@@ -1,0 +1,194 @@
+﻿@using COAD.SEGURANCA.Extensions
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = " COADCORP - Sistema de Gestão Integrada.";
+}
+
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+
+    .quebrapagina {
+        page-break-before: always;
+    }
+</style>
+
+@Scripts.Render("~/Scripts/negocio/parcelas.js")
+
+<form>
+    <div ng-app="appModule">
+        <div ng-controller="ParcelasController" class="padding content" ng-init="iniRelContratoRep(@ViewBag.REP_ID,'@ViewBag.REP_NOME');canPrint=true">
+            <div class="panel panel-corp hidden-print">
+                <div class="panel-heading">
+                    <i class="fa fa-list-alt fa-fw"></i>
+                    <label id="title">DASHBOARD DE VENDAS</label>
+                    <div class="pull-right hidden-print">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Opções
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)" ng-click="listarContratoRepData()">&nbspPesquisar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Ano")
+                                @Html.TextBox("_anoatual", "", new { @class = "form-control", ng_model = "filtro.ano"})
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Empresa")
+                                @Html.DropDownList("_emp_id", new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "filtro.emp_id"})
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Inicial")
+                                <div class="input-group date">
+                                    @Html.TextBox("dtinicial", "", new { @class = "form-control datepicker", ng_model = "dtini", app_date = "filtro.dtini"})
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Final")
+                                <div class="input-group date">
+                                    @Html.TextBox("dtfinal", "", new { @class = "form-control datepicker", ng_model = "dtfim", app_date = "filtro.dtfim"})
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-1" style="padding-top:25px;">
+                            <a href="javascript:void(0)" ng-click="listarContratoRepData()" class="btn btn-success"><i class="glyphicon glyphicon-refresh"></i></a>
+                        </div>
+                   </div>
+                </div>
+            </div>
+            <div id="baseContent" ng-class="{'panel panel-corp': baseContent, 'panel panel-corp hidden-print': !baseContent}">
+                <div class="panel-heading">
+                    <i class="fa fa-list-alt fa-fw"></i>
+                    <label id="title">RESUMO DE VENDAS - <strong>{{filtro.representante.REP_NOME}}</strong> </label>
+                    <div class="pull-right hidden-print">
+
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="hidden-print panel-footer" ng-if="!listacontratorep||listacontratorep.count==0">
+                        <label id="title"><strong>Nenhuma venda encontrada para o período selecionado !!</strong> </label>
+                    </div>
+                    <div class="row" ng-if="listacontratorep.length>0">
+                        <div class="table-responsive" style="padding-left: 12px; padding-right: 12px;">
+                            <table class="table table-hover table-bordered" style="padding-left: 12px;">
+                                <thead>
+                                    <tr class="info">
+                                        <th colspan="10">
+                                            <i class="glyphicon glyphicon-book"></i>&nbspCOADCORP - Faturamento por Representante (Analítico) - {{filtro.dataatual}}
+                                        </th>
+                                        <th style="text-align: right;">
+                                            Período:{{filtro.mes}} / {{filtro.ano}}
+                                        </th>
+                                    </tr>
+                                    <tr class="info">
+                                        <th colspan="10">
+                                            <span ng-if="filtro.representante.REP_NOME!=null">Representante - {{filtro.representante.REP_NOME}}</span>
+                                            <span ng-if="filtro.representante.REP_NOME==null">TODOS OS REPRESENTANTES</span>
+                                        </th>
+                                        <th style="text-align: right;">
+                                            <span ng-if="filtro.emp_id==1">COAD</span>
+                                            <span ng-if="filtro.emp_id==2">ATUALIZACAO</span>
+                                            <span ng-if="filtro.emp_id==3">CONTABIL E JURIDICA</span>
+                                            <span ng-if="filtro.emp_id==4">COAD - GRAFICA</span>
+                                            <span ng-if="filtro.emp_id==5">CORTESIA</span>
+                                            <span ng-if="filtro.emp_id==6">Franquia RJ</span>
+                                            <span ng-if="filtro.emp_id==7">PORTO MARAVILHA</span>
+                                        </th>
+                                    </tr>
+                                    <tr class="info">
+                                        <th style="text-align:right;">Assinatura</th>
+                                        <th>Representante</th>
+                                        <th>Cliente</th>
+                                        <th style="text-align:center;">UF</th>
+                                        <th>Cons</th>
+                                        <th style="text-align:right;">Contrato</th>
+                                        <th style="text-align:center;">Faturamento</th>
+                                        <th style="text-align:right;">Valor-R$</th>
+                                        <th style="text-align:right;">Contrato (Ant.)</th>
+                                        <th style="text-align:center;">Faturamento (Ant.)</th>
+                                        <th style="text-align:right;">Valor-R$ (Ant.)</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in listacontratorep">
+                                    <td style="font-size: small; text-align:right;">{{item.ASN_NUM_ASSINATURA}}</td>
+                                    <td style="font-size:10px; text-align:left;width:15%">{{item.CAR_ID}} - {{item.REP_NOME}}</td>
+                                    <td style="font-size:10px; text-align:left;width:35%">{{item.CLI_NOME}}</td>
+                                    <td style="font-size: small;">{{item.UF}}</td>
+                                    <td style="font-size: small;text-align:center;">{{item.ASN_QTDE_CONS_CONTRATO}}</td>
+                                    <td style="text-align: right;">{{item.CTR_NUM_CONTRATO}}</td>
+                                    <td app-show-date="item.CTR_DATA_FAT" style="font-size: small;text-align:center;"></td>
+                                    <td app-show-dinheiro="item.VALOR_TOTAL" style="text-align: right; width:15%"></td>
+                                    <td style="text-align: right;">{{item.CTR_NUM_CONTRATO_ANT}}</td>
+                                    <td app-show-date="item.CTR_DATA_FAT_ANT" style="font-size: small;text-align:center;"></td>
+                                    <td app-show-dinheiro="item.VALOR_TOTAL_ANT" style="text-align: right; width:15%" "></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive" style="padding-left: 12px; padding-right: 12px;">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr class="info">
+                                        <th style="text-align: center;" colspan="7">Total</th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <label>Período:</label>&nbsp{{filtro.mes}} / {{filtro.ano}}
+                                    </td>
+                                    <td app-show-dinheiro="tolcontratos" style="text-align: right;"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" ng-if="export.lnkPath!=null&&export.lnkPath!=''">
+                        <div class="form-group">
+                            <a href="{{export.lnkPath}}" ng-click="export.lnkPath=null"><i class="glyphicon glyphicon-cloud-download"></i> Donwload do arquivo ( {{export.lnkPath}} ) </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden-print panel-footer" ng-if="listacontratorep.length>0">
+                    <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+                    <a class="btn btn-default" href="javascript:void(0)" ng-click="expPlanilhaRep(listacontratorep,null)" title="Exportar a tabela para o excel">
+                        <i class="fa fa-file-excel-o blue"></i>&nbspExportar
+                    </a>
+                </div>
+            </div>
+            @*<div id="baseContent" ng-class="{'panel panel-corp': baseContent1, 'panel panel-corp hidden-print': !baseContent1}">
+                <div class="panel-heading">
+                    <i class="fa fa-list-alt fa-fw"></i>
+                    <label id="title">RESUMO DE FATURAMENTO</label>
+                    <div class="pull-right hidden-print">
+
+                    </div>
+                </div>
+                <div class="panel-body">
+
+                </div>
+            </div>*@
+        </div>
+    </div>
+</form>
+
+
+

@@ -1,0 +1,191 @@
+﻿@model  COAD.COADGED.Model.DTO.PublicacaoDTO
+@{
+    ViewBag.Title = "Edit";
+}
+@using Coad.GenericCrud.Extensions
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li>@Html.ActionLink("Gerenciar Matérias","index","Materia")</li>
+        <li class="active">Editar Matéria - Redator: @ViewBag.redator</li>         
+    </ol>
+}
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/publicacao.js")
+<div class="form-lg padding" ng-app="appModule">
+    <div class="panel panel-default" ng-controller="PublicacaoController" data-ng-init="read(@ViewBag.publicacaoId)">
+            @Html.ValidationSummary(true)          
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Editar Matéria</div>
+            <div class="panel-body">
+                 <div app-message></div>
+                 @using (Html.BeginForm(null, null, FormMethod.Post, new {role = "form"})) 
+                 {
+                     <div class="panel-footer">
+                         <div class="row">
+                            <div class="form-group col-lg-2">
+                                @Html.LabelFor(model => model.PUB_ID)
+                                @Html.TextBoxFor(model => model.PUB_ID, new {@class = "form-control", ng_model = "publicacao.PUB_ID", disabled = "disabled" })
+                                @Html.ValidationMessageFor(model => model.PUB_ID, null, new { app_validation_msg = "erros", @for = "PUB_ID" }) 
+                            </div>
+
+                            <div class="form-group col-lg-3">
+                                @Html.Label("Informativo")
+                                @Html.DropDownList("informativo", new SelectList(@ViewBag.informativo, "Value", "Text"), "" ,new {@class = "form-control", ng_model = "publicacao.informativo" })
+                            </div>
+
+                            <div class="form-group col-lg-3">
+                                @Html.Label("Colecionador")
+                                @Html.DropDownListFor(model => model.GRD_CONS_ID, new SelectList(@ViewBag.grpConsultoria, "Value", "Text"), "" ,new {@class = "form-control", ng_model = "publicacao.GRD_CONS_ID" })
+                                @Html.ValidationMessageFor(model => model.GRD_CONS_ID, null, new { app_validation_msg = "erros", @for = "GRD_CONS_ID" }) 
+                            </div>
+                            <div class="form-group col-lg-2">
+                                @Html.Label("Área")
+                                @Html.DropDownListFor(model => model.AREAS_CONSULTORIA, new SelectList(@ViewBag.areas, "Value", "Text"), "" ,new {@class = "form-control", ng_model = "publicacao.areaId" })
+                                @Html.ValidationMessageFor(model => model.AREAS_CONSULTORIA, null, new { app_validation_msg = "erros", @for = "areaId" }) 
+                            </div>
+                            <div class="form-group col-lg-2">
+                                @Html.Label("UF")
+                                @Html.DropDownListFor(model => model.UF_ID, new SelectList(@ViewBag.uf, "Value", "Text"), "" ,new {@class = "form-control", ng_model = "publicacao.UF_ID" })
+                                @Html.ValidationMessageFor(model => model.UF_ID, null, new { app_validation_msg = "erros", @for = "UF_ID" }) 
+                            </div>
+                         </div>
+                         <div class="row">
+                            <div class="form-group col-lg-6">
+                                @Html.LabelFor(model => model.TIP_MAT_ID)
+                                @Html.DropDownListFor(model => model.TIP_MAT_ID, new SelectList(@ViewBag.tpMateria, "Value", "Text"), "Selecione" ,new {@class = "form-control", ng_model = "publicacao.TIP_MAT_ID" })
+                                @Html.ValidationMessageFor(model => model.TIP_MAT_ID, null, new { app_validation_msg = "erros", @for = "TIP_MAT_ID" }) 
+                            </div>
+                            <div class="form-group col-lg-6">
+                                @Html.Label("Usar matéria neste informativo?")
+                                @Html.DropDownListFor(model => model.PUB_ATIVO, new SelectList(@ViewBag.ativo, "Value", "Text"), "" ,new {@class = "form-control", ng_model = "publicacao.PUB_ATIVO" })
+                                @Html.ValidationMessageFor(model => model.PUB_ATIVO, null, new { app_validation_msg = "erros", @for = "PUB_ATIVO" }) 
+                            </div>
+                         </div>
+                     </div>
+                     <div class="panel-footer">
+                         <div class="row">
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.TIT_ID)
+                                @Html.DropDownListFor(model => model.TIT_ID, new SelectList(@ViewBag.gg, "Value", "Text"), "Selecione" ,new {@class = "form-control", ng_model = "publicacao.TIT_ID", ng_change = "lerVerbetes(publicacao.TIT_ID)" })
+                                @Html.ValidationMessageFor(model => model.TIT_ID, null, new { app_validation_msg = "erros", @for = "TIT_ID" }) 
+                            </div>
+                            <div class="form-group col-lg-4" ng-show="verbetes">
+                                @Html.LabelFor(model => model.TIT_ID_VERBETE)
+                                <select ng-options=" item.TIT_ID as item.TIT_DESCRICAO for item in verbetes" class="form-control" ng-model = "publicacao.TIT_ID_VERBETE", ng-change = "lerSubverbetes(publicacao.TIT_ID_VERBETE)">
+                                    <option value="">Selecione</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-4" ng-show="subverbetes">
+                                @Html.LabelFor(model => model.TIT_ID_SUBVERBETE)
+                                <select ng-options=" item.TIT_ID as item.TIT_DESCRICAO for item in subverbetes" class="form-control" ng-model = "publicacao.TIT_ID_SUBVERBETE">
+                                    <option value="">Selecione</option>
+                                </select>
+                            </div>
+                         </div>
+                         <div class="row">
+                            <div class="form-group col-lg-12">
+                                @Html.LabelFor(model => model.PUB_OBS)
+                                @Html.TextAreaFor(model => model.PUB_OBS, new {@class = "form-control", ng_model = "publicacao.PUB_OBS" })
+                                @Html.ValidationMessageFor(model => model.PUB_OBS, null, new { app_validation_msg = "erros", @for = "PUB_OBS" }) 
+                            </div>
+                         </div>
+                     </div>
+                     <div class="panel-footer">
+                         <div class="row">
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.TIP_ATO_ID)
+                                @Html.DropDownListFor(model => model.TIP_ATO_ID, new SelectList(@ViewBag.tpAto, "Value", "Text"), "Selecione" ,new {@class = "form-control", ng_model = "publicacao.TIP_ATO_ID" })
+                                @Html.ValidationMessageFor(model => model.TIP_ATO_ID, null, new { app_validation_msg = "erros", @for = "TIP_ATO_ID" }) 
+                            </div>
+                            <div class="form-group col-lg-2">
+                                @Html.LabelFor(model => model.PUB_NUMERO_ATO)
+                                @Html.TextBoxFor(model => model.PUB_NUMERO_ATO, new {@class = "form-control", ng_model = "publicacao.PUB_NUMERO_ATO" })
+                                @Html.ValidationMessageFor(model => model.PUB_NUMERO_ATO, null, new { app_validation_msg = "erros", @for = "PUB_NUMERO_ATO" }) 
+                            </div>
+                            <div class="form-group col-lg-2">
+                                @Html.LabelFor(model => model.PUB_DATA_ATO)
+                                @Html.TextBoxFor(model => model.PUB_DATA_ATO, new { @class = "form-control datepicker", ng_model = "PUB_DATA_ATO", app_date = "informativo.PUB_DATA_ATO" })
+                                @Html.ValidationMessageFor(model => model.PUB_DATA_ATO, null, new { app_validation_msg = "erros", @for = "PUB_DATA_ATO" }) 
+                            </div>
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.ORG_ID)
+                                @Html.DropDownListFor(model => model.ORG_ID, new SelectList(@ViewBag.orgao, "Value", "Text"), "Selecione" ,new {@class = "form-control", ng_model = "publicacao.ORG_ID" })
+                                @Html.ValidationMessageFor(model => model.ORG_ID, null, new { app_validation_msg = "erros", @for = "ORG_ID" }) 
+                            </div>
+                         </div>
+                         <div class="row">
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.TVI_ID)
+                                @Html.DropDownListFor(model => model.TVI_ID, new SelectList(@ViewBag.veiculo, "Value", "Text"), "Selecione" ,new {@class = "form-control", ng_model = "publicacao.TVI_ID" })
+                                @Html.ValidationMessageFor(model => model.TVI_ID, null, new { app_validation_msg = "erros", @for = "TVI_ID" }) 
+                            </div>
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.PUB_DATA_PUB_ATO)
+                                @Html.TextBoxFor(model => model.PUB_DATA_PUB_ATO, new { @class = "form-control datepicker", ng_model = "PUB_DATA_PUB_ATO", app_date = "informativo.PUB_DATA_PUB_ATO" })
+                                @Html.ValidationMessageFor(model => model.PUB_DATA_PUB_ATO, null, new { app_validation_msg = "erros", @for = "PUB_DATA_PUB_ATO" }) 
+                            </div>
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.PUB_ID_REVOGADO)
+                                @Html.DropDownListFor(model => model.PUB_ID_REVOGADO, new SelectList(@ViewBag.atoRevogado, "Value", "Text"), "Selecione" ,new {@class = "form-control", ng_model = "publicacao.PUB_ID_REVOGADO" })
+                                @Html.ValidationMessageFor(model => model.PUB_ID_REVOGADO, null, new { app_validation_msg = "erros", @for = "PUB_ID_REVOGADO" }) 
+                            </div>
+                         </div>
+                     </div>
+                     <div class="panel-footer">
+                         <div class="row">
+                             <div class="form-group col-lg-12">
+                                @Html.LabelFor(model => model.PUB_CONTEUDO)
+                                @Html.TextAreaFor(model => model.PUB_CONTEUDO, new { @class = "form-control", ng_model = "publicacao.PUB_CONTEUDO" })
+                                @Html.Raw(@ViewBag.PUB_CONTEUDO)
+                             </div>
+                         </div>
+                     </div>                     
+                     <div class="panel-footer">
+                         <div class="row">
+                             <div class="form-group col-lg-12">
+                                @Html.LabelFor(model => model.PUB_CONTEUDO_RESENHA)
+                                @Html.TextAreaFor(model => model.PUB_CONTEUDO_RESENHA, new { @class = "form-control", ng_model = "publicacao.PUB_CONTEUDO_RESENHA" })
+                                @Html.Raw(@ViewBag.PUB_CONTEUDO_RESENHA)
+                             </div>
+                         </div>
+                     </div>                     
+                     <div class="panel-footer">
+                         <div class="row">
+                             <div class="form-group col-lg-12">
+                                @Html.LabelFor(model => model.PUB_MANCHETE)
+                                @Html.TextAreaFor(model => model.PUB_MANCHETE, new { @class = "form-control", ng_model = "publicacao.PUB_MANCHETE" })
+                                @Html.Raw(@ViewBag.PUB_MANCHETE)
+                             </div>
+                         </div>
+                     </div>                     
+                     <div class="panel-footer">
+                         <div class="row">
+                             <div class="form-group col-lg-12">
+                                @Html.LabelFor(model => model.PUB_EMENTA)
+                                @Html.TextAreaFor(model => model.PUB_EMENTA, new { @class = "form-control", ng_model = "publicacao.PUB_EMENTA" })
+                                @Html.Raw(@ViewBag.PUB_EMENTA)
+                             </div>
+                         </div>
+                     </div>                     
+                     <div class="panel-footer">
+                         <div class="row">
+                             <div class="form-group col-lg-6">
+                                @Html.LabelFor(model => model.LBL_ID)
+                                @Html.DropDownListFor(model => model.LBL_ID, new SelectList(@ViewBag.label, "Value", "Text"), "Selecione" , new { @class = "form-control", ng_model = "publicacao.LBL_ID" })
+                                @Html.ValidationMessageFor(model => model.LBL_ID, null, new { app_validation_msg = "erros", @for = "LBL_ID" }) 
+                             </div>
+                             <div class="form-group col-lg-6">
+                                @Html.LabelFor(model => model.SEC_ID)
+                                @Html.DropDownListFor(model => model.SEC_ID, new SelectList(@ViewBag.secao, "Value", "Text"), "Selecione" , new { @class = "form-control", ng_model = "publicacao.SEC_ID" })
+                                @Html.ValidationMessageFor(model => model.SEC_ID, null, new { app_validation_msg = "erros", @for = "SEC_ID" }) 
+                             </div>
+                         </div>
+                     </div>                     
+                 }
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-primary" ng-click="salvarPublicacao()">Salvar</button>
+                <span class="float-right"><button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default">Voltar</button></span>
+            </div> 
+    </div>
+</div>

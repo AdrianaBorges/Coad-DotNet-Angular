@@ -1,0 +1,141 @@
+﻿<!-- ALT: 23/06/2015 - disponibilizando os dados e métodos javascript -->
+@model  COAD.COADGED.Model.DTO.PublicacaoDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Cadastro de Matérias para a Redação e Editoração";     
+}
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li class="active">Gerenciar Matérias - Redator: @ViewBag.redator</li>         
+    </ol>
+}
+
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/publicacao.js")
+
+<!-- ALT: 23/06/2015 - abrindo Angular para a aplicação -->
+<div ng-app="appModule">
+    <div ng-controller="PublicacaoController" class="padding content" data-ng-init="init()">
+        <div class="panel panel-default">
+            <!-- ALT: 23/06/2015 - pequeno menu à direita -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Opções
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                            </li>                                                                           
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ALT: 23/06/2015 - buscar/pesquisar -->
+            <div class="panel-body"> 
+                <div class="row">              
+                    <div class="form-group col-lg-4">
+                        <label for="publicacaoId">Nº Matéria</label>
+                        <input type="text" id="publicacaoId" ng-model="filtro.publicacaoId" class="form-control"/>
+                    </div>             
+                    <div class="form-group col-lg-4">
+                        <label for="ano">Ano</label>
+                        <input type="text" id="ano" ng-model="filtro.ano" class="form-control"/>
+                    </div>             
+                    <div class="form-group col-lg-4">
+                        <label for="numero">Nº Informativo</label>
+                        <input type="text" id="numero" ng-model="filtro.numero" class="form-control"/>
+                    </div>             
+                </div>   
+                <div class="row">              
+                    <div class="form-group col-lg-12">
+                        <label for="manchete">Manchete</label>
+                        <textarea rows="4" cols="50" id="manchete" ng-model="filtro.manchete" class="form-control"></textarea>
+                    </div>             
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-3">
+                        <label for="ativoId"> Ativo </label>
+                        <input type="radio" id="ativoId" ng-model="filtro.ativoId" ng-value="1" />
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="ativoId2"> Inativo </label>
+                        <input type="radio" id="ativoId2" ng-model="filtro.ativoId" ng-value="0"/>
+                    </div>            
+                </div>
+            </div>
+
+            <!-- ALT: 23/06/2015 - botão pesquisar -->
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="listar()">Pesquisar</button>
+            </div>
+        </div>
+        
+        <div class="panel panel-default"  ng-show="publicacoes">
+            <!-- ALT: 23/06/2015 - exibindo dados pesquisados -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Cadastro de Publicações </div>
+            <div class="panel-body">         
+                <div class="table-responsive">     
+                    <!-- ALT: 23/06/2015 - mensagens ocorridas nesta tela -->
+                    <div>
+                        @Html.Messages()
+                        <div app-message></div>
+                    </div>
+
+                    <!-- ALT: 23/06/2015 - registros deste módulo -->
+                    <table class="table table-hover table-bordered">
+                        <!-- ALT: 23/06/2015 - exibindo campos do cabeçalho -->
+                        <thead>
+                            <tr>                               
+                                <th style="min-width: 050px">
+                                    @Html.DisplayNameFor(model => model.PUB_ID)
+                                </th>
+                                <th style="min-width: 050px">
+                                    @Html.DisplayNameFor(model => model.INF_ANO)
+                                </th>
+                                <th style="min-width: 050px">
+                                    @Html.DisplayNameFor(model => model.INF_NUMERO)                                                                                                           
+                                </th>
+                                <th style="min-width: 450px">
+                                    @Html.DisplayNameFor(model => model.PUB_MANCHETE)
+                                </th>
+                                <th style="min-width: 050px">
+                                    @Html.DisplayNameFor(model => model.PUB_ATIVO)
+                                </th>
+
+                                <th>Detalhes</th>
+                                <th>Editar</th>
+                            </tr>
+                        </thead>
+                        <!-- ALT: 23/06/2015 - exibindo os dados e os botões de operações -->
+                        <tr ng-repeat="item in publicacoes">
+                            <td>
+                                {{item.PUB_ID}}
+                            </td>
+                            <td>
+                                {{item.INF_ANO}}
+                            </td>
+                            <td>
+                                {{item.INF_NUMERO}}
+                            </td>
+                            <td>
+                                {{item.PUB_MANCHETE}}
+                            </td>
+                            <td>
+                                @Html.DropDownListFor(item => item.PUB_ATIVO, new SelectList(@ViewBag.ativo, "Value", "Text"), null ,new {@class = "form-control", ng_model = "item.PUB_ATIVO", disabled = "disabled" })
+                            </td>
+
+                            <td><a href="javascript:void(0)" app-post="@Url.Action("Detalhes")?publicacaoId={{item.PUB_ID}}" title="Detalhes" class="blue"><span class="glyphicon glyphicon-search"></span></a></td>
+                            <td><a href="javascript:void(0)" app-post="@Url.Action("Editar")?publicacaoId={{item.PUB_ID}}" title="Editar" class="blue"><span class="glyphicon glyphicon-edit"></span></a></td>
+                        </tr>
+                    </table>                       
+                </div>
+                <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+            </div>
+        </div>
+    </div>
+</div>

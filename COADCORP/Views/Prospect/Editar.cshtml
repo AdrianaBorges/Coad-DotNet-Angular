@@ -1,0 +1,119 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using COAD.CORPORATIVO.SessionUtils
+
+@{
+    ViewBag.Title = "Editar";
+    bool podeEditar = SessionUtil.PossuiPermissaoParaEditarProspect();
+    ViewBag.defer = "defer='defer'";
+}
+@using Coad.GenericCrud.Extensions
+@using GenericCrud.ActionResultTools
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Clientes (Editar)</li>
+    </ol>
+}
+<script src="@UrlCorp.Content("~/Scripts/negocio/controllers_plugins/telefone.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts/negocio/controllers_plugins/info_marketing.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts/negocio/controllers_plugins/info_cliente.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts/negocio/controllers_plugins/endereco.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts/negocio/cliente_prospect.js")" @ViewBag.defer></script>
+
+<div ng-app="appModule">
+    <div class="panel panel-default" ng-controller="ClienteProspectController" data-ng-init="init('@podeEditar'); readProspect('@ViewBag.clienteId', '@ViewBag.tipo');initEndSimple();" ng-cloak>
+        <!-- Default panel contents -->
+ 
+            @Html.ValidationSummary(true)          
+                  <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Editar Cliente
+                    
+                        <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"
+                                            aria-expanded="false" ng-disabled="button == 'saved'">
+                                            Opções
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                             <li>
+                                                <a href="@Url.Action("Buscar")" title="Voltar" class="blue"> Voltar</a>
+                                            </li>
+                                          @*  <li>
+                                                <a href="javascript:void(0)" title="Salvar" ng-click="salvarClienteFranquia()" class="blue">Salvar</a>
+                                            </li>*@
+                                    @*        <li>
+                                                <a href="javascript:void(0)" title="Informações" ng-click="abreModalCliente(prospect.CLI_ID)" class="blue">Informações do prospect</a>
+                                            </li>*@
+                                            <li ng-show="prospect.ID">
+                                                <a href="javascript:void(0)" app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}" 
+                                                    app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?" class="btnConfirmaExclusao blue" title="Excluir"> Excluir</a>
+                                            </li>                                                                                                                    
+                                        </ul>
+                                    </div>
+                                </div>
+                     
+                     
+            </div>
+
+            <div class="panel-body">  
+                <div app-message></div>
+                 @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) {
+                    <div class="row" ng-if="prospect.ClienteId">
+                        <div class="col-md-12">
+                            <div class="font-16 pull-right"><strong>Código do Prospect </strong><span class="label label-danger">{{prospect.ClienteId }}</span></div>
+                        </div>
+                    </div>
+                      @Html.Partial("Partials/_ProspectParcial")
+                      <div app-model-bind source-model="PROSPECT_TELEFONE" target-model="prospect.Telefones">
+                        @Html.Partial("Partials/_TelefoneProspectPartial")
+                      </div>
+
+                    <div app-modal="modal-carteira" header="Lista de Carteiras">
+                        @Html.Partial("Partials/Modais/_ModalBuscarCarteiraPartial")
+                    </div>
+                 }
+            </div>
+
+         <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("buscar", "prospect")'" class="btn btn-default" ng-disabled="button == 'saved'">
+                <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar</button>
+              <button  ng-show="podeEditar == true"
+                  app-switch-button="salvarProspect()" 
+                  switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]" 
+                  switch-var="button"
+                  class="btn btn-default">
+                  <span class="glyphicon glyphicon-floppy-save blue"></span>
+              </button>
+
+           <span ng-show="prospect.ID">
+                <button type="button" class="btn btn-danger" 
+                    app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}" app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?">
+                    <span class="glyphicon glyphicon-remove-sign"></span> Excluir</button>
+
+            </span>         
+
+        </div> 
+
+        <div data-app-modal="modal-prospect-criado" data-header="Prospect Salvo" data-submodal="" data-size="small" data-header-bg="false">              
+        <div class="alert alert-info alert-not-fixed" role="alert">
+            <span class="glyphicon glyphicon-thumbs-up"></span> O Prospect foi Salvo com Sucesso.
+        </div>
+            <div class="row form">
+            <div class="form-group col-lg-12 limit-modal-height">
+                 <div class="font-16"><strong>Código do Prospect </strong><span class="label label-danger">{{codigoProspect }}</span></div>   
+                 
+            </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <button type="button" class="btn btn-default" app-post="@Url.Action("buscar")"><span class="glyphicon glyphicon-list-alt"></span> Listagem</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" data-target="#modal-prospect-criado">
+                        <span class="glyphicon glyphicon-ok"></span> Ok</button>
+                </div>
+            </div>  
+        </div> 
+      </div>
+</div>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="75b9818a94f1410586071fa76676e357" Name="Diagram1">
+        <EntityTypeShape EntityType="COADGEDModel.AREA_CONSULTORIA_CURSO" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.AREAS_CONSULTORIA" Width="1.5" PointX="6.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.AREAS_CONSULTORIA_NEWS" Width="1.5" PointX="12" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.AREAS_CONSULTORIA1" Width="1.5" PointX="6.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.CADERNO" Width="1.5" PointX="17" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.CADERNO_COMPARTILHADO" Width="1.5" PointX="19.25" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.CADERNO_CONTEUDO" Width="1.5" PointX="19.25" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.CADERNO_NOTA" Width="1.5" PointX="19.25" PointY="26.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.CAPITAL" Width="1.5" PointX="6.75" PointY="38.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.CARGOS" Width="1.5" PointX="6.75" PointY="32.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.CLIENTES_REF" Width="1.5" PointX="14.75" PointY="22.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.COLABORADOR" Width="1.5" PointX="9" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.CONSULTA_EMAIL" Width="1.5" PointX="19.25" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.CONSULTA_EMAIL_COLECIONADOR" Width="1.5" PointX="14.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.CONSULTA_EMAIL_GRANDE_GRUPO" Width="1.5" PointX="17" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.CONSULTA_EMAIL_STATUS" Width="1.5" PointX="17" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.CONSULTA_EMAIL_VERBETE" Width="1.5" PointX="17" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.FUNCIONALIDADE" Width="1.5" PointX="17" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.FUNCIONALIDADE_NIVEL_ACESSO" Width="1.5" PointX="14.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.FUNDAMENTACAO" Width="1.5" PointX="5.25" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.INFORMATIVO" Width="1.5" PointX="12" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.LABELS" Width="1.5" PointX="3.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.LINHA_PRODUTO_REF" Width="1.5" PointX="12" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.LOG_ACESSO_PORTAL" Width="1.5" PointX="8.25" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.LOG_SIMULADOR" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.MANUAL_DP" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.MANUAL_DP_ITEM" Width="1.5" PointX="3" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.MANUAL_DP_LINK" Width="1.5" PointX="5.25" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.MANUAL_DP_MODULO" Width="1.5" PointX="1.5" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.MENU_DOC" Width="1.5" PointX="3" PointY="42" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.MENU_DOC_ITEM" Width="1.5" PointX="5.25" PointY="41.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.NEWS" Width="1.5" PointX="9.75" PointY="50.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.NOTICIA" Width="1.5" PointX="11.25" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.NOTICIA_GRUPO" Width="1.5" PointX="9" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.NOTICIA_GRUPO_LINHA_PROD" Width="1.5" PointX="14.25" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.NOTICIAS_GUARDADAS" Width="1.5" PointX="13.75" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.ORGAO" Width="1.5" PointX="0.75" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.ORIGEM_ACESSO_MENU" Width="1.5" PointX="8.25" PointY="54.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.ORIGEM_ACESSO_REF" Width="1.5" PointX="6" PointY="28.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.ORIGEM_ACESSO_SUBMENU" Width="1.5" PointX="10.5" PointY="54" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.ORIGEM_FUNCIONALIDADE" Width="1.5" PointX="19.25" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PERIODICIDADE" Width="1.5" PointX="1.5" PointY="34.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PLUBLICACAO_FLUXO" Width="1.5" PointX="3.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PRODUTO_COMPOSICAO_REF" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PRODUTO_REF" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PUBLICACAO" Width="1.5" PointX="6" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PUBLICACAO_ALTERACAO_REVOGACAO" Width="1.5" PointX="8.25" PointY="25.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PUBLICACAO_AREAS_CONSULTORIA" Width="1.5" PointX="9" PointY="36.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PUBLICACAO_BUSCA" Width="1.5" PointX="11.25" PointY="28.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PUBLICACAO_CICLO_APROVACAO" Width="1.5" PointX="11.25" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PUBLICACAO_CONFIG" Width="1.5" PointX="11.25" PointY="31.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PUBLICACAO_EDITADA" Width="1.5" PointX="8.25" PointY="29.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PUBLICACAO_FLUXO_ETAPA" Width="1.5" PointX="9" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PUBLICACAO_GRUPO_CONSULTORIA" Width="1.5" PointX="13.75" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PUBLICACAO_PALAVRA_CHAVE" Width="1.5" PointX="11.25" PointY="38.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PUBLICACAO_REMISSAO" Width="1.5" PointX="11.25" PointY="40.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PUBLICACAO_REMISSIVO" Width="1.5" PointX="11.25" PointY="43.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PUBLICACAO_REVISAO" Width="1.5" PointX="8.25" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PUBLICACAO_REVISAO_COLABORADOR" Width="1.5" PointX="11.25" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PUBLICACAO_TITULACAO" Width="1.5" PointX="11.25" PointY="46.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PUBLICACAO_UF" Width="1.5" PointX="14.25" PointY="37.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.RELATORIOS" Width="1.5" PointX="15.75" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.SECOES" Width="1.5" PointX="3.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.sysdiagrams" Width="1.5" PointX="19.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.TAB_DINAMICA" Width="1.5" PointX="16.5" PointY="36.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.TAB_DINAMICA_CONFIG" Width="1.5" PointX="14.25" PointY="41.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.TAB_DINAMICA_CONFIG_ITEM" Width="1.5" PointX="16.5" PointY="48" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.TAB_DINAMICA_GRUPO" Width="1.5" PointX="12" PointY="50" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.TAB_DINAMICA_ITEM" Width="1.5" PointX="18.75" PointY="29.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.TAB_DINAMICA_LINK" Width="1.5" PointX="16.5" PointY="54.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.TAB_DINAMICA_ORIGEM" Width="1.5" PointX="16.5" PointY="33.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.TAB_DINAMICA_PUBLICACAO" Width="1.5" PointX="16.5" PointY="60.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.TIPO_ATO" Width="1.5" PointX="0.75" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.TIPO_MATERIA" Width="1.5" PointX="3.75" PointY="31.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.TITULACAO" Width="1.5" PointX="9" PointY="43.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.UF_REF" Width="1.5" PointX="9.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.VEICULO" Width="1.5" PointX="3.75" PointY="34.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.CONSULTA_EMAIL_PERFIL_COLEC" Width="1.5" PointX="17" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.PUBLICACAO_vw" Width="1.5" PointX="21.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.TABELA_CEST_VW" Width="1.5" PointX="21.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADGEDModel.TABELA_TIPI_VW" Width="1.5" PointX="21.75" PointY="10.875" IsExpanded="true" />
+        <AssociationConnector Association="COADGEDModel.FK_AREAS_CONSULTORIA_NEWS_AREAS_CONSULTORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_COLABORADOR_AREAS_CONSULTORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_TITULACAO_AREAS_CONSULTORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_AREAS_CONSULTORIA_NEWS_AREAS_CONSULTORIA7" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_AREAS_CONSULTORIA_NEWS_NEWS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_AREAS_CONSULTORIA_NEWS_UF_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_COLABORADOR_AREAS_CONSULTORIA7" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_AREAS_CONSULTORIA_AREAS_CONSULTORIA7" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_TITULACAO_AREAS_CONSULTORIA7" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_CADERNO_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_CADERNO_COMPARTILHADO_CADERNO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_CADERNO_CONTEUDO_CADERNO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_CADERNO_NOTA_CADERNO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_CADERNO_COMPARTILHADO_CLIENTES_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_AREAS_CONSULTORIA_CAPITAL" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_COLABORADOR_CARGOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_FLUXO_ETAPA_CARGOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_CICLO_APROVACAO_COLABORADOR" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_REVISAO_COLABORADOR" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_REVISAO_COLABORADOR_COLABORADOR" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_CONSULTA_EMAIL_COLECIONADOR" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_CONSULTA_EMAIL_CONSULTA_EMAIL_VERBETE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_CONSULTA_EMAIL_GRANDE_GRUPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_CONSULTA_EMAIL_STATUS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_CONSULTA_EMAIL_COLECIONADOR_GRG" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_CONSULTA_EMAIL_COLECIONADOR_PC" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_CONSULTA_EMAIL_COLECIONADOR_VERB" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_FUNCIONALIDADE_FUNCIONALIDADE_NIVEL_ACESSO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_FUNCIONALIDADE_PRODUTO_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_ORIGEM_FUNCIONALIDADE_FUNCIONALIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_FUNDAMENTACAO_MANUAL_DP_ITEM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_UF_INFORMATIVO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_LABELS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_NOTICIA_GRUPO_LINHA_PROD_LINHA_PRODUTO_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_LOG_ACESSO_PORTAL_NOTICIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_LOG_ACESSO_PORTAL_ORIGEM_ACESSO_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_LOG_ACESSO_PORTAL_PUBLICACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_MANUAL_DP_ITEM_MANUAL_DP" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_MANUAL_DP_MANUAL_DP_MODULO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_MENU_DOC_MANUAL_DP" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_MANUAL_DP_ITEM_MANUAL_DP_ITEM1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_MANUAL_DP_ITEM_MANUAL_DP_LINK" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_MANUAL_DP_ITEM_ORGAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_MANUAL_DP_ITEM_TIPO_ATO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_MENU_DOC_ITEM_MENU_DOC" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_MENU_DOC_ITEM_PAI" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_NOTICIA_NOTICIA_GRUPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_NOTICIA_PUBLICACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_NOTICIA_TITULACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_NOTICIA_GRUPO_LINHA_PROD_NOTICIA_GRUPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_TIPO_PUBLICACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_ORIGEM_ACESSO_MENU_ORIGEM_ACESSO_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_ORIGEM_ACESSO_SUBMENU_ORIGEM_ACESSO_MENU" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_ORIGEM_FUNCIONALIDADE_ORIGEM_ACESSO_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_TAB_DINAMICA_ORIGEM_ORIGEM_ACESSO_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_VEICULO_PERIODICIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_FLUXO_ETAPA_PLUBLICACAO_FLUXO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_PLUBLICACAO_FLUXO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_ALTERACAO_REVOGACAO_PUBLICACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_EDITADA_PUBLICACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_REVISAO_COLABORADOR_PUBLICACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_REVISAO_PUBLICACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_SECOES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_TIPO_ATO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_TIPO_MATERIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_VEICULO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_BUSCA_PUBLICACAO_AREAS_CONSULTORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_CONFIG_PUBLICACAO_AREAS_CONSULTORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_PALAVRA_CHAVE_PUBLICACAO_AREAS_CONSULTORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_REMISSAO_PUBLICACAO_AREAS_CONSULTORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_REMISSIVO_PUBLICACAO_AREAS_CONSULTORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_REVISAO_COLABORADOR_PUBLICACAO_AREAS_CONSULTORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_REVISAO_PUBLICACAO_AREAS_CONSULTORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_TITULACAO_PUBLICACAO_AREAS_CONSULTORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_UF_PUBLICACAO_AREAS_CONSULTORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_CICLO_APROVACAO_PUBLICACAO_FLUXO_ETAPA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_PUBLICACAO_UF_UF_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_TAB_DINAMICA_ITEM_TAB_DINAMICA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_TAB_DINAMICA_TAB_DINAMICA_CONFIG" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_TAB_DINAMICA_CONFIG_ITEM_TAB_DINAMICA_CONFIG" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_CONFIG1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_GRUPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_LINK" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_TAB_DINAMICA_CONFIG_TITULACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_TAB_DINAMICA_ORIGEM_TAB_DINAMICA_CONFIG" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_TAB_DINAMICA_PUBLICACAO_TAB_DINAMICA_CONFIG" ManuallyRouted="false" />
+        <AssociationConnector Association="COADGEDModel.FK_TITULACAO_TITULACAO" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

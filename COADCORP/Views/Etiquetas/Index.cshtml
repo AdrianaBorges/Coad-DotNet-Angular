@@ -1,0 +1,73 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutosDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Histórico Atendimento (SAC)</li>
+
+    </ol>
+}
+
+@Scripts.Render("~/Scripts/negocio/histatend.js")
+@Html.ValidationSummary(false)
+
+<div ng-app="appModule">
+    <div ng-controller="HistAtendController"  data-ng-init="preparaTela()"  class="padding content">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div app-message></div>
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-print"></span> Filtros
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Opções
+                                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="javascript:void(0)" ng-click="ImpEtiqueta()" title="Imprimir etiquetas não impressas selecionadas na consulta." class="blue">Imprimir</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Data Inicial")
+                            <div class="input-group">
+                                <input type="text" id="_dtinicial"  class="form-control" ng-model="dtini" app-date="filtro.dtinicial" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Data Final")
+                            <div class="input-group">
+                                <input type="text" id="_dtfinal"  class="form-control" ng-model="dtfim" app-date="filtro.dtfinal" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="sigla">Assinatura</label>
+                        <input type="text" id="_assinatura" ng-model="filtro.assinatura" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                  <button ng-click="ImpEtiqueta()" class="btn btn-default blue" title="Imprimir etiquetas não impressas selecionadas na consulta.">
+                      <span class="glyphicon glyphicon-print blue"></span> Imprimir
+                  </button>
+            </div>
+        </div>
+    </div>
+</div>

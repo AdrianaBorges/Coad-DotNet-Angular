@@ -1,0 +1,197 @@
+﻿@using COAD.SEGURANCA.Extensions
+@model  COAD.CORPORATIVO.Model.Dto.TransportadorDTO
+
+@using Coad.GenericCrud.Extensions
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+
+    </ol>
+}
+
+@Scripts.Render("~/Scripts/appScripts/transportador.js")
+
+<form>
+    <div ng-app="appModule">
+        <div class="panel panel-default" ng-controller="TransportadorController" ng-init="CarregarTela(@ViewBag.tra_id)">
+            <div app-message></div>
+            <div class="panel panel-default">
+                <div class="panel-heading bold head-panel">
+                    <span class="glyphicon glyphicon-edit icon-panel"></span>@ViewBag.Title
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Opções<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="#" ng-click="Salvar()">Salvar</a>
+                                </li>
+                                <li><a href="#" ng-click="Excluir()" ng-show="tra.TRA_ID>0">Excluir</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a href="#" onclick="window.location = '@Url.Action("Index")'">Fechar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                @Html.PesquisaPopUpCidade("")
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Código")
+                            @Html.TextBoxFor(model => model.TRA_ID, new { @class = "form-control", ng_model = "tra.TRA_ID", disabled = true })
+                            @Html.ValidationMessageFor(model => model.TRA_ID, null, new { app_validation_msg = "erros", @for = "TRA_ID" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7">
+                        <div class="form-group">
+                            @Html.Label("Razão Social")
+                            @Html.TextBoxFor(model => model.TRA_RAZAO_SOCIAL, new { @class = "form-control", ng_model = "tra.TRA_RAZAO_SOCIAL" })
+                            @Html.ValidationMessageFor(model => model.TRA_RAZAO_SOCIAL, null, new { app_validation_msg = "erros", @for = "TRA_RAZAO_SOCIAL" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("Pessoa")
+                            @Html.DropDownList("FOR_TIPESSOA", new SelectList(@ViewBag.ListaTipoPessoa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "tra.TRA_TIPESSOA" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("CPF/CNPJ")
+                            @Html.TextBoxFor(model => model.TRA_CNPJ, new { @class = "form-control", ng_model = "tra.TRA_CNPJ" })
+                            @Html.ValidationMessageFor(model => model.TRA_CNPJ, null, new { app_validation_msg = "erros", @for = "TRA_CNPJ" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7">
+                        <div class="form-group">
+                            @Html.Label("Nome Fantasia")
+                            @Html.TextBoxFor(model => model.TRA_NOME_FANTASIA, new { @class = "form-control", ng_model = "tra.TRA_NOME_FANTASIA" })
+                            @Html.ValidationMessageFor(model => model.TRA_RAZAO_SOCIAL, null, new { app_validation_msg = "erros", @for = "TRA_NOME_FANTASIA" })
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("CEP")
+                            @Html.TextBoxFor(model => model.TRA_CEP, new { @class = "form-control", ng_model = "tra.TRA_CEP" })
+                            @Html.ValidationMessageFor(model => model.TRA_CEP, null, new { app_validation_msg = "erros", @for = "TRA_CEP" })
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            @Html.Label("Endereço")
+                            @Html.TextBoxFor(model => model.TRA_ENDERECO, new { @class = "form-control", ng_model = "tra.TRA_ENDERECO" })
+                            @Html.ValidationMessageFor(model => model.TRA_ENDERECO, null, new { app_validation_msg = "erros", @for = "TRA_ENDERECO" })
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            @Html.Label("Complemento")
+                            @Html.TextBoxFor(model => model.TRA_END_COMPLEMENTO, new { @class = "form-control", ng_model = "tra.TRA_END_COMPLEMENTO" })
+                            @Html.ValidationMessageFor(model => model.TRA_END_COMPLEMENTO, null, new { app_validation_msg = "erros", @for = "TRA_END_COMPLEMENTO" })
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Numero")
+                            @Html.TextBoxFor(model => model.TRA_END_NUMERO, new { @class = "form-control", ng_model = "tra.TRA_END_NUMERO" })
+                            @Html.ValidationMessageFor(model => model.TRA_END_NUMERO, null, new { app_validation_msg = "erros", @for = "TRA_END_NUMERO" })
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.Label("Bairro")
+                            @Html.TextBoxFor(model => model.TRA_BAIRRO, new { @class = "form-control", ng_model = "tra.TRA_BAIRRO" })
+                            @Html.ValidationMessageFor(model => model.TRA_BAIRRO, null, new { app_validation_msg = "erros", @for = "TRA_BAIRRO" })
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group" style="width: 360px; float: left;">
+                            @Html.Label("Município")
+                            @Html.HiddenFor(model => model.MUN_ID, new { @class = "form-control", ng_model = "tra.MUN_ID" })
+                            @Html.TextBox("MUN_DESCRICAO", "", new { @class = "form-control", ng_model = "MUN_DESCRICAO", disabled = true })
+                            @Html.ValidationMessageFor(model => model.MUN_ID, null, new { app_validation_msg = "erros", @for = "MUN_ID" })
+                        </div>
+                        <div class="form-group" style="width: 20px; float: left; padding-left: 4px; padding-top: 28px;">
+                            <a href="javascript:void(0)" class="btn btn-default" ng-click="AbrirJanelaCidade()"><span class="fa fa-search"></span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("id", "Insc. Estadual")
+                            @Html.TextBoxFor(model => model.TRA_INSCRICAO, new { @class = "form-control", ng_model = "tra.TRA_INSCRICAO" })
+                            @Html.ValidationMessageFor(model => model.TRA_INSCRICAO, null, new { app_validation_msg = "erros", @for = "TRA_INSCRICAO" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("id", "Insc. Municipal")
+                            @Html.TextBoxFor(model => model.TRA_INSCMUNIP, new { @class = "form-control", ng_model = "tra.TRA_INSCMUNIP" })
+                            @Html.ValidationMessageFor(model => model.TRA_INSCMUNIP, null, new { app_validation_msg = "erros", @for = "TRA_INSCMUNIP" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("Suframa")
+                            @Html.TextBoxFor(model => model.TRA_INSCSUFRAMA, new { @class = "form-control", ng_model = "tra.TRA_INSCSUFRAMA" })
+                            @Html.ValidationMessageFor(model => model.TRA_INSCSUFRAMA, null, new { app_validation_msg = "erros", @for = "TRA_INSCSUFRAMA" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("Telefone")
+                            @Html.TextBoxFor(model => model.TRA_TEL, new { @class = "form-control", ng_model = "tra.TRA_TEL" })
+                            @Html.ValidationMessageFor(model => model.TRA_TEL, null, new { app_validation_msg = "erros", @for = "TRA_TEL" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("Celular")
+                            @Html.TextBoxFor(model => model.TRA_CEL, new { @class = "form-control", ng_model = "tra.TRA_CEL" })
+                            @Html.ValidationMessageFor(model => model.TRA_CEL, null, new { app_validation_msg = "erros", @for = "TRA_CEL" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("Fax")
+                            @Html.TextBoxFor(model => model.TRA_FAX, new { @class = "form-control", ng_model = "tra.TRA_FAX" })
+                            @Html.ValidationMessageFor(model => model.TRA_FAX, null, new { app_validation_msg = "erros", @for = "TRA_FAX" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.Label("Contato")
+                            @Html.TextBoxFor(model => model.TRA_CONTATO, new { @class = "form-control", ng_model = "tra.TRA_CONTATO" })
+                            @Html.ValidationMessageFor(model => model.TRA_CONTATO, null, new { app_validation_msg = "erros", @for = "TRA_CONTATO" })
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.Label("Email")
+                            @Html.TextBoxFor(model => model.TRA_EMAIL, new { @class = "form-control", ng_model = "tra.TRA_EMAIL" })
+                            @Html.ValidationMessageFor(model => model.TRA_EMAIL, null, new { app_validation_msg = "erros", @for = "TRA_EMAIL" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span>Fechar</button>
+                <button type="button" ng-click="Salvar()" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save blue"></span>Salvar</button>
+                <button type="button" ng-click="Excluir()" class="btn btn-default" ng-show="tra.TRA_ID>0"><span class="glyphicon glyphicon-remove-sign"></span>Excluir</button>
+            </div>
+        </div>
+    </div>
+</form>

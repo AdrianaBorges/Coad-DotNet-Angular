@@ -1,0 +1,154 @@
+﻿@model COAD.SEGURANCA.Model.PerfilModel
+
+@{
+    ViewBag.Title = "Editar";
+}
+@using Coad.GenericCrud.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+
+@Scripts.Render("~/Scripts/appScripts/itemmenu.js")
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Item de Menu (Editar)</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+<div ng-app="appModule">
+    <div class="panel panel-corp" ng-controller="ItemMenuControler" data-ng-init="read('@ViewBag.ITM_ID', '@ViewBag.ultimoCodigo');" ng-cloak>
+        <div class="panel-heading bold head-panel">
+            <span class="glyphicon glyphicon-edit icon-panel"></span> Editar Item de Menu
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-warning btn-xs dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="false" ng-disabled="button == 'saved'">
+                        Opções
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li>
+                            <a href="@Url.Action("Index")" title="Voltar" class="blue"> Voltar</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" title="Salvar" ng-click="salvar()" class="blue">Salvar</a>
+                        </li>
+                        <li ng-show="prospect.ID">
+                            <a href="javascript:void(0)" app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}"
+                               app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?" class="btnConfirmaExclusao blue" title="Excluir">Excluir</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body">
+            <div app-message></div>
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { role = "form" }))
+            {
+
+                <fieldset>
+                    <legend>Dados básicos</legend>
+                    <div class="row">
+                        <div class="form-group col-sm-3">
+                            <label for="desc">Descrição</label>
+                            <input type="text" id="desc" ng-model="menu.ITM_DESCRICAO" class="form-control" />
+                            <div app-validation-msg="erros" for="ITM_DESCRICAO"></div>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="path">Caminho (Path)</label>
+                            <input type="text" id="path" ng-model="menu.ITM_NOME_ARQUIVO" class="form-control" />
+                            <div app-validation-msg="erros" for="ITM_NOME_ARQUIVO"></div>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label for="SIS_ID">Sistema</label>
+                            @Html.DropDownList("SIS_ID", (SelectList)@ViewBag.ListaSistema,
+                                    "Selecione", new { @class = "form-control", ng_model = "menu.SIS_ID", ng_change = "NivelMenuSelecionado()" })
+                            <div app-validation-msg="erros" for="ITM_NOME_ARQUIVO"></div>
+                        </div>
+                        <div class="form-group col-sm-1">
+                            <label for="path">Ordem</label>
+                            <input type="text" id="path" ng-model="menu.ITM_MENU_SEQ" class="form-control" />
+                            <div app-validation-msg="erros" for="ITM_MENU_SEQ"></div>
+                        </div>
+                        <div class="form-group col-sm-1">
+                            <label for="ITM_MENU_NIVEL">Nível</label>
+                            @Html.DropDownList("ITM_MENU_NIVEL", (SelectList)@ViewBag.ListaNivel, "Selecione",
+                                    new { @class = "form-control", ng_model = "menu.ITM_MENU_NIVEL", ng_change = "NivelMenuSelecionado()" })
+                            <div app-validation-msg="erros" for="ITM_MENU_NIVEL"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-3">
+                            <label for="ITM_MENU_NIVEL">Menu</label>
+                            <select class="form-control" ng-options="item.ITM_ID as item.ITM_DESCRICAO for item in listaMenu" ng-model="menu.ITM_NODE_ID">
+                                <option value="">Selecione</option>
+                            </select>
+                            <div app-validation-msg="erros" for="ITM_NODE_ID"></div>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="ativo">Ativo</label>
+                            <div class="radio">
+                                <label><input type="radio" name="tipo" ng-model="menu.ITM_TIPO" value="0" />Menu/Link</label>
+                                <label><input type="radio" name="tipo" ng-model="menu.ITM_TIPO" value="1" />Pagina</label>
+                                <label><input type="radio" name="tipo" ng-model="menu.ITM_TIPO" value="2" />Relatório</label>
+                            </div>
+                            <div app-validation-msg="erros" for="ITM_MENU_NIVEL"></div>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="itemExterno">Item Externo</label>
+                            <br />
+                            <input type="checkbox" id="itemExterno" ng-model="menu.ITM_EXTERNO" ng-true-value="1" ng-false-value="0" ng-checked="menu.ITM_EXTERNO == 1" />
+                            <div app-validation-msg="erros" for="ITM_EXTERNO"></div>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="itemExterno">Ativo</label>
+                            <br />
+                            <input type="checkbox" id="itemExterno" ng-model="menu.ITM_ATIVO" ng-true-value="1" ng-false-value="0" ng-checked="menu.ITM_ATIVO == 1" />
+                            <div app-validation-msg="erros" for="ITM_ATIVO"></div>
+                        </div>
+                        @if (ViewBag.editar == 0)
+                        {
+                            <div class="form-group col-sm-1">
+                                <label for="desc">Código</label>
+                                <input type="text" id="desc" ng-model="menu.ITM_ID" class="form-control" />
+                                <div app-validation-msg="erros" for="ITM_ID"></div>
+                            </div>
+                        }
+                    </div>
+                </fieldset>
+            }
+        </div>
+
+        <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default" ng-disabled="button == 'saved' || buttonDel == 'deleting'">
+                <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar
+            </button>
+            <button app-switch-button="salvar()"
+                    switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]"
+                    switch-var="button"
+                    class="btn btn-primary" ng-disabled="bloqueiaSalvamento && bloqueiaSalvamento === true || buttonDel == 'deleting'">
+                <span class="glyphicon glyphicon-floppy-save"></span>
+            </button>
+
+            <span ng-show="representante.REP_ID">
+                <button type="button" class="btn btn-danger" ng-disabled="button == 'saved'"
+                        app-switch-button="deletarRepresentante()"
+                        switch-conf="[{label : 'Excluir', state : 'del'}, {label : 'Excluindo...', state : 'deleting', disabled : true}]"
+                        switch-var="buttonDel"
+                        class="btn btn-default" ng-disabled="bloqueiaSalvamento && bloqueiaSalvamento === true">
+                    <span class="glyphicon glyphicon-remove-sign"></span>
+                </button>
+            </span>
+        </div>
+
+    </div>
+</div>

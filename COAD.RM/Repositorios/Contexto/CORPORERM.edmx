@@ -1,0 +1,2095 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CorporeRMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="PFPERFF">
+          <Key>
+            <PropertyRef Name="CODCOLIGADA" />
+            <PropertyRef Name="CHAPA" />
+            <PropertyRef Name="ANOCOMP" />
+            <PropertyRef Name="MESCOMP" />
+            <PropertyRef Name="NROPERIODO" />
+          </Key>
+          <Property Name="CODCOLIGADA" Type="smallint" Nullable="false" />
+          <Property Name="CHAPA" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="ANOCOMP" Type="smallint" Nullable="false" />
+          <Property Name="MESCOMP" Type="smallint" Nullable="false" />
+          <Property Name="NROPERIODO" Type="smallint" Nullable="false" />
+          <Property Name="MESCAIXACOMUM" Type="smallint" />
+          <Property Name="VALORESFORCADOS" Type="smallint" />
+          <Property Name="MOVIMPORTADO" Type="smallint" />
+          <Property Name="EDITADO" Type="smallint" />
+          <Property Name="ALTERADO" Type="smallint" />
+          <Property Name="SALCOMISSAO" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="FERIASMES" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEINSS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEINSSOUTROEMP" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSFERIAS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSOUTROEMP" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEINSS13" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEINSS13OUTRO" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSS13" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASESALFAMILIA" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="SALFAMILIA" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEVALETRANSP" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="VALETRANSPENTR" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="VALETRANSPDESC" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEIRRF" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="IRRF" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSCAIXA" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="DEDUTIVELIRRF" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEIRRFPART" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="IRRFPART" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEIRRFFERIAS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="IRRFFERIAS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSCOMCPMF" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="DESCRICAO" Type="varchar" MaxLength="250" />
+          <Property Name="BASEFGTS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEFGTS13" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="SALARIOPAGO" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="STATUSCCUSTO" Type="smallint" />
+          <Property Name="BASEIRRF13" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="SALARIODECALCULO" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="IRRF13" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSFERIASCOMCPMF" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSCALCUSUARIO" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEFGTSDIFSAL" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSDIFSAL" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSDIFSAL13" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSDIFSALFER" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="EXECID" Type="varchar" MaxLength="50" />
+          <Property Name="RECCREATEDBY" Type="varchar" MaxLength="50" />
+          <Property Name="RECCREATEDON" Type="datetime" />
+          <Property Name="RECMODIFIEDBY" Type="varchar" MaxLength="50" />
+          <Property Name="RECMODIFIEDON" Type="datetime" />
+          <Property Name="NRODEPENDIRRF" Type="smallint" />
+          <Property Name="LIQUIDO" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="NRODEPENDSALFAMILIA" Type="smallint" />
+          <Property Name="IDDADOSRESID" Type="smallint" />
+        </EntityType>
+        <EntityType Name="PFPERFFCOMPL">
+          <Key>
+            <PropertyRef Name="CODCOLIGADA" />
+            <PropertyRef Name="CHAPA" />
+            <PropertyRef Name="ANOCOMP" />
+            <PropertyRef Name="MESCOMP" />
+            <PropertyRef Name="NROPERIODO" />
+          </Key>
+          <Property Name="CODCOLIGADA" Type="smallint" Nullable="false" />
+          <Property Name="CHAPA" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="ANOCOMP" Type="smallint" Nullable="false" />
+          <Property Name="MESCOMP" Type="smallint" Nullable="false" />
+          <Property Name="NROPERIODO" Type="smallint" Nullable="false" />
+          <Property Name="MESCAIXACOMUM" Type="smallint" />
+          <Property Name="VALORESFORCADOS" Type="smallint" />
+          <Property Name="MOVIMPORTADO" Type="smallint" />
+          <Property Name="EDITADO" Type="smallint" />
+          <Property Name="ALTERADO" Type="smallint" />
+          <Property Name="SALCOMISSAO" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="FERIASMES" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEINSS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEINSSOUTROEMP" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSFERIAS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSOUTROEMP" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEINSS13" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEINSS13OUTRO" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSS13" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASESALFAMILIA" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="SALFAMILIA" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEVALETRANSP" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="VALETRANSPENTR" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="VALETRANSPDESC" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEIRRF" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="IRRF" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSCAIXA" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="DEDUTIVELIRRF" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEIRRFPART" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="IRRFPART" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEIRRFFERIAS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="IRRFFERIAS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSCOMCPMF" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="DESCRICAO" Type="varchar" MaxLength="250" />
+          <Property Name="BASEFGTS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEFGTS13" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="SALARIOPAGO" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="STATUSCCUSTO" Type="smallint" />
+          <Property Name="BASEIRRF13" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="SALARIODECALCULO" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="IRRF13" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSFERIASCOMCPMF" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSCALCUSUARIO" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="BASEFGTSDIFSAL" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSDIFSAL" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSDIFSAL13" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INSSDIFSALFER" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="EXECID" Type="varchar" MaxLength="50" />
+          <Property Name="RECCREATEDBY" Type="varchar" MaxLength="50" />
+          <Property Name="RECCREATEDON" Type="datetime" />
+          <Property Name="RECMODIFIEDBY" Type="varchar" MaxLength="50" />
+          <Property Name="RECMODIFIEDON" Type="datetime" />
+          <Property Name="NRODEPENDIRRF" Type="smallint" />
+          <Property Name="LIQUIDO" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="NRODEPENDSALFAMILIA" Type="smallint" />
+          <Property Name="IDDADOSRESID" Type="smallint" />
+        </EntityType>
+        <EntityType Name="PFUNC">
+          <Key>
+            <PropertyRef Name="CODCOLIGADA" />
+            <PropertyRef Name="CHAPA" />
+          </Key>
+          <Property Name="CODCOLIGADA" Type="smallint" Nullable="false" />
+          <Property Name="CHAPA" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="NROFICHAREG" Type="int" />
+          <Property Name="CODRECEBIMENTO" Type="char" MaxLength="1" />
+          <Property Name="CODSITUACAO" Type="char" MaxLength="1" />
+          <Property Name="CODTIPO" Type="char" MaxLength="1" />
+          <Property Name="CODSECAO" Type="varchar" MaxLength="35" />
+          <Property Name="CODFUNCAO" Type="varchar" MaxLength="10" />
+          <Property Name="CODSINDICATO" Type="varchar" MaxLength="10" />
+          <Property Name="JORNADA" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="CODHORARIO" Type="varchar" MaxLength="10" />
+          <Property Name="NRODEPIRRF" Type="smallint" />
+          <Property Name="NRODEPSALFAM" Type="smallint" />
+          <Property Name="DTBASE" Type="datetime" />
+          <Property Name="SALARIO" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="SITUACAOFGTS" Type="char" MaxLength="1" />
+          <Property Name="DTOPCAOFGTS" Type="datetime" />
+          <Property Name="CONTAFGTS" Type="varchar" MaxLength="11" />
+          <Property Name="SALDOFGTS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="DTSALDOFGTS" Type="datetime" />
+          <Property Name="CONTRIBSINDICAL" Type="char" MaxLength="1" />
+          <Property Name="APOSENTADO" Type="smallint" />
+          <Property Name="TEMMAIS65ANOS" Type="smallint" />
+          <Property Name="AJUDACUSTO" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="PERCENTADIANT" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="ARREDONDAMENTO" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="DATAADMISSAO" Type="datetime" />
+          <Property Name="TIPOADMISSAO" Type="char" MaxLength="1" />
+          <Property Name="DTTRANSFERENCIA" Type="datetime" />
+          <Property Name="MOTIVOADMISSAO" Type="varchar" MaxLength="2" />
+          <Property Name="TEMPRAZOCONTR" Type="smallint" />
+          <Property Name="FIMPRAZOCONTR" Type="datetime" />
+          <Property Name="DATADEMISSAO" Type="datetime" />
+          <Property Name="TIPODEMISSAO" Type="char" MaxLength="1" />
+          <Property Name="MOTIVODEMISSAO" Type="varchar" MaxLength="2" />
+          <Property Name="DTDESLIGAMENTO" Type="datetime" />
+          <Property Name="DTULTIMOMOVIM" Type="datetime" />
+          <Property Name="DTPAGTORESCISAO" Type="datetime" />
+          <Property Name="CODSAQUEFGTS" Type="varchar" MaxLength="2" />
+          <Property Name="TEMAVISOPREVIO" Type="smallint" />
+          <Property Name="DTAVISOPREVIO" Type="datetime" />
+          <Property Name="NRODIASAVISO" Type="smallint" />
+          <Property Name="DTVENCFERIAS" Type="datetime" />
+          <Property Name="INICPROGFERIAS1" Type="datetime" />
+          <Property Name="FIMPROGFERIAS1" Type="datetime" />
+          <Property Name="QUERABONO" Type="smallint" />
+          <Property Name="QUER1APARC13O" Type="smallint" />
+          <Property Name="NRODIASADIANTFER" Type="smallint" />
+          <Property Name="EVTADIANTFERIAS" Type="varchar" MaxLength="4" />
+          <Property Name="FERIASCOLETIVAS" Type="smallint" />
+          <Property Name="NRODIASFERIAS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="NRODIASABONO" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="INICPROGFERIAS2" Type="datetime" />
+          <Property Name="FIMPROGFERIAS2" Type="datetime" />
+          <Property Name="SALDOFERIAS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="SALDOFERIASANT" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="SALDOFERANTAUX" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="OBSFERIAS" Type="varchar" MaxLength="80" />
+          <Property Name="DTPAGTOFERIAS" Type="datetime" />
+          <Property Name="DTAVISOFERIAS" Type="datetime" />
+          <Property Name="NDIASLICREM1" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="NDIASLICREM2" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="DTINICIOLICENCA" Type="datetime" />
+          <Property Name="MEDIASALMATERN" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="SITUACAORAIS" Type="char" MaxLength="1" />
+          <Property Name="CONTAPAGAMENTO" Type="varchar" MaxLength="15" />
+          <Property Name="MEMBROSINDICAL" Type="smallint" />
+          <Property Name="VINCULORAIS" Type="varchar" MaxLength="2" />
+          <Property Name="USAVALETRANSP" Type="smallint" />
+          <Property Name="DIASUTEISMES" Type="smallint" />
+          <Property Name="DIASUTMEIOEXP" Type="smallint" />
+          <Property Name="DIASUTPROXMES" Type="smallint" />
+          <Property Name="DIASUTPROXMEIO" Type="smallint" />
+          <Property Name="DIASUTRESTANTES" Type="smallint" />
+          <Property Name="DIASUTRESTMEIO" Type="smallint" />
+          <Property Name="MUDOUENDERECO" Type="smallint" />
+          <Property Name="MUDOUCARTTRAB" Type="smallint" />
+          <Property Name="ANTIGACARTTRAB" Type="varchar" MaxLength="10" />
+          <Property Name="ANTIGASERIECART" Type="varchar" MaxLength="5" />
+          <Property Name="MUDOUNOME" Type="smallint" />
+          <Property Name="ANTIGONOME" Type="varchar" MaxLength="120" />
+          <Property Name="MUDOUPIS" Type="smallint" />
+          <Property Name="ANTIGOPIS" Type="varchar" MaxLength="11" />
+          <Property Name="MUDOUCHAPA" Type="smallint" />
+          <Property Name="ANTIGACHAPA" Type="varchar" MaxLength="16" />
+          <Property Name="MUDOUADMISSAO" Type="smallint" />
+          <Property Name="ANTIGADTADM" Type="datetime" />
+          <Property Name="ANTIGOVINCULO" Type="char" MaxLength="1" />
+          <Property Name="ANTIGOTIPOFUNC" Type="char" MaxLength="1" />
+          <Property Name="ANTIGOTIPOADM" Type="char" MaxLength="1" />
+          <Property Name="MUDOUDTOPCAO" Type="smallint" />
+          <Property Name="ANTIGADTOPCAO" Type="datetime" />
+          <Property Name="MUDOUSECAO" Type="smallint" />
+          <Property Name="ANTIGASECAO" Type="varchar" MaxLength="35" />
+          <Property Name="MUDOUDTNASCIM" Type="smallint" />
+          <Property Name="ANTIGADTNASCIM" Type="datetime" />
+          <Property Name="FALTAALTERFGTS" Type="smallint" />
+          <Property Name="DEDUZIRRF65" Type="smallint" />
+          <Property Name="PISPARAFGTS" Type="varchar" MaxLength="11" />
+          <Property Name="ULTIMORECALCULODATA" Type="datetime" />
+          <Property Name="ULTIMORECALCULOHORA" Type="datetime" />
+          <Property Name="DESCONTAAVISOPREVIO" Type="smallint" />
+          <Property Name="CODFILIAL" Type="smallint" Nullable="false" />
+          <Property Name="NOME" Type="varchar" MaxLength="120" />
+          <Property Name="INDINICIOHOR" Type="smallint" />
+          <Property Name="PISPASEP" Type="varchar" MaxLength="11" />
+          <Property Name="DTCADASTROPIS" Type="datetime" />
+          <Property Name="CODPESSOA" Type="int" Nullable="false" />
+          <Property Name="CODBANCOFGTS" Type="varchar" MaxLength="3" />
+          <Property Name="CODBANCOPAGTO" Type="varchar" MaxLength="3" />
+          <Property Name="CODAGENCIAPAGTO" Type="varchar" MaxLength="6" />
+          <Property Name="CODBANCOPIS" Type="varchar" MaxLength="3" />
+          <Property Name="RESCISAOCALCULADA" Type="smallint" />
+          <Property Name="OPBANCARIA" Type="varchar" MaxLength="5" />
+          <Property Name="MEMBROCIPA" Type="smallint" />
+          <Property Name="USASALCOMPOSTO" Type="smallint" />
+          <Property Name="REGATUAL" Type="int" />
+          <Property Name="NUMVEZESDESCEMPRESTIMO" Type="smallint" />
+          <Property Name="DATAINICIODESCEMPRESTIMO" Type="datetime" />
+          <Property Name="GRUPOSALARIAL" Type="varchar" MaxLength="10" />
+          <Property Name="JORNADAMENSAL" Type="smallint" />
+          <Property Name="PREVDISP" Type="datetime" />
+          <Property Name="CODOCORRENCIA" Type="smallint" Nullable="false" />
+          <Property Name="CODCATEGORIA" Type="smallint" />
+          <Property Name="CLASSECONTRIB" Type="smallint" />
+          <Property Name="CODEQUIPE" Type="varchar" MaxLength="20" />
+          <Property Name="ESUPERVISOR" Type="smallint" />
+          <Property Name="INTEGRCONTABIL" Type="varchar" MaxLength="22" />
+          <Property Name="INTEGRGERENCIAL" Type="varchar" MaxLength="22" />
+          <Property Name="USACONTROLEDESALDO" Type="smallint" />
+          <Property Name="CI" Type="varchar" MaxLength="11" />
+          <Property Name="MUDOUCI" Type="smallint" />
+          <Property Name="ANTIGOCI" Type="varchar" MaxLength="11" />
+          <Property Name="PERIODORESCISAO" Type="smallint" />
+          <Property Name="CODGRPQUIOSQUE" Type="varchar" MaxLength="15" />
+          <Property Name="FGTSMESANTRECOLGRFP" Type="smallint" />
+          <Property Name="CODNIVELSAL" Type="varchar" MaxLength="10" />
+          <Property Name="TRABALHOUNADEMISSAO" Type="smallint" />
+          <Property Name="NRODIASFERIASJORNRED" Type="smallint" />
+          <Property Name="POSSUIALVARAMENOR16" Type="smallint" />
+          <Property Name="DATARESCISAO" Type="datetime" />
+          <Property Name="SITUACAOINSS" Type="smallint" />
+          <Property Name="DTAPOSENTADORIA" Type="datetime" />
+          <Property Name="CODTABELASALARIAL" Type="varchar" MaxLength="10" />
+          <Property Name="TEMDEDUCAOCPMF" Type="smallint" />
+          <Property Name="NRODIASFERIASCORRIDOS" Type="smallint" />
+          <Property Name="NRODIASABONOCORRIDOS" Type="smallint" />
+          <Property Name="POSICAOABONO" Type="smallint" />
+          <Property Name="REGIMEREVEZAMENTO" Type="varchar" MaxLength="15" />
+          <Property Name="QUERADIANTAMENTO" Type="smallint" />
+          <Property Name="DTPROXAQUISFERIAS" Type="datetime" />
+          <Property Name="CODCOLFORNEC" Type="smallint" />
+          <Property Name="CODFORNECEDOR" Type="varchar" MaxLength="25" />
+          <Property Name="ISENTOIRRF" Type="smallint" />
+          <Property Name="ANOCOMPTRANSF" Type="smallint" />
+          <Property Name="MESCOMPTRANSF" Type="smallint" />
+          <Property Name="NROPERIODOTRANSF" Type="smallint" />
+          <Property Name="TIPOAPOSENTADORIA" Type="smallint" />
+          <Property Name="REPOEVAGA" Type="varchar" MaxLength="1" />
+          <Property Name="SALDOFGTSREAL" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="RESCISAOPRECISARECALC" Type="smallint" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BENEFPONTOS" Type="int" />
+          <Property Name="CONTRIBASSOC1OCORRCNPJ" Type="varchar" MaxLength="20" />
+          <Property Name="CONTRIBASSOC2OCORRCNPJ" Type="varchar" MaxLength="20" />
+          <Property Name="CONTRIBASSISTCNPJ" Type="varchar" MaxLength="20" />
+          <Property Name="CONTRIBCONFEDCNPJ" Type="varchar" MaxLength="20" />
+          <Property Name="CONTRIBASSOC1OCORRVALOR" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="CONTRIBASSOC2OCORRVALOR" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="CONTRIBASSISTVALOR" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="CONTRIBCONFEDVALOR" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="LOCALTRABCODMUNCIPIO" Type="varchar" MaxLength="15" />
+          <Property Name="MESESHORAEXTRAS" Type="int" />
+          <Property Name="MESESGRATIFICACAO" Type="int" />
+          <Property Name="MESESDISSIDIOCOLETIVO" Type="int" />
+          <Property Name="INDICADORSINDICALIZADO" Type="smallint" />
+          <Property Name="DTULTIMOMOVIMPGTOEXTRAS" Type="datetime" />
+          <Property Name="FIMPRAZOPRORROGCONTR" Type="datetime" />
+          <Property Name="CODCOLIGADAORIGEM" Type="smallint" />
+          <Property Name="CHAPAORIGEM" Type="varchar" MaxLength="16" />
+          <Property Name="RECCREATEDBY" Type="varchar" MaxLength="50" />
+          <Property Name="RECCREATEDON" Type="datetime" />
+          <Property Name="RECMODIFIEDBY" Type="varchar" MaxLength="50" />
+          <Property Name="RECMODIFIEDON" Type="datetime" />
+          <Property Name="NUMEROCARTAOSUS" Type="varchar" MaxLength="100" />
+          <Property Name="FERIASFINALIZADASPROXMES" Type="smallint" />
+          <Property Name="INDSIMPLES" Type="smallint" />
+          <Property Name="TPCONTABANCARIA" Type="varchar" MaxLength="1" />
+          <Property Name="NRPROCJUD" Type="varchar" MaxLength="20" />
+          <Property Name="RESIDENCIAPROPRIA" Type="smallint" />
+          <Property Name="RESIDENCIARECURSOSFGTS" Type="smallint" />
+          <Property Name="TPREGIMEPREV" Type="varchar" MaxLength="1" />
+          <Property Name="INDADMISSAO" Type="smallint" />
+          <Property Name="TIPOREINTEGRACAO" Type="smallint" />
+          <Property Name="DATAREINTEGRACAO" Type="datetime" />
+          <Property Name="DATARETORNOEFETIVO" Type="datetime" />
+          <Property Name="NROLEIANISTIA" Type="varchar" MaxLength="20" />
+          <Property Name="NROPROCESSOJUDICIAL" Type="varchar" MaxLength="20" />
+          <Property Name="NATUREZAESTAGIO" Type="char" MaxLength="1" />
+          <Property Name="CODNIVELESTAGIO" Type="char" MaxLength="1" />
+          <Property Name="AREAATUACAOESTAGIO" Type="varchar" MaxLength="50" />
+          <Property Name="NUMEROAPOLICEESTAGIO" Type="varchar" MaxLength="30" />
+          <Property Name="DTPREVTERMINOESTAGIO" Type="datetime" />
+          <Property Name="CODINSTITUICAOENSINOESTAGIO" Type="varchar" MaxLength="16" />
+          <Property Name="CODAGENTEINTEGRACAOESTAGIO" Type="varchar" MaxLength="16" />
+          <Property Name="CPFCOORDENADORESTAGIO" Type="varchar" MaxLength="11" />
+          <Property Name="NOMECOORDENADORESTAGIO" Type="varchar" MaxLength="80" />
+          <Property Name="CNPJEMPRESAORIGEM" Type="varchar" MaxLength="14" />
+          <Property Name="DTADMISSAOEMPRESAORIGEM" Type="datetime" />
+          <Property Name="MATRICULAEMPRESAORIGEM" Type="varchar" MaxLength="30" />
+          <Property Name="CODCATEGORIAEMPRESAORIGEM" Type="smallint" />
+          <Property Name="RECEBSEGDESEMP" Type="smallint" />
+          <Property Name="TIPOREDUCAOAVISO" Type="smallint" />
+          <Property Name="FORMAREDUCAOAVISO" Type="smallint" />
+          <Property Name="MOTIVOTRABTEMP" Type="smallint" />
+          <Property Name="CHAPASUBSTRABTEMP" Type="varchar" MaxLength="16" />
+          <Property Name="MOTIVOCANCELAMENTOAVISO" Type="smallint" />
+          <Property Name="DTCANCELAMENTOAVISO" Type="datetime" />
+          <Property Name="NROATESTADOOBITO" Type="varchar" MaxLength="32" />
+          <Property Name="NROPROCESSOTRAB" Type="varchar" MaxLength="20" />
+          <Property Name="OBSERVACAORESCISAO" Type="varchar" MaxLength="255" />
+          <Property Name="OBSERVACAOAVISOPREVIO" Type="varchar" MaxLength="255" />
+          <Property Name="CARREGOUAVISOPREVIO" Type="smallint" />
+          <Property Name="DESCRICAOSALVARIAVEL" Type="varchar" MaxLength="255" />
+          <Property Name="OBSCANCELAMENTOAVISO" Type="varchar" MaxLength="255" />
+          <Property Name="SUCESSAOVINCULO" Type="smallint" />
+          <Property Name="CNPJEMPRESAANTERIOR" Type="varchar" MaxLength="20" />
+          <Property Name="MATRICULAANTERIOR" Type="varchar" MaxLength="30" />
+          <Property Name="DTINICIOVINCULO" Type="datetime" />
+          <Property Name="OBSERVACAOSUCESSAO" Type="varchar" MaxLength="255" />
+          <Property Name="TRANSFERENCIASUCESSAO" Type="smallint" />
+          <Property Name="APMISTO_DTAVTRAB" Type="datetime" />
+          <Property Name="APMISTO" Type="smallint" />
+          <Property Name="FERIASDIASUTEIS" Type="smallint" />
+          <Property Name="FERIASSALDODIASUTEIS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="SITUACAOIRRF" Type="smallint" />
+          <Property Name="IDDADOSRESID" Type="smallint" />
+          <Property Name="SEQUENCIATRANSF" Type="smallint" />
+          <Property Name="CODBANCOPAGTO2" Type="varchar" MaxLength="3" />
+          <Property Name="CODAGENCIAPAGTO2" Type="varchar" MaxLength="6" />
+          <Property Name="CONTAPAGAMENTO2" Type="varchar" MaxLength="15" />
+          <Property Name="OPBANCARIA2" Type="varchar" MaxLength="5" />
+          <Property Name="TPCONTABANCARIA2" Type="varchar" MaxLength="1" />
+          <Property Name="INDPAGTOJUIZO" Type="smallint" />
+          <Property Name="CODIGORECEITA3533" Type="smallint" />
+          <Property Name="DTDESLIGAMENTOREINT" Type="datetime" />
+          <Property Name="MATRICULAESOCIAL" Type="varchar" MaxLength="30" />
+          <Property Name="MOTIVOTRANSFERENCIA" Type="smallint" />
+          <Property Name="ANOSCONTRIBINSS" Type="int" />
+          <Property Name="CODORGORIDES" Type="varchar" MaxLength="10" />
+          <Property Name="CODREGJURI" Type="char" MaxLength="2" />
+          <Property Name="CODCCUSTO" Type="varchar" MaxLength="25" />
+          <Property Name="IDITEMCONTABIL" Type="int" />
+          <Property Name="IDCLASSEVALOR" Type="int" />
+          <Property Name="TIPOREGIMEJORNADA" Type="smallint" />
+          <Property Name="DISPENSADOAVISO" Type="smallint" />
+          <Property Name="CNPJEMPRESASUCESSORA" Type="varchar" MaxLength="20" />
+          <Property Name="JUSTIFICATIVATRABTEMP" Type="varchar" MaxLength="999" />
+          <Property Name="TPINCLUSAOCONTRATO" Type="smallint" />
+          <Property Name="TEMPOPARCIAL" Type="smallint" />
+          <Property Name="COTAPCD" Type="smallint" />
+          <Property Name="COLTOMADORTEMP" Type="smallint" />
+          <Property Name="CODIGOTOMADORTEMP" Type="varchar" MaxLength="25" />
+          <Property Name="DTDEMISSAOPREVISTA" Type="datetime" />
+          <Property Name="JUSTIFICATIVAPRORROGTEMP" Type="varchar" MaxLength="999" />
+          <Property Name="DTAVISOPREVIOTRAB" Type="datetime" />
+          <Property Name="TEMCLAUASSEG" Type="smallint" />
+          <Property Name="CPFSUBSTRABTEMP" Type="varchar" MaxLength="11" />
+          <Property Name="TPINSCRICAOTEMP" Type="numeric" Precision="1" Scale="0" />
+          <Property Name="NROINSCRITEMP" Type="varchar" MaxLength="20" />
+          <Property Name="TIPOAVISOPREVIO" Type="smallint" />
+          <Property Name="CODCATEGORIAESOCIAL" Type="smallint" />
+          <Property Name="CODTIPOCONTRATO" Type="smallint" />
+          <Property Name="ESOCIALFUNCAOCONF" Type="smallint" />
+          <Property Name="CODFUNCAOCONF" Type="varchar" MaxLength="10" />
+          <Property Name="MOTIVOAVISOPREVIOTRAB" Type="varchar" MaxLength="10" />
+          <Property Name="CODCATEGORIATRABCEDIDO" Type="smallint" />
+          <Property Name="CNPJCEDENTE" Type="varchar" MaxLength="18" />
+          <Property Name="MATRICULACEDENTE" Type="varchar" MaxLength="30" />
+          <Property Name="DATAADMISSAOCEDENTE" Type="datetime2" Precision="7" />
+          <Property Name="TIPOREGIMETRABALHISTACEDIDO" Type="smallint" />
+          <Property Name="TIPOREGIMEPREVIDENCIARIOCEDIDO" Type="smallint" />
+          <Property Name="INFOONUSCESSAO" Type="smallint" />
+          <Property Name="TIPOCONTRATOPRAZO" Type="varchar" MaxLength="2" />
+          <Property Name="ESOCIALNATATIVIDADE" Type="smallint" />
+          <Property Name="MOTIVOSAIDATRANSFERENCIA" Type="smallint" />
+        </EntityType>
+        <EntityType Name="PFUNCAO">
+          <Key>
+            <PropertyRef Name="CODCOLIGADA" />
+            <PropertyRef Name="CODIGO" />
+          </Key>
+          <Property Name="CODCOLIGADA" Type="smallint" Nullable="false" />
+          <Property Name="CODIGO" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NOME" Type="varchar" MaxLength="100" />
+          <Property Name="NUMPONTOS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="CBO" Type="varchar" MaxLength="8" />
+          <Property Name="CARGO" Type="varchar" MaxLength="16" />
+          <Property Name="INATIVA" Type="smallint" />
+          <Property Name="ATIVTRANSP" Type="smallint" />
+          <Property Name="DESCRICAO" Type="text" />
+          <Property Name="FAIXASALARIAL" Type="varchar" MaxLength="16" />
+          <Property Name="LIMITEFUNC" Type="int" />
+          <Property Name="VERBAQUADROVAGAS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="PERCQUADROVAGAS" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="DATAULTIMAREVISAO" Type="datetime" />
+          <Property Name="NUMREVISAO" Type="varchar" MaxLength="30" />
+          <Property Name="CBO2002" Type="varchar" MaxLength="10" />
+          <Property Name="CODTABELA" Type="varchar" MaxLength="10" />
+          <Property Name="CODPERFILCAND" Type="varchar" MaxLength="15" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BENEFPONTOS" Type="int" />
+          <Property Name="OBJETIVO" Type="text" />
+          <Property Name="DESCRICAOPPP" Type="text" />
+          <Property Name="EXIBEORGANOGRAMA" Type="varchar" MaxLength="1" />
+          <Property Name="CODFUNCAOCHEFIA" Type="varchar" MaxLength="10" />
+          <Property Name="JORNADAREF" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="RECCREATEDBY" Type="varchar" MaxLength="50" />
+          <Property Name="RECCREATEDON" Type="datetime" />
+          <Property Name="RECMODIFIEDBY" Type="varchar" MaxLength="50" />
+          <Property Name="RECMODIFIEDON" Type="datetime" />
+          <Property Name="CODTIPOFUNCAO" Type="char" MaxLength="2" />
+          <Property Name="SIGLA" Type="varchar" MaxLength="30" />
+          <Property Name="ESOCIALFUNCAOCONF" Type="smallint" />
+        </EntityType>
+        <EntityType Name="PPESSOA">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+          </Key>
+          <Property Name="CODIGO" Type="int" Nullable="false" />
+          <Property Name="NOME" Type="varchar" MaxLength="120" />
+          <Property Name="APELIDO" Type="varchar" MaxLength="40" />
+          <Property Name="DTNASCIMENTO" Type="datetime" />
+          <Property Name="ESTADOCIVIL" Type="varchar" MaxLength="1" />
+          <Property Name="SEXO" Type="varchar" MaxLength="1" />
+          <Property Name="NACIONALIDADE" Type="varchar" MaxLength="3" />
+          <Property Name="GRAUINSTRUCAO" Type="varchar" MaxLength="3" />
+          <Property Name="RUA" Type="varchar" MaxLength="140" />
+          <Property Name="NUMERO" Type="varchar" MaxLength="8" />
+          <Property Name="COMPLEMENTO" Type="varchar" MaxLength="60" />
+          <Property Name="BAIRRO" Type="varchar" MaxLength="80" />
+          <Property Name="ESTADO" Type="varchar" MaxLength="2" />
+          <Property Name="CIDADE" Type="varchar" MaxLength="32" />
+          <Property Name="CEP" Type="varchar" MaxLength="9" />
+          <Property Name="PAIS" Type="varchar" MaxLength="60" />
+          <Property Name="REGPROFISSIONAL" Type="varchar" MaxLength="15" />
+          <Property Name="CPF" Type="varchar" MaxLength="11" />
+          <Property Name="IDIMAGEM" Type="int" />
+          <Property Name="TELEFONE1" Type="varchar" MaxLength="15" />
+          <Property Name="TELEFONE2" Type="varchar" MaxLength="15" />
+          <Property Name="CARTIDENTIDADE" Type="varchar" MaxLength="15" />
+          <Property Name="UFCARTIDENT" Type="varchar" MaxLength="2" />
+          <Property Name="ORGEMISSORIDENT" Type="varchar" MaxLength="15" />
+          <Property Name="DTEMISSAOIDENT" Type="datetime" />
+          <Property Name="TITULOELEITOR" Type="varchar" MaxLength="14" />
+          <Property Name="ZONATITELEITOR" Type="varchar" MaxLength="6" />
+          <Property Name="SECAOTITELEITOR" Type="varchar" MaxLength="6" />
+          <Property Name="CARTEIRATRAB" Type="varchar" MaxLength="10" />
+          <Property Name="SERIECARTTRAB" Type="varchar" MaxLength="5" />
+          <Property Name="UFCARTTRAB" Type="varchar" MaxLength="2" />
+          <Property Name="DTCARTTRAB" Type="datetime" />
+          <Property Name="NIT" Type="smallint" />
+          <Property Name="CARTMOTORISTA" Type="varchar" MaxLength="15" />
+          <Property Name="TIPOCARTHABILIT" Type="varchar" MaxLength="5" />
+          <Property Name="DTVENCHABILIT" Type="datetime" />
+          <Property Name="CERTIFRESERV" Type="varchar" MaxLength="40" />
+          <Property Name="CATEGMILITAR" Type="varchar" MaxLength="10" />
+          <Property Name="NATURALIDADE" Type="varchar" MaxLength="32" />
+          <Property Name="ESTADONATAL" Type="varchar" MaxLength="2" />
+          <Property Name="DATACHEGADA" Type="datetime" />
+          <Property Name="CARTMODELO19" Type="varchar" MaxLength="15" />
+          <Property Name="CONJUGEBRASIL" Type="smallint" />
+          <Property Name="NATURALIZADO" Type="smallint" />
+          <Property Name="FILHOSBRASIL" Type="smallint" />
+          <Property Name="NROFILHOSBRASIL" Type="smallint" />
+          <Property Name="NROREGGERAL" Type="varchar" MaxLength="15" />
+          <Property Name="NRODECRETO" Type="varchar" MaxLength="15" />
+          <Property Name="DTVENCIDENT" Type="datetime" />
+          <Property Name="DTVENCCARTTRAB" Type="datetime" />
+          <Property Name="TIPOVISTO" Type="varchar" MaxLength="10" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="60" />
+          <Property Name="INVESTTREINANT" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="CORRACA" Type="smallint" />
+          <Property Name="DEFICIENTEFISICO" Type="smallint" />
+          <Property Name="CODUSUARIO" Type="varchar" MaxLength="20" />
+          <Property Name="TELEFONE3" Type="varchar" MaxLength="15" />
+          <Property Name="FAX" Type="varchar" MaxLength="15" />
+          <Property Name="EMPRESA" Type="varchar" MaxLength="60" />
+          <Property Name="CODPROFISSAO" Type="int" />
+          <Property Name="CODOCUPACAO" Type="varchar" MaxLength="3" />
+          <Property Name="CODMEMOOBS" Type="int" />
+          <Property Name="BRPDH" Type="smallint" />
+          <Property Name="NPASSAPORTE" Type="varchar" MaxLength="15" />
+          <Property Name="FUMANTE" Type="smallint" />
+          <Property Name="PAISORIGEM" Type="varchar" MaxLength="20" />
+          <Property Name="DTEMISSPASSAPORTE" Type="datetime" />
+          <Property Name="DTVALPASSAPORTE" Type="datetime" />
+          <Property Name="OBSPESSOA" Type="text" />
+          <Property Name="IDIMAGEMDOC" Type="int" />
+          <Property Name="IDIMAGEMDOCV" Type="int" />
+          <Property Name="AJUSTATAMANHOFOTO" Type="smallint" />
+          <Property Name="DEFICIENTEAUDITIVO" Type="smallint" />
+          <Property Name="DEFICIENTEFALA" Type="smallint" />
+          <Property Name="DEFICIENTEVISUAL" Type="smallint" />
+          <Property Name="DEFICIENTEMENTAL" Type="smallint" />
+          <Property Name="RECURSOREALIZACAOTRAB" Type="varchar" MaxLength="120" />
+          <Property Name="RECURSOACESSIBILIDADE" Type="varchar" MaxLength="120" />
+          <Property Name="DATAAPROVACAOCURR" Type="datetime" />
+          <Property Name="CODMUNICIPIO" Type="varchar" MaxLength="20" />
+          <Property Name="LOCALIDADE" Type="varchar" MaxLength="40" />
+          <Property Name="CSM" Type="varchar" MaxLength="10" />
+          <Property Name="DTEXPCML" Type="datetime" />
+          <Property Name="EXPED" Type="varchar" MaxLength="10" />
+          <Property Name="RM" Type="varchar" MaxLength="10" />
+          <Property Name="SITMILITAR" Type="varchar" MaxLength="10" />
+          <Property Name="DTTITELEITOR" Type="datetime" />
+          <Property Name="ESTELEIT" Type="varchar" MaxLength="2" />
+          <Property Name="TIPOSANG" Type="varchar" MaxLength="10" />
+          <Property Name="IDBIOMETRIA" Type="int" />
+          <Property Name="ALUNO" Type="smallint" Nullable="false" />
+          <Property Name="PROFESSOR" Type="smallint" Nullable="false" />
+          <Property Name="USUARIOBIBLIOS" Type="smallint" Nullable="false" />
+          <Property Name="FUNCIONARIO" Type="smallint" Nullable="false" />
+          <Property Name="EXFUNCIONARIO" Type="smallint" Nullable="false" />
+          <Property Name="CANDIDATO" Type="smallint" Nullable="false" />
+          <Property Name="TAGSCRIPT" Type="text" />
+          <Property Name="FIADOR_SGI" Type="smallint" />
+          <Property Name="CONJUGE_SGI" Type="smallint" />
+          <Property Name="DEFICIENTEMOBREDUZIDA" Type="smallint" />
+          <Property Name="RECCREATEDBY" Type="varchar" MaxLength="50" />
+          <Property Name="RECCREATEDON" Type="datetime" />
+          <Property Name="RECMODIFIEDBY" Type="varchar" MaxLength="50" />
+          <Property Name="RECMODIFIEDON" Type="datetime" />
+          <Property Name="DTVENCIDENTPT" Type="datetime" />
+          <Property Name="CODTIPORUA" Type="smallint" />
+          <Property Name="CODTIPOBAIRRO" Type="smallint" />
+          <Property Name="IDPAIS" Type="smallint" />
+          <Property Name="CODNATURALIDADE" Type="varchar" MaxLength="20" />
+          <Property Name="NUMERORIC" Type="varchar" MaxLength="20" />
+          <Property Name="ORGEMISSORRIC" Type="varchar" MaxLength="20" />
+          <Property Name="DTEMISSAORIC" Type="datetime" />
+          <Property Name="DTEMISSAOCNH" Type="datetime" />
+          <Property Name="ORGEMISSORCNH" Type="varchar" MaxLength="20" />
+          <Property Name="DATANATURALIZACAO" Type="datetime" />
+          <Property Name="ORGEMISSORRNE" Type="varchar" MaxLength="20" />
+          <Property Name="DTEMISSAORNE" Type="datetime" />
+          <Property Name="NOMESOCIAL" Type="varchar" MaxLength="120" />
+          <Property Name="DEFICIENTEINTELECTUAL" Type="smallint" />
+          <Property Name="DEFICIENTEOBSERVACAO" Type="varchar" MaxLength="255" />
+          <Property Name="DATAOBITO" Type="datetime" />
+          <Property Name="MATRICULAOBITO" Type="varchar" MaxLength="50" />
+          <Property Name="FALECIDO" Type="int" />
+          <Property Name="PORTARIANATURALIZACAO" Type="varchar" MaxLength="50" />
+          <Property Name="CODCLASSIFTRABESTRANG" Type="varchar" MaxLength="20" />
+          <Property Name="UFCNH" Type="varchar" MaxLength="2" />
+          <Property Name="DATAPRIMEIRACNH" Type="datetime" />
+          <Property Name="ANO1EMPREGO" Type="int" />
+          <Property Name="EMAILPESSOAL" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <Association Name="FKPFPERFF_PFUNC">
+          <End Role="PFUNC" Type="Self.PFUNC" Multiplicity="1" />
+          <End Role="PFPERFF" Type="Self.PFPERFF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PFUNC">
+              <PropertyRef Name="CODCOLIGADA" />
+              <PropertyRef Name="CHAPA" />
+            </Principal>
+            <Dependent Role="PFPERFF">
+              <PropertyRef Name="CODCOLIGADA" />
+              <PropertyRef Name="CHAPA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKPFPERFFCOMPL_PFUNC">
+          <End Role="PFUNC" Type="Self.PFUNC" Multiplicity="1" />
+          <End Role="PFPERFFCOMPL" Type="Self.PFPERFFCOMPL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PFUNC">
+              <PropertyRef Name="CODCOLIGADA" />
+              <PropertyRef Name="CHAPA" />
+            </Principal>
+            <Dependent Role="PFPERFFCOMPL">
+              <PropertyRef Name="CODCOLIGADA" />
+              <PropertyRef Name="CHAPA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKPFUNC_PFUNCAO">
+          <End Role="PFUNCAO" Type="Self.PFUNCAO" Multiplicity="0..1" />
+          <End Role="PFUNC" Type="Self.PFUNC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PFUNCAO">
+              <PropertyRef Name="CODCOLIGADA" />
+              <PropertyRef Name="CODIGO" />
+            </Principal>
+            <Dependent Role="PFUNC">
+              <PropertyRef Name="CODCOLIGADA" />
+              <PropertyRef Name="CODFUNCAO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKPFUNC_PFUNCAOCONF">
+          <End Role="PFUNCAO" Type="Self.PFUNCAO" Multiplicity="0..1" />
+          <End Role="PFUNC" Type="Self.PFUNC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PFUNCAO">
+              <PropertyRef Name="CODCOLIGADA" />
+              <PropertyRef Name="CODIGO" />
+            </Principal>
+            <Dependent Role="PFUNC">
+              <PropertyRef Name="CODCOLIGADA" />
+              <PropertyRef Name="CODFUNCAOCONF" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKPFUNC_PPESSOA">
+          <End Role="PPESSOA" Type="Self.PPESSOA" Multiplicity="1" />
+          <End Role="PFUNC" Type="Self.PFUNC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PPESSOA">
+              <PropertyRef Name="CODIGO" />
+            </Principal>
+            <Dependent Role="PFUNC">
+              <PropertyRef Name="CODPESSOA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="COAD_EMISSAO_CONTRACHEQUES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cpf" Type="varchar" Mode="In" />
+          <Parameter Name="empresa" Type="varchar" Mode="In" />
+          <Parameter Name="ano" Type="varchar" Mode="In" />
+          <Parameter Name="mes" Type="varchar" Mode="In" />
+          <Parameter Name="periodo" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="CorporeRMModelStoreContainer">
+          <EntitySet Name="PFPERFF" EntityType="Self.PFPERFF" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PFPERFFCOMPL" EntityType="Self.PFPERFFCOMPL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PFUNC" EntityType="Self.PFUNC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PFUNCAO" EntityType="Self.PFUNCAO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PPESSOA" EntityType="Self.PPESSOA" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FKPFPERFF_PFUNC" Association="Self.FKPFPERFF_PFUNC">
+            <End Role="PFUNC" EntitySet="PFUNC" />
+            <End Role="PFPERFF" EntitySet="PFPERFF" />
+          </AssociationSet>
+          <AssociationSet Name="FKPFPERFFCOMPL_PFUNC" Association="Self.FKPFPERFFCOMPL_PFUNC">
+            <End Role="PFUNC" EntitySet="PFUNC" />
+            <End Role="PFPERFFCOMPL" EntitySet="PFPERFFCOMPL" />
+          </AssociationSet>
+          <AssociationSet Name="FKPFUNC_PFUNCAO" Association="Self.FKPFUNC_PFUNCAO">
+            <End Role="PFUNCAO" EntitySet="PFUNCAO" />
+            <End Role="PFUNC" EntitySet="PFUNC" />
+          </AssociationSet>
+          <AssociationSet Name="FKPFUNC_PFUNCAOCONF" Association="Self.FKPFUNC_PFUNCAOCONF">
+            <End Role="PFUNCAO" EntitySet="PFUNCAO" />
+            <End Role="PFUNC" EntitySet="PFUNC" />
+          </AssociationSet>
+          <AssociationSet Name="FKPFUNC_PPESSOA" Association="Self.FKPFUNC_PPESSOA">
+            <End Role="PPESSOA" EntitySet="PPESSOA" />
+            <End Role="PFUNC" EntitySet="PFUNC" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CorporeRMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="PFPERFF">
+          <Key>
+            <PropertyRef Name="CODCOLIGADA" />
+            <PropertyRef Name="CHAPA" />
+            <PropertyRef Name="ANOCOMP" />
+            <PropertyRef Name="MESCOMP" />
+            <PropertyRef Name="NROPERIODO" />
+          </Key>
+          <Property Name="CODCOLIGADA" Type="Int16" Nullable="false" />
+          <Property Name="CHAPA" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ANOCOMP" Type="Int16" Nullable="false" />
+          <Property Name="MESCOMP" Type="Int16" Nullable="false" />
+          <Property Name="NROPERIODO" Type="Int16" Nullable="false" />
+          <Property Name="MESCAIXACOMUM" Type="Int16" />
+          <Property Name="VALORESFORCADOS" Type="Int16" />
+          <Property Name="MOVIMPORTADO" Type="Int16" />
+          <Property Name="EDITADO" Type="Int16" />
+          <Property Name="ALTERADO" Type="Int16" />
+          <Property Name="SALCOMISSAO" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="FERIASMES" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEINSS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEINSSOUTROEMP" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSFERIAS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSOUTROEMP" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEINSS13" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEINSS13OUTRO" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSS13" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASESALFAMILIA" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="SALFAMILIA" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEVALETRANSP" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="VALETRANSPENTR" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="VALETRANSPDESC" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEIRRF" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="IRRF" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSCAIXA" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="DEDUTIVELIRRF" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEIRRFPART" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="IRRFPART" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEIRRFFERIAS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="IRRFFERIAS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSCOMCPMF" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="DESCRICAO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="BASEFGTS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEFGTS13" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="SALARIOPAGO" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="STATUSCCUSTO" Type="Int16" />
+          <Property Name="BASEIRRF13" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="SALARIODECALCULO" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="IRRF13" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSFERIASCOMCPMF" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSCALCUSUARIO" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEFGTSDIFSAL" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSDIFSAL" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSDIFSAL13" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSDIFSALFER" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="EXECID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RECCREATEDBY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RECCREATEDON" Type="DateTime" Precision="3" />
+          <Property Name="RECMODIFIEDBY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RECMODIFIEDON" Type="DateTime" Precision="3" />
+          <Property Name="NRODEPENDIRRF" Type="Int16" />
+          <Property Name="LIQUIDO" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="NRODEPENDSALFAMILIA" Type="Int16" />
+          <Property Name="IDDADOSRESID" Type="Int16" />
+          <NavigationProperty Name="PFUNC" Relationship="Self.FKPFPERFF_PFUNC" FromRole="PFPERFF" ToRole="PFUNC" />
+        </EntityType>
+        <EntityType Name="PFPERFFCOMPL">
+          <Key>
+            <PropertyRef Name="CODCOLIGADA" />
+            <PropertyRef Name="CHAPA" />
+            <PropertyRef Name="ANOCOMP" />
+            <PropertyRef Name="MESCOMP" />
+            <PropertyRef Name="NROPERIODO" />
+          </Key>
+          <Property Name="CODCOLIGADA" Type="Int16" Nullable="false" />
+          <Property Name="CHAPA" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ANOCOMP" Type="Int16" Nullable="false" />
+          <Property Name="MESCOMP" Type="Int16" Nullable="false" />
+          <Property Name="NROPERIODO" Type="Int16" Nullable="false" />
+          <Property Name="MESCAIXACOMUM" Type="Int16" />
+          <Property Name="VALORESFORCADOS" Type="Int16" />
+          <Property Name="MOVIMPORTADO" Type="Int16" />
+          <Property Name="EDITADO" Type="Int16" />
+          <Property Name="ALTERADO" Type="Int16" />
+          <Property Name="SALCOMISSAO" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="FERIASMES" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEINSS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEINSSOUTROEMP" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSFERIAS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSOUTROEMP" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEINSS13" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEINSS13OUTRO" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSS13" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASESALFAMILIA" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="SALFAMILIA" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEVALETRANSP" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="VALETRANSPENTR" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="VALETRANSPDESC" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEIRRF" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="IRRF" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSCAIXA" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="DEDUTIVELIRRF" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEIRRFPART" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="IRRFPART" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEIRRFFERIAS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="IRRFFERIAS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSCOMCPMF" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="DESCRICAO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="BASEFGTS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEFGTS13" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="SALARIOPAGO" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="STATUSCCUSTO" Type="Int16" />
+          <Property Name="BASEIRRF13" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="SALARIODECALCULO" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="IRRF13" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSFERIASCOMCPMF" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSCALCUSUARIO" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="BASEFGTSDIFSAL" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSDIFSAL" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSDIFSAL13" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INSSDIFSALFER" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="EXECID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RECCREATEDBY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RECCREATEDON" Type="DateTime" Precision="3" />
+          <Property Name="RECMODIFIEDBY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RECMODIFIEDON" Type="DateTime" Precision="3" />
+          <Property Name="NRODEPENDIRRF" Type="Int16" />
+          <Property Name="LIQUIDO" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="NRODEPENDSALFAMILIA" Type="Int16" />
+          <Property Name="IDDADOSRESID" Type="Int16" />
+          <NavigationProperty Name="PFUNC" Relationship="Self.FKPFPERFFCOMPL_PFUNC" FromRole="PFPERFFCOMPL" ToRole="PFUNC" />
+        </EntityType>
+        <EntityType Name="PFUNC">
+          <Key>
+            <PropertyRef Name="CODCOLIGADA" />
+            <PropertyRef Name="CHAPA" />
+          </Key>
+          <Property Name="CODCOLIGADA" Type="Int16" Nullable="false" />
+          <Property Name="CHAPA" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NROFICHAREG" Type="Int32" />
+          <Property Name="CODRECEBIMENTO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CODSITUACAO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CODTIPO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CODSECAO" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="CODFUNCAO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CODSINDICATO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="JORNADA" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="CODHORARIO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NRODEPIRRF" Type="Int16" />
+          <Property Name="NRODEPSALFAM" Type="Int16" />
+          <Property Name="DTBASE" Type="DateTime" Precision="3" />
+          <Property Name="SALARIO" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="SITUACAOFGTS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DTOPCAOFGTS" Type="DateTime" Precision="3" />
+          <Property Name="CONTAFGTS" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="SALDOFGTS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="DTSALDOFGTS" Type="DateTime" Precision="3" />
+          <Property Name="CONTRIBSINDICAL" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="APOSENTADO" Type="Int16" />
+          <Property Name="TEMMAIS65ANOS" Type="Int16" />
+          <Property Name="AJUDACUSTO" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="PERCENTADIANT" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="ARREDONDAMENTO" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="DATAADMISSAO" Type="DateTime" Precision="3" />
+          <Property Name="TIPOADMISSAO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DTTRANSFERENCIA" Type="DateTime" Precision="3" />
+          <Property Name="MOTIVOADMISSAO" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="TEMPRAZOCONTR" Type="Int16" />
+          <Property Name="FIMPRAZOCONTR" Type="DateTime" Precision="3" />
+          <Property Name="DATADEMISSAO" Type="DateTime" Precision="3" />
+          <Property Name="TIPODEMISSAO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="MOTIVODEMISSAO" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DTDESLIGAMENTO" Type="DateTime" Precision="3" />
+          <Property Name="DTULTIMOMOVIM" Type="DateTime" Precision="3" />
+          <Property Name="DTPAGTORESCISAO" Type="DateTime" Precision="3" />
+          <Property Name="CODSAQUEFGTS" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="TEMAVISOPREVIO" Type="Int16" />
+          <Property Name="DTAVISOPREVIO" Type="DateTime" Precision="3" />
+          <Property Name="NRODIASAVISO" Type="Int16" />
+          <Property Name="DTVENCFERIAS" Type="DateTime" Precision="3" />
+          <Property Name="INICPROGFERIAS1" Type="DateTime" Precision="3" />
+          <Property Name="FIMPROGFERIAS1" Type="DateTime" Precision="3" />
+          <Property Name="QUERABONO" Type="Int16" />
+          <Property Name="QUER1APARC13O" Type="Int16" />
+          <Property Name="NRODIASADIANTFER" Type="Int16" />
+          <Property Name="EVTADIANTFERIAS" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="FERIASCOLETIVAS" Type="Int16" />
+          <Property Name="NRODIASFERIAS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="NRODIASABONO" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="INICPROGFERIAS2" Type="DateTime" Precision="3" />
+          <Property Name="FIMPROGFERIAS2" Type="DateTime" Precision="3" />
+          <Property Name="SALDOFERIAS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="SALDOFERIASANT" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="SALDOFERANTAUX" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="OBSFERIAS" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="DTPAGTOFERIAS" Type="DateTime" Precision="3" />
+          <Property Name="DTAVISOFERIAS" Type="DateTime" Precision="3" />
+          <Property Name="NDIASLICREM1" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="NDIASLICREM2" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="DTINICIOLICENCA" Type="DateTime" Precision="3" />
+          <Property Name="MEDIASALMATERN" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="SITUACAORAIS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CONTAPAGAMENTO" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="MEMBROSINDICAL" Type="Int16" />
+          <Property Name="VINCULORAIS" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="USAVALETRANSP" Type="Int16" />
+          <Property Name="DIASUTEISMES" Type="Int16" />
+          <Property Name="DIASUTMEIOEXP" Type="Int16" />
+          <Property Name="DIASUTPROXMES" Type="Int16" />
+          <Property Name="DIASUTPROXMEIO" Type="Int16" />
+          <Property Name="DIASUTRESTANTES" Type="Int16" />
+          <Property Name="DIASUTRESTMEIO" Type="Int16" />
+          <Property Name="MUDOUENDERECO" Type="Int16" />
+          <Property Name="MUDOUCARTTRAB" Type="Int16" />
+          <Property Name="ANTIGACARTTRAB" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ANTIGASERIECART" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="MUDOUNOME" Type="Int16" />
+          <Property Name="ANTIGONOME" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="MUDOUPIS" Type="Int16" />
+          <Property Name="ANTIGOPIS" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="MUDOUCHAPA" Type="Int16" />
+          <Property Name="ANTIGACHAPA" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="MUDOUADMISSAO" Type="Int16" />
+          <Property Name="ANTIGADTADM" Type="DateTime" Precision="3" />
+          <Property Name="ANTIGOVINCULO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ANTIGOTIPOFUNC" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ANTIGOTIPOADM" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="MUDOUDTOPCAO" Type="Int16" />
+          <Property Name="ANTIGADTOPCAO" Type="DateTime" Precision="3" />
+          <Property Name="MUDOUSECAO" Type="Int16" />
+          <Property Name="ANTIGASECAO" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="MUDOUDTNASCIM" Type="Int16" />
+          <Property Name="ANTIGADTNASCIM" Type="DateTime" Precision="3" />
+          <Property Name="FALTAALTERFGTS" Type="Int16" />
+          <Property Name="DEDUZIRRF65" Type="Int16" />
+          <Property Name="PISPARAFGTS" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="ULTIMORECALCULODATA" Type="DateTime" Precision="3" />
+          <Property Name="ULTIMORECALCULOHORA" Type="DateTime" Precision="3" />
+          <Property Name="DESCONTAAVISOPREVIO" Type="Int16" />
+          <Property Name="CODFILIAL" Type="Int16" Nullable="false" />
+          <Property Name="NOME" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="INDINICIOHOR" Type="Int16" />
+          <Property Name="PISPASEP" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="DTCADASTROPIS" Type="DateTime" Precision="3" />
+          <Property Name="CODPESSOA" Type="Int32" Nullable="false" />
+          <Property Name="CODBANCOFGTS" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="CODBANCOPAGTO" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="CODAGENCIAPAGTO" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="CODBANCOPIS" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="RESCISAOCALCULADA" Type="Int16" />
+          <Property Name="OPBANCARIA" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="MEMBROCIPA" Type="Int16" />
+          <Property Name="USASALCOMPOSTO" Type="Int16" />
+          <Property Name="REGATUAL" Type="Int32" />
+          <Property Name="NUMVEZESDESCEMPRESTIMO" Type="Int16" />
+          <Property Name="DATAINICIODESCEMPRESTIMO" Type="DateTime" Precision="3" />
+          <Property Name="GRUPOSALARIAL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="JORNADAMENSAL" Type="Int16" />
+          <Property Name="PREVDISP" Type="DateTime" Precision="3" />
+          <Property Name="CODOCORRENCIA" Type="Int16" Nullable="false" />
+          <Property Name="CODCATEGORIA" Type="Int16" />
+          <Property Name="CLASSECONTRIB" Type="Int16" />
+          <Property Name="CODEQUIPE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ESUPERVISOR" Type="Int16" />
+          <Property Name="INTEGRCONTABIL" Type="String" MaxLength="22" FixedLength="false" Unicode="false" />
+          <Property Name="INTEGRGERENCIAL" Type="String" MaxLength="22" FixedLength="false" Unicode="false" />
+          <Property Name="USACONTROLEDESALDO" Type="Int16" />
+          <Property Name="CI" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="MUDOUCI" Type="Int16" />
+          <Property Name="ANTIGOCI" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="PERIODORESCISAO" Type="Int16" />
+          <Property Name="CODGRPQUIOSQUE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="FGTSMESANTRECOLGRFP" Type="Int16" />
+          <Property Name="CODNIVELSAL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TRABALHOUNADEMISSAO" Type="Int16" />
+          <Property Name="NRODIASFERIASJORNRED" Type="Int16" />
+          <Property Name="POSSUIALVARAMENOR16" Type="Int16" />
+          <Property Name="DATARESCISAO" Type="DateTime" Precision="3" />
+          <Property Name="SITUACAOINSS" Type="Int16" />
+          <Property Name="DTAPOSENTADORIA" Type="DateTime" Precision="3" />
+          <Property Name="CODTABELASALARIAL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TEMDEDUCAOCPMF" Type="Int16" />
+          <Property Name="NRODIASFERIASCORRIDOS" Type="Int16" />
+          <Property Name="NRODIASABONOCORRIDOS" Type="Int16" />
+          <Property Name="POSICAOABONO" Type="Int16" />
+          <Property Name="REGIMEREVEZAMENTO" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="QUERADIANTAMENTO" Type="Int16" />
+          <Property Name="DTPROXAQUISFERIAS" Type="DateTime" Precision="3" />
+          <Property Name="CODCOLFORNEC" Type="Int16" />
+          <Property Name="CODFORNECEDOR" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="ISENTOIRRF" Type="Int16" />
+          <Property Name="ANOCOMPTRANSF" Type="Int16" />
+          <Property Name="MESCOMPTRANSF" Type="Int16" />
+          <Property Name="NROPERIODOTRANSF" Type="Int16" />
+          <Property Name="TIPOAPOSENTADORIA" Type="Int16" />
+          <Property Name="REPOEVAGA" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="SALDOFGTSREAL" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="RESCISAOPRECISARECALC" Type="Int16" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BENEFPONTOS" Type="Int32" />
+          <Property Name="CONTRIBASSOC1OCORRCNPJ" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CONTRIBASSOC2OCORRCNPJ" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CONTRIBASSISTCNPJ" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CONTRIBCONFEDCNPJ" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CONTRIBASSOC1OCORRVALOR" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="CONTRIBASSOC2OCORRVALOR" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="CONTRIBASSISTVALOR" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="CONTRIBCONFEDVALOR" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="LOCALTRABCODMUNCIPIO" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="MESESHORAEXTRAS" Type="Int32" />
+          <Property Name="MESESGRATIFICACAO" Type="Int32" />
+          <Property Name="MESESDISSIDIOCOLETIVO" Type="Int32" />
+          <Property Name="INDICADORSINDICALIZADO" Type="Int16" />
+          <Property Name="DTULTIMOMOVIMPGTOEXTRAS" Type="DateTime" Precision="3" />
+          <Property Name="FIMPRAZOPRORROGCONTR" Type="DateTime" Precision="3" />
+          <Property Name="CODCOLIGADAORIGEM" Type="Int16" />
+          <Property Name="CHAPAORIGEM" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="RECCREATEDBY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RECCREATEDON" Type="DateTime" Precision="3" />
+          <Property Name="RECMODIFIEDBY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RECMODIFIEDON" Type="DateTime" Precision="3" />
+          <Property Name="NUMEROCARTAOSUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FERIASFINALIZADASPROXMES" Type="Int16" />
+          <Property Name="INDSIMPLES" Type="Int16" />
+          <Property Name="TPCONTABANCARIA" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="NRPROCJUD" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RESIDENCIAPROPRIA" Type="Int16" />
+          <Property Name="RESIDENCIARECURSOSFGTS" Type="Int16" />
+          <Property Name="TPREGIMEPREV" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="INDADMISSAO" Type="Int16" />
+          <Property Name="TIPOREINTEGRACAO" Type="Int16" />
+          <Property Name="DATAREINTEGRACAO" Type="DateTime" Precision="3" />
+          <Property Name="DATARETORNOEFETIVO" Type="DateTime" Precision="3" />
+          <Property Name="NROLEIANISTIA" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NROPROCESSOJUDICIAL" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NATUREZAESTAGIO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CODNIVELESTAGIO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="AREAATUACAOESTAGIO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NUMEROAPOLICEESTAGIO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DTPREVTERMINOESTAGIO" Type="DateTime" Precision="3" />
+          <Property Name="CODINSTITUICAOENSINOESTAGIO" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="CODAGENTEINTEGRACAOESTAGIO" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="CPFCOORDENADORESTAGIO" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="NOMECOORDENADORESTAGIO" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="CNPJEMPRESAORIGEM" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="DTADMISSAOEMPRESAORIGEM" Type="DateTime" Precision="3" />
+          <Property Name="MATRICULAEMPRESAORIGEM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CODCATEGORIAEMPRESAORIGEM" Type="Int16" />
+          <Property Name="RECEBSEGDESEMP" Type="Int16" />
+          <Property Name="TIPOREDUCAOAVISO" Type="Int16" />
+          <Property Name="FORMAREDUCAOAVISO" Type="Int16" />
+          <Property Name="MOTIVOTRABTEMP" Type="Int16" />
+          <Property Name="CHAPASUBSTRABTEMP" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="MOTIVOCANCELAMENTOAVISO" Type="Int16" />
+          <Property Name="DTCANCELAMENTOAVISO" Type="DateTime" Precision="3" />
+          <Property Name="NROATESTADOOBITO" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="NROPROCESSOTRAB" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="OBSERVACAORESCISAO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="OBSERVACAOAVISOPREVIO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CARREGOUAVISOPREVIO" Type="Int16" />
+          <Property Name="DESCRICAOSALVARIAVEL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="OBSCANCELAMENTOAVISO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="SUCESSAOVINCULO" Type="Int16" />
+          <Property Name="CNPJEMPRESAANTERIOR" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MATRICULAANTERIOR" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DTINICIOVINCULO" Type="DateTime" Precision="3" />
+          <Property Name="OBSERVACAOSUCESSAO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="TRANSFERENCIASUCESSAO" Type="Int16" />
+          <Property Name="APMISTO_DTAVTRAB" Type="DateTime" Precision="3" />
+          <Property Name="APMISTO" Type="Int16" />
+          <Property Name="FERIASDIASUTEIS" Type="Int16" />
+          <Property Name="FERIASSALDODIASUTEIS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="SITUACAOIRRF" Type="Int16" />
+          <Property Name="IDDADOSRESID" Type="Int16" />
+          <Property Name="SEQUENCIATRANSF" Type="Int16" />
+          <Property Name="CODBANCOPAGTO2" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="CODAGENCIAPAGTO2" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="CONTAPAGAMENTO2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="OPBANCARIA2" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="TPCONTABANCARIA2" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="INDPAGTOJUIZO" Type="Int16" />
+          <Property Name="CODIGORECEITA3533" Type="Int16" />
+          <Property Name="DTDESLIGAMENTOREINT" Type="DateTime" Precision="3" />
+          <Property Name="MATRICULAESOCIAL" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="MOTIVOTRANSFERENCIA" Type="Int16" />
+          <Property Name="ANOSCONTRIBINSS" Type="Int32" />
+          <Property Name="CODORGORIDES" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CODREGJURI" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="CODCCUSTO" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IDITEMCONTABIL" Type="Int32" />
+          <Property Name="IDCLASSEVALOR" Type="Int32" />
+          <Property Name="TIPOREGIMEJORNADA" Type="Int16" />
+          <Property Name="DISPENSADOAVISO" Type="Int16" />
+          <Property Name="CNPJEMPRESASUCESSORA" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="JUSTIFICATIVATRABTEMP" Type="String" MaxLength="999" FixedLength="false" Unicode="false" />
+          <Property Name="TPINCLUSAOCONTRATO" Type="Int16" />
+          <Property Name="TEMPOPARCIAL" Type="Int16" />
+          <Property Name="COTAPCD" Type="Int16" />
+          <Property Name="COLTOMADORTEMP" Type="Int16" />
+          <Property Name="CODIGOTOMADORTEMP" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DTDEMISSAOPREVISTA" Type="DateTime" Precision="3" />
+          <Property Name="JUSTIFICATIVAPRORROGTEMP" Type="String" MaxLength="999" FixedLength="false" Unicode="false" />
+          <Property Name="DTAVISOPREVIOTRAB" Type="DateTime" Precision="3" />
+          <Property Name="TEMCLAUASSEG" Type="Int16" />
+          <Property Name="CPFSUBSTRABTEMP" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="TPINSCRICAOTEMP" Type="Decimal" Precision="1" Scale="0" />
+          <Property Name="NROINSCRITEMP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TIPOAVISOPREVIO" Type="Int16" />
+          <Property Name="CODCATEGORIAESOCIAL" Type="Int16" />
+          <Property Name="CODTIPOCONTRATO" Type="Int16" />
+          <Property Name="ESOCIALFUNCAOCONF" Type="Int16" />
+          <Property Name="CODFUNCAOCONF" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MOTIVOAVISOPREVIOTRAB" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CODCATEGORIATRABCEDIDO" Type="Int16" />
+          <Property Name="CNPJCEDENTE" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="MATRICULACEDENTE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DATAADMISSAOCEDENTE" Type="DateTime" Precision="7" />
+          <Property Name="TIPOREGIMETRABALHISTACEDIDO" Type="Int16" />
+          <Property Name="TIPOREGIMEPREVIDENCIARIOCEDIDO" Type="Int16" />
+          <Property Name="INFOONUSCESSAO" Type="Int16" />
+          <Property Name="TIPOCONTRATOPRAZO" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="ESOCIALNATATIVIDADE" Type="Int16" />
+          <Property Name="MOTIVOSAIDATRANSFERENCIA" Type="Int16" />
+          <NavigationProperty Name="PFPERFF" Relationship="Self.FKPFPERFF_PFUNC" FromRole="PFUNC" ToRole="PFPERFF" />
+          <NavigationProperty Name="PFPERFFCOMPL" Relationship="Self.FKPFPERFFCOMPL_PFUNC" FromRole="PFUNC" ToRole="PFPERFFCOMPL" />
+          <NavigationProperty Name="PFUNCAO" Relationship="Self.FKPFUNC_PFUNCAO" FromRole="PFUNC" ToRole="PFUNCAO" />
+          <NavigationProperty Name="PFUNCAO1" Relationship="Self.FKPFUNC_PFUNCAOCONF" FromRole="PFUNC" ToRole="PFUNCAO" />
+          <NavigationProperty Name="PPESSOA" Relationship="Self.FKPFUNC_PPESSOA" FromRole="PFUNC" ToRole="PPESSOA" />
+        </EntityType>
+        <EntityType Name="PFUNCAO">
+          <Key>
+            <PropertyRef Name="CODCOLIGADA" />
+            <PropertyRef Name="CODIGO" />
+          </Key>
+          <Property Name="CODCOLIGADA" Type="Int16" Nullable="false" />
+          <Property Name="CODIGO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NUMPONTOS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="CBO" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="CARGO" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="INATIVA" Type="Int16" />
+          <Property Name="ATIVTRANSP" Type="Int16" />
+          <Property Name="DESCRICAO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FAIXASALARIAL" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="LIMITEFUNC" Type="Int32" />
+          <Property Name="VERBAQUADROVAGAS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="PERCQUADROVAGAS" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="DATAULTIMAREVISAO" Type="DateTime" Precision="3" />
+          <Property Name="NUMREVISAO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CBO2002" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CODTABELA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CODPERFILCAND" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BENEFPONTOS" Type="Int32" />
+          <Property Name="OBJETIVO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DESCRICAOPPP" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EXIBEORGANOGRAMA" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="CODFUNCAOCHEFIA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="JORNADAREF" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="RECCREATEDBY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RECCREATEDON" Type="DateTime" Precision="3" />
+          <Property Name="RECMODIFIEDBY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RECMODIFIEDON" Type="DateTime" Precision="3" />
+          <Property Name="CODTIPOFUNCAO" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="SIGLA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESOCIALFUNCAOCONF" Type="Int16" />
+          <NavigationProperty Name="PFUNC" Relationship="Self.FKPFUNC_PFUNCAO" FromRole="PFUNCAO" ToRole="PFUNC" />
+          <NavigationProperty Name="PFUNC1" Relationship="Self.FKPFUNC_PFUNCAOCONF" FromRole="PFUNCAO" ToRole="PFUNC" />
+        </EntityType>
+        <EntityType Name="PPESSOA">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+          </Key>
+          <Property Name="CODIGO" Type="Int32" Nullable="false" />
+          <Property Name="NOME" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="APELIDO" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DTNASCIMENTO" Type="DateTime" Precision="3" />
+          <Property Name="ESTADOCIVIL" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="SEXO" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="NACIONALIDADE" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="GRAUINSTRUCAO" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="RUA" Type="String" MaxLength="140" FixedLength="false" Unicode="false" />
+          <Property Name="NUMERO" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="COMPLEMENTO" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="BAIRRO" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="ESTADO" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CIDADE" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="CEP" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="PAIS" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="REGPROFISSIONAL" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="CPF" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="IDIMAGEM" Type="Int32" />
+          <Property Name="TELEFONE1" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="TELEFONE2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="CARTIDENTIDADE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="UFCARTIDENT" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="ORGEMISSORIDENT" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DTEMISSAOIDENT" Type="DateTime" Precision="3" />
+          <Property Name="TITULOELEITOR" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="ZONATITELEITOR" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="SECAOTITELEITOR" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="CARTEIRATRAB" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SERIECARTTRAB" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="UFCARTTRAB" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DTCARTTRAB" Type="DateTime" Precision="3" />
+          <Property Name="NIT" Type="Int16" />
+          <Property Name="CARTMOTORISTA" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="TIPOCARTHABILIT" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="DTVENCHABILIT" Type="DateTime" Precision="3" />
+          <Property Name="CERTIFRESERV" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CATEGMILITAR" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NATURALIDADE" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="ESTADONATAL" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DATACHEGADA" Type="DateTime" Precision="3" />
+          <Property Name="CARTMODELO19" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="CONJUGEBRASIL" Type="Int16" />
+          <Property Name="NATURALIZADO" Type="Int16" />
+          <Property Name="FILHOSBRASIL" Type="Int16" />
+          <Property Name="NROFILHOSBRASIL" Type="Int16" />
+          <Property Name="NROREGGERAL" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="NRODECRETO" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DTVENCIDENT" Type="DateTime" Precision="3" />
+          <Property Name="DTVENCCARTTRAB" Type="DateTime" Precision="3" />
+          <Property Name="TIPOVISTO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="INVESTTREINANT" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="CORRACA" Type="Int16" />
+          <Property Name="DEFICIENTEFISICO" Type="Int16" />
+          <Property Name="CODUSUARIO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TELEFONE3" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="FAX" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="EMPRESA" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="CODPROFISSAO" Type="Int32" />
+          <Property Name="CODOCUPACAO" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="CODMEMOOBS" Type="Int32" />
+          <Property Name="BRPDH" Type="Int16" />
+          <Property Name="NPASSAPORTE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="FUMANTE" Type="Int16" />
+          <Property Name="PAISORIGEM" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DTEMISSPASSAPORTE" Type="DateTime" Precision="3" />
+          <Property Name="DTVALPASSAPORTE" Type="DateTime" Precision="3" />
+          <Property Name="OBSPESSOA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IDIMAGEMDOC" Type="Int32" />
+          <Property Name="IDIMAGEMDOCV" Type="Int32" />
+          <Property Name="AJUSTATAMANHOFOTO" Type="Int16" />
+          <Property Name="DEFICIENTEAUDITIVO" Type="Int16" />
+          <Property Name="DEFICIENTEFALA" Type="Int16" />
+          <Property Name="DEFICIENTEVISUAL" Type="Int16" />
+          <Property Name="DEFICIENTEMENTAL" Type="Int16" />
+          <Property Name="RECURSOREALIZACAOTRAB" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="RECURSOACESSIBILIDADE" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="DATAAPROVACAOCURR" Type="DateTime" Precision="3" />
+          <Property Name="CODMUNICIPIO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LOCALIDADE" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CSM" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DTEXPCML" Type="DateTime" Precision="3" />
+          <Property Name="EXPED" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="RM" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SITMILITAR" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DTTITELEITOR" Type="DateTime" Precision="3" />
+          <Property Name="ESTELEIT" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="TIPOSANG" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IDBIOMETRIA" Type="Int32" />
+          <Property Name="ALUNO" Type="Int16" Nullable="false" />
+          <Property Name="PROFESSOR" Type="Int16" Nullable="false" />
+          <Property Name="USUARIOBIBLIOS" Type="Int16" Nullable="false" />
+          <Property Name="FUNCIONARIO" Type="Int16" Nullable="false" />
+          <Property Name="EXFUNCIONARIO" Type="Int16" Nullable="false" />
+          <Property Name="CANDIDATO" Type="Int16" Nullable="false" />
+          <Property Name="TAGSCRIPT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FIADOR_SGI" Type="Int16" />
+          <Property Name="CONJUGE_SGI" Type="Int16" />
+          <Property Name="DEFICIENTEMOBREDUZIDA" Type="Int16" />
+          <Property Name="RECCREATEDBY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RECCREATEDON" Type="DateTime" Precision="3" />
+          <Property Name="RECMODIFIEDBY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RECMODIFIEDON" Type="DateTime" Precision="3" />
+          <Property Name="DTVENCIDENTPT" Type="DateTime" Precision="3" />
+          <Property Name="CODTIPORUA" Type="Int16" />
+          <Property Name="CODTIPOBAIRRO" Type="Int16" />
+          <Property Name="IDPAIS" Type="Int16" />
+          <Property Name="CODNATURALIDADE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NUMERORIC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ORGEMISSORRIC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DTEMISSAORIC" Type="DateTime" Precision="3" />
+          <Property Name="DTEMISSAOCNH" Type="DateTime" Precision="3" />
+          <Property Name="ORGEMISSORCNH" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DATANATURALIZACAO" Type="DateTime" Precision="3" />
+          <Property Name="ORGEMISSORRNE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DTEMISSAORNE" Type="DateTime" Precision="3" />
+          <Property Name="NOMESOCIAL" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="DEFICIENTEINTELECTUAL" Type="Int16" />
+          <Property Name="DEFICIENTEOBSERVACAO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DATAOBITO" Type="DateTime" Precision="3" />
+          <Property Name="MATRICULAOBITO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FALECIDO" Type="Int32" />
+          <Property Name="PORTARIANATURALIZACAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CODCLASSIFTRABESTRANG" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UFCNH" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DATAPRIMEIRACNH" Type="DateTime" Precision="3" />
+          <Property Name="ANO1EMPREGO" Type="Int32" />
+          <Property Name="EMAILPESSOAL" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PFUNC" Relationship="Self.FKPFUNC_PPESSOA" FromRole="PPESSOA" ToRole="PFUNC" />
+        </EntityType>
+        <Association Name="FKPFPERFF_PFUNC">
+          <End Role="PFUNC" Type="Self.PFUNC" Multiplicity="1" />
+          <End Role="PFPERFF" Type="Self.PFPERFF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PFUNC">
+              <PropertyRef Name="CODCOLIGADA" />
+              <PropertyRef Name="CHAPA" />
+            </Principal>
+            <Dependent Role="PFPERFF">
+              <PropertyRef Name="CODCOLIGADA" />
+              <PropertyRef Name="CHAPA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKPFPERFFCOMPL_PFUNC">
+          <End Role="PFUNC" Type="Self.PFUNC" Multiplicity="1" />
+          <End Role="PFPERFFCOMPL" Type="Self.PFPERFFCOMPL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PFUNC">
+              <PropertyRef Name="CODCOLIGADA" />
+              <PropertyRef Name="CHAPA" />
+            </Principal>
+            <Dependent Role="PFPERFFCOMPL">
+              <PropertyRef Name="CODCOLIGADA" />
+              <PropertyRef Name="CHAPA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKPFUNC_PFUNCAO">
+          <End Role="PFUNCAO" Type="Self.PFUNCAO" Multiplicity="0..1" />
+          <End Role="PFUNC" Type="Self.PFUNC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PFUNCAO">
+              <PropertyRef Name="CODCOLIGADA" />
+              <PropertyRef Name="CODIGO" />
+            </Principal>
+            <Dependent Role="PFUNC">
+              <PropertyRef Name="CODCOLIGADA" />
+              <PropertyRef Name="CODFUNCAO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKPFUNC_PFUNCAOCONF">
+          <End Role="PFUNCAO" Type="Self.PFUNCAO" Multiplicity="0..1" />
+          <End Role="PFUNC" Type="Self.PFUNC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PFUNCAO">
+              <PropertyRef Name="CODCOLIGADA" />
+              <PropertyRef Name="CODIGO" />
+            </Principal>
+            <Dependent Role="PFUNC">
+              <PropertyRef Name="CODCOLIGADA" />
+              <PropertyRef Name="CODFUNCAOCONF" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKPFUNC_PPESSOA">
+          <End Role="PPESSOA" Type="Self.PPESSOA" Multiplicity="1" />
+          <End Role="PFUNC" Type="Self.PFUNC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PPESSOA">
+              <PropertyRef Name="CODIGO" />
+            </Principal>
+            <Dependent Role="PFUNC">
+              <PropertyRef Name="CODPESSOA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CorporeRMEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PFPERFF" EntityType="Self.PFPERFF" />
+          <EntitySet Name="PFPERFFCOMPL" EntityType="Self.PFPERFFCOMPL" />
+          <EntitySet Name="PFUNC" EntityType="Self.PFUNC" />
+          <EntitySet Name="PFUNCAO" EntityType="Self.PFUNCAO" />
+          <EntitySet Name="PPESSOA" EntityType="Self.PPESSOA" />
+          <AssociationSet Name="FKPFPERFF_PFUNC" Association="Self.FKPFPERFF_PFUNC">
+            <End Role="PFUNC" EntitySet="PFUNC" />
+            <End Role="PFPERFF" EntitySet="PFPERFF" />
+          </AssociationSet>
+          <AssociationSet Name="FKPFPERFFCOMPL_PFUNC" Association="Self.FKPFPERFFCOMPL_PFUNC">
+            <End Role="PFUNC" EntitySet="PFUNC" />
+            <End Role="PFPERFFCOMPL" EntitySet="PFPERFFCOMPL" />
+          </AssociationSet>
+          <AssociationSet Name="FKPFUNC_PFUNCAO" Association="Self.FKPFUNC_PFUNCAO">
+            <End Role="PFUNCAO" EntitySet="PFUNCAO" />
+            <End Role="PFUNC" EntitySet="PFUNC" />
+          </AssociationSet>
+          <AssociationSet Name="FKPFUNC_PFUNCAOCONF" Association="Self.FKPFUNC_PFUNCAOCONF">
+            <End Role="PFUNCAO" EntitySet="PFUNCAO" />
+            <End Role="PFUNC" EntitySet="PFUNC" />
+          </AssociationSet>
+          <AssociationSet Name="FKPFUNC_PPESSOA" Association="Self.FKPFUNC_PPESSOA">
+            <End Role="PPESSOA" EntitySet="PPESSOA" />
+            <End Role="PFUNC" EntitySet="PFUNC" />
+          </AssociationSet>
+          <FunctionImport Name="COAD_EMISSAO_CONTRACHEQUES" ReturnType="Collection(CorporeRMModel.COAD_EMISSAO_CONTRACHEQUES_Result)">
+            <Parameter Name="cpf" Mode="In" Type="String" />
+            <Parameter Name="empresa" Mode="In" Type="String" />
+            <Parameter Name="ano" Mode="In" Type="String" />
+            <Parameter Name="mes" Mode="In" Type="String" />
+            <Parameter Name="periodo" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="COAD_EMISSAO_CONTRACHEQUES_Result">
+          <Property Type="String" Name="CCH_NUM_MATRICULA" Nullable="false" MaxLength="16" />
+          <Property Type="String" Name="CCH_NOME_FUNCIONARIO" Nullable="true" MaxLength="120" />
+          <Property Type="String" Name="CCH_SETOR" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="CCH_NUM_CTPS" Nullable="true" MaxLength="16" />
+          <Property Type="String" Name="CCH_NUM_CPF" Nullable="true" MaxLength="11" />
+          <Property Type="String" Name="CCH_BAN_NOME" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="CCH_AGE_NOME" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="CCH_CTA_PGTO" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="CCH_CARGO" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="CCH_SAL_BASE" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="CCH_BASE_INSS" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="CCH_BASE_FGTS" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="CCH_BASE_IRRF" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="CCH_VLR_LIQUIDO" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="Int16" Name="CCH_MES_COMP" Nullable="false" />
+          <Property Type="Int16" Name="CCH_ANO_COMP" Nullable="false" />
+          <Property Type="Int16" Name="CCH_PERIODO" Nullable="false" />
+          <Property Type="String" Name="CCH_COD_EVENTO" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="CCH_DESC_EVENTO" Nullable="true" MaxLength="80" />
+          <Property Type="Decimal" Name="CCH_REFERENCIA" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="String" Name="CCH_PROVDESCBASE" Nullable="true" MaxLength="1" />
+          <Property Type="Decimal" Name="CCH_VLR_PROVENTO" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="CCH_VLR_DESCONTOS" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="CCH_VLR_FGTS_MES" Nullable="true" Precision="21" Scale="6" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CorporeRMModelStoreContainer" CdmEntityContainer="CorporeRMEntities">
+          <EntitySetMapping Name="PFPERFF">
+            <EntityTypeMapping TypeName="CorporeRMModel.PFPERFF">
+              <MappingFragment StoreEntitySet="PFPERFF">
+                <ScalarProperty Name="CODCOLIGADA" ColumnName="CODCOLIGADA" />
+                <ScalarProperty Name="CHAPA" ColumnName="CHAPA" />
+                <ScalarProperty Name="ANOCOMP" ColumnName="ANOCOMP" />
+                <ScalarProperty Name="MESCOMP" ColumnName="MESCOMP" />
+                <ScalarProperty Name="NROPERIODO" ColumnName="NROPERIODO" />
+                <ScalarProperty Name="MESCAIXACOMUM" ColumnName="MESCAIXACOMUM" />
+                <ScalarProperty Name="VALORESFORCADOS" ColumnName="VALORESFORCADOS" />
+                <ScalarProperty Name="MOVIMPORTADO" ColumnName="MOVIMPORTADO" />
+                <ScalarProperty Name="EDITADO" ColumnName="EDITADO" />
+                <ScalarProperty Name="ALTERADO" ColumnName="ALTERADO" />
+                <ScalarProperty Name="SALCOMISSAO" ColumnName="SALCOMISSAO" />
+                <ScalarProperty Name="FERIASMES" ColumnName="FERIASMES" />
+                <ScalarProperty Name="BASEINSS" ColumnName="BASEINSS" />
+                <ScalarProperty Name="BASEINSSOUTROEMP" ColumnName="BASEINSSOUTROEMP" />
+                <ScalarProperty Name="INSS" ColumnName="INSS" />
+                <ScalarProperty Name="INSSFERIAS" ColumnName="INSSFERIAS" />
+                <ScalarProperty Name="INSSOUTROEMP" ColumnName="INSSOUTROEMP" />
+                <ScalarProperty Name="BASEINSS13" ColumnName="BASEINSS13" />
+                <ScalarProperty Name="BASEINSS13OUTRO" ColumnName="BASEINSS13OUTRO" />
+                <ScalarProperty Name="INSS13" ColumnName="INSS13" />
+                <ScalarProperty Name="BASESALFAMILIA" ColumnName="BASESALFAMILIA" />
+                <ScalarProperty Name="SALFAMILIA" ColumnName="SALFAMILIA" />
+                <ScalarProperty Name="BASEVALETRANSP" ColumnName="BASEVALETRANSP" />
+                <ScalarProperty Name="VALETRANSPENTR" ColumnName="VALETRANSPENTR" />
+                <ScalarProperty Name="VALETRANSPDESC" ColumnName="VALETRANSPDESC" />
+                <ScalarProperty Name="BASEIRRF" ColumnName="BASEIRRF" />
+                <ScalarProperty Name="IRRF" ColumnName="IRRF" />
+                <ScalarProperty Name="INSSCAIXA" ColumnName="INSSCAIXA" />
+                <ScalarProperty Name="DEDUTIVELIRRF" ColumnName="DEDUTIVELIRRF" />
+                <ScalarProperty Name="BASEIRRFPART" ColumnName="BASEIRRFPART" />
+                <ScalarProperty Name="IRRFPART" ColumnName="IRRFPART" />
+                <ScalarProperty Name="BASEIRRFFERIAS" ColumnName="BASEIRRFFERIAS" />
+                <ScalarProperty Name="IRRFFERIAS" ColumnName="IRRFFERIAS" />
+                <ScalarProperty Name="INSSCOMCPMF" ColumnName="INSSCOMCPMF" />
+                <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+                <ScalarProperty Name="BASEFGTS" ColumnName="BASEFGTS" />
+                <ScalarProperty Name="BASEFGTS13" ColumnName="BASEFGTS13" />
+                <ScalarProperty Name="SALARIOPAGO" ColumnName="SALARIOPAGO" />
+                <ScalarProperty Name="STATUSCCUSTO" ColumnName="STATUSCCUSTO" />
+                <ScalarProperty Name="BASEIRRF13" ColumnName="BASEIRRF13" />
+                <ScalarProperty Name="SALARIODECALCULO" ColumnName="SALARIODECALCULO" />
+                <ScalarProperty Name="IRRF13" ColumnName="IRRF13" />
+                <ScalarProperty Name="INSSFERIASCOMCPMF" ColumnName="INSSFERIASCOMCPMF" />
+                <ScalarProperty Name="INSSCALCUSUARIO" ColumnName="INSSCALCUSUARIO" />
+                <ScalarProperty Name="BASEFGTSDIFSAL" ColumnName="BASEFGTSDIFSAL" />
+                <ScalarProperty Name="INSSDIFSAL" ColumnName="INSSDIFSAL" />
+                <ScalarProperty Name="INSSDIFSAL13" ColumnName="INSSDIFSAL13" />
+                <ScalarProperty Name="INSSDIFSALFER" ColumnName="INSSDIFSALFER" />
+                <ScalarProperty Name="EXECID" ColumnName="EXECID" />
+                <ScalarProperty Name="RECCREATEDBY" ColumnName="RECCREATEDBY" />
+                <ScalarProperty Name="RECCREATEDON" ColumnName="RECCREATEDON" />
+                <ScalarProperty Name="RECMODIFIEDBY" ColumnName="RECMODIFIEDBY" />
+                <ScalarProperty Name="RECMODIFIEDON" ColumnName="RECMODIFIEDON" />
+                <ScalarProperty Name="NRODEPENDIRRF" ColumnName="NRODEPENDIRRF" />
+                <ScalarProperty Name="LIQUIDO" ColumnName="LIQUIDO" />
+                <ScalarProperty Name="NRODEPENDSALFAMILIA" ColumnName="NRODEPENDSALFAMILIA" />
+                <ScalarProperty Name="IDDADOSRESID" ColumnName="IDDADOSRESID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PFPERFFCOMPL">
+            <EntityTypeMapping TypeName="CorporeRMModel.PFPERFFCOMPL">
+              <MappingFragment StoreEntitySet="PFPERFFCOMPL">
+                <ScalarProperty Name="CODCOLIGADA" ColumnName="CODCOLIGADA" />
+                <ScalarProperty Name="CHAPA" ColumnName="CHAPA" />
+                <ScalarProperty Name="ANOCOMP" ColumnName="ANOCOMP" />
+                <ScalarProperty Name="MESCOMP" ColumnName="MESCOMP" />
+                <ScalarProperty Name="NROPERIODO" ColumnName="NROPERIODO" />
+                <ScalarProperty Name="MESCAIXACOMUM" ColumnName="MESCAIXACOMUM" />
+                <ScalarProperty Name="VALORESFORCADOS" ColumnName="VALORESFORCADOS" />
+                <ScalarProperty Name="MOVIMPORTADO" ColumnName="MOVIMPORTADO" />
+                <ScalarProperty Name="EDITADO" ColumnName="EDITADO" />
+                <ScalarProperty Name="ALTERADO" ColumnName="ALTERADO" />
+                <ScalarProperty Name="SALCOMISSAO" ColumnName="SALCOMISSAO" />
+                <ScalarProperty Name="FERIASMES" ColumnName="FERIASMES" />
+                <ScalarProperty Name="BASEINSS" ColumnName="BASEINSS" />
+                <ScalarProperty Name="BASEINSSOUTROEMP" ColumnName="BASEINSSOUTROEMP" />
+                <ScalarProperty Name="INSS" ColumnName="INSS" />
+                <ScalarProperty Name="INSSFERIAS" ColumnName="INSSFERIAS" />
+                <ScalarProperty Name="INSSOUTROEMP" ColumnName="INSSOUTROEMP" />
+                <ScalarProperty Name="BASEINSS13" ColumnName="BASEINSS13" />
+                <ScalarProperty Name="BASEINSS13OUTRO" ColumnName="BASEINSS13OUTRO" />
+                <ScalarProperty Name="INSS13" ColumnName="INSS13" />
+                <ScalarProperty Name="BASESALFAMILIA" ColumnName="BASESALFAMILIA" />
+                <ScalarProperty Name="SALFAMILIA" ColumnName="SALFAMILIA" />
+                <ScalarProperty Name="BASEVALETRANSP" ColumnName="BASEVALETRANSP" />
+                <ScalarProperty Name="VALETRANSPENTR" ColumnName="VALETRANSPENTR" />
+                <ScalarProperty Name="VALETRANSPDESC" ColumnName="VALETRANSPDESC" />
+                <ScalarProperty Name="BASEIRRF" ColumnName="BASEIRRF" />
+                <ScalarProperty Name="IRRF" ColumnName="IRRF" />
+                <ScalarProperty Name="INSSCAIXA" ColumnName="INSSCAIXA" />
+                <ScalarProperty Name="DEDUTIVELIRRF" ColumnName="DEDUTIVELIRRF" />
+                <ScalarProperty Name="BASEIRRFPART" ColumnName="BASEIRRFPART" />
+                <ScalarProperty Name="IRRFPART" ColumnName="IRRFPART" />
+                <ScalarProperty Name="BASEIRRFFERIAS" ColumnName="BASEIRRFFERIAS" />
+                <ScalarProperty Name="IRRFFERIAS" ColumnName="IRRFFERIAS" />
+                <ScalarProperty Name="INSSCOMCPMF" ColumnName="INSSCOMCPMF" />
+                <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+                <ScalarProperty Name="BASEFGTS" ColumnName="BASEFGTS" />
+                <ScalarProperty Name="BASEFGTS13" ColumnName="BASEFGTS13" />
+                <ScalarProperty Name="SALARIOPAGO" ColumnName="SALARIOPAGO" />
+                <ScalarProperty Name="STATUSCCUSTO" ColumnName="STATUSCCUSTO" />
+                <ScalarProperty Name="BASEIRRF13" ColumnName="BASEIRRF13" />
+                <ScalarProperty Name="SALARIODECALCULO" ColumnName="SALARIODECALCULO" />
+                <ScalarProperty Name="IRRF13" ColumnName="IRRF13" />
+                <ScalarProperty Name="INSSFERIASCOMCPMF" ColumnName="INSSFERIASCOMCPMF" />
+                <ScalarProperty Name="INSSCALCUSUARIO" ColumnName="INSSCALCUSUARIO" />
+                <ScalarProperty Name="BASEFGTSDIFSAL" ColumnName="BASEFGTSDIFSAL" />
+                <ScalarProperty Name="INSSDIFSAL" ColumnName="INSSDIFSAL" />
+                <ScalarProperty Name="INSSDIFSAL13" ColumnName="INSSDIFSAL13" />
+                <ScalarProperty Name="INSSDIFSALFER" ColumnName="INSSDIFSALFER" />
+                <ScalarProperty Name="EXECID" ColumnName="EXECID" />
+                <ScalarProperty Name="RECCREATEDBY" ColumnName="RECCREATEDBY" />
+                <ScalarProperty Name="RECCREATEDON" ColumnName="RECCREATEDON" />
+                <ScalarProperty Name="RECMODIFIEDBY" ColumnName="RECMODIFIEDBY" />
+                <ScalarProperty Name="RECMODIFIEDON" ColumnName="RECMODIFIEDON" />
+                <ScalarProperty Name="NRODEPENDIRRF" ColumnName="NRODEPENDIRRF" />
+                <ScalarProperty Name="LIQUIDO" ColumnName="LIQUIDO" />
+                <ScalarProperty Name="NRODEPENDSALFAMILIA" ColumnName="NRODEPENDSALFAMILIA" />
+                <ScalarProperty Name="IDDADOSRESID" ColumnName="IDDADOSRESID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PFUNC">
+            <EntityTypeMapping TypeName="CorporeRMModel.PFUNC">
+              <MappingFragment StoreEntitySet="PFUNC">
+                <ScalarProperty Name="CODCOLIGADA" ColumnName="CODCOLIGADA" />
+                <ScalarProperty Name="CHAPA" ColumnName="CHAPA" />
+                <ScalarProperty Name="NROFICHAREG" ColumnName="NROFICHAREG" />
+                <ScalarProperty Name="CODRECEBIMENTO" ColumnName="CODRECEBIMENTO" />
+                <ScalarProperty Name="CODSITUACAO" ColumnName="CODSITUACAO" />
+                <ScalarProperty Name="CODTIPO" ColumnName="CODTIPO" />
+                <ScalarProperty Name="CODSECAO" ColumnName="CODSECAO" />
+                <ScalarProperty Name="CODFUNCAO" ColumnName="CODFUNCAO" />
+                <ScalarProperty Name="CODSINDICATO" ColumnName="CODSINDICATO" />
+                <ScalarProperty Name="JORNADA" ColumnName="JORNADA" />
+                <ScalarProperty Name="CODHORARIO" ColumnName="CODHORARIO" />
+                <ScalarProperty Name="NRODEPIRRF" ColumnName="NRODEPIRRF" />
+                <ScalarProperty Name="NRODEPSALFAM" ColumnName="NRODEPSALFAM" />
+                <ScalarProperty Name="DTBASE" ColumnName="DTBASE" />
+                <ScalarProperty Name="SALARIO" ColumnName="SALARIO" />
+                <ScalarProperty Name="SITUACAOFGTS" ColumnName="SITUACAOFGTS" />
+                <ScalarProperty Name="DTOPCAOFGTS" ColumnName="DTOPCAOFGTS" />
+                <ScalarProperty Name="CONTAFGTS" ColumnName="CONTAFGTS" />
+                <ScalarProperty Name="SALDOFGTS" ColumnName="SALDOFGTS" />
+                <ScalarProperty Name="DTSALDOFGTS" ColumnName="DTSALDOFGTS" />
+                <ScalarProperty Name="CONTRIBSINDICAL" ColumnName="CONTRIBSINDICAL" />
+                <ScalarProperty Name="APOSENTADO" ColumnName="APOSENTADO" />
+                <ScalarProperty Name="TEMMAIS65ANOS" ColumnName="TEMMAIS65ANOS" />
+                <ScalarProperty Name="AJUDACUSTO" ColumnName="AJUDACUSTO" />
+                <ScalarProperty Name="PERCENTADIANT" ColumnName="PERCENTADIANT" />
+                <ScalarProperty Name="ARREDONDAMENTO" ColumnName="ARREDONDAMENTO" />
+                <ScalarProperty Name="DATAADMISSAO" ColumnName="DATAADMISSAO" />
+                <ScalarProperty Name="TIPOADMISSAO" ColumnName="TIPOADMISSAO" />
+                <ScalarProperty Name="DTTRANSFERENCIA" ColumnName="DTTRANSFERENCIA" />
+                <ScalarProperty Name="MOTIVOADMISSAO" ColumnName="MOTIVOADMISSAO" />
+                <ScalarProperty Name="TEMPRAZOCONTR" ColumnName="TEMPRAZOCONTR" />
+                <ScalarProperty Name="FIMPRAZOCONTR" ColumnName="FIMPRAZOCONTR" />
+                <ScalarProperty Name="DATADEMISSAO" ColumnName="DATADEMISSAO" />
+                <ScalarProperty Name="TIPODEMISSAO" ColumnName="TIPODEMISSAO" />
+                <ScalarProperty Name="MOTIVODEMISSAO" ColumnName="MOTIVODEMISSAO" />
+                <ScalarProperty Name="DTDESLIGAMENTO" ColumnName="DTDESLIGAMENTO" />
+                <ScalarProperty Name="DTULTIMOMOVIM" ColumnName="DTULTIMOMOVIM" />
+                <ScalarProperty Name="DTPAGTORESCISAO" ColumnName="DTPAGTORESCISAO" />
+                <ScalarProperty Name="CODSAQUEFGTS" ColumnName="CODSAQUEFGTS" />
+                <ScalarProperty Name="TEMAVISOPREVIO" ColumnName="TEMAVISOPREVIO" />
+                <ScalarProperty Name="DTAVISOPREVIO" ColumnName="DTAVISOPREVIO" />
+                <ScalarProperty Name="NRODIASAVISO" ColumnName="NRODIASAVISO" />
+                <ScalarProperty Name="DTVENCFERIAS" ColumnName="DTVENCFERIAS" />
+                <ScalarProperty Name="INICPROGFERIAS1" ColumnName="INICPROGFERIAS1" />
+                <ScalarProperty Name="FIMPROGFERIAS1" ColumnName="FIMPROGFERIAS1" />
+                <ScalarProperty Name="QUERABONO" ColumnName="QUERABONO" />
+                <ScalarProperty Name="QUER1APARC13O" ColumnName="QUER1APARC13O" />
+                <ScalarProperty Name="NRODIASADIANTFER" ColumnName="NRODIASADIANTFER" />
+                <ScalarProperty Name="EVTADIANTFERIAS" ColumnName="EVTADIANTFERIAS" />
+                <ScalarProperty Name="FERIASCOLETIVAS" ColumnName="FERIASCOLETIVAS" />
+                <ScalarProperty Name="NRODIASFERIAS" ColumnName="NRODIASFERIAS" />
+                <ScalarProperty Name="NRODIASABONO" ColumnName="NRODIASABONO" />
+                <ScalarProperty Name="INICPROGFERIAS2" ColumnName="INICPROGFERIAS2" />
+                <ScalarProperty Name="FIMPROGFERIAS2" ColumnName="FIMPROGFERIAS2" />
+                <ScalarProperty Name="SALDOFERIAS" ColumnName="SALDOFERIAS" />
+                <ScalarProperty Name="SALDOFERIASANT" ColumnName="SALDOFERIASANT" />
+                <ScalarProperty Name="SALDOFERANTAUX" ColumnName="SALDOFERANTAUX" />
+                <ScalarProperty Name="OBSFERIAS" ColumnName="OBSFERIAS" />
+                <ScalarProperty Name="DTPAGTOFERIAS" ColumnName="DTPAGTOFERIAS" />
+                <ScalarProperty Name="DTAVISOFERIAS" ColumnName="DTAVISOFERIAS" />
+                <ScalarProperty Name="NDIASLICREM1" ColumnName="NDIASLICREM1" />
+                <ScalarProperty Name="NDIASLICREM2" ColumnName="NDIASLICREM2" />
+                <ScalarProperty Name="DTINICIOLICENCA" ColumnName="DTINICIOLICENCA" />
+                <ScalarProperty Name="MEDIASALMATERN" ColumnName="MEDIASALMATERN" />
+                <ScalarProperty Name="SITUACAORAIS" ColumnName="SITUACAORAIS" />
+                <ScalarProperty Name="CONTAPAGAMENTO" ColumnName="CONTAPAGAMENTO" />
+                <ScalarProperty Name="MEMBROSINDICAL" ColumnName="MEMBROSINDICAL" />
+                <ScalarProperty Name="VINCULORAIS" ColumnName="VINCULORAIS" />
+                <ScalarProperty Name="USAVALETRANSP" ColumnName="USAVALETRANSP" />
+                <ScalarProperty Name="DIASUTEISMES" ColumnName="DIASUTEISMES" />
+                <ScalarProperty Name="DIASUTMEIOEXP" ColumnName="DIASUTMEIOEXP" />
+                <ScalarProperty Name="DIASUTPROXMES" ColumnName="DIASUTPROXMES" />
+                <ScalarProperty Name="DIASUTPROXMEIO" ColumnName="DIASUTPROXMEIO" />
+                <ScalarProperty Name="DIASUTRESTANTES" ColumnName="DIASUTRESTANTES" />
+                <ScalarProperty Name="DIASUTRESTMEIO" ColumnName="DIASUTRESTMEIO" />
+                <ScalarProperty Name="MUDOUENDERECO" ColumnName="MUDOUENDERECO" />
+                <ScalarProperty Name="MUDOUCARTTRAB" ColumnName="MUDOUCARTTRAB" />
+                <ScalarProperty Name="ANTIGACARTTRAB" ColumnName="ANTIGACARTTRAB" />
+                <ScalarProperty Name="ANTIGASERIECART" ColumnName="ANTIGASERIECART" />
+                <ScalarProperty Name="MUDOUNOME" ColumnName="MUDOUNOME" />
+                <ScalarProperty Name="ANTIGONOME" ColumnName="ANTIGONOME" />
+                <ScalarProperty Name="MUDOUPIS" ColumnName="MUDOUPIS" />
+                <ScalarProperty Name="ANTIGOPIS" ColumnName="ANTIGOPIS" />
+                <ScalarProperty Name="MUDOUCHAPA" ColumnName="MUDOUCHAPA" />
+                <ScalarProperty Name="ANTIGACHAPA" ColumnName="ANTIGACHAPA" />
+                <ScalarProperty Name="MUDOUADMISSAO" ColumnName="MUDOUADMISSAO" />
+                <ScalarProperty Name="ANTIGADTADM" ColumnName="ANTIGADTADM" />
+                <ScalarProperty Name="ANTIGOVINCULO" ColumnName="ANTIGOVINCULO" />
+                <ScalarProperty Name="ANTIGOTIPOFUNC" ColumnName="ANTIGOTIPOFUNC" />
+                <ScalarProperty Name="ANTIGOTIPOADM" ColumnName="ANTIGOTIPOADM" />
+                <ScalarProperty Name="MUDOUDTOPCAO" ColumnName="MUDOUDTOPCAO" />
+                <ScalarProperty Name="ANTIGADTOPCAO" ColumnName="ANTIGADTOPCAO" />
+                <ScalarProperty Name="MUDOUSECAO" ColumnName="MUDOUSECAO" />
+                <ScalarProperty Name="ANTIGASECAO" ColumnName="ANTIGASECAO" />
+                <ScalarProperty Name="MUDOUDTNASCIM" ColumnName="MUDOUDTNASCIM" />
+                <ScalarProperty Name="ANTIGADTNASCIM" ColumnName="ANTIGADTNASCIM" />
+                <ScalarProperty Name="FALTAALTERFGTS" ColumnName="FALTAALTERFGTS" />
+                <ScalarProperty Name="DEDUZIRRF65" ColumnName="DEDUZIRRF65" />
+                <ScalarProperty Name="PISPARAFGTS" ColumnName="PISPARAFGTS" />
+                <ScalarProperty Name="ULTIMORECALCULODATA" ColumnName="ULTIMORECALCULODATA" />
+                <ScalarProperty Name="ULTIMORECALCULOHORA" ColumnName="ULTIMORECALCULOHORA" />
+                <ScalarProperty Name="DESCONTAAVISOPREVIO" ColumnName="DESCONTAAVISOPREVIO" />
+                <ScalarProperty Name="CODFILIAL" ColumnName="CODFILIAL" />
+                <ScalarProperty Name="NOME" ColumnName="NOME" />
+                <ScalarProperty Name="INDINICIOHOR" ColumnName="INDINICIOHOR" />
+                <ScalarProperty Name="PISPASEP" ColumnName="PISPASEP" />
+                <ScalarProperty Name="DTCADASTROPIS" ColumnName="DTCADASTROPIS" />
+                <ScalarProperty Name="CODPESSOA" ColumnName="CODPESSOA" />
+                <ScalarProperty Name="CODBANCOFGTS" ColumnName="CODBANCOFGTS" />
+                <ScalarProperty Name="CODBANCOPAGTO" ColumnName="CODBANCOPAGTO" />
+                <ScalarProperty Name="CODAGENCIAPAGTO" ColumnName="CODAGENCIAPAGTO" />
+                <ScalarProperty Name="CODBANCOPIS" ColumnName="CODBANCOPIS" />
+                <ScalarProperty Name="RESCISAOCALCULADA" ColumnName="RESCISAOCALCULADA" />
+                <ScalarProperty Name="OPBANCARIA" ColumnName="OPBANCARIA" />
+                <ScalarProperty Name="MEMBROCIPA" ColumnName="MEMBROCIPA" />
+                <ScalarProperty Name="USASALCOMPOSTO" ColumnName="USASALCOMPOSTO" />
+                <ScalarProperty Name="REGATUAL" ColumnName="REGATUAL" />
+                <ScalarProperty Name="NUMVEZESDESCEMPRESTIMO" ColumnName="NUMVEZESDESCEMPRESTIMO" />
+                <ScalarProperty Name="DATAINICIODESCEMPRESTIMO" ColumnName="DATAINICIODESCEMPRESTIMO" />
+                <ScalarProperty Name="GRUPOSALARIAL" ColumnName="GRUPOSALARIAL" />
+                <ScalarProperty Name="JORNADAMENSAL" ColumnName="JORNADAMENSAL" />
+                <ScalarProperty Name="PREVDISP" ColumnName="PREVDISP" />
+                <ScalarProperty Name="CODOCORRENCIA" ColumnName="CODOCORRENCIA" />
+                <ScalarProperty Name="CODCATEGORIA" ColumnName="CODCATEGORIA" />
+                <ScalarProperty Name="CLASSECONTRIB" ColumnName="CLASSECONTRIB" />
+                <ScalarProperty Name="CODEQUIPE" ColumnName="CODEQUIPE" />
+                <ScalarProperty Name="ESUPERVISOR" ColumnName="ESUPERVISOR" />
+                <ScalarProperty Name="INTEGRCONTABIL" ColumnName="INTEGRCONTABIL" />
+                <ScalarProperty Name="INTEGRGERENCIAL" ColumnName="INTEGRGERENCIAL" />
+                <ScalarProperty Name="USACONTROLEDESALDO" ColumnName="USACONTROLEDESALDO" />
+                <ScalarProperty Name="CI" ColumnName="CI" />
+                <ScalarProperty Name="MUDOUCI" ColumnName="MUDOUCI" />
+                <ScalarProperty Name="ANTIGOCI" ColumnName="ANTIGOCI" />
+                <ScalarProperty Name="PERIODORESCISAO" ColumnName="PERIODORESCISAO" />
+                <ScalarProperty Name="CODGRPQUIOSQUE" ColumnName="CODGRPQUIOSQUE" />
+                <ScalarProperty Name="FGTSMESANTRECOLGRFP" ColumnName="FGTSMESANTRECOLGRFP" />
+                <ScalarProperty Name="CODNIVELSAL" ColumnName="CODNIVELSAL" />
+                <ScalarProperty Name="TRABALHOUNADEMISSAO" ColumnName="TRABALHOUNADEMISSAO" />
+                <ScalarProperty Name="NRODIASFERIASJORNRED" ColumnName="NRODIASFERIASJORNRED" />
+                <ScalarProperty Name="POSSUIALVARAMENOR16" ColumnName="POSSUIALVARAMENOR16" />
+                <ScalarProperty Name="DATARESCISAO" ColumnName="DATARESCISAO" />
+                <ScalarProperty Name="SITUACAOINSS" ColumnName="SITUACAOINSS" />
+                <ScalarProperty Name="DTAPOSENTADORIA" ColumnName="DTAPOSENTADORIA" />
+                <ScalarProperty Name="CODTABELASALARIAL" ColumnName="CODTABELASALARIAL" />
+                <ScalarProperty Name="TEMDEDUCAOCPMF" ColumnName="TEMDEDUCAOCPMF" />
+                <ScalarProperty Name="NRODIASFERIASCORRIDOS" ColumnName="NRODIASFERIASCORRIDOS" />
+                <ScalarProperty Name="NRODIASABONOCORRIDOS" ColumnName="NRODIASABONOCORRIDOS" />
+                <ScalarProperty Name="POSICAOABONO" ColumnName="POSICAOABONO" />
+                <ScalarProperty Name="REGIMEREVEZAMENTO" ColumnName="REGIMEREVEZAMENTO" />
+                <ScalarProperty Name="QUERADIANTAMENTO" ColumnName="QUERADIANTAMENTO" />
+                <ScalarProperty Name="DTPROXAQUISFERIAS" ColumnName="DTPROXAQUISFERIAS" />
+                <ScalarProperty Name="CODCOLFORNEC" ColumnName="CODCOLFORNEC" />
+                <ScalarProperty Name="CODFORNECEDOR" ColumnName="CODFORNECEDOR" />
+                <ScalarProperty Name="ISENTOIRRF" ColumnName="ISENTOIRRF" />
+                <ScalarProperty Name="ANOCOMPTRANSF" ColumnName="ANOCOMPTRANSF" />
+                <ScalarProperty Name="MESCOMPTRANSF" ColumnName="MESCOMPTRANSF" />
+                <ScalarProperty Name="NROPERIODOTRANSF" ColumnName="NROPERIODOTRANSF" />
+                <ScalarProperty Name="TIPOAPOSENTADORIA" ColumnName="TIPOAPOSENTADORIA" />
+                <ScalarProperty Name="REPOEVAGA" ColumnName="REPOEVAGA" />
+                <ScalarProperty Name="SALDOFGTSREAL" ColumnName="SALDOFGTSREAL" />
+                <ScalarProperty Name="RESCISAOPRECISARECALC" ColumnName="RESCISAOPRECISARECALC" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BENEFPONTOS" ColumnName="BENEFPONTOS" />
+                <ScalarProperty Name="CONTRIBASSOC1OCORRCNPJ" ColumnName="CONTRIBASSOC1OCORRCNPJ" />
+                <ScalarProperty Name="CONTRIBASSOC2OCORRCNPJ" ColumnName="CONTRIBASSOC2OCORRCNPJ" />
+                <ScalarProperty Name="CONTRIBASSISTCNPJ" ColumnName="CONTRIBASSISTCNPJ" />
+                <ScalarProperty Name="CONTRIBCONFEDCNPJ" ColumnName="CONTRIBCONFEDCNPJ" />
+                <ScalarProperty Name="CONTRIBASSOC1OCORRVALOR" ColumnName="CONTRIBASSOC1OCORRVALOR" />
+                <ScalarProperty Name="CONTRIBASSOC2OCORRVALOR" ColumnName="CONTRIBASSOC2OCORRVALOR" />
+                <ScalarProperty Name="CONTRIBASSISTVALOR" ColumnName="CONTRIBASSISTVALOR" />
+                <ScalarProperty Name="CONTRIBCONFEDVALOR" ColumnName="CONTRIBCONFEDVALOR" />
+                <ScalarProperty Name="LOCALTRABCODMUNCIPIO" ColumnName="LOCALTRABCODMUNCIPIO" />
+                <ScalarProperty Name="MESESHORAEXTRAS" ColumnName="MESESHORAEXTRAS" />
+                <ScalarProperty Name="MESESGRATIFICACAO" ColumnName="MESESGRATIFICACAO" />
+                <ScalarProperty Name="MESESDISSIDIOCOLETIVO" ColumnName="MESESDISSIDIOCOLETIVO" />
+                <ScalarProperty Name="INDICADORSINDICALIZADO" ColumnName="INDICADORSINDICALIZADO" />
+                <ScalarProperty Name="DTULTIMOMOVIMPGTOEXTRAS" ColumnName="DTULTIMOMOVIMPGTOEXTRAS" />
+                <ScalarProperty Name="FIMPRAZOPRORROGCONTR" ColumnName="FIMPRAZOPRORROGCONTR" />
+                <ScalarProperty Name="CODCOLIGADAORIGEM" ColumnName="CODCOLIGADAORIGEM" />
+                <ScalarProperty Name="CHAPAORIGEM" ColumnName="CHAPAORIGEM" />
+                <ScalarProperty Name="RECCREATEDBY" ColumnName="RECCREATEDBY" />
+                <ScalarProperty Name="RECCREATEDON" ColumnName="RECCREATEDON" />
+                <ScalarProperty Name="RECMODIFIEDBY" ColumnName="RECMODIFIEDBY" />
+                <ScalarProperty Name="RECMODIFIEDON" ColumnName="RECMODIFIEDON" />
+                <ScalarProperty Name="NUMEROCARTAOSUS" ColumnName="NUMEROCARTAOSUS" />
+                <ScalarProperty Name="FERIASFINALIZADASPROXMES" ColumnName="FERIASFINALIZADASPROXMES" />
+                <ScalarProperty Name="INDSIMPLES" ColumnName="INDSIMPLES" />
+                <ScalarProperty Name="TPCONTABANCARIA" ColumnName="TPCONTABANCARIA" />
+                <ScalarProperty Name="NRPROCJUD" ColumnName="NRPROCJUD" />
+                <ScalarProperty Name="RESIDENCIAPROPRIA" ColumnName="RESIDENCIAPROPRIA" />
+                <ScalarProperty Name="RESIDENCIARECURSOSFGTS" ColumnName="RESIDENCIARECURSOSFGTS" />
+                <ScalarProperty Name="TPREGIMEPREV" ColumnName="TPREGIMEPREV" />
+                <ScalarProperty Name="INDADMISSAO" ColumnName="INDADMISSAO" />
+                <ScalarProperty Name="TIPOREINTEGRACAO" ColumnName="TIPOREINTEGRACAO" />
+                <ScalarProperty Name="DATAREINTEGRACAO" ColumnName="DATAREINTEGRACAO" />
+                <ScalarProperty Name="DATARETORNOEFETIVO" ColumnName="DATARETORNOEFETIVO" />
+                <ScalarProperty Name="NROLEIANISTIA" ColumnName="NROLEIANISTIA" />
+                <ScalarProperty Name="NROPROCESSOJUDICIAL" ColumnName="NROPROCESSOJUDICIAL" />
+                <ScalarProperty Name="NATUREZAESTAGIO" ColumnName="NATUREZAESTAGIO" />
+                <ScalarProperty Name="CODNIVELESTAGIO" ColumnName="CODNIVELESTAGIO" />
+                <ScalarProperty Name="AREAATUACAOESTAGIO" ColumnName="AREAATUACAOESTAGIO" />
+                <ScalarProperty Name="NUMEROAPOLICEESTAGIO" ColumnName="NUMEROAPOLICEESTAGIO" />
+                <ScalarProperty Name="DTPREVTERMINOESTAGIO" ColumnName="DTPREVTERMINOESTAGIO" />
+                <ScalarProperty Name="CODINSTITUICAOENSINOESTAGIO" ColumnName="CODINSTITUICAOENSINOESTAGIO" />
+                <ScalarProperty Name="CODAGENTEINTEGRACAOESTAGIO" ColumnName="CODAGENTEINTEGRACAOESTAGIO" />
+                <ScalarProperty Name="CPFCOORDENADORESTAGIO" ColumnName="CPFCOORDENADORESTAGIO" />
+                <ScalarProperty Name="NOMECOORDENADORESTAGIO" ColumnName="NOMECOORDENADORESTAGIO" />
+                <ScalarProperty Name="CNPJEMPRESAORIGEM" ColumnName="CNPJEMPRESAORIGEM" />
+                <ScalarProperty Name="DTADMISSAOEMPRESAORIGEM" ColumnName="DTADMISSAOEMPRESAORIGEM" />
+                <ScalarProperty Name="MATRICULAEMPRESAORIGEM" ColumnName="MATRICULAEMPRESAORIGEM" />
+                <ScalarProperty Name="CODCATEGORIAEMPRESAORIGEM" ColumnName="CODCATEGORIAEMPRESAORIGEM" />
+                <ScalarProperty Name="RECEBSEGDESEMP" ColumnName="RECEBSEGDESEMP" />
+                <ScalarProperty Name="TIPOREDUCAOAVISO" ColumnName="TIPOREDUCAOAVISO" />
+                <ScalarProperty Name="FORMAREDUCAOAVISO" ColumnName="FORMAREDUCAOAVISO" />
+                <ScalarProperty Name="MOTIVOTRABTEMP" ColumnName="MOTIVOTRABTEMP" />
+                <ScalarProperty Name="CHAPASUBSTRABTEMP" ColumnName="CHAPASUBSTRABTEMP" />
+                <ScalarProperty Name="MOTIVOCANCELAMENTOAVISO" ColumnName="MOTIVOCANCELAMENTOAVISO" />
+                <ScalarProperty Name="DTCANCELAMENTOAVISO" ColumnName="DTCANCELAMENTOAVISO" />
+                <ScalarProperty Name="NROATESTADOOBITO" ColumnName="NROATESTADOOBITO" />
+                <ScalarProperty Name="NROPROCESSOTRAB" ColumnName="NROPROCESSOTRAB" />
+                <ScalarProperty Name="OBSERVACAORESCISAO" ColumnName="OBSERVACAORESCISAO" />
+                <ScalarProperty Name="OBSERVACAOAVISOPREVIO" ColumnName="OBSERVACAOAVISOPREVIO" />
+                <ScalarProperty Name="CARREGOUAVISOPREVIO" ColumnName="CARREGOUAVISOPREVIO" />
+                <ScalarProperty Name="DESCRICAOSALVARIAVEL" ColumnName="DESCRICAOSALVARIAVEL" />
+                <ScalarProperty Name="OBSCANCELAMENTOAVISO" ColumnName="OBSCANCELAMENTOAVISO" />
+                <ScalarProperty Name="SUCESSAOVINCULO" ColumnName="SUCESSAOVINCULO" />
+                <ScalarProperty Name="CNPJEMPRESAANTERIOR" ColumnName="CNPJEMPRESAANTERIOR" />
+                <ScalarProperty Name="MATRICULAANTERIOR" ColumnName="MATRICULAANTERIOR" />
+                <ScalarProperty Name="DTINICIOVINCULO" ColumnName="DTINICIOVINCULO" />
+                <ScalarProperty Name="OBSERVACAOSUCESSAO" ColumnName="OBSERVACAOSUCESSAO" />
+                <ScalarProperty Name="TRANSFERENCIASUCESSAO" ColumnName="TRANSFERENCIASUCESSAO" />
+                <ScalarProperty Name="APMISTO_DTAVTRAB" ColumnName="APMISTO_DTAVTRAB" />
+                <ScalarProperty Name="APMISTO" ColumnName="APMISTO" />
+                <ScalarProperty Name="FERIASDIASUTEIS" ColumnName="FERIASDIASUTEIS" />
+                <ScalarProperty Name="FERIASSALDODIASUTEIS" ColumnName="FERIASSALDODIASUTEIS" />
+                <ScalarProperty Name="SITUACAOIRRF" ColumnName="SITUACAOIRRF" />
+                <ScalarProperty Name="IDDADOSRESID" ColumnName="IDDADOSRESID" />
+                <ScalarProperty Name="SEQUENCIATRANSF" ColumnName="SEQUENCIATRANSF" />
+                <ScalarProperty Name="CODBANCOPAGTO2" ColumnName="CODBANCOPAGTO2" />
+                <ScalarProperty Name="CODAGENCIAPAGTO2" ColumnName="CODAGENCIAPAGTO2" />
+                <ScalarProperty Name="CONTAPAGAMENTO2" ColumnName="CONTAPAGAMENTO2" />
+                <ScalarProperty Name="OPBANCARIA2" ColumnName="OPBANCARIA2" />
+                <ScalarProperty Name="TPCONTABANCARIA2" ColumnName="TPCONTABANCARIA2" />
+                <ScalarProperty Name="INDPAGTOJUIZO" ColumnName="INDPAGTOJUIZO" />
+                <ScalarProperty Name="CODIGORECEITA3533" ColumnName="CODIGORECEITA3533" />
+                <ScalarProperty Name="DTDESLIGAMENTOREINT" ColumnName="DTDESLIGAMENTOREINT" />
+                <ScalarProperty Name="MATRICULAESOCIAL" ColumnName="MATRICULAESOCIAL" />
+                <ScalarProperty Name="MOTIVOTRANSFERENCIA" ColumnName="MOTIVOTRANSFERENCIA" />
+                <ScalarProperty Name="ANOSCONTRIBINSS" ColumnName="ANOSCONTRIBINSS" />
+                <ScalarProperty Name="CODORGORIDES" ColumnName="CODORGORIDES" />
+                <ScalarProperty Name="CODREGJURI" ColumnName="CODREGJURI" />
+                <ScalarProperty Name="CODCCUSTO" ColumnName="CODCCUSTO" />
+                <ScalarProperty Name="IDITEMCONTABIL" ColumnName="IDITEMCONTABIL" />
+                <ScalarProperty Name="IDCLASSEVALOR" ColumnName="IDCLASSEVALOR" />
+                <ScalarProperty Name="TIPOREGIMEJORNADA" ColumnName="TIPOREGIMEJORNADA" />
+                <ScalarProperty Name="DISPENSADOAVISO" ColumnName="DISPENSADOAVISO" />
+                <ScalarProperty Name="CNPJEMPRESASUCESSORA" ColumnName="CNPJEMPRESASUCESSORA" />
+                <ScalarProperty Name="JUSTIFICATIVATRABTEMP" ColumnName="JUSTIFICATIVATRABTEMP" />
+                <ScalarProperty Name="TPINCLUSAOCONTRATO" ColumnName="TPINCLUSAOCONTRATO" />
+                <ScalarProperty Name="TEMPOPARCIAL" ColumnName="TEMPOPARCIAL" />
+                <ScalarProperty Name="COTAPCD" ColumnName="COTAPCD" />
+                <ScalarProperty Name="COLTOMADORTEMP" ColumnName="COLTOMADORTEMP" />
+                <ScalarProperty Name="CODIGOTOMADORTEMP" ColumnName="CODIGOTOMADORTEMP" />
+                <ScalarProperty Name="DTDEMISSAOPREVISTA" ColumnName="DTDEMISSAOPREVISTA" />
+                <ScalarProperty Name="JUSTIFICATIVAPRORROGTEMP" ColumnName="JUSTIFICATIVAPRORROGTEMP" />
+                <ScalarProperty Name="DTAVISOPREVIOTRAB" ColumnName="DTAVISOPREVIOTRAB" />
+                <ScalarProperty Name="TEMCLAUASSEG" ColumnName="TEMCLAUASSEG" />
+                <ScalarProperty Name="CPFSUBSTRABTEMP" ColumnName="CPFSUBSTRABTEMP" />
+                <ScalarProperty Name="TPINSCRICAOTEMP" ColumnName="TPINSCRICAOTEMP" />
+                <ScalarProperty Name="NROINSCRITEMP" ColumnName="NROINSCRITEMP" />
+                <ScalarProperty Name="TIPOAVISOPREVIO" ColumnName="TIPOAVISOPREVIO" />
+                <ScalarProperty Name="CODCATEGORIAESOCIAL" ColumnName="CODCATEGORIAESOCIAL" />
+                <ScalarProperty Name="CODTIPOCONTRATO" ColumnName="CODTIPOCONTRATO" />
+                <ScalarProperty Name="ESOCIALFUNCAOCONF" ColumnName="ESOCIALFUNCAOCONF" />
+                <ScalarProperty Name="CODFUNCAOCONF" ColumnName="CODFUNCAOCONF" />
+                <ScalarProperty Name="MOTIVOAVISOPREVIOTRAB" ColumnName="MOTIVOAVISOPREVIOTRAB" />
+                <ScalarProperty Name="CODCATEGORIATRABCEDIDO" ColumnName="CODCATEGORIATRABCEDIDO" />
+                <ScalarProperty Name="CNPJCEDENTE" ColumnName="CNPJCEDENTE" />
+                <ScalarProperty Name="MATRICULACEDENTE" ColumnName="MATRICULACEDENTE" />
+                <ScalarProperty Name="DATAADMISSAOCEDENTE" ColumnName="DATAADMISSAOCEDENTE" />
+                <ScalarProperty Name="TIPOREGIMETRABALHISTACEDIDO" ColumnName="TIPOREGIMETRABALHISTACEDIDO" />
+                <ScalarProperty Name="TIPOREGIMEPREVIDENCIARIOCEDIDO" ColumnName="TIPOREGIMEPREVIDENCIARIOCEDIDO" />
+                <ScalarProperty Name="INFOONUSCESSAO" ColumnName="INFOONUSCESSAO" />
+                <ScalarProperty Name="TIPOCONTRATOPRAZO" ColumnName="TIPOCONTRATOPRAZO" />
+                <ScalarProperty Name="ESOCIALNATATIVIDADE" ColumnName="ESOCIALNATATIVIDADE" />
+                <ScalarProperty Name="MOTIVOSAIDATRANSFERENCIA" ColumnName="MOTIVOSAIDATRANSFERENCIA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PFUNCAO">
+            <EntityTypeMapping TypeName="CorporeRMModel.PFUNCAO">
+              <MappingFragment StoreEntitySet="PFUNCAO">
+                <ScalarProperty Name="CODCOLIGADA" ColumnName="CODCOLIGADA" />
+                <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+                <ScalarProperty Name="NOME" ColumnName="NOME" />
+                <ScalarProperty Name="NUMPONTOS" ColumnName="NUMPONTOS" />
+                <ScalarProperty Name="CBO" ColumnName="CBO" />
+                <ScalarProperty Name="CARGO" ColumnName="CARGO" />
+                <ScalarProperty Name="INATIVA" ColumnName="INATIVA" />
+                <ScalarProperty Name="ATIVTRANSP" ColumnName="ATIVTRANSP" />
+                <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+                <ScalarProperty Name="FAIXASALARIAL" ColumnName="FAIXASALARIAL" />
+                <ScalarProperty Name="LIMITEFUNC" ColumnName="LIMITEFUNC" />
+                <ScalarProperty Name="VERBAQUADROVAGAS" ColumnName="VERBAQUADROVAGAS" />
+                <ScalarProperty Name="PERCQUADROVAGAS" ColumnName="PERCQUADROVAGAS" />
+                <ScalarProperty Name="DATAULTIMAREVISAO" ColumnName="DATAULTIMAREVISAO" />
+                <ScalarProperty Name="NUMREVISAO" ColumnName="NUMREVISAO" />
+                <ScalarProperty Name="CBO2002" ColumnName="CBO2002" />
+                <ScalarProperty Name="CODTABELA" ColumnName="CODTABELA" />
+                <ScalarProperty Name="CODPERFILCAND" ColumnName="CODPERFILCAND" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BENEFPONTOS" ColumnName="BENEFPONTOS" />
+                <ScalarProperty Name="OBJETIVO" ColumnName="OBJETIVO" />
+                <ScalarProperty Name="DESCRICAOPPP" ColumnName="DESCRICAOPPP" />
+                <ScalarProperty Name="EXIBEORGANOGRAMA" ColumnName="EXIBEORGANOGRAMA" />
+                <ScalarProperty Name="CODFUNCAOCHEFIA" ColumnName="CODFUNCAOCHEFIA" />
+                <ScalarProperty Name="JORNADAREF" ColumnName="JORNADAREF" />
+                <ScalarProperty Name="RECCREATEDBY" ColumnName="RECCREATEDBY" />
+                <ScalarProperty Name="RECCREATEDON" ColumnName="RECCREATEDON" />
+                <ScalarProperty Name="RECMODIFIEDBY" ColumnName="RECMODIFIEDBY" />
+                <ScalarProperty Name="RECMODIFIEDON" ColumnName="RECMODIFIEDON" />
+                <ScalarProperty Name="CODTIPOFUNCAO" ColumnName="CODTIPOFUNCAO" />
+                <ScalarProperty Name="SIGLA" ColumnName="SIGLA" />
+                <ScalarProperty Name="ESOCIALFUNCAOCONF" ColumnName="ESOCIALFUNCAOCONF" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PPESSOA">
+            <EntityTypeMapping TypeName="CorporeRMModel.PPESSOA">
+              <MappingFragment StoreEntitySet="PPESSOA">
+                <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+                <ScalarProperty Name="NOME" ColumnName="NOME" />
+                <ScalarProperty Name="APELIDO" ColumnName="APELIDO" />
+                <ScalarProperty Name="DTNASCIMENTO" ColumnName="DTNASCIMENTO" />
+                <ScalarProperty Name="ESTADOCIVIL" ColumnName="ESTADOCIVIL" />
+                <ScalarProperty Name="SEXO" ColumnName="SEXO" />
+                <ScalarProperty Name="NACIONALIDADE" ColumnName="NACIONALIDADE" />
+                <ScalarProperty Name="GRAUINSTRUCAO" ColumnName="GRAUINSTRUCAO" />
+                <ScalarProperty Name="RUA" ColumnName="RUA" />
+                <ScalarProperty Name="NUMERO" ColumnName="NUMERO" />
+                <ScalarProperty Name="COMPLEMENTO" ColumnName="COMPLEMENTO" />
+                <ScalarProperty Name="BAIRRO" ColumnName="BAIRRO" />
+                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+                <ScalarProperty Name="CIDADE" ColumnName="CIDADE" />
+                <ScalarProperty Name="CEP" ColumnName="CEP" />
+                <ScalarProperty Name="PAIS" ColumnName="PAIS" />
+                <ScalarProperty Name="REGPROFISSIONAL" ColumnName="REGPROFISSIONAL" />
+                <ScalarProperty Name="CPF" ColumnName="CPF" />
+                <ScalarProperty Name="IDIMAGEM" ColumnName="IDIMAGEM" />
+                <ScalarProperty Name="TELEFONE1" ColumnName="TELEFONE1" />
+                <ScalarProperty Name="TELEFONE2" ColumnName="TELEFONE2" />
+                <ScalarProperty Name="CARTIDENTIDADE" ColumnName="CARTIDENTIDADE" />
+                <ScalarProperty Name="UFCARTIDENT" ColumnName="UFCARTIDENT" />
+                <ScalarProperty Name="ORGEMISSORIDENT" ColumnName="ORGEMISSORIDENT" />
+                <ScalarProperty Name="DTEMISSAOIDENT" ColumnName="DTEMISSAOIDENT" />
+                <ScalarProperty Name="TITULOELEITOR" ColumnName="TITULOELEITOR" />
+                <ScalarProperty Name="ZONATITELEITOR" ColumnName="ZONATITELEITOR" />
+                <ScalarProperty Name="SECAOTITELEITOR" ColumnName="SECAOTITELEITOR" />
+                <ScalarProperty Name="CARTEIRATRAB" ColumnName="CARTEIRATRAB" />
+                <ScalarProperty Name="SERIECARTTRAB" ColumnName="SERIECARTTRAB" />
+                <ScalarProperty Name="UFCARTTRAB" ColumnName="UFCARTTRAB" />
+                <ScalarProperty Name="DTCARTTRAB" ColumnName="DTCARTTRAB" />
+                <ScalarProperty Name="NIT" ColumnName="NIT" />
+                <ScalarProperty Name="CARTMOTORISTA" ColumnName="CARTMOTORISTA" />
+                <ScalarProperty Name="TIPOCARTHABILIT" ColumnName="TIPOCARTHABILIT" />
+                <ScalarProperty Name="DTVENCHABILIT" ColumnName="DTVENCHABILIT" />
+                <ScalarProperty Name="CERTIFRESERV" ColumnName="CERTIFRESERV" />
+                <ScalarProperty Name="CATEGMILITAR" ColumnName="CATEGMILITAR" />
+                <ScalarProperty Name="NATURALIDADE" ColumnName="NATURALIDADE" />
+                <ScalarProperty Name="ESTADONATAL" ColumnName="ESTADONATAL" />
+                <ScalarProperty Name="DATACHEGADA" ColumnName="DATACHEGADA" />
+                <ScalarProperty Name="CARTMODELO19" ColumnName="CARTMODELO19" />
+                <ScalarProperty Name="CONJUGEBRASIL" ColumnName="CONJUGEBRASIL" />
+                <ScalarProperty Name="NATURALIZADO" ColumnName="NATURALIZADO" />
+                <ScalarProperty Name="FILHOSBRASIL" ColumnName="FILHOSBRASIL" />
+                <ScalarProperty Name="NROFILHOSBRASIL" ColumnName="NROFILHOSBRASIL" />
+                <ScalarProperty Name="NROREGGERAL" ColumnName="NROREGGERAL" />
+                <ScalarProperty Name="NRODECRETO" ColumnName="NRODECRETO" />
+                <ScalarProperty Name="DTVENCIDENT" ColumnName="DTVENCIDENT" />
+                <ScalarProperty Name="DTVENCCARTTRAB" ColumnName="DTVENCCARTTRAB" />
+                <ScalarProperty Name="TIPOVISTO" ColumnName="TIPOVISTO" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="INVESTTREINANT" ColumnName="INVESTTREINANT" />
+                <ScalarProperty Name="CORRACA" ColumnName="CORRACA" />
+                <ScalarProperty Name="DEFICIENTEFISICO" ColumnName="DEFICIENTEFISICO" />
+                <ScalarProperty Name="CODUSUARIO" ColumnName="CODUSUARIO" />
+                <ScalarProperty Name="TELEFONE3" ColumnName="TELEFONE3" />
+                <ScalarProperty Name="FAX" ColumnName="FAX" />
+                <ScalarProperty Name="EMPRESA" ColumnName="EMPRESA" />
+                <ScalarProperty Name="CODPROFISSAO" ColumnName="CODPROFISSAO" />
+                <ScalarProperty Name="CODOCUPACAO" ColumnName="CODOCUPACAO" />
+                <ScalarProperty Name="CODMEMOOBS" ColumnName="CODMEMOOBS" />
+                <ScalarProperty Name="BRPDH" ColumnName="BRPDH" />
+                <ScalarProperty Name="NPASSAPORTE" ColumnName="NPASSAPORTE" />
+                <ScalarProperty Name="FUMANTE" ColumnName="FUMANTE" />
+                <ScalarProperty Name="PAISORIGEM" ColumnName="PAISORIGEM" />
+                <ScalarProperty Name="DTEMISSPASSAPORTE" ColumnName="DTEMISSPASSAPORTE" />
+                <ScalarProperty Name="DTVALPASSAPORTE" ColumnName="DTVALPASSAPORTE" />
+                <ScalarProperty Name="OBSPESSOA" ColumnName="OBSPESSOA" />
+                <ScalarProperty Name="IDIMAGEMDOC" ColumnName="IDIMAGEMDOC" />
+                <ScalarProperty Name="IDIMAGEMDOCV" ColumnName="IDIMAGEMDOCV" />
+                <ScalarProperty Name="AJUSTATAMANHOFOTO" ColumnName="AJUSTATAMANHOFOTO" />
+                <ScalarProperty Name="DEFICIENTEAUDITIVO" ColumnName="DEFICIENTEAUDITIVO" />
+                <ScalarProperty Name="DEFICIENTEFALA" ColumnName="DEFICIENTEFALA" />
+                <ScalarProperty Name="DEFICIENTEVISUAL" ColumnName="DEFICIENTEVISUAL" />
+                <ScalarProperty Name="DEFICIENTEMENTAL" ColumnName="DEFICIENTEMENTAL" />
+                <ScalarProperty Name="RECURSOREALIZACAOTRAB" ColumnName="RECURSOREALIZACAOTRAB" />
+                <ScalarProperty Name="RECURSOACESSIBILIDADE" ColumnName="RECURSOACESSIBILIDADE" />
+                <ScalarProperty Name="DATAAPROVACAOCURR" ColumnName="DATAAPROVACAOCURR" />
+                <ScalarProperty Name="CODMUNICIPIO" ColumnName="CODMUNICIPIO" />
+                <ScalarProperty Name="LOCALIDADE" ColumnName="LOCALIDADE" />
+                <ScalarProperty Name="CSM" ColumnName="CSM" />
+                <ScalarProperty Name="DTEXPCML" ColumnName="DTEXPCML" />
+                <ScalarProperty Name="EXPED" ColumnName="EXPED" />
+                <ScalarProperty Name="RM" ColumnName="RM" />
+                <ScalarProperty Name="SITMILITAR" ColumnName="SITMILITAR" />
+                <ScalarProperty Name="DTTITELEITOR" ColumnName="DTTITELEITOR" />
+                <ScalarProperty Name="ESTELEIT" ColumnName="ESTELEIT" />
+                <ScalarProperty Name="TIPOSANG" ColumnName="TIPOSANG" />
+                <ScalarProperty Name="IDBIOMETRIA" ColumnName="IDBIOMETRIA" />
+                <ScalarProperty Name="ALUNO" ColumnName="ALUNO" />
+                <ScalarProperty Name="PROFESSOR" ColumnName="PROFESSOR" />
+                <ScalarProperty Name="USUARIOBIBLIOS" ColumnName="USUARIOBIBLIOS" />
+                <ScalarProperty Name="FUNCIONARIO" ColumnName="FUNCIONARIO" />
+                <ScalarProperty Name="EXFUNCIONARIO" ColumnName="EXFUNCIONARIO" />
+                <ScalarProperty Name="CANDIDATO" ColumnName="CANDIDATO" />
+                <ScalarProperty Name="TAGSCRIPT" ColumnName="TAGSCRIPT" />
+                <ScalarProperty Name="FIADOR_SGI" ColumnName="FIADOR_SGI" />
+                <ScalarProperty Name="CONJUGE_SGI" ColumnName="CONJUGE_SGI" />
+                <ScalarProperty Name="DEFICIENTEMOBREDUZIDA" ColumnName="DEFICIENTEMOBREDUZIDA" />
+                <ScalarProperty Name="RECCREATEDBY" ColumnName="RECCREATEDBY" />
+                <ScalarProperty Name="RECCREATEDON" ColumnName="RECCREATEDON" />
+                <ScalarProperty Name="RECMODIFIEDBY" ColumnName="RECMODIFIEDBY" />
+                <ScalarProperty Name="RECMODIFIEDON" ColumnName="RECMODIFIEDON" />
+                <ScalarProperty Name="DTVENCIDENTPT" ColumnName="DTVENCIDENTPT" />
+                <ScalarProperty Name="CODTIPORUA" ColumnName="CODTIPORUA" />
+                <ScalarProperty Name="CODTIPOBAIRRO" ColumnName="CODTIPOBAIRRO" />
+                <ScalarProperty Name="IDPAIS" ColumnName="IDPAIS" />
+                <ScalarProperty Name="CODNATURALIDADE" ColumnName="CODNATURALIDADE" />
+                <ScalarProperty Name="NUMERORIC" ColumnName="NUMERORIC" />
+                <ScalarProperty Name="ORGEMISSORRIC" ColumnName="ORGEMISSORRIC" />
+                <ScalarProperty Name="DTEMISSAORIC" ColumnName="DTEMISSAORIC" />
+                <ScalarProperty Name="DTEMISSAOCNH" ColumnName="DTEMISSAOCNH" />
+                <ScalarProperty Name="ORGEMISSORCNH" ColumnName="ORGEMISSORCNH" />
+                <ScalarProperty Name="DATANATURALIZACAO" ColumnName="DATANATURALIZACAO" />
+                <ScalarProperty Name="ORGEMISSORRNE" ColumnName="ORGEMISSORRNE" />
+                <ScalarProperty Name="DTEMISSAORNE" ColumnName="DTEMISSAORNE" />
+                <ScalarProperty Name="NOMESOCIAL" ColumnName="NOMESOCIAL" />
+                <ScalarProperty Name="DEFICIENTEINTELECTUAL" ColumnName="DEFICIENTEINTELECTUAL" />
+                <ScalarProperty Name="DEFICIENTEOBSERVACAO" ColumnName="DEFICIENTEOBSERVACAO" />
+                <ScalarProperty Name="DATAOBITO" ColumnName="DATAOBITO" />
+                <ScalarProperty Name="MATRICULAOBITO" ColumnName="MATRICULAOBITO" />
+                <ScalarProperty Name="FALECIDO" ColumnName="FALECIDO" />
+                <ScalarProperty Name="PORTARIANATURALIZACAO" ColumnName="PORTARIANATURALIZACAO" />
+                <ScalarProperty Name="CODCLASSIFTRABESTRANG" ColumnName="CODCLASSIFTRABESTRANG" />
+                <ScalarProperty Name="UFCNH" ColumnName="UFCNH" />
+                <ScalarProperty Name="DATAPRIMEIRACNH" ColumnName="DATAPRIMEIRACNH" />
+                <ScalarProperty Name="ANO1EMPREGO" ColumnName="ANO1EMPREGO" />
+                <ScalarProperty Name="EMAILPESSOAL" ColumnName="EMAILPESSOAL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="COAD_EMISSAO_CONTRACHEQUES" FunctionName="CorporeRMModel.Store.COAD_EMISSAO_CONTRACHEQUES">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CorporeRMModel.COAD_EMISSAO_CONTRACHEQUES_Result">
+                <ScalarProperty Name="CCH_NUM_MATRICULA" ColumnName="CCH_NUM_MATRICULA" />
+                <ScalarProperty Name="CCH_NOME_FUNCIONARIO" ColumnName="CCH_NOME_FUNCIONARIO" />
+                <ScalarProperty Name="CCH_SETOR" ColumnName="CCH_SETOR" />
+                <ScalarProperty Name="CCH_NUM_CTPS" ColumnName="CCH_NUM_CTPS" />
+                <ScalarProperty Name="CCH_NUM_CPF" ColumnName="CCH_NUM_CPF" />
+                <ScalarProperty Name="CCH_BAN_NOME" ColumnName="CCH_BAN_NOME" />
+                <ScalarProperty Name="CCH_AGE_NOME" ColumnName="CCH_AGE_NOME" />
+                <ScalarProperty Name="CCH_CTA_PGTO" ColumnName="CCH_CTA_PGTO" />
+                <ScalarProperty Name="CCH_CARGO" ColumnName="CCH_CARGO" />
+                <ScalarProperty Name="CCH_SAL_BASE" ColumnName="CCH_SAL_BASE" />
+                <ScalarProperty Name="CCH_BASE_INSS" ColumnName="CCH_BASE_INSS" />
+                <ScalarProperty Name="CCH_BASE_FGTS" ColumnName="CCH_BASE_FGTS" />
+                <ScalarProperty Name="CCH_BASE_IRRF" ColumnName="CCH_BASE_IRRF" />
+                <ScalarProperty Name="CCH_VLR_LIQUIDO" ColumnName="CCH_VLR_LIQUIDO" />
+                <ScalarProperty Name="CCH_MES_COMP" ColumnName="CCH_MES_COMP" />
+                <ScalarProperty Name="CCH_ANO_COMP" ColumnName="CCH_ANO_COMP" />
+                <ScalarProperty Name="CCH_PERIODO" ColumnName="CCH_PERIODO" />
+                <ScalarProperty Name="CCH_COD_EVENTO" ColumnName="CCH_COD_EVENTO" />
+                <ScalarProperty Name="CCH_DESC_EVENTO" ColumnName="CCH_DESC_EVENTO" />
+                <ScalarProperty Name="CCH_REFERENCIA" ColumnName="CCH_REFERENCIA" />
+                <ScalarProperty Name="CCH_PROVDESCBASE" ColumnName="CCH_PROVDESCBASE" />
+                <ScalarProperty Name="CCH_VLR_PROVENTO" ColumnName="CCH_VLR_PROVENTO" />
+                <ScalarProperty Name="CCH_VLR_DESCONTOS" ColumnName="CCH_VLR_DESCONTOS" />
+                <ScalarProperty Name="CCH_VLR_FGTS_MES" ColumnName="CCH_VLR_FGTS_MES" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

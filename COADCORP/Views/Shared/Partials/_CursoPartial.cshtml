@@ -1,0 +1,155 @@
+﻿@if (ViewBag.mostrarTudo == true)
+{
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                        </li>                                                                           
+                                    </ul>
+                                </div>
+                            </div>
+        </div>
+          
+        <div class="panel-body"> 
+            <div class="row">
+                <div app-message></div>
+
+                <div class="form-group col-lg-4">
+                    <label for="sigla">Nome</label>
+                    <input type="text" id="nome" ng-model="filtro.descricao" class="form-control" />
+                </div>
+                <div class="form-group col-lg-4">
+                    <label for="proInteresse">Produto de Interesse</label>
+                    <input type="checkbox" id="proInteresse" ng-model="filtro.produtoInteresse" class="form-control" />
+                </div>
+
+                <div class="form-group col-lg-3">
+                    <label for="campo_EMP_ID">Empresa</label>
+                    <select id="campo_EMP_ID" name="campo_EMP_ID" class="form-control" ng-model="filtro.empId"
+                            ng-options="emp.EMP_ID as emp.EMP_NOME_FANTASIA for emp in lstEmpresas">
+                        <option value="">Selecione</option>
+                    </select>
+                    <div app-validation-msg="erros" for="EMP_ID"></div>
+                </div>
+            </div>          
+        </div>
+    <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="listarCurso()">Pesquisar</button>
+            </div>
+    </div>
+}
+else
+{
+
+    <div class="row padding">
+      
+            <div app-message></div>
+            
+            <div class="form-group col-lg-4">
+                <label for="sigla">Nome</label>
+                <input type="text" id="nome" ng-model="$parent.filtro.descricao" class="form-control"/>
+            </div>
+            <div class="form-group col-lg-4">
+                <label for="proInteresse">Produto de Interesse</label>
+                <input type="checkbox" id="proInteresse" ng-model="$parent.filtro.produtoInteresse" class="form-control"/>
+            </div>
+            <div class="form-group col-lg-2" style="padding-top: 24px">
+                <button type="button" class="btn btn-default" ng-click="$parent.listarCurso()"><span class="glyphicon glyphicon-search"></span></button>
+            </div>  
+    </div>  
+}         
+
+@{
+    if(ViewBag.mostraTudo == null){
+
+        ViewBag.classeModal = "limit-modal-height";   
+    }    
+
+}
+<div class="panel panel-default">
+    <!-- Default panel contents -->      
+    <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Cursos</div>
+          
+    <div class="panel-body @ViewBag.classeModal">                       
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th style="min-width: 260px">
+                                Descrição
+                            </th>
+                            <th>
+                                Produto
+                            </th>
+                            <th>Produto de Interesse</th>
+                            @if (ViewBag.mostrarTudo == null)
+                            {
+                                <th>Qtd</th>
+                            }
+                            <th>Empresa</th>
+                            <th>Valor de Venda</th>
+                            <th>#</th>
+                        </tr>
+                    </thead>    
+                    <tr ng-repeat="item in lstCursos" ng-init="item.QTD = 1" class="animate-repeat">
+                        <td>{{item.CMP_ID}}</td>
+                        <td>
+                            {{item.CMP_DESCRICAO}}
+                        </td>
+                        <td>
+                            {{item.PRODUTOS.PRO_SIGLA}}
+                        </td>
+                        <td>
+                            <span ng-if="item.CMP_PRO_INTERESSE" class="label label-success">SIM</span>
+                            <span ng-if="!item.CMP_PRO_INTERESSE" class="label label-warning">NÂO</span>
+                        </td>
+                        @if (ViewBag.mostrarTudo == null)
+                        {
+                            <td>
+                                <input type="text" ng-model="item.QTD" style="max-width: 60px"
+                                       class="form-control" app-number />
+                            </td>
+                        }
+
+                        <td>{{item.EMPRESAS.EMP_NOME_FANTASIA}}</td>
+                        <td app-show-dinheiro="item.CMP_VLR_VENDA"></td>
+                        <td>
+                            @if (ViewBag.mostrarTudo == true)
+                            {
+                                <a href="javascript:void(0)" app-post="@Url.Action("Editar")?composicaoId={{item.CMP_ID}}" title="Editar" class="blue">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="javascript:void(0)" title="Selecione" class="blue" ng-click="adicionarProduto(item)">
+                                    <span class="glyphicon glyphicon-ok-sign"></span>
+                                </a>
+                            }
+                            <a href="javascript:void(0)" ng-click="deletarCurso(item.CMP_ID);" id="btexcluir" title="Excluir" class="text-danger">
+                                <span class="glyphicon glyphicon-remove-sign"></span>
+                            </a>
+                        </td>
+
+                    </tr>
+                <tr>
+                    <td colspan="7" ng-show="lstCursos.length == 0 && listado">Nenhum registro foi encontrado.</td>
+                    <td colspan="7" ng-show="!lstCursos">Clique em pesquisar para listar.</td>
+                </tr>
+
+            </table> 
+        </div>
+        <div app-pagination request-page="paginaReq" load-function="listarCurso(paginaReq)"></div>             
+
+    </div>
+         
+</div>     

@@ -1,0 +1,94 @@
+﻿
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+@Scripts.Render("~/Scripts/negocio/cliente.js")
+
+
+<div ng-app="appModule">
+    <div class="panel panel-default" ng-controller="ClienteController"  ng-init="initAssinatura('@ViewBag.Assinatura');" ng-cloak>
+        <div class="panel panel-default">
+            <div app-message></div>
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-edit icon-panel"></span>@ViewBag.Title &nbsp<span class="label alert-danger" ng_show="assinatura.ASN_ATIVA==false">Inativo</span>
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Opções <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li><a href="~/Cliente/Index" app-popover data-content="Pesquisar" class="blue">Pesquisar</a>
+                            </li>
+                            <li><a href="javascript:void(0)" app-popover data-content="Excluir" ng-click="atualizarAssinaturaURA()" ng-show="assinatura.ASN_NUM_ASSINATURA!=null">Salvar</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="form-group col-sm-2">
+                @Html.Label("Assinatura")
+                <input type="text" class="form-control" ng_model="NUM_ASSINATURA" maxlength="35" ng-change="pesquisarAssinatura(NUM_ASSINATURA)"/>
+            </div>
+            <div class="form-group col-sm-4">
+                @Html.Label("Nome")
+                <input type="text" class="form-control" ng_model="assinatura.CLIENTES.CLI_NOME" maxlength="35" disabled="disabled"/>
+            </div>
+            <div class="form-group col-sm-1">
+                @Html.Label("Produto")
+                <input type="text" class="form-control" ng_model="assinatura.PRO_ID" maxlength="35" disabled="disabled" />
+            </div>
+            <div class="form-group col-sm-2">
+                @Html.Label("Ano COAD")
+                <input type="text" class="form-control" ng_model="assinatura.ASN_ANO_COAD" maxlength="35" disabled="disabled"/>
+            </div>
+            <div class="form-group col-sm-3">
+                @Html.Label("Aos Cuidados")
+                <input type="text" class="form-control" ng_model="assinatura.ASN_A_C" maxlength="35" />
+            </div>
+            <div class="form-group col-sm-2">
+                @Html.Label("Ano Remessa")
+                <input type="text" class="form-control" ng_model="assinatura.ASN_ANO_REMESSA" maxlength="35" disabled="disabled" />
+            </div>
+            <div class="form-group col-sm-2">
+                @Html.Label("Nº Remessa")
+                <input type="text" class="form-control" ng_model="assinatura.ASN_REMESSA" maxlength="35" disabled="disabled" />
+            </div>
+            <div class="form-group col-sm-2">
+                @Html.Label("Tipo Envio")
+                <input type="text" class="form-control" ng_model="assinatura.ASN_NUM_TP_ENVIO" maxlength="35" disabled="disabled"/>
+            </div>
+            <div class="form-group col-sm-2">
+                @Html.Label("Consultas Contrato")
+                <input type="text" class="form-control" ng_model="assinatura.ASN_QTDE_CONS_CONTRATO" maxlength="35" />
+            </div>
+            <div class="form-group col-sm-4" >
+                @Html.Label("Situação")
+                <div class="col-lg-12">
+                    <label class="pull-left">
+                        <input ng-model="assinatura.ativo" type="radio" value="0" ng-disabled="assinatura.ASN_QTDE_CONS_CONTRATO<1||assinatura.ASN_ATIVA==false"/>
+                        <i></i><span class="weight-300">Inativar cliente na ura</span>
+                    </label>
+                </div>
+                <div class="col-lg-12">
+                    <label class="pull-left">
+                        <input ng-model="assinatura.ativo" type="radio" value="1" ng-disabled="assinatura.ASN_QTDE_CONS_CONTRATO<1||assinatura.ASN_ATIVA==false"/>
+                        <i></i><span class="weight-300">Ativar cliente na ura</span>
+                    </label>
+                </div>
+            </div>
+    </div>
+        </div>
+        <div class="panel-footer">
+            <button type="button" class="btn btn-default" ng-click="atualizarAssinaturaURA()" ng-if="assinatura!=null"><span class="glyphicon glyphicon-floppy-save blue"></span>&nbspSalvar</button>
+        </div>
+    </div>
+</div>
+

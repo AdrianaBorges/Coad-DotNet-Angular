@@ -1,0 +1,82 @@
+﻿
+        <fieldset>
+            <legend ng-if="!edicaoCliente">Telefones</legend>
+                <div class="row padding">    
+                    <span class="font-16" ng-if="edicaoCliente">                        
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                        <label class="font-15">Telefones</label>
+                    </span>                    
+                <div class="table-responsive">
+                    <div app-validation-msg="erros" for="ASSINATURA_TELEFONE"></div>
+                <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tipo de Telefone</th>
+                        <th>DDD</th>
+                        <th>Telefone</th>
+                        <th>Contato</th>
+                        <th>Ramal</th>
+                        <th>Ações</th>                                    
+                    </tr>                                   
+                </thead>
+                <tbody>
+                    <tr ng-repeat="tel in CLIENTES_TELEFONE" ng-show="CLIENTES_TELEFONE" ng-controller="ForEachTelefoneController">
+                        <td data-app-editable-td="tel.tipoTelefone.TIPO_TEL_ID" data-label="tel.tipoTelefone.TIPO_TEL_DESCRICAO" data-blur-event="blurTipoTel"
+                            data-validation-property-name="ASSINATURA_TELEFONE[{{$index}}].TIPO_TEL_ID" data-validation-obj="erros"
+                            data-disable-label="edicaoCliente">
+                          <select id="tipoTel" name="tipoTel" class="form-control" ng-change="tipoTelefoneSelecionado(tel)"
+                               ng-model="tel.tipoTelefone"
+                               ng-options="tipoTel as tipoTel.TIPO_TEL_DESCRICAO for tipoTel in lstTipoTelefone track by tipoTel.TIPO_TEL_ID"
+                               ng-blur="blurTipoTel($event)">
+                                       <option value="">Selecione</option>
+                             </select>
+                        </td>
+                        <td data-app-editable-td="tel.ATE_DDD" data-label="tel.ATE_DDD" 
+                            data-blur-event="confirmarEdicaoDDD"
+                            data-disable-label="edicaoCliente">
+                            
+                            <input type="text" ng-model="tel.ATE_DDD" maxlength="2" 
+                                class="form-control grid-input  float-left" ng-blur="confirmarEdicaoDDD($event)" 
+                                style="width: 41px;" app-number/>                                       
+                        </td>  
+                        <td app-editable-td="tel.ATE_TELEFONE" label="tel.ATE_TELEFONE" blur-event="confirmarEdicaoTel" 
+                            validation-property-name="ASSINATURA_TELEFONE[{{$index}}].ATE_TELEFONE" validation-obj="erros"
+                            data-disable-label="edicaoCliente">
+                            
+                            <input type="text" ng-model="tel.ATE_TELEFONE" 
+                                class="form-control grid-input  float-left" ng-blur="confirmarEdicaoTel($event)" maxlength="9" app-number/>                                       
+                        </td>    
+                        <td app-editable-td="tel.ATE_CONTATO" label="tel.ATE_CONTATO" blur-event="confirmarEdicaoContato"
+                            data-disable-label="edicaoCliente">
+                            
+                            <input type="text" ng-model="tel.ATE_CONTATO" maxlength="12" 
+                                class="form-control grid-input  float-left" ng-blur="confirmarEdicaoContato($event)"/>                                       
+                        </td>
+                        <td app-editable-td="tel.ATE_RAMAL" label="tel.ATE_RAMAL" blur-event="confirmarEdicaoRamal"
+                            data-disable-label="edicaoCliente">                            
+                            <input type="text" ng-model="tel.ATE_RAMAL" maxlength="12" 
+                                class="form-control grid-input  float-left" ng-blur="confirmarEdicaoRamal($event)"/>                                       
+                        </td>                             
+                        <td>                                       
+                            <a href="javascript:void(0)" ng-click="ExcluirTelefone($index)" class="btnConfirmaExclusao red" id="btexcluir" title="Excluir">
+                                <span class="glyphicon glyphicon-remove-sign"></span>
+                            </a>
+                            <span ng-show="CLIENTES_TELEFONE.length == ($index + 1)">
+                                <a href="javascript:void(0)" ng-click="IncluirTelefone(tel)" title="Incluir">
+                                    <span class="glyphicon glyphicon-plus blue"></span>
+                                </a>
+                            </span>
+                        </td>
+                                    
+                    </tr>
+                    <tr ng-hide="CLIENTES_TELEFONE.length > 0">
+                        <td colspan="6">Nenhuma telefone adicionado. Clique para adicionar: 
+                            <a href="javascript:void(0)" ng-click="IncluirTelefone(tel)" title="Incluir">
+                                    <span class="glyphicon glyphicon-plus blue"></span>
+                                </a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+            </div>
+        </fieldset>     

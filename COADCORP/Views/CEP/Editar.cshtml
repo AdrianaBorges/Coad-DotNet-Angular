@@ -1,0 +1,143 @@
+﻿@using Coad.GenericCrud.Extensions
+
+@{
+    ViewBag.Title = "Index";     
+}
+
+@Scripts.Render("~/Scripts/appScripts/cep.js")
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">@Html.ActionLink("Home", "index", "Home") </a></li>
+        <li class="active">Cadastro de CEP</li>
+    </ol>
+}
+
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div class="padding content" ng-controller="CEPController" data-ng-init="init(@ViewBag.cepid)" ng-cloak>
+        <div id="page-wrapper">
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-filter"></span>&nbspFiltros
+                    <div class="pull-right">
+                        <div class="btn-group">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group col-sm-2">
+                            @Html.Label("CEP")
+                            <a data-toggle="modal" href="#Modal-Correios" data-toggle="tooltip" data-placement="top" app-popover data-content="Pesquisa na base dos correios" style="padding-top: -5px; text-decoration: none;">
+                                <img src="~/Images/logo_correios.png" style="width: 70px; height: 20px;"></a>
+                            <input type="text" class="form-control" ng-model="cep.CEP_NUMERO" maxlength="8" ng-change="buscarCep(cep.CEP_NUMERO)" />
+                            @Html.ValidationMessage("CEP_NUMERO", null, new { app_validation_msg = "erros", @for = "CEP_NUMERO" })
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="Logradouro">Município</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" ng-model="cep.END_MUNICIPIO"  disabled="disabled"/>
+                                @Html.ValidationMessage("MUN_ID", null, new { app_validation_msg = "erros", @for = "MUN_ID" })
+                                <span class="input-group-btn">
+                                    <a data-toggle="modal" href="#Modal-Municipio" data-toggle="tooltip" data-placement="top" app-popover data-content="Pesquisar municipios" style="text-decoration: none;" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-search"></span>&nbsp
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            @Html.Label("UF")
+                            @Html.DropDownList("UF", new SelectList(ViewBag.ufs, "UF_SIGLA", "UF_SIGLA"), "Selecione", new { @class = "form-control", ng_model = "cep.CEP_UF", disabled="disabled" })
+                            @Html.ValidationMessage("CEP_UF", null, new { app_validation_msg = "erros", @for = "CEP_UF" })
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="Bairro">Bairro</label>
+                            <div
+                                app-select2="cep.BAR_ID"
+                                ng-model="TEXTO"
+                                result-list="_listaBairro"
+                                search-param="_bar_descricao"
+                                load-function="buscarBairro(_bar_descricao)"
+                                list-value="BAR_ID"
+                                list-label="BAR_DESCRICAO">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            @Html.Label("Logradouro")
+                            <input type="text" class="form-control" ng-model="cep.CEP_LOG" />
+                            @Html.ValidationMessage("CEP_LOG", null, new { app_validation_msg = "erros", @for = "CEP_LOG" })
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" ng-click="salvarCEP()"><span class="glyphicon glyphicon-floppy-save blue"></span>&nbspSalvar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Municipio -->
+        <div app-modal="Modal-Municipio" header="Municipio">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-5">
+                        <label for="sigla">Municipio</label>
+                        <input type="text" id="Logradouro" ng-model="filtro.mun_descricao" class="form-control" ng-change="buscarMunicipio()" />
+                    </div>
+                </div>
+                <div class="row" style="max-height: 350px; overflow-y: auto;">
+                    <div class="form-group col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr class="info">
+                                        <th style="min-width: 75px">ID</th>
+                                        <th style="text-align: center;">Nome</th>
+                                        <th style="min-width: 132px">UF</th>
+                                        <th>IBGE</th>
+                                        <th>CEP</th>
+                                        <th style="text-align: center;">Editar</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in dbMunicipio">
+                                    <td>{{item.MUN_ID}}</td>
+                                    <td>{{item.MUN_DESCRICAO}}</td>
+                                    <td>{{item.UF}}</td>
+                                    <td>{{item.IBGE_COD_COMPLETO}}</td>
+                                    <td>{{item.MUN_CEP}}</td>
+                                    <td style="text-align: center;">
+                                        <a href="javascript:void(0)" ng-click="selecMunicipio(item)" data-dismiss="modal" title="Editar" class="blue">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</button>
+            </div>
+        </div>
+
+        <!-- Modal Correios -->
+        <div app-modal="Modal-Correios" header="Correios">
+            <div class="panel-body">
+                <center><iframe src="http://m.correios.com.br/movel/index.do" width="100%" height="400" scrolling="YES"></iframe></center>
+            </div>
+        </div>
+
+    </div>
+
+</div>

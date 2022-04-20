@@ -1,0 +1,63 @@
+﻿@model  COAD.COADGED.Model.DTO.InformativoDTO
+@{
+    ViewBag.Title = "Incluir";
+}
+@using Coad.GenericCrud.Extensions
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li>@Html.ActionLink("Gerenciar Informativos","index","Informativo")</li>
+        <li class="active">Incluir novo Informativo</li>         
+    </ol>
+}
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/informativo.js")
+<div class="form-lg padding" ng-app="appModule">
+    <div class="panel panel-default" ng-controller="InformativoController" data-ng-init="read(@ViewBag.ano, @ViewBag.numero)">
+            @Html.ValidationSummary(true)          
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Incluir novo Informativo</div>
+            <div class="panel-body">  
+                 <div app-message></div>
+                 @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) 
+                 {
+                 <div class="row">
+                    <div class="form-group col-lg-3">
+                        @Html.LabelFor(model => model.INF_ANO)
+                        @Html.TextBoxFor(model => model.INF_ANO,  new {@class = "form-control", ng_model = "informativo.INF_ANO" })
+                        @Html.ValidationMessageFor(model => model.INF_ANO, null, new { app_validation_msg = "erros", @for = "INF_ANO" }) 
+                    </div>
+                    <div class="form-group col-lg-3">
+                        @Html.LabelFor(model => model.INF_NUMERO)
+                        @Html.TextBoxFor(model => model.INF_NUMERO,  new {@class = "form-control", ng_model = "informativo.INF_NUMERO" })
+                        @Html.ValidationMessageFor(model => model.INF_NUMERO, null, new { app_validation_msg = "erros", @for = "INF_NUMERO" }) 
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <div class="input-group date">
+                            @Html.LabelFor(model => model.INF_DATA_INICIO)
+                            @Html.TextBoxFor(model => model.INF_DATA_INICIO, new { @class = "form-control datepicker", ng_model = "INF_DATA_INICIO", app_date = "informativo.INF_DATA_INICIO" })
+                            @Html.ValidationMessageFor(model => model.INF_DATA_INICIO, null, new { app_validation_msg = "erros", @for = "INF_DATA_INICIO" }) 
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <div class="input-group date">
+                            @Html.LabelFor(model => model.INF_DATA_PREV_POSTAGEM)
+                            @Html.TextBoxFor(model => model.INF_DATA_PREV_POSTAGEM,  new {@class = "form-control datepicker", ng_model = "INF_DATA_PREV_POSTAGEM", app_date = "informativo.INF_DATA_PREV_POSTAGEM" })
+                            @Html.ValidationMessageFor(model => model.INF_DATA_PREV_POSTAGEM, null, new { app_validation_msg = "erros", @for = "INF_DATA_PREV_POSTAGEM" }) 
+                        </div>
+                    </div>
+                 </div>
+                     
+                 <div class="row">
+                    <div class="form-group col-lg-2">
+                        @Html.LabelFor(model => model.INF_ATIVO)
+                        @Html.DropDownListFor(model => model.INF_ATIVO, new SelectList(@ViewBag.ativo, "Value", "Text"), null ,new {@class = "form-control", ng_model = "informativo.INF_ATIVO" })
+                    </div>
+                 </div>
+                 }
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-primary" ng-click="incluirInformativo()">Salvar</button>
+                <span class="float-right"><button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default">Voltar</button></span>
+            </div> 
+    </div>
+</div>

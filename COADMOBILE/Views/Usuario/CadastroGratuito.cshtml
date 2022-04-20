@@ -1,0 +1,202 @@
+﻿@model COAD.PORTAL.Model.DTO.PortalCoad.ClienteDTO
+@using COAD.SEGURANCA.Extensions
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt_br">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title PORTAL COAD</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
+
+    @Styles.Render("~/Content/themes/base/default.css")
+    @Styles.Render("~/Content/themes/base/simple-sidebar.css")
+    @Styles.Render("~/Content/themes/base/bootstrap-theme.css")
+    @Styles.Render("~/Content/themes/base/bootstrap.css")
+
+    @Scripts.Render("~/Scripts/Angular/angular.js")
+    <script src="@Url.Content("~/Scripts/jquery-1.11.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui.min.js")" type="text/javascript"></script>
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/bootstrap.min.js")
+    @Scripts.Render("~/Scripts/default.js")
+    
+      
+    @Scripts.Render("~/Scripts/Angular/angular_modules/service_module.js")
+    @Scripts.Render("~/Scripts/Angular/angular_modules/directives_module.js")
+
+    <!-- compatibilidades com ie antigos-->
+    @Scripts.Render("~/Scripts/compatibilidades/respond.js")
+    <!--[if lt IE 9]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    @Scripts.Render("~/Scripts/compatibilidades/PIE.js")
+    @Scripts.Render("~/Scripts/negocio/clientePortal.js")
+    <script>
+        $(document).ready(function () {
+            $('.showLoaderImage').click(function () {
+                showAjaxLoader();
+                $.ajax({
+                    url: "http://localhost:24675",
+                    cache: false,
+                    async: false,
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        $("#ErroConexao").show();
+                        $(".showLoaderImage").hide();
+                        //alert("Fora do ar");
+                        return false;
+                    },
+                    success: function (html) {
+                        $("#ErroConexao").hide();
+                        $(".showLoaderImage").hide();
+                        document.getElementById("frmCadGrat").submit();
+                        location.href = '/Login/Login';
+                    }
+                });
+
+            });
+
+            //$('.showLoaderImageRedirect').click(function (url) {
+            //    showAjaxLoader();
+            //    $.ajax({
+            //        url: "http://localhost:24675",
+            //        cache: false,
+            //        async: false,
+            //        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //            $("#ErroConexao").show();
+            //            $(".showLoaderImage").hide();
+            //            //alert("Fora do ar");
+            //            return false;
+            //        },
+            //        success: function (html) {
+            //            $("#ErroConexao").hide();
+            //            $(".showLoaderImage").hide();
+            //            location.href = '/Login/Login';
+            //        }
+            //    });
+
+            //});            
+        });
+
+        function Redirecionar(urlDestino) {
+            showAjaxLoader();
+            $.ajax({
+                url: window.location.origin,
+                cache: false,
+                async: false,
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $("#ErroConexao").show();
+                    $(".showLoaderImage").hide();
+                    //alert("Fora do ar");
+                    return false;
+                },
+                success: function (html) {
+                    $("#ErroConexao").hide();
+                    $(".showLoaderImage").hide();
+                    location.href = '/Login/Login';
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+
+    @using (Html.BeginForm("CadastroGratuito", "Usuario", FormMethod.Post, new { id = "frmCadGrat" }))
+    {
+        if (TempData["Resultado"] != null)
+        {
+            string t = TempData["Resultado"].ToString();
+
+        @Html.Alert(t, "PORTAL COAD MOBILE");
+
+        }
+        <div id="ErroConexao" style="display:none;">Parece que você está sem conexão.<br /> Tente novamente mais tarde</div>
+        <header class="header-logo">
+            <div class="menu-header">
+                <nav class="navbar navbar-inverse navbar-fixed-top menu-overrides" role="navigation">
+                    <div class="navbar-header">
+                        <img src="~/Images/logo-coad-informacoes-confiaveis.png" width="110" height="50" />
+                    </div>
+                    <div class="container">
+                        <div id="navbar" class="navbar-collapse collapse">
+                        </div>
+                    </div>
+                </nav>
+                <!-- Fim do menu navbar do boostrap -->
+            </div>
+        </header>
+        <div class="container" ng-app="appModule">
+            <div class="row">
+                &nbsp
+            </div>
+            <div class="row" ng-controller="ClientePortalController" data-ng-init="init();">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="login-panel panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Cadastro Gratuito</h3>
+                        </div>
+                        <div class="panel-body">
+                            @Html.Hidden("perfil", "cont")
+                            @*
+        <div class="form-group">
+            @Html.Label("Perfil")
+        </div>
+        <div class="editor-field">
+            <select id="perfil" name="perfil">
+				<option value="Selecione o perfil">Selecione o perfil</option>
+				<option value="cont">Contábil</option>
+				<option value="adv">Jurídico</option>
+			    <option value="rh">Trabalhista</option>
+			</select>
+            @Html.ValidationMessageFor(model => model.perfil)
+        </div>*@
+                            <div class="form-group">
+                                @Html.Label("nome", "Nome")
+                                @Html.TextBoxFor(model => model.nome, new { @class = "form-control", placeholder = "Nome" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("sobrenome", "Sobrenome")
+                                @Html.TextBoxFor(model => model.sobrenome, new { @class = "form-control", placeholder = "Sobrenome" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("email", "Email")
+                                @Html.TextBoxFor(model => model.email, new { @class = "form-control", placeholder = "Email" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("cpf", "CPF")
+                                @Html.TextBoxFor(model => model.cpf, new { @class = "form-control", placeholder = "CPF" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("estado", "Estado")
+                                @Html.DropDownList("estado", new SelectList(ViewBag.UFs, "Value", "Text"), new { @class = "form-control" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("telefone", "Telefone")
+                                @Html.TextBoxFor(model => model.telefone, new { @class = "form-control", placeholder = "Telefone" })
+                            </div>
+                            <br />
+                            @Html.ValidationMessage("Error")
+                            <p>
+                                <input type="button" value="Cadastrar" class="btn btn-lg btn-success btn-block showLoaderImage" />
+                                <input type="button" value="Voltar" onclick="Redirecionar('~/Login/Login');" class="btn btn-lg btn-success btn-block" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
+

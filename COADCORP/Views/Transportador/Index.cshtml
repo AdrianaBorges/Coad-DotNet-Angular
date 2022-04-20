@@ -1,0 +1,105 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.TransportadorDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Transportador</li>
+
+    </ol>
+}
+@Scripts.Render("~/Scripts/appScripts/transportador.js")
+<div ng-app="appModule">
+    <div ng-controller="TransportadorController" class="padding content">
+        <div class="panel panel-default">
+            <div app-message></div>
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel">
+               <span class="glyphicon glyphicon-filter"></span> Filtros
+               <div class="pull-right">
+                   <div class="btn-group">
+                       <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Opções<span class="caret"></span></button>
+                       <ul class="dropdown-menu pull-right" role="menu">
+                           <li>
+                               <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                           </li>
+                       </ul>
+                   </div>
+               </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-10">
+                        <label for="sigla">Razão Social</label>
+                        <input type="text" id="nome" ng-model="filtro.razaosocial" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="listar()"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-show="_listaTransportador">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Transportadores</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                    <div>
+                        @Html.Messages()
+                    </div>
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr class="info">
+                                <th style="min-width: 50px">
+                                    @Html.DisplayNameFor(model => model.TRA_ID)
+                                </th>
+                                <th style="min-width: 250px">
+                                    @Html.DisplayNameFor(model => model.TRA_RAZAO_SOCIAL)
+                                </th>
+                                <th style="min-width: 80px">
+                                    @Html.DisplayNameFor(model => model.TRA_CNPJ)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TRA_CEL)
+                                </th>
+                                <th style="min-width: 80px">
+                                    @Html.DisplayNameFor(model => model.TRA_TEL)
+                                </th>
+                                <th style="min-width: 80px">
+                                    @Html.DisplayNameFor(model => model.TRA_FAX)
+                                </th>
+                                  <th style="min-width: 80px">
+                                    @Html.DisplayNameFor(model => model.TRA_EMAIL)
+                                </th>
+                                <th>Editar</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in _listaTransportador">
+                            <td>{{item.TRA_ID}}
+                            </td>
+                            <td>{{item.TRA_RAZAO_SOCIAL}}
+                            </td>
+                            <td>{{ item.TRA_CNPJ}}
+                            </td>
+                            <td>{{item.TRA_CEL}}
+                            </td>
+                            <td>{{ item.TRA_TEL}}
+                            </td>
+                            <td>{{item.TRA_FAX}}
+                            </td>
+                            <td>{{item.TRA_EMAIL}}
+                            </td>
+                            <td style="text-align: center;"><a href="javascript:void(0)" app-post="@Url.Action("Editar")?_tra_id={{item.TRA_ID}}" title="Editar" class="blue"><span class="glyphicon glyphicon-edit"></span></a></td>
+                        </tr>
+                    </table>
+                </div>
+                <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+            </div>
+        </div>
+    </div>
+</div>

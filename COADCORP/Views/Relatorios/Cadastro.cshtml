@@ -1,0 +1,56 @@
+﻿@Scripts.Render("~/Scripts/appScripts/relatorios.js")
+
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">@Html.ActionLink("Relatorios", "index", "Relatorios") </a></li>
+        <li class="active">Relatórios de Cadastro</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="relatoriosControler" class="padding content" ng-cloak>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-corp">
+                    <div class="panel-heading bold"><span class="glyphicon glyphicon-th-list"></span>&nbspLista de Relatórios</div>
+                    <div class="panel-body">
+                        <dl>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/AcessoTabelas/Index">Relatório Acesso a Tabelas</a>
+                            </dt>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/AcessoTabelas/Acesso">Relatório Acesso a Tabelas (Analítico)</a>
+                            </dt>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/RelRepresentanteCarteira/Index">Representantes por Carteira</a>
+                            </dt>
+                            <dt>
+                              <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                              <a href="/RelTransferenciaAssinatura/Index">Relatório de Transferência de Assinaturas</a>
+                            </dt>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/HistoricoAtendimento/index">Qualificação dos atendimentos (SAC)</a>
+                            </dt>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/Etiquetas/Avulsa">Etiqueta Avulsa</a>
+                            </dt>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

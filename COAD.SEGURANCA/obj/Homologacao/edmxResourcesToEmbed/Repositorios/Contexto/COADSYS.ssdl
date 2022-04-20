@@ -1,0 +1,1138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="COADSYSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BANCOS_REF">
+    <Key>
+      <PropertyRef Name="BAN_ID" />
+    </Key>
+    <Property Name="BAN_ID" Type="char" MaxLength="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CONTA">
+    <Key>
+      <PropertyRef Name="CTA_ID" />
+    </Key>
+    <Property Name="CTA_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EMP_ID" Type="int" Nullable="false" />
+    <Property Name="CTA_AGENCIA" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="CTA_CONTA" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CTA_TIPO" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="CTA_CONVENIO" Type="varchar" MaxLength="30" />
+    <Property Name="CTA_CODIGO_240" Type="varchar" MaxLength="30" />
+    <Property Name="CTA_CODIGO_400" Type="varchar" MaxLength="30" />
+    <Property Name="CTA_COMPL_CTA_COB" Type="varchar" MaxLength="10" />
+    <Property Name="CTA_CARTEIRA_REMESSA" Type="varchar" MaxLength="10" />
+    <Property Name="CTA_CARTEIRA_BOLETO" Type="varchar" MaxLength="10" />
+    <Property Name="CTA_CEDENTE_REMESSA" Type="varchar" MaxLength="20" />
+    <Property Name="CTA_CEDENTE_BOLETO" Type="varchar" MaxLength="20" />
+    <Property Name="DATA_CADASTRO" Type="datetime" Nullable="false" />
+    <Property Name="DATA_ALTERACAO" Type="datetime" />
+    <Property Name="DATA_EXCLUSAO" Type="datetime" />
+    <Property Name="BAN_ID" Type="char" MaxLength="3" Nullable="false" />
+    <Property Name="CTA_PERC_MULTA" Type="numeric" Precision="6" Scale="2" />
+    <Property Name="CTA_PERC_MORA_MES" Type="numeric" Precision="6" Scale="2" />
+    <Property Name="CTA_CEDENTE_EMITE_BOLETO" Type="bit" Nullable="false" />
+    <Property Name="CTA_NR_ARQ_ENVIADO" Type="int" Nullable="false" />
+    <Property Name="CTA_ALOCAR_TITULO_DA_EMP_ID" Type="int" />
+    <Property Name="CTA_ENVIA_BOLETO" Type="bit" />
+    <Property Name="CTA_ESPECIE_DOC" Type="varchar" MaxLength="20" />
+    <Property Name="CTA_ESPECIE" Type="varchar" MaxLength="20" />
+    <Property Name="CTA_ACEITE" Type="varchar" MaxLength="20" />
+    <Property Name="CTA_INSTRUCOES_BOLETO" Type="varchar" MaxLength="2000" />
+    <Property Name="CTA_GERA_NOSSO_NUMERO" Type="bit" />
+    <Property Name="EMP_ID_S_AVS" Type="int" />
+    <Property Name="CTA_ULTIMO_NOSSO_NUMERO" Type="bigint" />
+  </EntityType>
+  <EntityType Name="CONTABILISTA">
+    <Key>
+      <PropertyRef Name="CNT_ID" />
+    </Key>
+    <Property Name="CNT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CNT_NOME" Type="varchar" MaxLength="60" Nullable="false" />
+    <Property Name="CNT_CPF_CNPJ" Type="varchar" MaxLength="14" />
+    <Property Name="CNT_CRC_UF" Type="char" MaxLength="2" />
+    <Property Name="CTR_CRC_NUMERO" Type="varchar" MaxLength="6" />
+    <Property Name="CTR_CRC_DIGITO" Type="char" MaxLength="1" />
+    <Property Name="CTR_CEP" Type="varchar" MaxLength="8" />
+    <Property Name="CTR_LOGRADOURO" Type="varchar" MaxLength="70" />
+    <Property Name="CTR_NUMERO" Type="varchar" MaxLength="6" />
+    <Property Name="CTR_COMPLEMENTO" Type="varchar" MaxLength="70" />
+    <Property Name="CTR_BAIRRO" Type="varchar" MaxLength="50" />
+    <Property Name="CTR_TEL" Type="varchar" MaxLength="12" />
+    <Property Name="CTR_FAX" Type="varchar" MaxLength="12" />
+    <Property Name="CTR_CEL" Type="varchar" MaxLength="12" />
+    <Property Name="CTR_EMAIL" Type="varchar" MaxLength="50" />
+    <Property Name="IBGE_COD_COMPLETO" Type="varchar" MaxLength="7" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DEPARTAMENTO">
+    <Key>
+      <PropertyRef Name="DP_ID" />
+    </Key>
+    <Property Name="DP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DP_NOME" Type="nvarchar" MaxLength="100" />
+    <Property Name="DATA_DESATIVACAO" Type="datetime" />
+  </EntityType>
+  <EntityType Name="EMPRESA">
+    <Key>
+      <PropertyRef Name="EMP_ID" />
+    </Key>
+    <Property Name="EMP_ID" Type="int" Nullable="false" />
+    <Property Name="EMP_RAZAO_SOCIAL" Type="varchar" MaxLength="70" />
+    <Property Name="EMP_NOME_FANTASIA" Type="varchar" MaxLength="70" />
+    <Property Name="EMP_CNPJ" Type="varchar" MaxLength="14" />
+    <Property Name="EMP_IE" Type="varchar" MaxLength="20" />
+    <Property Name="EMP_IM" Type="varchar" MaxLength="20" />
+    <Property Name="EMP_SUFRAMA" Type="varchar" MaxLength="20" />
+    <Property Name="EMP_LOGRADOURO" Type="varchar" MaxLength="60" />
+    <Property Name="EMP_NUMERO" Type="varchar" MaxLength="10" />
+    <Property Name="EMP_COMPLEMENTO" Type="varchar" MaxLength="40" />
+    <Property Name="EMP_BAIRRO" Type="varchar" MaxLength="30" />
+    <Property Name="EMP_CEP" Type="varchar" MaxLength="10" />
+    <Property Name="EMP_TEL1" Type="varchar" MaxLength="14" />
+    <Property Name="EMP_TEL2" Type="varchar" MaxLength="14" />
+    <Property Name="EMP_TEL3" Type="varchar" MaxLength="14" />
+    <Property Name="EMP_EMAIL" Type="varchar" MaxLength="60" />
+    <Property Name="EMP_SITE" Type="varchar" MaxLength="100" />
+    <Property Name="EMP_ULTIMA_NFE" Type="int" />
+    <Property Name="EMP_CNR_AGCEDENTE" Type="varchar" MaxLength="10" />
+    <Property Name="EMP_AREA" Type="int" />
+    <Property Name="EMP_TIPO" Type="int" />
+    <Property Name="EMP_IE_ST" Type="varchar" MaxLength="20" />
+    <Property Name="CNT_ID" Type="int" />
+    <Property Name="IBGE_COD_COMPLETO" Type="varchar" MaxLength="7" />
+    <Property Name="CID_ID" Type="int" />
+    <Property Name="EMP_APARECE_PRE_PEDIDO" Type="bit" Nullable="false" />
+    <Property Name="EMP_GRP_COAD" Type="bit" Nullable="false" />
+    <Property Name="EMP_DATA_ULT_FAT" Type="datetime" />
+    <Property Name="EMP_ID_CORREIO" Type="int" />
+    <Property Name="EMP_DESP_ADM_BOLETO" Type="numeric" Precision="12" Scale="2" />
+    <Property Name="EMP_MORA_MES_BOLETO" Type="numeric" Precision="12" Scale="2" />
+    <Property Name="EMP_ULT_FECHAMENTO_FAT" Type="datetime" />
+    <Property Name="EMP_NOME_CERTIFICADO" Type="varchar" MaxLength="255" />
+    <Property Name="EMP_CERTIFICADO_SENHA" Type="varchar" MaxLength="255" />
+    <Property Name="EMP_ULTIMA_NFSE" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'COADSYS.dbo.EMPRESA_TST2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="EMPRESA_TST2">
+    <Key>
+      <PropertyRef Name="EMP_ID" />
+      <PropertyRef Name="EMP_APARECE_PRE_PEDIDO" />
+      <PropertyRef Name="EMP_GRP_COAD" />
+    </Key>
+    <Property Name="EMP_ID" Type="int" Nullable="false" />
+    <Property Name="EMP_RAZAO_SOCIAL" Type="varchar" MaxLength="70" />
+    <Property Name="EMP_NOME_FANTASIA" Type="varchar" MaxLength="70" />
+    <Property Name="EMP_CNPJ" Type="varchar" MaxLength="14" />
+    <Property Name="EMP_IE" Type="varchar" MaxLength="20" />
+    <Property Name="EMP_IM" Type="varchar" MaxLength="20" />
+    <Property Name="EMP_SUFRAMA" Type="varchar" MaxLength="20" />
+    <Property Name="EMP_LOGRADOURO" Type="varchar" MaxLength="60" />
+    <Property Name="EMP_NUMERO" Type="varchar" MaxLength="10" />
+    <Property Name="EMP_COMPLEMENTO" Type="varchar" MaxLength="40" />
+    <Property Name="EMP_BAIRRO" Type="varchar" MaxLength="30" />
+    <Property Name="EMP_CEP" Type="varchar" MaxLength="10" />
+    <Property Name="EMP_TEL1" Type="varchar" MaxLength="14" />
+    <Property Name="EMP_TEL2" Type="varchar" MaxLength="14" />
+    <Property Name="EMP_TEL3" Type="varchar" MaxLength="14" />
+    <Property Name="EMP_EMAIL" Type="varchar" MaxLength="60" />
+    <Property Name="EMP_SITE" Type="varchar" MaxLength="100" />
+    <Property Name="EMP_ULTIMA_NFE" Type="int" />
+    <Property Name="EMP_CNR_AGCEDENTE" Type="varchar" MaxLength="10" />
+    <Property Name="EMP_AREA" Type="int" />
+    <Property Name="EMP_TIPO" Type="int" />
+    <Property Name="EMP_IE_ST" Type="varchar" MaxLength="20" />
+    <Property Name="CNT_ID" Type="int" />
+    <Property Name="IBGE_COD_COMPLETO" Type="varchar" MaxLength="7" />
+    <Property Name="CID_ID" Type="int" />
+    <Property Name="EMP_APARECE_PRE_PEDIDO" Type="bit" Nullable="false" />
+    <Property Name="EMP_GRP_COAD" Type="bit" Nullable="false" />
+    <Property Name="EMP_DATA_ULT_FAT" Type="datetime" />
+    <Property Name="EMP_ID_CORREIO" Type="int" />
+    <Property Name="EMP_DESP_ADM_BOLETO" Type="numeric" Precision="12" Scale="2" />
+    <Property Name="EMP_MORA_MES_BOLETO" Type="numeric" Precision="12" Scale="2" />
+    <Property Name="EMP_ULT_FECHAMENTO_FAT" Type="datetime" />
+    <Property Name="EMP_NOME_CERTIFICADO" Type="varchar" MaxLength="255" />
+    <Property Name="EMP_CERTIFICADO_SENHA" Type="varchar" MaxLength="255" />
+    <Property Name="EMP_ULTIMA_NFSE" Type="int" />
+  </EntityType>
+  <EntityType Name="FILA_EMAIL">
+    <Key>
+      <PropertyRef Name="FLE_ID" />
+    </Key>
+    <Property Name="FLE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FLE_EMAIL" Type="varchar" MaxLength="200" />
+    <Property Name="FLE_ASSUNTO" Type="varchar" MaxLength="200" />
+    <Property Name="FLE_CORPO" Type="text" />
+    <Property Name="FLE_DATA_CRIACAO" Type="datetime" />
+    <Property Name="FLE_DATA_ENVIO" Type="datetime" />
+    <Property Name="FLE_FUNCIONALIDADE_ORIGEM" Type="varchar" MaxLength="300" />
+    <Property Name="FLM_METODO_ORIGEM" Type="varchar" MaxLength="300" />
+    <Property Name="FLM_SERVICO_ORIGEM" Type="varchar" MaxLength="300" />
+    <Property Name="CLI_ID" Type="int" />
+    <Property Name="REP_ID" Type="int" />
+    <Property Name="USU_LOGIN" Type="varchar" MaxLength="40" />
+    <Property Name="FLE_VISUALIZACAO_ALTERNATIVA" Type="text" />
+    <Property Name="FLE_CONTENT_TYPE" Type="varchar" MaxLength="70" />
+    <Property Name="FLE_ACTION_NAME" Type="varchar" MaxLength="70" />
+    <Property Name="FLE_ARGUMENTO_ACAO" Type="varchar" MaxLength="200" />
+    <Property Name="NTS_ID" Type="int" />
+    <Property Name="FLE_REPORTACAO_ERRO" Type="bit" />
+    <Property Name="FLE_CC" Type="varchar" MaxLength="100" />
+    <Property Name="FLE_CCO" Type="varchar" MaxLength="100" />
+    <Property Name="FLE_CC_ERRO" Type="varchar" MaxLength="100" />
+    <Property Name="FLE_CCO_ERRO" Type="varchar" MaxLength="100" />
+    <Property Name="FLE_DATA_CANCELAMENTO" Type="datetime" />
+    <Property Name="FLE_ERRO_PAUSADO_ATE" Type="datetime" />
+    <Property Name="FLE_COD_SMTP" Type="int" />
+    <Property Name="FLE_PATH_ANEXO" Type="varchar" MaxLength="150" />
+    <Property Name="FLE_BINARIO_ARQUIVO" Type="varbinary(max)" />
+    <Property Name="FLE_NOME_ARQUIVO" Type="varchar" MaxLength="255" />
+    <Property Name="FLE_SUCCESS_CALLBACK" Type="varchar" MaxLength="100" />
+    <Property Name="FLE_FAIL_CALLBACK" Type="varchar" MaxLength="100" />
+    <Property Name="FLE_CALLBACK_CONTEXT_KEY" Type="int" />
+    <Property Name="FLE_CALLBACK_CONTEXT_KEY_STR" Type="varchar" MaxLength="20" />
+    <Property Name="FLE_FALHA_NOTIFICADA" Type="bit" />
+  </EntityType>
+  <EntityType Name="FONTE_DADOS_DESCRICAO">
+    <Key>
+      <PropertyRef Name="FDD_ID" />
+    </Key>
+    <Property Name="FDD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FDD_DESCRICAO" Type="varchar" MaxLength="300" />
+    <Property Name="DFD_TOKEN" Type="varchar" MaxLength="150" />
+    <Property Name="DFD_PATH" Type="varchar" MaxLength="150" />
+    <Property Name="FDA_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="FONTE_DADOS_TEMPLATE">
+    <Key>
+      <PropertyRef Name="FDA_ID" />
+    </Key>
+    <Property Name="FDA_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FDA_DESCRICAO" Type="varchar" MaxLength="150" />
+    <Property Name="TPL_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="FUNCIONALIDADE_SISTEMA">
+    <Key>
+      <PropertyRef Name="FSI_ID" />
+    </Key>
+    <Property Name="FSI_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FSI_DESCRICAO" Type="varchar" MaxLength="200" />
+    <Property Name="FSI_USA_TEMPLATE" Type="bit" />
+    <Property Name="DATA_EXCLUSAO" Type="datetime" />
+    <Property Name="TPL_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="HISTORICO_EXECUCAO">
+    <Key>
+      <PropertyRef Name="HIE_ID" />
+    </Key>
+    <Property Name="HIE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HIE_NOME" Type="varchar" MaxLength="150" />
+    <Property Name="HIE_DESCRICAO" Type="text" />
+    <Property Name="HIE_DATA_EXECUCAO" Type="datetime" />
+    <Property Name="HIE_ERRO_NOME" Type="varchar" MaxLength="150" />
+    <Property Name="HIE_ERRO_DESCRICAO" Type="text" />
+    <Property Name="HIE_NOME_SERVICO" Type="varchar" MaxLength="120" />
+    <Property Name="HIE_PROJETO" Type="varchar" MaxLength="120" />
+    <Property Name="HIE_STACK_TRACE" Type="text" />
+    <Property Name="HIE_CORREU_ERRO" Type="bit" />
+    <Property Name="TPJ_ID" Type="int" />
+    <Property Name="HIE_ID_REF" Type="int" />
+    <Property Name="HIE_ID_STR_REF" Type="varchar" MaxLength="20" />
+    <Property Name="HIE_ID_DESC" Type="varchar" MaxLength="70" />
+    <Property Name="NTS_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="IMPORTACAO">
+    <Key>
+      <PropertyRef Name="IMP_ID" />
+    </Key>
+    <Property Name="IMP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IMP_DATA" Type="datetime" />
+    <Property Name="IMP_DATA_CANCELAMENTO" Type="datetime" />
+    <Property Name="IMP_DATA_CONCLUSAO" Type="datetime" />
+    <Property Name="IMP_DATA_INICIO" Type="datetime" />
+    <Property Name="REP_ID" Type="int" />
+    <Property Name="USU_LOGIN" Type="varchar" MaxLength="150" />
+    <Property Name="IMP_PASSO_BATCH_DESCRICAO" Type="varchar" MaxLength="200" />
+    <Property Name="IMP_PASSO_BATCH" Type="int" />
+    <Property Name="IMS_ID" Type="int" />
+    <Property Name="IMS_PATH_ARQUIVO" Type="varchar" MaxLength="255" />
+    <Property Name="IMP_QTD_PROC_SUCCESSO" Type="int" />
+    <Property Name="IMP_QTD_PROC_FALHA" Type="int" />
+    <Property Name="IMP_QTD_SUS_TOTAL" Type="int" />
+    <Property Name="IMP_QTD_SUS_DUPLICADA" Type="int" />
+    <Property Name="IMP_QTD_REAL_SUS" Type="int" />
+    <Property Name="IMP_WEB_SERVICE" Type="bit" />
+  </EntityType>
+  <EntityType Name="IMPORTACAO_STATUS">
+    <Key>
+      <PropertyRef Name="IMS_ID" />
+    </Key>
+    <Property Name="IMS_ID" Type="int" Nullable="false" />
+    <Property Name="IMS_DESCRICAO" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="ITEM_MENU">
+    <Key>
+      <PropertyRef Name="ITM_ID" />
+    </Key>
+    <Property Name="ITM_ID" Type="int" Nullable="false" />
+    <Property Name="ITM_DESCRICAO" Type="varchar" MaxLength="50" />
+    <Property Name="ITM_ARQUIVO" Type="varchar" MaxLength="70" />
+    <Property Name="ITM_NODE_ID" Type="int" />
+    <Property Name="ITM_MENU_SEQ" Type="int" />
+    <Property Name="ITM_MENU_NIVEL" Type="int" />
+    <Property Name="ITM_TIPO" Type="int" />
+    <Property Name="ITM_EXTERNO" Type="int" />
+    <Property Name="ITM_ATIVO" Type="int" />
+    <Property Name="ITM_RETORNO" Type="varchar" MaxLength="70" />
+    <Property Name="ITM_NOME_ARQUIVO" Type="varchar" MaxLength="50" />
+    <Property Name="SIS_ID" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="ITEM_MENU_PERFIL">
+    <Key>
+      <PropertyRef Name="EMP_ID" />
+      <PropertyRef Name="PER_ID" />
+      <PropertyRef Name="ITM_ID" />
+    </Key>
+    <Property Name="EMP_ID" Type="int" Nullable="false" />
+    <Property Name="PER_ID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="ITM_ID" Type="int" Nullable="false" />
+    <Property Name="NIV_ACESSO" Type="int" />
+    <Property Name="NIV_INSERT" Type="int" />
+    <Property Name="NIV_EDIT" Type="int" />
+    <Property Name="NIV_DELETE" Type="int" />
+  </EntityType>
+  <EntityType Name="JOB_AGENDAMENTO">
+    <Key>
+      <PropertyRef Name="JOB_ID" />
+    </Key>
+    <Property Name="JOB_ID" Type="int" Nullable="false" />
+    <Property Name="JOB_NOME" Type="varchar" MaxLength="140" />
+    <Property Name="JOB_DESCRICAO" Type="text" />
+    <Property Name="JOB_ATIVADO" Type="bit" />
+    <Property Name="JOB_DATA_ULTIMA_EXECUCAO" Type="datetime" />
+    <Property Name="JOB_MINUTOS_MAX_OCIOSO" Type="int" />
+    <Property Name="JOB_EXECUTANDO" Type="bit" />
+    <Property Name="JOB_EMAIL_ENVIO" Type="varchar" MaxLength="300" />
+    <Property Name="JOB_EXECUTAR_AGORA" Type="bit" />
+    <Property Name="JOB_INICIO_EXECUCAO" Type="datetime" />
+    <Property Name="JOB_ATIVAR" Type="bit" />
+    <Property Name="JOB_BATCH_NOME" Type="varchar" MaxLength="255" />
+    <Property Name="JOB_BATCH_PROCESSED_ITENS" Type="int" />
+    <Property Name="JOB_BATCH_TOTAL_ITENS" Type="int" />
+    <Property Name="JOB_BATCH_PROGRESS" Type="int" />
+    <Property Name="JOB_PENDING_ITENS_DESC" Type="varchar" MaxLength="150" />
+    <Property Name="JOB_COD_EXE_REF" Type="int" />
+    <Property Name="JOB_COD_STR_EXE_REF" Type="varchar" MaxLength="50" />
+    <Property Name="JOB_COD_EXE_REF_DESC" Type="varchar" MaxLength="100" />
+    <Property Name="JOB_QTD_SUCESSO" Type="int" />
+    <Property Name="JOB_QTD_FALHA" Type="int" />
+  </EntityType>
+  <EntityType Name="JOB_NOTIFICACAO">
+    <Key>
+      <PropertyRef Name="JNF_ID" />
+    </Key>
+    <Property Name="JNF_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JOB_ID" Type="int" />
+    <Property Name="JNF_DESCRICAO" Type="varchar" MaxLength="150" />
+    <Property Name="JNF_DATA" Type="datetime" />
+    <Property Name="JNF_DATA_CONCLUSAO" Type="datetime" />
+    <Property Name="JNF_DATA_CANCELAMENTO" Type="datetime" />
+    <Property Name="REP_ID" Type="int" />
+    <Property Name="USU_LOGIN" Type="varchar" MaxLength="15" />
+    <Property Name="JNF_COD_REF" Type="int" />
+    <Property Name="JNF_COD_STR_REF" Type="varchar" MaxLength="150" />
+    <Property Name="JNT_ID" Type="int" />
+    <Property Name="JNF_ULTIMO_ERRO" Type="text" />
+    <Property Name="JNF_EXIBIR_PROGRESSO" Type="bit" />
+  </EntityType>
+  <EntityType Name="JOB_NOTIFICACAO_MSG_ITEM">
+    <Key>
+      <PropertyRef Name="NTM_ID" />
+    </Key>
+    <Property Name="NTM_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JNF_ID" Type="int" />
+    <Property Name="NTM_MENSAGEM" Type="text" />
+    <Property Name="NTM_COD_REF" Type="int" />
+    <Property Name="NTM_COD_REF_STR" Type="varchar" MaxLength="50" />
+    <Property Name="NTM_DATA" Type="datetime" />
+  </EntityType>
+  <EntityType Name="JOB_NOTIFICACAO_STATUS">
+    <Key>
+      <PropertyRef Name="JNT_ID" />
+    </Key>
+    <Property Name="JNT_ID" Type="int" Nullable="false" />
+    <Property Name="JNT_DESCRICAO" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="LOG_OCORRENCIA">
+    <Key>
+      <PropertyRef Name="LOG_SEQ" />
+    </Key>
+    <Property Name="LOG_SEQ" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LOG_MESSAGE" Type="varchar" MaxLength="2000" Nullable="false" />
+    <Property Name="LOG_IP_ACESSO" Type="varchar" MaxLength="20" />
+    <Property Name="ITM_PATH" Type="varchar" MaxLength="300" />
+    <Property Name="USU_LOGIN" Type="varchar" MaxLength="15" />
+    <Property Name="LOG_DATA" Type="datetime" />
+    <Property Name="LOG_ID_ERRO" Type="varchar" MaxLength="20" />
+    <Property Name="LOG_EMAIL" Type="varchar" MaxLength="70" />
+    <Property Name="LOG_STACK_TRACE" Type="text" />
+    <Property Name="LOG_FULL_MSG" Type="text" />
+  </EntityType>
+  <EntityType Name="NIVEL_ACESSO">
+    <Key>
+      <PropertyRef Name="NIV_ACE_ID" />
+    </Key>
+    <Property Name="NIV_ACE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NIV_ACE_DESCRICAO" Type="nvarchar" MaxLength="60" />
+    <Property Name="NIV_ACE_NIVEL" Type="int" />
+  </EntityType>
+  <EntityType Name="NOTA_FISCAL_LOTE_ITEM_TIPO">
+    <Key>
+      <PropertyRef Name="NIT_ID" />
+    </Key>
+    <Property Name="NIT_ID" Type="int" Nullable="false" />
+    <Property Name="NIT_DESCRICAO" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="NOTIFICACAO_SISTEMA">
+    <Key>
+      <PropertyRef Name="NTS_ID" />
+    </Key>
+    <Property Name="NTS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NTS_DESCRICAO" Type="varchar" MaxLength="400" />
+    <Property Name="NTS_COD_REF_INT" Type="int" />
+    <Property Name="NTS_COD_REF_STR" Type="varchar" MaxLength="8" />
+    <Property Name="NTS_DESCRICAO_COD_REF" Type="varchar" MaxLength="200" />
+    <Property Name="NTS_DATA" Type="datetime" />
+    <Property Name="TNS_ID" Type="int" />
+    <Property Name="NTS_NUMERO_CORRENCIA" Type="int" />
+    <Property Name="NTS_SERVICO" Type="varchar" MaxLength="230" />
+    <Property Name="NTS_PROJETO" Type="varchar" MaxLength="230" />
+    <Property Name="NTS_DATA_RESOLUCAO" Type="datetime" />
+    <Property Name="NTS_ERRO_NOME" Type="varchar" MaxLength="150" />
+    <Property Name="NTS_ERRO_DESCRICAO" Type="text" />
+    <Property Name="NTF_ENVIA_EMAIL" Type="varchar" MaxLength="250" />
+    <Property Name="NTS_ERRO_PAUSADO_ATE" Type="datetime" />
+    <Property Name="NTF_DATA_CANCELAMENTO" Type="datetime" />
+    <Property Name="NTS_STACK_TRACE" Type="text" />
+  </EntityType>
+  <EntityType Name="PARAMETRO_GRUPO">
+    <Key>
+      <PropertyRef Name="PGR_ID" />
+    </Key>
+    <Property Name="PGR_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PGR_DESCRICAO" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="PARAMETROS">
+    <Key>
+      <PropertyRef Name="PAR_ID" />
+    </Key>
+    <Property Name="PAR_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PAR_KEY" Type="varchar" MaxLength="200" />
+    <Property Name="PAR_VALOR" Type="varchar" MaxLength="200" />
+    <Property Name="USU_LOGIN" Type="varchar" MaxLength="15" />
+    <Property Name="PAR_DATA_ALTERA" Type="datetime" />
+    <Property Name="PGR_ID" Type="int" />
+    <Property Name="PAR_TIPO" Type="char" MaxLength="1" />
+    <Property Name="PAR_VALOR_PADRAO" Type="varchar" MaxLength="255" />
+    <Property Name="PAR_KEY_DESCRICAO" Type="varchar" MaxLength="70" />
+  </EntityType>
+  <EntityType Name="PERFIL">
+    <Key>
+      <PropertyRef Name="EMP_ID" />
+      <PropertyRef Name="PER_ID" />
+    </Key>
+    <Property Name="EMP_ID" Type="int" Nullable="false" />
+    <Property Name="PER_ID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="PER_ATIVO" Type="int" />
+    <Property Name="PER_HORA_INI" Type="varchar" MaxLength="8" />
+    <Property Name="PER_HORA_FIM" Type="varchar" MaxLength="8" />
+    <Property Name="PER_OUTROS_NIVEIS" Type="int" />
+    <Property Name="SIS_ID" Type="varchar" MaxLength="20" />
+    <Property Name="PER_BUSCA_REP" Type="int" />
+    <Property Name="PER_DASHBOARD" Type="int" />
+    <Property Name="GERENCIA" Type="bit" />
+    <Property Name="DP_ID" Type="int" />
+    <Property Name="PER_PATH_HOME" Type="varchar" MaxLength="50" />
+    <Property Name="NIV_ACE_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="PERFIL_USUARIO">
+    <Key>
+      <PropertyRef Name="EMP_ID" />
+      <PropertyRef Name="PER_ID" />
+      <PropertyRef Name="USU_LOGIN" />
+    </Key>
+    <Property Name="EMP_ID" Type="int" Nullable="false" />
+    <Property Name="PER_ID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="USU_LOGIN" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="PUS_DEFAULT" Type="int" />
+    <Property Name="PUS_ATIVO" Type="int" />
+    <Property Name="PERFIL_CLONAVEL" Type="bit" />
+    <Property Name="PUS_INSERIDO_EXTERNAMENTO" Type="bit" />
+  </EntityType>
+  <EntityType Name="RELATORIOS">
+    <Key>
+      <PropertyRef Name="REL_ID" />
+    </Key>
+    <Property Name="REL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="REL_DESCRICAO" Type="varchar" MaxLength="255" />
+    <Property Name="REL_PATH" Type="varchar" MaxLength="100" />
+    <Property Name="REL_TIPO" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="SISTEMA">
+    <Key>
+      <PropertyRef Name="SIS_ID" />
+    </Key>
+    <Property Name="SIS_ID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="SIS_DESCRICAO" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="SIS_VERSAO" Type="varchar" MaxLength="20" />
+    <Property Name="SIS_URL" Type="varchar" MaxLength="50" />
+    <Property Name="SIS_URL_PRODUCAO" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TEMPLATE_GRUPO">
+    <Key>
+      <PropertyRef Name="TGR_ID" />
+    </Key>
+    <Property Name="TGR_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TGR_DESCRICAO" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="TEMPLATE_HTML">
+    <Key>
+      <PropertyRef Name="TPL_ID" />
+    </Key>
+    <Property Name="TPL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TPL_DESCRICAO" Type="varchar" MaxLength="150" />
+    <Property Name="TPL_HTML" Type="text" />
+    <Property Name="TGR_ID" Type="int" />
+    <Property Name="TPL_ID_LAYOUT" Type="int" />
+    <Property Name="LAYOUT" Type="bit" />
+    <Property Name="DATA_EXCLUIR" Type="datetime" />
+    <Property Name="FDA_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="TIPO_JOB">
+    <Key>
+      <PropertyRef Name="TPJ_ID" />
+    </Key>
+    <Property Name="TPJ_ID" Type="int" Nullable="false" />
+    <Property Name="TPJ_DESCRICAO" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TIPO_NOTIFICACAO_SISTEMA">
+    <Key>
+      <PropertyRef Name="TNS_ID" />
+    </Key>
+    <Property Name="TNS_ID" Type="int" Nullable="false" />
+    <Property Name="TNS_DESCRICAO" Type="varchar" MaxLength="250" />
+    <Property Name="TNS_COD_REF_DESC" Type="varchar" MaxLength="250" />
+    <Property Name="TNS_COD_REF_NOME_CAMPO" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="USUARIO">
+    <Key>
+      <PropertyRef Name="USU_LOGIN" />
+    </Key>
+    <Property Name="USU_LOGIN" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="USU_DATA_CAD" Type="datetime" Nullable="false" />
+    <Property Name="USU_ATIVO" Type="int" Nullable="false" />
+    <Property Name="USU_DATA_EXPIRA" Type="datetime" />
+    <Property Name="USU_DATA_ULTIMOACESSO" Type="datetime" />
+    <Property Name="USU_DATA_LOGIN" Type="datetime" />
+    <Property Name="USU_NOME" Type="varchar" MaxLength="50" />
+    <Property Name="USU_SENHA" Type="varchar" MaxLength="50" />
+    <Property Name="USU_ADMIN" Type="int" />
+    <Property Name="USU_EMAIL" Type="varchar" MaxLength="70" />
+    <Property Name="USU_NOVA_SENHA" Type="int" />
+    <Property Name="EMP_ID" Type="int" Nullable="false" />
+    <Property Name="REP_ID" Type="int" />
+    <Property Name="USU_CPF" Type="varchar" MaxLength="14" />
+    <Property Name="USU_ADMIN_LOGIN_PERFIL" Type="bit" Nullable="false" />
+    <Property Name="CADASTRADO_POR" Type="varchar" MaxLength="15" />
+    <Property Name="USU_EMAIL_SENHA" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_CONTA_BANCOS_REF">
+    <End Role="BANCOS_REF" Type="Self.BANCOS_REF" Multiplicity="1" />
+    <End Role="CONTA" Type="Self.CONTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BANCOS_REF">
+        <PropertyRef Name="BAN_ID" />
+      </Principal>
+      <Dependent Role="CONTA">
+        <PropertyRef Name="BAN_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONTA_EMPRESA">
+    <End Role="EMPRESA" Type="Self.EMPRESA" Multiplicity="1" />
+    <End Role="CONTA" Type="Self.CONTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPRESA">
+        <PropertyRef Name="EMP_ID" />
+      </Principal>
+      <Dependent Role="CONTA">
+        <PropertyRef Name="EMP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONTA_X_EMPRESA_SACADORA_AVALISTA">
+    <End Role="EMPRESA" Type="Self.EMPRESA" Multiplicity="0..1" />
+    <End Role="CONTA" Type="Self.CONTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPRESA">
+        <PropertyRef Name="EMP_ID" />
+      </Principal>
+      <Dependent Role="CONTA">
+        <PropertyRef Name="EMP_ID_S_AVS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EMPRESA_CONTABILISTA">
+    <End Role="CONTABILISTA" Type="Self.CONTABILISTA" Multiplicity="0..1" />
+    <End Role="EMPRESA" Type="Self.EMPRESA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONTABILISTA">
+        <PropertyRef Name="CNT_ID" />
+      </Principal>
+      <Dependent Role="EMPRESA">
+        <PropertyRef Name="CNT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FILA_EMAIL_X_NOTIFICACAO_SISTEMA">
+    <End Role="NOTIFICACAO_SISTEMA" Type="Self.NOTIFICACAO_SISTEMA" Multiplicity="0..1" />
+    <End Role="FILA_EMAIL" Type="Self.FILA_EMAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NOTIFICACAO_SISTEMA">
+        <PropertyRef Name="NTS_ID" />
+      </Principal>
+      <Dependent Role="FILA_EMAIL">
+        <PropertyRef Name="NTS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FONTE_DADOS_DESCRICAO_FONTE_DADOS_TEMPLATE">
+    <End Role="FONTE_DADOS_TEMPLATE" Type="Self.FONTE_DADOS_TEMPLATE" Multiplicity="0..1" />
+    <End Role="FONTE_DADOS_DESCRICAO" Type="Self.FONTE_DADOS_DESCRICAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FONTE_DADOS_TEMPLATE">
+        <PropertyRef Name="FDA_ID" />
+      </Principal>
+      <Dependent Role="FONTE_DADOS_DESCRICAO">
+        <PropertyRef Name="FDA_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HISTORICO_EXECUCAO_TIPO_JOB">
+    <End Role="TIPO_JOB" Type="Self.TIPO_JOB" Multiplicity="0..1" />
+    <End Role="HISTORICO_EXECUCAO" Type="Self.HISTORICO_EXECUCAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO_JOB">
+        <PropertyRef Name="TPJ_ID" />
+      </Principal>
+      <Dependent Role="HISTORICO_EXECUCAO">
+        <PropertyRef Name="TPJ_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HISTORICO_EXECUCAO_X_NOTIFICACAO_SISTEMA">
+    <End Role="NOTIFICACAO_SISTEMA" Type="Self.NOTIFICACAO_SISTEMA" Multiplicity="0..1" />
+    <End Role="HISTORICO_EXECUCAO" Type="Self.HISTORICO_EXECUCAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NOTIFICACAO_SISTEMA">
+        <PropertyRef Name="NTS_ID" />
+      </Principal>
+      <Dependent Role="HISTORICO_EXECUCAO">
+        <PropertyRef Name="NTS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IMPORTACAO_IMPORTACAO_STATUS">
+    <End Role="IMPORTACAO_STATUS" Type="Self.IMPORTACAO_STATUS" Multiplicity="0..1" />
+    <End Role="IMPORTACAO" Type="Self.IMPORTACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IMPORTACAO_STATUS">
+        <PropertyRef Name="IMS_ID" />
+      </Principal>
+      <Dependent Role="IMPORTACAO">
+        <PropertyRef Name="IMS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ITEM_MENU_ITEM_MENU">
+    <End Role="ITEM_MENU" Type="Self.ITEM_MENU" Multiplicity="0..1" />
+    <End Role="ITEM_MENU1" Type="Self.ITEM_MENU" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ITEM_MENU">
+        <PropertyRef Name="ITM_ID" />
+      </Principal>
+      <Dependent Role="ITEM_MENU1">
+        <PropertyRef Name="ITM_NODE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ITEM_MENU_PERFIL_ITEM_MENU">
+    <End Role="ITEM_MENU" Type="Self.ITEM_MENU" Multiplicity="1" />
+    <End Role="ITEM_MENU_PERFIL" Type="Self.ITEM_MENU_PERFIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ITEM_MENU">
+        <PropertyRef Name="ITM_ID" />
+      </Principal>
+      <Dependent Role="ITEM_MENU_PERFIL">
+        <PropertyRef Name="ITM_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ITEM_MENU_PERFIL_PERFIL">
+    <End Role="PERFIL" Type="Self.PERFIL" Multiplicity="1" />
+    <End Role="ITEM_MENU_PERFIL" Type="Self.ITEM_MENU_PERFIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PERFIL">
+        <PropertyRef Name="EMP_ID" />
+        <PropertyRef Name="PER_ID" />
+      </Principal>
+      <Dependent Role="ITEM_MENU_PERFIL">
+        <PropertyRef Name="EMP_ID" />
+        <PropertyRef Name="PER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ITEM_MENU_SISTEMA">
+    <End Role="SISTEMA" Type="Self.SISTEMA" Multiplicity="0..1" />
+    <End Role="ITEM_MENU" Type="Self.ITEM_MENU" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SISTEMA">
+        <PropertyRef Name="SIS_ID" />
+      </Principal>
+      <Dependent Role="ITEM_MENU">
+        <PropertyRef Name="SIS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JOB_NOTIFICACAO_JOB_AGENDAMENTO">
+    <End Role="JOB_AGENDAMENTO" Type="Self.JOB_AGENDAMENTO" Multiplicity="0..1" />
+    <End Role="JOB_NOTIFICACAO" Type="Self.JOB_NOTIFICACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JOB_AGENDAMENTO">
+        <PropertyRef Name="JOB_ID" />
+      </Principal>
+      <Dependent Role="JOB_NOTIFICACAO">
+        <PropertyRef Name="JOB_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JOB_NOTIFICACAO_MSG_ITEM_JOB_NOTIFICACAO">
+    <End Role="JOB_NOTIFICACAO" Type="Self.JOB_NOTIFICACAO" Multiplicity="0..1" />
+    <End Role="JOB_NOTIFICACAO_MSG_ITEM" Type="Self.JOB_NOTIFICACAO_MSG_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JOB_NOTIFICACAO">
+        <PropertyRef Name="JNF_ID" />
+      </Principal>
+      <Dependent Role="JOB_NOTIFICACAO_MSG_ITEM">
+        <PropertyRef Name="JNF_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JOB_NOTIFICACAO_USUARIO">
+    <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+    <End Role="JOB_NOTIFICACAO" Type="Self.JOB_NOTIFICACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USUARIO">
+        <PropertyRef Name="USU_LOGIN" />
+      </Principal>
+      <Dependent Role="JOB_NOTIFICACAO">
+        <PropertyRef Name="USU_LOGIN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JOB_NOTIFICACAO_X_JOB_TIPO">
+    <End Role="JOB_NOTIFICACAO_STATUS" Type="Self.JOB_NOTIFICACAO_STATUS" Multiplicity="0..1" />
+    <End Role="JOB_NOTIFICACAO" Type="Self.JOB_NOTIFICACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JOB_NOTIFICACAO_STATUS">
+        <PropertyRef Name="JNT_ID" />
+      </Principal>
+      <Dependent Role="JOB_NOTIFICACAO">
+        <PropertyRef Name="JNT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NOTIFICACAO_SISTEMA_TIPO_NOTIFICACAO_SISTEMA">
+    <End Role="TIPO_NOTIFICACAO_SISTEMA" Type="Self.TIPO_NOTIFICACAO_SISTEMA" Multiplicity="0..1" />
+    <End Role="NOTIFICACAO_SISTEMA" Type="Self.NOTIFICACAO_SISTEMA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO_NOTIFICACAO_SISTEMA">
+        <PropertyRef Name="TNS_ID" />
+      </Principal>
+      <Dependent Role="NOTIFICACAO_SISTEMA">
+        <PropertyRef Name="TNS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PARAMETROS_PARAMETRO_GRUPO">
+    <End Role="PARAMETRO_GRUPO" Type="Self.PARAMETRO_GRUPO" Multiplicity="0..1" />
+    <End Role="PARAMETROS" Type="Self.PARAMETROS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PARAMETRO_GRUPO">
+        <PropertyRef Name="PGR_ID" />
+      </Principal>
+      <Dependent Role="PARAMETROS">
+        <PropertyRef Name="PGR_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PARAMETROS_USUARIO">
+    <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+    <End Role="PARAMETROS" Type="Self.PARAMETROS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USUARIO">
+        <PropertyRef Name="USU_LOGIN" />
+      </Principal>
+      <Dependent Role="PARAMETROS">
+        <PropertyRef Name="USU_LOGIN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERFIL_DP">
+    <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="0..1" />
+    <End Role="PERFIL" Type="Self.PERFIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTAMENTO">
+        <PropertyRef Name="DP_ID" />
+      </Principal>
+      <Dependent Role="PERFIL">
+        <PropertyRef Name="DP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERFIL_EMPRESA">
+    <End Role="EMPRESA" Type="Self.EMPRESA" Multiplicity="1" />
+    <End Role="PERFIL" Type="Self.PERFIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPRESA">
+        <PropertyRef Name="EMP_ID" />
+      </Principal>
+      <Dependent Role="PERFIL">
+        <PropertyRef Name="EMP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERFIL_NIVEL_ACESSO">
+    <End Role="NIVEL_ACESSO" Type="Self.NIVEL_ACESSO" Multiplicity="0..1" />
+    <End Role="PERFIL" Type="Self.PERFIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NIVEL_ACESSO">
+        <PropertyRef Name="NIV_ACE_ID" />
+      </Principal>
+      <Dependent Role="PERFIL">
+        <PropertyRef Name="NIV_ACE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERFIL_SISTEMA">
+    <End Role="SISTEMA" Type="Self.SISTEMA" Multiplicity="0..1" />
+    <End Role="PERFIL" Type="Self.PERFIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SISTEMA">
+        <PropertyRef Name="SIS_ID" />
+      </Principal>
+      <Dependent Role="PERFIL">
+        <PropertyRef Name="SIS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERFIL_USUARIO_PERFIL">
+    <End Role="PERFIL" Type="Self.PERFIL" Multiplicity="1" />
+    <End Role="PERFIL_USUARIO" Type="Self.PERFIL_USUARIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PERFIL">
+        <PropertyRef Name="EMP_ID" />
+        <PropertyRef Name="PER_ID" />
+      </Principal>
+      <Dependent Role="PERFIL_USUARIO">
+        <PropertyRef Name="EMP_ID" />
+        <PropertyRef Name="PER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERFIL_USUARIO_USUARIO">
+    <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+    <End Role="PERFIL_USUARIO" Type="Self.PERFIL_USUARIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USUARIO">
+        <PropertyRef Name="USU_LOGIN" />
+      </Principal>
+      <Dependent Role="PERFIL_USUARIO">
+        <PropertyRef Name="USU_LOGIN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TEMPLATE_HTML_TEMPLATE_GRUPO">
+    <End Role="TEMPLATE_GRUPO" Type="Self.TEMPLATE_GRUPO" Multiplicity="0..1" />
+    <End Role="TEMPLATE_HTML" Type="Self.TEMPLATE_HTML" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TEMPLATE_GRUPO">
+        <PropertyRef Name="TGR_ID" />
+      </Principal>
+      <Dependent Role="TEMPLATE_HTML">
+        <PropertyRef Name="TGR_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TEMPLATE_HTML_TEMPLATE_TEMPLATE_HTML_LAYOUT">
+    <End Role="TEMPLATE_HTML" Type="Self.TEMPLATE_HTML" Multiplicity="0..1" />
+    <End Role="TEMPLATE_HTML1" Type="Self.TEMPLATE_HTML" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TEMPLATE_HTML">
+        <PropertyRef Name="TPL_ID" />
+      </Principal>
+      <Dependent Role="TEMPLATE_HTML1">
+        <PropertyRef Name="TPL_ID_LAYOUT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TEMPLATE_HTML_X_FONTE_DADOS_TEMPLATE">
+    <End Role="FONTE_DADOS_TEMPLATE" Type="Self.FONTE_DADOS_TEMPLATE" Multiplicity="0..1" />
+    <End Role="TEMPLATE_HTML" Type="Self.TEMPLATE_HTML" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FONTE_DADOS_TEMPLATE">
+        <PropertyRef Name="FDA_ID" />
+      </Principal>
+      <Dependent Role="TEMPLATE_HTML">
+        <PropertyRef Name="FDA_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TEMPLATE_HTML_X_FUNCIONALIDADE_SISTEMA_REF">
+    <End Role="TEMPLATE_HTML" Type="Self.TEMPLATE_HTML" Multiplicity="0..1" />
+    <End Role="FUNCIONALIDADE_SISTEMA" Type="Self.FUNCIONALIDADE_SISTEMA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TEMPLATE_HTML">
+        <PropertyRef Name="TPL_ID" />
+      </Principal>
+      <Dependent Role="FUNCIONALIDADE_SISTEMA">
+        <PropertyRef Name="TPL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USUARIO_EMPRESA">
+    <End Role="EMPRESA" Type="Self.EMPRESA" Multiplicity="1" />
+    <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPRESA">
+        <PropertyRef Name="EMP_ID" />
+      </Principal>
+      <Dependent Role="USUARIO">
+        <PropertyRef Name="EMP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USUARIO_USUARIO">
+    <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+    <End Role="USUARIO1" Type="Self.USUARIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USUARIO">
+        <PropertyRef Name="USU_LOGIN" />
+      </Principal>
+      <Dependent Role="USUARIO1">
+        <PropertyRef Name="CADASTRADO_POR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="COADSYSModelStoreContainer">
+    <EntitySet Name="BANCOS_REF" EntityType="Self.BANCOS_REF" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CONTA" EntityType="Self.CONTA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CONTABILISTA" EntityType="Self.CONTABILISTA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DEPARTAMENTO" EntityType="Self.DEPARTAMENTO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EMPRESA" EntityType="Self.EMPRESA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FILA_EMAIL" EntityType="Self.FILA_EMAIL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FONTE_DADOS_DESCRICAO" EntityType="Self.FONTE_DADOS_DESCRICAO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FONTE_DADOS_TEMPLATE" EntityType="Self.FONTE_DADOS_TEMPLATE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FUNCIONALIDADE_SISTEMA" EntityType="Self.FUNCIONALIDADE_SISTEMA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HISTORICO_EXECUCAO" EntityType="Self.HISTORICO_EXECUCAO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IMPORTACAO" EntityType="Self.IMPORTACAO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IMPORTACAO_STATUS" EntityType="Self.IMPORTACAO_STATUS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ITEM_MENU" EntityType="Self.ITEM_MENU" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ITEM_MENU_PERFIL" EntityType="Self.ITEM_MENU_PERFIL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JOB_AGENDAMENTO" EntityType="Self.JOB_AGENDAMENTO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JOB_NOTIFICACAO" EntityType="Self.JOB_NOTIFICACAO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JOB_NOTIFICACAO_MSG_ITEM" EntityType="Self.JOB_NOTIFICACAO_MSG_ITEM" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JOB_NOTIFICACAO_STATUS" EntityType="Self.JOB_NOTIFICACAO_STATUS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LOG_OCORRENCIA" EntityType="Self.LOG_OCORRENCIA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NIVEL_ACESSO" EntityType="Self.NIVEL_ACESSO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NOTA_FISCAL_LOTE_ITEM_TIPO" EntityType="Self.NOTA_FISCAL_LOTE_ITEM_TIPO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NOTIFICACAO_SISTEMA" EntityType="Self.NOTIFICACAO_SISTEMA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PARAMETRO_GRUPO" EntityType="Self.PARAMETRO_GRUPO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PARAMETROS" EntityType="Self.PARAMETROS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PERFIL" EntityType="Self.PERFIL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PERFIL_USUARIO" EntityType="Self.PERFIL_USUARIO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RELATORIOS" EntityType="Self.RELATORIOS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SISTEMA" EntityType="Self.SISTEMA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TEMPLATE_GRUPO" EntityType="Self.TEMPLATE_GRUPO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TEMPLATE_HTML" EntityType="Self.TEMPLATE_HTML" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIPO_JOB" EntityType="Self.TIPO_JOB" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIPO_NOTIFICACAO_SISTEMA" EntityType="Self.TIPO_NOTIFICACAO_SISTEMA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EMPRESA_TST2" EntityType="Self.EMPRESA_TST2" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[EMPRESA_TST2].[EMP_ID] AS [EMP_ID], 
+[EMPRESA_TST2].[EMP_RAZAO_SOCIAL] AS [EMP_RAZAO_SOCIAL], 
+[EMPRESA_TST2].[EMP_NOME_FANTASIA] AS [EMP_NOME_FANTASIA], 
+[EMPRESA_TST2].[EMP_CNPJ] AS [EMP_CNPJ], 
+[EMPRESA_TST2].[EMP_IE] AS [EMP_IE], 
+[EMPRESA_TST2].[EMP_IM] AS [EMP_IM], 
+[EMPRESA_TST2].[EMP_SUFRAMA] AS [EMP_SUFRAMA], 
+[EMPRESA_TST2].[EMP_LOGRADOURO] AS [EMP_LOGRADOURO], 
+[EMPRESA_TST2].[EMP_NUMERO] AS [EMP_NUMERO], 
+[EMPRESA_TST2].[EMP_COMPLEMENTO] AS [EMP_COMPLEMENTO], 
+[EMPRESA_TST2].[EMP_BAIRRO] AS [EMP_BAIRRO], 
+[EMPRESA_TST2].[EMP_CEP] AS [EMP_CEP], 
+[EMPRESA_TST2].[EMP_TEL1] AS [EMP_TEL1], 
+[EMPRESA_TST2].[EMP_TEL2] AS [EMP_TEL2], 
+[EMPRESA_TST2].[EMP_TEL3] AS [EMP_TEL3], 
+[EMPRESA_TST2].[EMP_EMAIL] AS [EMP_EMAIL], 
+[EMPRESA_TST2].[EMP_SITE] AS [EMP_SITE], 
+[EMPRESA_TST2].[EMP_ULTIMA_NFE] AS [EMP_ULTIMA_NFE], 
+[EMPRESA_TST2].[EMP_CNR_AGCEDENTE] AS [EMP_CNR_AGCEDENTE], 
+[EMPRESA_TST2].[EMP_AREA] AS [EMP_AREA], 
+[EMPRESA_TST2].[EMP_TIPO] AS [EMP_TIPO], 
+[EMPRESA_TST2].[EMP_IE_ST] AS [EMP_IE_ST], 
+[EMPRESA_TST2].[CNT_ID] AS [CNT_ID], 
+[EMPRESA_TST2].[IBGE_COD_COMPLETO] AS [IBGE_COD_COMPLETO], 
+[EMPRESA_TST2].[CID_ID] AS [CID_ID], 
+[EMPRESA_TST2].[EMP_APARECE_PRE_PEDIDO] AS [EMP_APARECE_PRE_PEDIDO], 
+[EMPRESA_TST2].[EMP_GRP_COAD] AS [EMP_GRP_COAD], 
+[EMPRESA_TST2].[EMP_DATA_ULT_FAT] AS [EMP_DATA_ULT_FAT], 
+[EMPRESA_TST2].[EMP_ID_CORREIO] AS [EMP_ID_CORREIO], 
+[EMPRESA_TST2].[EMP_DESP_ADM_BOLETO] AS [EMP_DESP_ADM_BOLETO], 
+[EMPRESA_TST2].[EMP_MORA_MES_BOLETO] AS [EMP_MORA_MES_BOLETO], 
+[EMPRESA_TST2].[EMP_ULT_FECHAMENTO_FAT] AS [EMP_ULT_FECHAMENTO_FAT], 
+[EMPRESA_TST2].[EMP_NOME_CERTIFICADO] AS [EMP_NOME_CERTIFICADO], 
+[EMPRESA_TST2].[EMP_CERTIFICADO_SENHA] AS [EMP_CERTIFICADO_SENHA], 
+[EMPRESA_TST2].[EMP_ULTIMA_NFSE] AS [EMP_ULTIMA_NFSE]
+FROM [dbo].[EMPRESA_TST2] AS [EMPRESA_TST2]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_CONTA_BANCOS_REF" Association="Self.FK_CONTA_BANCOS_REF">
+      <End Role="BANCOS_REF" EntitySet="BANCOS_REF" />
+      <End Role="CONTA" EntitySet="CONTA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONTA_EMPRESA" Association="Self.FK_CONTA_EMPRESA">
+      <End Role="EMPRESA" EntitySet="EMPRESA" />
+      <End Role="CONTA" EntitySet="CONTA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONTA_X_EMPRESA_SACADORA_AVALISTA" Association="Self.FK_CONTA_X_EMPRESA_SACADORA_AVALISTA">
+      <End Role="EMPRESA" EntitySet="EMPRESA" />
+      <End Role="CONTA" EntitySet="CONTA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EMPRESA_CONTABILISTA" Association="Self.FK_EMPRESA_CONTABILISTA">
+      <End Role="CONTABILISTA" EntitySet="CONTABILISTA" />
+      <End Role="EMPRESA" EntitySet="EMPRESA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FILA_EMAIL_X_NOTIFICACAO_SISTEMA" Association="Self.FK_FILA_EMAIL_X_NOTIFICACAO_SISTEMA">
+      <End Role="NOTIFICACAO_SISTEMA" EntitySet="NOTIFICACAO_SISTEMA" />
+      <End Role="FILA_EMAIL" EntitySet="FILA_EMAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FONTE_DADOS_DESCRICAO_FONTE_DADOS_TEMPLATE" Association="Self.FK_FONTE_DADOS_DESCRICAO_FONTE_DADOS_TEMPLATE">
+      <End Role="FONTE_DADOS_TEMPLATE" EntitySet="FONTE_DADOS_TEMPLATE" />
+      <End Role="FONTE_DADOS_DESCRICAO" EntitySet="FONTE_DADOS_DESCRICAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HISTORICO_EXECUCAO_TIPO_JOB" Association="Self.FK_HISTORICO_EXECUCAO_TIPO_JOB">
+      <End Role="TIPO_JOB" EntitySet="TIPO_JOB" />
+      <End Role="HISTORICO_EXECUCAO" EntitySet="HISTORICO_EXECUCAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HISTORICO_EXECUCAO_X_NOTIFICACAO_SISTEMA" Association="Self.FK_HISTORICO_EXECUCAO_X_NOTIFICACAO_SISTEMA">
+      <End Role="NOTIFICACAO_SISTEMA" EntitySet="NOTIFICACAO_SISTEMA" />
+      <End Role="HISTORICO_EXECUCAO" EntitySet="HISTORICO_EXECUCAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IMPORTACAO_IMPORTACAO_STATUS" Association="Self.FK_IMPORTACAO_IMPORTACAO_STATUS">
+      <End Role="IMPORTACAO_STATUS" EntitySet="IMPORTACAO_STATUS" />
+      <End Role="IMPORTACAO" EntitySet="IMPORTACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ITEM_MENU_ITEM_MENU" Association="Self.FK_ITEM_MENU_ITEM_MENU">
+      <End Role="ITEM_MENU" EntitySet="ITEM_MENU" />
+      <End Role="ITEM_MENU1" EntitySet="ITEM_MENU" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ITEM_MENU_PERFIL_ITEM_MENU" Association="Self.FK_ITEM_MENU_PERFIL_ITEM_MENU">
+      <End Role="ITEM_MENU" EntitySet="ITEM_MENU" />
+      <End Role="ITEM_MENU_PERFIL" EntitySet="ITEM_MENU_PERFIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ITEM_MENU_PERFIL_PERFIL" Association="Self.FK_ITEM_MENU_PERFIL_PERFIL">
+      <End Role="PERFIL" EntitySet="PERFIL" />
+      <End Role="ITEM_MENU_PERFIL" EntitySet="ITEM_MENU_PERFIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ITEM_MENU_SISTEMA" Association="Self.FK_ITEM_MENU_SISTEMA">
+      <End Role="SISTEMA" EntitySet="SISTEMA" />
+      <End Role="ITEM_MENU" EntitySet="ITEM_MENU" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JOB_NOTIFICACAO_JOB_AGENDAMENTO" Association="Self.FK_JOB_NOTIFICACAO_JOB_AGENDAMENTO">
+      <End Role="JOB_AGENDAMENTO" EntitySet="JOB_AGENDAMENTO" />
+      <End Role="JOB_NOTIFICACAO" EntitySet="JOB_NOTIFICACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JOB_NOTIFICACAO_MSG_ITEM_JOB_NOTIFICACAO" Association="Self.FK_JOB_NOTIFICACAO_MSG_ITEM_JOB_NOTIFICACAO">
+      <End Role="JOB_NOTIFICACAO" EntitySet="JOB_NOTIFICACAO" />
+      <End Role="JOB_NOTIFICACAO_MSG_ITEM" EntitySet="JOB_NOTIFICACAO_MSG_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JOB_NOTIFICACAO_USUARIO" Association="Self.FK_JOB_NOTIFICACAO_USUARIO">
+      <End Role="USUARIO" EntitySet="USUARIO" />
+      <End Role="JOB_NOTIFICACAO" EntitySet="JOB_NOTIFICACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JOB_NOTIFICACAO_X_JOB_TIPO" Association="Self.FK_JOB_NOTIFICACAO_X_JOB_TIPO">
+      <End Role="JOB_NOTIFICACAO_STATUS" EntitySet="JOB_NOTIFICACAO_STATUS" />
+      <End Role="JOB_NOTIFICACAO" EntitySet="JOB_NOTIFICACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NOTIFICACAO_SISTEMA_TIPO_NOTIFICACAO_SISTEMA" Association="Self.FK_NOTIFICACAO_SISTEMA_TIPO_NOTIFICACAO_SISTEMA">
+      <End Role="TIPO_NOTIFICACAO_SISTEMA" EntitySet="TIPO_NOTIFICACAO_SISTEMA" />
+      <End Role="NOTIFICACAO_SISTEMA" EntitySet="NOTIFICACAO_SISTEMA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PARAMETROS_PARAMETRO_GRUPO" Association="Self.FK_PARAMETROS_PARAMETRO_GRUPO">
+      <End Role="PARAMETRO_GRUPO" EntitySet="PARAMETRO_GRUPO" />
+      <End Role="PARAMETROS" EntitySet="PARAMETROS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PARAMETROS_USUARIO" Association="Self.FK_PARAMETROS_USUARIO">
+      <End Role="USUARIO" EntitySet="USUARIO" />
+      <End Role="PARAMETROS" EntitySet="PARAMETROS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERFIL_DP" Association="Self.FK_PERFIL_DP">
+      <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
+      <End Role="PERFIL" EntitySet="PERFIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERFIL_EMPRESA" Association="Self.FK_PERFIL_EMPRESA">
+      <End Role="EMPRESA" EntitySet="EMPRESA" />
+      <End Role="PERFIL" EntitySet="PERFIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERFIL_NIVEL_ACESSO" Association="Self.FK_PERFIL_NIVEL_ACESSO">
+      <End Role="NIVEL_ACESSO" EntitySet="NIVEL_ACESSO" />
+      <End Role="PERFIL" EntitySet="PERFIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERFIL_SISTEMA" Association="Self.FK_PERFIL_SISTEMA">
+      <End Role="SISTEMA" EntitySet="SISTEMA" />
+      <End Role="PERFIL" EntitySet="PERFIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERFIL_USUARIO_PERFIL" Association="Self.FK_PERFIL_USUARIO_PERFIL">
+      <End Role="PERFIL" EntitySet="PERFIL" />
+      <End Role="PERFIL_USUARIO" EntitySet="PERFIL_USUARIO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERFIL_USUARIO_USUARIO" Association="Self.FK_PERFIL_USUARIO_USUARIO">
+      <End Role="USUARIO" EntitySet="USUARIO" />
+      <End Role="PERFIL_USUARIO" EntitySet="PERFIL_USUARIO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TEMPLATE_HTML_TEMPLATE_GRUPO" Association="Self.FK_TEMPLATE_HTML_TEMPLATE_GRUPO">
+      <End Role="TEMPLATE_GRUPO" EntitySet="TEMPLATE_GRUPO" />
+      <End Role="TEMPLATE_HTML" EntitySet="TEMPLATE_HTML" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TEMPLATE_HTML_TEMPLATE_TEMPLATE_HTML_LAYOUT" Association="Self.FK_TEMPLATE_HTML_TEMPLATE_TEMPLATE_HTML_LAYOUT">
+      <End Role="TEMPLATE_HTML" EntitySet="TEMPLATE_HTML" />
+      <End Role="TEMPLATE_HTML1" EntitySet="TEMPLATE_HTML" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TEMPLATE_HTML_X_FONTE_DADOS_TEMPLATE" Association="Self.FK_TEMPLATE_HTML_X_FONTE_DADOS_TEMPLATE">
+      <End Role="FONTE_DADOS_TEMPLATE" EntitySet="FONTE_DADOS_TEMPLATE" />
+      <End Role="TEMPLATE_HTML" EntitySet="TEMPLATE_HTML" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TEMPLATE_HTML_X_FUNCIONALIDADE_SISTEMA_REF" Association="Self.FK_TEMPLATE_HTML_X_FUNCIONALIDADE_SISTEMA_REF">
+      <End Role="TEMPLATE_HTML" EntitySet="TEMPLATE_HTML" />
+      <End Role="FUNCIONALIDADE_SISTEMA" EntitySet="FUNCIONALIDADE_SISTEMA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USUARIO_EMPRESA" Association="Self.FK_USUARIO_EMPRESA">
+      <End Role="EMPRESA" EntitySet="EMPRESA" />
+      <End Role="USUARIO" EntitySet="USUARIO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USUARIO_USUARIO" Association="Self.FK_USUARIO_USUARIO">
+      <End Role="USUARIO" EntitySet="USUARIO" />
+      <End Role="USUARIO1" EntitySet="USUARIO" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

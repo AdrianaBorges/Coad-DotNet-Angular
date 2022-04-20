@@ -1,0 +1,108 @@
+﻿@using Coad.GenericCrud.Extensions
+
+@{
+    ViewBag.Title = "Index";     
+}
+
+@Scripts.Render("~/Scripts/appScripts/funcionalidade.js")
+
+<div ng-app="appModule">
+    <div ng-controller="FuncionalidadeController" class="padding content">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li>
+                            @Html.ActionLink("Home", "index", "Home")
+                        </li>
+                        <li class="active">
+                            <i class="fa fa-desktop"></i>&nbspFuncionalidades Portal
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div app-message></div>
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-filter"></span>&nbspFiltros
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Opções<span class="caret"></span></button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="javascript:void(0)" app-post="@Url.Action("Editar")?_fci_id=" title="Editar" class="blue">
+                                    <span class="glyphicon glyphicon-edit"></span>&nbspNovo
+                                </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="form-group">
+                                @Html.Label("Informe o nome da funcionalidade")
+                                <input id="_FCI_DESCRICAO" type="text" ng-model="filtro.FCI_DESCRICAO" class="form-control " placeholder="Descrição" autofocus autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button ng-click="listar()" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                </div>
+            </div>
+            <div class="panel panel-default" ng-show="listafuncionalidade">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-book"></span>&nbspFuncionalidades Portal
+                    <div class="pull-right">
+                        <div class="btn-group">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr class="info">
+                                <th style="text-align: right;">ID</th>
+                                <th>Descrição</th>
+                                <th>Tipo</th>
+                                <th>Produto</th>
+                                <th style="text-align: center;">Alteração</th>
+                                <th>Usuário</th>
+                                <th style="text-align: center;">Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listafuncionalidade">
+                                <td style="text-align: right;">{{item.FCI_ID}}</td>
+                                <td>{{item.FCI_DESCRICAO}}</td>
+                                <td>
+                                    <span ng-if="item.FCI_TIPO=='BAN'">BANNER</span>
+                                    <span ng-if="item.FCI_TIPO=='CAR'">CAROUSEL</span>
+                                    <span ng-if="item.FCI_TIPO=='IMG'">IMAGEM</span>
+                                    <span ng-if="item.FCI_TIPO=='FUN'">FUNCIONALIDADE</span>
+                                    <span ng-if="item.FCI_TIPO=='NOV'">NOVIDADES</span>
+                                </td>
+                                <td>
+                                   <span ng-if="item.PRO_ID==NULL">TODOS</span>
+                                   <span ng-if="item.PRO_ID!=NULL">{{item.PRO_ID}}</span>
+                                </td>
+                                <td app-show-date="item.FCI_DATA_ALTERA" style="text-align: center;">{{item.FCI_DATA_ALTERA}}</td>
+                                <td>{{item.USU_LOGIN}}</td>
+                                <td style="text-align: center;">
+                                    <a href="javascript:void(0)" app-post="@Url.Action("Editar")?_fci_id={{item.FCI_ID}}" title="Editar" class="blue">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr />
+                    <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,253 @@
+﻿
+@using COAD.SEGURANCA.Repositorios.Base
+<div>
+        <div class="row process-wizard process-wizard-info">
+
+	    <div class="col-xs-3 process-wizard-step" ng-class="{   
+                'complete' : passoImport > 1,
+                'active' : passoImport == 1,
+                'disabled' : passoImport < 1}
+            ">
+		    <div class="text-center process-wizard-stepnum">Importar Telefones</div>
+		    <div class="progress"><div class="progress-bar"></div></div>
+		    <a href="#" class="process-wizard-dot" ng-click="alterarPasso(1)"></a>
+		    <div class="process-wizard-info text-center">Nessa etapa você poderá selecionar os telefones a ser importados.</div>
+	    </div>
+
+	    <div class="col-xs-3 process-wizard-step" ng-class="{  
+                'complete' : passoImport > 2,
+                'active' : passoImport == 2,
+                'disabled' : passoImport < 2}
+            "><!-- complete -->
+		    <div class="text-center process-wizard-stepnum">Importar Emails</div>
+		    <div class="progress"><div class="progress-bar"></div></div>
+		    <a href="#" class="process-wizard-dot" ng-click="alterarPasso(2)"></a>
+		    <div class="process-wizard-info text-center">Nessa etapa você poderá selecionar os emails a ser importados.</div>
+	    </div>
+
+	    <div class="col-xs-3 process-wizard-step" ng-class="{  
+                'complete' : passoImport > 3,
+                'active' : passoImport == 3,
+                'disabled' : passoImport < 3}
+            "><!-- complete -->
+		    <div class="text-center process-wizard-stepnum">Revisão</div>
+		    <div class="progress"><div class="progress-bar"></div></div>
+		    <a href="#" class="process-wizard-dot" ng-click="alterarPasso(3)"></a>
+		    <div class="process-wizard-info text-center">Nessa etapa você poderá revisar os dados e confirmar os dados.</div>
+	    </div>
+    </div>
+                <br />
+                <fieldset ng-show="passoImport <= 2"> <!-- Passos 1 e 2-->
+                    <legend class="text-primary">Assinatura</legend>
+                    <div class="row">
+                        <div class="form-group col-sm-4">                            
+                            <label for="selectRegiao">Assinatura</label>
+                            <select name="assinatura" class="form-control" ng-model="$parent.objAssinatura"
+                                ng-options="item as item.ASN_NUM_ASSINATURA for item in lstAssinatura" 
+                                ng-change="assinaturaSelecionada()">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                            @if (SessionContext.IsGerenteDepartamentoOR(true, "TI", "FRANQUIADOR"))
+                            {
+                                <div class="form-group col-sm-4">
+                                    <label for="selectRegiao">Região</label> 
+                                    <select ng-options="reg.RG_ID as reg.RG_DESCRICAO for reg in regioes"
+                                            ng-model="$parent.modalImportacao.RG_ID" id="selectRegiao1" class="form-control">
+                                            <option value="">Selecione</option>
+                                    </select>
+                              
+                                </div>    
+                            }
+                    </div>
+                </fieldset>                   
+                <fieldset ng-show="passoImport == 1" class="animate-show"> <!-- Passos 1-->
+                    <legend class="text-primary">Telefones</legend>
+                    <div class="row">
+                        <div class="form-group col-sm-6"
+                            app-droppable="removerTelefoneOuEmailImportacao(idDrag, idDrop)"
+                                transfer-model="$parent.objRemoveTelEmail" id-drop="drop_remove_tel" style="min-height:140px;">                                                                    
+                            <div class="table-responsive">
+                                <table class="table table-hover table-stripped">
+                                        <thead>
+                                            <tr>        
+                                                <th>
+                                                    Telefone da Assinatura
+                                                </th>
+                                            </tr>
+                                        </thead>    
+                                        <tr ng-repeat="item in lstTelefone | filter:query | as:'telFiltrado'" class="animate-repeat-all">
+                                            <td>
+                                                <div class="label label-info" app-draggable id-drag="drag_telefone" model="item"> 
+                                                    <span>({{item.ATE_DDD}}) {{item.ATE_TELEFONE}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td ng-show="lstTelefone.length == 0 && telefoneListado">Nenhum telefone foi encontrado.</td>
+                                            <td ng-show="!lstTelefone">Selecione uma assinatura.</td>
+                                            <td ng-show="telefoneListado && telFiltrado.length <= 0">Todos os telefones foram adicionados.</td>
+                                        </tr>
+
+                                </table> 
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6" app-droppable="adicionarTelefoneOuEmailImportacao(idDrag, idDrop)" 
+                                transfer-model="$parent.objTelEmail" id-drop="drop_tel" style="min-height:140px;">
+                                                                                                      
+                            <div class="table-responsive">
+                                <table class="table table-hover table-stripped">
+                                        <thead>
+                                            <tr>        
+                                                <th>
+                                                    Telefone
+                                                </th>
+                                            </tr>
+                                        </thead>    
+                                        <tr ng-repeat="item in $parent.modalImportacao.ASSINATURA_TELEFONE" class="animate-repeat-all">
+                                            <td>
+                                                <div
+                                                    class="label label-info" 
+                                                    app-draggable id-drag="drag_remove_tel"
+                                                    model="item"> 
+                                                    <span>({{item.ATE_DDD}}) {{item.ATE_TELEFONE}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td ng-show="modalImportacao.ASSINATURA_TELEFONE.length == 0 && listado">Nenhum telefone foi adicionado.</td>
+                                        </tr>
+
+                                </table> 
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>   
+    
+                <fieldset ng-show="$parent.passoImport == 2" class="animate-show"> <!-- Passos 1 e 2-->
+                    <legend class="text-primary">Emails</legend>
+                    <div class="row">
+                        <div class="form-group col-sm-6"
+                            app-droppable="removerTelefoneOuEmailImportacao(idDrag, idDrop)"
+                                transfer-model="$parent.objRemoveTelEmail" id-drop="drop_remove_email" style="min-height:140px;">                                                                    
+                            <div class="table-responsive">
+                                <table class="table table-hover table-stripped">
+                                        <thead>
+                                            <tr>        
+                                                <th>
+                                                    Emails da Assinatura
+                                                </th>
+                                            </tr>
+                                        </thead>    
+                                        <tr ng-repeat="item in lstEmail | filter:query | as:'emailFiltrado'" class="animate-repeat-all">
+                                            <td>
+                                                <div class="label label-info" app-draggable id-drag="drag_email" model="item"> 
+                                                    <span>{{item.AEM_EMAIL}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td ng-show="lstEmail.length == 0 && emailListado">Nenhum E-Mail foi encontrado.</td>
+                                            <td ng-show="!lstEmail">Selecione uma assinatura.</td>
+                                            <td ng-show="emailListado && emailFiltrado.length <= 0">Todos os E-Mails foram adicionados.</td>
+                                        </tr>
+
+                                </table> 
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6" app-droppable="adicionarTelefoneOuEmailImportacao(idDrag, idDrop)" 
+                                transfer-model="$parent.objTelEmail" id-drop="drop_email" style="min-height:140px;">
+                                                                                                      
+                            <div class="table-responsive">
+                                <table class="table table-hover table-stripped">
+                                        <thead>
+                                            <tr>        
+                                                <th>
+                                                    Email
+                                                </th>
+                                            </tr>
+                                        </thead>    
+                                        <tr ng-repeat="item in $parent.modalImportacao.ASSINATURA_EMAIL" class="animate-repeat-all">
+                                            <td>
+                                                <div
+                                                    class="label label-info" 
+                                                    app-draggable id-drag="drag_remove_email"
+                                                    model="item"> 
+                                                    <span> {{item.AEM_EMAIL}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td ng-show="modalImportacao.ASSINATURA_EMAIL.length == 0 && listado">Nenhum E-Mail foi adicionado.</td>
+                                        </tr>
+
+                                </table> 
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset ng-show="passoImport == 3"> <!-- Passos 3-->
+                    <legend class="text-primary">Resumo</legend>
+                       <div class="alert alert-info alert-not-fixed" role="alert">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                            Visualize os detalhes da importação em seguida confirme a importação.
+                       </div>
+                    <div class="row">
+                        <div class="form-group col-sm-5">                                                                                                      
+                            <div class="table-responsive">
+                                <table class="table table-hover table-stripped table-bordered">
+                                    <thead>
+                                        <tr>        
+                                            <th>
+                                                Telefone
+                                            </th>
+                                        </tr>
+                                    </thead>    
+                                    <tr ng-repeat="item in $parent.modalImportacao.ASSINATURA_TELEFONE" class="animate-repeat-all">
+                                        <td>
+                                            ({{item.ATE_DDD}}) {{item.ATE_TELEFONE}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td ng-show="modalImportacao.ASSINATURA_TELEFONE.length == 0">Nenhum telefone foi adicionado.</td>
+                                    </tr>
+                                </table> 
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-5">                                                                                                      
+                            <div class="table-responsive">
+                                <table class="table table-hover table-stripped table-bordered">
+                                        <thead>
+                                            <tr>        
+                                                <th>
+                                                    Email
+                                                </th>
+                                            </tr>
+                                        </thead>    
+                                        <tr ng-repeat="item in $parent.modalImportacao.ASSINATURA_EMAIL" class="animate-repeat-all">
+                                            <td>
+                                                {{item.AEM_EMAIL}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td ng-show="modalImportacao.ASSINATURA_EMAIL.length == 0">Nenhum E-Mail foi adicionado.</td>
+                                        </tr>
+
+                                </table> 
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>  
+                <button class="btn btn-default"
+                        ng-click="regredirPasso()"                   
+                        ng-show="passoImport > 1"><span class="glyphicon glyphicon-chevron-left text-primary"></span> Retornar</button>   
+                
+                <button class="btn btn-default"
+                        ng-click="prosseguirPasso()"                   
+                        ng-show="passoImport <= 2">Próximo <span class="glyphicon glyphicon-chevron-right text-primary"></span></button>    
+                
+                <button class="btn btn-primary" ng-show="passoImport == 3"
+                    app-switch-button="importarClienteParaAgenda()"
+                    switch-conf="[{label : 'Importar', state : 'import'}, {label : 'Importando...', state : 'importando', disabled : true}]"
+                    switch-var="$parent.buttonImport"></button>
+</div>

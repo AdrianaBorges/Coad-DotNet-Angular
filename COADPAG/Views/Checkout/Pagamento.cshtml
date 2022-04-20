@@ -1,0 +1,329 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/Scripts/appScripts/Checkout.js")
+
+
+<div ng-app="appModule">
+    <div ng-controller="PortalController" data-ng-init="initDadosPagamento('@ViewBag.IpeId','@ViewBag.IpeHash');" >
+        <!-- Modal Tabelas Acessada -->
+        <div app-modal-erro="Modal-Erro" header="Atenção" >
+           <div class="panel-body">
+              <strong><p ng-bind-html="trustAsHtml(erro)"></p></strong>
+           </div>
+        </div>
+
+        <div class="container" ng-if="!cartao">
+           <div class="col-lg-3" >
+                <div id="preloader">
+                    <div class="inner">
+                        <span class="loader"></span>
+                    </div>
+                </div>
+           </div>
+           <div class="col-lg-7">
+              <img src="http://www.coad.com.br/imagens/banners/Pop%20Up%20-%20Prog%20EAD.png" />
+           </div>
+        </div>
+  
+        <div class="container" ng-if="cartao!=null">
+            <form class="row clearfix">
+@*                <div class="col-md-12">
+                    <div app-message="erro"></div>
+                </div>*@
+                <div class="col-lg-7 col-sm-7">
+                    <div class="box-static box-border-top padding-30">
+                        <div class="row nomargin-bottom">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Resumo da compra</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <span class="clearfix">
+                                    <strong class="pull-left">DESCRIÇÃO</strong>
+                                    <strong class="pull-right">VALOR</strong>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label class="pull-left">{{cartao.cmpDescricao}}</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label class="pull-left">QUANTIDADE&nbsp</label>
+                                <span class="pull-right">{{cartao.cmpQuantidade}}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label class="pull-left">VALOR UNITÁRIO R$&nbsp</label>
+                                <span class="pull-right" app-show-dinheiro="cartao.valortela" show-simbolo="false"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                         @*   <strong>Voce recebera a confirmação da compra no email </strong>(<a href="#">{{comprador.email}}</a>).*@
+                        </div>
+                    </div>
+
+                    <div class="box-static box-border-top padding-30">
+                        <div class="row nomargin-bottom">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Meus Dados</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="pull-left">{{comprador.nome}}</label>
+                            </div>
+                            <div class="col-md-12">
+                                <label>{{comprador.numeroDocumento}}</label>
+                            </div>
+                            <div class="col-md-12">
+                                <label>{{cartao.email}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="box-static box-border-top padding-30">
+                        <div class="row nomargin-bottom">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Endereço Faturamento</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="pull-left">{{cartao.endereco}} - {{cartao.numero}}</label><label class="pull-left" ng-if="cartao.complemento!=null">&nbsp - {{cartao.complemento}}</label>
+                            </div>
+                            <div class="col-md-12">
+                                <label>{{cartao.bairro}}</label>
+                            </div>
+                            <div class="col-md-12">
+                                <label>{{cartao.CEP}} - {{cartao.cidade}} - {{cartao.UF}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-5 col-sm-5">
+                    <div class="box-static box-border-top padding-30">
+                        <div class="row nomargin-bottom">
+                            <div class="col-lg-12 nomargin clearfix" ng-show="cartao.formapgto==1" >
+                                <label class="radio pull-left nomargin-top">
+                                    <input ng-model="cartao.formapgto" type="radio" value="1" />
+                                    <i></i><span class="weight-300">Boleto</span>
+                                </label>
+                            </div>
+                            <div class="col-lg-12 nomargin clearfix" ng-show="cartao.formapgto==2" >
+                                <label class="radio pull-left">
+                                    <input ng-model="cartao.formapgto" type="radio" value="2"  />
+                                    <i></i><span class="weight-300">Cartão de Credito</span>
+                                </label>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="panel panel-default" ng-if="cartao.formapgto==2">
+                          <div class="panel-body">
+                             <i class="fa fa-exclamation-triangle" style="color:red;" aria-hidden="true"></i>
+                             <strong>Importante</strong><br /><br /><p>Lembre-se que o valor total da compra não pode exceder o limite de seu cartão. Esta é a regra de aprovação adotada pelas administradoras de cartão de crédito. </p> 
+                          </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="box-static box-border-top padding-30" ng-if="cartao.formapgto==2">
+                        <div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Pagamento</h4>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Parcelar em *</label>
+                                    <div class="col-lg-12 form-control box-static" style="vertical-align:middle;padding:7px;">
+                                       <span>{{cartao.numeroParcelas}} X de R$ </span>               
+                                       <span app-show-dinheiro="cartao.valorParcelas" show-simbolo="false"></span> (sem juros)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Nome Impresso no Cartão *</label>
+                                    <input ng-model="cartao.portador" type="text" class="form-control required" autocomplete="off" />
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Selecione a Bandeira *</label>
+                                </div>
+                                <div class="col-lg-12">
+                                   <ul class="payment-methods">
+                                        <li class="payment-method visa" >
+                                        <input name="payment_methods" type="radio" ng-model="cartao.bandeira" value="1" id="visa">
+                                        <label for="visa" >visa</label>
+                                        </li>
+                                        <li class="payment-method master">
+                                        <input name="payment_methods" type="radio" ng-model="cartao.bandeira" value="2" id="master">
+                                        <label for="master" >master</label>
+                                        </li>
+                                   
+                                        <li class="payment-method hipercard">
+                                        <input name="payment_methods" type="radio" ng-model="cartao.bandeira" value="3" id="hipercard">
+                                        <label for="hipercard" >hipercard</label>
+                                        </li>
+
+                                        <li class="payment-method american">
+                                        <input name="payment_methods" type="radio" ng-model="cartao.bandeira" value="4" id="american">
+                                        <label for="american" >american</label>
+                                        </li>
+                                        
+                                        <li class="payment-method diners">
+                                        <input name="payment_methods" type="radio" ng-model="cartao.bandeira" value="5" id="diners">
+                                        <label for="diners" >diners</label>
+                                        </li>
+                                      </ul>
+                                 </div>
+                            </div>
+                            <div class="row"> 
+                                 <div class="col-lg-12">
+                                   <ul class="payment-methods">
+                                     
+                                 
+                                        <li class="payment-method elo">
+                                        <input name="payment_methods" type="radio" ng-model="cartao.bandeira" value="6" id="elo">
+                                        <label for="elo" >elo</label>
+                                        </li>
+
+                                        <li class="payment-method discover">
+                                        <input name="payment_methods" type="radio" ng-model="cartao.bandeira" value="8" id="discover">
+                                        <label for="discover" >discover</label>
+                                        </li>
+                                      </ul>
+                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Numero do Cartão *</label>
+                                    <input ng-model="cartao.numeroCartao" type="text" class="form-control required" autocomplete="off" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Vencimento do Cartão *</label>
+                                    <div class="row nomargin-bottom">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <select ng-model="cartao.mesExpiracao" class="form-control pointer required">
+                                                <option value="0">Mês</option>
+                                                <option value="01">01 - Janeiro</option>
+                                                <option value="02">02 - Fevereiro</option>
+                                                <option value="03">03 - Março</option>
+                                                <option value="04">04 - Abril</option>
+                                                <option value="05">05 - Maio</option>
+                                                <option value="06">06 - Junho</option>
+                                                <option value="07">07 - Julho</option>
+                                                <option value="08">08 - Agosto</option>
+                                                <option value="09">09 - Setembro</option>
+                                                <option value="10">10 - Outubro</option>
+                                                <option value="11">11 - Novembro</option>
+                                                <option value="12">12 - Dezembro</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-6">
+                                            <select ng-model="cartao.anoExpiracao" class="form-control pointer required">
+                                                <option value="0">Ano</option>
+                                                <option value="2015">2015</option>
+                                                <option value="2016">2016</option>
+                                                <option value="2017">2017</option>
+                                                <option value="2018">2018</option>
+                                                <option value="2019">2019</option>
+                                                <option value="2020">2020</option>
+                                                <option value="2021">2021</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                                <option value="2025">2025</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label>Código de Segurança *</label>
+                                    <input ng-model="cartao.codigoSeguranca" type="text" class="form-control required" autocomplete="off" maxlength="4" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <hr ng-if="cartao.formapgto==2" />
+                    <div class="box-static box-border-top padding-30">
+                        <div class="box-title">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <span class="clearfix">
+                                        <span class="pull-right" app-show-dinheiro="cartao.valortela" show-simbolo="false"></span>
+                                        <strong class="pull-left">Subtotal: R$</strong>
+                                    </span>
+                                    <span class="clearfix">
+                                        <span class="pull-right">0.00</span>
+                                        <span class="pull-left">Desconto: R$</span>
+                                    </span>
+
+                                    <hr />
+
+                                    <span class="clearfix">
+                                        <span class="pull-right" app-show-dinheiro="cartao.valortela" show-simbolo="false"></span>
+                                        <strong class="pull-left">TOTAL: R$</strong>
+                                    </span>
+
+                                    <hr />
+                         
+                                    <button
+                                        app-switch-button="realizarPagamento()"
+                                        switch-conf="[{label : 'Confirmar Pagamento', state : 'save'}, {label : 'Processando...', state : 'saved', disabled : true}]"
+                                        switch-var="$parent.button"
+                                        class="btn btn-primary btn-lg btn-block size-15" ng-hide="cartao.formapgto==1">
+                                        <span class="fa fa-mail-forward""></span>
+                                    </button>
+                                          
+                                    <button
+                                        app-switch-button="realizarPagamento()"
+                                        switch-conf="[{label : 'Gerar Boleto', state : 'save'}, {label : 'Processando...', state : 'saved', disabled : true}]"
+                                        switch-var="$parent.button"
+                                        class="btn btn-primary btn-lg btn-block size-15" ng-hide="cartao.formapgto==2">
+                                        <span class="fa fa-mail-forward""></span>
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="COADIARIOModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="COADIARIOEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="CO_AREAS" EntityType="COADIARIOModel.CO_AREAS" />
+    <EntitySet Name="CO_CALENDARIO" EntityType="COADIARIOModel.CO_CALENDARIO" />
+    <EntitySet Name="CO_ESTADOS" EntityType="COADIARIOModel.CO_ESTADOS" />
+    <EntitySet Name="CO_MUNICIPIOS" EntityType="COADIARIOModel.CO_MUNICIPIOS" />
+    <EntitySet Name="CO_NIVEL_USUARIO" EntityType="COADIARIOModel.CO_NIVEL_USUARIO" />
+    <EntitySet Name="CO_OBRIGACOES" EntityType="COADIARIOModel.CO_OBRIGACOES" />
+    <EntitySet Name="CO_TIPOS" EntityType="COADIARIOModel.CO_TIPOS" />
+    <EntitySet Name="CO_USUARIOLOGS" EntityType="COADIARIOModel.CO_USUARIOLOGS" />
+    <EntitySet Name="CO_USUARIOS" EntityType="COADIARIOModel.CO_USUARIOS" />
+    <EntitySet Name="CO_USUARIOSBKP" EntityType="COADIARIOModel.CO_USUARIOSBKP" />
+    <EntitySet Name="sysdiagrams" EntityType="COADIARIOModel.sysdiagrams" />
+    <AssociationSet Name="FK__CO_OBRIGA__COD_A__37A5467C" Association="COADIARIOModel.FK__CO_OBRIGA__COD_A__37A5467C">
+      <End Role="CO_AREAS" EntitySet="CO_AREAS" />
+      <End Role="CO_OBRIGACOES" EntitySet="CO_OBRIGACOES" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CO_CALEND__NUM_O__164452B1" Association="COADIARIOModel.FK__CO_CALEND__NUM_O__164452B1">
+      <End Role="CO_OBRIGACOES" EntitySet="CO_OBRIGACOES" />
+      <End Role="CO_CALENDARIO" EntitySet="CO_CALENDARIO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CO_MUNICI__NUM_U__32E0915F" Association="COADIARIOModel.FK__CO_MUNICI__NUM_U__32E0915F">
+      <End Role="CO_ESTADOS" EntitySet="CO_ESTADOS" />
+      <End Role="CO_MUNICIPIOS" EntitySet="CO_MUNICIPIOS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CO_OBRIGA__NUM_U__34C8D9D1" Association="COADIARIOModel.FK__CO_OBRIGA__NUM_U__34C8D9D1">
+      <End Role="CO_ESTADOS" EntitySet="CO_ESTADOS" />
+      <End Role="CO_OBRIGACOES" EntitySet="CO_OBRIGACOES" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CO_OBRIGA__NUMPK__35BCFE0A" Association="COADIARIOModel.FK__CO_OBRIGA__NUMPK__35BCFE0A">
+      <End Role="CO_MUNICIPIOS" EntitySet="CO_MUNICIPIOS" />
+      <End Role="CO_OBRIGACOES" EntitySet="CO_OBRIGACOES" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CO_OBRIGA__COD_T__117F9D94" Association="COADIARIOModel.FK__CO_OBRIGA__COD_T__117F9D94">
+      <End Role="CO_TIPOS" EntitySet="CO_TIPOS" />
+      <End Role="CO_OBRIGACOES" EntitySet="CO_OBRIGACOES" />
+    </AssociationSet>
+    <FunctionImport Name="BUSCAR_MATERIA_POR_ID_PORTAL_PROC" ReturnType="Collection(COADIARIOModel.BUSCAR_MATERIA_POR_ID_PORTAL_PROC_Result)">
+      <Parameter Name="id" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="BUSCAR_MATERIA_PORTAL_PROC" ReturnType="Collection(COADIARIOModel.BUSCAR_MATERIA_PORTAL_PROC_Result)">
+      <Parameter Name="label" Mode="In" Type="String" />
+      <Parameter Name="tipo" Mode="In" Type="String" />
+      <Parameter Name="num_ato" Mode="In" Type="String" />
+      <Parameter Name="ano" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="BUSCAR_VERBETES_PORTAL_PROC">
+      <Parameter Name="colec" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CLIENTES_PORTAL_PROC" ReturnType="Collection(COADIARIOModel.CLIENTES_PORTAL_PROC_Result)">
+      <Parameter Name="usuario" Mode="In" Type="String" />
+      <Parameter Name="senha" Mode="In" Type="String" />
+      <Parameter Name="email" Mode="In" Type="String" />
+      <Parameter Name="cpf" Mode="In" Type="String" />
+      <Parameter Name="tipoBusca" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="INDICES_PORTAL_PROC" ReturnType="Collection(COADIARIOModel.INDICES_PORTAL_PROC_Result)" />
+    <FunctionImport Name="NOTICIAS_PORTAL_PESQUISA_PROC" ReturnType="Collection(COADIARIOModel.NOTICIAS_PORTAL_PESQUISA_PROC_Result)">
+      <Parameter Name="titulo" Mode="In" Type="String" />
+      <Parameter Name="texto" Mode="In" Type="String" />
+      <Parameter Name="descricao" Mode="In" Type="String" />
+      <Parameter Name="Limitador" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="NOTICIAS_PORTAL_POR_ID_PROC" ReturnType="Collection(COADIARIOModel.NOTICIAS_PORTAL_POR_ID_PROC_Result)">
+      <Parameter Name="identificador" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="NOTICIAS_PORTAL_PROC" ReturnType="Collection(COADIARIOModel.NOTICIAS_PORTAL_PROC_Result)">
+      <Parameter Name="Limitador" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="CO_AREAS">
+    <Key>
+      <PropertyRef Name="COD_AREA" />
+    </Key>
+    <Property Name="COD_AREA" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="NOME_AREA" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ABRANGENCIA" Type="String" Nullable="false" MaxLength="1" Unicode="true" FixedLength="true" />
+    <Property Name="HABILITADO" Type="Int16" />
+    <NavigationProperty Name="CO_OBRIGACOES" Relationship="COADIARIOModel.FK__CO_OBRIGA__COD_A__37A5467C" FromRole="CO_AREAS" ToRole="CO_OBRIGACOES" />
+  </EntityType>
+  <EntityType Name="CO_CALENDARIO">
+    <Key>
+      <PropertyRef Name="NUM_CALENDARIO" />
+      <PropertyRef Name="NUM_OBRIGACAO" />
+    </Key>
+    <Property Name="NUM_CALENDARIO" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="NUM_OBRIGACAO" Type="Int64" Nullable="false" />
+    <Property Name="DTReferencia" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="TXT_REFERENCIA" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="HABILITADO" Type="Int16" />
+    <Property Name="CriadoEmDT" Type="DateTime" Precision="7" />
+    <Property Name="AtualizadoEmDT" Type="DateTime" Precision="7" />
+    <Property Name="CriadoPor" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="AtualizadoPor" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="CO_OBRIGACOES" Relationship="COADIARIOModel.FK__CO_CALEND__NUM_O__164452B1" FromRole="CO_CALENDARIO" ToRole="CO_OBRIGACOES" />
+  </EntityType>
+  <EntityType Name="CO_ESTADOS">
+    <Key>
+      <PropertyRef Name="NUM_UF" />
+    </Key>
+    <Property Name="NUM_UF" Type="Int64" Nullable="false" />
+    <Property Name="COD_UF" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="NOME_UF" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="HABILITADO" Type="Int16" />
+    <NavigationProperty Name="CO_MUNICIPIOS" Relationship="COADIARIOModel.FK__CO_MUNICI__NUM_U__32E0915F" FromRole="CO_ESTADOS" ToRole="CO_MUNICIPIOS" />
+    <NavigationProperty Name="CO_OBRIGACOES" Relationship="COADIARIOModel.FK__CO_OBRIGA__NUM_U__34C8D9D1" FromRole="CO_ESTADOS" ToRole="CO_OBRIGACOES" />
+  </EntityType>
+  <EntityType Name="CO_MUNICIPIOS">
+    <Key>
+      <PropertyRef Name="PK_MUNIC" />
+    </Key>
+    <Property Name="PK_MUNIC" Type="Int64" Nullable="false" />
+    <Property Name="NUM_UF" Type="Int64" Nullable="false" />
+    <Property Name="NUM_MUNICIPIO" Type="Int64" Nullable="false" />
+    <Property Name="NOME_MUNICIPIO" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="HABILITADO" Type="Int16" />
+    <NavigationProperty Name="CO_ESTADOS" Relationship="COADIARIOModel.FK__CO_MUNICI__NUM_U__32E0915F" FromRole="CO_MUNICIPIOS" ToRole="CO_ESTADOS" />
+    <NavigationProperty Name="CO_OBRIGACOES" Relationship="COADIARIOModel.FK__CO_OBRIGA__NUMPK__35BCFE0A" FromRole="CO_MUNICIPIOS" ToRole="CO_OBRIGACOES" />
+  </EntityType>
+  <EntityType Name="CO_NIVEL_USUARIO">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="nivel" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="CO_OBRIGACOES">
+    <Key>
+      <PropertyRef Name="NUM_OBRIGACAO" />
+    </Key>
+    <Property Name="TXT_TITULO" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="true" />
+    <Property Name="NUM_OBRIGACAO" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="HABILITADO" Type="Int16" />
+    <Property Name="TXT_PESSOAS_OBRIGADAS" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="TXT_FATO_GERADOR" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="TXT_PENALIDADE" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="TXT_ABRANGENCIA" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="COD_TIPO" Type="String" Nullable="false" MaxLength="3" Unicode="true" FixedLength="true" />
+    <Property Name="TXT_OBSERVACAO" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="TXT_FORMA_ENTREGA" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="LNK_ORIENTACAO" Type="String" MaxLength="255" Unicode="true" FixedLength="true" />
+    <Property Name="TXT_FUNDLEGAL" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="LNK_GUIARECOL" Type="String" MaxLength="255" Unicode="true" FixedLength="true" />
+    <Property Name="TXT_RECOLHIMENTO" Type="String" MaxLength="255" Unicode="true" FixedLength="true" />
+    <Property Name="LNK_IRSITE" Type="String" MaxLength="255" Unicode="true" FixedLength="true" />
+    <Property Name="NUM_UF" Type="Int64" />
+    <Property Name="NUMPK_MUNICIPIO" Type="Int64" />
+    <Property Name="COD_AREA" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="CriadoEmDT" Type="DateTime" Precision="7" />
+    <Property Name="AtualizadoEmDT" Type="DateTime" Precision="7" />
+    <Property Name="CriadoPor" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="AtualizadoPor" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Sigla" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="CO_AREAS" Relationship="COADIARIOModel.FK__CO_OBRIGA__COD_A__37A5467C" FromRole="CO_OBRIGACOES" ToRole="CO_AREAS" />
+    <NavigationProperty Name="CO_CALENDARIO" Relationship="COADIARIOModel.FK__CO_CALEND__NUM_O__164452B1" FromRole="CO_OBRIGACOES" ToRole="CO_CALENDARIO" />
+    <NavigationProperty Name="CO_ESTADOS" Relationship="COADIARIOModel.FK__CO_OBRIGA__NUM_U__34C8D9D1" FromRole="CO_OBRIGACOES" ToRole="CO_ESTADOS" />
+    <NavigationProperty Name="CO_MUNICIPIOS" Relationship="COADIARIOModel.FK__CO_OBRIGA__NUMPK__35BCFE0A" FromRole="CO_OBRIGACOES" ToRole="CO_MUNICIPIOS" />
+    <NavigationProperty Name="CO_TIPOS" Relationship="COADIARIOModel.FK__CO_OBRIGA__COD_T__117F9D94" FromRole="CO_OBRIGACOES" ToRole="CO_TIPOS" />
+  </EntityType>
+  <EntityType Name="CO_TIPOS">
+    <Key>
+      <PropertyRef Name="COD_TIPO" />
+    </Key>
+    <Property Name="COD_TIPO" Type="String" Nullable="false" MaxLength="3" Unicode="true" FixedLength="true" />
+    <Property Name="NOME_TIPO" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="HABILITADO" Type="Int16" />
+    <NavigationProperty Name="CO_OBRIGACOES" Relationship="COADIARIOModel.FK__CO_OBRIGA__COD_T__117F9D94" FromRole="CO_TIPOS" ToRole="CO_OBRIGACOES" />
+  </EntityType>
+  <EntityType Name="CO_USUARIOLOGS">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ip_usuario" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="nome_usuario" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="id_usuario" Type="Int32" Nullable="false" />
+    <Property Name="ultimo_acesso" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="id_calendario" Type="Int64" />
+    <Property Name="acao_realizada" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="texto_obrigacao" Type="String" MaxLength="250" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="CO_USUARIOS">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="usuario" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="senha" Type="String" Nullable="false" MaxLength="250" Unicode="false" FixedLength="false" />
+    <Property Name="nivel" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CO_USUARIOSBKP">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="usuario" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="senha" Type="String" Nullable="false" MaxLength="250" Unicode="false" FixedLength="false" />
+    <Property Name="nivel" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK__CO_OBRIGA__COD_A__37A5467C">
+    <End Role="CO_AREAS" Type="COADIARIOModel.CO_AREAS" Multiplicity="1" />
+    <End Role="CO_OBRIGACOES" Type="COADIARIOModel.CO_OBRIGACOES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CO_AREAS">
+        <PropertyRef Name="COD_AREA" />
+      </Principal>
+      <Dependent Role="CO_OBRIGACOES">
+        <PropertyRef Name="COD_AREA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CO_CALEND__NUM_O__164452B1">
+    <End Role="CO_OBRIGACOES" Type="COADIARIOModel.CO_OBRIGACOES" Multiplicity="1" />
+    <End Role="CO_CALENDARIO" Type="COADIARIOModel.CO_CALENDARIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CO_OBRIGACOES">
+        <PropertyRef Name="NUM_OBRIGACAO" />
+      </Principal>
+      <Dependent Role="CO_CALENDARIO">
+        <PropertyRef Name="NUM_OBRIGACAO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CO_MUNICI__NUM_U__32E0915F">
+    <End Role="CO_ESTADOS" Type="COADIARIOModel.CO_ESTADOS" Multiplicity="1" />
+    <End Role="CO_MUNICIPIOS" Type="COADIARIOModel.CO_MUNICIPIOS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CO_ESTADOS">
+        <PropertyRef Name="NUM_UF" />
+      </Principal>
+      <Dependent Role="CO_MUNICIPIOS">
+        <PropertyRef Name="NUM_UF" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CO_OBRIGA__NUM_U__34C8D9D1">
+    <End Role="CO_ESTADOS" Type="COADIARIOModel.CO_ESTADOS" Multiplicity="0..1" />
+    <End Role="CO_OBRIGACOES" Type="COADIARIOModel.CO_OBRIGACOES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CO_ESTADOS">
+        <PropertyRef Name="NUM_UF" />
+      </Principal>
+      <Dependent Role="CO_OBRIGACOES">
+        <PropertyRef Name="NUM_UF" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CO_OBRIGA__NUMPK__35BCFE0A">
+    <End Role="CO_MUNICIPIOS" Type="COADIARIOModel.CO_MUNICIPIOS" Multiplicity="0..1" />
+    <End Role="CO_OBRIGACOES" Type="COADIARIOModel.CO_OBRIGACOES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CO_MUNICIPIOS">
+        <PropertyRef Name="PK_MUNIC" />
+      </Principal>
+      <Dependent Role="CO_OBRIGACOES">
+        <PropertyRef Name="NUMPK_MUNICIPIO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CO_OBRIGA__COD_T__117F9D94">
+    <End Role="CO_TIPOS" Type="COADIARIOModel.CO_TIPOS" Multiplicity="1" />
+    <End Role="CO_OBRIGACOES" Type="COADIARIOModel.CO_OBRIGACOES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CO_TIPOS">
+        <PropertyRef Name="COD_TIPO" />
+      </Principal>
+      <Dependent Role="CO_OBRIGACOES">
+        <PropertyRef Name="COD_TIPO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="BUSCAR_MATERIA_POR_ID_PORTAL_PROC_Result">
+    <Property Type="Int32" Name="id" Nullable="true" />
+    <Property Type="String" Name="titulo" Nullable="true" />
+    <Property Type="DateTime" Name="dataCadastro" Nullable="true" Precision="23" />
+    <Property Type="String" Name="modulo" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="colec" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="ano" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="num" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="informativo" Nullable="true" />
+    <Property Type="Int32" Name="pagina" Nullable="true" />
+    <Property Type="String" Name="gg" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="vb" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="svb" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="complemento" Nullable="true" />
+    <Property Type="String" Name="tipo_materia" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="expressao_ato" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="org" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="html" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="BUSCAR_MATERIA_PORTAL_PROC_Result">
+    <Property Type="Int32" Name="id" Nullable="true" />
+    <Property Type="String" Name="tipo" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="numero" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="ano" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="orgao" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="area" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="assunto" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="subGrupo" Nullable="true" MaxLength="250" />
+    <Property Type="Int32" Name="informativo" Nullable="true" />
+    <Property Type="Int32" Name="pagina" Nullable="true" />
+    <Property Type="String" Name="grande_grupo" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="CLIENTES_PORTAL_PROC_Result">
+    <Property Type="Int32" Name="id" Nullable="true" />
+    <Property Type="String" Name="perfil" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="usuario" Nullable="true" MaxLength="40" />
+    <Property Type="String" Name="senha" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="permissao" Nullable="true" MaxLength="2" />
+    <Property Type="String" Name="status" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="cpf" Nullable="true" MaxLength="40" />
+    <Property Type="String" Name="nome" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="sobrenome" Nullable="true" MaxLength="80" />
+    <Property Type="String" Name="empresa" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="email" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="endereco" Nullable="true" MaxLength="80" />
+    <Property Type="String" Name="numero" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="complemento" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="bairro" Nullable="true" MaxLength="40" />
+    <Property Type="String" Name="cep" Nullable="true" MaxLength="9" />
+    <Property Type="String" Name="cidade" Nullable="true" MaxLength="60" />
+    <Property Type="String" Name="estado" Nullable="true" MaxLength="2" />
+    <Property Type="String" Name="telefone" Nullable="true" MaxLength="40" />
+    <Property Type="String" Name="conhecimento" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="publico" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="vigencia" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="trab" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="profissao" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="sexo" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="data_nascimento" Nullable="true" MaxLength="12" />
+    <Property Type="String" Name="area_atuacao" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="receber_novidades" Nullable="true" MaxLength="1" />
+    <Property Type="Int32" Name="cadastrado" Nullable="true" />
+    <Property Type="String" Name="data1" Nullable="true" MaxLength="20" />
+    <Property Type="DateTime" Name="expiracao" Nullable="true" Precision="23" />
+    <Property Type="String" Name="tipo_usuario" Nullable="true" MaxLength="20" />
+    <Property Type="Int32" Name="contador" Nullable="true" />
+    <Property Type="DateTime" Name="dataCadastro" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="data_atualizacao" Nullable="true" Precision="23" />
+    <Property Type="String" Name="cnpj" Nullable="true" MaxLength="40" />
+    <Property Type="Int32" Name="id_estacio" Nullable="true" />
+    <Property Type="Byte" Name="oab_flag" Nullable="true" />
+    <Property Type="String" Name="oab_nr_inscricao" Nullable="true" MaxLength="40" />
+    <Property Type="String" Name="oab_status" Nullable="true" MaxLength="1" />
+    <Property Type="DateTime" Name="dt_ultimo_login" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="qtd_sessoes" Nullable="true" />
+    <Property Type="String" Name="oab_nr_ficha" Nullable="true" MaxLength="40" />
+    <Property Type="DateTime" Name="data_repositorio" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="pesquisa" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="INDICES_PORTAL_PROC_Result">
+    <Property Type="Int32" Name="idc_agregado_id" Nullable="true" />
+    <Property Type="String" Name="idc_agregado_nome" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="idc_agregado_valor" Nullable="true" MaxLength="12" />
+    <Property Type="String" Name="idc_agregado_data" Nullable="true" MaxLength="20" />
+    <Property Type="Int32" Name="idc_agregado_orientacao" Nullable="true" />
+    <Property Type="Int32" Name="idc_agregado_ordem" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="NOTICIAS_PORTAL_PESQUISA_PROC_Result">
+    <Property Type="Int32" Name="id" Nullable="true" />
+    <Property Type="Int32" Name="id_prod" Nullable="true" />
+    <Property Type="Int32" Name="id_tipo" Nullable="true" />
+    <Property Type="String" Name="texto" Nullable="true" MaxLength="Max" />
+    <Property Type="String" Name="nota" Nullable="true" MaxLength="Max" />
+    <Property Type="String" Name="destaque" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="newsletter" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="link_file" Nullable="true" MaxLength="255" />
+    <Property Type="DateTime" Name="data_cadastro" Nullable="true" Precision="23" />
+    <Property Type="String" Name="destaque_home" Nullable="true" MaxLength="3" />
+    <Property Type="String" Name="destaque_perfil" Nullable="true" MaxLength="3" />
+    <Property Type="Byte" Name="destaque_fixo_home" Nullable="true" />
+    <Property Type="Byte" Name="destaque_fixo_perfil" Nullable="true" />
+    <Property Type="Int32" Name="id_grupo" Nullable="true" />
+    <Property Type="Int32" Name="id_noticia" Nullable="true" />
+    <Property Type="String" Name="verbete" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="subverbete" Nullable="true" MaxLength="255" />
+    <Property Type="Int32" Name="id_noticias_grupo" Nullable="true" />
+    <Property Type="Int32" Name="id_tipo_noticias_grupo" Nullable="true" />
+    <Property Type="String" Name="descricao" Nullable="true" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="NOTICIAS_PORTAL_POR_ID_PROC_Result">
+    <Property Type="Int32" Name="id" Nullable="true" />
+    <Property Type="Int32" Name="id_prod" Nullable="true" />
+    <Property Type="Int32" Name="id_tipo" Nullable="true" />
+    <Property Type="String" Name="texto" Nullable="true" MaxLength="Max" />
+    <Property Type="String" Name="nota" Nullable="true" MaxLength="Max" />
+    <Property Type="String" Name="destaque" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="newsletter" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="link_file" Nullable="true" MaxLength="255" />
+    <Property Type="DateTime" Name="data_cadastro" Nullable="true" Precision="23" />
+    <Property Type="String" Name="destaque_home" Nullable="true" MaxLength="3" />
+    <Property Type="String" Name="destaque_perfil" Nullable="true" MaxLength="3" />
+    <Property Type="Byte" Name="destaque_fixo_home" Nullable="true" />
+    <Property Type="Byte" Name="destaque_fixo_perfil" Nullable="true" />
+    <Property Type="Int32" Name="id_grupo" Nullable="true" />
+    <Property Type="Int32" Name="id_noticia" Nullable="true" />
+    <Property Type="String" Name="verbete" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="subverbete" Nullable="true" MaxLength="255" />
+    <Property Type="Int32" Name="id_noticias_grupo" Nullable="true" />
+    <Property Type="Int32" Name="id_tipo_noticias_grupo" Nullable="true" />
+    <Property Type="String" Name="descricao" Nullable="true" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="NOTICIAS_PORTAL_PROC_Result">
+    <Property Type="Int32" Name="id" Nullable="true" />
+    <Property Type="Int32" Name="id_prod" Nullable="true" />
+    <Property Type="Int32" Name="id_tipo" Nullable="true" />
+    <Property Type="String" Name="texto" Nullable="true" MaxLength="Max" />
+    <Property Type="String" Name="nota" Nullable="true" MaxLength="Max" />
+    <Property Type="String" Name="destaque" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="newsletter" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="link_file" Nullable="true" MaxLength="255" />
+    <Property Type="DateTime" Name="data_cadastro" Nullable="true" Precision="23" />
+    <Property Type="String" Name="destaque_home" Nullable="true" MaxLength="3" />
+    <Property Type="String" Name="destaque_perfil" Nullable="true" MaxLength="3" />
+    <Property Type="Byte" Name="destaque_fixo_home" Nullable="true" />
+    <Property Type="Byte" Name="destaque_fixo_perfil" Nullable="true" />
+    <Property Type="Int32" Name="id_grupo" Nullable="true" />
+    <Property Type="Int32" Name="id_noticia" Nullable="true" />
+    <Property Type="String" Name="verbete" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="subverbete" Nullable="true" MaxLength="255" />
+    <Property Type="Int32" Name="id_noticias_grupo" Nullable="true" />
+    <Property Type="Int32" Name="id_tipo_noticias_grupo" Nullable="true" />
+    <Property Type="String" Name="descricao" Nullable="true" MaxLength="255" />
+  </ComplexType>
+</Schema>

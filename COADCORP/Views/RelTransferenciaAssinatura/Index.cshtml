@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@Scripts.Render("~/Scripts/appScripts/TransferenciaAssinatura.js")
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Relatorios/Index">Relatórios</a></li>
+        <li><a href="/Relatorios/Cadastro">Relatórios de Cadastro </a></li>
+        <li class="active">&nbspRelatorio Transferência de Assinatura</li>
+    </ol>
+}
+
+@{
+    ViewBag.print = true;
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;
+    if (ViewBag.print == true)
+    {
+        ViewBag.printableClass = "hidden-print";
+    }
+
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+<div ng-app="appModule">
+    <div ng-controller="TransferenciaAssinaturaController" class="padding content" data-ng-init="carregarTela();canPrint=true" ng-cloak>
+        <div id="page-wrapper">
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading bold head-panel">
+                    <label id="title"><span class="glyphicon glyphicon-calendar"></span>&nbspTransferência de Assinatura</label>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="pull-Left">
+                                <label for="sigla">Mês</label>
+                                <div class="form-group">
+                                    @Html.DropDownList("_mes", new SelectList(@ViewBag.ListaMes, "Value", "Text"), null, new { placeholder = "Selecione o Mês", @class = "form-control", ng_model = "filtro.mes", ng_change = "listar()" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div class="pull-Left">
+                                <label for="sigla">Ano</label>
+                                <input type="text" id="ano" ng_model="filtro.ano" class="form-control" ng-change="listar()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" ng-click="listar()"><span class="fa fa-search"></span>&nbspPesquisar</button>
+                </div>
+            </div>
+            <div class="panel panel-default" id="baseContent" ng-if="listaTransferencias">
+                <div class="hidden-print panel-heading">
+                    <span class="glyphicon glyphicon-book"></span>&nbspRelatorio Transferência de Assinatura ({{filtro.mes}}/{{filtro.ano}})
+                    <div class="pull-right">
+                        <div class="btn-group">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr class="info">
+                                <th colspan="6">
+                                    <i class="glyphicon glyphicon-book"></i>&nbspCOADCORP - Relatorio Transferência de Assinatura - {{filtro.dataatual}}
+                                </th>
+                                <th style="text-align: right;">
+                                    Período:{{filtro.mes}} / {{filtro.ano}}
+                                </th>
+                            </tr>
+                            <tr class="info">
+                                <th style="text-align:Center;">Data Transf.</th>
+                                <th style="text-align:Center;">Origem</th>
+                                <th style="text-align:Center;">Atual</th>
+                                <th style="text-align:left;">Cliente</th>
+                                <th style="text-align:left;">Solicitante</th>
+                                <th style="text-align:left;">Login</th>
+                                <th style="text-align:left;">Motivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listaTransferencias | orderBy:'-ASN_DATA_TRANSF'" ">
+                                <td style="text-align:Center;" app-show-date="item.ASN_DATA_TRANSF"></td>
+                                <td style="text-align:Center;">{{item.ASN_NUM_ASSINATURA_ANT}}</td>
+                                <td style="text-align:Center;">{{item.ASN_NUM_ASSINATURA_ATU}}</td>
+                                <td style="text-align:left;width:30%;">{{item.CLIENTES.CLI_NOME}}</td>
+                                <td style="text-align:left;">{{item.ASN_TRANSF_SOLICITANTE}}</td>
+                                <td style="text-align:left;">{{item.USU_LOGIN}}</td>
+                                <td style="text-align:left;width:20%;">{{item.ASN_TRANSF_MOTIVO}}</td>
+                            </tr>
+                            <tr ng-hide="listaTransferencias.length > 0">
+                                <td colspan="7">
+                                    Nenhum item selecionado. Realize uma nova pesquisa!
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="hidden-print panel-footer" style="text-align:center;">
+                    <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+                    <a class="btn btn-default" href="/Relatorios/Controladoria">
+                        <span class="glyphicon glyphicon-chevron-left blue"></span>&nbspVoltar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

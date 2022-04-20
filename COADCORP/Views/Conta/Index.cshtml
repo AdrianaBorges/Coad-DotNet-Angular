@@ -1,0 +1,98 @@
+﻿
+@using GenericCrud.ActionResultTools
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<script src="@UrlCorp.Content("~/Scripts/negocio/conta.js")" defer="defer"></script>
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active"> Conta</li>
+
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="ContaController" class="padding content" ng-cloak data-ng-init="init()">
+        <div class="panel panel-corp">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold">
+                <span class="glyphicon glyphicon-user"></span> Conta
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Opções
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="@Url.Action("Editar")" class="blue">Novo</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div app-filtro-topo2="filtros" model="filtro" list="lstFiltrosUtilizados" flag-abrir="abrirFiltro" acao-pesquisar="BuscarConta()" watch-pesquisa="dispararPesquisa">
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr class="">
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarConta()" order-property="EMP_ID">Empresa</th>
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarConta()" order-property="BAN_ID">Banco</th>
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarConta()" order-property="CTA_ID">ID</th>
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarConta()" order-property="CTA_AGENCIA">Agência</th>
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarConta()" order-property="CTA_CONTA">Conta</th>
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarConta()" order-property="CTA_TIPO">Tipo</th>
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarConta()" order-property="CTA_NR_ARQ_ENVIADO">Nº Arquivo</th>
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarConta()" order-property="CTA_CEDENTE_EMITE_BOLETO">Gera Remessa</th>
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarConta()" order-property="CTA_ENVIA_BOLETO">Disponível no portal</th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in lstconta">
+                            <td>{{item.EMP_ID}}</td>
+                            <td>{{item.BAN_ID}}</td>
+                            <td>{{item.CTA_ID}}</td>
+                            <td>{{item.CTA_AGENCIA}}</td>
+                            <td>{{item.CTA_CONTA}}</td>
+                            <td>{{item.CTA_TIPO}}</td>
+                            <td>{{item.CTA_NR_ARQ_ENVIADO}}</td>
+                            <td>
+                                <span class="btn btn-success" ng-if="item.CTA_CEDENTE_EMITE_BOLETO==true">SIM</span>
+                                <span class="btn btn-warning" ng-if="item.CTA_CEDENTE_EMITE_BOLETO!=true">NÃO</span>
+                            </td>
+                            <td> 
+                                <span class="btn btn-success" ng-if="item.CTA_ENVIA_BOLETO==true">SIM</span>
+                                <span class="btn btn-warning" ng-if="item.CTA_ENVIA_BOLETO!=true">NÃO</span>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" app-post="@Url.Action("Editar")?CTA_ID={{item.CTA_ID}}"
+                                   title="Editar" class="blue">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="12" ng-show="!lstconta || lstconta.length == 0">Nenhum registro foi encontrado.</td>
+                        </tr>
+                    </table>
+                </div>
+                <div app-pagination="page" request-page="paginaReq" page-request="filtro.requisicao" load-function="BuscarConta(paginaReq)" ng-show="lstconta && lstconta.length > 1"></div>
+            </div>
+        </div>
+        <div app-filtro-lateral="filtros" model="filtro" list="lstFiltrosUtilizados" acao-pesquisar="BuscarConta()" flag-abrir="abrirFiltro">
+
+        </div>
+    </div>
+</div>

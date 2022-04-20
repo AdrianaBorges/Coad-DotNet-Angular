@@ -1,0 +1,664 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@Scripts.Render("~/Scripts/appScripts/remessa.js")
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+
+    .bd-callout {
+        padding: 1.25rem;
+        margin-top: 1.25rem;
+        margin-bottom: 1.25rem;
+        border: 1px solid #eee;
+        border-left-width: .25rem;
+        border-radius: .25rem
+    }
+
+        .bd-callout h4 {
+            margin-top: 0;
+            margin-bottom: .25rem
+        }
+
+        .bd-callout p:last-child {
+            margin-bottom: 0
+        }
+
+        .bd-callout code {
+            border-radius: .25rem
+        }
+
+        .bd-callout + .bd-callout {
+            margin-top: -.25rem
+        }
+
+    .bd-callout-info {
+        border-left-color: #5bc0de
+    }
+
+        .bd-callout-info h4 {
+            color: #5bc0de
+        }
+
+    .bd-callout-warning {
+        border-left-color: #f0ad4e
+    }
+
+        .bd-callout-warning h4 {
+            color: #f0ad4e
+        }
+
+    .bd-callout-danger {
+        border-left-color: #d9534f
+    }
+
+        .bd-callout-danger h4 {
+            color: #d9534f
+        }
+
+    .bd-examples .img-thumbnail {
+        margin-bottom: .75rem
+    }
+
+    .bd-examples h4 {
+        margin-bottom: .25rem
+    }
+
+    .bd-examples p {
+        margin-bottom: 1.25rem
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="RemessaController" class="padding content" ng-init="initRemessa()">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li>
+                            @Html.ActionLink("Home", "index", "Home")
+                        </li>
+                        <li class="active">
+                            <i class="fa fa-desktop"></i>&nbspPesquisar Alocação
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-filter"></span>&nbspAlocação de Titulos
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Opções<span class="caret"></span></button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="javascript:void(0);" ng-click="abriModalSelecionarRemessa()">Nova Alocação</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group col-lg-2">
+                            @Html.Label("Período Inicial")
+                            <div class="input-group date">
+                                <input type="text" class="form-control" ng-model="dtinicial" app-date="filtro.inicial" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="cnab">Final</label>
+                            <div class="input-group date">
+                                <input type="text" class="form-control" ng-model="dtfinal" app-date="filtro.final" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label for="cnab">Empresa</label>
+                            @Html.DropDownList("filtro.empresa", new SelectList(@ViewBag.empresa, "Value", "Text"), "Todas", new { @class = "form-control", ng_model = "filtro.empresa" })
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="cnab">Banco</label>
+                            @Html.DropDownList("filtro.banco", new SelectList(@ViewBag.banco, "Value", "Text"), "Todos", new { @class = "form-control", ng_model = "filtro.banco" })
+                        </div>
+                    </div>
+                    <div class="row" ng-repeat="reg in lnkPath">
+                        <div class="col-lg-12">
+                            <a target="_blank" app-post="@Url.Action("BaixarArquivoRemessa")?_arquivo={{reg.Value}}" style="cursor:pointer"><i class="glyphicon glyphicon-cloud-download"></i>&nbsp{{reg.Text}}</a>
+                        </div>
+                    </div>
+                    <div class="row" ng-repeat="reg in lnkPathZip">
+                        <div class="col-lg-12">
+                            <a target="_blank" app-post="@Url.Action("BaixarArquivoZipNFeRemessa")?_arquivo={{reg.Value}}" style="cursor:pointer"><i class="glyphicon glyphicon-cloud-download"></i>&nbsp{{reg.Text}}</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-footer">
+                    <button ng-click="listarRemessa()" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default" >
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-book"></span>&nbspLista Alocação
+                <div class="pull-right">
+                    <div class="btn-group">
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example" ng-if="lstdisponivel.length > 0">
+                    <thead>
+                        <tr class="info">
+                            <th style="text-align: right;">
+                                Qtde
+                            </th>
+                            <th style="text-align: right;width:40%;">
+                                <strong>Disponível (R$) </strong>
+                            </th>
+                            <th style="text-align: right;width:40%;">
+                                <strong>Disponível (R$) <span style="font-style:italic;color:red"> (Vencimento Inferior a 21 dias) </span></strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in lstdisponivel">
+                            <td style="text-align: right;">{{item.QTDE_TITULOS}}</td>
+                            <td class="align-right" style="min-width: 100px;">
+                                <a href="javascript:void(0);" ng-click="abriModalSelecionarRemessa()"> 
+                                    <span app-show-dinheiro="item.TOTAL_DISPONIVEL"></span> 
+                                </a>
+                            </td>
+                            <td class="align-right" style="min-width: 100px;">
+                                <a href="javascript:void(0);" ng-click="abriModalSelecionarRemessa()">
+                                    <span app-show-dinheiro="item.TOTAL_NECESSARIO"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                        <tr class="info">
+                            <th style="text-align: right;">Nº Remessa</th>
+                            <th style="text-align: center;">Tipo</th>
+                            <th style="text-align: center;">Status</th>
+                            <th style="text-align: center;">Alocação</th>
+                            <th style="text-align: center;">Remessa</th>
+                            <th style="text-align: center;">Transmissão</th>
+                            <th style="text-align: center;">Banco</th>
+                            <th style="text-align: center;">Conta</th>
+                            <th style="text-align: center;">Desalocado</th>
+                            <th style="text-align: right;">
+                                Qtde
+                            </th>
+                            <th style="text-align: right;">
+                                Valor (R$)
+                            </th>
+                            <th style="text-align: center;" colspan="5">Opções</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in listaremessa">
+                            <td style="text-align: right;">{{item.REM_ID}}</td>
+                            <td style="text-align: center;">
+                                <span class="label label-success">
+                                    {{item.TIPO_REMESSA.TRE_DESCRICAO}}
+                                </span>
+                                @*<span class="label label-default" ng-if="item.REM_AVULSA == true">Avulsa </span>
+            <span class="label label-primary" ng-if="item.REM_AVULSA != true">Padrão </span>*@
+                            </td>
+                            <td style="text-align: center;">
+                                <span class="label label-danger" ng_show="item.REM_DATA_DESALOCACAO!=null">Desalocado</span>
+                                <span class="label label-info" ng_show="item.REM_DATA_DESALOCACAO==null&&item.REM_TRANSMITIDO==null&&item.REM_DATA_REMESSA!=null">Gerado</span>
+                                <span class="label label-warning" ng_show="item.REM_DATA_DESALOCACAO==null&&item.REM_TRANSMITIDO==null&&item.REM_DATA_REMESSA==null">Pendente</span>
+                                <span class="label label-success" ng_show="item.REM_DATA_DESALOCACAO==null&&item.REM_TRANSMITIDO!=null">Transmitido</span>
+                            </td>
+                            <td style="text-align: center;">{{item.REM_DATA | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</td>
+                            <td style="text-align: center;">{{item.REM_DATA_REMESSA | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</td>
+                            <td style="text-align: center;">{{item.REM_DATA_TRANSMISSAO| date:"dd/MM/yyyy HH:mm" : 'UTC'}}</td>
+                            <td style="text-align: right;">{{item.BAN_ID}}</td>
+                            <td style="text-align: right;">{{item.CTA_ID}}</td>
+                            <td style="text-align: center;">{{item.REM_DATA_DESALOCACAO | date:"dd/MM/yyyy HH:mm"  : 'UTC'}}</td>
+                            <td style="text-align: right;">{{item.REM_QTDE}}</td>
+                            <td app-show-dinheiro="item.REM_TOTAL_REMESSA" class="align-right" style="min-width: 100px;"></td>
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" ng-click="abriModalDetalharRemessa(item)" title="Detalhar alocação"><span class="glyphicon glyphicon-search"></span></a>
+                            </td>
+                            <td style="text-align: center;">
+                                <div ng-if="item.REM_DATA_DESALOCACAO==null">
+                                    <a href="javascript:void(0)" ng-click="infTransmissaoArq(item)" title="Confirmar transmissão do arquivo" ng-if="item.REM_TRANSMITIDO==null&&item.REM_DATA_REMESSA!=null">
+                                        <span class="glyphicon glyphicon-ok red"></span>
+                                    </a>
+                                    <a href="javascript:void(0)" ng-click="" title="É preciso gerar a remessa para confirmar a transmissão" ng-if="item.REM_TRANSMITIDO==null&&item.REM_DATA_REMESSA==null">
+                                        <span class="glyphicon glyphicon-ok "></span>
+                                    </a>
+                                    <a href="javascript:void(0)" ng-click="" title="Arquivo transmitido" ng-if="item.REM_TRANSMITIDO!=null">
+                                        <span class="glyphicon glyphicon-ok-circle"></span>
+                                    </a>
+                                </div>
+                            </td>
+                            <td style="text-align: center;">
+                                <div ng-if="item.REM_DATA_DESALOCACAO==null">
+                                    <a href="javascript:void(0)" ng-click="abrirJanelaGerarRemessa(item);" title="Gerar arquivo de remessa" ng_show="item.REM_TRANSMITIDO==null">
+                                        <span class="glyphicon glyphicon-cog red"></span>
+                                    </a>
+                                    <a href="javascript:void(0)" ng-click="abrirJanelaGerarRemessa(item);" title="Remessa já enviada" ng_show="item.REM_TRANSMITIDO!=null">
+                                        <span class="glyphicon glyphicon-cog"></span>
+                                    </a>
+                                </div>
+                            </td>
+                            <td style="text-align: center;">
+                                <div>
+                                    <a href="javascript:void(0)" ng-click="downloadNFEsRemessa(item);" title="Download do ZIP com as NFes" ng_show="item.REM_DATA_REMESSA!=null">
+                                        <span class="glyphicon glyphicon-download-alt red"></span>
+                                    </a>
+                                </div>
+                            </td>
+                            <td style="text-align: center;">
+                                <div ng-if="item.REM_DATA_DESALOCACAO==null">
+                                    <a href="javascript:void(0)" ng-click="desAlocar(item);" title="Desfazer esta alocação e liberar os títulos" ng-if="item.REM_TRANSMITIDO==null">
+                                        <span class="glyphicon glyphicon-remove red"></span>
+                                    </a>
+                                    <a href="javascript:void(0)" title="Esta alocação não pode mais ser desfeita" ng-if="item.REM_TRANSMITIDO!=null">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="12" ng-if="!listaremessa || listaremessa.length == 0">Nenhum registro foi encontrado.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <app-pagination request-page="paginaReq" load-function="listarRemessa(paginaReq)" ng-if="listaremessa.length > 0"></app-pagination>
+            </div>
+        </div>
+
+
+        <!-- Modal detalhar registro -->
+        <div app-modal="modal-gerar-remessa" header="Gerar Remessa">
+            <div class="panel-body">
+                <div class="form-group col-lg-4">
+                    <label for="cnab">Tipo Remessa</label>
+                    <select id="TipoRemessa" ng-options="item.OCM_CODIGO as item.OCM_DESCRICAO for item in lstTipoRemessa" class="form-control" ng-model="TipoRemessa">
+                        <option value="">Selecione</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="GerarRemessa(TipoRemessa)">
+                    <span class="glyphicon glyphicon-cog blue"></span>&nbspProcessar
+                </button>
+            </div>
+        </div>
+
+        <!-- Selecionar Titulos P/ Alocação -->
+        <div app-modal="modal-detalhar-remessa" header="Titulos Alocação">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-2" style="text-align: right">
+                        <label for="cnab">Nº Remessa</label><br>
+                        <label for="cnab">{{remselect.REM_ID}}</label>
+                    </div>
+                    <div class="form-group col-lg-2" style="text-align: right">
+                        <label for="cnab">Alocação</label><br>
+                        <label for="cnab">{{remselect.REM_DATA | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</label>
+                    </div>
+                    <div class="form-group col-lg-2" style="text-align: right">
+                        <label for="cnab">Remessa</label><br>
+                        <label for="cnab">{{remselect.REM_DATA_REMESSA | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</label>
+                    </div>
+                    <div class="form-group col-lg-2" style="text-align: right">
+                        <label for="cnab">Qtd.Títulos</label><br>
+                        <label for="cnab">{{remselect.REM_QTDE}}</label>
+                    </div>
+                    <div class="form-group col-lg-2" style="text-align: right">
+                        <label for="cnab">Total Selecionado</label><br>
+                        <label><strong><span app-show-dinheiro="remselect.REM_TOTAL_REMESSA"></span></strong></label>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr class="info">
+                                <th>Assinatura</th>
+                                <th>Cliente</th>
+                                <th>Nº Parcela</th>
+                                <th style="text-align: center;">Alocação</th>
+                                <th>Vencimento</th>
+                                <th>Pagamento</th>
+                                <th class="align-right">Valor</th>
+                                <th style="text-align: center;">Situação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listaparcelas">
+                                <td>{{item.ASN_NUM_ASSINATURA}}</td>
+                                <td>{{item.CLI_NOME}}</td>
+                                <td>{{item.PAR_NUM_PARCELA}}</td>
+                                <td style="text-align: center;">{{item.BAN_ID}} <span app-show-date="item.PAR_DATA_ALOC"></span></td>
+                                <td>{{item.PAR_DATA_VENCTO | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</td>
+                                <td>{{item.PAR_DATA_PAGTO | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</td>
+                                <td app-show-dinheiro="item.PAR_VLR_PARCELA" class="align-right" style="min-width: 100px;"></td>
+                                <td style="text-align: center;">
+                                    <span ng-show="item.REM_ID!=remselect.REM_ID" class="label alert-warning">Realocada</span>
+                                    <span ng-show="item.REM_ID==remselect.REM_ID&&item.ALO_DATA_DESALOCACAO!=null" class="label alert-info">Transmitido</span>
+                                    <span ng-show="item.REM_ID==remselect.REM_ID&&item.ALO_DATA_TRANSMISSAO!=null" class="label alert-info">Transmitido</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <app-pagination request-page="paginaReq01" load-function="listarParcelas(paginaReq01)"></app-pagination>
+            </div>
+        </div>
+
+        <!-- Selecionar Titulos P/ Alocação -->
+        <div app-modal="modal-selecionar-remessa" header="Selecionar Titulos P/ Alocação">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-3">
+                        @Html.Label("Tipo de Alocação") <br>
+                        <select class="form-control" ng-options="item.TRE_DESCRICAO for item in lstTipoRemessa" ng-model="filtro.tiporemessa" ng-change="selecionaTipoAlocacao(filtro.tiporemessa)"></select>
+                        <!--Padrão <input type="hidden" class="form-control" ng-model="filtro.tiporemessa" value="1" ng-init="selecionaTipoAlocacao(1)" />-->
+                    </div>
+                    @*<div class="form-group col-lg-3">
+                        <label>Utilizar sacador avalista</label><br />
+                        <label class="switch switch switch-round switch-success" style="padding-top: 5px;">
+                            <input type="checkbox" id="sacador_avalista" ng-model="filtro.sacadorAvalista"
+                                   ng-checked="filtro.sacadorAvalista == true"
+                                   class="form-control" value="false">
+                            <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                        </label>
+                    </div>*@
+                    <div class="form-group col-lg-3" ng-if="filtro.tiporemessa">
+                        <input type="checkbox" class="form-control" ng-model="filtro.porvalor" />
+                        <label>Seleção por valor</label>
+                    </div>
+                    <div class="form-group col-lg-6" style="padding-left:0px;padding-top:25px;" ng-if="listaalocacao!=null&&listaalocacao.length>0">
+                        <button type="button" class="btn btn-danger" style="float:right;" ng-click="mostrarSelecionado()">
+                            <span> Selecionados ({{listaalocacao.length}})</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row" ng-if="( filtro.tiporemessa.TRE_ID != 2 )">
+                    <div class="form-group col-lg-3">
+                        @Html.Label("Período Inicial")
+                        <div class="input-group date">
+                            <input type="text" class="form-control" ng-model="filtro.vencI" app-date="filtro.dvencimentoI" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="cnab">Final</label>
+                        <div class="input-group date">
+                            <input type="text" class="form-control" ng-model="filtro.vencF" app-date="filtro.dvencimentoF" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="cnab">Vlr. Inicial</label>
+                        <input type="text" class="form-control" app-mask-dinheiro="filtro.vlrI" ng-model="filtro.vlrItxt" />
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="cnab">Valor Final</label>
+                        <input type="text" class="form-control" app-mask-dinheiro="filtro.vlrF" ng-model="filtro.vlrFtxt" />
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="cnab">Tot.Desejado</label>
+                        <input type="text" class="form-control" app-mask-dinheiro="filtro.vlrT" ng-model="filtro.vlrTtxt" />
+                    </div>
+                </div>
+                <div class="row" ng-if="filtro.tiporemessa.TRE_ID == 2">
+                    <div class="form-group col-lg-4">
+                        <label for="cnab">Banco</label>
+                        @Html.DropDownList("BAN_ID", new SelectList(@ViewBag.banco, "Value", "Text"), "Selecione",
+                                            new { @class = "form-control", ng_model = "filtro.bco", ng_change = "buscarContasBanco()", ng_disabled = "filtro.remessa" })
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="cnab">Conta</label>
+                        <select id="contas" ng-options=" item.CTA_ID as item.CTA_CONTA for item in listacontas" class="form-control" ng-model="filtro.ctaId">
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-2" style="text-align: right" ng-if="alocacao!=null">
+                        <label for="cnab">Total Desejado</label><br>
+                        <label><strong><span app-show-dinheiro="filtro.vlrT"></span></strong></label>
+                    </div>
+                    <div class="form-group col-lg-2" style="text-align: right" ng-if="alocacao!=null">
+                        <label for="cnab">Qtd.Títulos</label><br>
+                        <label for="cnab">{{alocacao.qAlocacao}}</label>
+                    </div>
+                    <div class="form-group col-lg-2" style="text-align: right" ng-if="alocacao!=null">
+                        <label for="cnab">Total Selecionado</label><br>
+                        <label><strong><span app-show-dinheiro="alocacao.vAlocacao"></span></strong></label>
+                    </div>
+                </div>
+                <div class="row" ng-if="filtro.TRE_ID != 2">
+                    <div class="form-group col-lg-3">
+                        <label for="cnab">Empresa</label>
+                         @Html.DropDownList("filtro.empresa", new SelectList(@ViewBag.empresa, "Value", "Text"), "Todas", new { @class = "form-control", ng_model = "filtro.empresa", ng_change="limparAlocacao();listarRemessa();" })
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="cnab">Banco</label>
+                        @Html.DropDownList("BAN_ID", new SelectList(@ViewBag.banco, "Value", "Text"), "Selecione",
+                                            new { @class = "form-control", ng_model = "filtro.bco", ng_change = "buscarContasBanco();limparAlocacao();", ng_disabled = "filtro.remessa" })
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="cnab">Conta</label>
+                        <select id="contas" ng-options=" item.CTA_ID as item.CTA_CONTA for item in listacontas" ng-change="limparAlocacao();" class="form-control" ng-model="filtro.ctaId">
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-3" ng-if="filtro.porvalor == 2">
+                        <label for="cnab">Total Desejado</label>
+                        <input type="text" class="form-control" app-mask-dinheiro="filtro.vlrT" ng-model="filtro.vlrTtxt" />
+                    </div>
+                    <div class="form-group col-lg-2" ng-if="!filtro.porvalor">
+                        <label>Assinatura</label>
+                        <input type="text" id="assinatura" ng-model="filtro.assinatura" ng-blur="carregarItensAvulsos()" class="form-control" style="text-transform:uppercase" />
+                    </div>
+                    <div class="form-group col-lg-3" ng-if="!filtro.porvalor">
+                        <label>Nome</label>
+                        <input type="text" id="assinatura" ng-model="filtro.nomecliente" ng-blur="carregarItensAvulsos()" class="form-control" style="text-transform:uppercase" />
+                    </div>
+                </div>
+                <div class="row" ng-if="filtro.avulsa">
+                    <div class="col-lg-12 btn btn-default" ng-if="alocacao!=null">
+                        <div class="form-group col-lg-4" style="text-align: right" ng-if="alocacao!=null">
+                            <label for="cnab">Total Desejado</label><br>
+                            <label><strong><span app-show-dinheiro="filtro.vlrT"></span></strong></label>
+                        </div>
+                        <div class="form-group col-lg-4" style="text-align: right" ng-if="alocacao!=null">
+                            <label for="cnab">Qtd.Títulos</label><br>
+                            <label for="cnab">{{alocacao.qAlocacao}}</label>
+                        </div>
+                        <div class="form-group col-lg-4" style="text-align: right" ng-if="alocacao!=null">
+                            <label for="cnab">Total Selecionado</label><br>
+                            <label><strong><span app-show-dinheiro="alocacao.vAlocacao"></span></strong></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+					<!--  ng-if="filtro.avulsa" -->
+                    <p></p>
+                    <div ng-if="!filtro.porvalor">
+
+                        <div class="form-group col-lg-12" ng-if="!selecionados">
+                            <div class="table-responsive" style="height:200px; overflow:auto;">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr class="info">
+                                            <th colspan="7" style="text-align: center;">P E S Q U I S A</th>
+                                        </tr>
+                                        <tr class="info">
+                                            <th>Assinatura</th>
+                                            <th>Cliente</th>
+                                            <th>Vencimento</th>
+                                            <th>Nº Parcela</th>
+                                            <th>Valor R$</th>
+                                            <th style="text-align: center;">Situação</th>
+                                            <th style="text-align: center;">Opções</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in lstalocacaoavulsa">
+                                            <td>{{item.ASN_NUM_ASSINATURA}}</td>
+                                            <td>{{item.CLI_NOME}}</td>
+                                            <td app-show-date="item.PAR_DATA_VENCTO"></td>
+                                            <td>{{item.PAR_NUM_PARCELA}}</td>
+                                            <td app-show-dinheiro="item.PAR_VLR_PARCELA" class="align-right" style="min-width: 100px;"></td>
+                                            <td>
+                                                <span ng-if="item.PAR_DATA_ALOC==null" class="label label-success">NÃO ALOCADO</span>
+                                                <span ng-if="item.PAR_DATA_ALOC!=null" class="label label-danger">ALOCADO</span>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <a href="javascript:void(0)" ng-click="addItemAlocacao(item)" title="Confirmar alocação.">
+                                                    <span class="glyphicon glyphicon-ok red"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-12" ng-if="selecionados">
+                            <div class="table-responsive" style="height:200px; overflow:auto;">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr class="info">
+                                            <th colspan="6" style="text-align: center;">R E M E S S A</th>
+                                        </tr>
+                                        <tr class="info">
+                                            <th>Assinatura</th>
+                                            <th>Cliente</th>
+                                            <th>Vencimento</th>
+                                            <th>Nº Parcela</th>
+                                            <th>Valor R$</th>
+                                            <th style="text-align: center;">Opções</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in listaalocacao">
+                                            <td>{{item.ASN_NUM_ASSINATURA}}</td>
+                                            <td>{{item.CLI_NOME}}</td>
+                                            <td app-show-date="item.PAR_DATA_VENCTO"></td>
+                                            <td>{{item.PAR_NUM_PARCELA}}</td>
+                                            <td app-show-dinheiro="item.PAR_VLR_PARCELA" class="align-right" style="min-width: 100px;"></td>
+                                            <td style="text-align: center;">
+                                                <a href="javascript:void(0)" ng-click="removeItemAlocacao($index)" title="Confirmar alocação.">
+                                                    <span class="glyphicon glyphicon-remove red"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+					<!--  ng-if="filtro.porvalor" -->
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example" ng-if="lstdisponivel.length > 0">
+                            <thead>
+                                <tr class="info">
+                                    <th style="text-align: right;">
+                                        Qtde
+                                    </th>
+                                    <th style="text-align: right;width:40%;">
+                                        <strong>Disponível (R$) </strong>
+                                    </th>
+                                    <th style="text-align: right;width:40%;">
+                                        <strong>Disponível (R$) <span style="font-style:italic;color:red"> (Vencimento Inferior a 21 dias) </span></strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in lstdisponivel">
+                                    <td style="text-align: right;">{{item.QTDE_TITULOS}}</td>
+                                    <td class="align-right" style="min-width: 100px;">
+                                        <span app-show-dinheiro="item.TOTAL_DISPONIVEL"></span>
+                                    </td>
+                                    <td app-show-dinheiro="item.TOTAL_NECESSARIO" class="align-right" style="min-width: 100px;"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" ng-click="limparFiltro();" class="btn btn-default" @*ng-if="filtro.avulsa==false"*@ title="Limpar filtros">
+                    <span class="glyphicon glyphicon-remove red"></span>&nbspLimpar filtros
+                </button>
+                <button type="button" class="btn btn-primary" ng-if="filtro.avulsa&&filtro.porvalor" ng-click="selecionarTitulos()">
+                    <span class="glyphicon glyphicon-refresh"></span>&nbspSelecionar títulos
+                </button>
+                <button type="button" class="btn btn-primary" ng-if="filtro.avulsa==false" ng-click="titulosAlocacao()">
+                    <span class="glyphicon glyphicon-refresh"></span>&nbspSelecionar títulos
+                </button>
+                <button type="button" ng-click="verTitulosDestaAlocacao()" class="btn btn-default" ng-if="alocacao.qAlocacao>0 && filtro.avulsa==false">
+                    <span class="glyphicon glyphicon-search"></span>&nbspVer os títulos desta alocação
+                </button>
+                <button type="button" ng-click="efetuarAlocacaoAvulsa()" class="btn btn-success" ng-if="filtro.avulsa==true&&alocacao.qAlocacao>0" style="float:right;">
+                    <span class="glyphicon glyphicon-ok"></span>&nbspConfirmar Alocação Avulsa
+                </button>
+                <button type="button" ng-click="efetuarAlocacao()" class="btn btn-success" ng-if="filtro.avulsa==false&&alocacao.qAlocacao>0" style="float:right;">
+                    <span class="glyphicon glyphicon-ok"></span>&nbspConfirmar Alocação
+                </button>
+            </div>
+        </div>
+
+        @*modal-preview - editor --- Popup modal*@
+        @*<div app-init-editor="editor"></div>*@
+
+        <div app-modal="modal-titulos-selecionados-para-remessa" header="Titulos selecionados para esta alocação">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr class="info">
+                                <th>Empresa</th>
+                                <th>Assinatura</th>
+                                <th>Cliente</th>
+                                <th>Contrato</th>
+                                <th>Nº Parcela</th>
+                                <th style="text-align: center;">Alocação</th>
+                                <th>Vencimento</th>
+                                <th class="align-right">Valor</th>
+                                <th style="text-align: center;">Situação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listaalocacao">
+                                <td>{{item.EMP_ID}}</td>
+                                <td>{{item.ASN_NUM_ASSINATURA}}</td>
+                                <td>{{item.CLI_NOME}}</td>
+                                <td>{{item.CTR_NUM_CONTRATO}}</td>
+                                <td>{{item.PAR_NUM_PARCELA}}</td>
+                                <td style="text-align: center;">{{filtro.bco}} - <span app-show-date="date"></span></td>
+                                <td app-show-date="item.PAR_DATA_VENCTO"></td>
+                                <td app-show-dinheiro="item.PAR_VLR_PARCELA" class="align-right" style="min-width: 100px;"></td>
+                                <td style="text-align: center;">
+                                    <span class="label alert-warning">Disponível para alocação</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+

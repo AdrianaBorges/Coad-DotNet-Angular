@@ -1,0 +1,541 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutoComposicaoDTO
+
+@{
+    ViewBag.Title = "Emitir Pedido";
+    ViewBag.useNewTheme = false;
+}
+@using Coad.GenericCrud.Extensions
+@using COAD.CORPORATIVO.SessionUtils
+
+    @section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li class="active">Emitir Pedido</li>         
+        
+    </ol>
+}
+    
+@Scripts.Render("~/Scripts/negocio/pedido.js")
+
+<div ng-app="appModule">
+    <div ng-controller="PedidoController" data-ng-init="init('@ViewBag.CLI_ID', '@SessionUtil.GetUenId()')" ng-cloak ng-show="pedido" class="animate-show-no-border">
+        
+               <div app-html-var="popOverHTML">
+                <div class="text-info">
+                    <div>
+                        <a href="javascript:void(0);" ng-click="abrirModalCurso()"
+                                title="Adicionar Curso">
+                            <span class="glyphicon glyphicon-plus"></span> Adicionar Curso</a>
+                    </div>
+                    <div>
+                        <a href="javascript:void(0);" ng-click="abrirModalProdutoComposicao()"
+                                title="Adicionar Produto Composicao">
+                            <span class="glyphicon glyphicon-plus"></span> Adicionar Produtos</a>
+                    </div>
+                                                        
+                </div>
+            </div>
+            <div class="panel panel-default">       
+                    @Html.ValidationSummary(true)          
+                          <!-- Default panel contents -->
+                    <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-shopping-cart icon-panel"></span> Pedido</div>
+                    <div class="panel-body">  
+                         <div app-message></div>
+                         @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) {
+                            <fieldset>
+                                <legend class="text-primary">Informações do Cliente</legend>
+                                <div class="row">
+                                           <div class="form-group col-sm-1">
+                                                   <label>Código</label>
+                                                    <div class="text">{{pedido.INFO_CLIENTE.CLI_ID}}</div>
+                                            </div>
+                                           <div class="form-group col-sm-3">
+                                                    <label>Nome</label>
+                                                    <div class="text">{{pedido.INFO_CLIENTE.CLI_NOME}}</div>
+                                            </div>
+                                            <div class="form-group col-sm-2">
+                                                  <label>CPF/CNPJ</label>
+                                                  <div class="text">{{pedido.INFO_CLIENTE.CLI_CPF_CNPJ}}</div>
+                                            </div>
+                                           <div class="form-group col-sm-2">
+                                                  <label>Tipo de Pessoa</label>
+                                                  <div class="text">{{pedido.INFO_CLIENTE.TIPO_CLIENTE.TIPO_CLI_DESCRICAO}}</div>
+                                           </div>
+                                           <div class="form-group col-sm-1">
+                                                  <label>Tipo</label>
+                                                  <div>
+                                                      <span class="label" ng-class="{
+                                                      
+                                                          'label-warning' : pedido.INFO_CLIENTE.CLA_CLI_ID == 1,
+                                                          'label-success' : pedido.INFO_CLIENTE.CLA_CLI_ID == 2,
+                                                          'label-primary' : pedido.INFO_CLIENTE.CLA_CLI_ID == 3,
+                                                          }">{{pedido.INFO_CLIENTE.CLASSIFICACAO_CLIENTE.CLA_CLI_DESCRICAO}}</span>
+
+                                                  </div>
+                                            </div>                                         
+                                       </div>
+                                <div class="row">
+                                    <div class="col col-xs-3 col-md-3 form-group" ng-if="pedido.INFO_CLIENTE && pedido.INFO_CLIENTE.TIPO_CLI_ID != 2">                                    
+	                                    <label>Empresa é do Simples?</label><br />
+                                        <label class="switch switch-success switch-round">
+                                            <input type="checkbox" ng-model="pedido.PED_EMPRESA_DO_SIMPLES" 
+                                                ng-change="calcularImpostoDoPedido()" ng-checked="pedido.PED_EMPRESA_DO_SIMPLES == true">
+	                                        <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                                        </label>
+                                    </div>
+                                    <div class="col col-xs-2 col-md-2 form-group" ng-if="pedido.INFO_CLIENTE && pedido.INFO_CLIENTE.TIPO_CLI_ID != 2">                                    
+	                                    <label>Faturar 100%</label><br />
+                                        <label class="switch switch-success switch-round">
+                                            <input type="checkbox" ng-model="pedido.PED_CEM_POR_CENTO_FATURADO" 
+                                                ng-change="calcularImpostoDoPedido()" ng-checked="pedido.PED_CEM_POR_CENTO_FATURADO == true">
+	                                        <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <legend class="text-primary">Produtos</legend>
+                           
+                                <div class="table-responsive">                                
+                                    <div ng-if="pedido.ITEM_PEDIDO.length <= 0" class="text">
+                                    
+                                        @if(SessionUtil.GetUenId() == 1 || SessionUtil.FranquiadoOuGerente()){
+                                        
+                                            <span>Adicionar Curso</span>
+                                            <a href="javascript:void(0);" ng-click="abrirModalCurso()"
+                                                         title="Adicionar" class="text-primary">
+                                                        <span class="glyphicon glyphicon-plus"></span></a>
+                                        }
+
+                                        @if (SessionUtil.GetUenId() != 1 || SessionUtil.FranquiadoOuGerente())
+                                        {
+                                            <span>Adicionar Produto</span>
+                                            <a href="javascript:void(0);" ng-click="abrirModalProdutoComposicao()"
+                                                         title="Adicionar" class="text-primary">
+                                                        <span class="glyphicon glyphicon-plus"></span></a>
+                                        }
+                                    </div>
+                                    <table class="table table-hover table-bordered" ng-show="pedido.ITEM_PEDIDO.length > 0">
+                                        <thead>
+                                            <tr>      
+                                                <th>Item N°</th>
+                                                <th>                                           
+                                                    Produto
+                                                </th>
+                                                <th>
+                                                    QTD
+                                                </th>
+                                                <th>
+                                                    Valor da Parcela
+                                                </th>
+                                                <th>Preco Unitário</th>
+                                                <th>Total sem imposto</th>
+                                                <th>Total </th>           
+                                            
+                                                <th>                                           
+                                                    Desconto (%)
+                                                </th>
+                                                <th ng-show="existeAlgumRecorrente">Cobrar Dia</th> 
+                                                <th>#</th>                                       
+                                            </tr>
+                                        </thead>
+                                      <tr ng-repeat="item in pedido.ITEM_PEDIDO" class="animate-repeat">
+                                          <td>{{$index + 1}}</td>
+                                            <td>
+                                                {{item.PRODUTO_COMPOSICAO.CMP_DESCRICAO}} 
+                                                <strong class="label label-primary" 
+                                                    ng-if="item.IPE_PRIMEIRA_PARCELA_CORTERIA">
+                                                    Primeira parcela grátis
+                                                </strong>
+                                            </td>  
+                                            <td>
+                                                <span class="label label-success">{{item.IPE_QTD}}</span>
+                                            </td>
+                                            <td>
+                                                <span ng-if="item.IPE_PARCELA"><strong>{{item.IPE_PARCELA}}X</strong> De</span>
+                                                <strong><span app-show-dinheiro="item.IPE_VALOR_PARCELA"></span></strong>
+                                            </td>                                      
+                                            <td>
+                                                <strong app-show-dinheiro="item.IPE_PRECO_UNITARIO"></strong>
+                                            </td>
+                                            <td>
+                                                <strong app-show-dinheiro="item.IPE_TOTAL_SEM_IMPOSTO"></strong>
+                                            </td>
+                                            <td>
+                                                <strong app-show-dinheiro="item.IPE_TOTAL"></strong>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="valor_parcelas" ng-model="item.desconto" app-mask-dinheiro="item.IPE_DESCONTO"
+                                                    ng-if="item.REGIAO_TABELA_PRECO.TABELA_PRECO.TP_MARGEM_NEGOCIACAO"
+                                                     class="form-control float-left" style="max-width: 70px" maxlength="6" app-popover 
+                                                    content="Desconto Máximo : {{item.REGIAO_TABELA_PRECO.TABELA_PRECO.TP_MARGEM_NEGOCIACAO}}%"
+                                                    ng-blur="calcularDesconto(item);"/>
+                                            
+                                            </td>
+                                            <td ng-show="existeAlgumRecorrente">
+                                                <input type="text" name="dia_cobranca" ng-model="item.IPE_DIA_VENCIMENTO_VENDA_RECORRENTE" 
+                                                    ng-show="item.TIPO_PERIODO.TTP_RECORRENTE == true"
+                                                     class="form-control float-left" style="max-width: 50px" maxlength="2" app-popover 
+                                                    content="Melhor dia para cobrar a recorrencia."/>
+                                                <span ng-show="item.TIPO_PERIODO.TTP_RECORRENTE != true" class="label label-default">Não se aplica</span>
+                                            
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0)" ng-click="deletarItemProduto($index)" 
+                                                        class="btnConfirmaExclusao red" id="btexcluir" title="Excluir"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                                                <a href="javascript:void(0)" ng-click="abrirModalTabelaPreco(item.PRODUTO_COMPOSICAO.CMP_ID, item, item.IPE_QTD)" 
+                                                     id="tabPreco" title="Tabela de Preço"><span class="glyphicon glyphicon-usd"></span></a>
+                                            
+                                                @if (SessionUtil.FranquiadoOuGerente())
+                                                {   
+                                              
+                                                    <a href="javascript:void(0)" ng-click="abrirInfoFatura(item.INFO_FATURA)" ng-show="item.INFO_FATURA"
+                                                         id="info_fatura" title="Info Fatura"><span class="glyphicon glyphicon-barcode"></span></a>
+                                                
+                                                    <a href="javascript:void(0);" ng-if="$last && item.lock != true"
+                                                        app-popover 
+                                                        data-html-var="$parent.popOverHTML"
+                                                        data-popover-title="Adicionar Produto" 
+                                                        title="Adicionar Produto" 
+                                                        data-trigger="focus" 
+                                                        data-direction="left" class="text-primary">
+                                                        <span class="glyphicon glyphicon-plus"></span>
+                                                    </a>
+                                                
+                                                }else{
+                                                     if(SessionUtil.GetUenId() == 1){
+                                                        <a href="javascript:void(0)" ng-click="abrirInfoFatura(item.INFO_FATURA)" ng-show="item.INFO_FATURA"
+                                                         id="info_fatura" title="Info Fatura"><span class="glyphicon glyphicon-barcode"></span></a>
+                                            
+                                                        <a href="javascript:void(0);" ng-click="abrirModalCurso()" ng-if="$last && item.lock != true"
+                                                                 title="Adicionar Curso" class="text-primary">
+                                                                <span class="glyphicon glyphicon-plus"></span></a>
+                                                     }
+
+                                                    if(SessionUtil.GetUenId() != 1){
+                                    
+                                                        <a href="javascript:void(0);" ng-click="abrirModalProdutoComposicao()" ng-if="$last && item.lock != true"
+                                                                 title="Adicionar Produto Composicao" class="text-primary">
+                                                                <span class="glyphicon glyphicon-plus"></span></a>
+                                                     }
+                                                }
+                                            </td>
+                                      </tr>
+                                        <tr>
+                                            <td colspan="5" ng-if="pedido.ITEM_PEDIDO.length <= 0" class="text">
+                                                Não foi encontrado nenhum registro.
+                                            </td>
+                                        </tr>
+                                    </table> 
+                                    <div>
+                                         <button type="button" class="btn btn-default" ng-click="gerarParticipantesEFormaDePagamento()" ng-show="passo == 2"> Continuar</button>
+                                    </div>
+                                </div>
+                            <br />
+                        </fieldset>                         
+                        <fieldset ng-show="passo == 3 && pedido.UEN_ID == 1">
+                            <legend ng-if="showLabel === true">
+                                  Participantes
+                            </legend>
+                                <div ng-repeat="itemPedido in pedido.ITEM_PEDIDO" ng-if="itemPedido.PRODUTO_COMPOSICAO.EhCurso === true" ng-init="$parent.showLabel = true">
+                                    <div ng-show="itemPedido.PEDIDO_PARTICIPANTE.length > 0" class="text padding-bottom">
+                                        <strong>
+                                            Produto: {{itemPedido.PRODUTO_COMPOSICAO.CMP_DESCRICAO}}
+                                        </strong>
+                                    </div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-hover" ng-show="itemPedido.PEDIDO_PARTICIPANTE.length > 0">
+                                        <thead>
+                                            <tr>      
+                                                <th>N°</th>
+                                                <th>                                           
+                                                    Nome
+                                                </th>
+                                                <th>
+                                                    CPF
+                                                </th>
+                                                <th>
+                                                    E-Mail
+                                                </th>
+                                                <th>DDD</th>
+                                                <th>Telefone</th>
+                                                <th></th>                                       
+                                            </tr>
+                                        </thead>
+                                      <tr ng-repeat="item in itemPedido.PEDIDO_PARTICIPANTE" class="animate-repeat">
+                                            <td>{{$index + 1}}</td>
+                                            <td app-editable-td="item.PPR_NOME" label="item.PPR_NOME" blur-event="confirmarEdicaoNome" 
+                                                validation-property-name="ITEM_PEDIDO[{{$parent.$index}}].PEDIDO_PARTICIPANTE[{{$index}}].PPR_NOME"
+                                                validation-obj="erros">
+                                                <input type="text" ng-model="item.PPR_NOME"
+                                                    class="form-control float-left" ng-blur="confirmarEdicaoNome($event)" maxlength="100"/>                                       
+                                            </td>
+                                            <td app-editable-td="item.PPR_CPF_CNPJ" label="item.PPR_CPF_CNPJ" blur-event="confirmarEdicaoCPF" 
+                                                validation-property-name="ITEM_PEDIDO[{{$parent.$index}}].PEDIDO_PARTICIPANTE[{{$index}}].PPR_CPF_CNPJ"
+                                                validation-obj="erros">
+                                                <input type="text" ng-model="item.PPR_CPF_CNPJ" app-number
+                                                    class="form-control float-left" ng-blur="confirmarEdicaoCPF($event)" maxlength="14"
+                                                    style="max-width: 130px;"/>                                       
+                                            </td>
+                                            <td app-editable-td="item.PPR_EMAIL" label="item.PPR_EMAIL" blur-event="confirmarEdicaoEmail"
+                                                validation-property-name="ITEM_PEDIDO[{{$parent.$index}}].PEDIDO_PARTICIPANTE[{{$index}}].PPR_EMAIL"
+                                                validation-obj="erros" style="max-width: 160px;">
+                                                <input type="text" ng-model="item.PPR_EMAIL"
+                                                    class="form-control float-left" ng-blur="confirmarEdicaoEmail($event)" maxlength="100" />                                       
+                                            </td>
+                                            <td app-editable-td="item.PPR_DDD" label="item.PPR_DDD" blur-event="confirmarEdicaoDDD" 
+                                                validation-property-name="ITEM_PEDIDO[{{$parent.$index}}].PEDIDO_PARTICIPANTE[{{$index}}].PPR_DDD"
+                                                validation-obj="erros">
+                                                <input type="text" ng-model="item.PPR_DDD" app-number
+                                                    class="form-control float-left" maxlength="2" ng-blur="confirmarEdicaoDDD($event)"
+                                                    style="max-width: 40px;"/>                                       
+                                            </td>
+                                            <td app-editable-td="item.PPR_TELEFONE" label="item.PPR_TELEFONE" blur-event="confirmarEdicaoTel" 
+                                                validation-property-name="ITEM_PEDIDO[{{$parent.$index}}].PEDIDO_PARTICIPANTE[{{$index}}].PPR_TELEFONE"
+                                                validation-obj="erros">
+                                                <input type="text" ng-model="item.PPR_TELEFONE" app-number
+                                                    class="form-control float-left" ng-blur="confirmarEdicaoTel($event)" maxlength="20"
+                                                    style="max-width: 100px;"/>                                       
+                                            </td> 
+                                            <td>
+                                                <span class="label label-success">{{item.IPE_QTD}}</span>
+                                            </td>
+                                      </tr>
+                                        <tr>
+                                            <td colspan="5" ng-if="pedido.ITEM_PEDIDO.length <= 0" class="text">
+                                                Não foi encontrado nenhum registro.
+                                            </td>
+                                        </tr>
+                                    </table> 
+                                    <div>
+                                         <button type="button" class="btn btn-default" ng-click="gerarParticipantesEFormaDePagamento()" ng-show="passo == 2"> Continuar</button>
+                                    </div>
+                                </div>
+                        
+                                    <hr  />
+                                </div>
+                        </fieldset> 
+                        <fieldset ng-show="passo == 3">
+                            <legend>
+                                <a  role="button" data-toggle="collapse" href="#pagamentos" aria-expanded="true" aria-controls="pagamentos">
+                                  Pagamento
+                                </a>
+                            </legend>
+                            <div id="pagamentos">  
+                                <div ng-repeat="itemPedido in pedido.ITEM_PEDIDO" ng-init="$indexItemPedido = $index">
+                                    <div ng-show="itemPedido.ITEM_PEDIDO_PEDIDO_PAGAMENTO.length > 0" class="text padding-bottom">
+                                        <strong>
+                                            Produto: {{itemPedido.PRODUTO_COMPOSICAO.CMP_DESCRICAO}}
+                                        </strong>
+                                    </div>
+                                    <div class="form-group panel panel-default" ng-repeat="item in itemPedido.ITEM_PEDIDO_PEDIDO_PAGAMENTO"
+                                            ng-show="itemPedido.ITEM_PEDIDO_PEDIDO_PAGAMENTO.length > 0">
+                                        <div></div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                                    <label for="tipo_pagamento">Tipo de Pagamento</label>
+                                                    <div>
+                                                        <span ng-class="{
+                                                            'glyphicon glyphicon-barcode' : item.PEDIDO_PAGAMENTO.TIPO_PAGAMENTO.TPG_ID == 7 ,
+                                                            'glyphicon glyphicon-usd': item.PEDIDO_PAGAMENTO.TIPO_PAGAMENTO.TPG_ID == 8 ,
+                                                            'glyphicon glyphicon-credit-card' : item.PEDIDO_PAGAMENTO.TIPO_PAGAMENTO.TPG_ID == 9
+                                                        
+                                                            }" class="text"></span>
+                                                        <span class="label label-success">{{item.PEDIDO_PAGAMENTO.TIPO_PAGAMENTO.TPG_DESCRICAO}}</span>
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="col-lg-1 padding-top-24">
+                                                    <span ng-if="item.PEDIDO_PAGAMENTO.PGT_ENTRADA == true" class="label label-warning">Entrada</span>
+                                                </div>
+                                                <div class="col-lg-1">
+                                                    <label for="parcelas">Parcela(s)</label>
+                                                    <div class="text">{{item.PEDIDO_PAGAMENTO.PGT_QTDE_PARCELAS}}</div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <label for="valor_parcelas">Valor da Parcela</label>
+                                                    <div class="text" app-show-dinheiro="item.PEDIDO_PAGAMENTO.PGT_VLR_PARCELA" 
+                                                        ng-if="item.PEDIDO_PAGAMENTO.PGT_ENTRADA == false || itemPedido.parcelaUnica == true"></div>
+
+                                                    <input type="text" class="form-control" app-mask-dinheiro="item.PEDIDO_PAGAMENTO.PGT_VLR_PARCELA" 
+                                                        ng-model="item.PEDIDO_PAGAMENTO.PGT_VLR_PARCELAStr" change="recalcularParcelas(itemPedido)" 
+                                                        ng-if="item.PEDIDO_PAGAMENTO.PGT_ENTRADA != false && itemPedido.parcelaUnica == false"/>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <label for="valor">Valor</label>
+                                                    <div class="text" app-show-dinheiro="item.PEDIDO_PAGAMENTO.PGT_VLR_TOTAL"></div>                                               
+                                                
+                                                </div>
+                                            
+                                                <div class="col-lg-2 form-group" ng-show="itemPedido.TIPO_PERIODO.TTP_RECORRENTE != true">
+                                                    <label for="valor">Vencimento</label>
+                                                    <input type="text" class="form-control" 
+                                                        ng-model="item.PEDIDO_PAGAMENTO.PGT_DATA_VENCIMENTOSTR"
+                                                        app-date="item.PEDIDO_PAGAMENTO.PGT_DATA_VENCIMENTO"/>
+                                                    <div app-validation-msg="erros" 
+                                                        for="ITEM_PEDIDO[{{$indexItemPedido}}].ITEM_PEDIDO_PEDIDO_PAGAMENTO[{{$index}}].PEDIDO_PAGAMENTO.PGT_DATA_VENCIMENTO"></div>
+                                                </div>     
+                                            </div> 
+
+                                            <br /> 
+    @*                                        <div class="row" ng-show="item.TPG_ID == 8">
+                                                <div class="col-lg-3">
+                                                    <label for="mumero">Número do Cheque</label>
+                                                    <input type="text" name="numero" ng-model="item.PGT_NUMERO_DOCUMENTO" class="form-control" />
+                                                </div>                                                                                                        
+                                                <div class="col-lg-3">
+                                                    <label for="valor">Cheque valido até</label>
+                                                    <input type="text" name="valor" ng-model="item.PGT_CHEQUE_BOM_PARADate" 
+                                                        app-date="item.PGT_CHEQUE_BOM_PARA" class="form-control" />
+                                                </div> 
+                                            </div>   
+                                            <div class="row" ng-show="item.TPG_ID == 9">
+                                                <div class="col-lg-3">
+                                                    <label for="mumero">Número do Cartão</label>
+                                                    <input type="text" name="numero" ng-model="item.PGT_NUMERO_DOCUMENTO" class="form-control" />
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <label for="codigo_secreto">Código Secreto do Cartão</label>
+                                                    <input type="text" name="codigo_secreto" ng-model="item.PGT_CODIGO_CARTAO" class="form-control" />
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <label for="cartao">Cartão Válido Até</label>
+                                                    <input type="text" name="cartao" ng-model="item.PGT_VENCIMENTO_CARTAOMask" app-date="item.PGT_VENCIMENTO_CARTAO" 
+                                                        class="form-control" />
+                                                </div>
+                                            </div>           *@                  
+                                        </div>
+                              </div>
+                        
+                                    <hr  />
+                                </div>
+                            </div>
+                        </fieldset> 
+                        <fieldset ng-show="passo == 3">                        
+                            <legend class="text-primary">Dados Finais</legend>
+                            <div class="row">
+                                <div class="form-group col-sm-12">                        
+                                        <div app_validation_msg="erros" for="PED_CRM_DESCRICAO"></div>
+                                        <label>Observações</label>
+                                        <textarea class="form-control" placeholder="Observações" rows="6" ng-model="pedido.PED_CRM_DESCRICAO"></textarea>
+                                </div>                                         
+                            </div>
+                        </fieldset>  
+                         }
+                    </div>
+                <div class="panel-footer">
+                        <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default" ng-disabled="buttonSave == emitindo">
+                            <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar
+                        </button>
+                   @*     <button type="button" class="btn btn-primary" ng-click="salvarComposicao()" ng-disabled="buttonSave.show == false">
+                            <span class="glyphicon glyphicon-floppy-save"></span> {{buttonSave.label}}
+                        </button>*@     
+                
+                  <button  
+                      app-switch-button="emitirPedido()" ng-show="passo == 3"
+                      switch-conf="[{label : 'Emitir Pedido', state : 'emit'}, {label : 'Emitindo Pedido...', state : 'emitindo', disabled : true}]" 
+                      switch-var="buttonSave"
+                      class="btn btn-primary">
+                      <span class="glyphicon glyphicon-floppy-save"></span>
+                  </button>
+                
+                </div>
+            </div>
+
+         <div app-modal="modal-curso" header="Selecione o Curso">  
+         
+            @Html.Partial("Partials/_CursoPartial")
+         </div> 
+
+        <div app-modal="modal-produto-composicao" header="Selecione o Produto">  
+         
+            @Html.Partial("Partials/_ProdutoPartial")
+         </div>
+
+        <div app-modal="modal-fatura" header="Informações de desconto de imposto" size="small">
+            @Html.Partial("Partials/_ModalInfoFaturaPartial")
+         </div>  
+
+        <div app-modal="modal-tabela-preco" header="Tabela de Preço">
+                 
+            <div class="row">
+                <div class="col-lg-4" ng-show="$parent.itemSelecionado.PRODUTO_COMPOSICAO.EhCurso != true">
+                    <label for="tipo_pagamento">Período</label>
+                    <select name="tipo_periodo" class="form-control" ng-model="$parent.idTipoPeriodo"
+                        ng-options="item.TTP_ID as item.TTP_DESCRICAO for item in lstTipoPeriodoDoProduto" 
+                        ng-change="tipoPagamentoTabelaPrecoSelecionado()">
+                        <option value="">Selecione</option>
+                    </select>
+                    <div app-validation-msg="erros" for="TPG_ID"> </div>
+                </div>
+                 <div class="col-lg-4">
+                    <label for="tipo_pagamento">Tipo de Pagamento</label>
+                    <select name="tipo_pagamento" class="form-control" ng-model="$parent.tipoPagamentoSelecionado"
+                        ng-options="item as item.TPG_DESCRICAO for item in lstTipoPagamento track by item.TPG_ID" 
+                        ng-change="tipoPagamentoTabelaPrecoSelecionado()">
+                        <option value="">Selecione</option>
+                    </select>
+                    <div app-validation-msg="erros" for="TPG_ID"> </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Parcelas</th>
+                                <th>Preço Total</th>
+                                <th ng-show="$parent.itemSelecionado.PRODUTO_COMPOSICAO.EhCurso != true">Período</th>
+                                <th>Tipo Pagamento</th>
+                                <th>Região</th>
+                                <th>Margem de Negociação</th>
+                                <th colspan="2">#</th>                                  
+                            </tr>                                   
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in regiaoResumoParcelas" class="animate-repeat">
+                                <td><strong>{{item.Parcela}}X</strong> De <strong app-show-dinheiro="item.ValorParcela" output-model="item.ValorParcelaMask"></strong></td>
+                                <td app-show-dinheiro="item.Total" output-model="item.TotalMask">
+                                </td>                            
+                                <td ng-show="$parent.itemSelecionado.PRODUTO_COMPOSICAO.EhCurso != true">
+                                    {{item.REGIAO_TABELA_PRECO.TABELA_PRECO.TIPO_PERIODO.TTP_DESCRICAO}}
+                                </td>
+                                <td>
+                                    {{item.TIPO_PAGAMENTO.TPG_DESCRICAO}}
+                                </td>
+                                <td> {{item.REGIAO_TABELA_PRECO.REGIAO.RG_DESCRICAO}}
+                                
+                                </td>
+                                <td><span class="label label-success">{{item.REGIAO_TABELA_PRECO.TABELA_PRECO.TP_MARGEM_NEGOCIACAO}}%</span></td>
+                                <td ng-show="item.PermitirParcelaCortesia">
+                                    <label for="pendente">Primeiro mês grátis</label><br />
+                                    <label class="switch switch-success switch-round">
+                                        <input type="checkbox" ng-model="item.primeiroMesGratis" 
+                                            ng-checked="item.primeiroMesGratis == true">
+	                                    <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" title="Selecione" class="blue" ng-click="adicionarTabelaDePrecoNoItemPedido(item)">
+                                         <span class="glyphicon glyphicon-ok-sign"></span>
+                                    </a>
+                                </td>
+                                    
+                            </tr>
+                            <tr ng-hide="regiaoResumoParcelas.length > 0">
+                                <td colspan="7">Nenhum configuração de preço foi adicionada.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>  
+         </div>  
+        </div>
+ </div>
+

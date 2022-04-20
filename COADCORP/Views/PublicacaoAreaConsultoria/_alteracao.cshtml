@@ -1,0 +1,56 @@
+﻿@model  COAD.COADGED.Model.DTO.PublicacaoAreaConsultoriaDTO
+
+<div ng-repeat="alteracao in pub.TMP_REVOGACAO" ng-show="pub.TMP_REVOGACAO">
+    <div class="row">
+        <div class="form-group" ng-show="pub.TMP_REVOGACAO[$index].PAR_TIPO=='A'">
+            <div class="form-group col-lg-3">
+                @Html.Label("Tipo Ato")
+                <select id="tpAtoAlterado{{$index+1}}" class="form-control" ng-model = "pub.TMP_REVOGACAO[$index].TIP_ATO_ID" ng-change="trocouRevogacao()" ng-blur="BuscarAtoRevogado($index)" ng-disabled="(operacao.substring(0,1)=='V')">
+                    <option value="">--Selecione--</option>
+                    <option data-ng-repeat="item in lst._tpAto" ng-value="{{item.Value}}" ng-selected="alteracao.TIP_ATO_ID==item.Value">{{item.Text}}</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.PUBLICACAO.PUBLICACAO_ALTERACAO_REVOGACAO, null, new { app_validation_msg = "erros", @for = "TIP_ATO_ID" })
+            </div>
+            <div class="form-group col-lg-2">
+                @Html.Label("Data do Ato")
+                <div class="input-group date">
+                    <input type="text" class="form-control datepicker" maxlength="10" ng-model="PUB_DATA_ATO_branco" app-date="alteracao.PUB_DATA_ATO" ng-change="trocouRevogacao()" ng-blur="BuscarAtoRevogado($index)" ng-disabled="(operacao.substring(0,1)=='V')" />
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                </div>
+                <div app-validation-msg="erros" for="PUB_DATA_ATO"></div>
+            </div>
+            <div class="form-group col-lg-2">
+                @Html.Label("Nº do Ato")
+                @Html.TextBoxFor(model => model.PUBLICACAO.PUBLICACAO_ALTERACAO_REVOGACAO, new { @class = "form-control", ng_model = "pub.TMP_REVOGACAO[$index].PUB_NUMERO_ATO",  
+                                                                                                 ng_change = "trocouRevogacao()", ng_blur="BuscarAtoRevogado($index)", ng_disabled="(operacao.substring(0,1)=='V')" })
+                @Html.ValidationMessageFor(model => model.PUBLICACAO.PUBLICACAO_ALTERACAO_REVOGACAO, null, new { app_validation_msg = "erros", @for = "PUB_NUMERO_ATO" })
+            </div>
+            <div class="form-group col-lg-3">
+                @Html.Label("Órgão")
+                <select id="orgao" class="form-control" ng-model = "pub.TMP_REVOGACAO[$index].ORG_ID" ng-disabled="(operacao.substring(0,1)=='V')">
+                    <option value="">--Selecione--</option>
+                    <option data-ng-repeat="item in lst._orgao" ng-value="{{item.Value}}" ng-selected="alteracao.ORG_ID==item.Value">{{item.Text}}</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.PUBLICACAO.PUBLICACAO_ALTERACAO_REVOGACAO, null, new { app_validation_msg = "erros", @for = "ORG_ID" })
+            </div>
+            <div class="form-group col-lg-10">
+                @Html.Label("Alteração ocorrida")
+                @Html.TextAreaFor(model => model.PUBLICACAO.PUBLICACAO_ALTERACAO_REVOGACAO, new { @class = "form-control", ng_model = "pub.TMP_REVOGACAO[$index].PUB_ALTERACAO_ATO", ng_disabled="(operacao.substring(0,1)=='V')" })
+                @Html.ValidationMessageFor(model => model.PUBLICACAO.PUBLICACAO_ALTERACAO_REVOGACAO, null, new { app_validation_msg = "erros", @for = "PUB_ALTERACAO_ATO" })
+            </div>
+            <div class="form-group col-lg-1" ng-if="alteracao.TIP_ATO_ID && (operacao.substring(0,1)!='V')">
+                @Html.Label("ação")<br>
+                <span>
+                    <a href="javascript:void(0)" ng-click="adicionarRevogacaoAlteracao('A')" title="Incluir" 
+                        ng-if="alteracao.TIP_ATO_ID && alteracao.PUB_NUMERO_ATO && alteracao.PAR_TIPO=='A'">
+                        <span class="glyphicon glyphicon-plus blue"></span>
+                    </a>
+                    <a href="javascript:void(0)" ng-click="removerRevogacaoAlteracao(alteracao, $index)" title="Excluir"
+                        ng-if="alteracao.TIP_ATO_ID">
+                        <span class="glyphicon glyphicon-trash red"></span>
+                    </a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>                     

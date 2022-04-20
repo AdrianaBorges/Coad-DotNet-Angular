@@ -1,0 +1,464 @@
+﻿@model COAD.CORPORATIVO.Model.Dto.RepresentanteDTO
+
+@{
+    ViewBag.Title = "Campanha de Vendas - Editar ";
+}
+@using Coad.GenericCrud.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+@using GenericCrud.ActionResultTools
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Campanha de Vendas (Editar)</li>
+    </ol>
+}
+
+
+@{
+
+    bool adm = (SessionContext.IsAdmDepartamento("TI") || SessionContext.IsAdmDepartamento("Franquiador"));
+
+}
+
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/campanha_venda.js")" defer="defer"></script>
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+<div ng-app="appModule">
+    <div class="panel panel-corp" ng-controller="CampanhaVendaController" data-ng-init="init('@ViewBag.cveId');" ng-cloak>
+        <div class="panel-heading bold head-panel">
+            <span class="glyphicon glyphicon-edit icon-panel"></span> Editar Campanha de Vendas
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="false" ng-disabled="button == 'saved'">
+                        Opções
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li>
+                            <a href="@Url.Action("index")" title="Voltar" class="blue"> Voltar</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" title="Salvar" ng-click="salvar()" class="blue">Salvar</a>
+                        </li>
+                        <li ng-show="prospect.ID">
+                            <a href="javascript:void(0)" app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}"
+                               app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?" class="btnConfirmaExclusao blue" title="Excluir">Excluir</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div app-message></div>
+            <div>
+                <div>
+                    <div>
+                        <div class="pull-right">
+                            <strong>Código: </strong><span class="label label-danger">{{campanhaVendas.CVE_ID}}</span>
+                        </div>
+                    </div>
+                    <fieldset>
+                        <legend class="text-info">
+                            <span class="font-30">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                <span class="font-16">Dados de Cadastro</span>
+                            </span>
+                        </legend>
+                        <section id="identificacao">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span class="font-16">
+                                        <i class="fa fa-tag" aria-hidden="true"></i>
+                                        <label class="font-15">Indentificação</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-3">
+                                    <label for="campo_descricao">Descrição</label>
+                                    <input type="text" id="campo_descricao" class="form-control" ng-model="campanhaVendas.CVE_DESCRICAO" max="30" />
+                                    <div app-validation-msg="erros" for="REP_NOME"></div>
+                                </div>
+                            </div>
+                        </section>
+                        <section id="Identificação">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span class="font-16">
+                                        <i class="fa fa-cogs" aria-hidden="true"></i>
+                                        <label class="font-15">Definições</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-2">
+                                    <label for="campo_periodo_inicial">Valida De</label>
+                                    <input type="text" id="campo_periodo_inicial" class="form-control" ng-model="campanhaVendas.CVE_PERIODO_INICIALStr"
+                                           app-date="campanhaVendas.CVE_PERIODO_INICIAL" />
+                                    <div app-validation-msg="erros" for="CVE_PERIODO_INICIAL"></div>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label for="campo_periodo_final">Valida Até</label>
+                                    <input type="text" id="campo_periodo_final" class="form-control"
+                                           ng-model="campanhaVendas.CVE_PERIODO_FINALStr"
+                                           app-date="campanhaVendas.CVE_PERIODO_FINAL" />
+                                    <div app-validation-msg="erros" for="CVE_PERIODO_FINAL"></div>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label for="venc-par2">Parcela Mínimo</label>
+                                    <div class="input-group" style="max-width: 95px">
+                                        <input type="number" id="venc-par2" ng-model="campanhaVendas.CVE_NUM_PARCELA_MIN"
+                                               class="form-control" style="max-width: 100px;" max="100" />
+                                        <strong class="input-group-addon">x</strong>
+                                    </div>
+                                    <div app-validation-msg="erros" for="CVE_NUM_PARCELA_MIN"></div>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label for="venc-par2">Parcelas Máximo</label>
+                                    <div class="input-group" style="max-width: 95px">
+                                        <input type="number" id="venc-par2" ng-model="campanhaVendas.CVE_NUM_PARCELA_MAX" class="form-control"
+                                               style="max-width: 100px;" max="100" />
+                                        <strong class="input-group-addon">x</strong>
+                                    </div>
+                                    <div app-validation-msg="erros" for="CVE_NUM_PARCELA_MAX"></div>
+                                </div>
+                            </div>
+
+                        </section>
+                        <section id="contato">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span class="font-16">
+                                        <i class="fa fa-unlock" aria-hidden="true"></i>
+                                        <label class="font-15">Regras</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-3">
+                                    <label for="venc-par2">Limite Min Venc. 1º parcela</label>
+                                    <div class="input-group" style="max-width: 115px">
+                                        <input type="number" id="venc-par2" ng-model="campanhaVendas.CVE_DIAS_MIN_PRIMEIRA_PARCELA"
+                                               class="form-control" style="max-width: 70px;" max="100" />
+                                        <strong class="input-group-addon">Dias</strong>
+                                    </div>
+                                    <div app-validation-msg="erros" for="CVE_DIAS_MIN_PRIMEIRA_PARCELA"></div>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label for="venc-par2">Limite Max Venc. 1º parcela (Dias)</label>
+                                    <div class="input-group" style="max-width: 115px">
+                                        <input type="number" id="venc-par2" ng-model="campanhaVendas.CVE_DIAS_MAX_PRIMEIRA_PARCELA"
+                                               class="form-control" style="max-width: 70px;" max="100" />
+                                        <strong class="input-group-addon">Dias</strong>
+                                    </div>
+                                    <div app-validation-msg="erros" for="CVE_DIAS_MAX_PRIMEIRA_PARCELA"></div>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label for="venc-par2"> Intervalos Fixo Entre 1º e 2° Parcela</label>
+                                    <div class="input-group" style="max-width: 115px">
+                                        <input type="number" id="venc-par2" ng-model="campanhaVendas.CVE_DIAS_FIXO_SEGUNDA_PARCELA"
+                                               class="form-control" style="max-width: 70px;" max="100" />
+                                        <strong class="input-group-addon">Dias</strong>
+                                    </div>
+                                    <div app-validation-msg="erros" for="CVE_DIAS_FIXO_SEGUNDA_PARCELA"></div>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label for="venc-par2">Intervalo Min Entre 1º e 2º Parcela</label>
+                                    <div class="input-group" style="max-width: 115px">
+                                        <input type="number" id="venc-par2" ng-model="campanhaVendas.CVE_DIAS_MIN_SEGUNDA_PARCELA"
+                                               class="form-control" style="max-width: 70px;" max="100" />
+                                        <strong class="input-group-addon">Dias</strong>
+                                    </div>
+                                    <div app-validation-msg="erros" for="CVE_DIAS_MIN_SEGUNDA_PARCELA"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-2">
+                                    <label for="acrescimo">Acréscimo Mínimo</label>
+                                    <div class="input-group" style="max-width: 100px">
+                                        <input type="number" id="acrescimo" ng-model="campanhaVendas.CVE_ACRESCIMO_MINIMO"
+                                               class="form-control" style="max-width: 80px;" max="100" ng-change="validarDesconto()" />
+                                        <strong class="input-group-addon">%</strong>
+                                    </div>
+                                    <span class="glyphicon glyphicon-question-sign text-danger"
+                                          title="Tenha em mente, ao preencher esse campo e o desconto máximo, que o acrescimo mínimo é subtraido do desconto máximo.
+                                      Portanto o desconto máximo não deve ser maior ou igual ao acréscimo mínimo.
+                                      Ou seja, resultado = (Acréscimo Mínimo - Desconto Máximo).
+                                      Na maioria dos casos, não é necessário preencher os dois campos.
+                                      Considere ajustar só o acréscimo mínimo."
+                                          data-toggle="tooltip">
+                                    </span>
+                                    <div app-validation-msg="erros" for="CVE_ACRESCIMO_MINIMO"></div>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label for="acrescimo">Desconto Máximo</label>
+                                    <div class="input-group" style="max-width: 100px">
+                                        <input type="number" id="acrescimo" ng-model="campanhaVendas.CVE_DESCONTO_MAX" ng-change="validarDesconto()"
+                                               class="form-control" style="max-width: 80px;" max="100" />
+                                        <strong class="input-group-addon">%</strong>
+                                    </div>
+                                    <span class="glyphicon glyphicon-question-sign text-danger"
+                                          title="Tenha em mente, ao preencher esse campo e o desconto máximo, que o acrescimo mínimo é subtraido do desconto máximo.
+                                      Portanto o desconto máximo não deve ser maior ou igual ao acréscimo mínimo.
+                                      Ou seja, resultado = (Acréscimo Mínimo - Desconto Máximo).
+                                      Na maioria dos casos, não é necessário preencher os dois campos.
+                                      Considere ajustar só o acréscimo mínimo."
+                                          data-toggle="tooltip">
+                                    </span>
+                                    <div app-validation-msg="erros" for="CVE_DESCONTO_MAX"></div>
+                                </div>
+                            </div>
+                        </section>
+                        <section>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span class="font-16">
+                                        <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                                        <label class="font-15">Tipo de Venda</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row padding">
+                                <div class="table-responsive col-sm-6">
+                                    <label>Tipo de Proposta/Pedido</label>
+                                    <div class="limit-div padding">
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tipo de Proposta/Pedido</th>
+                                                    <th>Ações</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="tpp in lstTipoProposta | filter: query">
+                                                    <td>
+                                                        {{tpp.TPP_DESCRICAO}}
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0)" ng-click="adicionarTipoProposta(tpp)" class="blue" id="btnEdicaoItem" title="Incluir">
+                                                            <span class="glyphicon glyphicon-forward"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-hide="(lstTipoProposta | filter: query).length != 0">
+                                                    <td colspan="7">
+                                                        <span ng-if="lstTipoProposta.length == 0">Não há Tipo de Proposta/Pedido cadastradas.</span>
+                                                        <span ng-if="(lstTipoProposta | filter: query).length < 1">Não há Proposta/Pedido para adicionar.</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="table-responsive col-sm-6">
+                                    <label>Tipo de Proposta/Pedido Selecionada</label>
+                                    <div class="limit-div padding">
+                                        {{model.USU_ADMIN_LOGIN_PERFIL}}
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tipo de Proposta/Pedido</th>
+                                                    <th>Ações</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="tpPro in campanhaVendas.CAMPANHA_VENDA_TIPO_PROPOSTA">
+
+                                                    <td>
+                                                        {{tpPro.TIPO_PROPOSTA.TPP_DESCRICAO}}
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0)" ng-click="excluirTipoProposta($index)" class="btnConfirmaExclusao red"
+                                                           id="btexcluir21" title="Excluir">
+                                                            <span class="glyphicon glyphicon-remove-sign"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-hide="campanhaVendas.CAMPANHA_VENDA_TIPO_PROPOSTA.length >= 1">
+                                                    <td colspan="7">Nenhum Tipo de Proposta foi Adicionada
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span class="font-16">
+                                        <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+                                        <label class="font-15">Tipo de Pagamento</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row padding">
+                                <div class="table-responsive col-sm-6">
+                                    <label>Tipo de Pagamento</label>
+                                    <div class="limit-div padding">
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tipo de Pagamento</th>
+                                                    <th>Ações</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="tpp in lstTipoPagamento | filter: query">
+                                                    <td>
+                                                        {{tpp.TPG_DESCRICAO}}
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0)" ng-click="adicionarTipoPagamento(tpp)" class="blue" id="btnEdicaoItem" title="Incluir">
+                                                            <span class="glyphicon glyphicon-forward"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-hide="(lstTipoPagamento | filter: query).length != 0">
+                                                    <td colspan="7">
+                                                        <span ng-if="lstTipoPagamento.length == 0">Não há Tipo de Pagamento cadastradas.</span>
+                                                        <span ng-if="(lstTipoPagamento | filter: query).length < 1">Não há Pagamento para adicionar.</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="table-responsive col-sm-6">
+                                    <label>Tipo de Pagamento Selecionados</label>
+                                    <div class="limit-div padding">
+                                        {{model.USU_ADMIN_LOGIN_PERFIL}}
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tipo de Proposta/Pedido</th>
+                                                    <th>Ações</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="tpPag in campanhaVendas.TIPO_PAGAMENTO_CAMPANHA_VENDA">
+
+                                                    <td>
+                                                        {{tpPag.TIPO_PAGAMENTO.TPG_DESCRICAO}}
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0)" ng-click="excluirTipoProposta($index)" class="btnConfirmaExclusao red"
+                                                           id="btexcluir21" title="Excluir">
+                                                            <span class="glyphicon glyphicon-remove-sign"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-hide="campanhaVendas.TIPO_PAGAMENTO_CAMPANHA_VENDA.length >= 1">
+                                                    <td colspan="7">Nenhum Tipo de Pagamento foi Adicionado
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span class="font-16">
+                                        <i class="fa fa-gift font-20" aria-hidden="true"></i>
+                                        <label class="font-15">Produtos</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row padding">                                
+                                <div class="table-responsive col-sm-12">
+                                    <div>
+                                        <label class="text-muted">Adicionar Produto</label>
+                                        <a href="javascript:void(0);" ng-click="abrirModalProduto()"
+                                           title="Adicionar" class="text-primary">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </a>
+                                    </div>
+                                    <div class="limit-div padding">
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Produto Composicao</th>
+                                                    <th>Empresa</th>
+                                                    <th>#</th>
+                                                </tr>
+                                            </thead>
+                                            <tr ng-repeat="item in campanhaVendas.CAMPANHA_VENDAS_PRODUTO_COMPOSICAO" class="animate-repeat" ng-class="{ 'disabled-row' : item.PST_ID != null && item.PST_ID != 1 && item.PST_ID != 10}">
+                                                <td>
+                                                    {{item.PRODUTO_COMPOSICAO.CMP_ID}}
+                                                </td>
+                                                <td>
+                                                    {{item.PRODUTO_COMPOSICAO.CMP_DESCRICAO}}
+                                                </td>
+                                                <td>
+                                                    {{item.PRODUTO_COMPOSICAO.EMPRESAS.EMP_NOME_FANTASIA}}
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0)" ng-click="deletarProdutoComposicao($index)"
+                                                       class="btnConfirmaExclusao red" id="btexcluir" title="Excluir"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" ng-if="campanhaVendas.CAMPANHA_VENDAS_PRODUTO_COMPOSICAO.length <= 0" class="text">
+                                                    Nenhum produto adicionado.
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </section>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default" ng-disabled="button == 'saved' || buttonDel == 'deleting'">
+                <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar
+            </button>
+            <button app-switch-button="salvarCampanha()"
+                    switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]"
+                    switch-var="button"
+                    class="btn btn-primary">
+                <span class="glyphicon glyphicon-floppy-save"></span>
+            </button>
+            <span ng-show="representante.REP_ID">
+                <button type="button" class="btn btn-danger" ng-disabled="button == 'saved' && bloqueiaSalvamento && bloqueiaSalvamento === true"
+                        app-switch-button="deletarRepresentante()"
+                        switch-conf="[{label : 'Excluir', state : 'del'}, {label : 'Excluindo...', state : 'deleting', disabled : true}]"
+                        switch-var="buttonDel">
+                    <span class="glyphicon glyphicon-remove-sign"></span>
+                </button>
+            </span>
+        </div>
+        <div app-modal="modal-usuario" header="Lista de Usuários">
+            @Html.Partial("Partials/Modais/_ModalBuscarUsuarioPartial")
+        </div>
+        <div app-modal="modal-carteira" header="Lista de Carteiras">
+            @Html.Partial("Partials/Modais/_ModalBuscarCarteiraPartial")
+        </div>
+        <div app-modal="modal-produto" header="Selecione o Produto">
+            @Html.Partial("Partials/_ProdutoPartialProposta")
+        </div>
+    </div>
+</div>

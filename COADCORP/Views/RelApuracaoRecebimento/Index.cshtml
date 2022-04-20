@@ -1,0 +1,230 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@Scripts.Render("~/Scripts/negocio/contratos.js")
+
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="ContratosController" class="padding content" ng-init="initApuraRecebimento()">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li>
+                            @Html.ActionLink("Home", "index", "Home")
+                        </li>
+                        <li class="active">
+                            <i class="fa fa-desktop"></i>&nbspApuração de Recebimento
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-filter"></span>&nbspApuração de Recebimento
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Opções<span class="caret"></span></button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="javascript:void(0);" ng-click="listarApuracao()">Atualizar</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-2">
+                        <div class="col-lg-12 nomargin clearfix">
+                            <fieldset>
+                                <label>Tipo de Baixa</label>
+                                <div class="row">
+                                    <label class=" pull-left nomargin-top">
+                                        <input ng-model="filtro.tipobaixa" type="radio" ng-value="0" />
+                                        <i></i><span class="weight-300">Todos</span>
+                                    </label>
+                                </div>
+
+                                <div class="row">
+                                    <label class="pull-left">
+                                        <input ng-model="filtro.tipobaixa" type="radio" ng-value="1" />
+                                        <i></i><span class="weight-300">Automatica</span>
+                                    </label>
+                                </div>
+
+                                <div class="row">
+                                    <label class=" pull-left">
+                                        <input ng-model="filtro.tipobaixa" type="radio" ng-value="2" />
+                                        <i></i><span class="weight-300">Manual</span>
+                                    </label>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="form-group col-lg-3">
+                            @Html.Label("Período Inicial")
+                            <div class="input-group date">
+                                <input type="text" class="form-control" ng-model="dtinicial" app-date="filtro.dtini" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label for="cnab">Final</label>
+                            <div class="input-group date">
+                                <input type="text" class="form-control" ng-model="dtfinal" app-date="filtro.dtfim" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Empresa")
+                                @Html.DropDownList("_emp_id", new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "filtro.emp_id", ng_Change = "listarApuraRecebimento()" })
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="cnab">Banco</label>
+                            @Html.DropDownList("filtro.banco", new SelectList(@ViewBag.banco, "Value", "Text"), "Todos", new { @class = "form-control", ng_model = "filtro.banco" })
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="GRUPO_ID">Grupo</label>
+                                @Html.DropDownList("GRUPO_ID", new SelectList(ViewBag.grupos, "GRUPO_ID", "GRU_DESCRICAO"), "Selecione", new { @class = "form-control", ng_model = "filtro.grupo_id" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button ng-click="listarApuraRecebimento()" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-if="lstGeral">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-book"></span>&nbsp
+                <a data-toggle="collapse" href="#collapse01" role="button" aria-expanded="false" aria-controls="collapse01">
+                    Baixa Automática
+                </a>
+                <div class="pull-right">
+                    <div class="btn-group">
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div ng-repeat="item00 in lstGeral">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr class="info">
+                                <th style="text-align: center; width:270px;" colspan="4">E N T R A D A</th>
+                                <th style="text-align: center;" colspan="3">O U T R A S</th>
+                                <th style="text-align: center;" colspan="2"> T O T A L</th>
+                            </tr>
+                        </thead>
+                        <thead>
+                            <tr class="info">
+                                <th style="text-align: center;width:10%; vertical-align:bottom;" app-show-date="item00.PAR_DATA_PAGTO"></th>
+                                <th style="text-align: right; width:10%;">Previsto </th>
+                                <th style="text-align: right; width:10%;">Realizado</th>
+
+                                <th style="text-align: right; width:10%;">Diferença</th>
+
+                                <th style="text-align: right; width:12%;">Previsto </th>
+                                <th style="text-align: right; width:12%;">Realizado</th>
+                                
+                                <th style="text-align: right; width:12%;">Diferença</th>
+                                <th style="text-align: right; width:15%;">Previsto </th>
+                                <th style="text-align: right; width:15%;">Realizado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in item00.APURARCAO">
+                                <td style="text-align: left;">{{item.TPG_DESCRICAO}}</td>
+                                <td style="text-align: right;" app-show-dinheiro="item.PAR_VLR_PREV_PRIMEIRA"></td>
+                                <td style="text-align: right;" app-show-dinheiro="item.PAR_VLR_PAGO_PRIMEIRA"></td>
+                                
+                                <td style="text-align: right;" >{{item.PAR_VLR_PAGO_PRIMEIRA  - item.PAR_VLR_PREV_PRIMEIRA |  currency : 'R$ ' }}</td>
+
+                                <td style="text-align: right;" app-show-dinheiro="item.PAR_VLR_PREVISTO"></td>
+                                <td style="text-align: right;" app-show-dinheiro="item.PAR_VLR_PAGO"></td>
+
+                                <td style="text-align: right;">{{item.PAR_VLR_PAGO - item.PAR_VLR_PREVISTO  |  currency : 'R$ ' }}</td>
+                                <td style="text-align: right;">{{item.PAR_VLR_PREV_PRIMEIRA + item.PAR_VLR_PREVISTO  |  currency : 'R$ ' }}</td>
+                                <td style="text-align: right;">{{item.PAR_VLR_PAGO_PRIMEIRA + item.PAR_VLR_PAGO  |  currency : 'R$ ' }}</td>
+
+          
+                                
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr>
+                                <th style="text-align: center;">T O T A I S:</th>
+                                <td style="text-align: right;" app-show-dinheiro="item00.PAR_VLR_PREV_PRIMEIRA"></td>
+                                <td style="text-align: right;" app-show-dinheiro="item00.PAR_VLR_PAGO_PRIMEIRA"></td>
+                                
+                                <td style="text-align: right;">{{item00.PAR_VLR_PAGO_PRIMEIRA - item00.PAR_VLR_PREV_PRIMEIRA |  currency : 'R$ ' }}</td>
+
+                                <td style="text-align: right;" app-show-dinheiro="item00.PAR_VLR_PREVISTO"></td>
+                                <td style="text-align: right;" app-show-dinheiro="item00.PAR_VLR_PAGO"></td>
+
+                                <td style="text-align: right;">{{item00.PAR_VLR_PAGO - item00.PAR_VLR_PREVISTO  |  currency : 'R$ ' }}</td>
+                                <td style="text-align: right;">{{item00.PAR_VLR_PREV_PRIMEIRA + item00.PAR_VLR_PREVISTO  |  currency : 'R$ ' }}</td>
+                                <td style="text-align: right;">{{item00.PAR_VLR_PAGO_PRIMEIRA + item00.PAR_VLR_PAGO  |  currency : 'R$ ' }}</td>
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+                 </div>
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                        <tr class="info">
+                            <th style="text-align: center;" colspan="9">T O T A L</th>
+                        </tr>
+                    </thead>
+                    <thead>
+                        <tr class="info">
+                            <th style="text-align: center;width:10%; vertical-align:bottom;" app-show-date="item00.PAR_DATA_PAGTO"></th>
+                            <th style="text-align: right; width:10%;">Previsto </th>
+                            <th style="text-align: right; width:10%;">Realizado</th>
+
+                            <th style="text-align: right; width:10%;">Diferença</th>
+
+                            <th style="text-align: right; width:12%;">Previsto </th>
+                            <th style="text-align: right; width:12%;">Realizado</th>
+
+                            <th style="text-align: right; width:12%;">Diferença</th>
+                            <th style="text-align: right; width:15%;">Previsto </th>
+                            <th style="text-align: right; width:15%;">Realizado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th style="text-align: center;">T O T A I S:</th>
+                            <td style="text-align: right;" app-show-dinheiro="lstTotal.PAR_VLR_PREV_PRIMEIRA"></td>
+                            <td style="text-align: right;" app-show-dinheiro="lstTotal.PAR_VLR_PAGO_PRIMEIRA"></td>
+
+                            <td style="text-align: right;">{{lstTotal.PAR_VLR_PAGO_PRIMEIRA - lstTotal.PAR_VLR_PREV_PRIMEIRA |  currency : 'R$ ' }}</td>
+
+                            <td style="text-align: right;" app-show-dinheiro="lstTotal.PAR_VLR_PREVISTO"></td>
+                            <td style="text-align: right;" app-show-dinheiro="lstTotal.PAR_VLR_PAGO"></td>
+
+                            <td style="text-align: right;">{{lstTotal.PAR_VLR_PAGO - lstTotal.PAR_VLR_PREVISTO  |  currency : 'R$ ' }}</td>
+                            <td style="text-align: right;">{{lstTotal.PAR_VLR_PREV_PRIMEIRA + lstTotal.PAR_VLR_PREVISTO  |  currency : 'R$ ' }}</td>
+                            <td style="text-align: right;">{{lstTotal.PAR_VLR_PAGO_PRIMEIRA + lstTotal.PAR_VLR_PAGO  |  currency : 'R$ ' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

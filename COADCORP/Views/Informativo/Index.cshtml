@@ -1,0 +1,358 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+@Scripts.Render("~/Scripts/negocio/COADGED/informativo.js")
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+<div ng-app="appModule">
+    <div ng-controller="InformativoController" class="padding content" data-ng-init="initInformativo(@ViewBag.numultRemessa);canPrint=true" ng-cloak>
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li>
+                            @Html.ActionLink("Home", "index", "Home")
+                        </li>
+                        <li class="active">
+                            <i class="fa fa-desktop"></i>&nbspPostagem de Informativos
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-filter"></span>&nbspPostagem de Informativos
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Opções<span class="caret"></span></button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0);" ng-click="abrirModalAddMateriaAdicional()" title="Adicionar Matéria Adicional">
+                                        Adicionar Matéria Adicional
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" ng-click="abrirModalAddProtocolado()" title="Adicionar Protocolado">
+                                        Adicionar Protocolados
+                                    </a>
+                                </li>
+                                <li><a href="javascript:void(0);" ng-click="abrirModalNovaPostagem()">Nova Postagem</a></li>
+                                <li><a href="javascript:void(0);" ng-click="abrirModalMateriaAdicional()">Pesquisar Matéria Adicional</a></li>
+                                <li><a href="javascript:void(0);" ng-click="abrirModalProtocolado()">Pesquisar Protocolados</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group col-lg-2">
+                            @Html.Label("Período Inicial")
+                            <div class="input-group date">
+                                <input type="text" class="form-control" ng-model="dtinicial" app-date="filtro.inicial" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="cnab">Final</label>
+                            <div class="input-group date">
+                                <input type="text" class="form-control" ng-model="dtfinal" app-date="filtro.final" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" ng-if="export.lnkPath">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <a href="{{export.lnkPath}}" ng-click="export.lnkPath=null"><i class="glyphicon glyphicon-cloud-download"></i> Donwload do arquivo ( {{export.lnkPath}} ) </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button ng-click="listarPostagens()" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-show="lstinformativo">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-book"></span>&nbspLista Arquivos de Retorno
+                <div class="pull-right">
+                    <div class="btn-group">
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                        <tr class="info">
+                            <th style="text-align: right;">Nº Remessa</th>
+                            <th style="text-align: center;">Envio</th>
+                            <th style="text-align: center;">MDP</th>
+                            <th style="text-align: center;">Tipo</th>
+                            <th style="text-align: center;">Situação</th>
+                            <th style="text-align: center;">Gerado</th>
+                            <th style="text-align: center;">Reprocessado</th>
+                            <th style="text-align: center;">Envio</th>
+                            <th style="text-align: left;">Usuário</th>
+                            <th style="text-align: left;">Usuário (Reprocesso)</th>
+                            <th style="text-align: center;" colspan="4">Opções</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in lstinformativo">
+                            <td style="text-align: right;">{{item.INF_REMESSA}} / {{item.INF_ANO}}</td>
+                            <td style="text-align: center;">{{item.INF_ENVIO}}</td>
+                            <td style="text-align: center;">
+                                <span class="label label-danger" ng-if="item.INF_MDP==true">SIM</span>
+                                <span class="label label-info" ng-if="item.INF_MDP==null||item.INF_MDP==false">NÃO</span>
+                            </td>
+                            <td style="text-align: center;">
+                                <span class="label label-danger" ng-if="item.INF_ENVIO==1" title="Paginas de rosto enviado via carta">CORREIO CARTA</span>
+                                <span class="label label-info" ng-if="item.INF_ENVIO==2" title="Arquivo de remessa enviado para os correios.">ENTR. DIRETA</span>
+                            </td>
+                            <td style="text-align: center;">
+                                <span class="label label-warning" ng-if="item.INF_DATA_CANC==null&&item.INF_ENTREGA==null">Gerado</span>
+                                <span class="label label-info" ng-if="item.INF_DATA_CANC==null&&item.INF_ENTREGA!=null">Enviado</span>
+                                <span class="label label-danger" ng-if="item.INF_DATA_CANC!=null">Reprocessado</span>
+                            </td>
+                            <td style="text-align: center;">
+                                {{item.INF_DATA | date:"dd/MM/yyyy HH:mm" : 'UTC'}}
+                            </td>
+                            <td style="text-align: center;">{{item.INF_DATA_REPROCESSO | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</td>
+                            <td style="text-align: center;">{{item.INF_ENTREGA | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</td>
+                            <td style="text-align: left;">{{item.USU_LOGIN}}
+                            <td style="text-align: left;">{{item.USU_LOGIN_REPROCESSO}}</td>
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" ng-click="enviarArquivo(item)" title="Enviar o arquivo de remessa" ng-if="item.INF_ENTREGA==null">
+                                    <span class="glyphicon glyphicon-cloud-upload red"></span>
+                                </a>
+                                <a href="javascript:void(0)" ng-click="" title="Arquivo Já Enviado" ng-if="item.INF_ENTREGA!=null">
+                                    <span class="glyphicon glyphicon-cloud-upload"></span>
+                                </a>
+                            </td>
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)"
+                                   ng-click="baixarArquivos(item)"
+                                   style="cursor:pointer"
+                                   title="baixar o arquivos">
+                                    <i class="glyphicon glyphicon-cloud-download"></i>
+                                </a>
+                            </td>
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" ng-click="abriModalDetalharRetorno(item)" title="Detalhar arquivo de remessa"><span class="glyphicon glyphicon-search"></span></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <app-pagination request-page="paginaReq" load-function="listarPostagens(paginaReq)" style="text-align: center;"></app-pagination>
+            </div>
+            <div class="hidden-print panel-footer">
+                <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+            </div>
+        </div>
+
+
+
+        <!-- Nova Postagem Modal  --->
+        <div app-modal="modal-nova-postagem" header="Nova Postagem">
+            <div class="container">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-lg-1">
+                            <label for="ano">Ult.Remessa</label><br>
+                            <button type="button" class="btn btn-danger">
+                                @ViewBag.ultimaRemessaEnviada
+                            </button>
+                        </div>
+                        <div class="col-lg-1">
+                            <label for="ano">Prox. Rem</label>
+                            <div class="form-group">
+                                <input type="text" id="numero" ng-model="filtro.remessa" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="ano">.</label>
+                            <div class="form-group">
+                                <select id="ano" ng-model="filtro.ano" class="form-control" />
+                                <option value="2017">2017</option>
+                                <option value="2018">2018</option>
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-1">
+                            <label for="produtos">MDP</label><br>
+                            <label><input type="checkbox" name="filtro.MDP" value="true" ng-model="filtro.MDP"> Sim</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="MontarRemessa()" title="Gerar Remessa">
+                    <span class="fa fa-cog"></span> Gerar Remessa
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Modal Protocolado -->
+
+        <div app-modal="modal-AddProtocolado" header="Adicionar Protocolados">
+            <div class="panel-body">
+                <div class="row">
+
+                </div>
+                <div class="table-responsive">
+                    <div class="col-lg-2">
+                        <input type="text" ng-model="etiq.ASN_NUM_ASSINATURA" maxlength="8" ng-blur="mostrarCliente()"
+                               class="form-control grid-input float-left" />
+                    </div>
+                    <div class="col-lg-10">
+                        <label type="text" class="form-control float-left" style="padding-left: 5px; padding-top: 5px;" ng-if="etiq.ASN_NUM_ASSINATURA!=null&&etiq.ASN_NUM_ASSINATURA!=''">{{etiq.CLI_NOME}}</label>
+                        <span class="label label-danger" ng-if="etiq.ASN_PROTOCOLADA==true" ng_click="etiq.ASN_PROTOCOLADA=false">PROTOCOLADA</span>
+                        <span class="label label-info" ng-if="etiq.ASN_PROTOCOLADA==false" ng_click="etiq.ASN_PROTOCOLADA=true">NÃO PROTOCOLADA</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="salvarProtocolado(etiq.ASN_NUM_ASSINATURA,etiq.ASN_PROTOCOLADA)" title="Adicionar Protocolado">
+                    <span class="fa fa-cog"></span> Salvar
+                </button>
+            </div>
+        </div>
+
+        <div app-modal="modal-protocolado" header="Pesquisar Protocolados">
+            <div class="panel-body">
+                <div class="row">
+
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr class="info">
+                                <th style="text-align: center;">Nº Assinatura</th>
+                                <th style="text-align: center;">Remessa</th>
+                                <th style="text-align: center;">Envio</th>
+                                <th style="text-align: left;">Cliente</th>
+                                <th style="text-align: center;">Opções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in lstProtocoladas">
+                                <td style="text-align: center;">{{item.ASN_NUM_ASSINATURA}}</td>
+                                <td style="text-align: center;">{{item.ASN_REMESSA}} / {{item.ASN_ANO_REMESSA}}</td>
+                                <td style="text-align: center;">{{item.ASN_NUM_TP_ENVIO}}</td>
+                                <td style="text-align: left;">{{item.CLIENTE.CLI_NOME}}</td>
+                                <td style="text-align: center;">
+                                    <a href="javascript:void(0)" ng-click="salvarProtocolado(item.ASN_NUM_ASSINATURA,false)" title="Remover dos protocolados.">
+                                        <span class="fa fa-close"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div app-pagination="paginaReq01" request-page="paginaReq" load-function="listarProtocoladas(paginaReq)" style="text-align: center;"></div>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+
+        <!-- Modal Novo -->
+
+        <div app-modal="modal-AddAdicional" header="Adicionar Matéria Adicional">
+            <div class="panel-body">
+                <div class="row">
+
+                </div>
+                <div class="table-responsive">
+                    <div class="col-lg-2">
+                        <input type="text" ng-model="etiq.ASN_NUM_ASSINATURA" maxlength="8" ng-blur="mostrarCliente()"
+                               class="form-control grid-input float-left" />
+                    </div>
+                    <div class="col-lg-5">
+                        <label type="text" class="form-control float-left" style="padding-left: 5px; padding-top: 5px;" ng-if="etiq.ASN_NUM_ASSINATURA!=null&&etiq.ASN_NUM_ASSINATURA!=''">{{etiq.CLI_NOME}}</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <input type="text" ng-model="etiq.ASN_MATERIA_ADICIONAL" class="form-control" ng-if="etiq.ASN_NUM_ASSINATURA!=null&&etiq.ASN_NUM_ASSINATURA!=''" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="salvarMateriaAdicional(etiq.ASN_NUM_ASSINATURA, etiq.ASN_MATERIA_ADICIONAL)" title="Adicionar Matéria Adicional">
+                    <span class="fa fa-cog"></span> Salvar
+                </button>
+            </div>
+        </div>
+
+        <div app-modal="modal-Adicional" header="Matéria Adicional">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label for="ano">Nº Assinatura</label>
+                        <div class="form-group">
+                            <input type="text" ng-model="filtro.asn_num_assinatura" maxlength="8" ng-blur="listarMateriaAdicional()"
+                                   class="form-control grid-input float-left" />
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr class="info">
+                                    <th style="text-align: center;">Nº Assinatura</th>
+                                    <th style="text-align: center;">Remessa</th>
+                                    <th style="text-align: center;">Envio</th>
+                                    <th style="text-align: left;">Cliente</th>
+                                    <th style="text-align: left;">Adicional</th>
+                                    <th style="text-align: center;">Opções</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in lstMateriaAdicional">
+                                    <td style="text-align: center;">{{item.ASN_NUM_ASSINATURA}}</td>
+                                    <td style="text-align: center;">{{item.ASN_REMESSA}} / {{item.ASN_ANO_REMESSA}}</td>
+                                    <td style="text-align: center;">{{item.ASN_NUM_TP_ENVIO}}</td>
+                                    <td style="text-align: left;">{{item.CLIENTE.CLI_NOME}}</td>
+                                    <td style="text-align: center;">{{item.ASN_MATERIA_ADICIONAL}}</td>
+                                    <td style="text-align: center;">
+                                        <a href="javascript:void(0)" ng-click="salvarProtocolado(item.ASN_NUM_ASSINATURA,false)" title="Remover matéria adicional">
+                                            <span class="fa fa-close"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div app-pagination="paginaReq02" request-page="pagReq" load-function="listarMateriaAdicional(pagReq)" style="text-align: center;"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+

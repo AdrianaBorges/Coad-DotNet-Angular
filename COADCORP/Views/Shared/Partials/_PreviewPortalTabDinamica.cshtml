@@ -1,0 +1,261 @@
+﻿@*Esta tela sera apresentada no portal *@
+@*(Introdução, Informações Preenchimento)*@
+@*<div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div id="Descricao" ng-show="tabela.TAB_DESCRICAO!=null&&tabela.TAB_DESCRICAO!=''" class="col-lg-12">
+                    <p ng-bind-html="trustAsHtml(tabela.TAB_DESCRICAO)"></p>
+                </div>
+                <div id="Introducao" ng-show="tabconfig.TDC_INTRODUCAO==true" class="col-lg-12">
+                    <p ng-bind-html="trustAsHtml(tabela.TAB_INTRODUCAO)"></p>
+                </div>
+                <div id="InfPreenchimento" ng-show="tabconfig.TDC_INF_PREENCHIMENTO==true" class="col-lg-12">
+                    <p ng-bind-html="trustAsHtml(tabela.TAB_INF_PREENCHIMENTO)"></p>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+<div class="row">
+    <div id="Descricao" ng-if="tabela.TAB_DESCRICAO!=null&&tabela.TAB_DESCRICAO!=''" class="col-lg-12">
+        <div class="form-group">
+            <p ng-bind-html="trustAsHtml(tabela.TAB_DESCRICAO)"></p>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-if="tabconfig.TDC_INTRODUCAO==true">
+    <div id="Introducao" class="col-lg-12">
+        <div class="form-group">
+            <p ng-bind-html="trustAsHtml(tabela.TAB_INTRODUCAO)"></p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div id="InfPreenchimento" ng-if="tabconfig.TDC_INF_PREENCHIMENTO==true" class="col-lg-12">
+        <div class="form-group">
+            <p ng-bind-html="trustAsHtml(tabela.TAB_INF_PREENCHIMENTO)"></p>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    .exemplo2 input[type=radio], .exemplo2 input[type=checkbox] {
+        display: none;
+    }
+
+    .exemplo2 label {
+        cursor: pointer;
+    }
+
+    .exemplo2 input[type="radio"] + label:before, .exemplo2 input[type="checkbox"] + label:before {
+        border: 1px solid #5D5C5C;
+        content: "\00a0";
+        display: inline-block;
+        font: 16px/1em sans-serif;
+        height: 16px;
+        margin: 0 .25em 0 0;
+        padding: 0;
+        vertical-align: top;
+        width: 16px;
+        border-radius: 4px;
+    }
+
+    .exemplo2 input[type="radio"]:checked + label:before, .exemplo2 input[type="checkbox"]:checked + label:before {
+        background: #A0A0A0;
+        color: #FFF;
+        content: "\2713";
+        text-align: center;
+    }
+
+
+    .exemplo1 input[type=radio], .exemplo1 input[type=checkbox] {
+        display: none; /* Esconde os inputs */
+    }
+
+        .exemplo1 input[type=radio] + label, .exemplo1 input[type=checkbox] + label {
+            display: inline-block;
+            height: 20px;
+            padding: 0 0 0 25px;
+            margin: 0 10px 0 0;
+            background-image: url(http://www.webcis.com.br/images/imagens-noticias/checkbox/ico-master.png);
+            background-repeat: no-repeat;
+            background-position: 0 0;
+        }
+
+        .exemplo1 input[type=checkbox] + label {
+            background-position: 0 -60px; /* Muda a posição do background só no checkbox */
+        }
+
+        .exemplo1 input[type=radio]:checked + label {
+            background-position: 0 -30px;
+        }
+
+        .exemplo1 input[type=checkbox]:checked + label {
+            background-position: 0 -90px;
+        }
+</style>
+
+
+<div class="row" ng-if="tabconfig.TDC_TIPO!=2||tabconfig.TDC_PALAVRA_CHAVE==true">
+    <div class="col-lg-12 hidden-print">
+        <div id="page-wrapper">
+            <div class="panel panel-corp" ng-if="(ParamConsulta.length>0)||(tabconfig.TDC_PALAVRA_CHAVE==true)">
+                <div app-message></div>
+                <div class="panel-heading bold head-panel">
+                    <label id="title"><span class="fa fa-search"></span>&nbspPesquisa Avançada</label>
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Opções<span class="caret"></span></button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)" ng-click="listarTabDinamica()">Atualizar</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint">Imprimir</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" onclick="FecharJanela();">Fechar Janela</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body" style="background-color: #f5f5f5; padding-bottom: 10px;">
+                    <div class="exemplo1">
+                        <div class="col-lg-4 nomargin clearfix" ng-if="ParamConsulta.length>0">
+                            <label class="radio pull-left nomargin-top">
+                                <input ng-model="tabconfig.opcao" type="radio" ng-value="0" ng-change="limpaParametros()" />
+                                <i></i><span class="weight-300">Busca específica</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-4 nomargin clearfix" ng-if="tabconfig.TDC_PALAVRA_CHAVE==true">
+                            <label class="radio pull-left">
+                                <input ng-model="tabconfig.opcao" type="radio" ng-value="1" ng-change="limpaParametros()" />
+                                <i></i><span class="weight-300">Busca Geral (Palavra Chave)</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" style="padding-top: 18px; padding-left:0px !important;">
+                        <div ng-class="{'col-lg-4':ParamConsulta.length==3,'col-lg-3':ParamConsulta.length>3,'col-lg-6':ParamConsulta.length<3}" ng-repeat="item in ParamConsulta" ng_if="tabconfig.opcao==0">
+                            <div class="form-group">
+                                <label>{{item.label}}</label>
+                                <input name="_valor" type="text" class="form-control" placeholder="Pesquisar..." ng-model="item.valor" ng-if="item.esperado==null||item.esperado==''" />
+                                <select class="form-control float-left" size="1" ng-model="item.valor" ng-if="item.esperado!=null&&item.esperado!=''">
+                                    <option></option>
+                                    <option ng-repeat="option in listas[item.campo]">
+                                        {{option}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6" ng_if="tabconfig.opcao==1">
+                            <div class="form-group">
+                                <label>Palavra Chave</label>
+                                <input name="_valor" type="text" class="form-control" placeholder="Pesquisar..." ng-model="tabconfig.palavrachave" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer hidden-print" style="text-align: center; padding-bottom:10px; ">
+                    <button ng-click="listarTabDinamica()" class="btn btn-default"><span class="fa fa-search blue"></span>&nbspPesquisar</button>
+                    <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-if="(tbitem.length>0)&&(tabconfig.TDC_TIPO!=2&&tabconfig.TDC_LAYOUT_TABELA=='LIS')">
+    <div class="col-lg-12" style="overflow-x: auto;">
+        <div class="panel panel-default" id="Tabela">
+            <table class="table table-striped table-bordered table-hover" id="tabeladinamica">
+                <thead>
+                    <tr class="bg-info">
+                        <th ng-repeat="item in tabconfig.TAB_DINAMICA_CONFIG_ITEM" ng-if="item.TCI_CAMPO_VISIVEL==true" ng-class="{right : item.TCI_ALINHAMENTO_CAMPO=='D', left : item.TCI_ALINHAMENTO_CAMPO=='E', center : item.TCI_ALINHAMENTO_CAMPO=='C'}">
+                            <label>{{item.TCI_NOME_CAMPO}}</label>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in tbitem">
+                        <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM" ng-if="cabec.TCI_CAMPO_VISIVEL==true" ng-class="{right : cabec.TCI_ALINHAMENTO_CAMPO=='D', left : cabec.TCI_ALINHAMENTO_CAMPO=='E', center : cabec.TCI_ALINHAMENTO_CAMPO=='C'}">
+                            <p ng-if="cabec.TCI_TIPO_CAMPO=='D'&&item[cabec.TCI_NOME_CAMPODB]!='-'" ng-bind-html="formatarData(item[cabec.TCI_NOME_CAMPODB])"></p>
+                            <p ng-if="cabec.TCI_TIPO_CAMPO=='D'&&item[cabec.TCI_NOME_CAMPODB]=='-'">{{item[cabec.TCI_NOME_CAMPODB]}}</p>
+                            <p ng-if="cabec.TCI_TIPO_CAMPO=='F'&&item[cabec.TCI_NOME_CAMPODB]!='-'" app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]"></p>
+                            <p ng-if="cabec.TCI_TIPO_CAMPO=='F'&&item[cabec.TCI_NOME_CAMPODB]=='-'">{{item[cabec.TCI_NOME_CAMPODB]}}</p>
+                            <p ng-if="cabec.TCI_TIPO_CAMPO=='P'&&item[cabec.TCI_NOME_CAMPODB]>0">{{item[cabec.TCI_NOME_CAMPODB]}}&nbsp%</p>
+                            <p ng-if="cabec.TCI_TIPO_CAMPO=='P'&&item[cabec.TCI_NOME_CAMPODB]=='-'">{{item[cabec.TCI_NOME_CAMPODB]}}</p>
+                            <p ng-if="cabec.TCI_TIPO_CAMPO!='D'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'">{{item[cabec.TCI_NOME_CAMPODB]}}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+  
+        </div>
+    </div>
+    <div class="col-lg-12 hidden-print" style="text-align: center" ng-if="page.numeroPaginas>1">
+        <app-pagination request-page="paginaReq" load-function="listarTabDinamica(paginaReq)" ng-if="tbitem.length>0"></app-pagination>
+    </div>
+</div>
+
+<div class="row" ng-if="(tbitem.length>0)&&(tabconfig.TDC_TIPO!=2&&tabconfig.TDC_LAYOUT_TABELA=='LSA')">
+    <div class="col-lg-12" style="overflow-x: auto;">
+        <div class="panel-group" id="accordion" ng-repeat="item in tbitem" ng-init="open=false">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title" ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM" ng-if="cabec.TCI_CAMPO_VISIVEL==true" ng-class="{right : cabec.TCI_ALINHAMENTO_CAMPO=='D', left : cabec.TCI_ALINHAMENTO_CAMPO=='E', center : cabec.TCI_ALINHAMENTO_CAMPO=='C'}">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#{{item.TAB_ID}}" style="text-decoration: none;" ng-click="open=!open" ng-if="$index==0">
+                            <i class="fa blue" ng-class="{'fa-minus-circle': open,'fa-plus-circle':!open||open==false}"></i>
+                        </a>
+                        <label>{{cabec.TCI_NOME_CAMPO}}:</label>
+                        &nbsp
+                        <span ng-if="cabec.TCI_TIPO_CAMPO=='D'&&item[cabec.TCI_NOME_CAMPODB]!='-'" ng-bind-html="formatarData(item[cabec.TCI_NOME_CAMPODB])"></span>
+                        <span ng-if="cabec.TCI_TIPO_CAMPO=='D'&&item[cabec.TCI_NOME_CAMPODB]=='-'">{{item[cabec.TCI_NOME_CAMPODB]}}</span>
+                        <span ng-if="cabec.TCI_TIPO_CAMPO=='F'&&item[cabec.TCI_NOME_CAMPODB]!='-'" app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]"></span>
+                        <span ng-if="cabec.TCI_TIPO_CAMPO=='F'&&item[cabec.TCI_NOME_CAMPODB]=='-'">{{item[cabec.TCI_NOME_CAMPODB]}}</span>
+                        <span ng-if="cabec.TCI_TIPO_CAMPO=='P'&&item[cabec.TCI_NOME_CAMPODB]>0">{{item[cabec.TCI_NOME_CAMPODB]}}&nbsp%</span>
+                        <span ng-if="cabec.TCI_TIPO_CAMPO=='P'&&item[cabec.TCI_NOME_CAMPODB]=='-'">{{item[cabec.TCI_NOME_CAMPODB]}}</span>
+                        <span ng-if="cabec.TCI_TIPO_CAMPO!='D'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'">{{item[cabec.TCI_NOME_CAMPODB]}}</span>
+                    </h4>
+                </div>
+                <div id="{{item.TAB_ID}}" class="accordion-body collapse">
+                    <div class="panel-body">
+                        <ul class="list-unstyled list-icons margin-bottom-10">
+                            <li class="margin-top-6" ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM" ng-if="cabec.TCI_CAMPO_VISIVEL==false&&item[cabec.TCI_NOME_CAMPODB]!=''">
+                                <i class="fa fa-arrow-circle-right"></i>
+                                <label style="font-size: small; font-style: italic;">{{cabec.TCI_NOME_CAMPO}}:</label>
+                                &nbsp
+                                <span ng-bind-html="trustAsHtml(item[cabec.TCI_NOME_CAMPODB])"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 hidden-print" style="text-align: center" ng-if="page.numeroPaginas>1">
+        <app-pagination request-page="paginaReq" load-function="listarTabDinamica(paginaReq)" ng-if="tbitem.length>0"></app-pagination>
+    </div>
+</div>
+
+
+@*(Legenda, Informações Gerais)*@
+<br />
+<div class="row">
+    <div id="Legenda" ng-if="tabconfig.TDC_LEGENDA_LAYOUT==true" class="col-lg-12">
+        <p ng-bind-html="trustAsHtml(tabela.TAB_LEGENDA_LAYOUT)"></p>
+    </div>
+</div>
+
+<div class="row">
+    <div id="InfGerais" ng-if="tabconfig.TDC_INF_GERAIS==true" class="col-lg-12">
+        <p ng-bind-html="trustAsHtml(tabela.TAB_INF_GERAIS)"></p>
+    </div>
+</div>
+<br />
+

@@ -1,0 +1,43 @@
+﻿@model COAD.COADGED.Model.DTO.CadernoDTO
+
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Cadernos","index","Caderno")</li>
+        <li class="active">Cadernos</li>
+    </ol>
+}
+@{
+    ViewBag.Title = Model.CAD_NOME;
+}
+
+@Scripts.Render("~/Scripts/negocio/coCaderno.js")
+<div style="display:none;">
+    <div id="dialog-confirm" title="Tem certeza que quer excluir este caderno?">
+        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>O caderno será removido permanentemente. Tem certeza?</p>
+    </div>
+</div>
+<div ng-app="appModule">
+    <div ng-controller="CadernoController" class="padding content" data-ng-init="init();">
+        <input id="cadernoid" type="hidden" value="@Model.CAD_ID" />
+        <div class="row pull-left" ng-hide="showme" style="width:70%">
+            <h2>
+                <span id="tituloCad" ng-model="tituloCad">@Model.CAD_NOME</span>
+            </h2>
+        </div>         
+        <div class="row pull-left" ng-show="showme" style="width:70%">
+            @Html.TextBoxFor(model => model.CAD_NOME, new { @class="form-control", maxlength="10" })
+            <button ng-click="showme=false;RenomearCaderno();" class="form-control btn btn-primary ">Salvar</button>
+        </div>
+        <br />
+        <div class="btn-group" style="width:30%;">
+          <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opções</button>
+          <ul class="dropdown-menu">
+            <li><a ng-click="showme=true">Renomer</a></li>
+            <li><a ng-click="ExcluirCaderno('@Model.CAD_ID')">Excluir</a></li>
+            <li><a href="#">Compartilhar (Pós Férias)</a></li>
+          </ul>
+        </div>
+
+        <div style="clear:left;">sdfgsdtyjghjfgjjgfjfgjghjfghjgfjjghjfsdfsdf</div>
+    </div>
+</div>

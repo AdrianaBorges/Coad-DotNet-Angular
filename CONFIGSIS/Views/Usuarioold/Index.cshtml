@@ -1,0 +1,135 @@
+﻿@using COAD.SEGURANCA.Extensions
+@model IEnumerable<COAD.SEGURANCA.Repositorios.Contexto.PERFIL_USUARIO>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+@using (Html.BeginForm())
+{
+    if ( TempData["Resultado"] != null)
+    {
+        string t = TempData["Resultado"].ToString();
+        
+        @Html.Alert(t);
+    }
+
+    <div class="form panel panel-primary">
+        <div class="panel-heading">
+            <i class="fa fa-search fa-fw"></i> @ViewBag.Title
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                        Opções
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li><a href="../Usuario/Novo">Novo</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    @Html.ValidationSummary(false, "", new { @class = "alert alert-danger", role = "alert" })
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    @Html.Label("Login")
+                    @Html.TextBox("_usu_login", "", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="form-group">
+                    @Html.Label("Perfil")
+                    @Html.DropDownList("_per_id", new SelectList(@ViewBag.listaPerfil, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="form-group">
+                    @Html.Label("Empresa")
+                    @Html.DropDownList("_emp_id", new SelectList(@ViewBag.listaemp, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Pesquisar" class="btn btn-default" />
+        </div>
+    </div>
+  
+}
+
+
+  <div class="form panel panel-primary">
+        <div class="panel-heading">
+            @ViewBag.Title
+        </div>
+        <div class="panel-body">
+
+            @{
+                var grid = new WebGrid(source: Model, canPage: true, defaultSort: "USU_LOGIN", rowsPerPage: 30, canSort: true, ajaxUpdateCallback: "GridUpdate", ajaxUpdateContainerId: "grid");
+
+                if (@Model != null)
+                {
+                    var gridHtml = grid.Table(htmlAttributes: new { id = "grid" },
+                        /* headerStyle: "tabheader" ,*/ footerStyle: "paginacao",
+                        tableStyle: "tabconteudo table table-hover", alternatingRowStyle: "odd", columns: grid.Columns(
+                            grid.Column("USUARIO.USU_LOGIN", header: "Login"),
+                            grid.Column("USUARIO.USU_NOME", header: "Nome"),
+                            grid.Column("PER_ID", header: "Perfil"),
+                            grid.Column(header: "Situação", format: @<text> @if (item.USUARIO.USU_ATIVO == 0)
+                                                                            { 
+<span>Inativo</span> 
+                                                                            }
+                                                                            else
+                                                                            {  
+<span>Ativo</span> 
+                                                                            } </text>, style: "colunagridacoes table-icons"),
+                            grid.Column(header: "Tipo", format: @<text> @if (item.USUARIO.USU_ADMIN == 0)
+                                                                        { 
+<span>Padrão</span> 
+                                                                        }
+                                                                        else
+                                                                        {  
+<span>Administrador</span> 
+                                                                        } </text>, style: "colunagridacoes table-icons"),
+                            grid.Column("USUARIO.USU_DATA_ULTIMOACESSO", header: "Ult. Acesso"),
+                            grid.Column("USUARIO.USU_DATA_EXPIRA", header: "Expira em"),
+                            grid.Column(header: "", format: @<text>
+                <a href="@Url.Action("Editar", new { _usu_login = item.USUARIO.USU_LOGIN })" title="">
+                    <span class="glyphicon glyphicon-edit"></span></a>
+                </text>, style: "colunagridacoes table-icons"),
+                            grid.Column(header: "", format: @<text>
+                <a href="@Url.Action("Excluir", new { _usu_login = item.USUARIO.USU_LOGIN })" title="">
+                    <span class="glyphicon glyphicon-remove-sign"></span></a>
+                </text>, style: "colunagridacoes table-icons")
+                        )
+                    ).ToString();
+
+
+
+                    // var pager = grid.Pager().ToString();
+                    var pager = grid.PagerList(WebGridPagerModes.All, "Primeiro", "Anterior", "Próximo", "Último", 5, "pagination");
+                
+       
+                @(new HtmlString(gridHtml))                
+                @pager
+                       
+                }
+            }
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Excel" class="btn btn-default" } />
+            <input type="submit" value="PDF"  class="btn btn-default" />
+        </div>
+    </div>

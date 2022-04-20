@@ -1,0 +1,256 @@
+﻿@model COAD.SEGURANCA.Model.UsuarioModel
+
+@{
+    ViewBag.Title = "Editar";
+}
+@using Coad.GenericCrud.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Clientes (Editar)</li>
+    </ol>
+}
+@Scripts.Render("~/Scripts/negocio/usuario.js")
+
+<div ng-app="appModule">
+    <div class="panel panel-default" ng-controller="UsuarioController" data-ng-init="read('@ViewBag.USU_LOGIN', '@ViewBag.origem', '@ViewBag.adminDeLogin'); 
+ListarPerfis(@ViewBag.emp_id)" ng-cloak>
+        <!-- Default panel contents -->
+                  <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel blue"></span> Editar Usuário
+                    
+                        <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"
+                                            aria-expanded="false" ng-disabled="button == 'saved'">
+                                            Opções
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                             <li>
+                                                <a href="@Url.Action("Index")" title="Voltar" class="blue"> Voltar</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" title="Salvar" ng-click="salvarClienteFranquia()" class="blue">Salvar</a>
+                                            </li>
+                                            <li ng-show="prospect.ID">
+                                                <a href="javascript:void(0)" app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}" 
+                                                    app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?" class="btnConfirmaExclusao blue" title="Excluir"> Excluir</a>
+                                            </li>                                                                                                                    
+                                        </ul>
+                                    </div>
+                                </div>
+                     
+                     
+            </div>
+
+            <div class="panel-body">  
+                <div app-message></div>
+                 @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) {                         
+                     
+                      <fieldset>
+                    <legend>Dados básicos</legend>
+                    
+                    <div class="row"> 
+                        <div class="form-group col-sm-2">
+                            @Html.Label("Login")
+                            @Html.TextBoxFor(model => model.USU_LOGIN,  new {@class = "form-control", ng_model = "usuario.USU_LOGIN", 
+ng_disabled = "usuario.editando === true", ng_blur = "checaLogin()", ng_class="{'login-existe' : bloqueiaSalvamento}",  maxlength = "15" })
+                            @Html.ValidationMessageFor(model => model.USU_LOGIN, null, new { app_validation_msg = "erros", @for = "USU_LOGIN" })
+                           <div class="message-error">{{loginMsg}}</div> 
+                        </div>
+                        <div class="form-group col-sm-3">
+                            @Html.Label("Nome")
+                            @Html.TextBoxFor(model => model.USU_NOME, new {@class = "form-control", ng_model = "usuario.USU_NOME"})
+                            @Html.ValidationMessageFor(model => model.USU_NOME, null, new { app_validation_msg = "erros", @for = "USU_NOME" })                   
+                        </div> 
+                        <div class="form-group col-sm-2">
+                            @Html.Label("CPF")
+                            @Html.TextBoxFor(model => model.USU_CPF, new {@class = "form-control", ng_model = "usuario.USU_CPF", maxlength = "14"})
+                            @Html.ValidationMessageFor(model => model.USU_CPF, null, new { app_validation_msg = "erros", @for = "USU_CPF" })                   
+                        </div> 
+                       <div class="form-group col-sm-4">
+                            @Html.Label("E-Mail")
+                            @Html.TextBoxFor(model => model.USU_EMAIL, new {@class = "form-control", ng_model = "usuario.USU_EMAIL"})
+                            @Html.ValidationMessageFor(model => model.USU_EMAIL, null, new { app_validation_msg = "erros", @for = "USU_EMAIL" })                 
+                       </div>                            
+                  </div>
+                  <div class="row">
+                     @if(SessionContext.admin){   
+                       <div class="col-lg-3" ng-if="!usuario.editando">
+                            <div class="form-group">
+                                @Html.Label("Empresa")
+                                @Html.DropDownListFor(model => model.EMP_ID, 
+new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "--- Selecione ---", new { @class = "form-control", ng_model = "usuario.EMP_ID" })
+                                @Html.ValidationMessageFor(model => model.USU_EMAIL, null, new { app_validation_msg = "erros", @for = "EMP_ID" })     
+                            </div>
+                       </div>
+                  }                            
+                @if(SessionContext.admin){                    
+                         <div class="form-group col-sm-3">
+                            @Html.Label("Data de Cadastro")
+                            @Html.TextBoxFor(model => model.USU_DATA_CAD,  new {@class = "form-control", 
+ng_model = "usuario.USU_DATA_CADMask", app_date = "usuario.USU_DATA_CAD", maxlength = 14 , disabled = "disabled"})
+                            @Html.ValidationMessageFor(model => model.USU_DATA_CAD, null, new { app_validation_msg = "erros", @for = "USU_DATA_CAD"}) 
+                        </div>
+                         <div class="form-group col-sm-3">
+                            @Html.Label("Expira em")
+                            @Html.TextBoxFor(model => model.USU_DATA_EXPIRA,  new {@class = "form-control",
+ ng_model = "usuario.USU_DATA_EXPIRAMask", app_date = "usuario.USU_DATA_EXPIRA"})
+                            @Html.ValidationMessageFor(model => model.USU_DATA_EXPIRA, null, new { app_validation_msg = "erros", @for = "USU_DATA_EXPIRA"}) 
+                        </div>
+                        }
+                            
+                    </div>
+                    @if(SessionContext.admin){
+                        <div class="row">
+                        <div class="col-lg-4 form-group"> 
+                                <div>@Html.ValidationMessageFor(model => model.USU_ATIVO , null, new { app_validation_msg = "erros", @for = "USU_ATIVO"}) </div>
+                                @Html.Label("Situação")
+                                <div class="radio">
+                                    <label>@Html.RadioButtonFor(model => model.USU_ATIVO, "0", new { @checked = 0 , ng_model = "usuario.USU_ATIVO", ng_value="0"})Inativo</label>
+                                </div>
+                                <div class="radio">
+                                    <label>@Html.RadioButtonFor(model => model.USU_ATIVO, "1", new { @checked = 1 , ng_model = "usuario.USU_ATIVO", ng_value="1"})Ativo</label>
+                                </div>
+                               
+                        </div>
+                        <div class="col-lg-4 form-group">
+                               <div>@Html.ValidationMessageFor(model => model.USU_ADMIN , null, new { app_validation_msg = "erros", @for = "USU_ADMIN"}) </div>
+                                @Html.Label("Tipo")
+                                <div class="radio">
+                                    <label>@Html.RadioButtonFor(model => model.USU_ADMIN, "0", new { @checked = 1 , ng_model = "usuario.USU_ADMIN", ng_value="0"})Padrão</label>
+                                </div>
+                                <div class="radio">
+                                    <label>@Html.RadioButtonFor(model => model.USU_ADMIN, "1", new 
+                                        { @checked = 0 , ng_model = "usuario.USU_ADMIN", ng_value="1"})Administrador/Master</label>
+                                        
+                                </div>
+                        </div>
+                        
+                        <div class="col-lg-4 form-group" ng-if="!usuario.USU_ADMIN"> 
+                                <div>@Html.ValidationMessageFor(model => model.USU_ADMIN_LOGIN_PERFIL , null, 
+new { app_validation_msg = "erros", @for = "USU_ADMIN_LOGIN_PERFIL"}) </div>
+                                @Html.Label("Cria outros logins")
+                                <div class="radio">
+                                    <label>@Html.RadioButtonFor(model => model.USU_ADMIN_LOGIN_PERFIL, "0", 
+                                            new { @checked = 0 , ng_model = "usuario.USU_ADMIN_LOGIN_PERFIL", ng_value="0"})Não</label>
+                                </div>
+                                <div class="radio">
+                                    <label>@Html.RadioButtonFor(model => model.USU_ADMIN_LOGIN_PERFIL, "1", 
+                                            new { @checked = 1 , ng_model = "usuario.USU_ADMIN_LOGIN_PERFIL", ng_value="1"})Sim</label>
+                                </div>                               
+                        </div>
+                        
+                    </div>
+                    }
+                    </fieldset>  
+
+                    if(SessionContext.admin){
+                    <fieldset>
+                        <legend>Perfil(s)</legend>
+                                       <div class="row padding">                
+                        <div class="table-responsive col-sm-6">
+                            @Html.Label("Perfis")
+                            <div class="limit-div padding">
+                                <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Perfil</th>
+                                    <th>Ações</th>                                    
+                                </tr>                                   
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="per in lstPerfis | filter: query">
+                                    <td>
+                                        {{per.PER_ID}}
+                                    </td>
+                                    <td>                                        
+                                        <a href="javascript:void(0)" ng-click="adicionarPerfil(per)" class="blue" id="btnEdicaoItem" title="Incluir">
+                                            <span class="glyphicon glyphicon-forward"></span>
+                                        </a>
+                                    </td>                                    
+                                </tr>
+                                <tr ng-hide="(lstPerfis | filter: query).length != 0">
+                                    <td colspan="7">
+                                        <span ng-if="lstPerfis.length == 0">Não há Perfis cadastradas.</span> 
+                                        <span ng-if="(lstPerfis | filter: query).length < 1">Não há Perfis para adicionar.</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                            </div>
+                    </div>
+                         <div class="table-responsive col-sm-6">
+                            @Html.Label("Perfis Selecionados")
+                         <div class="limit-div padding">
+                        {{model.USU_ADMIN_LOGIN_PERFIL}}
+                          <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Perfil</th>
+                                    <th>Padrão</th>
+                                    <th ng-if="!usuario.USU_ADMIN && usuario.USU_ADMIN_LOGIN_PERFIL">Copiavel</th>
+                                    <th>Ações</th>
+                                    
+                                </tr>                                   
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="per in usuario.PERFIL_USUARIO">
+                                    
+                                    <td>
+                                        {{per.PERFIL.PER_ID}}
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="perfil_padrao" 
+                                            ng-model="per.PUS_DEFAULT" ng-checked="per.PUS_DEFAULT"/>
+                                    </td>
+                                    <td ng-if="!usuario.USU_ADMIN && usuario.USU_ADMIN_LOGIN_PERFIL">
+                                        <input type="checkbox" name="perfil_clonavel"
+                                            ng-model="per.PERFIL_CLONAVEL" ng-checked="per.PERFIL_CLONAVEL" ng-disabled="per.PERFIL.SIS_ID == 'CONFIGSIS'"/>
+                                    </td>
+                                    <td> 
+                                        <a href="javascript:void(0)" ng-click="excluirPerfil($index)" class="btnConfirmaExclusao red" 
+                                                    id="btexcluir21" title="Excluir"><span class="glyphicon glyphicon-remove-sign"></span>
+                                                    </a>
+                                    </td>                                    
+                                </tr>
+                                <tr ng-hide="usuario.PERFIL_USUARIO.length >= 1">
+                                    <td colspan="7">Nenhuma perfil foi adicionada
+                                </tr>
+                            </tbody>
+                        </table>
+                            </div>
+                    </div>
+                    </div>
+        
+                    </fieldset>
+
+                    }
+                 }
+            </div>
+
+         <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default" ng-disabled="button == 'saved' || (bloqueiaSalvamento && bloqueiaSalvamento === true)">
+                <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar</button>
+              <button  
+                  app-switch-button="salvarUsuario()" 
+                  switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]" 
+                  switch-var="button"
+                  class="btn btn-default" ng-disabled="bloqueiaSalvamento && bloqueiaSalvamento === true">
+                  <span class="glyphicon glyphicon-floppy-save blue"></span>
+              </button>
+
+           <span ng-show="usuario.USU_LOGIN && usuario.editanto">
+                <button type="button" class="btn btn-danger" ng-disabled="(bloqueiaSalvamento && bloqueiaSalvamento === true) || button == 'saved'"
+                    app-confirm="@Url.Action("Remover")?prospectId={{usuario.USU_LOGIN}}" app-msg="Deseja realmente excluir o usuário [{{usuario.USU_LOGIN}}] ?">
+                    <span class="glyphicon glyphicon-remove-sign"></span> Excluir</button>
+
+            </span>         
+        </div> 
+               
+      </div>
+</div>

@@ -1,0 +1,8 @@
+C:\COAD\workspace\svn\acobranca\COAD.SCHEDULER\obj\Homologacao\COAD.SCHEDULER.JobScheduler.resources
+C:\COAD\workspace\svn\acobranca\COAD.SCHEDULER\obj\Homologacao\COAD.SCHEDULER.ProjectInstaller.resources
+C:\COAD\workspace\svn\acobranca\COAD.SCHEDULER\obj\Homologacao\COAD.SCHEDULER.Service.ServiceDev.resources
+C:\COAD\workspace\svn\acobranca\COAD.SCHEDULER\obj\Homologacao\COAD.SCHEDULER.Service.ServiceHomol.resources
+C:\COAD\workspace\svn\acobranca\COAD.SCHEDULER\obj\Homologacao\COAD.SCHEDULER.Service.ServiceProd.resources
+C:\COAD\workspace\svn\acobranca\COAD.SCHEDULER\obj\Homologacao\COAD.AGENDADOR.csproj.GenerateResource.cache
+C:\COAD\workspace\svn\acobranca\COAD.SCHEDULER\obj\Homologacao\COAD.AGENDADOR.csproj.CoreCompileInputs.cache
+C:\COAD\workspace\svn\acobranca\COAD.SCHEDULER\obj\Homologacao\COAD.AGENDADOR.csprojAssemblyReference.cache

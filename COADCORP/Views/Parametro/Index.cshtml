@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+@Scripts.Render("~/Scripts/negocio/parametro.js")
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+<div ng-app="appModule">
+    <div ng-controller="ParametroController" class="padding content" data-ng-init="init();canPrint=true" ng-cloak>
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li>
+                            @Html.ActionLink("Home", "index", "Home")
+                        </li>
+                        <li class="active">
+                            <i class="fa fa-desktop"></i>&nbspParametros
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-filter"></span>&nbspParametros do Sistema
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Opções<span class="caret"></span></button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0);" ng-click="salvar()">&nbspSalvar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group col-lg-3">
+                            <label for="Grupos">Grupo Parametros</label>
+                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="PGR_ID"  ng-change="buscaParametros(PGR_ID)">
+                                <option ng-repeat="item in lstParametroGrupo"  value="{{item.PGR_ID}}" >{{item.PGR_DESCRICAO}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button ng-click="buscaParametros(PGR_ID)" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-show="lstParametros">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-book"></span>&nbspParametros
+                <div class="pull-right">
+                    <div class="btn-group">
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                        <tr class="info">
+                            <th style="text-align: right;">Parametro</th>
+                            <th style="text-align: left;">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in lstParametros" ng_if="item.PAR_KEY!='CTAPRIMEIRAPARCELA'">
+                            <td style="text-align: right;">{{item.PAR_KEY_DESCRICAO}}</td>
+                            <td style="text-align: center;">
+                                <div class="form-group" app-popover data-direction="left" data-content="{{item.PAR_VALOR_PADRAO}}" >
+                                    <div class="input-group" ng-if="item.PAR_KEY!='CTAPRIMEIRAPARCELA'&&item.PAR_KEY!='CTABOLETOAVULSO'" > 
+                                        <div class="input-group-addon" ng-show="item.PAR_TIPO!='F'&&item.PAR_TIPO!='P'&&item.PAR_TIPO!='D'">.....</div>
+                                        <div class="input-group-addon" ng-show="item.PAR_TIPO=='F'">R$</div>
+                                        <div class="input-group-addon" ng-show="item.PAR_TIPO=='P'">&nbsp%</div>
+                                        <div class="input-group-addon" ng-show="item.PAR_TIPO=='D'">
+                                            <span class="glyphicon glyphicon-calendar blue"></span>
+                                        </div>
+                                        <input type="text" style="width: 150px" app-mask-dinheiro="item.PAR_VALOR" ng-model="B[$index]" maxlength="15" class="form-control text-right" ng-if="item.PAR_TIPO=='F'" />
+                                        <input type="text" style="width: 150px" ng-model="item.PAR_VALOR" maxlength="10" class="form-control text-right" ng-if="item.PAR_TIPO=='P'" />
+                                        <input type="text" style="width: 150px" ng-model="item[$index]" app-date="item.PAR_VALOR" date-name="item_{{$index}}" maxlength="10" class="form-control datepicker" ng-if="item.PAR_TIPO=='D'" />
+                                        <input type="text" style="width: 150px" ng-model="item.PAR_VALOR" maxlength="10" class="form-control text-right" ng-if="item.PAR_TIPO!='P'&&item.PAR_TIPO!='F'&&item.PAR_TIPO!='D'" />
+                                    </div>
+                                    @Html.DropDownList("filtro.conta", new SelectList(@ViewBag.conta, "Value", "Text"), "Todos", new { @class = "form-control", ng_model = "item.PAR_VALOR", ng_if= "item.PAR_KEY=='CTAPRIMEIRAPARCELA'||item.PAR_KEY=='CTABOLETOAVULSO'", width="150px" })
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="hidden-print panel-footer">
+                <button type="button" class="btn btn-default" ng-click="salvar()"><span class="glyphicon glyphicon-floppy-save blue"></span>&nbspSalvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

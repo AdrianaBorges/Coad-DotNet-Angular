@@ -1,0 +1,13 @@
+﻿@using COAD.SEGURANCA.Extensions
+@{
+    ViewBag.Title = " COAD ";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+

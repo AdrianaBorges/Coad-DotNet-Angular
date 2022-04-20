@@ -1,0 +1,30 @@
+﻿
+<div data-app-modal="modal-codigos-selecionados" data-header="Proposta Selecionadas" size="small">
+    <form>
+        <div class="panel panel-corp" style="margin: 0px;">
+            <div class="panel-heading bold head-panel">
+                <i class="fa fa-check-square text-16" aria-hidden="true"></i> {{modalCodigos.label}}
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 75px">
+                                    {{modalCodigos.descricao}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in modalCodigos.lstCodigos" class="animate-repeat">
+                            <td>{{item.key}}</td>
+                        </tr>
+                        <tr>
+                            <td ng-show="modalCodigos.lstCodigos.length == 0">Nenhum registro foi encontrado.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

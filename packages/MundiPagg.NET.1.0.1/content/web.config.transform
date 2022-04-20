@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <appSettings>
+    <add key="MundiPagg.MerchantKey" value="00000000-0000-0000-0000-000000000000"/>
+  </appSettings>
+</configuration>

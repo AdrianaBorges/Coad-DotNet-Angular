@@ -1,0 +1,120 @@
+﻿@using COAD.SEGURANCA.Extensions
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+ 
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+<script src="~/Scripts/appScripts/ura.js"></script>
+
+<div ng-app="appModule">
+    <div ng-controller="URAControler" class="padding content">
+        <div class="panel panel-default">
+            <div app-message></div>
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel">
+                <i class="fa fa-search fa-fw"></i>@ViewBag.Title
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            Opções
+                                <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li><a href="../URA/PesquisarClientes">Limpar Campos</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        @Html.Label("Informe a Assinatura")
+                        <input type="text" ng-model="filtro.ASN_NUM_ASSINATURA" class="form-control" ng-change="listarClientes()"   />
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.Label("Informe a Assinatura")
+                        <div class="form-group input-group" style="width: 250px; float: left;">
+                            <input type="hidden" ng-model="filtro.CLI_ID" class="form-control" />
+                            <span class="input-group-btn">
+                                <input type="text" ng-model="filtro.CLI_NOME" class="form-control" disabled="true" />
+                                <a href="javascript:void(0)" class="btn btn-default" ng-click="AbreJanelaCliente()"><span class="fa fa-search"></span></a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        @Html.Label("Informe o Telofene")
+                        <input type="text" ng-model="filtro.telefone" class="form-control"  ng-change="listarClientes()"  />
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.Label("Selecione a URA")
+                        @Html.DropDownList("URA", new SelectList(@ViewBag.ListaUras, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_model = "filtro.URA_ID", ng_change="listarClientes()" })
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <input type="button" ng-click="listarClientes()" value="Pesquisar" class="btn btn-default" />
+            </div>
+        </div>
+        <div class="panel panel-default" ng-show="listaClientes">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span>Lista de Clientes</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr class="info">
+                                <th>@Html.Label("VIP")</th>
+                                <th>@Html.Label("DDD")</th>
+                                <th>@Html.Label("Telefone")</th>
+                                <th>@Html.Label("Senha")</th>
+                                <th>@Html.Label("Assinatura")</th>
+                                <th>@Html.Label("Nome")</th>
+                                <th>@Html.Label("Ativo")</th>
+                                <th>@Html.Label("id", "Tot.Consultas")</th>
+                                <th>@Html.Label("Acesso")</th>
+                                <th>@Html.Label("id", "Tot.Realizado")</th>
+                                <th>@Html.Label("Grupo")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listaClientes">
+                                <td ng-if="item.VIP==0">Não</td>
+                                <td ng-if="item.VIP==1">Sim</td>
+                                <td>{{item.DDD}}</td>
+                                <td>{{item.TELEFONE}}</td>
+                                <td>{{item.SENHA}}</td>
+                                <td>{{item.CODIGO}}</td>
+                                <td>{{item.NOME}}</td>
+                                <td ng-if="item.PODE==0">Não</td>
+                                <td ng-if="item.PODE==1">Sim</td>
+                                <td style="text-align: center;">{{item.QTE_CONS}}</td>
+                                <td style="text-align: center;">{{item.ACESSO}}</td>
+                                <td style="text-align: center;">{{item.QTE_REALIZ}}</td>
+                                <td style="text-align: center;">{{item.GRUPO}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr />
+                <app-pagination request-page="paginaReq" load-function="listarClientes(paginaReq)"></app-pagination>
+            </div>
+        </div>
+        @Html.DescricaoCliente("")
+    </div>
+</div>
+

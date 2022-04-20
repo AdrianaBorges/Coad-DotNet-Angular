@@ -1,0 +1,212 @@
+﻿@using COAD.SEGURANCA.Extensions
+@model  COAD.CORPORATIVO.Model.Fornecedor
+
+@{
+    ViewBag.Title = "Fornecedor (Editar)";
+}
+@using Coad.GenericCrud.Extensions
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Fornecedor (Editar)</li>
+
+    </ol>
+}
+
+@Scripts.Render("~/Scripts/appScripts/fornecedor.js")
+
+<div class="form-lg padding" ng-app="appModule">
+    <div class="panel panel-default" ng-controller="FornecedorController" ng-init="CarregaTela(@ViewBag.for_id)">
+        @Html.ValidationSummary(true)
+        <!-- Default panel contents -->
+        <div class="panel-heading bold head-panel">
+            <span class="glyphicon glyphicon-edit icon-panel"></span>Fornecedor (Editar)
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            Opções
+                                <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li><a href="#" ng-click="Salvar()">Salvar</a>
+                            </li>
+                            <li><a href="#" ng-click="Excluir()">Excluir</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="#" onclick="window.location = '@Url.Action("Index")'">Pesquisar</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+        </div>
+        <div class="panel-body">
+            @Html.PesquisaPopUpCidade("")
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        @Html.Label("Código")
+                        @Html.TextBoxFor(model => model.FOR_ID, new { @class = "form-control", ng_model = "for.FOR_ID", disabled = true })
+                        @Html.ValidationMessageFor(model => model.FOR_ID, null, new { app_validation_msg = "erros", @for = "FOR_ID" })
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="form-group">
+                        @Html.Label("Razão Social")
+                        @Html.TextBoxFor(model => model.FOR_RAZAO_SOCIAL, new { @class = "form-control", ng_model = "for.FOR_RAZAO_SOCIAL" })
+                        @Html.ValidationMessageFor(model => model.FOR_RAZAO_SOCIAL, null, new { app_validation_msg = "erros", @for = "FOR_RAZAO_SOCIAL" })
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        @Html.Label("Nome Fantasia")
+                        @Html.TextBoxFor(model => model.FOR_NOME_FANTASIA, new { @class = "form-control", ng_model = "for.FOR_NOME_FANTASIA" })
+                        @Html.ValidationMessageFor(model => model.FOR_NOME_FANTASIA, null, new { app_validation_msg = "erros", @for = "FOR_NOME_FANTASIA" })
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        @Html.Label("Pessoa")
+                        @Html.DropDownList("FOR_TIPESSOA", new SelectList(@ViewBag.ListaTipoPessoa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "for.FOR_TIPESSOA" })
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        @Html.Label("CPF/CNPJ")
+                        @Html.TextBoxFor(model => model.FOR_CNPJ, new { @class = "form-control", ng_model = "for.FOR_CNPJ" })
+                        @Html.ValidationMessageFor(model => model.FOR_CNPJ, null, new { app_validation_msg = "erros", @for = "FOR_CNPJ" })
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        @Html.Label("CEP")
+                        @Html.TextBoxFor(model => model.FOR_CEP, new { @class = "form-control", ng_model = "for.FOR_CEP" })
+                        @Html.ValidationMessageFor(model => model.FOR_CEP, null, new { app_validation_msg = "erros", @for = "FOR_CEP" })
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="form-group">
+                        @Html.Label("Endereço")
+                        @Html.TextBoxFor(model => model.FOR_ENDERECO, new { @class = "form-control", ng_model = "for.FOR_ENDERECO" })
+                        @Html.ValidationMessageFor(model => model.FOR_ENDERECO, null, new { app_validation_msg = "erros", @for = "FOR_ENDERECO" })
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        @Html.Label("Numero")
+                        @Html.TextBoxFor(model => model.FOR_END_NUMERO, new { @class = "form-control", ng_model = "for.FOR_END_NUMERO" })
+                        @Html.ValidationMessageFor(model => model.FOR_END_NUMERO, null, new { app_validation_msg = "erros", @for = "FOR_END_NUMERO" })
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.Label("Complemento")
+                        @Html.TextBoxFor(model => model.FOR_END_COMPLEMENTO, new { @class = "form-control", ng_model = "for.FOR_END_COMPLEMENTO" })
+                        @Html.ValidationMessageFor(model => model.FOR_END_COMPLEMENTO, null, new { app_validation_msg = "erros", @for = "FOR_END_COMPLEMENTO" })
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        @Html.Label("Bairro")
+                        @Html.TextBoxFor(model => model.FOR_BAIRRO, new { @class = "form-control", ng_model = "for.FOR_BAIRRO" })
+                        @Html.ValidationMessageFor(model => model.FOR_BAIRRO, null, new { app_validation_msg = "erros", @for = "FOR_BAIRRO" })
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="form-group" style="width: 290px; float: left;">
+                        @Html.Label("Município")
+                        @Html.HiddenFor(model => model.MUN_ID, new { @class = "form-control", ng_model = "for.MUN_ID" })
+                        @Html.TextBox("MUN_DESCRICAO", "", new { @class = "form-control", ng_model = "MUN_DESCRICAO", disabled = true })
+                        @Html.ValidationMessageFor(model => model.MUN_ID, null, new { app_validation_msg = "erros", @for = "MUN_ID" })
+                    </div>
+                    <div class="form-group" style="width: 20px; float: left; padding-left: 4px; padding-top: 28px;">
+                        <a href="javascript:void(0)" class="btn btn-default" ng-click="AbrirJanelaCidade()"><span class="fa fa-search"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        @Html.Label("id", "Insc. Estadual")
+                        @Html.TextBoxFor(model => model.FOR_INSCRICAO, new { @class = "form-control", ng_model = "for.FOR_INSCRICAO" })
+                        @Html.ValidationMessageFor(model => model.FOR_INSCRICAO, null, new { app_validation_msg = "erros", @for = "FOR_INSCRICAO" })
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        @Html.Label("id", "Insc. Municipal")
+                        @Html.TextBoxFor(model => model.FOR_INSCMUNIP, new { @class = "form-control", ng_model = "for.FOR_INSCMUNIP" })
+                        @Html.ValidationMessageFor(model => model.FOR_INSCMUNIP, null, new { app_validation_msg = "erros", @for = "FOR_INSCMUNIP" })
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        @Html.Label("Suframa")
+                        @Html.TextBoxFor(model => model.FOR_INSCSUFRAMA, new { @class = "form-control", ng_model = "for.FOR_INSCSUFRAMA" })
+                        @Html.ValidationMessageFor(model => model.FOR_INSCSUFRAMA, null, new { app_validation_msg = "erros", @for = "FOR_INSCSUFRAMA" })
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        @Html.Label("Telefone")
+                        @Html.TextBoxFor(model => model.FOR_TEL, new { @class = "form-control", ng_model = "for.FOR_TEL" })
+                        @Html.ValidationMessageFor(model => model.FOR_TEL, null, new { app_validation_msg = "erros", @for = "FOR_TEL" })
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        @Html.Label("Celular")
+                        @Html.TextBoxFor(model => model.FOR_CEL, new { @class = "form-control", ng_model = "for.FOR_CEL" })
+                        @Html.ValidationMessageFor(model => model.FOR_CEL, null, new { app_validation_msg = "erros", @for = "FOR_CEL" })
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        @Html.Label("Fax")
+                        @Html.TextBoxFor(model => model.FOR_FAX, new { @class = "form-control", ng_model = "for.FOR_FAX" })
+                        @Html.ValidationMessageFor(model => model.FOR_FAX, null, new { app_validation_msg = "erros", @for = "FOR_FAX" })
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        @Html.Label("Contato")
+                        @Html.TextBoxFor(model => model.FOR_CONTATO, new { @class = "form-control", ng_model = "for.FOR_CONTATO" })
+                        @Html.ValidationMessageFor(model => model.FOR_CONTATO, null, new { app_validation_msg = "erros", @for = "FOR_CONTATO" })
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="form-group">
+                        @Html.Label("Email")
+                        @Html.TextBoxFor(model => model.FOR_EMAIL, new { @class = "form-control", ng_model = "for.FOR_EMAIL" })
+                        @Html.ValidationMessageFor(model => model.FOR_EMAIL, null, new { app_validation_msg = "erros", @for = "FOR_EMAIL" })
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="form-group">
+                        @Html.Label("Tipo")
+                        @Html.DropDownList("FOR_TIPESSOA", new SelectList(@ViewBag.ListaTipoFornecedor, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "for.TIPO_FOR_ID" })
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        @Html.Label("Pais")
+                        @Html.DropDownList("FOR_COD_PAIS", new SelectList(@ViewBag.ListaPais, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "for.FOR_COD_PAIS" })
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default">Voltar</button>
+            <button type="button" ng-click="Salvar()" class="btn btn-default">Salvar</button>
+            <button type="button" ng-click="Excluir()" class="btn btn-default">Excluir</button>
+        </div>
+
+    </div>
+</div>

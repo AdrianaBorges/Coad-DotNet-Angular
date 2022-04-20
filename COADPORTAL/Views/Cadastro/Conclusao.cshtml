@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutCadastro.cshtml";
+}
+
+@Scripts.Render("~/Scripts/appScripts/Portal.js")
+
+
+<div ng-app="appModule">
+    <div ng-controller="PortalController" ng-init="initDadosConclusao('@ViewBag.Nome',@ViewBag.Boleto);">
+        <div class="container">
+            <div class="panel panel-default">
+                <div class="panel-body" ng-if="boleto!=1" >
+                    <h3>Caro {{comprador.nome}}, </h3>
+
+                    <p>
+                        A sua compra foi processada com sucesso ! Em alguns momentos voce irá receber a confirmação da sua compra no email que voce nos informou.<br />
+                        Conheça outros produtos da COAD em <a href="http://www.coad.com.br/">COAD Informações Confiáveis.</a>
+                    </p>
+
+                    <hr />
+
+                    <p>
+                        Para realizar o login e ter acesso as funcionalidades do portal <a href="/Login">clique aqui</a>
+                    </p>
+
+
+                    <p>
+                        Muito obrigado pela confiança.<br />
+                        <strong>COAD</strong>
+                    </p>
+                </div>
+                <div class="panel-body" ng-if="boleto==1" >
+                    <h3>Caro {{comprador.nome}}, </h3>
+
+                    <p>
+                        Em alguns minutos, você irá receber via email o boleto para realizar o pagamento da sua compra.<br />
+                    </p>
+
+                    <hr />
+
+                    <p>
+                        Conheça outros produtos da COAD em <a href="http://www.coad.com.br/">COAD Informações Confiáveis.</a>
+                    </p>
+
+
+                    <p>
+                        Muito obrigado pela confiança.<br />
+                        <strong>COAD</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

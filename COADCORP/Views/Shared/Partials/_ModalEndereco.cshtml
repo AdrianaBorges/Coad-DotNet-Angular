@@ -1,0 +1,115 @@
+﻿<div app-modal="modal-endereco" header="Dados do Endereço">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group col-sm-2">
+                    @*@Html.Label("Tipo")
+                    @Html.DropDownList("UF", new SelectList(@ViewBag.ListaTipoEndereco, "Value", "Text"), null, new { @class = "form-control", ng_model = "$parent.end.END_TIPO", ng_change = "tipoEnderecoSelecionado()", ng_disabled = "acaoEnd.acao === 1" })
+                *@
+                    @Html.Label("Tipo")
+                    <select id="tipodeendereco" name="tipodeendereco" class="form-control" ng-model="$parent.end.TIPO_ENDERECO" ng-disabled="acaoEnd.acao === 1"
+                        ng-options="tEnd as tEnd.TP_END_DESCRICAO for tEnd in tipoEnderecos track by tEnd.TP_END_ID" ng-change="tipoEnderecoSelecionado()">
+                        <option value="">Selecione</option>
+                    </select>
+                    @Html.ValidationMessage("tipo", null, new { app_validation_msg = "erros", @for = "END_TIPO" })
+                </div>
+                <div class="form-group col-sm-2">
+                    @Html.Label("CEP")
+                    <a data-toggle="modal" href="#Modal-Correios" data-toggle="tooltip" data-placement="top" app-popover data-content="Pesquisa na base dos correios" style="padding-top: -5px; text-decoration: none;">
+                        <img src="~/Images/logo_correios.png" style="width: 70px; height: 20px;"></a>
+                    <input type="text" class="form-control" ng-model="$parent.end.END_CEP" maxlength="8" ng-change="buscarCep(end.END_CEP)" />
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="Logradouro">Município</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="$parent.end.END_MUNICIPIO" disabled="disabled" />
+                        <span class="input-group-btn">
+                            <a data-toggle="modal" href="#Modal-Municipio" data-toggle="tooltip" data-placement="top" app-popover data-content="Pesquisar municipios" style="text-decoration: none;" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-search"></span>&nbsp
+                            </a>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-sm-2">
+                    @Html.Label("UF")
+                    @Html.DropDownList("UF", new SelectList(ViewBag.ufs, "UF_SIGLA", "UF_SIGLA"), "Selecione", new { @class = "form-control", ng_model = "$parent.end.END_UF", disabled = "disabled" })
+                </div>
+                <div class="form-group col-sm-3">
+                    @Html.Label("Bairro")
+                    <input type="text" class="form-control" ng-model="$parent.end.END_BAIRRO" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    @Html.Label("Logradouro")
+                    <input type="text" class="form-control" ng-model="$parent.end.END_LOGRADOURO" />
+                </div>
+                <div class="form-group col-sm-2">
+                    @Html.Label("Número")
+                    <input type="text" class="form-control" ng-model="$parent.end.END_NUMERO" />
+                </div>  
+                <div class="form-group col-sm-4">
+                    @Html.Label("Complemento")
+                    <input type="text" class="form-control" ng-model="$parent.end.END_COMPLEMENTO"  />
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="button" class="btn btn-default" ng-click="salvarEndereco()"><span class="glyphicon glyphicon-floppy-save blue"></span>{{acaoEnd.label}}</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Municipio -->
+<div app-modal="Modal-Municipio" header="Municipio"> 
+    <div class="panel-body">
+        <div class="row">
+            <div class="form-group col-lg-5">
+                <label for="sigla">Municipio</label>
+                <input type="text" id="Logradouro" ng-model="filtro.mun_descricao" class="form-control" ng-change="buscarMunicipio()" />
+            </div>
+        </div>
+        <div class="row" style="max-height: 350px; overflow-y: auto;">
+            <div class="form-group col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr class="info">
+                                <th style="min-width: 75px">ID</th>
+                                <th style="text-align: center;">Nome</th>
+                                <th style="min-width: 132px">UF</th>
+                                <th>IBGE</th>
+                                <th>CEP</th>
+                                <th style="text-align: center;">Editar</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in dbMunicipio">
+                            <td>{{item.MUN_ID}}</td>
+                            <td>{{item.MUN_DESCRICAO}}</td>
+                            <td>{{item.UF}}</td>
+                            <td>{{item.IBGE_COD_COMPLETO}}</td>
+                            <td>{{item.MUN_CEP}}</td>
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" ng-click="selecMunicipio(item)" data-dismiss="modal" title="Editar" class="blue">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</button>
+    </div>
+</div>
+
+<!-- Modal Correios -->
+<div app-modal="Modal-Correios" header="Correios">
+    <div class="panel-body">
+        <center><iframe src="http://m.correios.com.br/movel/index.do" width="100%" height="400" scrolling="YES"></iframe></center>
+    </div>
+</div>
+
+<!-- Modal Correios -->

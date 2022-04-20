@@ -1,0 +1,112 @@
+﻿@using Coad.GenericCrud.Extensions
+
+@{
+    ViewBag.Title = "Index";     
+}
+
+@Scripts.Render("~/Scripts/appScripts/cep.js")
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">@Html.ActionLink("Home", "index", "Home") </a></li>
+        <li class="active">Cadastro de CEP</li>
+    </ol>
+}
+
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="CEPController" class="padding content" >
+        <div id="page-wrapper">
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-filter"></span>&nbspFiltros
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Opções<span class="caret"></span></button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="javascript:void(0)" app-post="@Url.Action("Editar")?_cep_id=" title="Editar" class="blue">
+                                        <span class="glyphicon glyphicon-edit"></span>&nbspNovo
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Informe o CEP")
+                                <input id="_cep" type="text" ng-model="param.cep" class="form-control " placeholder="CEP" autofocus autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="form-group">
+                                @Html.Label("Informe o Logradouro")
+                                <input id="_logradouro" type="text" ng-model="param.logradouro" class="form-control " placeholder="Logradouro" autofocus autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button ng-click="listar()" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                </div>
+            </div>
+            <div class="panel panel-corp" ng-show="listacep">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-book"></span>&nbspCadastro de CEP
+                    <div class="pull-right">
+                        <div class="btn-group">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr class="info">
+                                <th>ID</th>
+                                <th>UF</th>
+                                <th>Logradouro</th>
+                                <th>Bairro</th>
+                                <th>Numero</th>
+                                <th>Tipo</th>
+                                <th>Logradouro Sem Acento</th>
+                                <th>Municipio</th>
+                                <th style="text-align: center;">Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listacep">
+                                <td>{{item.CEP_ID}}</td>
+                                <td>{{item.CEP_UF}}</td>
+                                <td>{{item.CEP_LOG}}</td>
+                                <td>{{item.CEP_BAIRRO.BAR_DESCRICAO}}</td>
+                                <td>{{item.CEP_NUMERO}}</td>
+                                <td>{{item.CEP_TIPO_LOGRADOURO}}</td>
+                                <td>{{item.CEP_LOG_SEM_ACENTO}}</td>
+                                <td>{{item.MUNICIPIO.MUN_DESCRICAO}}</td>
+                                <td style="text-align: center;">
+                                    <a href="javascript:void(0)" app-post="@Url.Action("Editar")?_cep_id={{item.CEP_NUMERO}}" title="Editar" class="blue">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr />
+                    <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

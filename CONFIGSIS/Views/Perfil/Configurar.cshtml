@@ -1,0 +1,271 @@
+﻿
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li class="active">Configurar Menus para Perfis</li>         
+        
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+@Scripts.Render("~/Scripts/appScripts/itemmenu.js")
+<div ng-app="appModule">
+    <div ng-controller="ItemMenuControler" class="padding content" ng-cloak>
+    <div class="panel panel-corp">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-warning btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                        </li>                                                                           
+                                    </ul>
+                                </div>
+                            </div>
+      </div>
+          
+      <div class="panel-body">
+           
+        <div class="row">        
+            <div class="form-group col-lg-3">
+                <label for="usu_login">Sistema</label>
+                 @Html.DropDownList("SIS_ID", (SelectList) ViewBag.ListaSistema,
+                    "Selecione" ,new {@class = "form-control", ng_model = "filtroItensMenuPerfil._sis_id", ng_change="sistemaSelecionado()" })
+            </div>      
+            <div class="form-group col-lg-3">
+                <label for="usu_login">Perfil</label>
+                <div 
+                    app-select2="filtroItensMenuPerfil._per_id" 
+                    ng-model="descricaoPerfil" 
+                    result-list="perfis" 
+                    search-param="perfilNome" 
+                    load-function="carregaPerfis(perfilNome)"
+                    list-value="PER_ID" 
+                    list-label="PER_ID"
+                    start-with-full-list="true"></div>
+                
+            </div>          
+        </div>
+      </div>
+                  
+        <div class="panel-footer">
+            <button type="button" class="btn btn-primary" ng-click="CarregarItensMenuPerfil($event)">Pesquisar</button>
+             <button  
+                  app-switch-button="salvarItemMenuPerfil($event)" 
+                  switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]" 
+                  switch-var="button"
+                  class="btn btn-default" 
+                  ng-show="itemMenuPerfil && itemMenuPerfil.length > 0">
+                  <span class="glyphicon glyphicon-floppy-save blue"></span>
+              </button>
+        </div>
+</div>
+        <div app-message></div>
+<div class="row">
+        <div class="col-md-4">
+                    <div class="panel panel-corp">
+                          <!-- Default panel contents -->
+      
+                          <div class="panel-heading bold"><span class="glyphicon glyphicon-th-list"></span> Perfil</div>
+          
+                          <div class="panel-body overflow">   
+                                <ul class="nav">
+                                    <li ng-repeat="item in itemMenuPerfil" role="presentation" class="animate-repeat">
+                                        <a href="javascript:void(0)" ng-click="dispararAcaoMenuClicado($event, item.ITEM_MENU.ITM_ID, item.ITEM_MENU, '#pai_' + item.ITEM_MENU.ITM_ID)">
+                                                        <span ng-class="
+                                                                        {
+                                                                            ' glyphicon-folder-close': item.aberto == false || !item.aberto,
+                                                                            ' glyphicon-folder-open': item.aberto == true
+                                                                        }"
+                                                             class="glyphicon text-muted">
+
+                                                        </span>
+                                            <span>
+                                                {{item.ITEM_MENU.ITM_DESCRICAO}} 
+                                                <span ng-click="selecionaItemMenuPerfil($event, item)" class="glyphicon glyphicon-chevron-right"></span>
+                                            </span>
+                                            </a>
+                                        <ul id="pai_{{item.ITEM_MENU.ITM_ID}}" class="collapse" aria-expanded="true">
+                                            <li app-recursive class="animate-repeat" ng-repeat="item in item.SUB_ITEM_MENU" 
+                                                    ng-click="dispararAcaoMenuClicado($event, item.ITEM_MENU.ITM_ID, item.ITEM_MENU, '#filho_' + item.ITEM_MENU.ITM_ID)">
+                                                    <a href="javascript:void(0)">{{tipo}}
+                                                        <span ng-show="item.ITEM_MENU.ITM_TIPO == '0'">
+                                                            <span ng-class="
+                                                                        {
+                                                                            ' glyphicon-folder-close': item.aberto == false || !item.aberto,
+                                                                            ' glyphicon-folder-open': item.aberto == true
+                                                                        }"
+                                                             class="glyphicon text-muted">
+
+                                                        </span>
+                                                        </span>
+                                                        <span ng-show="item.ITEM_MENU.ITM_TIPO == '1'" class="glyphicon glyphicon-tasks text-muted">
+                                                        </span>
+                                                            <span>
+                                                                {{item.ITEM_MENU.ITM_DESCRICAO}}
+                                                                <span ng-click="selecionaItemMenuPerfil($event, item)" class="glyphicon glyphicon-chevron-right"></span>
+                                                            </span>
+                                                        <ul app-clone-point  class="collapse" aria-expanded="true" id="filho_{{item.ITEM_MENU.ITM_ID}}"></ul>
+                                                    </a>         
+                        
+                                            </li>     
+                                        </ul>
+                                    </li>    
+                                </ul>    
+                             @*<div app-pagination="page" request-page="paginaReq" load-function="listarItensDeMenu(paginaReq)"></div>*@          
+                            </div>
+                    </div>
+        </div>
+      
+
+        <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="panel panel-corp" ng-show="itemMenuPerfilSelecionado">
+                              <!-- Default panel contents -->
+      
+                              <div class="panel-heading bold"><span class="glyphicon glyphicon-th-list"></span> Menu pai</div>
+          
+                              <div class="panel-body">   
+                                         
+                                                <div class="table-responsive"> 
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>     
+                                                                <th>Id</th>
+                                                                <th>Descrição</th>
+                                                                <th>Ativo</th>   
+                                                                <th>Acesso</th>
+                                                                <th>Incluir</th>
+                                                                <th>Editar</th> 
+                                                                <th>Excluir</th>                        
+                                                            </tr>
+                                                        </thead>
+                                                        <tr>                                    
+                                                            <td>{{itemMenuPerfilSelecionado.ITEM_MENU.ITM_ID}}</td>                       
+                                                            <td>{{itemMenuPerfilSelecionado.ITEM_MENU.ITM_DESCRICAO}}</td>
+                                                            <td>
+                                                                <span class="label label-success" ng-if="itemMenuPerfilSelecionado.ITEM_MENU.ITM_ATIVO == 1">SIM</span>
+                                                                <span class="label label-warning" 
+                                                                    ng-if="!itemMenuPerfilSelecionado.ITEM_MENU.ITM_ATIVO || itemMenuPerfilSelecionado.ITEM_MENU.ITM_ATIVO == 0">NÃO</span>
+                                                            </td>
+                                                            <td>
+                                                                <input type="checkbox" ng-model="itemMenuPerfilSelecionado.NIV_ACESSO" 
+                                                                        name="menu_pai_acesso" ng-change="nivelAcessoClicado(itemMenuPerfilSelecionado)" 
+                                                                            ng-true-value="1" ng-false-value="0" ng-checked="itemMenuPerfilSelecionado.NIV_ACESSO == 1"/>
+                                                            </td>
+                                                            <td>                                                                
+                                                                <input type="checkbox" ng-model="itemMenuPerfilSelecionado.NIV_INSERT" 
+                                                                        name="menu_pai_insert" ng-change="nivelInsertClicado(itemMenuPerfilSelecionado)"
+                                                                            ng-true-value="1" ng-false-value="0" ng-checked="itemMenuPerfilSelecionado.NIV_INSERT == 1"/>
+                                                            </td>
+                                                            <td>
+                                                                <input type="checkbox" ng-model="itemMenuPerfilSelecionado.NIV_EDIT" 
+                                                                        name="menu_pai_edit" ng-change="nivelEditClicado(itemMenuPerfilSelecionado)"
+                                                                            ng-true-value="1" ng-false-value="0" ng-checked="itemMenuPerfilSelecionado.NIV_EDIT == 1"/>
+                                                            </td>
+                                                            <td>
+                                                                <input type="checkbox" ng-model="itemMenuPerfilSelecionado.NIV_DELETE" 
+                                                                        name="menu_pai_delete" ng-change="nivelDeleteClicado(itemMenuPerfilSelecionado)"
+                                                                            ng-true-value="1" ng-false-value="0" ng-checked="itemMenuPerfilSelecionado.NIV_DELETE == 1"/>
+                                                            </td>                                                            
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="9" ng-show="!itemMenuPerfilSelecionado.ITEM_MENU && listado">Nenhum registro foi encontrado.</td>
+                                                            <td colspan="9" ng-show="!itemMenuPerfilSelecionado.ITEM_MENU">Clique em pesquisar para listar.</td>
+                                                        </tr>
+                                                    </table> 
+                                            </div>    
+                                  </div>
+         
+                                </div> 
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                        <div class="panel panel-corp">
+                                  <!-- Default panel contents -->
+      
+                                  <div class="panel-heading bold"><span class="glyphicon glyphicon-th-list"></span> Menus</div>
+          
+                                  <div class="panel-body">   
+                                           
+                                                <div class="table-responsive">     
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>     
+                                                                    <th>Id</th>
+                                                                    <th>Descrição</th>
+                                                                    <th>Ativo</th>   
+                                                                    <th>Acesso</th>
+                                                                    <th>Incluir</th>
+                                                                    <th>Editar</th> 
+                                                                    <th>Excluir</th>
+                      
+                                                                </tr>
+                                                            </thead>
+                                                            <tr ng-repeat="item in itemMenuPerfilSelecionado.SUB_ITEM_MENU" class="animate-repeat">                                    
+                                                                <td>{{item.ITEM_MENU.ITM_ID}}</td>
+                                                                <td>{{item.ITEM_MENU.ITM_DESCRICAO}}</td>
+                                                                <td>
+                                                                    <span class="label label-success" ng-if="item.ITEM_MENU.ITM_ATIVO == 1">SIM</span>
+                                                                    <span class="label label-warning" ng-if="!item.ITEM_MENU.ITM_ATIVO || item.ITEM_MENU.ITM_ATIVO == 0">NÃO</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="checkbox" ng-model="item.NIV_ACESSO" 
+                                                                        name="menu_acesso" ng-change="nivelAcessoClicado(item)"
+                                                                            ng-true-value="1" ng-false-value="0" ng-checked="item.NIV_ACESSO == 1"/>
+                                                                </td>
+                                                                <td>                                                                
+                                                                    <input type="checkbox" ng-model="item.NIV_INSERT" 
+                                                                        name="menu_insert" ng-change="nivelInsertClicado(item)"
+                                                                            ng-true-value="1" ng-false-value="0" ng-checked="item.NIV_INSERT == 1"/>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="checkbox" ng-model="item.NIV_EDIT" 
+                                                                        name="menu_edit" ng-change="nivelEditClicado(item)"
+                                                                            ng-true-value="1" ng-false-value="0" ng-checked="item.NIV_EDIT == 1"/>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="checkbox" ng-model="item.NIV_DELETE" 
+                                                                        name="menu_delete" ng-change="nivelDeleteClicado(item)"
+                                                                            ng-true-value="1" ng-false-value="0" ng-checked="item.NIV_DELETE == 1"/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="10" ng-show="itemMenuPerfilSelecionado.SUB_ITEM_MENU.length == 0 && listado">Nenhum registro foi encontrado.</td>
+                                                                <td colspan="10" ng-show="!itemMenuPerfilSelecionado.SUB_ITEM_MENU">Clique em pesquisar para listar.</td>
+                                                            </tr>
+                                                        </table> 
+                                                </div>          
+                                          @*<div app-pagination="paginaItemMenuGrid" request-page="paginaReq" load-function="listarItensDeMenu(paginaReq, 'grid')"></div>*@          
+
+                                      </div>
+         
+                                    </div> 
+                </div>
+                    </div>
+    </div>
+</div>
+       
+    </div>   
+</div>

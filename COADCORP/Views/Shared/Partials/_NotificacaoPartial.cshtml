@@ -1,0 +1,44 @@
+﻿@using COAD.SEGURANCA.Repositorios.Base
+@using COAD.CORPORATIVO.SessionUtils
+@if (SessionContext.EhAutenticado() && SessionUtil.PossuiNotificacoes())
+{          
+    <li class="dropdown" ng-controller="NotificacaoController" data-ng-init="initNotify(); initInfoCliente();" ng-cloak>
+        <div app-message></div>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" ng-click="checaResumoNotificacacoesNaoLidas()">
+            <span class="glyphicon glyphicon-exclamation-sign"></span><b class="caret"></b>
+            <span class="badge">{{qtdNotificacoes}}</span></a>
+        <ul class="dropdown-menu alert-dropdown">
+            <li ng-repeat="notify in lstResumoNotificacoes" class="separator-li">
+                <a href="javascript:void(0)" ng-click="abreModalNotificacao(notify)" ng-class="{
+                                            
+                                    'bg-nofity-view' : !notify.NTF_VISUALIZADO                                       
+                                }">
+                    <span class="label label-default"
+                        ng-class="{
+                                    'label-info': notify.URG_NTF_ID == 'INFO',
+                                    'label-warning': notify.URG_NTF_ID == 'WARN',
+                                    'label-danger': notify.URG_NTF_ID == 'ERROR',
+                                    'label-primary': notify.URG_NTF_ID == 'PRIORITY',
+                                    'label-success': notify.URG_NTF_ID == 'SUCCESS',
+                                    'label-default': !notify.URG_NTF_ID
+                                }">{{notify.URG_NTF_ID}}                                                                                          
+                    </span>&nbsp;{{ notify.NTF_DESCRICAO | limitTo:40 }}<span ng-if="notify.NTF_DESCRICAO.length > 40">...</span></a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="#" ng-click="marcarTodasAsMotificacoesComoLida('@SessionContext.GetIdRepresentante()')">Marcar Todos Como Lido</a>
+            </li>
+            <li>
+                <a href="/notificacoes/mostrartudo">Ver Todos</a>
+            </li>
+        </ul>
+        <div data-app-modal="modal-notify1" data-header="Notificações" data-size="small" data-header-bg="false">
+            @Html.Partial("partials/_ModalVisualizarNotificacaoPartial")
+        </div>       
+        @Html.Partial("Partials/_ModalClientePartialLayout")
+        @Html.Partial("Partials/_NotificacaoPopupPartial")
+    </li>
+
+}
+
+

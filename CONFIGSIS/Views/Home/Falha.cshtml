@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Falha";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li class="active">Falha</li>         
+        
+    </ol>
+}
+<div class="padding">
+    <div class="panel panel-warning">
+                  <!-- Default panel contents -->
+        <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-warning-sign"></span> 
+            Ouve uma falha de validação ao processar a ação.
+        </div>
+        <div class="panel-body">
+            <strong><em>Detalhe da falha:</em></strong>
+            <div><span class="glyphicon glyphicon-arrow-right"></span> @{if(TempData["message"] != null) { @TempData["message"];} else { @ViewData["message"];}}</div>
+        </div>
+    </div>
+
+</div>

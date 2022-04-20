@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="asteriskcdrdbModelStoreContainer" CdmEntityContainer="asteriskcdrdbEntities">
+    <EntitySetMapping Name="coad">
+      <EntityTypeMapping TypeName="asteriskcdrdbModel.coad">
+        <MappingFragment StoreEntitySet="coad">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="vip" ColumnName="vip" />
+          <ScalarProperty Name="ddd" ColumnName="ddd" />
+          <ScalarProperty Name="telefone" ColumnName="telefone" />
+          <ScalarProperty Name="senha" ColumnName="senha" />
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="pode" ColumnName="pode" />
+          <ScalarProperty Name="qte_cons" ColumnName="qte_cons" />
+          <ScalarProperty Name="acesso" ColumnName="acesso" />
+          <ScalarProperty Name="qte_realiz" ColumnName="qte_realiz" />
+          <ScalarProperty Name="grupo" ColumnName="grupo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

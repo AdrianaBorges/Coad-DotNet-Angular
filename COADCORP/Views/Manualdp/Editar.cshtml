@@ -1,0 +1,292 @@
+﻿@using Coad.GenericCrud.Extensions
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@Scripts.Render("~/Scripts/appScripts/Manualdp.js")
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">Home </a></li>
+        <li class="active">&nbspManual DP</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+<div ng-app="appModule">
+    <div ng-controller="ManualdpController" data-ng-init="carregaTela(@ViewBag.mai_id)" class="padding content">
+        <div id="page-wrapper">
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading bold head-panel">
+                    <span class="fa fa-table fa-fw"></span>&nbspManual DP
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Opções<span class="caret"></span></button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="/Manualdp/Index">Fechar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.Label("Tema")
+                                <select name="selmodulo" id="selmodulo" ng-model="item.MOD_ID" ng_change="listarAssuntoPorModulo()"
+                                        ng-options="x.MOD_ID as x.MOD_DESCRICAO for x in listamodulo"
+                                        class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.Label("Assunto")
+                                <select name="selassunto" id="selassunto" ng-model="item.MAN_ID"
+                                        ng-options="i.MAN_ID as i.MAN_ASSUNTO for i in listaassunto"
+                                        class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.Label("Item")
+                                <input id="titulo" type="text" ng-model="item.MAI_TITULO" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Incluido Por")
+                                <input id="incluidopor" type="text" ng-model="item.USU_LOGIN" class="form-control" disabled="disabled" />
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Inclusão")
+                                <div class="input-group date">
+                                    @Html.TextBox("DATA_INSERT", "", new { @class = "form-control datepicker", ng_model = "dtinsert", app_date = "item.DATA_INSERT", disabled = "disabled" })
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Publicação")
+                                <div class="input-group date">
+                                    @Html.TextBox("publicacao", "", new { @class = "form-control datepicker", ng_model = "dtpublicacao", app_date = "item.MAI_DATA_PUBLICACAO", disabled = "disabled" })
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div class="form-group">
+                                @Html.Label("Index")
+                                <input id="Index" type="text" ng-model="item.MAI_INDEX" class="form-control" disabled="disabled" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <fieldset>
+                                <div class="row padding">
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                            <tr class="info">
+                                                <th style="text-align: left;width:20%;">TAG</th>
+                                                <th style="text-align: left;">Descrição</th>
+                                                <th style="text-align: left;width:40%;">Link</th>
+                                                <th style="text-align: center;" colspan="2">Opções</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-hide="item.MANUAL_DP_LINK.length > 0">
+                                                <td colspan="10"><a href="#" ng_click="addLink()" title="Adicionar o novo item">Click no botão ao lado para adicionar um item <i class="fa fa-plus"></i></a></td>
+                                            </tr>
+                                            <tr ng-repeat="lnk in item.MANUAL_DP_LINK">
+                                                <td>
+                                                    <input id="tag" type="text" ng-model="lnk.LNK_TAG" class="form-control" />
+                                                </td>
+                                                <td>
+                                                    <input id="descricao" type="text" ng-model="lnk.LNK_DESCRICAO" class="form-control" />
+                                                </td>
+                                                <td>
+                                                    <div class="input-group">
+                                                        <input id="link" type="text" ng-model="lnk.LNK_LINK" class="form-control" disabled="disabled" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-primary" ng-click="abrirPopUpReferencia(lnk)">&nbsp<span class="glyphicon glyphicon-search"></span>&nbsp</button>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <a href="javascript:void(0)" ng_click="removeLINK($index)" class="btnConfirmaExclusao red" title="Excluir o registro selecionado">
+                                                        <span class="glyphicon glyphicon-remove-sign"></span>
+                                                    </a>
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <a href="javascript:void(0)" ng_click="addLink()" title="Adicionar o novo item" ng-show="item.MANUAL_DP_LINK.length == ($index + 1)">
+                                                        <span class="glyphicon glyphicon-plus blue"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <fieldset>
+                                <div class="row padding">
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                            <tr class="info">
+                                                <th style="text-align: center;">Tipo Ato</th>
+                                                <th>Nº Ato</th>
+                                                <th style="text-align: center;">Data Ato</th>
+                                                <th style="text-align: center;">Orgão</th>
+                                                <th style="text-align: center;">Nº Artigo</th>
+                                                <th style="text-align: center;">§ Paragrafo</th>
+                                                <th style="text-align: center;">Inciso</th>
+                                                <th style="text-align: center;" colspan="4">Opções</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-hide="item.FUNDAMENTACAO.length > 0">
+                                                <td colspan="10"><a href="#" ng_click="add()" title="Adicionar o novo item">Click no botão ao lado para adicionar um item <i class="fa fa-plus"></i></a></td>
+                                            </tr>
+                                            <tr ng-repeat="fund in item.FUNDAMENTACAO">
+                                                <td style="text-align: center;">
+                                                    @Html.DropDownList("s", new SelectList(@ViewBag.tpAto, "Value", "Text"), "Selecione", new { id = "tpAto", @class = "form-control", ng_model = "fund.TIP_ATO_ID" })
+                                                </td>
+                                                <td>
+                                                    <input id="numAto" type="text" ng-model="fund.MAI_NUMERO_ATO" class="form-control" />
+                                                </td>
+                                                <td>
+                                                    <div class="input-group date">
+                                                        <input id="dataAto" type="datetime" ng-model="fund.MAI_DATA_ATO" class="form-control datepicker" maxlength="10" title="Informe a data no formato dd/MM/yyyy " />
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownList("s", new SelectList(@ViewBag.orgao, "Value", "Text"), "Selecione", new { id = "orgaoId", @class = "form-control", ng_model = "fund.ORG_ID" })
+                                                </td>
+                                                <td>
+                                                    <input id="numAto" type="text" ng-model="fund.MAI_NUMERO_ARTIGO" class="form-control" />
+                                                </td>
+                                                <td>
+                                                    <input id="numParagrafo" type="text" ng-model="fund.FUN_NUM_PARAGRAFO" class="form-control" />
+                                                </td>
+                                                <td>
+                                                    <input id="numInciso" type="text" ng-model="fund.FUN_INCISO" class="form-control" />
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <a href="javascript:void(0)" ng_click="remove($index)" class="btnConfirmaExclusao red" title="Excluir o registro selecionado">
+                                                        <span class="glyphicon glyphicon-remove-sign"></span>
+                                                    </a>
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <a href="javascript:void(0)" ng_click="add()" title="Adicionar o novo item" ng-show="item.FUNDAMENTACAO.length == ($index + 1)">
+                                                        <span class="glyphicon glyphicon-plus blue"></span>
+                                                    </a>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label><span><strong>Descrição</strong> (personalizada)</span></label>
+                                <div app-editor="item.MAI_DESCRICAO" editor-model="editor" id="descricao">
+                                </div>
+                                <div app-validation-msg="erros" for="item.MAI_DESCRICAO"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <a href="/Manualdp/Index" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</a>
+                    <a href="javascript:void(0);" ng-click="salvar()" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save blue"></span>&nbspSalvar</a>
+                </div>
+            </div>
+        </div>
+
+        @Html.Messages()
+
+
+        @*modal-preview - editor --- Popup modal*@
+        <div app-init-editor="editor"></div>
+
+
+        <!-- Modal Atualizar Ura e dados da Assinatura -->
+        <div app-modal="Modal-Referencia" header="Referência">
+            <div class="panel-body">
+                <div class="row" style="padding-bottom: 10px; overflow: auto; height: 300px;">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.Label("Informe o Assunto")
+                            <input id="titulo" type="text" ng-model="MAI_TITULO" class="form-control" ng-change="listarReferencia(MAI_TITULO)" />
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr class="info">
+                                    <th>Tema</th>
+                                    <th>Assunto</th>
+                                    <th>Item</th>
+                                    <th>Situação</th>
+                                    <th style="text-align: center;" colspan="2">Opções</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in listaitens">
+                                    <td>{{item.MOD_ID}} - {{item.MOD_DESCRICAO}}</td>
+                                    <td>{{item.MAN_ID}} - {{item.MAN_ASSUNTO}}</td>
+                                    <td>{{item.MAI_TITULO}}</td>
+                                    <td style="text-align: center;">
+                                        <span class="label label-success" ng_show="item.MAI_DATA_PUBLICACAO!=null">Publicado</span>
+                                        <span class="label label-warning" ng_show="item.MAI_DATA_PUBLICACAO==null">Pendente</span>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <a  href="javascript:void(0);" data-dismiss="modal" data-placement="left"  app-popover data-content="Selecionar o item"  ng-click="selecItem(item.MAI_ID)">
+                                            <span class="fa fa-check"></span>
+                                        </a>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <a href="javascript:void(0);" data-dismiss="modal" data-placement="left" app-popover data-content="Selecionar assunto" ng-click="selecAssunto(item.MOD_ID,item.MAN_ID)">
+                                            <span class="fa fa-check"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="atualizarURA()">
+                    <span class="glyphicon glyphicon-floppy-save blue"></span>&nbspFechar
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

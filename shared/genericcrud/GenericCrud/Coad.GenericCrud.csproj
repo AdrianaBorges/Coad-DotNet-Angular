@@ -1,0 +1,413 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props" Condition="Exists('..\..\..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A6A9FF49-FA0D-468E-9966-31B8D7EF5A97}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GenericCrud</RootNamespace>
+    <AssemblyName>GenericCrud</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\dasilva\Documents\projetos\compilados\CoadGenericCrud\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <WebGreaseLibPath>..\..\..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>176D9FF2D8B153962FFC65AB1DFB88178A4A4785</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Coad.GenericCrud_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>coadgenericcrud.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Homologacao|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Homologacao\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_Prod|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug_Prod\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Castle.Core.3.3.0\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=3.4.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Castle.Windsor.3.4.0\lib\net45\Castle.Windsor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Open-XML-SDK.2.7.2\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.CodeCoverage.Shim, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.CodeCoverage.1.0.3\lib\netstandard1.0\Microsoft.VisualStudio.CodeCoverage.Shim.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz, Version=2.5.0.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Quartz.2.5.0\lib\net40\Quartz.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic">
+      <HintPath>..\..\..\blibliotecas\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Mvc.4.0.40804.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActionResultTools\HelpersUtil.cs" />
+    <Compile Include="ActionResultTools\JSONResponse.cs" />
+    <Compile Include="ActionResultTools\Message.cs" />
+    <Compile Include="ActionResultTools\OpenDbContextInViewAttribute.cs" />
+    <Compile Include="ActionResultTools\ScriptsCorp.cs" />
+    <Compile Include="ActionResultTools\StylesCorp.cs" />
+    <Compile Include="ActionResultTools\UrlCorp.cs" />
+    <Compile Include="Config\AnnotationConfigurationStore.cs" />
+    <Compile Include="Config\AttributeConfigurator.cs" />
+    <Compile Include="Config\ClassScan\ClassScanner.cs" />
+    <Compile Include="Config\ConfigEnuns\LifeStyleTypeEnum.cs" />
+    <Compile Include="Config\DataAttributes\Interfaces\IMemberConfiguration.cs" />
+    <Compile Include="Config\DataAttributes\Maps\ProxyConfigAttribute.cs" />
+    <Compile Include="Config\DataAttributes\Maps\ServicePropertyMethodAttribute.cs" />
+    <Compile Include="Config\DataAttributes\Maps\ServicePropertyAttribute.cs" />
+    <Compile Include="Config\DataAttributes\Maps\IgnoreMemberMappingAttribute.cs" />
+    <Compile Include="Config\DataAttributes\Maps\MapingDirection.cs" />
+    <Compile Include="Config\DataAttributes\Maps\MappingMemberAttribute.cs" />
+    <Compile Include="Config\DataAttributes\Maps\MappingAttribute.cs" />
+    <Compile Include="Config\DataAttributes\DAOConfigAttribute.cs" />
+    <Compile Include="Config\DataAttributes\ServiceConfigAttribute.cs" />
+    <Compile Include="Config\GenericCrudConfig.cs" />
+    <Compile Include="Config\IOCContainer\DbContextAcessorInstaller.cs" />
+    <Compile Include="Config\IOCContainer\IOCContainerProxy.cs" />
+    <Compile Include="Config\IOCContainer\IOCContainerConfigurator.cs" />
+    <Compile Include="Config\IOCContainer\JobInstaller.cs" />
+    <Compile Include="Config\IOCContainer\ServiceInstaller.cs" />
+    <Compile Include="Config\MapperEngineFactory.cs" />
+    <Compile Include="Config\MapperProfileConfig.cs" />
+    <Compile Include="Config\ProfileConfig.cs" />
+    <Compile Include="Controllers\GenericController.cs" />
+    <Compile Include="Dao\Base\AbstractGenericDao.cs" />
+    <Compile Include="Dao\Base\IEntityEntry.cs" />
+    <Compile Include="Dao\Base\IRepository.cs" />
+    <Compile Include="Dao\Base\Linq\LinqExpressions.cs" />
+    <Compile Include="Dao\Base\MappingBag.cs" />
+    <Compile Include="Dao\Base\Pagination\Pagina.cs" />
+    <Compile Include="Dao\Base\RepositoryObservable.cs" />
+    <Compile Include="Dao\Base\RepositoryDbContextObserver.cs" />
+    <Compile Include="Dao\QueryParam.cs" />
+    <Compile Include="DTOConversion\Service\ConversionService.cs" />
+    <Compile Include="DTOConversion\Service\DTOConverterExecutor.cs" />
+    <Compile Include="Dao\Base\Pagination\Paginator.cs" />
+    <Compile Include="Dao\Base\ResultExpression.cs" />
+    <Compile Include="Config\ProfileConfigurator.cs" />
+    <Compile Include="Dao\Base\IDao.cs" />
+    <Compile Include="Excel\ExcelProxyAbstract.cs" />
+    <Compile Include="Excel\ExcelLoad.cs" />
+    <Compile Include="Excel\Impl\ExcelProxyOpenXML.cs" />
+    <Compile Include="Excel\Metadatas\CellOptions.cs" />
+    <Compile Include="Excel\Metadatas\ExcelIgnoreAttribute.cs" />
+    <Compile Include="Excel\Metadatas\ExcelColumnAttribute.cs" />
+    <Compile Include="Exceptions\ItemReferenciaWarningException.cs" />
+    <Compile Include="Exceptions\WarningException.cs" />
+    <Compile Include="Exceptions\AjaxException.cs" />
+    <Compile Include="Exceptions\AcessoException.cs" />
+    <Compile Include="Exceptions\NaoDispEmProdException.cs" />
+    <Compile Include="Exceptions\SchedulerException.cs" />
+    <Compile Include="Exceptions\MappingException.cs" />
+    <Compile Include="Exceptions\ErrorHandling\AjaxExceptionFilterAttribute.cs" />
+    <Compile Include="Exceptions\ErrorHandling\ExceptionFilterAttribute.cs" />
+    <Compile Include="Exceptions\ExceptionFormatter.cs" />
+    <Compile Include="Exceptions\ValidacaoException.cs" />
+    <Compile Include="Exceptions\FormattedDbEntityValidationException.cs" />
+    <Compile Include="Exceptions\NegocioException.cs" />
+    <Compile Include="Extensions\HtmlExtensions.cs" />
+    <Compile Include="Extensions\IQueryableExtensions.cs" />
+    <Compile Include="DTOConversion\DTOConverter.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Interceptores\DAOInterceptor.cs" />
+    <Compile Include="IOCContainer\Repository\DbContextAcessorNetCore.cs" />
+    <Compile Include="IOCContainer\Repository\DbContextAcessor.cs" />
+    <Compile Include="IOCContainer\Repository\IDbContextAcessor.cs" />
+    <Compile Include="Mapper\AutoMapperConfig.cs" />
+    <Compile Include="Mapper\GenericProfile.cs" />
+    <Compile Include="Mapper\MapperEngineWrapper.cs" />
+    <Compile Include="Mapper\MapperWrapper.cs" />
+    <Compile Include="Metadatas\MetodoAuxiliarAttribute.cs" />
+    <Compile Include="Metadatas\MetodoTopLevelReferenciavelAttribute.cs" />
+    <Compile Include="Metadatas\MetodoTopLevelAttribute.cs" />
+    <Compile Include="Models\BatchStatus.cs" />
+    <Compile Include="Models\Comparators\GenericComparator.cs" />
+    <Compile Include="Models\DbContextFactory.cs" />
+    <Compile Include="Models\Enumerados\JobStatusEnum.cs" />
+    <Compile Include="Models\Filtros\FiltroOrdenacao.cs" />
+    <Compile Include="Models\Filtros\FiltroSelectDTO.cs" />
+    <Compile Include="Models\Filtros\FiltroDTO.cs" />
+    <Compile Include="Models\Filtros\FiltroGrupoDTO.cs" />
+    <Compile Include="Models\Filtros\FiltroSelectItemDTO.cs" />
+    <Compile Include="Models\Filtros\RequisicaoPaginacao.cs" />
+    <Compile Include="Models\Filtros\TipoFiltroEnum.cs" />
+    <Compile Include="Models\Interfaces\Formatting\FormatterMap.cs" />
+    <Compile Include="Models\Interfaces\Formatting\IMessageFormatter.cs" />
+    <Compile Include="Models\Interfaces\IJobNotifyHandler.cs" />
+    <Compile Include="Models\JobSchedulerDTO.cs" />
+    <Compile Include="Models\MessageFormatter\MensagemIndividual.cs" />
+    <Compile Include="Models\MessageFormatter\FormatterParams.cs" />
+    <Compile Include="Models\MessageFormatter\TipoRegistro.cs" />
+    <Compile Include="Models\Interfaces\IPrototype.cs" />
+    <Compile Include="Models\NotifyHandleResult.cs" />
+    <Compile Include="Models\NotifyHandlerResultItem.cs" />
+    <Compile Include="Models\QueryFilterSelectAttribute.cs" />
+    <Compile Include="Models\QueryFilterQueryAttribute.cs" />
+    <Compile Include="Models\QueryFilterTextoAttribute.cs" />
+    <Compile Include="Models\QueryFilterAgrupamentoAttribute.cs" />
+    <Compile Include="Models\QueryFilterOrdemAttribute.cs" />
+    <Compile Include="Models\QueryFilterPropertyDescAttribute.cs" />
+    <Compile Include="Models\QueryFilterAttribute.cs" />
+    <Compile Include="Models\ScheduleContext.cs" />
+    <Compile Include="Models\SqlDinamico\ColunaSqlDinamicoDTO.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\ReflectionProvider.cs" />
+    <Compile Include="Repositorios\Base\IRepositorioPadrao.cs" />
+    <Compile Include="Repositorios\Base\RepositorioGenericDAOAdapter.cs" />
+    <Compile Include="Security\Filter\SecureAttribute.cs" />
+    <Compile Include="Models\AbstractSearchParams.cs" />
+    <Compile Include="Service\Base\ActionCallBack.cs" />
+    <Compile Include="Service\Base\BasicServiceScope.cs" />
+    <Compile Include="Service\Base\GenericService.cs" />
+    <Compile Include="Service\Base\IAssociationServiceConfig.cs" />
+    <Compile Include="Models\Interfaces\IJobService.cs" />
+    <Compile Include="Service\Base\IBaseService.cs" />
+    <Compile Include="Service\Base\IService.cs" />
+    <Compile Include="Service\Base\IServiceCorp.cs" />
+    <Compile Include="Service\Base\ProxyDefinition.cs" />
+    <Compile Include="Service\Base\ServiceAdapter.cs" />
+    <Compile Include="Service\Base\ServiceAssociationConfig.cs" />
+    <Compile Include="Service\Base\ServiceReflectionProvider.cs" />
+    <Compile Include="Service\ClassMetadata.cs" />
+    <Compile Include="Service\FileFluent.cs" />
+    <Compile Include="Service\Formatting\MessageFormatterService.cs" />
+    <Compile Include="Service\HistoryRegister\HistoryRegisterService.cs" />
+    <Compile Include="Service\ConfigName.cs" />
+    <Compile Include="Service\SchedulerSRV.cs" />
+    <Compile Include="Service\ServiceConfig.cs" />
+    <Compile Include="Service\ServiceFactory.cs" />
+    <Compile Include="Service\TypeBuilderSRV.cs" />
+    <Compile Include="Util\AmbienteEnum.cs" />
+    <Compile Include="Util\DataUtil.cs" />
+    <Compile Include="Util\FileUtil.cs" />
+    <Compile Include="Util\StringUtil.cs" />
+    <Compile Include="Util\SysUtils.cs" />
+    <Compile Include="Validations\Base\MundipaggValidatorEnum.cs" />
+    <Compile Include="Validations\Base\OperadorLogicoEnum.cs" />
+    <Compile Include="Validations\Base\ValidationExpressions.cs" />
+    <Compile Include="Validations\MundipaggRequiredAttribute.cs" />
+    <Compile Include="Validations\NumberValidator.cs" />
+    <Compile Include="Validations\TextValidator.cs" />
+    <Compile Include="Validations\CpfOrCnpjValidatorAttribute.cs" />
+    <Compile Include="Validations\RangeIfAtribute.cs" />
+    <Compile Include="Validations\RequiredIfBaseAttribute.cs" />
+    <Compile Include="Validations\RequiredIfNotNullOrEmptyAttribute.cs" />
+    <Compile Include="Validations\StringLengthIfAttribute.cs" />
+    <Compile Include="Validations\ListHasDuplicationAttribute.cs" />
+    <Compile Include="Validations\PresentDateAttribute.cs" />
+    <Compile Include="Validations\interfaces\IValidationExpression.cs" />
+    <Compile Include="Validations\RequiredIfNullOrEmptyAttribute.cs" />
+    <Compile Include="Validations\IgnoreValidationAttribute.cs" />
+    <Compile Include="Validations\RequiredIfAttribute.cs" />
+    <Compile Include="Validations\RequiredListAttribute.cs" />
+    <Compile Include="Validations\RequiredListIfAttribute.cs" />
+    <Compile Include="Validations\ValidationResume.cs" />
+    <Compile Include="Validations\ValidatorProxy.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="coadgenericcrud.snk" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este projeto faz referência a pacotes do NuGet que não estão presentes neste computador. Use a Restauração de Pacotes do NuGet para baixá-los.  Para obter mais informações, consulte http://go.microsoft.com/fwlink/?LinkID=322105. O arquivo ausente é {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets'))" />
+  </Target>
+  <Import Project="..\..\..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets" Condition="Exists('..\..\..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

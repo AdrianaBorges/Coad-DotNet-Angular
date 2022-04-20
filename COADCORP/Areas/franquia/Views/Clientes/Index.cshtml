@@ -1,0 +1,188 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Gerenciar Clientes</li>
+
+    </ol>
+}
+<script src="~/Scripts/negocio/controllers_plugins/info_cliente.js"></script>
+@Scripts.Render("~/Scripts/negocio/cliente.js")
+@Scripts.Render("~/Scripts/negocio/controllers_plugins/carteiramento_plugin.js")
+<div ng-app="appModule">
+    <div ng-controller="ClienteController" class="padding content" ng-cloak data-ng-init="initInfoCliente(); initReencarteirar(); initClienteFranquia()">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-filter"></span>Filtros
+           <div class="pull-right">
+               <div class="btn-group">
+              
+                  
+                   <ul class="dropdown-menu pull-right" role="menu">
+                       <li>
+                           <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                       </li>
+                   </ul>
+               </div>
+           </div>
+            </div>
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="form-group col-lg-2">
+                        <label for="sigla">CNPJ/CPF</label>
+                        <input type="text" id="cnpf-cpf" ng-model="filtro.cpf_cnpj" class="form-control" maxlength="14"/>
+                    </div>
+                     <div class="form-group col-xs-2">
+                        <label for="sigla">CNPJ/CPF exato.
+                            <span class="glyphicon glyphicon-question-sign text-danger"
+                            title="Desmarque caso queira que a busca procure por parte do cnpj/cpf do cliente. (Pesquisa mais lenta)." 
+                                data-toggle="tooltip">
+                            </span>                     
+                        </label>
+                        <br />
+                        <input type="checkbox" id="checkbox_buscacnpj" ng-model="filtro.pesquisaCpfCnpjPorIqualdade" 
+                            ng-checked="filtro.pesquisaCpfCnpjPorIqualdade == true"/>
+               
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="sigla">Nome</label>
+                        <input type="text" id="nome" ng-model="filtro.nome" class="form-control" />
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="CLA_CLI_ID">Tipo</label>
+                        @Html.DropDownListFor(model => model.CLA_CLI_ID, new SelectList(@ViewBag.lstClassificacaoCliente, "CLA_CLI_ID", "CLA_CLI_DESCRICAO"), "Selecione",
+                new { @class = "form-control", ng_model = "filtro.classificacaoClienteId" })
+                        @Html.ValidationMessageFor(model => model.CLA_CLI_ID)
+                    </div>
+                    <div class="form-group col-xs-3">
+                        <label for="email">Email</label>
+                        <input type="text" id="email" ng-model="filtro.email" class="form-control" />
+                    </div>
+                   </div>
+                   <div class="row">
+                    
+                    <div class="form-group col-xs-1">
+                         
+                        <label for="sigla">DDD</label>
+                        <input type="text" id="ddd" ng-model="filtro.dddTelefone" class="form-control" maxlength="3" app-number />
+                    </div>
+                    <div class="form-group col-xs-2">
+                        <label for="nome">Telefone</label>
+                        <input type="text" id="nome2" ng-model="filtro.telefone" class="form-control" app-number maxlength="10" />
+                    </div>
+                       <div class="form-group col-lg-2">
+                        <label for="O_CAD_ID">Origem de Cadastro</label>
+                        @Html.DropDownListFor(model => model.INFO_MARKETING.O_CAD_ID, new SelectList(@ViewBag.lstOrigemCadastro, "O_CAD_ID", "O_CAD_DESCRICAO"), "Selecione",
+                new { @class = "form-control", ng_model = "filtro.origemId" })
+                        @Html.ValidationMessageFor(model => model.CLA_CLI_ID)
+                    </div>                   
+                    <div class="form-group col-xs-4">
+                        <label for="nome">Área de Interesse</label>
+                        @Html.DropDownList("area", 
+                        new SelectList(ViewBag.lstAreasDeInteresse, "AREA_ID", "AREA_NOME"), "Selecione" ,new {@class = "form-control", ng_model = "filtro.AREA_ID" })
+                    </div>
+                    <div class="form-group col-xs-4">
+                        <label for="nome">Produtos de interesse</label>
+                        @Html.DropDownList("prod_interesse", 
+                        new SelectList(ViewBag.lstProdutoInteresse, "CMP_ID", "CMP_DESCRICAO"), "Selecione" ,new {@class = "form-control", ng_model = "filtro.CMP_ID" })
+                    </div>
+            
+                </div>
+            </div>
+
+
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="listarClientesRepresentante()">Pesquisar</button>
+            </div>
+        </div>
+        <div app-message></div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span>Cadastro de Clientes</div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+
+                                <th style="min-width: 75px">Id
+                                </th>
+                                <th>Última atualização</th>
+                                <th style="min-width: 132px">Cnpj/Cpf
+                                </th>
+                                <th>Nome
+                                </th>
+                                <th>Email
+                                </th>
+                                <th>Tipo
+                                </th>
+                                <th>Ações</th>
+                                <th>Editar</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in clientes" class="animate-repeat">
+                            <td>{{item.CLI_ID}}
+                            </td>
+                            <td app-show-date="item.DATA_ULTIMO_HISTORICO"></td>
+                            <td>{{ item.CLI_CPF_CNPJ}}
+                            </td>
+                            <td>{{ item.CLI_NOME}}
+                            </td>
+                            <td>
+                                {{item.ASSINATURA_EMAIL[0].AEM_EMAIL}}
+                                <a href="javascript:void(0)" class="" ng-if="item.ASSINATURA_EMAIL.length > 1" 
+                                    app-list-popover="item.ASSINATURA_EMAIL" label="AEM_EMAIL" title="Emails">
+                                        <span class="badge" > + {{item.ASSINATURA_EMAIL.length - 1}}</span>
+                                </a>
+                            </td>
+                            <td>
+                                <span class="label" ng-class="{
+                                                      
+                                                      'label-warning' : item.CLA_CLI_ID == 1,
+                                                      'label-success' : item.CLA_CLI_ID == 2,
+                                                      'label-primary' : item.CLA_CLI_ID == 3,
+                                                      }">{{item.CLASSIFICACAO_CLIENTE.CLA_CLI_DESCRICAO}}</span>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" ng-click="abreModalCliente(item.CLI_ID)" title="Detalhes" class="blue">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </a>
+                                 <a href="javascript:void(0)" ng-click="abreModalAdicionarRegiao(item.CLI_ID)" title="Adicionar Região" class="blue">
+                                            <span class="glyphicon glyphicon-plus-sign"></span>
+                                 </a>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" app-post="@Url.Action("Editar")?clienteId={{item.CLI_ID}}" title="Editar" class="blue">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="8" ng-show="clientes.length == 0 && listado">Nenhum registro foi encontrado.</td>
+                            <td colspan="8" ng-show="!clientes">Clique em pesquisar para listar.</td>
+                        </tr>
+
+                    </table>
+                </div>
+                <app-pagination request-page="paginaReq" load-function="listarClientesRepresentante(paginaReq)"></app-pagination>
+
+            </div>
+        </div>
+
+        @Html.Partial("Partials/_ModalClientePartial")
+        @Html.Partial("Partials/_AdicionarRegiaoPartial")
+
+    </div>
+</div>

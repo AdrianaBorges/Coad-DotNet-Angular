@@ -1,0 +1,1017 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+
+@{
+    ViewBag.Title = "Editar";
+}
+@using Coad.GenericCrud.Extensions
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Clientes (Editar)</li>
+    </ol>
+}
+
+@Scripts.Render("~/Scripts/negocio/cliente.js")
+
+<div ng-app="appModule">
+    <div class="panel panel-default" ng-controller="ClienteController" data-ng-init="read(@ViewBag.clienteId); init(); buscarAssinatura(@ViewBag.clienteId);" ng-cloak>
+        <!-- Default panel contents -->
+        <div class="panel-heading bold head-panel">
+            <span class="glyphicon glyphicon-edit icon-panel"></span>Cliente(Editar)
+
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Opções
+                                        <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="@Url.Action("Index")" title="Voltar" class="blue">Voltar</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" title="Salvar" ng-click="SalvarCliente()" class="blue">Salvar</a>
+                            </li>
+                            <li ng-show="prospect.ID">
+                                <a href="javascript:void(0)" app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}" 
+                                                app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?" class="btnConfirmaExclusao blue" title="Excluir">Excluir</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { role = "form" }))
+            {
+                <div app-message></div>
+
+                <fieldset>
+                    <legend>Dados Cadastrais</legend>
+                    <div class="row">
+                        <div class="form-group col-sm-2">
+                            @Html.Label("Código")
+                            @Html.TextBoxFor(model => model.CLI_ID, new { @class = "form-control", ng_model = "cliente.CLI_ID", disabled = "disabled" })
+                            @Html.ValidationMessageFor(model => model.CLI_ID, null, new { app_validation_msg = "erros", @for = "CLI_ID" })
+                        </div>
+                        <div class="form-group col-sm-7">
+                            @Html.LabelFor(model => model.CLI_NOME)
+                            @Html.TextBoxFor(model => model.CLI_NOME, new { @class = "form-control", ng_model = "cliente.CLI_NOME" })
+                            @Html.ValidationMessageFor(model => model.CLI_NOME, null, new { app_validation_msg = "erros", @for = "CLI_NOME" })
+                        </div>
+                        <div class="form-group col-sm-3">
+                            @Html.LabelFor(model => model.CLI_CPF_CNPJ)
+                            @Html.TextBoxFor(model => model.CLI_CPF_CNPJ, new { @class = "form-control", ng_model = "cliente.CLI_CPF_CNPJ", maxlength = 14 })
+                            @Html.ValidationMessageFor(model => model.CLI_CPF_CNPJ, null, new { app_validation_msg = "erros", @for = "CLI_CPF_CNPJ" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-2">
+                            @Html.LabelFor(model => model.CLI_A_C)
+                            @Html.TextBoxFor(model => model.CLI_A_C, new { @class = "form-control", ng_model = "cliente.CLI_A_C" })
+                            @Html.ValidationMessageFor(model => model.CLI_A_C, null, new { app_validation_msg = "erros", @for = "CLI_A_C" })
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Pessoa")
+                                @Html.DropDownList("CLI_TP_PESSOA", new SelectList(@ViewBag.ListaTipoPessoa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "cliente.CLI_TP_PESSOA" })
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            @Html.Label("", "Tipo de Cliente")
+                            @Html.DropDownList("tipodeCLIENTES", new SelectList(ViewBag.tiposDeCliente, "Value", "Text"), "Selecione", new { @class = "form-control", ng_model = "cliente.TIPO_CLI_ID" })
+                        </div>
+                        <div class="form-group col-sm-3">
+                            @Html.LabelFor(model => model.CLI_INSCRICAO)
+                            @Html.TextBoxFor(model => model.CLI_INSCRICAO, new { @class = "form-control", ng_model = "cliente.CLI_INSCRICAO" })
+                            @Html.ValidationMessageFor(model => model.CLI_INSCRICAO, null, new { app_validation_msg = "erros", @for = "CLI_INSCRICAO" })
+                        </div>
+                        <div class="form-group col-sm-2">
+                            @Html.LabelFor(model => model.CLI_COD_PAIS)
+                            @Html.TextBoxFor(model => model.CLI_COD_PAIS, new { @class = "form-control", ng_model = "cliente.CLI_COD_PAIS" })
+                            @Html.ValidationMessageFor(model => model.CLI_COD_PAIS, null, new { app_validation_msg = "erros", @for = "CLI_COD_PAIS" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-2">
+                            @Html.LabelFor(model => model.CLI_SUFRAMA)
+                            @Html.TextBoxFor(model => model.CLI_SUFRAMA, new { @class = "form-control", ng_model = "cliente.CLI_SUFRAMA" })
+                            @Html.ValidationMessageFor(model => model.CLI_SUFRAMA, null, new { app_validation_msg = "erros", @for = "CLI_SUFRAMA" })
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Classificação")
+                                @Html.DropDownList("CLA_ID", new SelectList(@ViewBag.ListaClassificacao, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "cliente.CLA_ID" })
+                            </div>
+                        </div>
+                    </div>
+
+                </fieldset>
+                
+                <fieldset>
+                    <legend>Endereços</legend>
+                    <div class="row padding">
+                        <div class="table-responsive">
+                            <div app-validation-msg="erros"></div>
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Cep</th>
+                                        <th>UF</th>
+                                        <th>Município</th>
+                                        <th>Bairro</th>
+                                        <th>Logradouro</th>
+                                        <th style="text-align: center;">Editar</th>
+                                        <th style="text-align: center;">Novo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="end in cliente.CLIENTES_ENDERECO" ng-show="cliente.CLIENTES_ENDERECO">
+                                        <td>{{end.TIPO_ENDERECO.TP_END_DESCRICAO}}
+                                        </td>
+                                        <td>{{end.END_CEP}}
+                                        </td>
+                                        <td>{{end.END_UF}}
+                                        </td>
+                                        <td>{{end.MUNICIPIO.MUN_DESCRICAO}}
+                                        </td>
+                                        <td>{{end.END_BAIRRO}}
+                                        </td>
+                                        <td>{{end.END_LOGRADOURO}}
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <a href="javascript:void(0)" ng-click="AbrirModalEndereco(end, $index)" class="btnConfirmaExclusao blue" id="btnEdicaoItem" title="Editar">
+                                                <span class="glyphicon glyphicon-edit"></span>
+                                            </a>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <span ng-show="cliente.CLIENTES_ENDERECO.length == ($index + 1) && podeAdicionar()">
+                                                <a href="javascript:void(0)" ng-click="AbrirModalEndereco()" title="Incluir">
+                                                    <span class="glyphicon glyphicon-plus blue"></span>
+                                                </a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr ng-hide="cliente.CLIENTES_ENDERECO.length > 0">
+                                        <td colspan="8">Nenhuma endereço adicionado. Clique para adicionar: 
+                                        <a href="javascript:void(0)" ng-click="AbrirModalEndereco()" title="Incluir">
+                                            <span class="glyphicon glyphicon-plus blue"></span>
+                                        </a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <fieldset ng-show="listaassinatura">
+                    <legend>Assinaturas</legend>
+                    <div class="row padding">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Assinatura</th>
+                                        <th>Ano COAD</th>
+                                        <th>Cortesia</th>
+                                        <th>Aos Cuidados</th>
+                                        <th>Ano Remessa</th>
+                                        <th>Tipo Envio</th>
+                                        <th>Produto</th>
+                                        <th style="text-align: center;">Detalhe</th>
+                                        <th style="text-align: center;">Atendimento (SAC)</th>
+                                        <th style="text-align: center;" ng-show="assinturaSelect">Histórico (Agenda)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="ass in listaassinatura">
+                                        <td>{{ass.ASN_NUM_ASSINATURA}}
+                                        </td>
+                                        <td>{{ass.ASN_ANO_COAD}}
+                                        </td>
+                                        <td ng-if="ass.ASN_CORTESIA==0">Não</td>
+                                        <td ng-if="ass.ASN_CORTESIA==1">Sim</td>
+                                        <td>{{ass.ASN_A_C}}
+                                        </td>
+                                        <td>{{ass.ASN_ANO_REMESSA}}
+                                        </td>
+                                        <td>{{ass.ASN_NUM_TP_ENVIO}}
+                                        </td>
+                                        <td>{{ass.PRO_ID}} 
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <a href="javascript:void(0)" ng-click="selAssinatura(ass)" data-toggle="tooltip" data-placement="top" title="Selecionar Contrato">
+                                                <span class="fa fa-search"></span>
+                                            </a>
+                                        </td>
+
+                                        <td style="text-align: center;">
+                                            <a href="javascript:void(0)" ng-click="realizarAtendimento(ass)" data-toggle="tooltip" data-placement="top" title="Realizar Atendimento">
+                                                <span class="fa fa-comments"></span>
+                                            </a>
+                                        </td>
+                                        <td style="text-align: center;" ng-show="assinturaSelect">
+                                            <a href="javascript:void(0)" ng-click="mostrarHistAgenda(ass)" data-toggle="tooltip" data-placement="top" title="Consultar Histórico (Agenda)">
+                                                <span class="fa fa-calendar"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </fieldset> 
+                
+                <fieldset ng-show="assinturaSelect">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active" data-toggle="tab" aria-controls="tab1" aria-expanded="true"><a href="#tab1" id="selecionartab" data-toggle="tab">Telefones</a></li>
+                        <li><a href="#tab2" data-toggle="tab">Emails</a></li>
+                        <li ng-show="listacontrato"><a href="#tab3" data-toggle="tab">Contratos</a></li>
+                        <li ng-show="listaatend"><a href="#tab4" data-toggle="tab" id="selecionarHist">Histórico (SAC)</a></li>
+                        <li ng-show="listaagenda"><a href="#tab5" data-toggle="tab" id="selagendatab">Histórico(Agenda)</a></li>
+                        <li ng-show="listaQtdeConsEmail"><a href="#tab6" data-toggle="tab">Apuração Consultas</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane" id="tab1">
+                            <div class="row padding">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Assinatura</th>
+                                                <th>DDD</th>
+                                                <th>Telefone</th>
+                                                <th>Tipo</th>
+                                                <th>Tipo Atendimento (SAC)</th>
+                                                <th style="text-align: center;">Editar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="tel in listatelefone">
+                                                <td>{{tel.ASN_NUM_ASSINATURA}}
+                                                </td>
+                                                <td app-editable-td="tel.ATE_DDD" label="tel.ATE_DDD" blur-event="confirmarEdicaoDDD">
+                                                    <input type="text" ng-model="tel.ATE_DDD" maxlength="2"
+                                                        class="form-control grid-input  float-left" ng-blur="confirmarEdicaoDDD($event)" />
+                                                </td>
+                                                <td app-editable-td="tel.ATE_TELEFONE" label="tel.ATE_TELEFONE" blur-event="confirmarEdicaoTEL">
+                                                    <input type="text" ng-model="tel.ATE_TELEFONE" maxlength="12"
+                                                        class="form-control grid-input  float-left" ng-blur="confirmarEdicaoTEL($event)" />
+                                                </td>
+                                                <td app-editable-td="tel.TIPO_TEL_ID" label="tel.TIPO_TEL_ID" blur-event="blurTipoTel">
+                                                    @Html.DropDownList("TipoTel", new SelectList(ViewBag.Listatipotel, "Value", "Text"), "---- Selecione ----", new { @class = "form-control float-left grid-combobox", ng_model = "tel.TIPO_TEL_ID", ng_blur = "blurTipoTel($event)" })
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownList("SetorTel", new SelectList(@ViewBag.ListaSetorTelefone, "Value", "Text"), "---- Selecione ----", new { @class = "form-control float-left grid-combobox", ng_model = "tel.OPC_ID" })
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <a href="javascript:void(0)" ng-click="ExcluirTelefone($index)" class="btnConfirmaExclusao red" id="btexcluir" title="Excluir">
+                                                        <span class="glyphicon glyphicon-remove-sign"></span>
+                                                    </a>
+                                                    <span ng-show="listatelefone.length == ($index + 1)">
+                                                        <a href="javascript:void(0)" ng-click="IncluirTelefone(tel)" title="Incluir">
+                                                            <span class="glyphicon glyphicon-plus blue"></span>
+                                                        </a>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr ng-hide="listatelefone.length > 0">
+                                                <td colspan="6">Nenhuma telefone adicionado. Clique para adicionar: 
+                                                    <a href="javascript:void(0)" ng-click="IncluirTelefone(tel)" title="Incluir">
+                                                        <span class="glyphicon glyphicon-plus blue"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <app-pagination request-page="paginaReq" load-function="preencherGrids(paginaReq)"></app-pagination>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab2">
+                            <div class="row padding">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Assinatura</th>
+                                                <th>Email</th>
+                                                <th>Tipo Atendimento</th>
+                                                <th style="text-align: center;">Editar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="email in listaemail">
+                                                <td>{{email.ASN_NUM_ASSINATURA}}
+                                                </td>
+                                                <td app-editable-td="email.AEM_EMAIL" label="email.AEM_EMAIL" blur-event="confirmarEdicaoEmail">
+                                                    <input type="text" ng-model="email.AEM_EMAIL" maxlength="50"
+                                                        class="form-control grid-input  float-left" ng-blur="confirmarEdicaoEmail($event)" />
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownList("TipoEmail", new SelectList(@ViewBag.ListaSetorEmail, "Value", "Text"), "---- Selecione ----", new { @class = "form-control float-left grid-combobox", ng_model = "email.OPC_ID" })
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <a href="javascript:void(0)" ng-click="ExcluirEmail($index)" class="btnConfirmaExclusao red" id="btexcluir" title="Excluir">
+                                                        <span class="glyphicon glyphicon-remove-sign"></span>
+                                                    </a>
+                                                    <span ng-show="listaemail.length == ($index + 1)">
+                                                        <a href="javascript:void(0)" ng-click="IncluirEmail(email)" title="Incluir">
+                                                            <span class="glyphicon glyphicon-plus blue"></span>
+                                                        </a>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr ng-hide="listaemail.length > 0">
+                                                <td colspan="4">Nenhuma email adicionado. Clique para adicionar: 
+                                                    <a href="javascript:void(0)" ng-click="IncluirEmail(email)" title="Incluir">
+                                                        <span class="glyphicon glyphicon-plus blue"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab3">
+                            <div class="row padding">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Assinatura</th>
+                                                <th>Nº Contrato</th>
+                                                <th>Ano Vigência</th>
+                                                <th>Situação</th>
+                                                <th style="text-align: center">Data Inicial</th>
+                                                <th style="text-align: center">Data Final</th>
+                                                <th class="align-right">Valor</th>
+                                                <th style="text-align: center;">Parcelas</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="contrato in listacontrato" ng-class="{selectedLine: contrato.SITUACAO=='Futuro', selectedLineLIB: contrato.SITUACAO=='Encerrado'}">
+                                                <td>{{contrato.ASN_NUM_ASSINATURA}}
+                                                </td>
+                                                <td>{{contrato.CTR_NUM_CONTRATO}}
+                                                </td>
+                                                <td>{{contrato.CTR_ANO_VIGENCIA}}
+                                                </td>
+                                                <td>{{contrato.SITUACAO}}
+                                                </td>
+                                                <td app-show-date="contrato.CTR_DATA_INI_VIGENCIA" style="text-align: center"></td>
+                                                <td app-show-date="contrato.CTR_DATA_FIM_VIGENCIA" style="text-align: center"></td>
+                                                <td app-show-dinheiro="contrato.CTR_VLR_CONTRATO" class="align-right" style="min-width: 100px;"></td>
+                                                <td style="text-align: center;">
+                                                    <a href="javascript:void(0)" ng-click="AbrirModalParcelas(contrato)">
+                                                        <span class="fa fa-search"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div>
+                                    <input type="text" style="width: 10px; height: 10px; border: 1px solid #f1ecec;" />
+                                    <label>Contrato Vigente  / </label>
+                                    <input type="text" style="width: 10px; height: 10px; border: none;" class="selectedLine" />
+                                    <label>Contrato Futuro  / </label>
+                                    <input type="text" style="width: 10px; height: 10px; border: none;" class="selectedLineLIB" />
+                                    <label>Contrato Encerrado</label>
+                                </div>
+                                <hr />
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab4">
+                            <div class="row padding">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Assinatura</th>
+                                                <th>Data</th>
+                                                <th>Histórico</th>
+                                                <th>Solicitante</th>
+                                                <th>Ação</th>
+                                                <th>Data Resolução</th>
+                                                <th>Atendente</th>
+                                                <th style="text-align: center;">Etiqueta</th>
+                                                <th style="text-align: center;">Detalhe</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="historico in listaatend">
+                                                <td>{{historico.ASN_NUM_ASSINATURA}}
+                                                </td>
+                                                <td app-show-date="historico.HAT_DATA_HIST"></td>
+                                                <td>{{historico.HAT_DESCRICAO}}
+                                                </td>
+                                                <td>{{historico.HAT_SOLICITANTE}}
+                                                </td>
+                                                <td>{{historico.ACAO_ATENDIMENTO.ACA_DESCRICAO}}
+                                                </td>
+                                                <td app-show-date="historico.HAT_DATA_RESOLUCAO"></td>
+                                                <td>{{historico.USU_LOGIN}}
+                                                </td>
+                                                <td style="text-align: center;" ng-if="historico.HAT_IMP_ETIQUETA==true">SIM
+                                                </td>
+                                                <td style="text-align: center;" ng-if="historico.HAT_IMP_ETIQUETA==false">NÃO
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <a href="javascript:void(0)" ng-click="histAtendDetalhe(historico)">
+                                                        <span class="fa fa-search"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab5">
+                            <div class="row padding">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Assinatura</th>
+                                                <th>Data</th>
+                                                <th>Histórico Básico</th>
+                                                <th>Histórico</th>
+                                                <th>Contato</th>
+                                                <th>Resultado</th>
+                                                <th>Data Agenda</th>
+                                                <th>Nome</th>
+                                                <th>A/C</th>
+                                                <th style="text-align: center;">Detalhe</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="agenda in listaagenda">
+                                                <td>{{agenda.CODIGO}}
+                                                </td>
+                                                <td>{{agenda.DATA_HIST}}
+                                                </td>
+                                                <td>{{agenda.HISTORICO_BASICO}}
+                                                </td>
+                                                <td>{{agenda.HISTORICO_LIVRE}}
+                                                </td>
+                                                <td>{{agenda.CONTATO}}
+                                                </td>
+                                                <td>{{agenda.RESULTADO}}
+                                                </td>
+                                                <td>{{agenda.DATA_AGENDA}}</td>
+                                                <td>{{agenda.NOME}}
+                                                </td>
+                                                <td>{{agenda.A_C}}
+                                                </td>
+                                                <td style="text-align: center;" ng-click="histAgendaDetalhe(agenda)">
+                                                    <a href="javascript:void(0)" ng-click="">
+                                                        <span class="fa fa-search"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab6">
+                            <div class="row padding">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Assinatura</th>
+                                                <th>Período</th>
+                                                <th style="text-align: center">Consultas Contratadas</th>
+                                                <th style="text-align: center">Realizadas (URA-RJ)</th>
+                                                <th style="text-align: center">Realizadas (URA-MG)</th>
+                                                <th style="text-align: center">Realizadas (URA-PR)</th>
+                                                <th style="text-align: center">Realizadas (EMAIL)</th>
+                                                <th style="text-align: center">Realizadas (TOTAL)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="ConsEmail in listaQtdeConsEmail">
+                                                <td style="width: 20%">{{ConsEmail.codigo}}</td>
+                                                <td style="width: 50%">{{ConsEmail.periodo}}</td>
+                                                <td style="width: 10%; text-align: center">{{ConsEmail.contratadas}}</td>
+                                                <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdurarj>0">
+                                                    <a href="javascript:void(0)" ng-click="mostrarDetConsulta('URARJ')" title="Detalhamento das consultas">{{ConsEmail.qtdurarj}}</a></td>
+                                                <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdurarj<=0">{{ConsEmail.qtdurarj}}</td>
+                                                <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtduramg>0">
+                                                    <a href="javascript:void(0)" ng-click="mostrarDetConsulta('URAMG')" title="Detalhamento das consultas">{{ConsEmail.qtduramg}}</a></td>
+                                                <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtduramg<=0">{{ConsEmail.qtduramg}}</td>
+                                                <td style="width: 10%; text-align: center">{{ConsEmail.qtdurapr}}</td>
+                                                <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdemail>0">
+                                                    <a href="javascript:void(0)" ng-click="mostrarDetConsultaEmail()" title="Detalhamento das consultas por email">{{ConsEmail.qtdemail}}</a></td>
+                                                <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdemail<=0">{{ConsEmail.qtdemail}}
+                                                </td>
+                                                <td style="width: 10%; text-align: center">{{ConsEmail.qtdtotal}}</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+               
+            }
+
+        </div>
+        <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span>Voltar</button>
+            <button type="button" class="btn btn-default" ng-click="SalvarCliente()"><span class="glyphicon glyphicon-floppy-save blue"></span>Salvar</button>
+            <span ng-show="prospect.ID">
+                <button type="button" class="btn btn-danger" 
+                    app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}" app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?">
+                    <span class="glyphicon glyphicon-remove-sign"></span>Excluir</button>
+            </span>
+        </div>
+        <div app-modal="modal-endereco" header="Dados do Endereço">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group col-sm-2">
+                            @Html.Label("Tipo")
+                            <select id="tipodeendereco" name="tipodeendereco" class="form-control" ng-model="$parent.end.TIPO_ENDERECO"
+                                ng-options="tEnd as tEnd.TP_END_DESCRICAO for tEnd in tipoEnderecos track by tEnd.TP_END_ID" ng-change="tipoEnderecoSelecionado()" ng-disabled="acaoEnd.acao === 1">
+                                <option value="">Selecione</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().TIPO_LOG_ID, null, new { app_validation_msg = "erros", @for = "END_TIPO" })
+                        </div>
+                        <div class="form-group col-sm-2">
+                            @Html.Label("CEP")
+                            @Html.TextBoxFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_CEP, new { @class = "form-control", ng_model = "$parent.end.END_CEP", maxlength = "9", app_cep = "$parent.endereco" })
+                            @Html.ValidationMessageFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_CEP, null, new { app_validation_msg = "erros", @for = "END_CEP" })
+                        </div>
+                        <div class="form-group col-sm-2">
+                            @Html.Label("UF")
+                            @Html.DropDownList("UF", new SelectList(ViewBag.ufs, "UF_SIGLA", "UF_SIGLA"), "Selecione", new { @class = "form-control", ng_model = "$parent.end.END_UF", ng_change = "getBairrosPorUf(end)", app_cep_campo = "$parent.endereco", campo = "uf" })
+                            @Html.ValidationMessageFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_UF, null, new { app_validation_msg = "erros", @for = "END_UF" })
+                        </div>
+                        <div class="form-group col-sm-3">
+                            @Html.Label("Município")
+                            <select id="tipodeCLIENTES" name="tipodeCLIENTES" class="form-control" ng-model="$parent.end.MUNICIPIO"
+                                ng-options="mun as mun.MUN_DESCRICAO for mun in municipios track by mun.MUN_ID" ng-change="municipioSelecionado()">
+                                <option value="">Selecione</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_MUNICIPIO, null, new { app_validation_msg = "erros", @for = "MUN_ID" })
+                        </div>
+                        <div class="form-group col-sm-3">
+                            @Html.Label("Bairro")
+                            @Html.TextBoxFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_BAIRRO, new { @class = "form-control", ng_model = "$parent.end.END_BAIRRO", app_cep_campo = "$parent.endereco", campo = "bairro" })
+                            @Html.ValidationMessageFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_BAIRRO, null, new { app_validation_msg = "erros", @for = "END_BAIRRO" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-3">
+                            @Html.Label("Tipo Logradouro")
+                            @Html.DropDownList("TipoLogradouro", new SelectList(@ViewBag.ListaTipoLogradouro, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_model = "$parent.end.TIPO_LOG_ID", app_cep_campo = "$parent.TIPO_LOG_ID", campo = "TipoLogradouro" })
+                            @Html.ValidationMessageFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().TIPO_LOG_ID, null, new { app_validation_msg = "erros", @for = "TIPO_LOG_ID" })
+                        </div>
+                        <div class="form-group col-sm-3">
+                            @Html.Label("Logradouro")
+                            @Html.TextBoxFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_LOGRADOURO, new { @class = "form-control", ng_model = "$parent.end.END_LOGRADOURO", app_cep_campo = "$parent.endereco", campo = "logradouro" })
+                            @Html.ValidationMessageFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_LOGRADOURO, null, new { app_validation_msg = "erros", @for = "END_LOGRADOURO" })
+                        </div>
+                        <div class="form-group col-sm-2">
+                            @Html.Label("Número")
+                            @Html.TextBoxFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_NUMERO, new { @class = "form-control", ng_model = "$parent.end.END_NUMERO" })
+                            @Html.ValidationMessageFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_NUMERO, null, new { app_validation_msg = "erros", @for = "END_NUMERO" })
+                        </div>
+                        <div class="form-group col-sm-3">
+                            @Html.Label("Complemento")
+                            @Html.TextBoxFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_COMPLEMENTO, new { @class = "form-control", ng_model = "$parent.end.END_COMPLEMENTO" })
+                            @Html.ValidationMessageFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_COMPLEMENTO, null, new { app_validation_msg = "erros", @for = "END_COMPLEMENTO" })
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" ng-click="salvarEndereco()"><span class="glyphicon glyphicon-floppy-save blue"></span>{{acaoEnd.label}}</button>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Parcelas -->
+        <div app-modal="modal-parcelas" header="Parcelas">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Nº Contrato</th>
+                                <th>Nº Parcela</th>
+                                <th>Vencimento</th>
+                                <th class="align-right">Valor</th>
+                                <th>Status</th>
+                                <th>Situação</th>
+                                <th style="text-align: center;">Detalhe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listaparcelas" ng-class="{selectedLine: item.SITUACAO=='Vencida', selectedLineLIB: item.PAR_SITUACAO=='LIB'}">
+                                <td>{{item.CTR_NUM_CONTRATO}}
+                                </td>
+                                <td>{{item.PAR_NUM_PARCELA}}
+                                </td>
+                                <td app-show-date="item.PAR_DATA_VENCTO"></td>
+                                <td app-show-dinheiro="item.PAR_VLR_PARCELA" class="align-right" style="min-width: 100px;"></td>
+                                </td>
+                                <td>{{item.PAR_SITUACAO}}
+                                </td>
+                                <td>{{item.SITUACAO}}
+                                </td>
+                                <td style="text-align: center;">
+                                    <a href="javascript:void(0)" ng-click="LiberarDocVencido(item)" data-toggle="tooltip" data-placement="top" title="Marcar a parcelas em atraso para que ela não bloqueie acesso a ura.">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div>
+                    <input type="text" style="width: 10px; height: 10px; border: 1px solid #f1ecec;" />
+                    <label>Parcelas em Aberto / </label>
+                    <input type="text" style="width: 10px; height: 10px; border: none;" class="selectedLine" />
+                    <label>Parcelas Vencidas  / </label>
+                    <input type="text" style="width: 10px; height: 10px; border: none;" class="selectedLineLIB" />
+                    <label>Parcelas Vencidas (LIB)</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+        <!-- Modal URAS -->
+        <div app-modal="modal-ura" header="URAS">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>@Html.Label("URA")</th>
+                                <th>@Html.Label("VIP")</th>
+                                <th>@Html.Label("DDD")</th>
+                                <th>@Html.Label("Telefone")</th>
+                                <th>@Html.Label("Senha")</th>
+                                <th>@Html.Label("Assinatura")</th>
+                                <th>@Html.Label("Ativo")</th>
+                                <th>@Html.Label("id", "Tot.Consultas")</th>
+                                <th>@Html.Label("Acesso")</th>
+                                <th>@Html.Label("id", "Tot.Realizado")</th>
+                                <th>@Html.Label("Grupo")</th>
+                                @*<th style="text-align: center;">Bloquear / Liberar</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listauras">
+                                <td>{{item.uraid}}</td>
+                                <td>{{item.vip}}</td>
+                                <td>{{item.ddd}}</td>
+                                <td>{{item.telefone}}</td>
+                                <td>{{item.senha}}</td>
+                                <td>{{item.codigo}}</td>
+                                <td>{{item.pode}}</td>
+                                <td style="text-align: center">{{item.qte_cons}}</td>
+                                <td style="text-align: center">{{item.acesso}}</td>
+                                <td style="text-align: center">{{item.qte_realiz}}</td>
+                                <td style="text-align: center">{{item.grupo}}</td>
+                                @* <td style="text-align: center"><a href="javascript:void(0);" ng-click="AbreJanelaBloqueio(item)">
+                                    <span ng-if="item.pode=='Sim'" class="fa fa-times red"></span>
+                                    <span ng-if="item.pode=='Não'" class="glyphicon glyphicon-edit"></span>
+                                </a>
+                                </td>*@
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+        <!-- Modal Detalhe Consultas (ura) -->
+        <div app-modal="modal-det-consultas" header="Consultas">
+            <div class="panel-body">
+                <div class="table-responsive" style="overflow: auto; max-height: 300px;">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>@Html.Label("URA")</th>
+                                <th>@Html.Label("Assinatura")</th>
+                                <th>@Html.Label("Data")</th>
+                                <th>@Html.Label("Ramal")</th>
+                                <th>@Html.Label("Telefone")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in detconsultas">
+                                <td>{{item.URA_ID}}</td>
+                                <td>{{item.ASN_NUM_ASSINATURA}}</td>
+                                <td app-show-date="item.HAU_DATA_CADASTRO"></td>
+                                <td>{{item.HAU_RAMAL}}</td>
+                                <td>{{item.HAU_TELEFONE}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+        <!-- Modal Detalhe Consultas (Email) -->
+        <div app-modal="modal-det-consultas-email" header="Consultas">
+            <div class="panel-body">
+                <div class="table-responsive" style="overflow: auto; max-height: 300px;">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>@Html.Label("id", "Seq.")</th>
+                                <th>@Html.Label("Assinatura")</th>
+                                <th>@Html.Label("Data")</th>
+                                <th>@Html.Label("Email")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in detconsultas">
+                                <td>{{item.HAE_ID}}</td>
+                                <td>{{item.ASN_NUM_ASSINATURA}}</td>
+                                <td app-show-date="item.HAE_DTCADASTRO"></td>
+                                <td>{{item.HAE_EMAIL}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+        <!-- Modal Atendimento -->
+        <div app-modal="modal-atendimento" header="Atendimento">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-sm-3">
+                        @Html.Label("Tipo Atendimento")
+                        @Html.DropDownList("TipoAtend", new SelectList(@ViewBag.ListaTipoAtendimento, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_model = "atendimento.TIP_ATEND_ID" })
+                    </div>
+                    <div class="form-group col-sm-4">
+                        @Html.Label("Ação Atendimento")
+                        @Html.DropDownList("AcaoAtend", new SelectList(@ViewBag.ListaAcaoAtendimento, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_model = "atendimento.ACA_ID" })
+                    </div>
+                </div>
+                <div class="row">
+                    <fieldset ng-show="atendimento.TIP_ATEND_ID==1">
+                        <div class="row padding">
+                            <div class="form-group col-sm-2">
+                                @Html.Label("Remessa")
+                                <input type="text" class="form-control" ng_model="atendimento.Remessa01" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                @Html.Label(" a ")
+                                <input type="text" class="form-control" ng_model="atendimento.Remessa02" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                @Html.Label("Colecionador")
+                                <select id="Colecionador01" name="Colecionador01" class="form-control" ng-model="atendimento.colecionador"
+                                    ng-options="inf as inf.INF_DECRICAO for inf in listainformativos track by inf.INF_ID">
+                                    <option value="">--- Selecione ---</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                @Html.Label("Estados")
+                                @Html.DropDownList("Estados", new SelectList(@ViewBag.ListaUf, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_model = "atendimento.Estado" })
+                            </div>
+                            <div class="form-group col-sm-4">
+                                @Html.Label("Solicitante")
+                                @Html.TextBox("Solicitante", "", new { @class = "form-control", ng_model = "atendimento.HAT_SOLICITANTE", })
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset ng-show="atendimento.TIP_ATEND_ID==2">
+                        <div class="row padding">
+                            <div class="form-group col-sm-2">
+                                @Html.Label("Ano Pasta")
+                                @Html.TextBox("AnoPasta", "", new { @class = "form-control", ng_model = "atendimento.AnoPasta", })
+                            </div>
+                            <div class="form-group col-sm-3">
+                                @Html.Label("Estados")
+                                @Html.DropDownList("Estados", new SelectList(@ViewBag.ListaUf, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_model = "atendimento.Estado" })
+                            </div>
+                            <div class="form-group col-sm-2">
+                                @Html.Label("Pasta")
+                                @Html.DropDownList("Pasta", new SelectList(@ViewBag.ListaPasta, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_model = "atendimento.Pasta" })
+                            </div>
+                            <div class="form-group col-sm-5">
+                                @Html.Label("Solicitante")
+                                @Html.TextBox("Solicitante", "", new { @class = "form-control", ng_model = "atendimento.HAT_SOLICITANTE", })
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset ng-show="atendimento.TIP_ATEND_ID==3">
+                        <div class="row padding">
+                            <div class="form-group col-sm-2">
+                                @Html.Label("Ano Pasta")
+                                @Html.TextBox("AnoPasta", "", new { @class = "form-control", ng_model = "atendimento.AnoPasta", })
+                            </div>
+                            <div class="form-group col-sm-2">
+                                @Html.Label("Colecionador")
+                                <select id="Colecionador" name="Colecionador" class="form-control" ng-model="atendimento.colecionador"
+                                    ng-options="inf as inf.INF_DECRICAO for inf in listainformativos track by inf.INF_ID">
+                                    <option value="">--- Selecione ---</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                @Html.Label("Estados")
+                                @Html.DropDownList("Estados", new SelectList(@ViewBag.ListaUf, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_model = "atendimento.Estado" })
+                            </div>
+
+                            <div class="form-group col-sm-2">
+                                @Html.Label("Pasta")
+                                @Html.DropDownList("Pasta", new SelectList(@ViewBag.ListaPasta, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_model = "param.Pasta" })
+                            </div>
+                            <div class="form-group col-sm-4">
+                                @Html.Label("Solicitante")
+                                @Html.TextBox("Solicitante", "", new { @class = "form-control", ng_model = "atendimento.HAT_SOLICITANTE", })
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset ng-show="atendimento.TIP_ATEND_ID==4">
+                        <div class="row padding">
+                            <div class="form-group col-sm-4">
+                                @Html.Label("Campo Alteração")
+                                @Html.TextBox("CampoAlteracao", "", new { @class = "form-control", ng_model = "atendimento.CampoAlteracao", })
+                            </div>
+                            <div class="form-group col-sm-8">
+                                @Html.Label("Solicitante")
+                                @Html.TextBox("CampoAlteracao", "", new { @class = "form-control", ng_model = "atendimento.HAT_SOLICITANTE", })
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset ng-show="atendimento.TIP_ATEND_ID==5">
+                        <div class="row padding">
+                            <div class="form-group col-sm-4">
+                                @Html.Label("Motivo")
+                                @Html.DropDownList("Pasta", new SelectList(@ViewBag.ListaMotivoTroca, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_model = "atendimento.Motivo" })
+                            </div>
+                            <div class="form-group col-sm-8">
+                                @Html.Label("Solicitante")
+                                @Html.TextBox("Solicitante", "", new { @class = "form-control", ng_model = "atendimento.HAT_SOLICITANTE", })
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset ng-show="atendimento.TIP_ATEND_ID==6">
+                        <div class="row padding">
+                            <div class="form-group col-sm-6">
+                                @Html.Label("Solicitante")
+                                @Html.TextBox("Solicitante", "", new { @class = "form-control", ng_model = "atendimento.HAT_SOLICITANTE", })
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        @Html.Label("Descrição")
+                        <input type="text" class="form-control" ng_model="atendimento.HAT_TEXTO_ETIQUETA" />
+                    </div>
+                    <div class="form-group col-sm-12">
+                        @Html.Label("Histórico")
+                        @Html.TextArea("Hsitorico", "", new { @class = "form-control", ng_model = "atendimento.HAT_DESCRICAO", rows = 6, cols = 60 })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="GravarAtendimento(atendimento)"><span class="glyphicon glyphicon-floppy-save blue">Salvar</span></button>
+            </div>
+        </div>
+        <!-- Modal Histórico Atendimento -->
+        <div app-modal="modal-Hist-Atend" header="Histórico de Atendimento">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Assinatura")
+                        @Html.TextBox("Assinatura", "", new { @class = "form-control", ng_model = "histAtendSelect.ASN_NUM_ASSINATURA", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-4">
+                        @Html.Label("Ação")
+                        @Html.DropDownList("AcaoAtend", new SelectList(@ViewBag.ListaAcaoAtendimento, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_model = "histAtendSelect.ACA_ID", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Tipo Atendimento")
+                        @Html.DropDownList("TipoAtend", new SelectList(@ViewBag.ListaTipoAtendimento, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_model = "histAtendSelect.TIP_ATEND_ID", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Data Atendimento")
+                        <div app-show-date="histAtendSelect.HAT_DATA_HIST" class="form-control" disabled="true">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Resolução")
+                        <div app-show-date="histAtendSelect.HAT_DATA_RESOLUCAO" class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        @Html.Label("Solicitante")
+                        @Html.TextBox("Solicitante", "", new { @class = "form-control", ng_model = "histAtendSelect.HAT_SOLICITANTE", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-4">
+                        @Html.Label("Atendente")
+                        @Html.TextBox("Atendente", "", new { @class = "form-control", ng_model = "histAtendSelect.USU_LOGIN", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Etiqueta")
+                        @Html.TextBox("Etiqueta", "", new { @class = "form-control", ng_model = "histAtendSelect.HAT_IMP_ETIQUETA", disabled = true })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        @Html.Label("Descrição")
+                        @Html.TextBox("Historico", "", new { @class = "form-control", ng_model = "histAtendSelect.HAT_TEXTO_ETIQUETA", disabled = true })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        @Html.Label("Histórico")
+                        @Html.TextArea("Historico", "", new { @class = "form-control", ng_model = "histAtendSelect.HAT_DESCRICAO", rows = 6, cols = 50, disabled = true })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+        <!-- Modal Histórico Agenda -->
+        <div app-modal="modal-Hist-Agenda" header="Histórico Agendas">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Assinatura")
+                        @Html.TextBox("Assinatura", "", new { @class = "form-control", ng_model = "histAgendaSelect.CODIGO", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-4">
+                        @Html.Label("Nome")
+                        @Html.TextBox("Contato", "", new { @class = "form-control", ng_model = "histAgendaSelect.NOME", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-4">
+                        @Html.Label("Aos Cuidados")
+                        @Html.TextBox("Contato", "", new { @class = "form-control", ng_model = "histAgendaSelect.A_C", disabled = true })
+                    </div>
+
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Contato")
+                        @Html.TextBox("Contato", "", new { @class = "form-control", ng_model = "histAgendaSelect.CONTATO", disabled = true })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Resultado")
+                        @Html.TextBox("Contato", "", new { @class = "form-control", ng_model = "histAgendaSelect.RESULTADO", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Data")
+                        @Html.TextBox("Atendimento", "", new { @class = "form-control", ng_model = "histAgendaSelect.DATA_HIST", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Agenda")
+                        @Html.TextBox("Resolucao", "", new { @class = "form-control", ng_model = "histAgendaSelect.DATA_AGENDA", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-4">
+                        @Html.Label("Atendente")
+                        @Html.TextBox("Atendente", "", new { @class = "form-control", ng_model = "histAgendaSelect.USU_LOGIN", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Etiqueta")
+                        @Html.TextBox("Etiqueta", "", new { @class = "form-control", ng_model = "histAgendaSelect.HAT_IMP_ETIQUETA", disabled = true })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        @Html.Label("Histórico (Básico)")
+                        @Html.TextArea("HistoricoB", "", new { @class = "form-control", ng_model = "histAgendaSelect.HISTORICO_BASICO", rows = 6, cols = 50, disabled = true })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        @Html.Label("Histórico (Livre)")
+                        @Html.TextArea("HistoricoL", "", new { @class = "form-control", ng_model = "histAgendaSelect.HISTORICO_LIVRE", rows = 6, cols = 50, disabled = true })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>

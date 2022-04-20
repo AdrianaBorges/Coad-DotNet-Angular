@@ -1,0 +1,55 @@
+﻿@Scripts.Render("~/Scripts/appScripts/relatorios.js")
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">@Html.ActionLink("Relatorios", "index", "Relatorios") </a></li>
+        <li class="active">Relatórios Faturamento</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="relatoriosControler" class="padding content" ng-cloak>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-corp">
+                    <div class="panel-heading bold"><span class="glyphicon glyphicon-th-list"></span>&nbspLista de Relatórios</div>
+                    <div class="panel-body">
+                        <dl>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/RelFaturamentoContrato/Index">Contratos por data de Faturamento</a>
+                            </dt>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/RelFaturamentoProduto/Index">Faturamento por Produto</a>
+                            </dt>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/RelFaturamentoRepresentante/Index">Faturamento por Representante</a>
+                            </dt>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/RelFaturamentoTipoPgto/Index">Faturamento por Tipo de Pagamento</a>
+                            </dt>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/RelFaturamentoUF/Index">Faturamento por UF</a>
+                            </dt>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/RelFaturamentoUF/Produto">Faturamento por Produto/UF</a>
+                            </dt>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

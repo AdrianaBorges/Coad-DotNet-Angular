@@ -1,0 +1,105 @@
+﻿<!-- ALT: 23/06/2015 - disponibilizando os dados e métodos javascript -->
+@model  COAD.COADGED.Model.DTO.InformativoDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Fechamento da Produção do Informativo";     
+}
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li class="active">Gerenciar Informativos</li>         
+    </ol>
+}
+
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/informativo.js")
+
+<!-- ALT: 23/06/2015 - abrindo Angular para a aplicação -->
+<div ng-app="appModule">
+    <div ng-controller="InformativoController" class="padding content" data-ng-init="lerInformativosEmProducao(paginaReq)">
+        <div class="panel panel-default">
+            <!-- ALT: 23/06/2015 - exibindo dados pesquisados -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Fechamento da Produção do Informativo </div>
+
+            <div class="panel-body">  
+                <div>
+                    @Html.Messages()
+                    <div app-message></div>
+                </div>
+
+                <div ng-show="informativosEmProducao">
+
+                    @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) 
+                    {
+                    <div class="table-responsive">     
+                        <!-- ALT: 23/06/2015 - registros deste módulo -->
+                        <table class="table table-hover table-bordered">
+                            <!-- ALT: 23/06/2015 - exibindo campos do cabeçalho -->
+                            <thead>
+                                <tr>                               
+                                    <th style="min-width: 050px">
+                                        @Html.DisplayNameFor(model => model.INF_ANO)
+                                    </th>
+                                    <th style="min-width: 050px">
+                                        @Html.DisplayNameFor(model => model.INF_NUMERO)
+                                    </th>
+                                    <th style="min-width: 100px">
+                                        @Html.DisplayNameFor(model => model.INF_DATA_INICIO)                                                                                                           
+                                    </th>
+                                    <th style="min-width: 100px">
+                                        @Html.DisplayNameFor(model => model.INF_DATA_FINAL)
+                                    </th>
+                                    <th style="min-width: 100px">
+                                        @Html.DisplayNameFor(model => model.INF_DATA_PREV_POSTAGEM)
+                                    </th>
+                                    <th style="min-width: 100px">
+                                        @Html.DisplayNameFor(model => model.INF_DATA_POSTAGEM)                                                                                                           
+                                    </th>
+
+                                    <th>Encerrar Produção</th>
+                                    <th>Confirmar</th>
+                                </tr>
+                            </thead>
+                            <!-- ALT: 23/06/2015 - exibindo os dados e os botões de operações -->
+                            <tr ng-repeat="item in informativosEmProducao">
+                                <td>
+                                    {{item.INF_ANO}}
+                                </td>
+                                <td>
+                                    {{item.INF_NUMERO}}
+                                </td>
+                                <td>
+                                    {{item.INF_DATA_INICIO}}
+                                    @*@Html.TextBoxFor(item => item.INF_DATA_INICIO, new { @class = "form-control datepicker", ng_model = "INF_DATA_INICIO", app_date = "item.INF_DATA_INICIO", disabled = "disabled" })*@
+                                </td>
+                                <td>
+                                    {{item.INF_DATA_FINAL}}
+                                    @*@Html.TextBoxFor(item => item.INF_DATA_FINAL, new { @class = "form-control datepicker", ng_model = "INF_DATA_FINAL", app_date = "item.INF_DATA_FINAL", disabled = "disabled" })*@
+                                </td>
+                                <td>
+                                    {{item.INF_DATA_PREV_POSTAGEM}}
+                                    @*@Html.TextBoxFor(item => item.INF_DATA_PREV_POSTAGEM, new { @class = "form-control datepicker", ng_model = "INF_DATA_PREV_POSTAGEM", app_date = "item.INF_DATA_PREV_POSTAGEM", disabled = "disabled" })*@
+                                </td>
+                                <td>
+                                    {{item.INF_DATA_POSTAGEM}}
+                                    @*@Html.TextBoxFor(item => item.INF_DATA_POSTAGEM, new { @class = "form-control datepicker", ng_model = "INF_DATA_POSTAGEM", app_date = "item.INF_DATA_POSTAGEM", disabled = "disabled" })*@
+                                </td>
+
+                                <div class="form-group col-lg-3">
+                                    <div class="input-group date">
+                                        <td>
+                                            @Html.TextBox("dtFinal", DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), new { @class = "form-control datepicker", ng_model = "dtFinal", app_date = "dtEncerramento" })
+                                        </td>
+                                    </div>
+                                </div>
+                                <td><a href="javascript:void(0)" app-confirm="@Url.Action("SalvarEncerrarProducao")?ano={{item.INF_ANO}}&numero={{item.INF_NUMERO}}&dtEncerramento={{dtEncerramento}}" app-msg="Confirma o Encerramento da Produção do Informativo [{{item.INF_NUMERO}}/{{item.INF_ANO}}] no dia [{{dtFinal}}] ?" id="btConfirma" title="Encerramento" class="blue"><span class="glyphicon glyphicon-edit"></span></a></td>
+                            </tr>
+                        </table>                       
+                    </div>
+                    }
+                    <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

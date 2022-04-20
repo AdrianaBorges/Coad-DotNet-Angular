@@ -1,0 +1,120 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li class="active">Fila de Operadoras Logadas</li>         
+        
+    </ol>
+}
+@Scripts.Render("~/Scripts/negocio/fila.js")
+<div ng-app="appModule">
+    <div ng-controller="FilaController" class="padding content" ng-cloak data-ng-init="init()">
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right"> 
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" disabled="disabled">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                        </li>                                                                           
+                                    </ul>
+                                </div>
+                            </div>
+      </div>
+          
+      <div class="panel-body">            
+           
+        <div class="row">              
+            <div class="form-group col-lg-2">
+                <label for="sigla">Representante</label>
+                <input type="text" id="cnpf-cpf" ng-model="filtro.nomeRepresentante" class="form-control"/>
+            </div>
+        </div>
+      </div>
+
+
+        <div class="panel-footer">
+            <button type="button" class="btn btn-default" ng-click="listar()">Pesquisar</button>
+        </div>
+</div>
+        <div app-message></div>
+      <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Fila de rodizio</div>
+          
+      <div class="panel-body">       
+                    <div class="table-responsive">     
+                            <!-- <input type="text" ng-model="dataTest" app-date/>  -->       
+                       
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>                               
+                                    
+                                        <th style="min-width: 75px">                                           
+                                            Ordem
+                                        </th>
+                                        <th style="min-width: 132px">                                           
+                                            Regiao
+                                        </th>
+                                        <th>                                           
+                                            Representante
+                                        </th>      
+                                        <th>
+                                            Data e Hora do Login
+                                        </th>                                                        
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>    
+                              <tr ng-repeat="item in lstFila" class="text" class="animate-repeat">
+                                    <td>
+                                        <span class="label label-info">{{item.FLC_ORDEM}}</span>
+                                        <span class="label label-warning" ng-show="$index == 0">Próximo</span>
+                                        
+                                    </td>                                    
+                                    <td>
+                                        {{ item.REGIAO.RG_DESCRICAO}}
+                                    </td>   
+                                    <td>
+                                        {{ item.REPRESENTANTE.REP_NOME}}
+                                    </td>        
+                                    <td app-show-date="item.FLC_DATA" show-time>
+                                    </td> 
+                                   <td>
+                                        <a href="javascript:void(0)" ng-click="moverFila(item.FLC_ID, 'cima')" title="Mover Para Cima" class="blue">
+                                            <span class="glyphicon glyphicon-arrow-up"></span>
+                                        </a>
+                                        <a href="javascript:void(0)" ng-click="moverFila(item.FLC_ID, 'baixo')" title="Mover Para Baixo" class="blue">
+                                            <span class="glyphicon glyphicon-arrow-down"></span>
+                                        </a>
+                                        <a href="javascript:void(0)" ng-click="removerFila(item.FLC_ID)" title="Remover" class="red">
+                                            <span class="glyphicon glyphicon-remove-circle"></span>
+                                        </a>
+                                    </td>
+                                   
+                              </tr>
+                            <tr>
+                                <td colspan="6" ng-show="lstFila.length == 0 && listado">Nenhum registro foi encontrado.</td>
+                                <td colspan="6" ng-show="!lstFila">Clique em pesquisar para listar.</td>
+
+                            </tr>
+
+                            </table> 
+                    </div>
+              <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+
+          </div>
+        </div>  
+
+    </div>   
+</div>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons.WebService.ClienteIntegracao" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons.WebService.ClienteIntegracao" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:48701/CoadService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons" />
+  <xs:complexType name="ClienteIntegrResult">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons" base="q1:WebServiceResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Cliente" nillable="true" type="tns:ClienteIntegrDTO" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ClienteIntegrResult" nillable="true" type="tns:ClienteIntegrResult" />
+  <xs:complexType name="ClienteIntegrDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="A_C" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CNPJ_CPF" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Celular" nillable="true" type="tns:ClienteIntegrTelefoneDTO" />
+      <xs:element minOccurs="0" name="ClienteId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="EmailConsulta" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmailNewsLetter" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmailPagamento" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EnderecoEntrega" nillable="true" type="tns:ClienteIntegrEnderecoDTO" />
+      <xs:element minOccurs="0" name="EnderecoFaturamento" nillable="true" type="tns:ClienteIntegrEnderecoDTO" />
+      <xs:element minOccurs="0" name="Fax" nillable="true" type="tns:ClienteIntegrTelefoneDTO" />
+      <xs:element minOccurs="0" name="Nome" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Telefone" nillable="true" type="tns:ClienteIntegrTelefoneDTO" />
+      <xs:element minOccurs="0" name="TipoCliente" nillable="true" type="tns:ClienteIntegrTipoClienteDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ClienteIntegrDTO" nillable="true" type="tns:ClienteIntegrDTO" />
+  <xs:complexType name="ClienteIntegrTelefoneDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodigoTelefone" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Contato" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DDD" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Ramal" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Telefone" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ClienteIntegrTelefoneDTO" nillable="true" type="tns:ClienteIntegrTelefoneDTO" />
+  <xs:complexType name="ClienteIntegrEnderecoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Bairro" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CEP" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Complemento" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Logradouro" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Municipio" nillable="true" type="tns:ClienteIntegrMunicipioDTO" />
+      <xs:element minOccurs="0" name="Numero" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UF" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ClienteIntegrEnderecoDTO" nillable="true" type="tns:ClienteIntegrEnderecoDTO" />
+  <xs:complexType name="ClienteIntegrMunicipioDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodigoIBGE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodigoMunicipio" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="DescricaoMunicipio" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ClienteIntegrMunicipioDTO" nillable="true" type="tns:ClienteIntegrMunicipioDTO" />
+  <xs:complexType name="ClienteIntegrTipoClienteDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodigoTipoCliente" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="DescricaoTipoCliente" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ClienteIntegrTipoClienteDTO" nillable="true" type="tns:ClienteIntegrTipoClienteDTO" />
+  <xs:complexType name="ArrayOfClienteIntegrMunicipioDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ClienteIntegrMunicipioDTO" nillable="true" type="tns:ClienteIntegrMunicipioDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfClienteIntegrMunicipioDTO" nillable="true" type="tns:ArrayOfClienteIntegrMunicipioDTO" />
+  <xs:complexType name="ArrayOfClienteIntegrTipoClienteDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ClienteIntegrTipoClienteDTO" nillable="true" type="tns:ClienteIntegrTipoClienteDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfClienteIntegrTipoClienteDTO" nillable="true" type="tns:ArrayOfClienteIntegrTipoClienteDTO" />
+</xs:schema>

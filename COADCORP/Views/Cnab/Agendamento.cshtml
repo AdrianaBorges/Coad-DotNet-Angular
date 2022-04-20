@@ -1,0 +1,268 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using Coad.GenericCrud.Extensions
+@using COAD.CORPORATIVO.SessionUtils
+@using COAD.SEGURANCA.Repositorios.Base
+@{
+    ViewBag.Title = "Importação de Suspects";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Importação de Suspects</li>
+
+    </ol>
+}
+
+@Scripts.Render("~/Scripts/negocio/importacao_suspect.js")
+
+<div ng-app="appModule">
+    <div ng-controller="ImportacaoSuspectController" class="padding content" ng-cloak data-ng-init="init(@ViewBag.impID)">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-transfer"></span> Importação de Suspect
+             
+            </div>
+            <div class="panel-body">
+                <div class="row" ng-hide="step == 2 || modalImportacao.impID">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="exampleInputFile">Planilha de Carga</label> <!-- https://github.com/danialfarid/ng-file-upload -->
+                            <input type="file" id="uploadInput" class="button button-default" 
+                                ngf-select="uploadPlanilhaSuspect($file, $invalidFiles)" ngf-max-size="1MB" accept=".xls, .xlsx, .ods">
+                        </div>
+                        <div ng-show="f.progress && f.progress >= 0">
+                            Progresso:
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" 
+                                aria-valuenow="{{f.progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{f.progress}}%">
+                            <span class="sr-only">f.progress% Complete</span>
+                            </div>
+                        </div>
+                        {{errorMsg}}    
+                        </div>                       
+                    </div>
+                 </div>       
+                <div ng-show="step == 2">
+                    <div class="row padding">
+                        <div class="col-md-12">
+                            <div class="text text-16">
+                                <strong>Arquivo</strong>
+                                <div><i class="fa fa-file-excel-o font-16 text-success" aria-hidden="true"></i> {{filename}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="importacao">
+
+                    <div class="table-responsive">
+                        <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th class="center">Data</th>
+                                    <th class="center">Última Execução</th>
+                                    <th>Representante</th>
+                                    <th>Status</th>
+                                    <th>Arquivo de Importação</th>
+                                    <th class="right">Quantidade Total</th>
+                                    <th class="right">Quantidade Descartada</th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td>{{importacao.IMP_ID}}</td>
+                                <td><span app-show-date="importacao.IMP_DATA" show-time></span></td>
+                                <td><span app-show-date="importacao.IMP_DATA_ULTIMA_EXECUCAO" show-time></span></td>
+                                <td>{{importacao.REPRESENTANTE.REP_NOME}}</td>
+                                <td>
+                                    <span class="label" ng-class="{
+                                        'label-warning' : importacao.IMS_ID == 1 || importacao.IMS_ID == 6,
+                                        'label-purple' : importacao.IMS_ID == 6 || importacao.IMS_ID == 0,
+                                        'label-info' : importacao.IMS_ID == 4,
+                                        'label-danger' : importacao.IMS_ID == 5 || importacao.IMS_ID == 10,
+                                        'label-success' : importacao.IMS_ID == 2 || importacao.IMS_ID == 3
+                                    }">{{importacao.IMPORTACAO_STATUS.IMS_DESCRICAO}}</span>
+                                </td>
+                                <td>
+                                    {{importacao.NomeArquivo | limitTo:25}}
+                                    <span class="text-success"
+                                            ng-if="importacao.NomeArquivo.length > 25">...</span>
+                                </td>
+                                <td>{{importacao.IMP_QTD_SUS_TOTAL}}</td>
+                                <td>{{importacao.IMP_QTD_SUS_DUPLICADA}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row padding" ng-show="!batchProgress.Executando && batchProgress.CodStatus == 6">
+                    <div class="col-md-12">
+                        <div class="text text-16">
+                            <strong>Aguarde o Inicio da Importação...</strong>
+                            <span><img src="@Url.Content("~/Content/themes/base/images/ajax-loader-gears.gif")" style="width: 50px;" /></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                 <span 
+                      ng-show="step == 2">
+                     <button  
+                        app-switch-button="agendarImportacaoDeSuspect()"
+                        switch-conf="[{label : 'Agendar Importação', state : 'import'}, {label : 'Agendando...', state : 'impoting', disabled : true}]" 
+                        switch-var="$parent.buttonImport"
+                        class="btn btn-primary">
+                        <span class="glyphicon glyphicon-import"></span>
+                    </button>
+                     <button ng-click="cancelarUploadAgendamento()"
+                             class="btn btn-danger">
+                         <span class="glyphicon glyphicon-remove-circle"></span> Cancelar
+                     </button>
+               </span>
+                <span ng-show="importacao &&
+                      !batchProgress.Executando && 
+                      batchProgress.CodStatus != 5 && 
+                      batchProgress.CodStatus != 6">
+                    <button app-switch-button="reexecutarImportacao()"
+                            switch-conf="[{label : 'Executar', state : 'import'}, {label : 'Agendando...', state : 'impoting', disabled : true}]"
+                            switch-var="buttonReexecucao"
+                            class="btn btn-primary">
+                        <i class="fa fa-clock-o" aria-hidden="true"></i>
+                    </button>
+                </span>
+               <button class="btn btn-primary" onclick="location.reload();" ng-show="step == 3"><span class="glyphicon glyphicon-refresh"></span> Importar mais clientes.</button>
+            
+            </div>
+        </div>
+        <div app-message></div>       
+        
+        <div class="panel panel-default" ng-show="batchProgress.Executando">
+            <div>
+                <div app-message></div>
+                <div class="panel panel-corp">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading bold head-panel text-16"><i class="fa fa-spinner" aria-hidden="true"></i> Progresso</div>
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="form-group col-sm-1" ng-show="batchProgress.Executando">
+                                <label>Executando</label><br />
+                                <span><img src="@Url.Content("~/Content/themes/base/images/Double Ring-1s-35px.gif")" /></span>
+                            </div>
+                            <div class="form-group col-sm-7">
+                                <label>Status</label>
+                                <div ng-show="batchProgress.Executando && batchProgress.ItensRestantes > 0">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-primary progress-bar-striped active" role="progressbar"
+                                            aria-valuenow="{{batchProgress.Progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{batchProgress.Progress}}%" title="{{batchProgress.Progress}}% Completos">
+                                        <span class="sr-only">{{batchProgress.Progress}}% Completo</span>
+                                    </div>
+                                </div>
+                                    <div>
+                                        <div class="center">
+                                            <strong>{{batchProgress.NomePassoBatch}}</strong><br />
+                                            <span><strong><em>{{batchProgress.ProcessedItens}}</em></strong> de <strong><em>{{batchProgress.TotalItens}}</em></strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-show="batchProgress.Executando && !batchProgress.ItensRestantes">
+                                    <div>
+                                        <div class="center">
+                                            <strong>{{batchProgress.NomePassoBatch}}</strong><br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                            <div class="form-group col-sm-2">
+                                <label>Sucessos</label><br />
+                                <span class="label label-success">{{batchProgress.QuantidadeSucesso}}</span>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Falhas</label><br />
+                                <span class="label label-danger">{{batchProgress.QuantidadeFalha}}</span>
+                            </div>
+                        </div>
+                        <div class="row">   
+                            <div class="center">
+                                <strong class="text-muted">Últimos <em class="text-danger">30</em> Erros</strong>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <div class="table-responsive limit-div-5">
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                            <tr class="bg-info">
+                                                <th>
+                                                    Data
+                                                </th>
+                                                <th>
+                                                    Tipo
+                                                </th>
+                                                <th style="min-width: 300px;">
+                                                    Descrição
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-repeat="item in batchProgress.LstErros">
+                                            <td class="center" app-show-date="item.IMH_DATA" show-time></td>
+                                            <td>
+                                                <span>
+                                                    <span class="label" ng-class="{
+                                                        'label-warning' : item.IMS_ID == 1,
+                                                        'label-purple' : item.IMS_ID == 0 || item.IMS_ID == 0,
+                                                        'label-info' : item.IMS_ID == 4,
+                                                        'label-danger' : item.IMS_ID == 2,
+                                                        'label-success' : item.IMS_ID == 3
+                                }">
+                                                        {{item.IMPORTACAO_STATUS.IMS_DESCRICAO}}
+                                                    </span>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);"
+                                                   ng-click="abrirModalDescricao(item.IMH_DESCRICAO);"
+                                                   ng-class="{
+                                    'text-info' : !item.IMH_ERRO,
+                                    'text-danger' : item.IMH_ERRO
+                                }">
+                                                    <span>
+                                                        {{limparBR(item.IMH_DESCRICAO) | limitTo:100}}
+                                                        <span ng-if="limparBR(item.IMH_DESCRICAO).length > 100">...</span>
+                                                    </span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" ng-hide="batchProgress.LstErros" class="text">
+                                                Não foi encontrado nenhum registro.
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+            <div class="row">
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <button type="button" class="btn btn-default" app-post="@Url.Action("index")"><span class="glyphicon glyphicon-list-alt"></span> Listagem</button>
+                </div>
+            </div>
+
+        <div app-modal="descricao-importacao-importacao" header-bg="false">
+            <div class="panel panel-default">
+                <div class="panel panel-body limit-div-3">
+                    <div class="text-danger"><strong ng-bind-html="descricaoHistorico"></strong></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+</div>

@@ -1,0 +1,2 @@
+C:\COAD\workspace\svn\acobranca\COAD.PROXY\obj\Homologacao\COAD.PROXY.csprojAssemblyReference.cache
+C:\COAD\workspace\svn\acobranca\COAD.PROXY\obj\Homologacao\COAD.PROXY.csproj.CoreCompileInputs.cache

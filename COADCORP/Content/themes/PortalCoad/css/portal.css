@@ -1,0 +1,1648 @@
+
+
+	/* Modais
+	----------------------------------------------------------------------------------------------------*/
+	
+	.cadastro { width:50%; height:auto; display:block; margin:0 auto; background:#e0e0e2; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;  padding:4em}
+	.cadastro.fifty {width:15%; height:190px; display: inline-block; float:left; margin:0 0 0 2%}
+	.cadastro.last{ background:#1c5c8c; margin-left:0}
+	
+		.cadastro p { width:100%; display: inline-block; margin:0 auto; font-size:1.2em; color:#73797a;font-weight:bold;}
+		
+		.cadastro.fifty p { width:100%; display: inline-block; margin:0 auto; font-size:1.4em; color:#73797a; font-weight:bold;}
+		.cadastro.fifty p span { color:#1c5c8c;}
+		
+		.cadastro.fifty p.p-small { font-size:1em;}
+		
+		.cadastro p.lead { font-size:1.6em; color:#fff}
+		.cadastro p.big-lead { font-size:3.5em; color:#1c5c8c}
+		.cadastro p.big-lead span{ font-size:.5em}
+		
+		.cadastro form { margin-top:2em }
+			.cadastro input, .cadastro select { width:40%; display: inline-block; margin:.5em 5% 0 0; color:#75797b; font-size:1.2em; background:#fff}
+			.cadastro select { width:42.5%; display: inline-block; margin:.5em 5% 0 0; color:#75797b; font-size:1.2em; background:#fff}
+
+		.cadastro.fifty form { margin-top:0 }
+		.cadastro.last form { margin-top:1em }
+		
+			.cadastro.fifty input, .cadastro.fifty select { width:90%; display: inline-block; margin:.5em 5% 0 0; color:#75797b; font-size:1.2em; background:#fff}
+			.cadastro.fifty select { width:42.5%; display: inline-block; margin:.5em 5% 0 0; color:#75797b; font-size:1.2em; background:#fff}
+			
+		.cadastro.fifty form button { margin-top:1em }
+		.cadastro.fifty form button.btn-success { margin-top:2em }
+		.cadastro.fifty form button.btn-inverse { background:#ccc!important}
+
+
+.cadastro p.lead { 
+    font-size: 20px;
+    color: #FFFFFF;
+    display: inline-block;
+    font-weight: bold;
+    margin: 0 auto;
+    width: 100%;
+    line-height: 30px;
+    font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+}
+	
+.cadastro form { 
+    margin-top: 20px;
+    font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+    color: #F2F2F2;
+    font-size: 62.5%;
+    line-height: 20px;
+}
+.cadastro input, .cadastro select { 
+    color: #75797B;
+    display: inline-block;
+    font-size: 12px;
+    margin: 0.5em 5% 0 0;
+    width: 40%;
+    background: url("../images/bg_input.jpg") repeat-x scroll 0 0 #F6F6F6;
+    border: 1px solid #C6CBD1;
+    font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+    font-weight: normal;
+    padding: 8px 0 8px 8px;
+    text-align: left;
+    text-decoration: none;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+	border-radius: 4px 4px 4px 4px;
+    height: 20px;
+    line-height: 20px;
+    vertical-align: middle;
+}
+.modal-footer:before, .modal-footer:after {
+    content: "";
+    display: table;
+    line-height: 0;
+}
+.modal-footer:after {
+    clear: both;
+}
+.modal-footer:before, .modal-footer:after {
+    content: "";
+    display: table;
+    line-height: 0;
+}
+.modal-footer {
+    background-color: #F5F5F5;
+    border-radius: 0 0 6px 6px;
+    border-top: 1px solid #DDDDDD;
+    box-shadow: 0 1px 0 #FFFFFF inset;
+    margin-bottom: 0;
+    padding: 14px 15px 15px;
+    text-align: right;
+    color: #F2F2F2;
+    font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+    font-size: 62.5%;
+    line-height: 20px;
+}
+
+.modal-footer  a:link {
+    text-decoration: none;
+}
+
+.modal-footer  a, .modal-footer  a:visited {
+    font-size: 1.2em;
+    text-decoration: underline;
+}
+.modal-footer  a {
+    color: #0088CC;
+    text-decoration: none;
+    text-align: right;
+    font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+    line-height: 20px;
+}
+
+
+.btn-danger {
+    background-color: #DA4F49;
+    background-image: linear-gradient(to bottom, #EE5F5B, #BD362F);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-radius: 4px 4px 4px 4px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 0;
+    padding: 4px 12px;
+    text-align: center;
+    vertical-align: middle;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: normal;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+
+
+.btn-success {
+    background-color: #5BB75B;
+    background-image: linear-gradient(to bottom, #62C462, #51A351);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-radius: 4px 4px 4px 4px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 0;
+    padding: 4px 12px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.btn-inverse {
+  background-color: #363636;
+  background-image: linear-gradient(top, #444444, #222222);
+  background-repeat: repeat-x;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  color: #FFFFFF;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);  
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  border-radius: 4px 4px 4px 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 0;
+  padding: 4px 12px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+body {margin:0; padding:0;}
+
+#container {position:relative; margin:0; padding:0;}
+
+div.topo { background-image:url(/imagens/bg_topo.jpg); background-repeat:repeat-x; height:128px;}
+div.topo_busca { background-image:url(/imagens/header_busca.png); height:256px; width:765px; float:left;}
+
+/*	HEADER PRODUTO 19 - SUPORTE ONLINE	*/
+div.topo div.cont_topo_suporte_online { width:982px; margin:0 auto; background-image:url(/imagens/bg_topo.jpg); background-repeat:repeat-x; }
+div.topo div.cont_topo_suporte_online div.logo {float:left; height:33px; width:80px;}
+div.topo div.cont_topo_suporte_online div.conta {height:33px; float:left; width:400px; line-height:33px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#FFF;}
+div.topo div.cont_topo_suporte_online div.conta img {vertical-align:middle; margin:-4px 10px 0 10px; padding:0;}
+div.topo div.cont_topo_suporte_online div.conta a {text-decoration:none; color:#FFF; font-size:12px;}
+div.topo div.cont_topo_suporte_online div.conta a:hover {text-decoration:underline;}
+div.topo div.cont_topo_suporte_online div.menu_topo {height:33px; float:right; line-height:33px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#FFF;}
+div.topo div.cont_topo_suporte_online div.menu_topo a {text-decoration:none; color:#FFF;}
+div.topo div.cont_topo_suporte_online div.menu_topo a:hover {text-decoration:underline;}
+/*	HEADER PRODUTO 19 - SUPORTE ONLINE	*/
+
+
+div.topo div.cont_topo { width:982px; margin:0 auto; background-image:url(/imagens/bg_topo.jpg); background-repeat:repeat-x; }
+div.topo div.cont_topo div.menu { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#FFF; height:33px; line-height:30px; width:610px; float:left;}
+div.topo div.cont_topo div.menu ul {list-style:none; margin:0; padding:0 0 0 15px; display:inline;}
+div.topo div.cont_topo div.menu ul li { float:left; padding-right:23px;}
+div.topo div.cont_topo div.menu ul li a {color:#FFF; text-decoration:none;}
+div.topo div.cont_topo div.menu ul li a:hover { text-decoration:underline;}
+div.topo div.cont_topo div.menu ul li a.selected { font-weight: bold; text-decoration: underline;}
+
+div.topo div.cont_topo div.menu2 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#FFF; height:33px; line-height:32px; width:310px; float:right; text-align:right;}
+div.topo div.cont_topo div.menu2 ul {list-style:none; margin:0; padding:0 15px 0 0; display:inline;}
+div.topo div.cont_topo div.menu2 ul li { float:right; padding-left:10px;}
+div.topo div.cont_topo div.menu2 ul li a {color:#FFF; text-decoration:none;}
+div.topo div.cont_topo div.menu2 ul li a:hover { text-decoration:underline;}
+div.topo div.cont_topo div.menu2 ul li a.selected { font-weight: bold; text-decoration: underline;}
+
+div.topo div.cont_topo div.logo {padding:12px 0 0 0; width:500px; float:left;}
+div.topo div.cont_topo div.login { float:left; background-image:url(/imagens/bg_login.jpg); background-repeat:no-repeat; width:288px;  margin-top:16px; padding:11px 11px 11px 11px;}
+div.topo div.cont_topo div.login form {margin:0; padding:0;}
+div.topo div.cont_topo div.login form p {margin:0; padding:0;}
+div.topo div.cont_topo div.login form p.fl {margin:0; padding:0 0 0 0; float:left; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#FFF; width:215px; }
+div.topo div.cont_topo div.login form span.links {font-family:Arial, Helvetica, sans-serif; font-size:12px; padding:0; margin:3px 0 0 -3px; display:block; color:#d0dbe2;}
+div.topo div.cont_topo div.login form span.links span { margin-right:8px;}
+div.topo div.cont_topo div.login form span.links a {color:#d0dbe2; text-decoration:none; margin-right:8px;}
+div.topo div.cont_topo div.login form span.links a:hover { text-decoration:underline;}
+div.topo div.cont_topo div.login form span.links input {vertical-align:middle;}
+div.topo div.cont_topo div.login form p.fl input.campos01 {width:103px; height:18px; border:0; padding: 0 0 0 3px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; line-height:18px; margin: 0 2px 0 0;}
+div.topo div.cont_topo div.login form p.fl input.campos02 {width:93px; height:18px; border:0; padding: 0 0 0 3px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; line-height:18px; margin: 0 2px 0 0;}
+div.topo div.cont_topo div.login form p.flr {margin:0; padding:0; float:left;  width:66px;}
+div.topo div.cont_topo div.login div.dados_incorretos { clear:both; position:absolute; text-align:center; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#cc0000; padding:4px 15px 4px 15px; margin:0 0 0 -150px; text-align:center;}
+div.topo div.cont_topo div.login div.dados_incorretos img {vertical-align:middle; }
+div.senha {}
+div.topo_senha { height:50px; background-color:#206491; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#fff;   -webkit-border-radius:4px 4px 0 0 ; -moz-border-radius:4px 4px 0 0; border-radius:4px 4px 0 0; width:420px;}
+div.topo_senha h2 {margin:0; padding:0; line-height:50px; padding-left:15px; font-weight:normal;}
+div.cont_senha {width:370px; background-color:#FFF; padding:30px 25px 30px 25px;}
+div.cont_senha p {font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#13607f;}
+div.cont_senha form {margin:0; padding:0;}
+div.cont_senha form input { vertical-align:middle;}
+div.cont_senha form input.campos_senha01 { width:170px; height:16px; border-top:2px solid #999; border-left:2px solid #999; border-right:1px solid #ccc; border-bottom:1px solid #ccc;}
+div.cont_senha form input.campos_ass01 { width:170px; height:16px; border-top:2px solid #999; border-left:2px solid #999; border-right:1px solid #ccc; border-bottom:1px solid #ccc; vertical-align:middle;}
+
+div.topo_ajuda { height:50px; background-color:#206491; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#fff;   -webkit-border-radius:4px 4px 0 0 ; -moz-border-radius:4px 4px 0 0; border-radius:4px 4px 0 0; width:500px;}
+div.topo_ajuda h2 {margin:0; padding:0; line-height:50px; padding-left:15px; font-weight:normal;}
+div.cont_ajuda {width:450px; background-color:#FFF; padding:30px 25px 30px 25px;}
+div.cont_ajuda p {font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#13607f;}
+
+div.topo_alerta { height:26px; background-color: #ab1600; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#fff;   -webkit-border-radius:4px 4px 0 0 ; -moz-border-radius:4px 4px 0 0; border-radius:4px 4px 0 0; width:300px;}
+div.cont_alerta h2 {margin:0; padding:0; font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:50px; color:#ab1600; padding-left:15px; font-weight:normal; font-size:18px; background-color:#FFF; -webkit-border-radius:0px 0px 4px 4px ; -moz-border-radius:0px 0px 4px 4px; border-radius:0px 0px 4px 4px;}
+div.cont_alerta h2 img {vertical-align:middle; margin-right:10px;}
+div.cont_alerta form {margin:0; padding:0 20px 20px 20x;}
+div.cont_alerta form p {margin:0; padding:14px 0 0 47px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:13px; font-weight:bold; color:#0075b8;}
+div.cont_alerta form input.campos01 {width:203px; height:18px; border:1px solid #0075b8; padding: 0 0 0 3px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; line-height:18px; margin: 0 2px 10px 0; color:#0075b8;}
+div.cont_alerta form p.flr {float:left; margin:0 0 0 50px; padding:0;}
+div.cont_alerta form p.flr a { color:#0075b8; text-decoration:none; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px;}
+div.cont_alerta form p.flr a:hover {text-decoration:underline;}
+
+
+div.topo div.cont_topo div.telefones {margin:31px 0 0 26px; float:left; width:130px;}
+div.topo_tel { height:50px; background-color:#206491; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#fff;   -webkit-border-radius:4px 4px 0 0 ; -moz-border-radius:4px 4px 0 0; border-radius:4px 4px 0 0; width:500px;}
+div.topo_tel h2 {margin:0; padding:0; line-height:50px; padding-left:15px; font-weight:normal;}
+div.cont_tel { width:450px; background-color:#FFF; padding:30px 25px 30px 25px;}
+div.cont_tel h3 {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333; border-bottom:1px solid #333; margin:0; padding:0 0 1px 0; font-weight:normal;}
+div.cont_tel div.cols {padding:10px 0 10px 0; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#13607f; }
+div.cont_tel div.cols span {font-size:13px; font-weight:bold; color:#13607f; }
+div.cont_tel div.cols div.col_left { width:150px; float:left;}
+div.cont_tel div.cols div.col_center { width:150px; float:left; }
+div.cont_tel div.cols div.col_right { width:150px; float:right;}
+
+div.bread {float:left; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#666; padding:0 0 20px 0;}
+div.bread a {color:#666; text-decoration:none;}
+div.bread a:hover {text-decoration:underline;}
+div.voltar {float:right; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#666; padding:0 0 20px 0; font-weight:bold;}
+div.voltar a {color:#336699; text-decoration:none;}
+div.voltar a:hover {text-decoration:underline;}
+
+div.links { height:32px; background-image:url(/imagens/bg_links.jpg); background-repeat:repeat-x; margin-top:4px; line-height:32px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#FFF; padding-left:4px; }
+div.links a { color:#FFF; text-decoration:none; padding:0 5px 0 5px;}
+div.links a:hover {text-decoration:underline;}
+
+/* HOME */
+
+div.conteudo_home {width:982px; margin:0 auto; background-color:#fff; padding:25px 10px 30px 10px;}
+div.conteudo_home div.coluna_principal {width:810px; float:left;}
+div.conteudo_home div.coluna_principal div.banner { clear:both; width:809px; height:197px; position:relative; overflow:hidden;}
+div.conteudo_home div.coluna_principal div.banner ul {list-style:none; margin:0; padding:0; display:table; height:197px;}
+div.conteudo_home div.coluna_principal div.banner ul li {width:809px; height:197px; z-index: 10;}
+div.conteudo_home div.coluna_principal div.banner ul li h2 {padding:30px 15px 0 320px; margin:0; width:450px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:20px; font-weight:normal;}
+div.conteudo_home div.coluna_principal div.banner ul li h2 a { text-decoration:none; color:#666;}
+div.conteudo_home div.coluna_principal div.banner ul li h2 a:hover {color:#999;}
+#banner_01 {/*background-image:url(/imagens/banner_01.jpg); background-repeat:no-repeat;*/ width:809px; height:197px;}
+#banner_01 a {color:#fff;}
+/*#banner_02 {background-image:url(/imagens/banner_01.jpg); background-repeat:no-repeat; width:809px; height:197px;}
+#banner_02 a {color:#fff;}*/
+#banner_02 {background-image:url(/imagens/banner_03.jpg); background-repeat:no-repeat; width:809px; height:197px; border:none;}
+/*#banner_02 {background-image:url(/imagens/banner_tvcrc.jpg); background-repeat:no-repeat; width:809px; height:197px; border:none;}*/
+#banner_04 {/*background-image:url(/imagens/banner_04.jpg); background-repeat:no-repeat;*/ width:809px; height:197px;}
+div.conteudo_home div.coluna_principal div.banner span.limpar {display:block; height:1px; width:1px; float:left;}
+div.conteudo_home div.coluna_principal div.paginacao_home { z-index:100; position:absolute; top:336px; left: 63%;}
+div.conteudo_home div.coluna_principal div.paginacao_home a {background-image:url(/imagens/bg_paginacao.png); background-repeat:no-repeat; display:block; float:left; width:24px; height:24px; background-position:top center; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; color:#666; text-decoration:none; margin-right:7px; text-align:center; line-height:24px;}
+div.conteudo_home div.coluna_principal div.paginacao_home a:hover {background-image:url(/imagens/bg_paginacao.png); background-repeat:no-repeat;  width:24px; height:24px; background-position:bottom center; color:#fff;}
+div.conteudo_home div.coluna_principal div.paginacao_home a.activeSlide  {background-image:url(/imagens/bg_paginacao.png); background-repeat:no-repeat;  width:24px; height:24px; background-position:bottom center; color:#fff;}
+/*div.conteudo_home div.coluna_principal div.banner div.paginacao_home a.selected {background-image:url(/imagens/bg_paginacao.png); background-repeat:no-repeat;  width:24px; height:24px; background-position:bottom center; color:#fff;}*/
+div.conteudo_home div.coluna_principal div.areas { padding:29px 0 0 0; margin:0;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_left { width:250px; float:left; border-right: 1px solid #EDEDED; border-bottom: 1px solid #EDEDED; padding: 0px 14px 25px 0px; }
+div.conteudo_home div.coluna_principal div.areas div.coluna_left h1 {margin:0; padding:0 0 13px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#266787; font-weight:normal;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_left div.area { width:250px; height:87px;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_left h2 { margin:0; padding:16px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; color:#666;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_left div.lista {padding:20px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:13px; color:#666; height:150px;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_left div.lista ul {list-style:none; margin:0; padding:0;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_left div.lista ul li { background-repeat: no-repeat; background-position:0 7px; margin:0 0 13px 0; padding:0 0 0 0px; list-style-type: disc; margin: 0 0 13px 13px; font-weight: bold; } 
+div.conteudo_home div.coluna_principal div.areas div.coluna_left div.bt_beneficios {padding:22px 0 0 0; text-align: center; }
+
+div.conteudo_home div.coluna_principal div.areas div.coluna_center { width:250px; float:left; margin:0px; border-bottom: 1px solid #EDEDED; padding: 0px 15px 25px 15px; }
+div.conteudo_home div.coluna_principal div.areas div.coluna_center h1 {margin:0; padding:0 0 13px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#266787; font-weight:normal;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_center div.area { width:250px; height:87px;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_center h2 { margin:0; padding:16px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; color:#666;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_center div.lista {padding:20px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:13px; color:#666; height:150px;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_center div.lista ul {list-style:none; margin:0; padding:0;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_center div.lista ul li { background-repeat: no-repeat; background-position:0 7px; margin:0 0 13px 0; padding:0 0 0 0px; list-style-type: disc; margin: 0 0 13px 13px; font-weight: bold; } 
+div.conteudo_home div.coluna_principal div.areas div.coluna_center div.bt_beneficios {padding:22px 0 0 0; text-align: center;}
+
+div.conteudo_home div.coluna_principal div.areas div.coluna_right { width:250px; float:left; border-left: 1px solid #EDEDED; border-bottom: 1px solid #EDEDED; padding: 0px 0px 25px 14px; }
+div.conteudo_home div.coluna_principal div.areas div.coluna_right h1 {margin:0; padding:0 0 13px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#266787; font-weight:normal;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_right div.area { width:250px; height:87px;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_right h2 { margin:0; padding:16px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; color:#666;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_right div.lista {padding:20px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:13px; color:#666; height:150px;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_right div.lista ul {list-style:none; margin:0; padding:0;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_right div.lista ul li { background-repeat: no-repeat; background-position:0 7px; margin:0 0 13px 0; padding:0 0 0 0px; list-style-type: disc; margin: 0 0 13px 13px; font-weight: bold; } 
+div.conteudo_home div.coluna_principal div.areas div.coluna_right div.bt_beneficios {padding:22px 0 0 0; text-align: center;}
+
+div.conteudo_home div.coluna_principal div.areas div.coluna_left_bot { width:250px; float:left; border-right: 1px solid #EDEDED; padding: 15px 14px 25px 0px; }
+div.conteudo_home div.coluna_principal div.areas div.coluna_left_bot h1 {margin:0; padding:0 0 13px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#266787; font-weight:normal;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_left_bot div.area { width:250px; height:87px;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_left_bot h2 { margin:0; padding:16px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; color:#666;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_left_bot div.lista {padding:20px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:13px; color:#666; height:150px;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_left_bot div.lista ul {list-style:none; margin:0; padding:0;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_left_bot div.lista ul li { background-repeat: no-repeat; background-position:0 7px; margin:0 0 13px 0; padding:0 0 0 0px; list-style-type: disc; margin: 0 0 13px 13px; font-weight: bold; } 
+div.conteudo_home div.coluna_principal div.areas div.coluna_left_bot div.bt_beneficios {padding:22px 0 0 0; text-align: center; }
+
+div.conteudo_home div.coluna_principal div.areas div.coluna_center_bot { width:250px; float:left; margin:0px; padding: 15px 15px 25px 15px; }
+div.conteudo_home div.coluna_principal div.areas div.coluna_center_bot h1 {margin:0; padding:0 0 13px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#266787; font-weight:normal;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_center_bot div.area { width:250px; height:87px;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_center_bot h2 { margin:0; padding:16px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; color:#666;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_center_bot div.lista {padding:20px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:13px; color:#666; height:150px;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_center_bot div.lista ul {list-style:none; margin:0; padding:0;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_center_bot div.lista ul li { background-repeat: no-repeat; background-position:0 7px; margin:0 0 13px 0; padding:0 0 0 0px; list-style-type: disc; margin: 0 0 13px 13px; font-weight: bold; } 
+div.conteudo_home div.coluna_principal div.areas div.coluna_center_bot div.bt_beneficios {padding:22px 0 0 0; text-align: center; }
+
+div.conteudo_home div.coluna_principal div.areas div.coluna_right_bot { width:250px; float:left; margin:0px; border-left: 1px solid #EDEDED; padding: 15px 0px 25px 14px; }
+div.conteudo_home div.coluna_principal div.areas div.coluna_right_bot h1 {margin:0; padding:0 0 13px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#266787; font-weight:normal;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_right_bot div.area { width:250px; height:87px;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_right_bot h2 { margin:0; padding:16px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; font-weight:normal; color:#666;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_right_bot div.lista {padding:20px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:13px; color:#666; height:150px;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_right_bot div.lista ul {list-style:none; margin:0; padding:0;}
+div.conteudo_home div.coluna_principal div.areas div.coluna_right_bot div.lista ul li { background-repeat: no-repeat; background-position:0 7px; margin:0 0 13px 0; padding:0 0 0 0px; list-style-type: disc; margin: 0 0 13px 13px; font-weight: bold; } 
+div.conteudo_home div.coluna_principal div.areas div.coluna_right_bot div.bt_beneficios {padding:22px 0 0 0; text-align: center; }
+
+div.conteudo_home div.coluna_principal div.boxes { background-image:url(/imagens/bg_boxes.jpg); background-repeat:repeat-x; padding:45px 10px 0 10px; margin:50px 0 0 0;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left {width:230px; float:left;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left h1 {margin:0; padding:0 0 10px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#266787; font-weight:normal; border-bottom:5px solid #d5e2eb;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.produto {padding:15px 0 0 0; height:190px;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.produto div.foto { float:left; width:101px; height:142px; padding:5px; border-bottom:3px solid #eee; border-right:3px solid #eee; border-top:1px solid #eee; border-left:1px solid #eee;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.produto div.foto img {width:101px; height:142px;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.produto div.texto {float:left; padding-left:10px; width:105px;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.produto div.texto div.nome {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:13px; color:#333; font-weight:bold;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.produto div.texto div.nome a { color:#333; text-decoration:none;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.produto div.texto div.nome a:hover {text-decoration:underline;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.produto div.texto div.resumo {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#999; padding:5px 0 5px 0;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.produto div.texto div.de {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#999; text-decoration:line-through;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.produto div.texto div.por {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#feb10b;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.produto div.texto div.buton {padding:10px 0 0 0;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.link {clear:both; padding:5px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.link a {color:#336699; text-decoration:none;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.link a:hover {text-decoration:underline;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.favoritos { background-image:url(/imagens/bg_favoritos.jpg); background-repeat:no-repeat; width:240px; height:61px; margin-bottom:13px;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.favoritos a {display:block; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#266787; text-decoration:none; padding:24px 0 10px 60px;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.favoritos a:hover {text-decoration:underline;}
+
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.trabalhe_conosco { background-image:url(/imagens/bg_trabalhe_conosco.jpg); background-repeat:no-repeat; width:240px; height:61px; margin-bottom:13px;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.trabalhe_conosco a {display:block; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#266787; text-decoration:none; padding:24px 0 10px 60px;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.trabalhe_conosco a:hover {text-decoration:underline;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.trabalhe_conosco p.aguarde {}
+.finalizado { font-weight:bold; color:#1c5170; line-height: 40px;}
+
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.trabalhe_conosco2 { background-image:url(/imagens/bg_trabalhe_conosco2.jpg); background-repeat:no-repeat; width:240px; height:219px; padding:0 15px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.trabalhe_conosco2 a.trabalhe {display:block; font-size:17px; color:#266787; text-decoration:none; padding:24px 0 10px 60px;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.trabalhe_conosco2 label {display:block;  font-size:12px; color:#666666;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.trabalhe_conosco2 p {margin: 0; padding: 0;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.trabalhe_conosco2 select {margin: 0 0 15px; padding: 0;width: 200px;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.trabalhe_conosco2 img.enviar {position:relative; top:-2px; left:110px;}
+
+
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.indique { background-image:url(/imagens/bg_indique.jpg); background-repeat:no-repeat; width:240px; height:56px; margin-bottom:13px; }
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.indique a {display:block; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#266787; text-decoration:none; padding:20px 0 10px 66px;}
+div.conteudo_home div.coluna_principal div.boxes div.box_left div.indique a:hover {text-decoration:underline;}
+
+div.conteudo_home div.coluna_principal div.boxes div.box_center {width:230px; float:left; margin:0 50px 0 50px;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center h1 {margin:0; padding:0 0 10px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#266787; font-weight:normal; border-bottom:5px solid #d5e2eb;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.produto {padding:15px 0 0 0; height:190px;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.produto div.foto { float:left; width:101px; height:142px; padding:5px; border-bottom:3px solid #eee; border-right:3px solid #eee; border-top:1px solid #eee; border-left:1px solid #eee;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.produto div.foto img {width:101px; height:142px;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.produto div.texto {float:left; padding-left:10px; width:105px;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.produto div.texto div.nome {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:13px; color:#333; font-weight:bold;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.produto div.texto div.nome a { color:#333; text-decoration:none;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.produto div.texto div.nome a:hover {text-decoration:underline;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.produto div.texto div.resumo {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#999; padding:5px 0 5px 0;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.produto div.texto div.de {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#999; text-decoration:line-through;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.produto div.texto div.por {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#feb10b;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.produto div.texto div.buton {padding:10px 0 0 0;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.link {clear:both; padding:5px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.link a {color:#336699; text-decoration:none;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.link a:hover {text-decoration:underline;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.acesso { width:240px; height:129px; background-image:url(/imagens/bg_acesso.jpg); background-repeat:no-repeat;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.acesso p.titulo a {color:#266787; text-decoration:none;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.acesso p.titulo a:hover {text-decoration:underline;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.acesso p.titulo {padding:20px 25px 3px 90px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#266787; margin:0;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.acesso p { margin:0; padding:0 30px 0 20px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; color:#333;}
+div.conteudo_home div.coluna_principal div.boxes div.box_center div.acesso p a {color:#266787; text-decoration:none;}
+
+div.conteudo_home div.coluna_principal div.boxes div.box_right {width:230px; float:left;}
+div.conteudo_home div.coluna_principal div.boxes div.box_right h1 {margin:0; padding:0 0 10px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#266787; font-weight:normal; border-bottom:5px solid #d5e2eb;}
+div.conteudo_home div.coluna_principal div.boxes div.box_right div.historia {padding:15px 0 0 0; height:190px;}
+div.conteudo_home div.coluna_principal div.boxes div.box_right div.historia div.foto {  padding:5px; border-bottom:1px solid #ccc; border-right:1px solid #ccc; border-top:1px solid #ccc; border-left:1px solid #ccc;}
+div.conteudo_home div.coluna_principal div.boxes div.box_right div.historia div.texto { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; color:#333;}
+div.conteudo_home div.coluna_principal div.boxes div.box_right div.historia div.texto p {margin:0; padding:10px 0 0 0;}
+div.conteudo_home div.coluna_principal div.boxes div.box_right div.historia div.texto p a {color:#336699; text-decoration:none;}
+div.conteudo_home div.coluna_principal div.boxes div.box_right div.historia div.texto p a:hover {text-decoration:underline;}
+div.conteudo_home div.coluna_principal div.boxes div.box_right div.trabalhe { width:240px; height:129px; background-image:url(/imagens/bg_trabalhe.jpg); background-repeat:no-repeat;}
+div.conteudo_home div.coluna_principal div.boxes div.box_right div.trabalhe p.titulo {padding:20px 25px 3px 90px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#266787; margin:0;}
+div.conteudo_home div.coluna_principal div.boxes div.box_right div.trabalhe p.titulo a {color:#266787; text-decoration:none;}
+div.conteudo_home div.coluna_principal div.boxes div.box_right div.trabalhe p.titulo a:hover {text-decoration:underline;}
+div.conteudo_home div.coluna_principal div.boxes div.box_right div.trabalhe p { margin:0; padding:0 30px 0 20px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; color:#333;}
+div.conteudo_home div.coluna_principal div.boxes div.box_right div.trabalhe p a { color:#266787; text-decoration:none;}
+
+div.conteudo_home div.coluna_direita { margin-left:25px; width:147px; float:left;}
+
+div.conteudo_home div.coluna_direita div.twitter { margin:0 0 20px 0;}
+div.conteudo_home div.coluna_direita div.twitter div.ico { width:55px; height:47px; float:left;}
+div.conteudo_home div.coluna_direita div.twitter div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; padding:5px 0 0 0;}
+div.conteudo_home div.coluna_direita div.twitter div.texto a { text-decoration:none; color:#333;}
+div.conteudo_home div.coluna_direita div.twitter div.texto a:hover {text-decoration:underline;}
+
+div.conteudo_home div.coluna_direita div.itens { margin:0 0 50px 0;}
+div.conteudo_home div.coluna_direita div.itens div.assine { margin:0 0 20px 0;}
+div.conteudo_home div.coluna_direita div.itens div.assine div.ico { width:55px; height:47px; float:left;}
+div.conteudo_home div.coluna_direita div.itens div.assine div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; padding:10px 0 0 0;}
+div.conteudo_home div.coluna_direita div.itens div.assine div.texto a { text-decoration:none; color:#cc6600;}
+div.conteudo_home div.coluna_direita div.itens div.assine div.texto a:hover {text-decoration:underline;}
+
+div.conteudo_home div.coluna_direita div.itens div.iten_gratuito { margin:0 0 20px 0;}
+div.conteudo_home div.coluna_direita div.itens div.iten_gratuito div.ico { width:55px; height:47px; float:left;}
+div.conteudo_home div.coluna_direita div.itens div.iten_gratuito div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; /*padding:5px 0 0 0;*/}
+div.conteudo_home div.coluna_direita div.itens div.iten_gratuito div.texto a { text-decoration:none; color:#336600;}
+div.conteudo_home div.coluna_direita div.itens div.iten_gratuito div.texto a:hover {text-decoration:underline;}
+div.conteudo_home div.coluna_direita div.itens div.iten_gratuito div.texto div.titulo { font-weight:bold; color:#336600; }
+
+div.conteudo_home div.coluna_direita div.itens div.iten_noticias { margin:0 0 20px 0;}
+div.conteudo_home div.coluna_direita div.itens div.iten_noticias div.ico { width:55px; height:47px; float:left;}
+div.conteudo_home div.coluna_direita div.itens div.iten_noticias div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; /*padding:5px 0 0 0;*/}
+div.conteudo_home div.coluna_direita div.itens div.iten_noticias div.texto a { text-decoration:none; color:#333;}
+div.conteudo_home div.coluna_direita div.itens div.iten_noticias div.texto a:hover {text-decoration:underline;}
+div.conteudo_home div.coluna_direita div.itens div.iten_noticias div.texto div.titulo { font-weight:bold; }
+
+div.conteudo_home div.coluna_direita div.itens div.twitter { margin:0 0 20px 0;}
+div.conteudo_home div.coluna_direita div.itens div.twitter div.ico { width:55px; height:47px; float:left;}
+div.conteudo_home div.coluna_direita div.itens div.twitter div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; padding:5px 0 0 0;}
+div.conteudo_home div.coluna_direita div.itens div.twitter div.texto a { text-decoration:none; color:#333;}
+div.conteudo_home div.coluna_direita div.itens div.twitter div.texto a:hover {text-decoration:underline;}
+div.conteudo_home div.coluna_direita div.noticias {width:147px; border:1px solid #ccc;}
+div.conteudo_home div.coluna_direita div.noticias div.titulo { height:41px; background-image:url(/imagens/bg_titulo_noticias.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; color:#266787;}
+div.conteudo_home div.coluna_direita div.noticias div.titulo span {float:left;}
+div.conteudo_home div.coluna_direita div.noticias div.titulo a { color:#266787; text-decoration:none; display:block; width:26px; float:right; height:23px; margin:7px 10px 0 0;}
+div.conteudo_home div.coluna_direita div.noticias div.titulo a:hover {text-decoration:underline;}
+div.conteudo_home div.coluna_direita div.noticias div.data { padding:8px 0 4px 8px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; font-weight:bold;}
+div.conteudo_home div.coluna_direita div.noticias div.manchetes {padding:5px 0 0 8px;}
+div.conteudo_home div.coluna_direita div.noticias div.manchetes ul {list-style:none; margin:0; padding:0; display:table;}
+div.conteudo_home div.coluna_direita div.noticias div.manchetes ul li { padding:0 8px 3px 0;}
+div.conteudo_home div.coluna_direita div.noticias div.manchetes ul li div.hora { font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; font-weight:bold;}
+div.conteudo_home div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_home div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico a {color:#990000; text-decoration:none;}
+div.conteudo_home div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico a:hover {text-decoration:underline;}
+div.conteudo_home div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_home div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil a {color:#003366; text-decoration:none;}
+div.conteudo_home div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil a:hover {text-decoration:underline;}
+div.conteudo_home div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_home div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista a {color:#024909; text-decoration:none;}
+div.conteudo_home div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista a:hover {text-decoration:underline;}
+div.conteudo_home div.coluna_direita div.noticias div.manchetes ul li div.manchete p { margin:0; padding:0 0 7px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; }
+div.conteudo_home div.coluna_direita div.noticias div.manchetes ul li div.manchete a { color:#333; text-decoration:none;}
+div.conteudo_home div.coluna_direita div.noticias div.manchetes ul li div.manchete a:hover {  text-decoration:underline;}
+div.conteudo_home div.coluna_direita div.noticias div.mais_noticias {height:31px; background-image:url(/imagens/bg_mais_noticias.jpg); background-repeat:no-repeat; margin:4px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; line-height:31px; padding-left:8px;}
+div.conteudo_home div.coluna_direita div.noticias div.mais_noticias a { color:#336699; text-decoration:none;}
+div.conteudo_home div.coluna_direita div.noticias div.mais_noticias a:hover {text-decoration:underline;}
+
+div.conteudo_home div.coluna_direita div.coad_news {width:147px; border:1px solid #ccc;}
+div.conteudo_home div.coluna_direita div.coad_news div.titulo { height:41px; background-image:url(/imagens/bg_titulo.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; color:#266787;}
+div.conteudo_home div.coluna_direita div.coad_news div.texto {padding:13px 8px 5px 8px;}
+div.conteudo_home div.coluna_direita div.coad_news div.texto p { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; color:#333; margin:0; padding:0 0 7px 0;}
+div.conteudo_home div.coluna_direita div.coad_news div.texto a {color:#333; text-decoration:none;}
+div.conteudo_home div.coluna_direita div.coad_news div.texto a:hover {text-decoration:underline;}
+
+div.conteudo_home div.coluna_direita div.indicadores {width:147px; border:1px solid #ccc;}
+div.conteudo_home div.coluna_direita div.indicadores div.titulo { height:41px; background-image:url(/imagens/bg_titulo.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; color:#266787;}
+div.conteudo_home div.coluna_direita div.indicadores div.texto {padding:13px 5px 10px 5px;}
+div.conteudo_home div.coluna_direita div.indicadores div.texto table tr td { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#333; padding: 3px 3px 3px 0;}
+
+/* FIM HOME */
+
+
+/* TRIBUTARIO */
+
+div.conteudo_tributario {width:982px; margin:0 auto; background-color:#fff; padding:10px 10px 30px 10px;}
+div.conteudo_tributario div.coluna_principal {width:810px; float:left;}
+div.conteudo_tributario div.coluna_principal div.banner { width:809px; height:150px; background-image:url(/imagens/banner_marcacao_atc.jpg); background-repeat:no-repeat;}
+div.conteudo_tributario div.coluna_principal div.banner h1 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:21px; color:#004580; font-weight:normal; width:450px; padding:20px 0 0 30px; margin:0;}
+div.conteudo_tributario div.coluna_principal div.banner h2 { width:300px; padding:10px 0 0 30px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333333; font-weight:normal; margin:0;}
+div.conteudo_tributario div.coluna_principal div.banner_master { width:809px; height:150px; background-image:url(/imagens/banner_marcacao_atc_master.jpg); background-repeat:no-repeat;}
+div.conteudo_tributario div.coluna_principal div.banner_master h1 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:21px; color:#004580; font-weight:normal; width:450px; padding:20px 0 0 30px; margin:0;}
+div.conteudo_tributario div.coluna_principal div.banner_master h2 { width:300px; padding:10px 0 0 30px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333333; font-weight:normal; margin:0;}
+div.conteudo_tributario div.coluna_principal div.banner_mf { width:809px; height:150px; background-image:url(/imagens/banner_marcacao_mf.jpg); background-repeat:no-repeat;}
+div.conteudo_tributario div.coluna_principal div.banner_mf h1 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:21px; color:#004580; font-weight:normal; width:450px; padding:20px 0 0 30px; margin:0;}
+div.conteudo_tributario div.coluna_principal div.banner_mf h2 { width:300px; padding:10px 0 0 30px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333333; font-weight:normal; margin:0;}
+div.conteudo_tributario div.coluna_principal div.beneficios { padding:29px 0 0 0; margin:0;}
+div.conteudo_tributario div.coluna_principal div.beneficios h1 { width:450px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:25px; color:#333; font-weight:normal; float:left; margin:0; padding:0;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.print_indique { float:right; font-family:Arial, Helvetica, sans-serif; font-size:12px; width:250px; padding-top:7px;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.print_indique img {vertical-align:middle;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.print_indique a {color:#666; text-decoration:none;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.print_indique a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista {padding:30px 0 0 20px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#666;  width:380px; float:left;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista ul {list-style:none; margin:0; padding:0;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista ul li {background-image:url(/imagens/bullet_azul.jpg); background-repeat: no-repeat; background-position:0 7px; margin:0 0 30px 0; padding:0 0 0 20px;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista div.outros_beneficios { padding:20px 0 0 0;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista div.outros_beneficios a { text-decoration:none; color: #006699;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista div.outros_beneficios a:hover {text-decoration:underline; }
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista2 {padding:30px 0 0 20px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#666;  width:380px; float:right;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista2 ul {list-style:none; margin:0; padding:0;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista2 ul li {background-image:url(/imagens/bullet_azul.jpg); background-repeat: no-repeat; background-position:0 7px; margin:0 0 30px 0; padding:0 0 0 20px;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas { background-image:url(/imagens/bg_boxes.jpg); background-repeat:repeat-x; padding:15px 10px 0 10px; margin:50px 0 0 0;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.titulo { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; color:#333; padding:0 0 20px 0;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.conteudo_caracteristicas {border:1px solid #ccc; padding:20px;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.conteudo_caracteristicas div.left { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333; width:310px; float:left;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.conteudo_caracteristicas div.right { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333; width:310px; float:right;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.aviso { font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; padding:15px 0 0 0;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.esclarecimento { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333; padding:30px 0 0 0;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.esclarecimento a {color:#336699; text-decoration:none;}
+
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine {padding:30px 0 0 0;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine h1 {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:22px; color:#333; font-weight:normal;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine div.alerta { height:50px; line-height:50px; border:1px solid #ccc; background-color:#ffff99; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#333; font-weight:bold; padding-left:15px; margin-bottom:20px;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine div.alerta span { color:#990000;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine div.alerta img {vertical-align:middle; margin-right:7px;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine div.sucesso { height:50px; line-height:50px; border:1px solid #ccc; background-color:#cdfd99; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#333; font-weight:bold; padding-left:15px;  margin-bottom:20px;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine div.sucesso img {vertical-align:middle; margin-right:7px;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine p {width:48%; height:80px; margin:0; padding:0; float:left;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine p label { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine p input.campos01 {width:330px; height:28px; line-height:28px; border:1px solid #333; margin-top:8px;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine p select { height:32px; line-height:28px; border:1px solid #333; margin-top:8px; width:100px;}
+div.conteudo_tributario div.coluna_principal div.veja_tambem { background-image:url(/imagens/bg_boxes.jpg); background-repeat:repeat-x; padding:15px 10px 0 30px; margin:50px 0 0 0;}
+div.conteudo_tributario div.coluna_principal div.veja_tambem div.titulo { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; color:#266787; padding:0 0 20px 0;}
+div.conteudo_tributario div.coluna_principal div.veja_tambem div.veja {float:left; width:300px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px;}
+div.conteudo_tributario div.coluna_principal div.veja_tambem div.veja p {margin:0; padding:0;}
+div.conteudo_tributario div.coluna_principal div.veja_tambem div.veja p a {color:#336699; text-decoration:none;}
+div.conteudo_tributario div.coluna_principal div.veja_tambem div.veja p a:hover { text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita { margin-left:25px; width:147px; float:left;}
+div.conteudo_tributario div.coluna_direita div.itens { margin:0 0 50px 0;}
+
+div.conteudo_tributario div.coluna_direita div.twitter { margin:0 0 20px 0;}
+div.conteudo_tributario div.coluna_direita div.twitter div.ico { width:55px; height:47px; float:left;}
+div.conteudo_tributario div.coluna_direita div.twitter div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; padding:5px 0 0 0;}
+div.conteudo_tributario div.coluna_direita div.twitter div.texto a { text-decoration:none; color:#333;}
+div.conteudo_tributario div.coluna_direita div.twitter div.texto a:hover {text-decoration:underline;}
+
+div.conteudo_tributario div.coluna_direita div.itens { margin:0 0 50px 0;}
+div.conteudo_tributario div.coluna_direita div.itens div.assine { margin:0 0 20px 0;}
+div.conteudo_tributario div.coluna_direita div.itens div.assine div.ico { width:55px; height:47px; float:left;}
+div.conteudo_tributario div.coluna_direita div.itens div.assine div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; padding:10px 0 0 0;}
+div.conteudo_tributario div.coluna_direita div.itens div.assine div.texto a { text-decoration:none; color:#cc6600;}
+div.conteudo_tributario div.coluna_direita div.itens div.assine div.texto a:hover {text-decoration:underline;}
+
+div.conteudo_tributario div.coluna_direita div.itens div.iten_gratuito { margin:0 0 20px 0;}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_gratuito div.ico { width:55px; height:47px; float:left;}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_gratuito div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; /*padding:5px 0 0 0;*/}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_gratuito div.texto a { text-decoration:none; color:#336600;}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_gratuito div.texto a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_gratuito div.texto div.titulo { font-weight:bold; color:#336600; }
+
+div.conteudo_tributario div.coluna_direita div.itens div.iten_noticias { margin:0 0 20px 0;}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_noticias div.ico { width:55px; height:47px; float:left;}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_noticias div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; /*padding:5px 0 0 0;*/}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_noticias div.texto a { text-decoration:none; color:#333;}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_noticias div.texto a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_noticias div.texto div.titulo { font-weight:bold; }
+
+div.conteudo_tributario div.coluna_direita div.itens div.twitter { margin:0 0 20px 0;}
+div.conteudo_tributario div.coluna_direita div.itens div.twitter div.ico { width:55px; height:47px; float:left;}
+div.conteudo_tributario div.coluna_direita div.itens div.twitter div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; padding:5px 0 0 0;}
+div.conteudo_tributario div.coluna_direita div.itens div.twitter div.texto a { text-decoration:none; color:#333;}
+div.conteudo_tributario div.coluna_direita div.itens div.twitter div.texto a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.noticias {width:147px; border:1px solid #ccc;}
+div.conteudo_tributario div.coluna_direita div.noticias div.titulo { height:41px; background-image:url(/imagens/bg_titulo_noticias.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; }
+div.conteudo_tributario div.coluna_direita div.noticias div.titulo a { color:#266787; text-decoration:none; display:block; width:26px; float:right; height:23px; margin:7px 10px 0 0;}
+div.conteudo_tributario div.coluna_direita div.noticias div.titulo a { color:#266787; text-decoration:none; display:block;}
+div.conteudo_tributario div.coluna_direita div.noticias div.titulo a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.noticias div.data { padding:8px 0 4px 8px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; font-weight:bold;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes {padding:5px 0 0 8px;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul {list-style:none; margin:0; padding:0; display:table;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li { padding:0 8px 3px 0;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.hora { font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; font-weight:bold;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico a {color:#990000; text-decoration:none;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil a {color:#003366; text-decoration:none;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista a {color:#024909; text-decoration:none;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.manchete p { margin:0; padding:0 0 7px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; }
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.manchete a { color:#333; text-decoration:none;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.manchete a:hover {  text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.noticias div.mais_noticias {height:31px; background-image:url(/imagens/bg_mais_noticias.jpg); background-repeat:no-repeat; margin:4px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; line-height:31px; padding-left:8px;}
+div.conteudo_tributario div.coluna_direita div.noticias div.mais_noticias a { color:#336699; text-decoration:none;}
+div.conteudo_tributario div.coluna_direita div.noticias div.mais_noticias a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.coad_news {width:147px; border:1px solid #ccc;}
+div.conteudo_tributario div.coluna_direita div.coad_news div.titulo { height:41px; background-image:url(/imagens/bg_titulo.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; color:#266787;}
+div.conteudo_tributario div.coluna_direita div.coad_news div.texto {padding:13px 8px 5px 8px;}
+div.conteudo_tributario div.coluna_direita div.coad_news div.texto p { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; color:#333; margin:0; padding:0 0 7px 0;}
+div.conteudo_tributario div.coluna_direita div.coad_news div.texto a {color:#333; text-decoration:none;}
+div.conteudo_tributario div.coluna_direita div.coad_news div.texto a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.indicadores {width:147px; border:1px solid #ccc;}
+div.conteudo_tributario div.coluna_direita div.indicadores div.titulo { height:41px; background-image:url(/imagens/bg_titulo.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; color:#266787;}
+div.conteudo_tributario div.coluna_direita div.indicadores div.texto {padding:13px 8px 10px 8px;}
+div.conteudo_tributario div.coluna_direita div.indicadores div.texto table tr td { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#333; padding:3px 0 3px 0;}
+
+/* FIM TRIBUTARIO */
+
+
+/* TRABALHISTA */
+
+div.conteudo_trabalhista {width:982px; margin:0 auto; background-color:#fff; padding:10px 10px 30px 10px;}
+div.conteudo_trabalhista div.coluna_principal {width:810px; float:left;}
+div.conteudo_trabalhista div.coluna_principal div.banner { width:809px; height:150px; background-image:url(/imagens/banner_marcacao_ct.jpg); background-repeat:no-repeat;}
+div.conteudo_trabalhista div.coluna_principal div.banner h1 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:21px; color:#006600; font-weight:normal; width:450px; padding:20px 0 0 30px; margin:0;}
+div.conteudo_trabalhista div.coluna_principal div.banner h2 { width:300px; padding:10px 0 0 30px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333333; font-weight:normal; margin:0;}
+div.conteudo_trabalhista div.coluna_principal div.banner_ct_online { width:809px; height:150px; background-image:url(/imagens/banner_marcacao_ct_online.jpg); background-repeat:no-repeat;}
+div.conteudo_trabalhista div.coluna_principal div.banner_ct_online h1 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:21px; color:#006600; font-weight:normal; width:450px; padding:20px 0 0 30px; margin:0;}
+div.conteudo_trabalhista div.coluna_principal div.banner_ct_online h2 { width:300px; padding:10px 0 0 30px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333333; font-weight:normal; margin:0;}
+div.conteudo_trabalhista div.coluna_principal div.banner_mdp { width:809px; height:150px; background-image:url(/imagens/banner_marcacao_mdp.jpg); background-repeat:no-repeat;}
+div.conteudo_trabalhista div.coluna_principal div.banner_mdp h1 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:21px; color:#006600; font-weight:normal; width:450px; padding:20px 0 0 30px; margin:0;}
+div.conteudo_trabalhista div.coluna_principal div.banner_mdp h2 { width:300px; padding:10px 0 0 30px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333333; font-weight:normal; margin:0;}
+div.conteudo_trabalhista div.coluna_principal div.beneficios { padding:29px 0 0 0; margin:0;}
+div.conteudo_trabalhista div.coluna_principal div.beneficios { padding:29px 0 0 0; margin:0;}
+div.conteudo_trabalhista div.coluna_principal div.beneficios h1 { width:450px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:25px; color:#333; font-weight:normal; float:left; margin:0; padding:0;}
+div.conteudo_trabalhista div.coluna_principal div.beneficios div.print_indique { float:right; font-family:Arial, Helvetica, sans-serif; font-size:12px; width:250px; padding-top:7px;}
+div.conteudo_trabalhista div.coluna_principal div.beneficios div.print_indique img {vertical-align:middle;}
+div.conteudo_trabalhista div.coluna_principal div.beneficios div.print_indique a {color:#666; text-decoration:none;}
+div.conteudo_trabalhista div.coluna_principal div.beneficios div.print_indique a:hover {text-decoration:underline;}
+div.conteudo_trabalhista div.coluna_principal div.beneficios div.lista {padding:30px 0 0 20px;  font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#666;  width:380px; float:left;}
+div.conteudo_trabalhista div.coluna_principal div.beneficios div.lista ul {list-style:none; margin:0; padding:0;}
+div.conteudo_trabalhista div.coluna_principal div.beneficios div.lista ul li {background-image:url(/imagens/bullet_verde.jpg); background-repeat: no-repeat; background-position:0 7px; margin:0 0 30px 0; padding:0 0 0 20px;}
+div.conteudo_trabalhista div.coluna_principal div.beneficios div.lista div.outros_beneficios { padding:20px 0 0 0;}
+div.conteudo_trabalhista div.coluna_principal div.beneficios div.lista div.outros_beneficios a { text-decoration:none; color: #006699;}
+div.conteudo_trabalhista div.coluna_principal div.beneficios div.lista div.outros_beneficios a:hover {text-decoration:underline; }
+div.conteudo_trabalhista div.coluna_principal div.beneficios div.lista2 {padding:30px 0 0 20px;  font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#666;  width:380px; float:right;}
+div.conteudo_trabalhista div.coluna_principal div.beneficios div.lista2 ul {list-style:none; margin:0; padding:0;}
+div.conteudo_trabalhista div.coluna_principal div.beneficios div.lista2 ul li {background-image:url(/imagens/bullet_verde.jpg); background-repeat: no-repeat; background-position:0 7px; margin:0 0 30px 0; padding:0 0 0 20px;}
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.form_assine {padding:30px 0 0 0;}
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.form_assine h1 {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:22px; color:#333; font-weight:normal;}
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.form_assine div.alerta { height:50px; line-height:50px; border:1px solid #ccc; background-color:#ffff99; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#333; font-weight:bold; padding-left:15px; margin-bottom:20px;}
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.form_assine div.alerta span { color:#990000;}
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.form_assine div.alerta img {vertical-align:middle; margin-right:7px;}
+
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.form_assine div.sucesso { height:50px; line-height:50px; border:1px solid #ccc; background-color:#cdfd99; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#333; font-weight:bold; padding-left:15px;  margin-bottom:20px;}
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.form_assine div.sucesso img {vertical-align:middle; margin-right:7px;}
+
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.form_assine p {width:48%; height:80px; margin:0; padding:0; float:left;}
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.form_assine p label { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333;}
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.form_assine p input.campos01 {width:330px; height:28px; line-height:28px; border:1px solid #333; margin-top:8px;}
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.form_assine p select { height:32px; line-height:28px; border:1px solid #333; margin-top:8px; width:100px;}
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas { background-image:url(/imagens/bg_boxes.jpg); background-repeat:repeat-x; padding:15px 10px 0 10px; margin:50px 0 0 0;}
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.titulo { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; color:#333; padding:0 0 20px 0;}
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.conteudo_caracteristicas {border:1px solid #ccc; padding:20px;}
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.conteudo_caracteristicas div.left { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333; width:310px; float:left;}
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.conteudo_caracteristicas div.right { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333; width:310px; float:right;}
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.aviso { font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; padding:15px 0 0 0;}
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.esclarecimento { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333; padding:30px 0 0 0;}
+div.conteudo_trabalhista div.coluna_principal div.caracteristicas div.esclarecimento a {color:#336699; text-decoration:none;}
+div.conteudo_trabalhista div.coluna_principal div.veja_tambem { background-image:url(/imagens/bg_boxes.jpg); background-repeat:repeat-x; padding:15px 10px 0 30px; margin:50px 0 0 0;}
+div.conteudo_trabalhista div.coluna_principal div.veja_tambem div.titulo { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; color:#266787; padding:0 0 20px 0;}
+div.conteudo_trabalhista div.coluna_principal div.veja_tambem div.veja {float:left; width:300px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px;}
+div.conteudo_trabalhista div.coluna_principal div.veja_tambem div.veja p {margin:0; padding:0;}
+div.conteudo_trabalhista div.coluna_principal div.veja_tambem div.veja p a {color:#336699; text-decoration:none;}
+div.conteudo_trabalhista div.coluna_principal div.veja_tambem div.veja p a:hover { text-decoration:underline;}
+
+div.conteudo_trabalhista div.coluna_direita { margin-left:25px; width:147px; float:left;}
+div.conteudo_trabalhista div.coluna_direita div.itens { margin:0 0 50px 0;}
+
+div.conteudo_trabalhista div.coluna_direita div.twitter { margin:0 0 20px 0;}
+div.conteudo_trabalhista div.coluna_direita div.twitter div.ico { width:55px; height:47px; float:left;}
+div.conteudo_trabalhista div.coluna_direita div.twitter div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; padding:5px 0 0 0;}
+div.conteudo_trabalhista div.coluna_direita div.twitter div.texto a { text-decoration:none; color:#333;}
+div.conteudo_trabalhista div.coluna_direita div.twitter div.texto a:hover {text-decoration:underline;}
+
+div.conteudo_trabalhista div.coluna_direita div.itens { margin:0 0 50px 0;}
+div.conteudo_trabalhista div.coluna_direita div.itens div.assine { margin:0 0 20px 0;}
+div.conteudo_trabalhista div.coluna_direita div.itens div.assine div.ico { width:55px; height:47px; float:left;}
+div.conteudo_trabalhista div.coluna_direita div.itens div.assine div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; padding:10px 0 0 0;}
+div.conteudo_trabalhista div.coluna_direita div.itens div.assine div.texto a { text-decoration:none; color:#cc6600;}
+div.conteudo_trabalhista div.coluna_direita div.itens div.assine div.texto a:hover {text-decoration:underline;}
+
+div.conteudo_trabalhista div.coluna_direita div.itens div.iten_gratuito { margin:0 0 20px 0;}
+div.conteudo_trabalhista div.coluna_direita div.itens div.iten_gratuito div.ico { width:55px; height:47px; float:left;}
+div.conteudo_trabalhista div.coluna_direita div.itens div.iten_gratuito div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; /*padding:5px 0 0 0;*/}
+div.conteudo_trabalhista div.coluna_direita div.itens div.iten_gratuito div.texto a { text-decoration:none; color:#336600;}
+div.conteudo_trabalhista div.coluna_direita div.itens div.iten_gratuito div.texto a:hover {text-decoration:underline;}
+div.conteudo_trabalhista div.coluna_direita div.itens div.iten_gratuito div.texto div.titulo { font-weight:bold; color:#336600; }
+
+div.conteudo_trabalhista div.coluna_direita div.itens div.iten_noticias { margin:0 0 20px 0;}
+div.conteudo_trabalhista div.coluna_direita div.itens div.iten_noticias div.ico { width:55px; height:47px; float:left;}
+div.conteudo_trabalhista div.coluna_direita div.itens div.iten_noticias div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; /*padding:5px 0 0 0;*/}
+div.conteudo_trabalhista div.coluna_direita div.itens div.iten_noticias div.texto a { text-decoration:none; color:#333;}
+div.conteudo_trabalhista div.coluna_direita div.itens div.iten_noticias div.texto a:hover {text-decoration:underline;}
+div.conteudo_trabalhista div.coluna_direita div.itens div.iten_noticias div.texto div.titulo { font-weight:bold; }
+
+div.conteudo_trabalhista div.coluna_direita div.itens div.twitter { margin:0 0 20px 0;}
+div.conteudo_trabalhista div.coluna_direita div.itens div.twitter div.ico { width:55px; height:47px; float:left;}
+div.conteudo_trabalhista div.coluna_direita div.itens div.twitter div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; padding:5px 0 0 0;}
+div.conteudo_trabalhista div.coluna_direita div.itens div.twitter div.texto a { text-decoration:none; color:#333;}
+div.conteudo_trabalhista div.coluna_direita div.itens div.twitter div.texto a:hover {text-decoration:underline;}
+div.conteudo_trabalhista div.coluna_direita div.noticias {width:147px; border:1px solid #ccc;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.titulo { height:41px; background-image:url(/imagens/bg_titulo_noticias.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; }
+div.conteudo_trabalhista div.coluna_direita div.noticias div.titulo a { color:#266787; text-decoration:none; display:block; width:26px; float:right; height:23px; margin:7px 10px 0 0;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.titulo a:hover {text-decoration:underline;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.data { padding:8px 0 4px 8px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; font-weight:bold;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.manchetes {padding:5px 0 0 8px;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.manchetes ul {list-style:none; margin:0; padding:0; display:table;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.manchetes ul li { padding:0 8px 3px 0;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.manchetes ul li div.hora { font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; font-weight:bold;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico a {color:#990000; text-decoration:none;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico a:hover {text-decoration:underline;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil a {color:#003366; text-decoration:none;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil a:hover {text-decoration:underline;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista a {color:#024909; text-decoration:none;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista a:hover {text-decoration:underline;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.manchetes ul li div.manchete p { margin:0; padding:0 0 7px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; }
+div.conteudo_trabalhista div.coluna_direita div.noticias div.manchetes ul li div.manchete a { color:#333; text-decoration:none;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.manchetes ul li div.manchete a:hover {  text-decoration:underline;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.mais_noticias {height:31px; background-image:url(/imagens/bg_mais_noticias.jpg); background-repeat:no-repeat; margin:4px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; line-height:31px; padding-left:8px;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.mais_noticias a { color:#336699; text-decoration:none;}
+div.conteudo_trabalhista div.coluna_direita div.noticias div.mais_noticias a:hover {text-decoration:underline;}
+
+div.conteudo_trabalhista div.coluna_direita div.coad_news {width:147px; border:1px solid #ccc;}
+div.conteudo_trabalhista div.coluna_direita div.coad_news div.titulo { height:41px; background-image:url(/imagens/bg_titulo.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; color:#266787;}
+div.conteudo_trabalhista div.coluna_direita div.coad_news div.texto {padding:13px 8px 5px 8px;}
+div.conteudo_trabalhista div.coluna_direita div.coad_news div.texto p { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; color:#333; margin:0; padding:0 0 7px 0;}
+div.conteudo_trabalhista div.coluna_direita div.coad_news div.texto a {color:#333; text-decoration:none;}
+div.conteudo_trabalhista div.coluna_direita div.coad_news div.texto a:hover {text-decoration:underline;}
+
+div.conteudo_trabalhista div.coluna_direita div.indicadores {width:147px; border:1px solid #ccc;}
+div.conteudo_trabalhista div.coluna_direita div.indicadores div.titulo { height:41px; background-image:url(/imagens/bg_titulo.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; color:#266787;}
+div.conteudo_trabalhista div.coluna_direita div.indicadores div.texto {padding:13px 8px 10px 8px;}
+div.conteudo_trabalhista div.coluna_direita div.indicadores div.texto table tr td { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#333; padding:3px 0 3px 0;}
+
+/* FIM TRABALHISTA */
+
+/* JURIDICO */
+
+div.conteudo_juridico {width:982px; margin:0 auto; background-color:#fff; padding:10px 10px 30px 10px;}
+div.conteudo_juridico div.coluna_principal {width:810px; float:left;}
+div.conteudo_juridico div.coluna_principal div.banner_adv_online { width:809px; height:150px; background-image:url(/imagens/banner_marcacao_adv_online.jpg); background-repeat:no-repeat;}
+div.conteudo_juridico div.coluna_principal div.banner_adv_online a  { color:#666; font-weight:bold;}
+div.conteudo_juridico div.coluna_principal div.banner_adv_online h1 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:21px; color:#990000; font-weight:normal; width:450px; padding:20px 0 0 30px; margin:0;}
+div.conteudo_juridico div.coluna_principal div.banner_adv_online h2 { width:320px; padding:10px 0 0 30px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333333; font-weight:normal; margin:0;}
+div.conteudo_juridico div.coluna_principal div.banner_adv_oab { width:809px; height:150px; background-image:url(/imagens/banner_marcacao_oab.jpg); background-repeat:no-repeat;}
+div.conteudo_juridico div.coluna_principal div.banner_adv_oab h1 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:21px; color:#990000; font-weight:normal; width:450px; padding:20px 0 0 30px; margin:0;}
+div.conteudo_juridico div.coluna_principal div.banner_adv_oab h2 { width:320px; padding:10px 0 0 30px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333333; font-weight:normal; margin:0;}
+div.conteudo_juridico div.coluna_principal div.banner { width:809px; height:150px; background-image:url(/imagens/banner_marcacao_adv.jpg); background-repeat:no-repeat;}
+div.conteudo_juridico div.coluna_principal div.banner h1 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:21px; color:#990000; font-weight:normal; width:450px; padding:20px 0 0 30px; margin:0;}
+div.conteudo_juridico div.coluna_principal div.banner h2 { width:320px; padding:10px 0 0 30px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333333; font-weight:normal; margin:0;}
+div.conteudo_juridico div.coluna_principal div.beneficios { padding:29px 0 0 0; margin:0;}
+div.conteudo_juridico div.coluna_principal div.beneficios h1 {float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:25px; color:#333; font-weight:normal; margin:0; padding:0;}
+div.conteudo_juridico div.coluna_principal div.beneficios div.print_indique { padding-top:8px; float:right; font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_juridico div.coluna_principal div.beneficios div.print_indique img {vertical-align:middle;}
+div.conteudo_juridico div.coluna_principal div.beneficios div.print_indique a {color:#666; text-decoration:none;}
+div.conteudo_juridico div.coluna_principal div.beneficios div.print_indique a:hover {text-decoration:underline;}
+div.conteudo_juridico div.coluna_principal div.beneficios div.lista {padding:30px 0 0 20px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#666;  width:380px; float:left;}
+div.conteudo_juridico div.coluna_principal div.beneficios div.lista ul {list-style:none; margin:0; padding:0;}
+div.conteudo_juridico div.coluna_principal div.beneficios div.lista ul li {background-image:url(/imagens/bullet_vermelho.jpg); background-repeat: no-repeat; background-position:0 7px; margin:0 0 30px 0; padding:0 0 0 20px;}
+div.conteudo_juridico div.coluna_principal div.beneficios div.lista div.outros_beneficios { padding:20px 0 0 0;}
+div.conteudo_juridico div.coluna_principal div.beneficios div.lista div.outros_beneficios a { text-decoration:none; color: #006699;}
+div.conteudo_juridico div.coluna_principal div.beneficios div.lista div.outros_beneficios a:hover {text-decoration:underline; }
+div.conteudo_juridico div.coluna_principal div.beneficios div.lista2 {padding:30px 0 0 20px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#666;  width:380px; float:right;}
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.esclarecimento { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333; padding:30px 0 0 0;}
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.esclarecimento a {color:#336699; text-decoration:none;}
+div.conteudo_juridico div.coluna_principal div.beneficios div.lista2 ul {list-style:none; margin:0; padding:0;}
+div.conteudo_juridico div.coluna_principal div.beneficios div.lista2 ul li {background-image:url(/imagens/bullet_vermelho.jpg); background-repeat: no-repeat; background-position:0 7px; margin:0 0 30px 0; padding:0 0 0 20px;}
+div.conteudo_juridico div.coluna_principal div.caracteristicas { background-image:url(/imagens/bg_boxes.jpg); background-repeat:repeat-x; padding:15px 10px 0 10px; margin:50px 0 0 0;}
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.titulo { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; color:#333; padding:0 0 20px 0;}
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.conteudo_caracteristicas {border:1px solid #ccc; padding:20px;}
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.conteudo_caracteristicas div.left { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333; width:310px; float:left;}
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.conteudo_caracteristicas div.right { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333; width:310px; float:right;}
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.aviso { font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; padding:15px 0 0 0;}
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.form_assine {padding:30px 0 0 0;}
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.form_assine h1 {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:22px; color:#333; font-weight:normal;}
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.form_assine div.alerta { height:50px; line-height:50px; border:1px solid #ccc; background-color:#ffff99; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#333; font-weight:bold; padding-left:15px; margin-bottom:20px;}
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.form_assine div.alerta span { color:#990000;}
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.form_assine div.alerta img {vertical-align:middle; margin-right:7px;}
+
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.form_assine div.sucesso { height:50px; line-height:50px; border:1px solid #ccc; background-color:#cdfd99; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#333; font-weight:bold; padding-left:15px;  margin-bottom:20px;}
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.form_assine div.sucesso img {vertical-align:middle; margin-right:7px;}
+
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.form_assine p {width:48%; height:80px; margin:0; padding:0; float:left;}
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.form_assine p label { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333;}
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.form_assine p input.campos01 {width:330px; height:28px; line-height:28px; border:1px solid #333; margin-top:8px;}
+div.conteudo_juridico div.coluna_principal div.caracteristicas div.form_assine p select { height:32px; line-height:28px; border:1px solid #333; margin-top:8px; width:100px;}
+div.conteudo_juridico div.coluna_principal div.veja_tambem { background-image:url(/imagens/bg_boxes.jpg); background-repeat:repeat-x; padding:15px 10px 0 30px; margin:50px 0 0 0;}
+div.conteudo_juridico div.coluna_principal div.veja_tambem div.titulo { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; color:#266787; padding:0 0 20px 0;}
+div.conteudo_juridico div.coluna_principal div.veja_tambem div.veja {float:left; width:300px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px;}
+div.conteudo_juridico div.coluna_principal div.veja_tambem div.veja p {margin:0; padding:0;}
+div.conteudo_juridico div.coluna_principal div.veja_tambem div.veja p a {color:#336699; text-decoration:none;}
+div.conteudo_juridico div.coluna_principal div.veja_tambem div.veja p a:hover { text-decoration:underline;}
+
+div.conteudo_juridico div.coluna_direita { margin-left:25px; width:147px; float:left;}
+div.conteudo_juridico div.coluna_direita div.itens { margin:0 0 50px 0;}
+
+div.conteudo_juridico div.coluna_direita div.twitter { margin:0 0 20px 0;}
+div.conteudo_juridico div.coluna_direita div.twitter div.ico { width:55px; height:47px; float:left;}
+div.conteudo_juridico div.coluna_direita div.twitter div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; padding:5px 0 0 0;}
+div.conteudo_juridico div.coluna_direita div.twitter div.texto a { text-decoration:none; color:#333;}
+div.conteudo_juridico div.coluna_direita div.twitter div.texto a:hover {text-decoration:underline;}
+
+div.conteudo_juridico div.coluna_direita div.itens { margin:0 0 50px 0;}
+div.conteudo_juridico div.coluna_direita div.itens div.assine { margin:0 0 20px 0;}
+div.conteudo_juridico div.coluna_direita div.itens div.assine div.ico { width:55px; height:47px; float:left;}
+div.conteudo_juridico div.coluna_direita div.itens div.assine div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; padding:10px 0 0 0;}
+div.conteudo_juridico div.coluna_direita div.itens div.assine div.texto a { text-decoration:none; color:#cc6600;}
+div.conteudo_juridico div.coluna_direita div.itens div.assine div.texto a:hover {text-decoration:underline;}
+
+div.conteudo_juridico div.coluna_direita div.itens div.iten_gratuito { margin:0 0 20px 0;}
+div.conteudo_juridico div.coluna_direita div.itens div.iten_gratuito div.ico { width:55px; height:47px; float:left;}
+div.conteudo_juridico div.coluna_direita div.itens div.iten_gratuito div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; /*padding:5px 0 0 0;*/}
+div.conteudo_juridico div.coluna_direita div.itens div.iten_gratuito div.texto a { text-decoration:none; color:#336600;}
+div.conteudo_juridico div.coluna_direita div.itens div.iten_gratuito div.texto a:hover {text-decoration:underline;}
+div.conteudo_juridico div.coluna_direita div.itens div.iten_gratuito div.texto div.titulo { font-weight:bold; color:#336600; }
+
+div.conteudo_juridico div.coluna_direita div.itens div.iten_noticias { margin:0 0 20px 0;}
+div.conteudo_juridico div.coluna_direita div.itens div.iten_noticias div.ico { width:55px; height:47px; float:left;}
+div.conteudo_juridico div.coluna_direita div.itens div.iten_noticias div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; /*padding:5px 0 0 0;*/}
+div.conteudo_juridico div.coluna_direita div.itens div.iten_noticias div.texto a { text-decoration:none; color:#333;}
+div.conteudo_juridico div.coluna_direita div.itens div.iten_noticias div.texto a:hover {text-decoration:underline;}
+div.conteudo_juridico div.coluna_direita div.itens div.iten_noticias div.texto div.titulo { font-weight:bold; }
+
+div.conteudo_juridico div.coluna_direita div.itens div.twitter { margin:0 0 20px 0;}
+div.conteudo_juridico div.coluna_direita div.itens div.twitter div.ico { width:55px; height:47px; float:left;}
+div.conteudo_juridico div.coluna_direita div.itens div.twitter div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; padding:5px 0 0 0;}
+div.conteudo_juridico div.coluna_direita div.itens div.twitter div.texto a { text-decoration:none; color:#333;}
+div.conteudo_juridico div.coluna_direita div.itens div.twitter div.texto a:hover {text-decoration:underline;}
+div.conteudo_juridico div.coluna_direita div.noticias {width:147px; border:1px solid #ccc;}
+div.conteudo_juridico div.coluna_direita div.noticias div.titulo { height:41px; background-image:url(/imagens/bg_titulo_noticias.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; }
+div.conteudo_juridico div.coluna_direita div.noticias div.titulo a { color:#266787; text-decoration:none; display:block; width:26px; float:right; height:23px; margin:7px 10px 0 0;}
+div.conteudo_juridico div.coluna_direita div.noticias div.titulo a:hover {text-decoration:underline;}
+div.conteudo_juridico div.coluna_direita div.noticias div.data { padding:8px 0 4px 8px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; font-weight:bold;}
+div.conteudo_juridico div.coluna_direita div.noticias div.manchetes {padding:5px 0 0 8px;}
+div.conteudo_juridico div.coluna_direita div.noticias div.manchetes ul {list-style:none; margin:0; padding:0; display:table;}
+div.conteudo_juridico div.coluna_direita div.noticias div.manchetes ul li { padding:0 8px 3px 0;}
+div.conteudo_juridico div.coluna_direita div.noticias div.manchetes ul li div.hora { font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; font-weight:bold;}
+div.conteudo_juridico div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_juridico div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico a {color:#990000; text-decoration:none;}
+div.conteudo_juridico div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico a:hover {text-decoration:underline;}
+div.conteudo_juridico div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_juridico div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil a {color:#003366; text-decoration:none;}
+div.conteudo_juridico div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil a:hover {text-decoration:underline;}
+div.conteudo_juridico div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_juridico div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista a {color:#024909; text-decoration:none;}
+div.conteudo_juridico div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista a:hover {text-decoration:underline;}
+div.conteudo_juridico div.coluna_direita div.noticias div.manchetes ul li div.manchete p { margin:0; padding:0 0 7px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; }
+div.conteudo_juridico div.coluna_direita div.noticias div.manchetes ul li div.manchete a { color:#333; text-decoration:none;}
+div.conteudo_juridico div.coluna_direita div.noticias div.manchetes ul li div.manchete a:hover {  text-decoration:underline;}
+div.conteudo_juridico div.coluna_direita div.noticias div.mais_noticias {height:31px; background-image:url(/imagens/bg_mais_noticias.jpg); background-repeat:no-repeat; margin:4px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; line-height:31px; padding-left:8px;}
+div.conteudo_juridico div.coluna_direita div.noticias div.mais_noticias a { color:#336699; text-decoration:none;}
+div.conteudo_juridico div.coluna_direita div.noticias div.mais_noticias a:hover {text-decoration:underline;}
+
+div.conteudo_juridico div.coluna_direita div.coad_news {width:147px; border:1px solid #ccc;}
+div.conteudo_juridico div.coluna_direita div.coad_news div.titulo { height:41px; background-image:url(/imagens/bg_titulo.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; color:#266787;}
+div.conteudo_juridico div.coluna_direita div.coad_news div.texto {padding:13px 8px 5px 8px;}
+div.conteudo_juridico div.coluna_direita div.coad_news div.texto p { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; color:#333; margin:0; padding:0 0 7px 0;}
+div.conteudo_juridico div.coluna_direita div.coad_news div.texto a {color:#333; text-decoration:none;}
+div.conteudo_juridico div.coluna_direita div.coad_news div.texto a:hover {text-decoration:underline;}
+
+div.conteudo_juridico div.coluna_direita div.indicadores {width:147px; border:1px solid #ccc;}
+div.conteudo_juridico div.coluna_direita div.indicadores div.titulo { height:41px; background-image:url(/imagens/bg_titulo.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; color:#266787;}
+div.conteudo_juridico div.coluna_direita div.indicadores div.texto {padding:13px 8px 10px 8px;}
+div.conteudo_juridico div.coluna_direita div.indicadores div.texto table tr td { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#333; padding:3px 0 3px 0;}
+
+/* FIM JURIDICO */
+
+
+/* A EMPRESA */
+
+div.conteudo_empresa {width:982px; margin:0 auto; background-color:#fff; padding:10px 10px 30px 10px;}
+div.conteudo_empresa div.banner { width:982px;}
+div.conteudo_empresa div.links { height:32px; background-image:url(/imagens/bg_links.jpg); background-repeat:repeat-x; margin-top:4px; line-height:32px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#FFF; padding-left:4px; }
+div.conteudo_empresa div.links a { color:#FFF; text-decoration:none; padding:0 5px 0 5px;}
+div.conteudo_empresa div.links a:hover {text-decoration:underline;}
+div.conteudo_empresa div.coluna_principal {width:530px; float:left;}
+div.conteudo_empresa div.coluna_principal div.historia { padding:19px 0 0 0; margin:0;}
+div.conteudo_empresa div.coluna_principal div.historia h1 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:25px; color:#333; font-weight:normal; padding-bottom:20px;}
+div.conteudo_empresa div.coluna_principal div.historia div.texto { padding-left:20px; padding-bottom:30px;  font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333;}
+div.conteudo_empresa div.coluna_principal div.historia div.texto p {margin:0; padding:0 0 17px 0;}
+div.conteudo_empresa div.coluna_principal div.historia div.texto p.bullet {background-image:url(/imagens/bullet_cinza.jpg); background-repeat:no-repeat; padding:0 0 17px 25px; background-position:0 7px;}
+div.conteudo_empresa div.coluna_principal div.historia div.texto div.parceiros {padding:0 20px 0 0; float:left;}
+div.conteudo_empresa div.coluna_principal div.historia div.texto a {color:#336699; text-decoration:none;}
+div.conteudo_empresa div.coluna_principal div.historia div.texto a:hover {text-decoration:underline;}
+div.conteudo_empresa div.coluna_principal div.veja_tambem { background-image:url(/imagens/bg_boxes.jpg); background-repeat:repeat-x; padding:15px 10px 0 30px; margin:20px 0 0 0;}
+div.conteudo_empresa div.coluna_principal div.veja_tambem div.titulo { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; color:#266787; padding:0 0 20px 0;}
+div.conteudo_empresa div.coluna_principal div.veja_tambem div.veja { width:500px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px;}
+div.conteudo_empresa div.coluna_principal div.veja_tambem div.veja p {margin:0; padding:0;}
+div.conteudo_empresa div.coluna_principal div.veja_tambem div.veja p a {color:#336699; text-decoration:none;}
+div.conteudo_empresa div.coluna_principal div.veja_tambem div.veja p a:hover { text-decoration:underline;}
+
+
+div.conteudo_empresa div.coluna_principal div.acesso { padding:19px 0 0 0; margin:0;}
+div.conteudo_empresa div.coluna_principal div.acesso h1 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:25px; color:#333; font-weight:normal; padding:0; margin:0;}
+div.conteudo_empresa div.coluna_principal div.acesso div.texto {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333; padding-top:20px;}
+div.conteudo_empresa div.coluna_principal div.acesso div.texto p {margin:0; padding:0 0 17px 0;}
+div.conteudo_empresa div.coluna_principal div.acesso div.acesso_gratuito { background-image:url(/imagens/bkg-experimente_semST.jpg); background-repeat:no-repeat; width:531px; height:180px;}
+div.conteudo_empresa div.coluna_principal div.acesso div.acesso_gratuito h2 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:25px; color:#266787; font-weight:normal; padding:15px 0 0 90px;}
+div.conteudo_empresa div.coluna_principal div.acesso div.acesso_gratuito p { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333333; padding:0 30px 0 30px;}
+div.conteudo_empresa div.coluna_principal div.acesso div.acesso_gratuito_st { background-image:url("/imagens/bkg-experimente.jpg"); background-repeat:no-repeat; width:531px; height:180px;}
+div.conteudo_empresa div.coluna_principal div.acesso div.acesso_gratuito_st h2 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:25px; color:#266787; font-weight:normal; padding:15px 0 0 90px;}
+div.conteudo_empresa div.coluna_principal div.acesso div.acesso_gratuito_st p { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333333; padding:0 30px 0 30px;}
+div.conteudo_empresa div.coluna_principal div.acesso div.alerta { height:50px; line-height:50px; border:1px solid #ccc; background-color:#ffff99; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#333; font-weight:bold; padding-left:15px; margin-bottom:20px;}
+div.conteudo_empresa div.coluna_principal div.acesso div.alerta span { color:#990000;}
+div.conteudo_empresa div.coluna_principal div.acesso div.alerta img {vertical-align:middle; margin-right:7px;}
+div.conteudo_empresa div.coluna_principal div.acesso div.sucesso { height:50px; line-height:50px; border:1px solid #ccc; background-color:#cdfd99; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#333; font-weight:bold; padding-left:15px;  margin-bottom:20px;}
+div.conteudo_empresa div.coluna_principal div.acesso div.sucesso img {vertical-align:middle; margin-right:7px;}
+div.conteudo_empresa div.coluna_principal div.acesso div.form_assine p {width:50%; height:80px; margin:0; padding:0; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333;}
+div.conteudo_empresa div.coluna_principal div.acesso div.form_assine p label { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333;}
+div.conteudo_empresa div.coluna_principal div.acesso div.form_assine p input.campos01 {width:240px; height:28px; line-height:28px; border:1px solid #333; margin-top:8px; padding-left:5px;}
+div.conteudo_empresa div.coluna_principal div.acesso div.form_assine p select { height:32px; line-height:28px; border:1px solid #333; margin-top:8px; width:160px;}
+
+
+div.conteudo_empresa div.coluna_direita { margin-left:105px; width:250px; float:left; padding-top:45px;}
+div.conteudo_empresa div.coluna_direita div.foto { border:1px solid #CCC; padding:15px; margin-bottom:35px;}
+div.conteudo_empresa div.coluna_direita div.depoimento { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; color:#333; line-height:28px; padding-bottom:35px;}
+div.conteudo_empresa div.coluna_direita div.depoimento p {margin:0; padding:0 0 10px 0;}
+div.conteudo_empresa div.coluna_direita div.depoimento span { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:11px; color:#333; line-height:16px;}
+div.conteudo_empresa div.coluna_direita div.depoimento span.autor {font-size:13px; font-style:italic;}
+div.conteudo_empresa div.coluna_direita div.depoimento img {vertical-align:middle;}
+div.conteudo_empresa div.coluna_direita div.favoritos { background-image:url(/imagens/bg_favoritos.jpg); background-repeat:no-repeat; width:240px; height:61px; margin-bottom:23px;}
+div.conteudo_empresa div.coluna_direita div.favoritos a {display:block; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#266787; text-decoration:none; padding:24px 0 10px 60px;}
+div.conteudo_empresa div.coluna_direita div.favoritos a:hover {text-decoration:underline;}
+div.conteudo_empresa div.coluna_direita div.indique { background-image:url(/imagens/bg_indique.jpg); background-repeat:no-repeat; width:240px; height:56px; margin-bottom:23px; }
+div.conteudo_empresa div.coluna_direita div.indique a {display:block; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#266787; text-decoration:none; padding:20px 0 10px 66px;}
+div.conteudo_empresa div.coluna_direita div.indique a:hover {text-decoration:underline;}
+div.conteudo_empresa div.coluna_direita div.acesso { width:240px; height:129px; background-image:url(/imagens/bg_acesso.jpg); background-repeat:no-repeat;}
+div.conteudo_empresa div.coluna_direita div.acesso p.titulo a {color:#266787; text-decoration:none;}
+div.conteudo_empresa div.coluna_direita div.acesso p.titulo a:hover {text-decoration:underline;}
+div.conteudo_empresa div.coluna_direita div.acesso p.titulo {padding:20px 25px 3px 90px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#266787; margin:0;}
+div.conteudo_empresa div.coluna_direita div.acesso p { margin:0; padding:0 30px 0 20px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; color:#333;}
+div.conteudo_empresa div.coluna_direita div.acesso p a {color:#266787; text-decoration:none;}
+
+/* FIM A EMPRESA */
+
+
+/* CURSOS APRESENTAÇÃO */
+
+div.conteudo_cursos_apresentacao {width:982px; margin:0 auto; background-color:#fff; padding:10px 10px 30px 10px;}
+div.conteudo_cursos_apresentacao div.banner { width:982px;}
+div.conteudo_cursos_apresentacao div.links { height:32px; background-image:url(/imagens/bg_links.jpg); background-repeat:repeat-x; margin-top:4px; line-height:32px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#FFF; padding-left:4px; }
+div.conteudo_cursos_apresentacao div.links a { color:#FFF; text-decoration:none; padding:0 5px 0 5px;}
+div.conteudo_cursos_apresentacao div.links a:hover {text-decoration:underline;}
+div.conteudo_cursos_apresentacao div.coluna_principal {width:530px; float:left;}
+div.conteudo_cursos_apresentacao div.coluna_principal div.historia { padding:19px 0 0 0; margin:0;}
+div.conteudo_cursos_apresentacao div.coluna_principal div.historia h1 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:25px; color:#333; font-weight:normal; padding-bottom:20px;}
+div.conteudo_cursos_apresentacao div.coluna_principal div.historia div.texto { padding-left:20px; padding-bottom:30px;  font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333;}
+div.conteudo_cursos_apresentacao div.coluna_principal div.historia div.texto p {margin:0; padding:0 0 17px 0;}
+div.conteudo_cursos_apresentacao div.coluna_principal div.historia div.texto p.bullet {background-image:url(/imagens/bullet_cinza.jpg); background-repeat:no-repeat; padding:0 0 17px 25px; background-position:0 7px;}
+div.conteudo_cursos_apresentacao div.coluna_principal div.historia div.texto div.parceiros {padding:0 20px 0 0; float:left;}
+div.conteudo_cursos_apresentacao div.coluna_principal div.historia div.texto a {color:#336699; text-decoration:none;}
+div.conteudo_cursos_apresentacao div.coluna_principal div.historia div.texto a:hover {text-decoration:underline;}
+div.conteudo_cursos_apresentacao div.coluna_principal div.veja_tambem { background-image:url(/imagens/bg_boxes.jpg); background-repeat:repeat-x; padding:15px 10px 0 30px; margin:20px 0 0 0;}
+div.conteudo_cursos_apresentacao div.coluna_principal div.veja_tambem div.titulo { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; color:#266787; padding:0 0 20px 0;}
+div.conteudo_cursos_apresentacao div.coluna_principal div.veja_tambem div.veja { width:500px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px;}
+div.conteudo_cursos_apresentacao div.coluna_principal div.veja_tambem div.veja p {margin:0; padding:0;}
+div.conteudo_cursos_apresentacao div.coluna_principal div.veja_tambem div.veja p a {color:#336699; text-decoration:none;}
+div.conteudo_cursos_apresentacao div.coluna_principal div.veja_tambem div.veja p a:hover { text-decoration:underline;}
+
+div.conteudo_cursos_apresentacao div.coluna_direita { margin-left:105px; width:250px; float:left; padding-top:25px;}
+div.conteudo_cursos_apresentacao div.coluna_direita h2 {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:22px; color:#333; font-weight:normal;}
+div.conteudo_cursos_apresentacao div.coluna_direita div.box {width:190px; margin:0 20px 30px 0; padding:0 0 0 12px; background-image:url(/imagens/bg_programacao_cursos.jpg); background-repeat:repeat-x;}
+div.conteudo_cursos_apresentacao div.coluna_direita div.box h1 {margin:0; padding:10px 0 10px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#333; font-weight:normal; border-bottom:5px solid #e4e4e4; }
+div.conteudo_cursos_apresentacao div.coluna_direita div.box div.data {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333;}
+div.conteudo_cursos_apresentacao div.coluna_direita div.box div.data span {font-size:12px; color:#999;}
+div.conteudo_cursos_apresentacao div.coluna_direita div.box div.data span a {color:#336699; text-decoration:none;}
+div.conteudo_cursos_apresentacao div.coluna_direita div.box div.link {clear:both; padding:0 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px;}
+div.conteudo_cursos_apresentacao div.coluna_direita div.box div.link a {color:#336699; text-decoration:none;}
+div.conteudo_cursos_apresentacao div.coluna_direita div.box div.link a:hover {text-decoration:underline;}
+div.conteudo_cursos_apresentacao div.coluna_direita div.button {padding:5px 0 0 15px; font-family: "Trebuchet MS", Arial, Helvetica, sans-serif; font-size:16px;}
+div.conteudo_cursos_apresentacao div.coluna_direita div.button a {color: #06F; text-decoration:none; font-weight:bold;}
+div.conteudo_cursos_apresentacao div.coluna_direita div.button a:hover {text-decoration:underline;}
+
+
+/* FIM CURSOS APRESENTAÇÃO */
+
+
+/* CURSOS PROGRAMAÇÃO */
+
+div.conteudo_cursos_programacao {width:982px; margin:0 auto; background-color:#fff; padding:10px 10px 30px 10px;}
+div.conteudo_cursos_programacao div.banner { width:982px;}
+div.conteudo_cursos_programacao div.links { height:32px; background-image:url(/imagens/bg_links.jpg); background-repeat:repeat-x; margin-top:4px; line-height:32px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#FFF; padding-left:4px; }
+div.conteudo_cursos_programacao div.links select { margin-left:390px;}
+div.conteudo_cursos_programacao div.links a { color:#FFF; text-decoration:none; padding:0 5px 0 5px;}
+div.conteudo_cursos_programacao div.links a:hover {text-decoration:underline;}
+div.conteudo_cursos_programacao div.coluna_principal {width:952px; padding-left:20px;}
+div.conteudo_cursos_programacao div.coluna_principal div.cursos { margin:0; padding:0;}
+div.conteudo_cursos_programacao div.coluna_principal div.cursos h1.titulo {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:25px; color:#333; font-weight:normal; padding:35px 0 0 0; margin:0; width:600px; float:left;}
+div.conteudo_cursos_programacao div.coluna_principal div.cursos div.estado {width:250px; float:right; margin-top:40px; text-align:right;}
+div.conteudo_cursos_programacao div.coluna_principal div.cursos div.mes { padding:35px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; color:#666;}
+div.conteudo_cursos_programacao div.coluna_principal div.cursos div.boxes { background-image:url(/imagens/bg_programacao_cursos.jpg); background-repeat:repeat-x; padding:15px 10px 0 10px; margin:20px 0 0 0; width:920px;}
+div.conteudo_cursos_programacao div.coluna_principal div.cursos div.boxes div.box_left {width:190px; float:left; margin:0 20px 30px 20px;}
+div.conteudo_cursos_programacao div.coluna_principal div.cursos div.boxes div.box_left h1 {margin:0; padding:0 0 10px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; color:#333; font-weight:normal; border-bottom:5px solid #e4e4e4;}
+div.conteudo_cursos_programacao div.coluna_principal div.cursos div.boxes div.box_left div.data {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333;}
+div.conteudo_cursos_programacao div.coluna_principal div.cursos div.boxes div.box_left div.data span {font-size:12px; color:#999;}
+div.conteudo_cursos_programacao div.coluna_principal div.cursos div.boxes div.box_left div.data span a {color:#336699; text-decoration:none;}
+div.conteudo_cursos_programacao div.coluna_principal div.cursos div.boxes div.box_left div.link {clear:both; padding:0 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px;}
+div.conteudo_cursos_programacao div.coluna_principal div.cursos div.boxes div.box_left div.link a {color:#336699; text-decoration:none;}
+div.conteudo_cursos_programacao div.coluna_principal div.cursos div.boxes div.box_left div.link a:hover {text-decoration:underline;}
+
+/* FIM CURSOS PROGRAMAÇÃO */
+
+
+/* CURSOS DETALHE */
+
+div.conteudo_cursos_detalhe {width:982px; margin:0 auto; background-color:#fff; padding:10px 10px 30px 10px;}
+div.conteudo_cursos_detalhe div.banner { width:982px;}
+div.conteudo_cursos_detalhe div.links { height:32px; background-image:url(/imagens/bg_links.jpg); background-repeat:repeat-x; margin-top:4px; line-height:32px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#FFF; padding-left:4px; }
+div.conteudo_cursos_detalhe div.links select { margin-left:390px;}
+div.conteudo_cursos_detalhe div.links a { color:#FFF; text-decoration:none; padding:0 5px 0 5px;}
+div.conteudo_cursos_detalhe div.links a:hover {text-decoration:underline;}
+div.conteudo_cursos_detalhe div.coluna_principal {width:952px; padding-top:30px;}
+div.conteudo_cursos_detalhe div.coluna_principal div.curso { margin:0; padding:10px 20px 0 20px; width:940px; background-image:url(/imagens/bg_boxes.jpg); background-repeat:repeat-x;}
+div.conteudo_cursos_detalhe div.coluna_principal div.curso h1.blue { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:22px; color:#0076b9; margin:0; padding:0; width:400px; float:left;}
+div.conteudo_cursos_detalhe div.coluna_principal div.curso h1.green { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:22px; color:#5e9f3e; margin:0; padding:0; width:400px; float:left;}
+div.conteudo_cursos_detalhe div.coluna_principal div.curso div.print_email {float:right;}
+div.conteudo_cursos_detalhe div.coluna_principal div.curso div.print_email a {margin-right:10px;}
+div.conteudo_cursos_detalhe div.coluna_principal div.curso h2  {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:23px; color:#333; margin:0; padding:20px 0 0 0;}
+div.conteudo_cursos_detalhe div.coluna_principal div.curso div.conteudo_curso { padding-top:20px;}
+div.conteudo_cursos_detalhe div.coluna_principal div.curso div.conteudo_curso div.left { width: 420px; float:left;}
+div.conteudo_cursos_detalhe div.coluna_principal div.curso div.conteudo_curso div.right {float:right; width:420px;}
+div.conteudo_cursos_detalhe div.coluna_principal div.curso div.conteudo_curso p {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:13px; color:#666;}
+div.conteudo_cursos_detalhe div.coluna_principal div.curso div.conteudo_curso p span {color:#333; font-weight:bold;}
+div.conteudo_cursos_detalhe div.coluna_principal div.curso div.conteudo_curso div.pre{float:right; width:420px;}
+div.conteudo_cursos_detalhe div.coluna_principal div.curso div.conteudo_curso div.right_form  {}
+div.topo_pre { height:50px; background-color:#206491; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#fff;   -webkit-border-radius:4px 4px 0 0 ; -moz-border-radius:4px 4px 0 0; border-radius:4px 4px 0 0; width:320px;}
+div.topo_pre h2 {margin:0; padding:0; line-height:50px; padding-left:15px; font-weight:normal;}
+div.cont_pre {width:270px; background-color:#FFF; padding:20px 25px 20px 25px;}
+div.cont_pre p {font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#333; font-weight:bold;}
+div.cont_pre form {margin:0; padding:0;}
+div.cont_pre form input { vertical-align:middle;}
+div.cont_pre input.campos_pre01 { width:200px; height:16px; border-top:2px solid #999; border-left:2px solid #999; border-right:1px solid #ccc; border-bottom:1px solid #ccc;}
+div.cont_pre input.campos_pre02 { width:50px; height:16px; border-top:2px solid #999; border-left:2px solid #999; border-right:1px solid #ccc; border-bottom:1px solid #ccc;}
+div.cont_pre input.campos_pre03 { width:127px; height:16px; border-top:2px solid #999; border-left:2px solid #999; border-right:1px solid #ccc; border-bottom:1px solid #ccc;}
+div.cont_pre div.alerta { height:30px; line-height:30px; border:1px solid #ccc; background-color:#ffff99; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#333; font-weight:bold; padding-left:7px; margin-bottom:20px;}
+div.cont_pre div.alerta span { color:#990000;}
+div.cont_pre div.alerta img {vertical-align:middle; margin-right:5px;}
+div.cont_pre div.sucesso { height:30px; line-height:30px; border:1px solid #ccc; background-color:#cdfd99; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#333; font-weight:bold; padding-left:5px;  margin-bottom:20px;}
+div.cont_pre div.sucesso img {vertical-align:middle; margin-right:7px;}
+
+/* FIM CURSOS DETALHE */
+
+/* CURSOS PRE RESERVA */
+
+div.conteudo_cursos_reserva {width:982px; margin:0 auto; background-color:#fff; padding:10px 10px 30px 10px;}
+div.conteudo_cursos_reserva div.banner { width:982px;}
+div.conteudo_cursos_reserva div.links { height:32px; background-image:url(/imagens/bg_links.jpg); background-repeat:repeat-x; margin-top:4px; line-height:32px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#FFF; padding-left:4px; }
+div.conteudo_cursos_reserva div.links select { margin-left:390px;}
+div.conteudo_cursos_reserva div.links a { color:#FFF; text-decoration:none; padding:0 5px 0 5px;}
+div.conteudo_cursos_reserva div.links a:hover {text-decoration:underline;}
+div.conteudo_cursos_reserva div.coluna_principal {width:952px; padding-top:30px;}
+div.conteudo_cursos_reserva div.coluna_principal div.curso { margin:0; padding:10px 20px 0 20px; width:940px; background-image:url(/imagens/bg_boxes.jpg); background-repeat:repeat-x;}
+div.conteudo_cursos_reserva div.coluna_principal div.curso div.print_email {float:right;}
+div.conteudo_cursos_reserva div.coluna_principal div.curso div.print_email a {margin-right:10px;}
+div.conteudo_cursos_reserva div.coluna_principal div.curso h2  {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:20px; color: #1c6590; margin:0; padding:20px 0 15px 0;}
+div.conteudo_cursos_reserva div.coluna_principal div.curso p { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:13px; color:#666; margin:0; padding:0 0 5px 0;}
+div.conteudo_cursos_reserva div.coluna_principal div.curso div.conteudo_curso { padding-top:15px;}
+div.conteudo_cursos_reserva div.coluna_principal div.curso div.conteudo_curso div.left { width: 550px; float:left;}div.conteudo_cursos_reserva div.coluna_principal div.curso div.conteudo_curso div.left p {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:13px; color:#666; padding:0 0 15px 0;}
+div.conteudo_cursos_reserva div.coluna_principal div.curso div.conteudo_curso div.left a { color:#069; text-decoration:none;}
+div.conteudo_cursos_reserva div.coluna_principal div.curso div.conteudo_curso div.left a:hover {color:#999;}
+div.conteudo_cursos_reserva div.coluna_principal div.curso div.conteudo_curso div.left p input { vertical-align:middle;}
+div.conteudo_cursos_reserva div.coluna_principal div.curso div.conteudo_curso div.right {float:right; width:320px;}
+div.conteudo_cursos_reserva div.coluna_principal div.curso div.conteudo_curso div.right input.campos_pre01 {width:250px; border:1px solid #CCC;}
+div.conteudo_cursos_reserva div.coluna_principal div.curso div.conteudo_curso div.right input.campos_pre02 {width:50px; border:1px solid #CCC;}
+div.conteudo_cursos_reserva div.coluna_principal div.curso div.conteudo_curso div.right input.campos_pre03 {width:190px; border:1px solid #CCC;}
+
+
+/* FIM CURSOS PRE RESERVA */
+
+/* CURSOS CORPORATIVO */
+
+div.conteudo_cursos_corporativo {width:982px; margin:0 auto; background-color:#fff; padding:10px 10px 30px 10px;}
+div.conteudo_cursos_corporativo div.banner { width:982px;}
+div.conteudo_cursos_corporativo div.links { height:32px; background-image:url(/imagens/bg_links.jpg); background-repeat:repeat-x; margin-top:4px; line-height:32px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#FFF; padding-left:4px; }
+div.conteudo_cursos_corporativo div.links select { margin-left:390px;}
+div.conteudo_cursos_corporativo div.links a { color:#FFF; text-decoration:none; padding:0 5px 0 5px;}
+div.conteudo_cursos_corporativo div.links a:hover {text-decoration:underline;}
+div.conteudo_cursos_corporativo div.coluna_principal {width:952px; padding-top:30px;}
+div.conteudo_cursos_corporativo div.coluna_principal div.curso { margin:0; padding:10px 20px 0 20px; width:940px; background-image:url(/imagens/bg_boxes.jpg); background-repeat:repeat-x;}
+div.conteudo_cursos_corporativo div.coluna_principal div.curso h2  {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:20px; color: #1c6590; margin:0; padding:20px 0 15px 0;}
+div.conteudo_cursos_corporativo div.coluna_principal div.curso p { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:13px; color:#666; margin:0; padding:0 0 5px 0;}
+div.conteudo_cursos_corporativo div.coluna_principal div.curso div.conteudo_curso { padding-top:15px;}
+
+div.conteudo_cursos_corporativo div.coluna_principal div.curso div.conteudo_curso div.sucesso { height:50px; line-height:50px; border:1px solid #ccc; background-color:#cdfd99; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#333; font-weight:bold; padding-left:15px;  margin-bottom:20px;}
+div.conteudo_cursos_corporativo div.coluna_principal div.curso div.conteudo_curso div.sucesso img {vertical-align:middle; margin-right:7px;}
+div.conteudo_cursos_corporativo div.coluna_principal div.curso div.conteudo_curso div.alerta { height:50px; line-height:50px; border:1px solid #ccc; background-color:#ffff99; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#333; font-weight:bold; padding-left:15px; margin-bottom:20px;}
+div.conteudo_cursos_corporativo div.coluna_principal div.curso div.conteudo_curso div.alerta span { color:#990000;}
+div.conteudo_cursos_corporativo div.coluna_principal div.curso div.conteudo_curso div.alerta img {vertical-align:middle; margin-right:7px;}
+
+
+
+div.conteudo_cursos_corporativo div.coluna_principal div.curso div.conteudo_curso div.left { width: 400px; float:left;}div.conteudo_cursos_corporativo div.coluna_principal div.curso div.conteudo_curso div.left p {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:13px; color:#666; padding:0 0 15px 0;}
+div.conteudo_cursos_corporativo div.coluna_principal div.curso div.conteudo_curso div.left a { color:#069; text-decoration:none;}
+div.conteudo_cursos_corporativo div.coluna_principal div.curso div.conteudo_curso div.left a:hover {color:#999;}
+div.conteudo_cursos_corporativo div.coluna_principal div.curso div.conteudo_curso div.left p input.campos_pre01 {width:250px; border:1px solid #CCC;}
+div.conteudo_cursos_corporativo div.coluna_principal div.curso div.conteudo_curso div.right {float:left; width:350px;}
+div.conteudo_cursos_corporativo div.coluna_principal div.curso div.conteudo_curso div.right p {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:13px; color:#666; padding:0 0 15px 0;}
+div.conteudo_cursos_corporativo div.coluna_principal div.curso div.conteudo_curso div.right input.campos_pre01 {width:250px; border:1px solid #CCC;}
+div.conteudo_cursos_corporativo div.coluna_principal div.curso div.conteudo_curso div.right input.campos_pre02 {width:50px; border:1px solid #CCC;}
+div.conteudo_cursos_corporativo div.coluna_principal div.curso div.conteudo_curso div.right input.campos_pre03 {width:190px; border:1px solid #CCC;}
+div.conteudo_cursos_corporativo div.coluna_principal div.curso div.conteudo_curso div.right textarea { width:350px; border:1px solid #CCC;}
+
+
+/* FIM CURSOS CORPORATIVO */
+
+
+/* NOTÍCIAS */
+
+div.conteudo_noticias {width:982px; margin:0 auto; background-color:#fff; padding:10px 10px 30px 10px;}
+div.conteudo_noticias div.coluna_principal {width:810px; float:left;}
+div.conteudo_noticias div.coluna_principal div.noticias { padding:0 0 0 0; margin:0;}
+div.conteudo_noticias div.coluna_principal div.noticias h1 { width:450px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:25px; color:#333; font-weight:normal;  margin:0; padding:0;}
+div.conteudo_noticias div.coluna_principal div.noticias ul {list-style:none; margin:0; padding:0; display:table;}
+div.conteudo_noticias div.coluna_principal div.noticias ul li {border-bottom:1px solid #ccc; padding:15px 0 15px 0; width:750px;}
+div.conteudo_noticias div.coluna_principal div.noticias ul li div.topico { width:250px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333; padding-bottom:10px;}
+div.conteudo_noticias div.coluna_principal div.noticias ul li div.topico div.titulo_juridico {color:#990000; text-decoration:none;}
+div.conteudo_noticias div.coluna_principal div.noticias ul li div.topico div.titulo_contabil {color:#003366; text-decoration:none;}
+div.conteudo_noticias div.coluna_principal div.noticias ul li div.topico div.titulo_trabalhista {color:#024909; text-decoration:none;}
+
+div.conteudo_noticias div.coluna_principal div.noticias ul li div.data {float:right; width:250px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333; text-align:right; padding-bottom:10px;}
+div.conteudo_noticias div.coluna_principal div.noticias ul li p {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#666; margin:0; padding:0;}
+div.conteudo_noticias div.coluna_principal div.noticias ul li p a {color:#266787; text-decoration:none;}
+div.conteudo_noticias div.coluna_principal div.noticias ul li p a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_principal div.noticias div.paginacao_interna { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#666; margin:0; padding:20px; text-align:center; }
+div.conteudo_noticias div.coluna_principal div.noticias div.paginacao_interna a { color:#266787; text-decoration:none;}
+div.conteudo_noticias div.coluna_principal div.noticias div.paginacao_interna a:hover { text-decoration:underline;}
+
+div.conteudo_noticias div.coluna_direita { margin-left:25px; width:147px; float:left;}
+div.conteudo_noticias div.coluna_direita div.itens { margin:0 0 50px 0;}
+
+div.conteudo_noticias div.coluna_direita div.twitter { margin:0 0 20px 0;}
+div.conteudo_noticias div.coluna_direita div.twitter div.ico { width:55px; height:47px; float:left;}
+div.conteudo_noticias div.coluna_direita div.twitter div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; padding:5px 0 0 0;}
+div.conteudo_noticias div.coluna_direita div.twitter div.texto a { text-decoration:none; color:#333;}
+div.conteudo_noticias div.coluna_direita div.twitter div.texto a:hover {text-decoration:underline;}
+
+div.conteudo_noticias div.coluna_direita div.itens { margin:0 0 50px 0;}
+div.conteudo_noticias div.coluna_direita div.itens div.assine { margin:0 0 20px 0;}
+div.conteudo_noticias div.coluna_direita div.itens div.assine div.ico { width:55px; height:47px; float:left;}
+div.conteudo_noticias div.coluna_direita div.itens div.assine div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; padding:10px 0 0 0;}
+div.conteudo_noticias div.coluna_direita div.itens div.assine div.texto a { text-decoration:none; color:#cc6600;}
+div.conteudo_noticias div.coluna_direita div.itens div.assine div.texto a:hover {text-decoration:underline;}
+
+div.conteudo_noticias div.coluna_direita div.itens div.iten_gratuito { margin:0 0 20px 0;}
+div.conteudo_noticias div.coluna_direita div.itens div.iten_gratuito div.ico { width:55px; height:47px; float:left;}
+div.conteudo_noticias div.coluna_direita div.itens div.iten_gratuito div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; /*padding:5px 0 0 0;*/}
+div.conteudo_noticias div.coluna_direita div.itens div.iten_gratuito div.texto a { text-decoration:none; color:#336600;}
+div.conteudo_noticias div.coluna_direita div.itens div.iten_gratuito div.texto a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.itens div.iten_gratuito div.texto div.titulo { font-weight:bold; color:#336600; }
+
+div.conteudo_noticias div.coluna_direita div.itens div.iten_noticias { margin:0 0 20px 0;}
+div.conteudo_noticias div.coluna_direita div.itens div.iten_noticias div.ico { width:55px; height:47px; float:left;}
+div.conteudo_noticias div.coluna_direita div.itens div.iten_noticias div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; /*padding:5px 0 0 0;*/}
+div.conteudo_noticias div.coluna_direita div.itens div.iten_noticias div.texto a { text-decoration:none; color:#333;}
+div.conteudo_noticias div.coluna_direita div.itens div.iten_noticias div.texto a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.itens div.iten_noticias div.texto div.titulo { font-weight:bold; }
+
+div.conteudo_noticias div.coluna_direita div.itens div.twitter { margin:0 0 20px 0;}
+div.conteudo_noticias div.coluna_direita div.itens div.twitter div.ico { width:55px; height:47px; float:left;}
+div.conteudo_noticias div.coluna_direita div.itens div.twitter div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; padding:5px 0 0 0;}
+div.conteudo_noticias div.coluna_direita div.itens div.twitter div.texto a { text-decoration:none; color:#333;}
+div.conteudo_noticias div.coluna_direita div.itens div.twitter div.texto a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.noticias {width:147px; border:1px solid #ccc;}
+div.conteudo_noticias div.coluna_direita div.noticias div.titulo { height:41px; background-image:url(/imagens/bg_titulo_noticias.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; }
+div.conteudo_noticias div.coluna_direita div.noticias div.titulo a { color:#266787; text-decoration:none; display:block;}
+div.conteudo_noticias div.coluna_direita div.noticias div.titulo a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.noticias div.data { padding:8px 0 4px 8px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; font-weight:bold;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes {padding:5px 0 0 8px;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul {list-style:none; margin:0; padding:0; display:table;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li { padding:0 8px 3px 0;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.hora { font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; font-weight:bold;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico a {color:#990000; text-decoration:none;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil a {color:#003366; text-decoration:none;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista a {color:#024909; text-decoration:none;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.manchete p { margin:0; padding:0 0 7px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; }
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.manchete a { color:#333; text-decoration:none;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.manchete a:hover {  text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.noticias div.mais_noticias {height:31px; background-image:url(/imagens/bg_mais_noticias.jpg); background-repeat:no-repeat; margin:4px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; line-height:31px; padding-left:8px;}
+div.conteudo_noticias div.coluna_direita div.noticias div.mais_noticias a { color:#336699; text-decoration:none;}
+div.conteudo_noticias div.coluna_direita div.noticias div.mais_noticias a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.coad_news {width:147px; border:1px solid #ccc;}
+div.conteudo_noticias div.coluna_direita div.coad_news div.titulo { height:41px; background-image:url(/imagens/bg_titulo.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; color:#266787;}
+div.conteudo_noticias div.coluna_direita div.coad_news div.texto {padding:13px 8px 5px 8px;}
+div.conteudo_noticias div.coluna_direita div.coad_news div.texto p { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; color:#333; margin:0; padding:0 0 7px 0;}
+div.conteudo_noticias div.coluna_direita div.coad_news div.texto a {color:#333; text-decoration:none;}
+div.conteudo_noticias div.coluna_direita div.coad_news div.texto a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.indicadores {width:147px; border:1px solid #ccc;}
+div.conteudo_noticias div.coluna_direita div.indicadores div.titulo { height:41px; background-image:url(/imagens/bg_titulo.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; color:#266787;}
+div.conteudo_noticias div.coluna_direita div.indicadores div.texto {padding:13px 8px 10px 8px;}
+div.conteudo_noticias div.coluna_direita div.indicadores div.texto table tr td { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#333; padding:3px 0 3px 0;}
+
+/* FIM NOTICIAS */
+
+
+/* NOTÍCIAS DETALHE */
+
+div.conteudo_noticias {width:982px; margin:0 auto; background-color:#fff; padding:10px 10px 30px 10px;}
+div.conteudo_noticias div.coluna_principal {width:810px; float:left;}
+div.conteudo_noticias div.coluna_principal div.noticias { padding:0 0 0 0; margin:0;}
+div.conteudo_noticias div.coluna_principal div.noticias h1 { width:450px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:25px; color:#333; font-weight:normal;  margin:0; padding:0;}
+div.conteudo_noticias div.coluna_principal div.noticias div.conteudo { background-image:url(/imagens/adv/bg_boxes.jpg); background-repeat:repeat-x; padding:10px 15px 20px 20px; margin:13px 0 0 0;}
+div.conteudo_noticias div.coluna_principal div.noticias div.conteudo div.data_hora {width:250px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#666; font-weight:bold;}
+div.conteudo_noticias div.coluna_principal div.noticias div.conteudo div.print_email {float:right;}
+div.conteudo_noticias div.coluna_principal div.noticias div.conteudo div.print_email a {margin-right:10px;}
+div.conteudo_noticias div.coluna_principal div.noticias div.conteudo div.tipo_materia { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:16px; color:#333;}
+div.conteudo_noticias div.coluna_principal div.noticias div.conteudo div.tipo_materia span.topico div.titulo_juridico {color:#990000; text-decoration:none;}
+div.conteudo_noticias div.coluna_principal div.noticias div.conteudo div.tipo_materia span.topico div.titulo_contabil {color:#003366; text-decoration:none;}
+div.conteudo_noticias div.coluna_principal div.noticias div.conteudo div.tipo_materia span.topico div.titulo_trabalhista {color:#024909; text-decoration:none;}
+div.conteudo_noticias div.coluna_principal div.noticias div.conteudo p.sub_tit { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:16px; color:#666; font-weight:bold; padding:0; margin:20px 0 0 0; clear:both;}
+div.conteudo_noticias div.coluna_principal div.noticias div.conteudo p {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#666; padding:0 0 20px 0; margin:0;}
+
+div.conteudo_noticias div.coluna_direita { margin-left:25px; width:147px; float:left;}
+div.conteudo_noticias div.coluna_direita div.itens { margin:0 0 50px 0;}
+div.conteudo_noticias div.coluna_direita div.itens div.assine { margin:0 0 20px 0;}
+div.conteudo_noticias div.coluna_direita div.itens div.assine div.ico { width:55px; height:47px; float:left;}
+div.conteudo_noticias div.coluna_direita div.itens div.assine div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; padding:10px 0 0 0;}
+div.conteudo_noticias div.coluna_direita div.itens div.assine div.texto a { text-decoration:none; color:#cc6600;}
+div.conteudo_noticias div.coluna_direita div.itens div.assine div.texto a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.itens div.iten_noticias { margin:0 0 20px 0;}
+div.conteudo_noticias div.coluna_direita div.itens div.iten_noticias div.ico { width:55px; height:47px; float:left;}
+div.conteudo_noticias div.coluna_direita div.itens div.iten_noticias div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; padding:5px 0 0 0;}
+div.conteudo_noticias div.coluna_direita div.itens div.iten_noticias div.texto a { text-decoration:none; color:#333;}
+div.conteudo_noticias div.coluna_direita div.itens div.iten_noticias div.texto a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.itens div.twitter { margin:0 0 20px 0;}
+div.conteudo_noticias div.coluna_direita div.itens div.twitter div.ico { width:55px; height:47px; float:left;}
+div.conteudo_noticias div.coluna_direita div.itens div.twitter div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; padding:5px 0 0 0;}
+div.conteudo_noticias div.coluna_direita div.itens div.twitter div.texto a { text-decoration:none; color:#333;}
+div.conteudo_noticias div.coluna_direita div.itens div.twitter div.texto a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.noticias {width:147px; border:1px solid #ccc;}
+div.conteudo_noticias div.coluna_direita div.noticias div.titulo { height:41px; background-image:url(/imagens/bg_titulo_noticias.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; }
+div.conteudo_noticias div.coluna_direita div.noticias div.titulo a { color:#266787; text-decoration:none; display:block; width:26px; float:right; height:23px; margin:7px 10px 0 0;}
+div.conteudo_noticias div.coluna_direita div.noticias div.titulo a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.noticias div.data { padding:8px 0 4px 8px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; font-weight:bold;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes {padding:5px 0 0 8px;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul {list-style:none; margin:0; padding:0; display:table;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li { padding:0 8px 3px 0;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.hora { font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; font-weight:bold;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico a {color:#990000; text-decoration:none;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil a {color:#003366; text-decoration:none;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista a {color:#024909; text-decoration:none;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.manchete p { margin:0; padding:0 0 7px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; }
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.manchete a { color:#333; text-decoration:none;}
+div.conteudo_noticias div.coluna_direita div.noticias div.manchetes ul li div.manchete a:hover {  text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.noticias div.mais_noticias {height:31px; background-image:url(/imagens/bg_mais_noticias.jpg); background-repeat:no-repeat; margin:4px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; line-height:31px; padding-left:8px;}
+div.conteudo_noticias div.coluna_direita div.noticias div.mais_noticias a { color:#336699; text-decoration:none;}
+div.conteudo_noticias div.coluna_direita div.noticias div.mais_noticias a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.coad_news {width:147px; border:1px solid #ccc;}
+div.conteudo_noticias div.coluna_direita div.coad_news div.titulo { height:41px; background-image:url(/imagens/bg_titulo.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; color:#266787;}
+div.conteudo_noticias div.coluna_direita div.coad_news div.texto {padding:13px 8px 5px 8px;}
+div.conteudo_noticias div.coluna_direita div.coad_news div.texto p { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; color:#333; margin:0; padding:0 0 7px 0;}
+div.conteudo_noticias div.coluna_direita div.coad_news div.texto a {color:#333; text-decoration:none;}
+div.conteudo_noticias div.coluna_direita div.coad_news div.texto a:hover {text-decoration:underline;}
+div.conteudo_noticias div.coluna_direita div.indicadores {width:147px; border:1px solid #ccc;}
+div.conteudo_noticias div.coluna_direita div.indicadores div.titulo { height:41px; background-image:url(/imagens/bg_titulo.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; color:#266787;}
+div.conteudo_noticias div.coluna_direita div.indicadores div.texto {padding:13px 8px 10px 8px;}
+div.conteudo_noticias div.coluna_direita div.indicadores div.texto table tr td { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#333; padding:3px 0 3px 0;}
+
+/* FIM NOTICIAS DETALHE */
+
+
+/* CONTATO */
+
+div.conteudo_contato {width:982px; margin:0 auto; background-color:#fff; padding:10px 10px 30px 10px;}
+div.conteudo_contato div.banner { width:982px;}
+div.conteudo_contato div.coluna_principal {width:565px; float:left;}
+div.conteudo_contato div.coluna_principal div.contato { padding:20px 0 0 0; margin:0;}
+div.conteudo_contato div.coluna_principal div.contato h1 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:25px; color:#333; font-weight:normal; padding-bottom:10px; margin:0;}
+div.conteudo_contato div.coluna_principal div.contato div.alerta { height:50px; line-height:50px; border:1px solid #ccc; background-color:#ffff99; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#333; font-weight:bold; padding-left:15px; margin-bottom:20px;}
+div.conteudo_contato div.coluna_principal div.contato div.alerta span { color:#990000;}
+div.conteudo_contato div.coluna_principal div.contato div.alerta img {vertical-align:middle; margin-right:7px;}
+div.conteudo_contato div.coluna_principal div.contato div.sucesso { height:50px; line-height:50px; border:1px solid #ccc; background-color:#cdfd99; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#333; font-weight:bold; padding-left:15px;  margin-bottom:20px;}
+div.conteudo_contato div.coluna_principal div.contato div.sucesso img {vertical-align:middle; margin-right:7px;}
+div.conteudo_contato div.coluna_principal div.contato form {margin:0; padding:0 0 0 22px;}
+div.conteudo_contato div.coluna_principal div.contato form label { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333;}
+div.conteudo_contato div.coluna_principal div.contato form input.campos01 { width:480px; height:26px; border:1px solid #333; margin-top:5px;}
+div.conteudo_contato div.coluna_principal div.contato form textarea { width:480px; height:150px; border:1px solid #333; margin-top:5px;}
+div.conteudo_contato div.coluna_principal div.contato form select {height:30px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; color:#333; line-height:30px; margin-top:4px; border:1px solid #333;}
+
+#aviso_contato_consultoria { 
+	width:482px;
+	height:98px; 
+	border:1px solid #ccc; 
+	background: url(/imagens/aviso_contato_consultoria.png) no-repeat #fffeec;
+}
+#aviso_contato_consultoria  #texto {
+	color:#333; 
+	font-family:"Trebuchet MS", Arial, helvetica, sans-serif; 
+	font-size:12px; 
+	padding: 10px 10px 0 50px;
+}
+#aviso_contato_consultoria  #texto #atencao{
+    font-weight: bold;
+    height: 20px;
+}
+#aviso_contato_consultoria  #texto div#msg{
+	line-height: 20px;
+}
+#aviso_contato_consultoria  #texto div span{
+	color: #0033cc;
+	text-decoration:underline;
+}
+
+
+div.conteudo_contato div.coluna_direita { margin-left:85px; width:280px; float:left; padding-top:45px;}
+div.conteudo_contato div.coluna_direita h2 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; color:#266787;font-weight:normal; margin:0; padding:0;}
+div.conteudo_contato div.coluna_direita div.telefones { }
+div.conteudo_contato div.coluna_direita div.telefones p {margin:0; padding:10px 0 10px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333;}
+div.conteudo_contato div.coluna_direita div.telefones div.coluna01 { width:115px; float:left;}
+div.conteudo_contato div.coluna_direita div.telefones div.coluna01 p {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px;}
+div.conteudo_contato div.coluna_direita div.telefones div.coluna02 { width:140px; float:left;}
+div.conteudo_contato div.coluna_direita div.telefones div.coluna02 p {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; padding-left:20px;}
+
+/* FIM CONTATO */
+
+/* MAPA DO SITE */
+
+div.conteudo_mapa {width:982px; margin:0 auto; background-color:#fff; padding:10px 10px 30px 10px;}
+div.conteudo_mapa div.banner { width:982px;}
+div.conteudo_mapa div.coluna_principal {width:982px;}
+div.conteudo_mapa div.coluna_principal div.mapa { padding:20px 0 0 0; margin:0;}
+div.conteudo_mapa div.coluna_principal div.mapa h1 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:25px; color:#333; font-weight:normal; padding-bottom:10px; margin:0;}
+div.conteudo_mapa div.coluna_principal div.mapa div.link_mapa {padding:0 0 25px 0;}
+div.conteudo_mapa div.coluna_principal div.mapa div.link_mapa h2 {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; font-weight:normal; color:#266787;}
+div.conteudo_mapa div.coluna_principal div.mapa div.link_mapa h2 a { text-decoration:none; color:#266787; }
+div.conteudo_mapa div.coluna_principal div.mapa div.link_mapa h2 a:hover {text-decoration:underline;}
+div.conteudo_mapa div.coluna_principal div.mapa div.link_mapa ul {list-style:none; margin:0; padding: 0 0 0 20px; display:table;}
+div.conteudo_mapa div.coluna_principal div.mapa div.link_mapa ul li {font-family: "Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_mapa div.coluna_principal div.mapa div.link_mapa ul li a {color:#333; text-decoration:none;}
+div.conteudo_mapa div.coluna_principal div.mapa div.link_mapa ul li a:hover { text-decoration:underline;}
+
+/* FIM MAPA DO SITE */
+
+div.conteudo_popup { width:780px; margin:0 auto;}
+
+div.conteudo_popup div.topo {height:110px;}
+div.conteudo_popup div.rodape {height:33px; background-color:#1d6490; background-image:none;}
+div.conteudo_popup div.rodape div.logo {float:left; height:33px; width:100px; margin-left:15px;}
+div.conteudo_popup div.rodape div.conta {height:33px; float:left; width:400px; line-height:33px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#FFF;}
+div.conteudo_popup div.rodape div.conta img {vertical-align:middle; margin:-15px 4px 0 3px; padding:0; width:30px; height:26px;}
+div.conteudo_popup div.rodape div.conta a {text-decoration:none; color:#FFF; font-size:12px;}
+div.conteudo_popup div.rodape div.conta a:hover {text-decoration:underline;}
+div.conteudo_popup div.rodape div.menu_rodape {height:33px; float:right; line-height:33px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#FFF; margin-right:15px;}
+div.conteudo_popup div.rodape div.menu_rodape a {text-decoration:none; color:#FFF;}
+div.conteudo_popup div.rodape div.menu_rodape a:hover {text-decoration:underline;}
+
+/**Resultados de Busca**/
+div.conteudo_popup div.topo_busca {height:110px;}
+div.conteudo_popup div.topo_busca div.logo {float:left; height:100px; width:120px;}
+div.conteudo_popup div.topo_busca div.conta {height:33px; float:left; width:400px; line-height:33px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#FFF;}
+div.conteudo_popup div.topo_busca div.conta img {vertical-align:middle; margin:-4px 10px 0 10px; padding:0;}
+div.conteudo_popup div.topo_busca div.conta a {text-decoration:none; color:#FFF; font-size:12px;}
+div.conteudo_popup div.topo_busca div.conta a:hover {text-decoration:underline;}
+div.conteudo_popup div.topo_busca div.menu_topo {height:33px; float:right; line-height:33px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#FFF; margin-right:15px;}
+div.conteudo_popup div.topo_busca div.menu_topo a {text-decoration:none; color:#FFF;}
+div.conteudo_popup div.topo_busca div.menu_topo a:hover {text-decoration:underline;}
+
+div.conteudo_popup div.rodape_busca {height:60px; width: 800px; background:url("/Content/themes/PortalCoad/img/footer_busca.png")}/*---------------*/
+div.conteudo_popup div.rodape_busca div.logo {float:left; height:60px; width: 800px; margin-left:15px;}
+div.conteudo_popup div.rodape_busca div.conta {height:60px; float:left; width:400px; line-height:33px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#FFF;}
+div.conteudo_popup div.rodape_busca div.conta img {vertical-align:middle; margin:-10px 4px 0 5px; padding:0; width:15px; height:20px;}
+div.conteudo_popup div.rodape_busca div.conta a {text-decoration:none; color:#FFF; font-size:12px;}
+div.conteudo_popup div.rodape_busca div.conta a:hover {text-decoration:underline;}
+div.conteudo_popup div.rodape_busca div.menu_rodape {float:right; line-height:33px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#FFF; margin-right:15px;}
+div.conteudo_popup div.rodape_busca div.menu_rodape a {text-decoration:none; color:#FFF;}
+div.conteudo_popup div.rodape_busca div.menu_rodape a:hover {text-decoration:underline;}
+/**Fim Resultados de Busca**/
+
+
+/*	CONTEUDO SCRIBD	*/
+div.conteudo_scribd { width:100%; margin:0 auto;}
+div.conteudo_scribd div.topo {height:33px;}
+div.conteudo_scribd div.topo div.logo {float:left; height:33px; width:100px; margin-left:15px;}
+div.conteudo_scribd div.topo div.conta {height:33px; float:left; width:400px; line-height:33px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#FFF;}
+div.conteudo_scribd div.topo div.conta img {vertical-align:middle; margin:-4px 10px 0 10px; padding:0;}
+div.conteudo_scribd div.topo div.conta a {text-decoration:none; color:#FFF; font-size:12px;}
+div.conteudo_scribd div.topo div.conta a:hover {text-decoration:underline;}
+div.conteudo_scribd div.topo div.menu_topo {height:33px; float:right; line-height:33px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#FFF; margin-right:15px;}
+div.conteudo_scribd div.topo div.menu_topo a {text-decoration:none; color:#FFF;}
+div.conteudo_scribd div.topo div.menu_topo a:hover {text-decoration:underline;}
+div.conteudo_scribd div.cont { background-image:url(/imagens/bg_cont_popup.jpg); background-repeat:repeat-x;}
+div.conteudo_scribd div.cont div.left { width:115px; float:left; padding:105px 0 0 30px;}
+div.conteudo_scribd div.cont div.left img {margin-bottom:8px;}
+div.conteudo_scribd div.cont div.right { width:100%; float:left;}
+div.conteudo_scribd div.cont div.right div.destaque { height:38px; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#333; line-height:38px;}
+div.conteudo_scribd div.cont div.right div.destaque input {vertical-align:middle;}
+div.conteudo_scribd div.cont div.right div.informativo {width:300px; float:left; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#333; padding-top:20px; line-height:22px;}
+div.conteudo_scribd div.cont div.right div.informativo span.assunto {font-weight:bold;}
+div.conteudo_scribd div.cont div.right div.tipo {float:right; text-align:right; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#333; padding-top:20px;  line-height:22px; width:300px;}
+div.conteudo_scribd div.cont div.right div.tipo span.tipo_assunto {font-weight:bold;}
+div.conteudo_scribd div.cont div.right div.texto {clear:both; padding-top:20px;}
+div.conteudo_scribd div.cont div.right div.texto h1 { font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#333;}
+div.conteudo_scribd div.cont div.right div.texto p {font-family:Arial, Helvetica, sans-serif; font-size:14px; line-height:22px; padding-bottom:20px;}
+div.conteudo_scribd div.cont div.right div.texto p table {width:100%;}
+div.conteudo_scribd div.cont div.right div.texto p span.destaque { background-color:#FF6;}
+div.conteudo_scribd div.rodape {height:18px; background-color:#1d6490; background-image:none;}
+
+
+
+div.topo_news { height:50px; background-color:#206491; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#fff;   -webkit-border-radius:4px 4px 0 0 ; -moz-border-radius:4px 4px 0 0; border-radius:4px 4px 0 0; width:370px;}
+div.topo_news h2 {margin:0; padding:0; line-height:50px; padding-left:15px; font-weight:normal;}
+div.cont_news {width:320px; background-color:#FFF; padding:0px 25px 30px 25px;}
+div.cont_news p {font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#13607f;}
+div.cont_news form {margin:0; padding:0;}
+div.cont_news form input { vertical-align:middle;}
+div.cont_news form input.campos_senha01 { width:170px; height:16px; border-top:2px solid #999; border-left:2px solid #999; border-right:1px solid #ccc; border-bottom:1px solid #ccc;}
+
+div.rodape {background-image:url(/imagens/bg_conteudo_rodape.jpg); background-repeat:repeat-x; height:136px;}
+div.rodape div.conteudo_rodape { background-image:url(/imagens/bg_conteudo_rodape.jpg); background-repeat:repeat-x; height:116px; width:982px; margin:0 auto; padding:20px 10px 0 10px;}
+div.rodape div.conteudo_rodape div.logo {float:left; padding:20px 0 0 300px;}
+div.rodape div.conteudo_rodape div.menu_rodape { font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#666; float:left; padding:1px 30px 0 40px; line-height:22px;}
+div.rodape div.conteudo_rodape div.menu_rodape a { color:#666; text-decoration:none; padding:0 3px 0 3px;}
+div.rodape div.conteudo_rodape div.menu_rodape a:hover {text-decoration:underline;}
+div.rodape div.conteudo_rodape div.selo { float:left; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#333; padding:15px 0 0 20px; line-height:20px;}
+
+/** Rodapé busca **/
+div.rodape_busca { background-image:url(/imagens/footer_busca.png); height:116px; width:745px; margin:0 auto; padding:20px 10px 0 10px; float:left;}
+div.rodape_busca div.conteudo_rodape { background-image:url(/imagens/footer_busca.png); height:116px; width:730px; margin:0 auto; padding:20px 10px 0 10px; float:right;}
+div.rodape_busca div.conteudo_rodape div.logo {float:left; padding:20px 0 0 300px;}
+div.rodape_busca div.conteudo_rodape div.menu_rodape { font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#666; float:left; padding:15px 30px 0 30px; line-height:22px;}
+div.rodape_busca div.conteudo_rodape div.menu_rodape a { color:#666; text-decoration:none; padding:0 3px 0 3px;}
+div.rodape_busca div.conteudo_rodape div.menu_rodape a:hover {text-decoration:underline;}
+div.rodape_busca div.conteudo_rodape div.selo { float:left; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#333; padding:15px 0 0 20px; line-height:20px;}
+/**Fim Rodapé busca**/
+
+div.bug { height:1px; width:1px; clear:both;}
+
+input.error { border: 1px solid #ff0000; }
+label.error { display:block !important; color: #ff0000 !important; font-weight:bold !important; font-size: 11px !important; }
+
+/* INICIO PESQUISA SATISFAÇÃO */
+#topo_pesquisa { width:982px; margin:0 auto; background-image:url(/imagens/barra-topo.jpg); background-repeat:repeat-x; }
+div.conteudo_pesquisa {width:982px; margin:0 auto; background-color:#fff; padding:10px 10px 30px 10px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; }
+div.conteudo_pesquisa div.banner { width:982px;}
+div.conteudo_pesquisa div.pesquisa_satisfacao { float:left;}
+div.conteudo_pesquisa div.pesquisa_satisfacao { padding:20px 0 0 0; margin:0;}
+div.conteudo_pesquisa div.pesquisa_satisfacao h1 { font-size:25px; color:#333; font-weight:normal; padding-bottom:10px; margin:0;}
+/* FIM PESQUISA SATISFAÇÃO */
+
+/* CURSO PRERESERVA */
+div#curso_prereserva { width: 420px; margin: 0 auto; font-family:Arial; font-size: 13px; }
+div#curso_prereserva p.chamada { float: left; font-size:16px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333; width: 100%; }
+div#curso_prereserva p.desc  { float: left; clear: left; width: 100%; margin: 0px; padding: 0px; }
+div#curso_prereserva p span { font-weight: bold; }
+div#curso_prereserva div.form_prereserva { float: left; width: 100%; margin: 30px 0px 0px 0px; }
+div#curso_prereserva div.field_box { float: left; width: 100%; margin: 5px 0px 5px 0px; }
+div#curso_prereserva div.field_box label { display: block; float: left; width: 100px; }
+div#curso_prereserva div.field_box input { width: 280px; }
+div#curso_prereserva div.field_box_metade { float: left; width: 265px; margin: 5px 0px 5px 0px; }
+div#curso_prereserva div.field_box_metade label { display: block; float: left; width: 100px; }
+div#curso_prereserva div.field_box_metade input { width: 120px; }
+div#curso_prereserva div.field_submit { float: left; clear: left; width: 129px; margin: 40px 0px 0px 200px; }
+div#curso_prereserva div#erroCurso { float: left; clear: left; margin: 10px 0px 10px 0px; padding: 10px; width: 363px; background: rgb(255, 213, 213); border: 1px solid #CCC; }
+div#curso_prereserva div#sucessoCurso { float: left; clear: left; margin: 10px 0px 10px 0px; padding: 10px; width: 363px; background: rgb(224, 255, 221); border: 1px solid #CCC; }
+
+/* Indicador na página principal Criado por Josias a pedido de Luciana*/
+div.tituloIndicador{ height:41px; background-image:url(/imagens/bg_titulo2.jpg); clear:left;clear:rigth; background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; color:#266787;}
+div.textoIndicador {padding:13px 8px 10px 8px;border-top:1px solid #ccc;}
+div.textoIndicador { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#333;}
+tr.indicesIndicador{ line-height:24px !important;}
+/* Fim indicador na página principal*/
+
+
+/* TRIBUTARIO */
+div.conteudo_tributario {width:982px; margin:0 auto; background-color:#fff; padding:10px 10px 30px 10px;}
+div.conteudo_tributario div.coluna_principal {width:810px; float:left;}
+div.conteudo_tributario div.coluna_principal div.banner { width:809px; height:150px; background-image:url(/imagens/banner_marcacao_atc.jpg); background-repeat:no-repeat;}
+div.conteudo_tributario div.coluna_principal div.banner h1 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:21px; color:#004580; font-weight:normal; width:450px; padding:20px 0 0 30px; margin:0;}
+div.conteudo_tributario div.coluna_principal div.banner h2 { width:300px; padding:10px 0 0 30px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333333; font-weight:normal; margin:0;}
+div.conteudo_tributario div.coluna_principal div.banner_master { width:809px; height:150px; background-image:url(/imagens/banner_marcacao_atc_master.jpg); background-repeat:no-repeat;}
+div.conteudo_tributario div.coluna_principal div.banner_master h1 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:21px; color:#004580; font-weight:normal; width:450px; padding:20px 0 0 30px; margin:0;}
+div.conteudo_tributario div.coluna_principal div.banner_master h2 { width:300px; padding:10px 0 0 30px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333333; font-weight:normal; margin:0;}
+div.conteudo_tributario div.coluna_principal div.banner_mf { width:809px; height:150px; background-image:url(/imagens/banner_marcacao_mf.jpg); background-repeat:no-repeat;}
+div.conteudo_tributario div.coluna_principal div.banner_mf h1 { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:21px; color:#004580; font-weight:normal; width:450px; padding:20px 0 0 30px; margin:0;}
+div.conteudo_tributario div.coluna_principal div.banner_mf h2 { width:300px; padding:10px 0 0 30px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333333; font-weight:normal; margin:0;}
+div.conteudo_tributario div.coluna_principal div.beneficios { padding:29px 0 0 0; margin:0;}
+div.conteudo_tributario div.coluna_principal div.beneficios h1 { width:450px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:25px; color:#333; font-weight:normal; float:left; margin:0; padding:0;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.print_indique { float:right; font-family:Arial, Helvetica, sans-serif; font-size:12px; width:250px; padding-top:7px;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.print_indique img {vertical-align:middle;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.print_indique a {color:#666; text-decoration:none;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.print_indique a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista {padding:30px 0 0 20px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#666;  width:380px; float:left;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista ul {list-style:none; margin:0; padding:0;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista ul li {background-image:url(/imagens/bullet_azul.jpg); background-repeat: no-repeat; background-position:0 7px; margin:0 0 30px 0; padding:0 0 0 20px;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista div.outros_beneficios { padding:20px 0 0 0;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista div.outros_beneficios a { text-decoration:none; color: #006699;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista div.outros_beneficios a:hover {text-decoration:underline; }
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista2 {padding:30px 0 0 20px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#666;  width:380px; float:right;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista2 ul {list-style:none; margin:0; padding:0;}
+div.conteudo_tributario div.coluna_principal div.beneficios div.lista2 ul li {background-image:url(/imagens/bullet_azul.jpg); background-repeat: no-repeat; background-position:0 7px; margin:0 0 30px 0; padding:0 0 0 20px;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas { background-image:url(/imagens/bg_boxes.jpg); background-repeat:repeat-x; padding:15px 10px 0 10px; margin:50px 0 0 0;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.titulo { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; color:#333; padding:0 0 20px 0;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.conteudo_caracteristicas {border:1px solid #ccc; padding:20px;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.conteudo_caracteristicas div.left { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333; width:310px; float:left;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.conteudo_caracteristicas div.right { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333; width:310px; float:right;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.aviso { font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; padding:15px 0 0 0;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.esclarecimento { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333; padding:30px 0 0 0;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.esclarecimento a {color:#336699; text-decoration:none;}
+
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine {padding:30px 0 0 0;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine h1 {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:22px; color:#333; font-weight:normal;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine div.alerta { height:50px; line-height:50px; border:1px solid #ccc; background-color:#ffff99; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#333; font-weight:bold; padding-left:15px; margin-bottom:20px;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine div.alerta span { color:#990000;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine div.alerta img {vertical-align:middle; margin-right:7px;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine div.sucesso { height:50px; line-height:50px; border:1px solid #ccc; background-color:#cdfd99; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#333; font-weight:bold; padding-left:15px;  margin-bottom:20px;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine div.sucesso img {vertical-align:middle; margin-right:7px;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine p {width:48%; height:80px; margin:0; padding:0; float:left;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine p label { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px; color:#333;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine p input.campos01 {width:330px; height:28px; line-height:28px; border:1px solid #333; margin-top:8px;}
+div.conteudo_tributario div.coluna_principal div.caracteristicas div.form_assine p select { height:32px; line-height:28px; border:1px solid #333; margin-top:8px; width:100px;}
+div.conteudo_tributario div.coluna_principal div.veja_tambem { background-image:url(/imagens/bg_boxes.jpg); background-repeat:repeat-x; padding:15px 10px 0 30px; margin:50px 0 0 0;}
+div.conteudo_tributario div.coluna_principal div.veja_tambem div.titulo { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; color:#266787; padding:0 0 20px 0;}
+div.conteudo_tributario div.coluna_principal div.veja_tambem div.veja {float:left; width:300px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:15px;}
+div.conteudo_tributario div.coluna_principal div.veja_tambem div.veja p {margin:0; padding:0;}
+div.conteudo_tributario div.coluna_principal div.veja_tambem div.veja p a {color:#336699; text-decoration:none;}
+div.conteudo_tributario div.coluna_principal div.veja_tambem div.veja p a:hover { text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita { margin-left:25px; width:147px; float:left;}
+div.conteudo_tributario div.coluna_direita div.itens { margin:0 0 50px 0;}
+
+div.conteudo_tributario div.coluna_direita div.twitter { margin:0 0 20px 0;}
+div.conteudo_tributario div.coluna_direita div.twitter div.ico { width:55px; height:47px; float:left;}
+div.conteudo_tributario div.coluna_direita div.twitter div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; padding:5px 0 0 0;}
+div.conteudo_tributario div.coluna_direita div.twitter div.texto a { text-decoration:none; color:#333;}
+div.conteudo_tributario div.coluna_direita div.twitter div.texto a:hover {text-decoration:underline;}
+
+div.conteudo_tributario div.coluna_direita div.itens { margin:0 0 50px 0;}
+div.conteudo_tributario div.coluna_direita div.itens div.assine { margin:0 0 20px 0;}
+div.conteudo_tributario div.coluna_direita div.itens div.assine div.ico { width:55px; height:47px; float:left;}
+div.conteudo_tributario div.coluna_direita div.itens div.assine div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:18px; padding:10px 0 0 0;}
+div.conteudo_tributario div.coluna_direita div.itens div.assine div.texto a { text-decoration:none; color:#cc6600;}
+div.conteudo_tributario div.coluna_direita div.itens div.assine div.texto a:hover {text-decoration:underline;}
+
+div.conteudo_tributario div.coluna_direita div.itens div.iten_gratuito { margin:0 0 20px 0;}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_gratuito div.ico { width:55px; height:47px; float:left;}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_gratuito div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; /*padding:5px 0 0 0;*/}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_gratuito div.texto a { text-decoration:none; color:#336600;}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_gratuito div.texto a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_gratuito div.texto div.titulo { font-weight:bold; color:#336600; }
+
+div.conteudo_tributario div.coluna_direita div.itens div.iten_noticias { margin:0 0 20px 0;}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_noticias div.ico { width:55px; height:47px; float:left;}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_noticias div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; /*padding:5px 0 0 0;*/}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_noticias div.texto a { text-decoration:none; color:#333;}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_noticias div.texto a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.itens div.iten_noticias div.texto div.titulo { font-weight:bold; }
+
+div.conteudo_tributario div.coluna_direita div.itens div.twitter { margin:0 0 20px 0;}
+div.conteudo_tributario div.coluna_direita div.itens div.twitter div.ico { width:55px; height:47px; float:left;}
+div.conteudo_tributario div.coluna_direita div.itens div.twitter div.texto { width:90px; float:left; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; padding:5px 0 0 0;}
+div.conteudo_tributario div.coluna_direita div.itens div.twitter div.texto a { text-decoration:none; color:#333;}
+div.conteudo_tributario div.coluna_direita div.itens div.twitter div.texto a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.noticias {width:147px; border:1px solid #ccc;}
+div.conteudo_tributario div.coluna_direita div.noticias div.titulo { height:41px; background-image:url(/imagens/bg_titulo_noticias.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; }
+div.conteudo_tributario div.coluna_direita div.noticias div.titulo a { color:#266787; text-decoration:none; display:block; width:26px; float:right; height:23px; margin:7px 10px 0 0;}
+div.conteudo_tributario div.coluna_direita div.noticias div.titulo a { color:#266787; text-decoration:none; display:block;}
+div.conteudo_tributario div.coluna_direita div.noticias div.titulo a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.noticias div.data { padding:8px 0 4px 8px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; font-weight:bold;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes {padding:5px 0 0 8px;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul {list-style:none; margin:0; padding:0; display:table;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li { padding:0 8px 3px 0;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.hora { font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333; font-weight:bold;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico a {color:#990000; text-decoration:none;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_juridico a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil a {color:#003366; text-decoration:none;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_contabil a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista { font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista a {color:#024909; text-decoration:none;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.titulo_trabalhista a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.manchete p { margin:0; padding:0 0 7px 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; }
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.manchete a { color:#333; text-decoration:none;}
+div.conteudo_tributario div.coluna_direita div.noticias div.manchetes ul li div.manchete a:hover {  text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.noticias div.mais_noticias {height:31px; background-image:url(/imagens/bg_mais_noticias.jpg); background-repeat:no-repeat; margin:4px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; line-height:31px; padding-left:8px;}
+div.conteudo_tributario div.coluna_direita div.noticias div.mais_noticias a { color:#336699; text-decoration:none;}
+div.conteudo_tributario div.coluna_direita div.noticias div.mais_noticias a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.coad_news {width:147px; border:1px solid #ccc;}
+div.conteudo_tributario div.coluna_direita div.coad_news div.titulo { height:41px; background-image:url(/imagens/bg_titulo.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; color:#266787;}
+div.conteudo_tributario div.coluna_direita div.coad_news div.texto {padding:13px 8px 5px 8px;}
+div.conteudo_tributario div.coluna_direita div.coad_news div.texto p { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px; color:#333; margin:0; padding:0 0 7px 0;}
+div.conteudo_tributario div.coluna_direita div.coad_news div.texto a {color:#333; text-decoration:none;}
+div.conteudo_tributario div.coluna_direita div.coad_news div.texto a:hover {text-decoration:underline;}
+div.conteudo_tributario div.coluna_direita div.indicadores {width:147px; border:1px solid #ccc;}
+div.conteudo_tributario div.coluna_direita div.indicadores div.titulo { height:41px; background-image:url(/imagens/bg_titulo.jpg); background-repeat:no-repeat; line-height:41px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:17px; padding-left:8px; color:#266787;}
+div.conteudo_tributario div.coluna_direita div.indicadores div.texto {padding:13px 8px 10px 8px;}
+div.conteudo_tributario div.coluna_direita div.indicadores div.texto table tr td { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:12px; color:#333; padding:3px 0 3px 0;}
+
+/* FIM TRIBUTARIO */

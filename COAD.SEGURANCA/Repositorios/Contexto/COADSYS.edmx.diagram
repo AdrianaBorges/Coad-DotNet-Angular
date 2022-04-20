@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="39f574297af149078566b64282fc1b04" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="COADSYSModel.BANCOS_REF" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.CONTA" Width="1.5" PointX="5.25" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.CONTABILISTA" Width="1.5" PointX="0.75" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.DEPARTAMENTO" Width="1.5" PointX="6" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.EMPRESA" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.FILA_EMAIL" Width="1.5" PointX="17.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.FONTE_DADOS_DESCRICAO" Width="1.5" PointX="13" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.FONTE_DADOS_TEMPLATE" Width="1.5" PointX="10.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.FUNCIONALIDADE_SISTEMA" Width="1.5" PointX="18.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.HISTORICO_EXECUCAO" Width="1.5" PointX="20.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.IMPORTACAO" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.IMPORTACAO_STATUS" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.ITEM_MENU" Width="1.5" PointX="8.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.ITEM_MENU_PERFIL" Width="1.5" PointX="10.5" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.JOB_AGENDAMENTO" Width="1.5" PointX="5.25" PointY="31.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.JOB_NOTIFICACAO" Width="1.5" PointX="7.5" PointY="24.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.JOB_NOTIFICACAO_MSG_ITEM" Width="1.5" PointX="9.75" PointY="29.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.JOB_NOTIFICACAO_STATUS" Width="1.5" PointX="5.25" PointY="37.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.LOG_OCORRENCIA" Width="1.5" PointX="5.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.NIVEL_ACESSO" Width="1.5" PointX="6" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.NOTA_FISCAL_LOTE_ITEM_TIPO" Width="1.5" PointX="7.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.NOTIFICACAO_SISTEMA" Width="1.5" PointX="15" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.PARAMETRO_GRUPO" Width="1.5" PointX="8.25" PointY="22.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.PARAMETROS" Width="1.5" PointX="10.5" PointY="25.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.PERFIL" Width="1.5" PointX="8.25" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.PERFIL_USUARIO" Width="1.5" PointX="10.5" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.RELATORIOS" Width="1.5" PointX="9.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.SISTEMA" Width="1.5" PointX="6" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.TEMPLATE_GRUPO" Width="1.5" PointX="13.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.TEMPLATE_HTML" Width="1.5" PointX="16" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.TIPO_JOB" Width="1.5" PointX="18" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.TIPO_NOTIFICACAO_SISTEMA" Width="1.5" PointX="12.75" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.USUARIO" Width="1.5" PointX="5.25" PointY="24.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADSYSModel.EMPRESA_TST2" Width="1.5" PointX="0.75" PointY="18.875" IsExpanded="true" />
+        <AssociationConnector Association="COADSYSModel.FK_CONTA_BANCOS_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_CONTA_EMPRESA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_CONTA_X_EMPRESA_SACADORA_AVALISTA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_EMPRESA_CONTABILISTA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_PERFIL_DP" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_PERFIL_EMPRESA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_USUARIO_EMPRESA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_FILA_EMAIL_X_NOTIFICACAO_SISTEMA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_FONTE_DADOS_DESCRICAO_FONTE_DADOS_TEMPLATE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_TEMPLATE_HTML_X_FONTE_DADOS_TEMPLATE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_TEMPLATE_HTML_X_FUNCIONALIDADE_SISTEMA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_HISTORICO_EXECUCAO_TIPO_JOB" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_HISTORICO_EXECUCAO_X_NOTIFICACAO_SISTEMA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_IMPORTACAO_IMPORTACAO_STATUS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_ITEM_MENU_ITEM_MENU" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_ITEM_MENU_PERFIL_ITEM_MENU" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_ITEM_MENU_SISTEMA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_ITEM_MENU_PERFIL_PERFIL" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_JOB_NOTIFICACAO_JOB_AGENDAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_JOB_NOTIFICACAO_MSG_ITEM_JOB_NOTIFICACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_JOB_NOTIFICACAO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_JOB_NOTIFICACAO_X_JOB_TIPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_PERFIL_NIVEL_ACESSO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_NOTIFICACAO_SISTEMA_TIPO_NOTIFICACAO_SISTEMA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_PARAMETROS_PARAMETRO_GRUPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_PARAMETROS_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_PERFIL_SISTEMA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_PERFIL_USUARIO_PERFIL" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_PERFIL_USUARIO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_TEMPLATE_HTML_TEMPLATE_GRUPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_TEMPLATE_HTML_TEMPLATE_TEMPLATE_HTML_LAYOUT" ManuallyRouted="false" />
+        <AssociationConnector Association="COADSYSModel.FK_USUARIO_USUARIO" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

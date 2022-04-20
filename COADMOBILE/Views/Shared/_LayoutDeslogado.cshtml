@@ -1,0 +1,133 @@
+﻿@using COAD.SEGURANCA.Extensions
+@using COAD.PORTAL.Extensions
+
+@{
+    HttpCookie myCookie = HttpContext.Current.Request.Cookies["InfClientes"];
+    string userName = "";
+    if (myCookie != null)
+    {
+        userName = myCookie.Values["UserName"];
+    }
+}
+<!DOCTYPE html>
+<html lang="pt_br">
+    <head>
+
+        <script type="text/javascript">
+            // para obter o contexto da aplicação
+            var contextPath = "@System.Web.HttpContext.Current.Request.ApplicationPath";
+        </script>
+
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />           
+        <link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" /> 
+       
+        @Styles.Render("~/Content/themes/base/simple-sidebar.css")
+        @Styles.Render("~/Content/themes/base/bootstrap-theme.css")
+        @Styles.Render("~/Content/themes/base/default.css")
+        @Styles.Render("~/Content/themes/base/bootstrap.css")
+        @Styles.Render("~/Content/themes/base/jquery.custom-scrollbar.css")
+        @Styles.Render("~/Content/themes/fonts/font-awesome.min.css")
+        @Styles.Render("~/Content/themes/base/coadcorp-boostrap.css")
+
+        <script src="@Url.Content("~/Scripts/jquery-1.11.1.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery-ui.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/modernizr-2.5.3.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery.maskedinput-1.2.2.js")" type="text/javascript"></script>
+
+        @Scripts.Render("~/Scripts/jquery.custom-scrollbar.min.js")
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/Scripts/bootstrap.min.js")
+      
+        @Scripts.Render("~/Scripts/util.js")   
+        @Scripts.Render("~/Scripts/Angular/angular.min.js")
+        @Scripts.Render("~/Scripts/Angular/angular_modules/service_module.js")
+        @Scripts.Render("~/Scripts/Angular/angular_modules/directives_module.js")
+        @Scripts.Render("~/Scripts/default.js")
+          
+        <!-- compatibilidades com ie antigos-->
+        @Scripts.Render("~/Scripts/compatibilidades/respond.js")  
+        <!--[if lt IE 9]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->  
+
+    </head>
+    <body class="body"> 
+      <div>          
+        <header> 
+          <div class="header">                      
+            <nav class="navbar navbar-inverse navbar-fixed-top menu-overrides" role="navigation">
+                <div class="navbar-header">
+                   <button class="btn btn-info" id="button-menu"><span id="icon-menu" class="glyphicon glyphicon-th-list"></span> Menu</button>
+                </div>
+              @*  <!--- Menu dados do usuário -->
+                @Html.MostraSistemas()
+                <!--- Informa se é Homologação -->
+                @Html.MostraImgHomolog("COADCORP")
+                <!--- Menu dados do usuário -->*@
+                @*@Html.MostraLoginPortal(@userName)*@
+                <!--- Menu dados do usuário -->
+            </nav>
+          <!-- Fim do menu navbar do boostrap -->
+          </div>  
+        </header>
+        <div id="wrapper" class="@ViewBag.Toggled">
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">                        
+                    <li class="sidebar-brand">
+                       @*@Html.MostraMenu()*@
+                    </li>
+                </ul>
+            </div>
+            <div id="page-content-wrapper">sdsdfsdfsdf
+                <div class="container-fluid limit-content">
+                    <div class="row body">
+                        <div id="breadcrumbs">
+                            @RenderSection("breadcrumbs", false)
+                        </div>                    
+                    </div>            
+                    <div class="row body">                                      
+                        @RenderBody()                                                   
+                    </div>                           
+                </div>          
+            </div>
+            <div class="footer" style="background-color:#3a7198;">   
+               <p style="color:white;">&copy; 2015 Coad, Inc.</p>             
+            </div>
+        </div>
+        @RenderSection("scripts", required: false)
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                if ($("#wrapper").hasClass("toggled")) {
+
+                    $("#button-menu").removeClass("btn-info");
+                    $("#button-menu").addClass("btn-primary");
+                }
+                else {
+
+                    $("#button-menu").addClass("btn-info");
+                    $("#button-menu").removeClass("btn-primary");
+                }
+                $("#button-menu").click(function (e) {
+                    e.preventDefault();
+
+                    $("#button-menu").toggleClass("btn-info");
+                    $("#button-menu").toggleClass("btn-primary");
+                    $("#wrapper").toggleClass("toggled");
+                });
+
+                $(".menu-sempre-visivel").click(function () {
+
+                    alert("Implementar");
+                });
+            });
+        </script>        
+        </div>
+    </body>
+    
+                      
+</html>

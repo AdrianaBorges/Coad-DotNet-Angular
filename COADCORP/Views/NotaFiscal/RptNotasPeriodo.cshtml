@@ -1,0 +1,211 @@
+﻿@using COAD.SEGURANCA.Extensions
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section Scripts {
+
+    <link href="~/Content/themes/base/bootstrap-datepicker.css" rel="stylesheet" />
+    @Scripts.Render("~/Scripts/appScripts/NotaFiscal.js")
+    @Scripts.Render("~/Scripts/appScripts/datepicker.js")
+    @Scripts.Render("~/Content/themes/base/bootstrap-datepicker.css")
+
+}
+
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li>
+            <i class="fa fa-home"></i><a href="/Relatorios/Controladoria">Relatorios</a>
+        </li>
+        <li>
+            <a href="/Relatorios/Controladoria">Relatórios Controladoria</a>
+        </li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+@{
+    ViewBag.print = true;
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;
+    if (ViewBag.print == true)
+    {
+        ViewBag.printableClass = "hidden-print";
+    }
+
+}
+
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+<div ng-app="appModule">
+    <div ng-controller="NotaFiscalControler" class="padding content" ng-init="PreparaTela();canPrint=true" ng-cloak>
+        <div id="page-wrapper">
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading bold head-panel">
+                    <label id="title"><i class="glyphicon glyphicon-calendar"></i> @ViewBag.Title</label>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Mes")
+                                @Html.DropDownList("_mesatual", new SelectList(@ViewBag.ListaMes, "Value", "Text"), new { @class = "form-control", ng_model = "filtro.mesatual" })
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div class="form-group">
+                                @Html.Label("Ano")
+                                @Html.TextBox("_anoatual", "", new { @class = "form-control", ng_model = "filtro.anoatual" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3" ng_if="filtro.analitico">
+                            <div class="form-group">
+                                @Html.Label("Empresa")
+                                @Html.DropDownList("_emp_id", new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "filtro.emp_id" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3" ng_if="filtro.analitico">
+                            <div class="form-group">
+                                @Html.Label("Tipo")
+                                <select ng_model="filtro.nf_tipo" class="form-control">
+                                    <option> ---- Selecionar ----</option>
+                                    <option value="0">Entrada</option>
+                                    <option value="1">Saida</option>
+                                    <option value="2">Entrada Servico</option>
+                                    <option value="3">Saida Servico</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3" style="padding-top: 25px;">
+                            <label class="switch switch switch-round">
+                                <input type="checkbox" ng_model="filtro.analitico" >
+                                <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                                <span>Relatório Analítico</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" ng-if="export.lnkPath!=null&&export.lnkPath!=''">
+                        <div class="form-group">
+                            <a href="{{export.lnkPath}}"><i class="glyphicon glyphicon-cloud-download"></i> Donwload do arquivo ( {{export.lnkPath}} ) </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" ng-click="listarRelatorio()"><span class="fa fa-search"></span>&nbspPesquisar</button>
+                    <a class="btn btn-default" href="javascript:void(0)" ng-click="expPlanilha()" title="Exportar a tabela para o excel">
+                        <i class="fa fa-file-excel-o blue"></i>&nbspExportar
+                    </a>
+                </div>
+            </div>
+            <div id="baseContent">
+                <div class="panel panel-default" ng-if="listaNotaFiscalSintetico.length>0&&filtro.analitico!=true">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-book"></span>&nbspRelatório de Notas Fiscais ({{filtro.mesatual}} / {{filtro.anoatual}} - Sintético ) {{listaNotaFiscalSintetico.length}}
+                        <div class="pull-right">
+                            <div class="btn-group">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr class="info">
+                                    <th style="text-align:right;">ID</th>
+                                    <th style="text-align:left;">Empresa</th>
+                                    <th style="text-align:right;">Total Entrada</th>
+                                    <th style="text-align:right;">Total Entrada (SERV)</th>
+                                    <th style="text-align:right;">Total Saida</th>
+                                    <th style="text-align:right;">Total Saida (SERV)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in listaNotaFiscalSintetico">
+                                    <td style="text-align:right;">{{item.EMP_ID}}</td>
+                                    <td style="text-align:left;">{{item.EMP_RAZAO_SOCIAL}}</td>
+                                    <td style="text-align:right;" app-show-dinheiro="item.NF_VLR_ENTRADA"></td>
+                                    <td style="text-align:right;" app-show-dinheiro="item.NF_VLR_ENTRADA_SERV"></td>
+                                    <td style="text-align:right;" app-show-dinheiro="item.NF_VLR_SAIDA"></td>
+                                    <td style="text-align:right;" app-show-dinheiro="item.NF_VLR_SAIDA_SERV"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="hidden-print panel-footer" style="text-align:center;">
+                        <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+                    </div>
+                </div>
+                <div class="panel panel-default" ng-if="listaNotaFiscal.length>0&&filtro.analitico">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-book"></span>&nbspRelatório de Notas Fiscais ({{filtro.mesatual}} / {{filtro.anoatual}} - Analítico - Empresa - {{filtro.emp_id}} )
+                        <div class="pull-right">
+                            <div class="btn-group">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example" ng-if="listaNotaFiscal.length > 0">
+                            <thead>
+                                <tr class="info">
+                                    <th style="text-align:left;">Tipo</th>
+                                    <th style="text-align:right;">Numero</th>
+                                    <th style="text-align:right;">Serie</th>
+                                    <th style="text-align:center;">Ent/Sai</th>
+                                    <th style="text-align:left;">Cli/Forn</th>
+                                    <th style="text-align:center;">Situação</th>
+                                    <th style="text-align:right;">Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="ite in listaNotaFiscal" >
+                                    <td style="text-align:left;">
+                                        <span ng-if="ite.NF_TIPO==0"><label>Entrada</label></span>
+                                        <span ng-if="ite.NF_TIPO==1"><label>Saida</label></span>
+                                        <span ng-if="ite.NF_TIPO==2"><label>Entrada Serviço</label></span>
+                                        <span ng-if="ite.NF_TIPO==3"><label>Saida Serviço</label></span>
+                                    </td>
+                                    <td style="text-align:right;">{{ite.NF_NUMERO}}</td>
+                                    <td style="text-align:right;">{{ite.NF_SERIE}}</td>
+                                    <td style="text-align:center;" app-show-date="ite.NF_DATA_ENTRADA" ng-if="ite.NF_TIPO==0||ite.NF_TIPO==2"></td>
+                                    <td style="text-align:center;" app-show-date="ite.NF_DATA_SAIDA" ng-if="ite.NF_TIPO==1||ite.NF_TIPO==3"></td>
+                                    <td style="text-align:left;">
+                                        <span ng-if="ite.NF_TIPO==0||ite.NF_TIPO==2">{{ite.FORNECEDOR.FOR_RAZAO_SOCIAL}}</span>
+                                        <span ng-if="ite.NF_TIPO==1||ite.NF_TIPO==3">{{ite.CLIENTES.CLI_NOME}}</span>
+                                    </td>
+                                    <td style="text-align: center">
+                                        <span class="label label-info"    ng_show="ite.NF_STATUS=='PEN'">Emitida</span>
+                                        <span class="label label-success" ng_show="ite.NF_STATUS=='ENV'">Enviada</span>
+                                        <span class="label label-warning" ng_show="ite.NF_STATUS=='CAN'">Cancelada</span>
+                                        <span class="label label-success" ng_show="ite.NF_STATUS=='DEV'">Devolvida</span>
+                                        <span class="label label-success" ng_show="ite.NF_STATUS=='ATI'">Normal</span>
+                                    </td>
+                                    <td style="text-align:right;" app-show-dinheiro="ite.NF_VLR_NOTA"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr />
+                        <app-pagination request-page="paginaReq" load-function="listarRelatorio(paginaReq)"></app-pagination>
+                    </div>
+                    <div class="hidden-print panel-footer" style="text-align:center;">
+                        <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

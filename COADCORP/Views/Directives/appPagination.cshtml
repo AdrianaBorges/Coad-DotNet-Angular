@@ -1,0 +1,20 @@
+﻿@{
+    Layout = null;
+}
+<nav id="{{id}}">
+    <ul class="pagination"> 
+    <li>
+        <a href="javascript:void(0)" aria-label="Previous" ng-click="anterior()" ng-class="{disabled : !testAnterior}">
+        <span aria-hidden="true">&laquo;</span>
+        </a>
+    </li>
+    <li ng-repeat="pag in objAppPagination.lstPagina" ng-class="{disabled : pag == objAppPagination.paginaAtual || pag < 0 }">
+        <a ng-if="pag > 0" href="javascript:void(0)" ng-click="gotoPage(pag)">{{pag}}</a>
+        <a ng-if="pag < 0" href="javascript:void(0)">...</a></li>
+    <li>
+        <a href="javascript:void(0)" aria-label="Next" ng-click="proximo()" ng-class="{disabled : testProximo}">
+        <span aria-hidden="true">&raquo;</span>
+        </a>
+    </li>
+    </ul>
+</nav>

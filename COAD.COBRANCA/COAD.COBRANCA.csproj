@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D75DC95A-5DDB-402F-8B58-0388D075A3E8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>COAD.COBRANCA</RootNamespace>
+    <AssemblyName>COAD.COBRANCA</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Homologacao|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Homologacao\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DocumentationFile>
+    </DocumentationFile>
+    <RegisterForComInterop>false</RegisterForComInterop>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_Prod|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug_Prod\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Boleto.Net">
+      <HintPath>..\blibliotecas\Boleto.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.2.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.2\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Tools.Com.Interop, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\blibliotecas\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bancos\Model\DTO\CamposLinhaDigitalDTO.cs" />
+    <Compile Include="Bancos\Model\DTO\Interfaces\INossoNumeroGenerator.cs" />
+    <Compile Include="Bancos\Model\DTO\RegrasBradescoCarteira4.cs" />
+    <Compile Include="Bancos\Model\DTO\CodigoBarrasDTO.cs" />
+    <Compile Include="Bancos\Model\DTO\LinhaDigitavelCampoDTO.cs" />
+    <Compile Include="Bancos\Model\DTO\LinhaDigitavelDTO.cs" />
+    <Compile Include="Bancos\Model\DTO\TituloDTO.cs" />
+    <Compile Include="Bancos\Service\BancoBanrisul.cs" />
+    <Compile Include="Bancos\Service\BancoSICOOB.cs" />
+    <Compile Include="Bancos\Service\BancoSafra.cs" />
+    <Compile Include="Bancos\Service\BancoItau.cs" />
+    <Compile Include="Bancos\Service\BancoSantander.cs" />
+    <Compile Include="Bancos\Service\BancoCaixa.cs" />
+    <Compile Include="Bancos\Service\CodigoBarraSRV.cs" />
+    <Compile Include="Bancos\Model\DTO\BradescoCobrancaRequest.cs" />
+    <Compile Include="Bancos\Model\DTO\BradescoCobrancaResponse.cs" />
+    <Compile Include="Bancos\Service\RegistrarBoletoSRV.cs" />
+    <Compile Include="Bancos\Config\ConfigBoleto.cs" />
+    <Compile Include="Exceptions\ConfigException.cs" />
+    <Compile Include="Exceptions\CalculoException.cs" />
+    <Compile Include="Bancos\Model\Constants\BoletoConstants.cs" />
+    <Compile Include="Bancos\Service\BancoBradesco.cs" />
+    <Compile Include="Bancos\Model\DTO\Interfaces\IBanco.cs" />
+    <Compile Include="Bancos\Model\DTO\ChaveConfigBoletoDTO.cs" />
+    <Compile Include="Bancos\Model\DTO\Interfaces\IRegrasBoleto.cs" />
+    <Compile Include="Bancos\Model\Enumerados\BancoEnum.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Bancos\Service\ConfigBoletoSRV.cs" />
+    <Compile Include="Util\MathUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\COAD.FISCAL\ClientWebServiceNfe\COAD.FISCAL.csproj">
+      <Project>{C0B6DD72-FA9A-4F88-9A95-AD81CC1CB8AF}</Project>
+      <Name>COAD.FISCAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\COAD.SEGURANCA\COAD.SEGURANCA.csproj">
+      <Project>{2584C60A-835B-44B7-9C49-10F489DE32BD}</Project>
+      <Name>COAD.SEGURANCA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\shared\genericcrud\GenericCrud\Coad.GenericCrud.csproj">
+      <Project>{A6A9FF49-FA0D-468E-9966-31B8D7EF5A97}</Project>
+      <Name>Coad.GenericCrud</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

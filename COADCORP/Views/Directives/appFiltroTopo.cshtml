@@ -1,0 +1,59 @@
+﻿@{
+    Layout = null;
+}<div class="row">
+    <div class="form-group float-left padding-button padding-button-pesquisar-filtro">
+        <a href="javascript:void" class="text-info" ng-click="pesquisar()" style="font-size: 25px" title="pesquisar..."><span class="glyphicon glyphicon-search"></span></a>
+    </div>
+    <div class="form-group col-md-2" ng-repeat="itm in appFiltroTopo[0].filtros | orderBy:ordem" ng-show="$index <= 3">
+        <div ng-switch="itm.tipo" class="form-group">
+            <div ng-switch-when="data" class="form-group">
+                <label for="{{itm.chave}}'_'{{$index}}">{{itm.label}}</label>
+                <input type="text"
+                       id="{{itm.chave + '_' + $index}}"
+                       name="{{itm.chave + '_' + $index}}"
+                       date-name="{{itm.chave + '_' + $index}}"
+                       ng-model="$parent.model[itm.chave + 'STR']"
+                       app-date="$parent.model[itm.chave]"
+                       class="form-control form-control-filtro" />
+            </div>
+            <div ng-switch-when="select">
+                <label for="{{itm.chave}}'_'{{$index}}">{{itm.label}}</label>
+                <select ng-options="co.value as co.label for co in itm.listCombo" ng-model="$parent.model[itm.chave]" class="form-control">
+                    <option value="">Selecione</option>
+                </select>
+                @*<span app-dropdown="itm.listCombo" ng-model="$parent.model[itm.chave]" data-key-name="value" data-label-name="label" data-default-label="{{itm.label}}"></span>*@
+            </div>
+            <div ng-switch-default>
+                <label for="{{itm.chave}}'_'{{$index}}">{{itm.label}}</label>
+                <input type="text" id="filtro_{{itm.chave}}_{{$index}}"
+                       name="filtro_{{itm.chave}}_{{$index}}"
+                       ng-model="$parent.model[itm.chave]"
+                       class="form-control"
+                       maxlength="{{itm.maxLength}}" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group float-left padding-button padding-button-pesquisar-filtro font-25">
+        <a href="javascript:void(0)" ng-click="toogleFiltrosExtras()">
+            <span ng-switch="flagAbrir">
+                <span ng-switch-when="true" class="glyphicon glyphicon-minus-sign" title="Esconder Filtros"></span>
+                <span ng-switch-default class="glyphicon glyphicon-plus-sign" title="Mais Filtros"></span>
+            </span>
+        </a>
+    </div>
+    <div>
+        <div class="row" ng-show="list">
+            <div class="form-group col-lg-12">
+                <div class="padding">
+                    <span ng-repeat="itm in list | orderBy:'ordem' | as:'listOrdenada'" class="float-left">
+                        <span class="label label-info"><span ng-if="itm.token.filterName">{{itm.token.filterName}} <span ng-if="itm.token.filterName && itm.token.label">>></span> </span> {{itm.token.label}}</span>
+                        <a href="javascript:void(0);" class="remove-link-filtro" ng-click="removerFiltro(itm.chave, $index);"> <span class="glyphicon glyphicon-remove red"></span></a>
+                    </span>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+
+</div>

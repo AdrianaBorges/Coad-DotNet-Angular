@@ -1,0 +1,73 @@
+﻿<fieldset ng-show="uen.UEN_ID == 1">
+    <legend class="text-info">
+        <span class="font-16">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <span class="font-15">Participantes</span>
+        </span>
+    </legend>
+        <div ng-repeat="pedido in objPedido.Itens" ng-show="pedido.PRODUTO_COMPOSICAO.EhCurso === true">
+            <div ng-show="pedido.Participantes.length > 0" class="text padding-bottom">
+                <strong>
+                    Produto: {{pedido.PRODUTO_COMPOSICAO.CMP_DESCRICAO}}
+                </strong>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>
+                                Nome
+                            </th>
+                            <th>
+                                CPF
+                            </th>
+                            <th>
+                                E-Mail
+                            </th>
+                            <th>DDD</th>
+                            <th>Telefone</th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in pedido.Participantes" class="animate-repeat">
+                        <td>{{$index + 1}}</td>
+                        <td>    
+                            <input type="text" ng-model="item.PPR_NOME"
+                                   class="form-control float-left" maxlength="100" />
+                            <div app-validation-msg="erros" for="PROPOSTA_ITEM[{{$parent.$index}}].Participantes[{{$index}}].PPR_NOME"></div>
+                        </td>
+                        <td>
+                            <input type="text" ng-model="item.PPR_CPF_CNPJ" app-number
+                                   class="form-control float-left" maxlength="14"
+                                   style="max-width: 130px;" />
+                            <div app-validation-msg="erros" for="PROPOSTA_ITEM[{{$parent.$index}}].Participantes[{{$index}}].PPR_CPF_CNPJ"></div>
+                        </td>
+                        <td style="max-width: 160px;">
+                            <input type="text" ng-model="item.PPR_EMAIL"
+                                   class="form-control float-left" maxlength="100" />
+                            <div app-validation-msg="erros" for="PROPOSTA_ITEM[{{$parent.$index}}].Participantes[{{$index}}].PPR_EMAIL"></div>
+                        </td>
+                        <td>
+                            <input type="text" ng-model="item.PPR_DDD" app-number
+                                   class="form-control float-left" maxlength="2"
+                                   style="max-width: 40px;" />
+                            <div app-validation-msg="erros" for="PROPOSTA_ITEM[{{$parent.$index}}].Participantes[{{$index}}].PPR_DDD"></div>
+                        </td>
+                        <td>
+                            <input type="text" ng-model="item.PPR_TELEFONE" app-number
+                                   class="form-control float-left" maxlength="20"
+                                   style="max-width: 100px;" />
+                            <div app-validation-msg="erros" for="PROPOSTA_ITEM[{{$parent.$index}}].Participantes[{{$index}}].PPR_TELEFONE"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" ng-if="pedidos.length <= 0" class="text">
+                            Não foi encontrado nenhum registro.
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <hr />
+        </div>
+    </fieldset>

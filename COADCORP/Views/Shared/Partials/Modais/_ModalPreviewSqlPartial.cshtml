@@ -1,0 +1,51 @@
+﻿  <div data-app-modal="modal-preview-query" data-header="Preview">
+             <div class="row">
+
+                <div class="form-group col-lg-12">
+                    
+                    <div class="panel panel-info" ng-class="{crosshair: joinMarkDTO.Passo == 0}">
+                            <!-- Default panel contents -->
+                        <div class="panel-heading bold head-panel pointer" data-toggle="collapse" data-target="#preview-query">
+                            <span class="glyphicon glyphicon-th-list"></span> Preview da Query <span class="caret"></span>
+                        </div>
+                        <div class="panel-body collapse in" aria-expanded="true" id="preview-query">
+                            <div class="panel-body">
+                                <figure class="highlight">
+                                    <pre>
+                                        {{montagemQuery}}    
+                                    </pre>
+                                </figure>                 
+                             </div>
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-default btn-sm" ng-click="mostrarPreviewResultado()">
+                                <span class="glyphicon glyphicon-eye-open"></span> Preview Resultado
+                            </button>    
+                        </div>
+                    </div>   
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    
+                    <div class="table-responsive">
+                        <div ng-show="resultado"><label>Exibindo os 5 primeiros registros</label></div>
+                        <table class="table table-hover table-bordered table-stripped">
+                            <thead>
+                                <tr>
+                                    <th ng-repeat="col in resultado.Colunas">{{limparColuna(col)}}</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in resultado.Dados" class="animate-repeat">
+                                <td ng-repeat="col in resultado.Colunas">{{item[col]}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="10" ng-show="!resultado">Clique no botão para visualizar a preview.</td>
+                                <td colspan="10" ng-show="resultado.Dados.length == 0 && listado">Nenhum resultado retornado.</td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+           </div>

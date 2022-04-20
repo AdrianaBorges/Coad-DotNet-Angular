@@ -1,0 +1,211 @@
+﻿
+@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+@using COAD.CORPORATIVO.SessionUtils
+@using GenericCrud.ActionResultTools
+@{
+    ViewBag.Title = "Importações";
+    bool gerente = (SessionContext.IsGerenteDepartamento("franquiado", true) || SessionContext.IsGerenteDepartamento("franquiador", true));
+    bool franquiador = SessionContext.IsGerenteDepartamento("franquiador", true);
+
+    bool podeFaturar = SessionUtil.PossuiPermissaoParaFaturar();
+    string podePagar = (podeFaturar) ? "1 == 1" : "1 == 2";
+    ViewBag.defer = @"defer='defer'";  
+
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li class="active">Configuração de CNAB</li>
+        
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/cnab.js")" defer="defer"></script>
+<div ng-app="appModule">
+    <div ng-controller="CnabController" class="padding content" ng-cloak data-ng-init="init()">
+
+        <div app-message></div>
+     
+        <section id="cnabs">
+            <div class="panel panel-corp">
+                <!-- Default panel contents -->
+                <div class="panel-heading bold head-panel">
+                    <span class="glyphicon glyphicon-filter"></span> Filtros
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Opções
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                </li>
+                                @*<li>
+                                    <a href="javascript:void(0)" class="text-primary" ng-click="abrirModalUploadPlanilhaErro()">Subir Planilha de Config</a>
+                                </li>*@
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">                        
+                        <div class="form-group col-sm-3">
+                            <label for="campo_BAN_ID">Banco</label>
+                            <select id="campo_BAN_ID" name="campo_BAN_ID" class="form-control" ng-model="filtro.banId"
+                                    ng-options="ban.BAN_ID as ban.BAN_ID + ' - ' + ban.BAN_NOME for ban in lstBancos">
+                                <option value="">Selecione</option>
+                            </select>
+                            <div app-validation-msg="erros" for="BAN_ID"></div>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label for="campo_EMP_ID">Empresa</label>
+                            <select id="campo_EMP_ID" name="campo_EMP_ID" class="form-control" ng-model="filtro.empId"
+                                    ng-options="emp.EMP_ID as emp.EMP_NOME_FANTASIA for emp in lstEmpresas">
+                                <option value="">Selecione</option>
+                            </select>
+                            <div app-validation-msg="erros" for="EMP_ID"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" ng-click="pesquisarCnabConfig()">Pesquisar</button>
+                </div>
+            </div>
+            <div class="panel panel-corp">
+                <!-- Default panel contents -->
+                <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-shopping-cart"></span>Listagem de Configurações de CNAB</div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr class="bg-info">
+                                    <th>Id</th>
+                                    <th>Código CNAB</th>
+                                    <th>Desc Tipo de Remessa</th>
+                                    <th>Banco</th>
+                                    <th>Empresa</th>
+                                    <th colspan="2">Ações</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in lstCnabConfig">
+                                <td>{{item.CNC_ID}}</td>
+                                <td>{{item.CNC_CODIGO_CNAB}}</td>
+                                <td>{{item.CNC_ARQUIVO}}</td>
+                                <td>{{item.BANCOS.BAN_NOME}}</td>
+                                <td>{{item.EMPRESAS.EMP_NOME_FANTASIA}}</td>
+                                <td>
+                                    <a href="javascript:void(0)" app-post="@Url.Action("Editar")?cncId={{item.CNC_ID}}"
+                                       title="Editar" class="blue">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="12" ng-show="!lstCnabConfig || lstCnabConfig.length == 0">Nenhum registro foi encontrado.</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <app-pagination request-page="paginaReq" load-function="pesquisarCnabConfig(paginaReq)"></app-pagination>
+
+                </div>
+            </div>
+        </section>
+    <div>
+        <div app-filtro-lateral="filtrosImportacoesSuspect" model="filtroImportacoesSuspect" list="lstFiltrosUtilizados" acao-pesquisar="pesquisarCnabConfig()" flag-abrir="abrirFiltro">
+
+        </div>
+
+ 
+        </div>
+        <div app-modal="nome-arquivo" header="Arquivo">
+            <div>{{NomeDoArquivo}}</div>
+        </div>
+        @Html.Partial("Partials/Modais/_HistoricoImportacaoPartial")
+        @Html.Partial("Partials/Modais/_ModalResultadoImportacaoPartial")
+
+        <div app-modal="modal-upload-planilha" header="Upload Dados do Cnab" submodal>
+            <div class="row">
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <form>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Arquivo de Carga</label> <!-- https://github.com/danialfarid/ng-file-upload -->
+                                    <input type="file" id="exampleInputFile" class="button button-default"
+                                           ngf-select="uploadPlanilha($file, $invalidFiles)" ngf-max-size="1MB" accept=".xls, .xlsx, .ods" ng-disabled="$parent.buttonUpload == 'updating'">
+                                    <div app-validation-msg="erros" for="NFe"></div>
+                                </div>
+                                <div class="progress" ng-show="f.progress >= 0 && !uploaded">
+                                    <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+                                         aria-valuenow="{{f.progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{f.progress}}%">
+                                        <span class="sr-only">f.progress% Complete</span>
+                                    </div>
+                                </div>
+                                {{errorMsg}}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row" ng-show="batchResp.ListErros.length > 0">
+                                <div class="col-md-12 limit-div-4">
+                                    <div class="table-responsive table-war">
+                                        <table class="table table-hover table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="min-width: 75px" id="erroBatch">
+                                                        Referência
+                                                    </th>
+                                                    <th>Mensagem</th>
+                                                </tr>
+                                            </thead>
+                                            <tr ng-repeat="item in batchResp.ListErros" class="animate-repeat">
+                                                <td class="text-danger"><strong>{{item.Contexto}}</strong></td>
+                                                <td class="text-danger">
+                                                    <strong>{{item.Mensagem}}</strong>
+                                                    <ul class="lista-sem-estilo padding-left" ng-show="item.ValidationErrors">
+                                                        <li ng-repeat-start="(key, value) in item.ValidationErrors" ng-show="$index == 0">
+                                                            <em class="text-danger">Mensagens de Validação</em>
+                                                        </li>
+                                                        <li ng-repeat-end>
+                                                            <ul class="lista-sem-estilo">
+                                                                <li ng-repeat="(key, subValue) in value">
+                                                                    <span class="text-danger">{{$parent.$parent.$index + 1}}.{{$parent.$index + 1}} {{subValue}}</span>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="uploaded === true">
+                            <button app-switch-button="inserirAtualizarPlanilhaCarga()"
+                                    switch-conf="[{label : 'Confirmar', state : 'update'}, {label : 'Processando...', state : 'updating', disabled : true}]"
+                                    switch-var="$parent.buttonUpload"
+                                    class="btn btn-success">
+                                <span class="glyphicon glyphicon-refresh"></span>
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+   
+</div>  
+</div>

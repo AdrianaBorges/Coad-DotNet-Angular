@@ -1,0 +1,137 @@
+﻿@using COAD.CORPORATIVO.SessionUtils
+<div>
+      <div>           
+           
+        <div class="row">              
+            <div class="form-group col-xs-3">
+                <label for="sigla">CNPJ/CPF</label>
+                <input type="text" id="cnpf-cpf" ng-model="$parent.filtro.cpf_cnpj" class="form-control" maxlength="14"/>
+            </div>
+            <div class="form-group col-xs-2">
+                <label for="sigla">CNPJ/CPF exato.
+                    <span class="glyphicon glyphicon-question-sign text-danger"
+                    title="Selecione 'não' caso queira que a busca procure por parte do cnpj/cpf do cliente. (Pesquisa mais lenta)." 
+                        data-toggle="tooltip">
+                    </span>                     
+                </label>
+                <br />
+                <label class="switch switch-warning switch-round">
+                    <input type="checkbox" id="checkbox_buscacnpj" 
+                        ng-model="$parent.filtro.pesquisaCpfCnpjPorIqualdade" 
+                        ng-checked="$parent.filtro.pesquisaCpfCnpjPorIqualdade == true">
+	                <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                </label>
+               
+            </div>
+            <div class="form-group col-xs-3">
+                <label for="ass1">Assinatura</label>
+                <input type="text" id="ass1" ng-model="$parent.filtro.codigoAssinatura" class="form-control" />
+            </div>
+            <div class="form-group col-xs-3">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome1" ng-model="$parent.filtro.nome" class="form-control"/>
+            </div>
+            </div>
+          <div class="row">
+            <div class="form-group col-xs-2">
+                <label for="email">Email</label>
+                <input type="text" id="email" ng-model="$parent.filtro.email" class="form-control"/>
+            </div>
+             <div class="form-group col-xs-1">
+                <label for="sigla">DDD</label>
+                <input type="text" id="ddd" ng-model="$parent.filtro.dddTelefone" class="form-control" maxlength="3" app-number/>
+            </div>
+            <div class="form-group col-xs-2">
+                <label for="nome">Telefone</label>
+                <input type="text" id="nome" ng-model="$parent.filtro.telefone" class="form-control" app-number/>
+            </div>
+
+              <div class="form-group col-md-2" ng-hide="filtro.exibirFiltroUen == false">
+                  <label>Uen Logada</label>
+                  <label class="switch switch-success switch-round">
+                      <input type="checkbox" ng-model="filtro.uenLogada" id="antecipada" ng-checked="filtro.uenLogada == true" class="ng-pristine ng-valid"><span class="switch-label" data-on="Sim" data-off="Não"></span>
+                  </label>
+              </div>
+        </div>
+          <button type="button" class="btn btn-default" ng-click="buscarClientes()">Pesquisar</button>
+      </div>
+</div>      
+<br />
+<div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Cadastro de Clientes</div>
+          
+      <div class="panel-body">       
+                    <div class="table-responsive limit-modal">     
+                            <!-- <input type="text" ng-model="dataTest" app-date/>  -->       
+                       
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>                               
+                                    
+                                        <th style="min-width: 75px">                                           
+                                            Id
+                                        </th>
+                                        <th style="min-width: 132px">                                           
+                                            Cnpj/Cpf
+                                        </th>
+                                        <th>                                           
+                                            Nome
+                                        </th>
+                                        <th>
+                                            Emails
+                                        </th>
+                                        <th>
+                                            Tipo
+                                        </th>      
+                                        <th>Ações</th>                                   
+                                    </tr>
+                                </thead>    
+                              <tr ng-repeat="item in clientes" class="animate-repeat" ng-class="{'disabled-row' : cpfObrigatorio === true && !item.CLI_CPF_CNPJ && item.CLI_CPF_CNPJ != ''}">
+                                    <td>
+                                        {{item.CLI_ID}}
+                                    </td>                                    
+                                    <td>
+                                        {{item.CLI_CPF_CNPJ}} 
+                                        <span class="label label-default" ng-show="cpfObrigatorio === true && !item.CLI_CPF_CNPJ && item.CLI_CPF_CNPJ != ''">
+                                            CNPJ/CPF não informado. (Dado Obrigatório)
+                                        </span>
+                                    </td>   
+                                    <td>
+                                        {{item.CLI_NOME}} {{item.CLI_EXCLUIR_VALIDACAO}}
+                                    </td>        
+                                  <td>
+                                       {{item.ASSINATURA_EMAIL[0].AEM_EMAIL}}
+                                <a href="javascript:void(0)" class="" ng-if="item.ASSINATURA_EMAIL.length > 1" 
+                                    app-list-popover="item.ASSINATURA_EMAIL" label="AEM_EMAIL" title="Emails">
+                                        <span class="badge" > + {{item.ASSINATURA_EMAIL.length - 1}}</span>
+                                </a>
+                                  </td>
+                                    <td>
+                                        <span class="label" ng-class="{
+                                                      
+                                                      'label-warning' : item.CLA_CLI_ID == 1,
+                                                      'label-success' : item.CLA_CLI_ID == 2,
+                                                      'label-primary' : item.CLA_CLI_ID == 3,
+                                                      }">{{item.CLASSIFICACAO_CLIENTE.CLA_CLI_DESCRICAO}}</span>
+                                    </td>                            
+                                    <td>
+                                        <a href="javascript:void(0)" ng-click="selecionarCliente(item)" title="Detalhes" class="blue" ng-hide="$parent.cpfObrigatorio === true && !item.CLI_CPF_CNPJ && item.CLI_CPF_CNPJ != ''">
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                        </a>                                          
+                                      </td>
+                                                                     
+                              </tr>
+                            <tr>
+                                <td colspan="7" ng-show="clientes.length == 0 && listado">Nenhum registro foi encontrado. 
+                                </td>
+                                <td colspan="7" ng-show="!clientes">Clique em pesquisar para listar.</td>
+
+                            </tr>
+
+                            </table> 
+                    </div>
+              <app-pagination request-page="paginaReq" load-function="buscarClientes(paginaReq)"></app-pagination>
+
+          </div>
+        </div>  

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ca9ae0d9735f4efd9a0a6fbc9d56139d" Name="Diagram1" ZoomLevel="65">
+        <EntityTypeShape EntityType="corporativo2Model.AGENDA" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="corporativo2Model.CLIENTES" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="corporativo2Model.EMAILS" Width="1.5" PointX="6.75" PointY="7.75" />
+        <EntityTypeShape EntityType="corporativo2Model.ender_fat" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="corporativo2Model.HIST_ATEND" Width="1.5" PointX="8.75" PointY="5.75" />
+        <EntityTypeShape EntityType="corporativo2Model.PARAM" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="corporativo2Model.Parcelas" Width="1.5" PointX="2.75" PointY="9.75" />
+        <EntityTypeShape EntityType="corporativo2Model.representante" Width="1.5" PointX="8.75" PointY="9.75" />
+        <EntityTypeShape EntityType="corporativo2Model.TELEFONES2" Width="1.5" PointX="10.75" PointY="3.75" />
+        <EntityTypeShape EntityType="corporativo2Model.ULTIMO_CODIGO" Width="1.5" PointX="10.75" PointY="7.75" />
+        <EntityTypeShape EntityType="corporativo2Model.bloqueia_consulta_individual" Width="1.5" PointX="10.75" PointY="10.75" />
+        <EntityTypeShape EntityType="corporativo2Model.liquidacao" Width="1.5" PointX="4.75" PointY="11.75" />
+        <EntityTypeShape EntityType="corporativo2Model.CONTRATOS" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="corporativo2Model.datas_fat" Width="1.5" PointX="15.375" PointY="0.75" />
+        <EntityTypeShape EntityType="corporativo2Model.empresas" Width="1.5" PointX="13.375" PointY="12.75" />
+        <EntityTypeShape EntityType="corporativo2Model.SEQ_PROD" Width="1.5" PointX="15.375" PointY="3.75" />
+        <EntityTypeShape EntityType="corporativo2Model.ASSINATURA" Width="1.5" PointX="15.375" PointY="6.75" />
+        <EntityTypeShape EntityType="corporativo2Model.cart_coad" Width="1.5" PointX="3.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

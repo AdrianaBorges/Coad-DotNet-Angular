@@ -1,0 +1,578 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COADRESTSERVICE\\COADRESTSERVICE.csproj": {}
+  },
+  "projects": {
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.COADGED\\COAD.COADGED.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.COADGED\\COAD.COADGED.csproj",
+        "projectName": "COAD.COADGED",
+        "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.COADGED\\COAD.COADGED.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO\\COAD.CORPORATIVO.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO\\COAD.CORPORATIVO.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PORTAL\\COAD.PORTAL.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PORTAL\\COAD.PORTAL.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.UTIL\\COAD.UTIL.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.UTIL\\COAD.UTIL.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.COBRANCA\\COAD.COBRANCA.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.COBRANCA\\COAD.COBRANCA.csproj",
+        "projectName": "COAD.COBRANCA",
+        "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.COBRANCA\\COAD.COBRANCA.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.FISCAL\\ClientWebServiceNfe\\COAD.FISCAL.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.FISCAL\\ClientWebServiceNfe\\COAD.FISCAL.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO.LEGADO\\COAD.CORPORATIVO.LEGADO.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO.LEGADO\\COAD.CORPORATIVO.LEGADO.csproj",
+        "projectName": "COAD.CORPORATIVO.LEGADO",
+        "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO.LEGADO\\COAD.CORPORATIVO.LEGADO.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO\\COAD.CORPORATIVO.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO\\COAD.CORPORATIVO.csproj",
+        "projectName": "COAD.CORPORATIVO",
+        "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO\\COAD.CORPORATIVO.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.COBRANCA\\COAD.COBRANCA.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.COBRANCA\\COAD.COBRANCA.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO.LEGADO\\COAD.CORPORATIVO.LEGADO.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO.LEGADO\\COAD.CORPORATIVO.LEGADO.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CRYPT\\COAD.CRYPT.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CRYPT\\COAD.CRYPT.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.FISCAL\\ClientWebServiceNfe\\COAD.FISCAL.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.FISCAL\\ClientWebServiceNfe\\COAD.FISCAL.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PORTAL\\COAD.PORTAL.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PORTAL\\COAD.PORTAL.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROSPECTADOS\\COAD.PROSPECTADOS.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROSPECTADOS\\COAD.PROSPECTADOS.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.UTIL\\COAD.UTIL.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.UTIL\\COAD.UTIL.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CRYPT\\COAD.CRYPT.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CRYPT\\COAD.CRYPT.csproj",
+        "projectName": "COAD.CRYPT",
+        "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CRYPT\\COAD.CRYPT.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.EXTENSION\\COAD.EXTENSION.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.EXTENSION\\COAD.EXTENSION.csproj",
+        "projectName": "COAD.EXTENSION",
+        "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.EXTENSION\\COAD.EXTENSION.csproj",
+        "frameworks": {
+          "net461": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net461": {}
+      }
+    },
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.FISCAL\\ClientWebServiceNfe\\COAD.FISCAL.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.FISCAL\\ClientWebServiceNfe\\COAD.FISCAL.csproj",
+        "projectName": "COAD.FISCAL",
+        "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.FISCAL\\ClientWebServiceNfe\\COAD.FISCAL.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.GATEWAY.MUNDIPAGG\\COAD.GATEWAY.MUNDIPAGG.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.GATEWAY.MUNDIPAGG\\COAD.GATEWAY.MUNDIPAGG.csproj",
+        "projectName": "COAD.GATEWAY.MUNDIPAGG",
+        "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.GATEWAY.MUNDIPAGG\\COAD.GATEWAY.MUNDIPAGG.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PORTAL\\COAD.PORTAL.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PORTAL\\COAD.PORTAL.csproj",
+        "projectName": "COAD.PORTAL",
+        "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PORTAL\\COAD.PORTAL.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROSPECTADOS\\COAD.PROSPECTADOS.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROSPECTADOS\\COAD.PROSPECTADOS.csproj",
+        "projectName": "COAD.PROSPECTADOS",
+        "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROSPECTADOS\\COAD.PROSPECTADOS.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROXY\\COAD.PROXY.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROXY\\COAD.PROXY.csproj",
+        "projectName": "COAD.PROXY",
+        "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROXY\\COAD.PROXY.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.COADGED\\COAD.COADGED.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.COADGED\\COAD.COADGED.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO.LEGADO\\COAD.CORPORATIVO.LEGADO.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO.LEGADO\\COAD.CORPORATIVO.LEGADO.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO\\COAD.CORPORATIVO.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO\\COAD.CORPORATIVO.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.GATEWAY.MUNDIPAGG\\COAD.GATEWAY.MUNDIPAGG.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.GATEWAY.MUNDIPAGG\\COAD.GATEWAY.MUNDIPAGG.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PORTAL\\COAD.PORTAL.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PORTAL\\COAD.PORTAL.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROSPECTADOS\\COAD.PROSPECTADOS.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROSPECTADOS\\COAD.PROSPECTADOS.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.UTIL\\COAD.UTIL.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.UTIL\\COAD.UTIL.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.RM\\COAD.RM.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.RM\\COAD.RM.csproj",
+        "projectName": "COAD.RM",
+        "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.RM\\COAD.RM.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SCHEDULER\\COAD.AGENDADOR.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SCHEDULER\\COAD.AGENDADOR.csproj",
+        "projectName": "COAD.AGENDADOR",
+        "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SCHEDULER\\COAD.AGENDADOR.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.COADGED\\COAD.COADGED.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.COADGED\\COAD.COADGED.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO.LEGADO\\COAD.CORPORATIVO.LEGADO.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO.LEGADO\\COAD.CORPORATIVO.LEGADO.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO\\COAD.CORPORATIVO.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO\\COAD.CORPORATIVO.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CRYPT\\COAD.CRYPT.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CRYPT\\COAD.CRYPT.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROSPECTADOS\\COAD.PROSPECTADOS.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROSPECTADOS\\COAD.PROSPECTADOS.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROXY\\COAD.PROXY.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROXY\\COAD.PROXY.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.UTIL\\COAD.UTIL.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.UTIL\\COAD.UTIL.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj",
+        "projectName": "COAD.SEGURANCA",
+        "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CRYPT\\COAD.CRYPT.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CRYPT\\COAD.CRYPT.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.UTIL\\COAD.UTIL.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.UTIL\\COAD.UTIL.csproj",
+        "projectName": "COAD.UTIL",
+        "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.UTIL\\COAD.UTIL.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.EXTENSION\\COAD.EXTENSION.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.EXTENSION\\COAD.EXTENSION.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PORTAL\\COAD.PORTAL.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PORTAL\\COAD.PORTAL.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COADRESTSERVICE\\COADRESTSERVICE.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COADRESTSERVICE\\COADRESTSERVICE.csproj",
+        "projectName": "COADRESTSERVICE",
+        "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COADRESTSERVICE\\COADRESTSERVICE.csproj",
+        "packagesPath": "C:\\Users\\ADM\\.nuget\\packages\\",
+        "outputPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COADRESTSERVICE\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\ADM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net461"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://www.nuget.org/api/v2/": {}
+        },
+        "frameworks": {
+          "net461": {
+            "targetAlias": "net461",
+            "projectReferences": {
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.COADGED\\COAD.COADGED.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.COADGED\\COAD.COADGED.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.COBRANCA\\COAD.COBRANCA.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.COBRANCA\\COAD.COBRANCA.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO.LEGADO\\COAD.CORPORATIVO.LEGADO.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO.LEGADO\\COAD.CORPORATIVO.LEGADO.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO\\COAD.CORPORATIVO.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CORPORATIVO\\COAD.CORPORATIVO.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CRYPT\\COAD.CRYPT.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.CRYPT\\COAD.CRYPT.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.FISCAL\\ClientWebServiceNfe\\COAD.FISCAL.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.FISCAL\\ClientWebServiceNfe\\COAD.FISCAL.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.GATEWAY.MUNDIPAGG\\COAD.GATEWAY.MUNDIPAGG.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.GATEWAY.MUNDIPAGG\\COAD.GATEWAY.MUNDIPAGG.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PORTAL\\COAD.PORTAL.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PORTAL\\COAD.PORTAL.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROSPECTADOS\\COAD.PROSPECTADOS.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROSPECTADOS\\COAD.PROSPECTADOS.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROXY\\COAD.PROXY.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.PROXY\\COAD.PROXY.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.RM\\COAD.RM.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.RM\\COAD.RM.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SCHEDULER\\COAD.AGENDADOR.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SCHEDULER\\COAD.AGENDADOR.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.SEGURANCA\\COAD.SEGURANCA.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.UTIL\\COAD.UTIL.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\COAD.UTIL\\COAD.UTIL.csproj"
+              },
+              "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj": {
+                "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net461": {
+          "targetAlias": "net461",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[3.3.1, )"
+            },
+            "Boleto.Net": {
+              "target": "Package",
+              "version": "[2.1.0.374, )"
+            },
+            "Castle.Core": {
+              "target": "Package",
+              "version": "[4.3.1, )"
+            },
+            "Castle.Windsor": {
+              "target": "Package",
+              "version": "[4.1.1, )"
+            },
+            "Castle.Windsor.MsDependencyInjection": {
+              "target": "Package",
+              "version": "[3.3.1, )"
+            },
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "ExcelLibrary": {
+              "target": "Package",
+              "version": "[1.2011.7.31, )"
+            },
+            "Microsoft.AspNet.Mvc": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            },
+            "Microsoft.AspNetCore": {
+              "target": "Package",
+              "version": "[2.1.6, )"
+            },
+            "Microsoft.AspNetCore.HttpsPolicy": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
+            "Microsoft.AspNetCore.Mvc": {
+              "target": "Package",
+              "version": "[2.1.3, )"
+            },
+            "Microsoft.AspNetCore.StaticFiles": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
+            "Microsoft.Office.Interop.Excel": {
+              "target": "Package",
+              "version": "[15.0.4795.1000, )"
+            },
+            "Microsoft.VisualStudio.Web.BrowserLink": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.1.9, )"
+            },
+            "MundiAPI.PCL": {
+              "target": "Package",
+              "version": "[0.14.2, )"
+            },
+            "MundiPagg.Gateway.Client": {
+              "target": "Package",
+              "version": "[1.3.2, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win7-x86": {
+          "#import": []
+        }
+      }
+    },
+    "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj",
+        "projectName": "Coad.GenericCrud",
+        "projectPath": "C:\\Adriana.Borges\\Material-TI\\COAD\\workspace\\svn\\acobranca\\shared\\genericcrud\\GenericCrud\\Coad.GenericCrud.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    }
+  }
+}

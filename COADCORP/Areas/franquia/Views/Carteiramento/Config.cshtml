@@ -1,0 +1,206 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.Prospect.ProspectDTO
+
+@{
+    ViewBag.Title = "Edit";
+}
+@using Coad.GenericCrud.Extensions
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li>@Html.ActionLink("Gerenciar Prospects","index","prospects")</li>
+        <li class="active">Configurações da Carteira</li>         
+        
+    </ol>
+}
+    
+@Scripts.Render("~/Scripts/negocio/carteiramento.js")
+<div class="padding" ng-app="appModule">
+
+    <div class="panel panel-default" ng-controller="CarteiramentoController" data-ng-init="read('@ViewBag.carteiraId'); init()" ng-cloak>
+       
+        <div app-modal="modal-representantes"  header="Selecione o Representante">
+     <div class="limit-modal-body">
+       <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           
+          </div>
+          
+          <div class="panel-body"> 
+              <div app-message="$parent.messageModal"></div>
+              <div class="row">
+                  <div class="form-group col-lg-3">
+                       <label for="REGIAO_ID">Região</label>
+                      @Html.DropDownList("RegiaoID", new SelectList(ViewBag.UfsRepresentante, "UF_SIGLA", "UF_SIGLA"), "Selecione" ,new {@class = "form-control", ng_model = "$parent.filtroRepresentante.siglaRegiao" })
+                  </div>      
+              <div class="form-group col-lg-3">
+                  <label for="sigla">Nome do Representante </label>
+                  <input type="text" id="nome_estrangeiro" ng-model="$parent.filtroRepresentante.nomeRepresentante" class="form-control"/>
+              </div>      
+            
+                  <div class="col-lg-6">
+                    <div class="form-group" style="padding-top: 25px">
+                        <button type="button" class="btn btn-default btn-sm button-sm-grid" ng-click="$parent.getLstRepresentante()">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </div>                 
+                </div>   
+            </div>     
+         </div>               
+            
+        </div>
+          <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Cadastro Representante</div>
+          
+          <div class="panel-body">         
+                    <div class="table-responsive">     
+                            <!-- <input type="text" ng-model="dataTest" app-date/>  -->                                   
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>   
+                                        <th>                                           
+                                            Id
+                                        </th>
+                                        <th style="min-width: 250px">                                          
+                                            Nome
+                                        </th>
+                                        <th>                                          
+                                            Regiao
+                                        </th>
+                                        <th>Escolher</th>
+                                    </tr>
+                                </thead>    
+                              <tr ng-repeat="item in representantes">
+                                    
+                                    <td>
+                                        {{item.REP_ID}}
+                                    </td> 
+                                    <td>
+                                        {{item.REP_NOME}}
+                                    </td>                                    
+                                    <td>
+                                        {{item.REGIAO_UF}}
+                                    </td>   
+                                    
+                                    <td><a href="javascript:void(0)" ng-click="$parent.IncluirRepresentante(item)" title="Detalhes" class="blue"><span class="glyphicon glyphicon-plus"></span></a></td>
+                                   
+                              </tr>
+                                <tr ng-hide="representantes">
+                                    <td colspan="4">Não foi encontrado nenhum registro.</td>
+                                </tr>
+                            </table> 
+                    </div>
+              <div app-pagination="paginaRep" request-page="paginaReqRepre" load-function="getLstRepresentante(paginaReqRepre)"></div>
+
+          </div>
+        </div>
+     </div>
+            
+      </div>
+            @Html.ValidationSummary(true)          
+                  <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Editar Prospects
+
+                <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                         <li>
+                                            <a href="@Url.Action("Index")" title="Voltar" class="blue"> Voltar</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" title="Salvar" ng-click="salvarProspect()" class="blue">Salvar</a>
+                                        </li>
+                                        <li ng-show="prospect.ID">
+                                            <a href="javascript:void(0)" app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}" 
+                                                app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?" class="btnConfirmaExclusao blue" title="Excluir"> Excluir</a>
+                                        </li>                                                                                                                    
+                                    </ul>
+                                </div>
+                            </div>
+            </div>
+
+
+            <div class="panel-body">  
+                 <div app-message></div>
+                 @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) {
+                     
+                <fieldset>
+                    <legend>Dados básicos</legend>
+                    
+                    <div class="row">                        
+                        <div class="form-group col-sm-2">
+                            @Html.Label("Código")
+                            @Html.TextBoxFor(model => model.ID,  new {@class = "form-control", ng_model = "carteira.CAR_ID", disabled = "disabled" })
+                            @Html.ValidationMessageFor(model => model.ID, null, new { app_validation_msg = "erros", @for = "ID" }) 
+                        </div>
+                        <div class="form-group col-sm-4">
+                            @Html.Label("Empresa de Faturamento")
+                            @Html.DropDownList("Empresa", 
+                                             new SelectList(ViewBag.empresas, "EMP_ID", "EMP_NOME_FANTASIA"), 
+                                             "Selecione", new {@class = "form-control", ng_model = "carteira.EMP_ID"})
+                            @Html.ValidationMessageFor(model => model.NOME, null, new { app_validation_msg = "erros", @for = "NOME" }) 
+                        </div>
+                    </div>
+                    </fieldset>                      
+                    <fieldset>
+                        <legend>Representantes</legend>
+                         <div class="row">
+                             <div class="form-group col-sm-2">
+                                 <button type="button" class="btn btn-default btn-sm button-sm-grid" ng-click="AbrirModalRepresentante(carteira.CAR_ID)">
+                                     <span class="glyphicon glyphicon-plus-sign blue"></span> Incluir
+                                 </button>
+                             </div>
+                         </div>
+                         <div class="row">                        
+                            <div class="table-responsive padding-left-right">
+                            <div app-validation-msg="erros" for="PROSPECTS_TELEFONE"></div>
+                            <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Representante</th>
+                                    <th>Região</th>
+                                    <th>Excluir</th>
+                                    
+                                </tr>                                   
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="rep in carteira.CARTEIRA_REPRESENTANTE | filter : queryRepresentante" ng-show="carteira.CARTEIRA_REPRESENTANTE">
+                                    <td>
+                                       {{rep.REPRESENTANTE.REP_NOME}}
+                                    </td>
+                                    <td>
+                                       {{rep.REPRESENTANTE.REGIAO.RG_DESCRICAO}}
+                                    </td>                                    
+                                    <td>  
+                                        <a href="javascript:void(0)" ng-click="ExcluirRepresentante($index)" class="btnConfirmaExclusao red" id="btexcluir" title="Excluir">
+                                            <span class="glyphicon glyphicon-remove-sign"></span>
+                                        </a>                                        
+                                    </td>
+                                    
+                                </tr>
+                                <tr ng-hide="carteira.CARTEIRA_REPRESENTANTE.length > 0">
+                                    <td colspan="4">Nenhuma representante adicionada.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                        </div>
+                    </fieldset>                  
+                 }
+
+            </div>
+        <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span> Voltar</button>
+            <button type="button" class="btn btn-default" ng-click="salvarConfig()"><span class="glyphicon glyphicon-floppy-save blue"></span> Salvar</button>      
+                
+        </div> 
+        
+    </div>
+    </div>

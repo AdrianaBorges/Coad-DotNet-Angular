@@ -1,0 +1,1014 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt_br">
+<head>
+
+    <script type="text/javascript">
+        // para obter o contexto da aplicação
+        var contextPath = "@System.Web.HttpContext.Current.Request.ApplicationPath";
+    </script>
+
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+     
+    @Styles.Render("~/Content/themes/PortalCoad/css/portal.css")
+    @Styles.Render("~/Content/themes/base/jquery-ui.css")
+    @Styles.Render("~/Content/themes/base/simple-sidebar.css")
+    @Styles.Render("~/Content/themes/base/bootstrap-theme.css")
+    @Styles.Render("~/Content/themes/base/default.css")
+    @Styles.Render("~/Content/themes/base/bootstrap.css")
+    @Styles.Render("~/Content/themes/fonts/font-awesome.min.css")
+    @Styles.Render("~/Content/themes/base/coadcorp-boostrap.css")
+
+    <script src="@Url.Content("~/Scripts/jquery-1.11.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/modernizr-2.5.3.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.maskMoney.js")" type="text/javascript"></script>
+
+
+    @Scripts.Render("~/Scripts/bootstrap.min.js")
+    @Scripts.Render("~/Scripts/util.js")
+    @Scripts.Render("~/Scripts/Angular/angular.min.js")
+    @Scripts.Render("~/Scripts/Angular/angular_modules/service_module.js")
+    @Scripts.Render("~/Scripts/Angular/angular_modules/directives_module.js")
+    @Scripts.Render("~/Scripts/Angular/ng-file-upload/ng-file-upload-shim.min.js")
+    @Scripts.Render("~/Scripts/Angular/ng-file-upload/ng-file-upload.min.js")
+    @Scripts.Render("~/Scripts/default.js")
+    @Scripts.Render("~/Scripts/negocio/notificacao.js")
+    @Scripts.Render("~/Scripts/negocio/controllers_plugins/info_cliente.js")
+    @Scripts.Render("~/Scripts/Angular/FusionCharts/fusioncharts.js")
+    @Scripts.Render("~/Scripts/Angular/FusionCharts/angular-fusioncharts.min.js")
+    @Scripts.Render("~/Scripts/js/plugins/tinymce/tinymce.min.js")
+    @Scripts.Render("~/Scripts/Angular/angular-sanitize.js")
+    @Scripts.Render("~/Scripts/Angular/angular-animate.js")
+    @Scripts.Render("~/Scripts/js/plugins/tinymce/tinymce_custom_app.js")
+    @Scripts.Render("~/Scripts/js/plugins/tinymce/Tinymce.js")
+    @Scripts.Render("~/Scripts/negocio/LucroPresumido.js")
+
+
+    <!-- compatibilidades com ie antigos-->
+    @Scripts.Render("~/Scripts/compatibilidades/respond.js")
+    <script type='text/javascript'>
+        function FecharJanela() {
+            ww = window.open(window.location, "_self");
+            ww.close();
+        }
+    </script>
+    <style type="text/css">
+        a[href]:after {
+            content: none !important;
+        }
+    </style>
+
+</head>
+<body class="body" ng-app="appModule">
+    <div ng-controller="LucroPresumidoController" data-ng-init="init();canPrint=true;">
+        <div class="hidden-print" app-modal-erro="Modal-Erro" header="Atenção" submodal>
+            <div class="panel-body">
+                <p><strong ng-bind-html="trustAsHtml(erro)"> </strong></p>
+            </div>
+        </div>
+        <div class="conteudo_popup" style="width: 1000px;">
+            <div style="height: 110px; background-image: url('/Content/themes/PortalCoad/img/header_busca.png')">
+                <img src="/Content/themes/PortalCoad/img/header_busca.png" style="width:100%; height:100%;" />
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>
+                        <h1><strong>Apuração do IRPJ, CSLL, PIS e COFINS pelas pessoas jurídicas tributadas pelo Lucro Presumido</strong></h1>
+                    </p>
+                </div>
+            </div>
+            <div class="hidden-print">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <p><p>As pessoas jurídicas não obrigadas à apuração do lucro real podem utilizar a tributação com base no lucro presumido, que é uma forma simplificada de determinar a base de cálculo do Imposto de Renda (IRPJ) e da Contribuição Social pelo Lucro Líquido (CSLL).&nbsp;</p>
+                            <p>O simulador COAD identifica os valores devidos de IRPJ, CSLL, PIS e COFINS no lucro presumido. O&nbsp;percentual de presunção de lucro varia de acordo com a atividade praticada pela empresa, portanto, <strong>dividimos o SIMULADOR em 4 grupos, conforme tabela abaixo.</strong></p>
+                            <p>Identifique a atividade praticada pela empresa, em seguida selecione o grupo a qual ela pertence e preencha os dados solicitados pelo SIMULADOR.</p>
+                            <p>Vale lembrar que a apuração do&nbsp;IRPJ, CSLL é trimestral, diferentemente do PIS e COFINS, que é apurado mensalmente.<br><br>O pagamento do IRPJ e CSLL poderá ser parcelado em até 3 quotas iguais mensais e sucessivas sendo que nenhuma quota poderá ter valor inferior a&nbsp; R$ 1.000,00.</p>
+                            <p>As contribuições para PIS/COFINS no lucro presumido são devidos pelo regime cumulativo, situação que prevê alíquota básica de 0,65% e 3% respectivamente.</p>
+                            <p>As operações de exportação de mercadorias e serviços desde que representem ingresso de divisas não são tributadas pelo PIS/COFINS. Este simulador considera essas operações isenta dessas contribuições.</p>
+                            <p>O resultado final, além de indicar os valores devidos a título de IR, CSLL, PIS&nbsp; e COFINS, demonstra em percentual a carga tributária incidente frente à receita auferida pela empresa no trimestre.</p>
+                            <p>Para maiores esclarecimentos sobre apuração do IR e CSLL no lucro presumido, clique aqui e consulte o Curso Prático IRPJ.</p></p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="hidden-print panel panel-default ng-scope">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-cog blue"></span>&nbsp;&nbsp;Preencha os campos abaixo para realizar o calculo
+                    </div>
+                    <div ng-repeat="lucroPresumidoObj in lucroPresumidoLista" class="panel-body">
+                        <div class="form-group">
+                            <form class="form-inline">
+                                <div class="row">
+                                    <div class="col-lg-3">
+
+                                        <label>Lista de Atividades</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <select class="form-control" ng-options="listaAtividade.nome for listaAtividade in lucroPresumidoObj.data.lucroPresumido.templateDOM.listaAtividade track by listaAtividade.id"
+                                                ng-model="lucroPresumidoObj.data.model.atividade"></select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>Trimestre</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <select class="form-control"
+                                                ng-options="listaTrimestre.nome for listaTrimestre in lucroPresumidoObj.data.lucroPresumido.templateDOM.listaTrimestre track by listaTrimestre.id"
+                                                ng-model="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux"></select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>Meses Apurados</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <select class="form-control"
+                                                ng-options="meses.valor for meses in lucroPresumidoObj.data.lucroPresumido.model.listaTrimestreAux.meses track by meses.id"
+                                                ng-model="lucroPresumidoLista[0].data.lucroPresumido.model.trimestre.meses"></select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3">
+
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==1">Janeiro</label>
+                                        <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==2">Abril</label>
+                                        <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==3">Julho</label>
+                                        <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==4">Outubro</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==1">Fevereiro</label>
+                                        <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==2">Maio</label>
+                                        <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==3">Agosto</label>
+                                        <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==4">Novembro</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==1">Março</label>
+                                        <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==2">Junho</label>
+                                        <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==3">Setembro</label>
+                                        <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==4">Dezembro</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>Receita - Mercado Interno</label>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   app-mask-dinheiro="lucroPresumidoLista[$index].data.model.receitaMercadoInterno[0].valor"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   ng-model="lucroPresumidoLista[$index].data.model.receitaMercadoInterno[0].aux.valor"
+                                                   ng-init="lucroPresumidoLista[$index].data.model.receitaMercadoInterno[0].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoLista[$index].data.model.receitaMercadoInterno[1].valor"
+                                                   ng-model="lucroPresumidoLista[$index].data.model.receitaMercadoInterno[1].aux.valor"
+                                                   ng-init="lucroPresumidoLista[$index].data.model.receitaMercadoInterno[1].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoLista[$index].data.model.receitaMercadoInterno[2].valor"
+                                                   ng-model="lucroPresumidoLista[$index].data.model.receitaMercadoInterno[2].aux.valor"
+                                                   ng-init="lucroPresumidoLista[$index].data.model.receitaMercadoInterno[2].valor=0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>Receita de Exportação</label>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.receitaExportacao[0].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.receitaExportacao[0].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.receitaExportacao[0].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.receitaExportacao[1].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.receitaExportacao[1].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.receitaExportacao[1].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.receitaExportacao[2].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.receitaExportacao[2].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.receitaExportacao[2].valor=0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>TOTAL Faturamento</label>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input class="form-control"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.totalFaturamento[0].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.totalFaturamento[0].aux.valor"
+                                                   value="{{lucroPresumidoObj.data.model.totalFaturamento[0].valor = (lucroPresumidoObj.data.model.receitaMercadoInterno[0].valor + lucroPresumidoObj.data.model.receitaExportacao[0].valor)  | currency : '' : 2}}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input class="form-control"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.totalFaturamento[1].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.totalFaturamento[1].aux.valor"
+                                                   value="{{lucroPresumidoObj.data.model.totalFaturamento[1].valor = (lucroPresumidoObj.data.model.receitaMercadoInterno[1].valor + lucroPresumidoObj.data.model.receitaExportacao[1].valor)  | currency : '' : 2}}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input class="form-control"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.totalFaturamento[2].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.totalFaturamento[2].aux.valor"
+                                                   value="{{lucroPresumidoObj.data.model.totalFaturamento[2].valor = (lucroPresumidoObj.data.model.receitaMercadoInterno[2].valor + lucroPresumidoObj.data.model.receitaExportacao[2].valor)  | currency : '' : 2}}" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>Vendas Canceladas e Descontos Incondicionais Concedidos</label>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.vendasCanceladasDescontosConcedidos[0].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.vendasCanceladasDescontosConcedidos[0].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.vendasCanceladasDescontosConcedidos[0].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.vendasCanceladasDescontosConcedidos[1].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.vendasCanceladasDescontosConcedidos[1].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.vendasCanceladasDescontosConcedidos[1].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.vendasCanceladasDescontosConcedidos[2].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.vendasCanceladasDescontosConcedidos[2].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.vendasCanceladasDescontosConcedidos[2].valor=0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>TOTAL RECEITA BRUTA</label>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input class="form-control"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.totalReceitaBruta[0].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.totalReceitaBruta[0].aux.valor"
+                                                   value="{{lucroPresumidoObj.data.model.totalReceitaBruta[0].valor = (lucroPresumidoObj.data.model.totalFaturamento[0].valor - lucroPresumidoObj.data.model.vendasCanceladasDescontosConcedidos[0].valor) | currency : '' : 2}}" disabled>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input class="form-control"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.totalReceitaBruta[1].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.totalReceitaBruta[1].aux.valor"
+                                                   value="{{lucroPresumidoObj.data.model.totalReceitaBruta[1].valor = (lucroPresumidoObj.data.model.totalFaturamento[1].valor - lucroPresumidoObj.data.model.vendasCanceladasDescontosConcedidos[1].valor) | currency : '' : 2}}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input class="form-control"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.totalReceitaBruta[2].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.totalReceitaBruta[2].aux.valor"
+                                                   value="{{lucroPresumidoObj.data.model.totalReceitaBruta[2].valor = (lucroPresumidoObj.data.model.totalFaturamento[2].valor - lucroPresumidoObj.data.model.vendasCanceladasDescontosConcedidos[2].valor) | currency : '' : 2}}" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>Receitas Financeiras (Rendimento aplicações em renda fixa)</label>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.receitasFinanceirasRendimentoAplicacoesEmRendaFixa[0].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.receitasFinanceirasRendimentoAplicacoesEmRendaFixa[0].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.receitasFinanceirasRendimentoAplicacoesEmRendaFixa[0].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.receitasFinanceirasRendimentoAplicacoesEmRendaFixa[1].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.receitasFinanceirasRendimentoAplicacoesEmRendaFixa[1].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.receitasFinanceirasRendimentoAplicacoesEmRendaFixa[1].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.receitasFinanceirasRendimentoAplicacoesEmRendaFixa[2].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.receitasFinanceirasRendimentoAplicacoesEmRendaFixa[2].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.receitasFinanceirasRendimentoAplicacoesEmRendaFixa[2].valor=0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>Recuperação de Perdas no Recebimento de Crédito</label>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.recuperacaoDePerdasNoRecebimentoDeCredito[0].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.recuperacaoDePerdasNoRecebimentoDeCredito[0].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.recuperacaoDePerdasNoRecebimentoDeCredito[0].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.recuperacaoDePerdasNoRecebimentoDeCredito[1].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.recuperacaoDePerdasNoRecebimentoDeCredito[1].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.recuperacaoDePerdasNoRecebimentoDeCredito[1].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.recuperacaoDePerdasNoRecebimentoDeCredito[2].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.recuperacaoDePerdasNoRecebimentoDeCredito[2].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.recuperacaoDePerdasNoRecebimentoDeCredito[2].valor=0">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>Ganho de Capital</label>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.ganhoCapital[0].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.ganhoCapital[0].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.ganhoCapital[0].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.ganhoCapital[1].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.ganhoCapital[1].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.ganhoCapital[1].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.ganhoCapital[2].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.ganhoCapital[2].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.ganhoCapital[2].valor=0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>IRRF Sobre Receitas Financeiras</label>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.irrfSemReceitasFinanceiras[0].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.irrfSemReceitasFinanceiras[0].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.irrfSemReceitasFinanceiras[0].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.irrfSemReceitasFinanceiras[1].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.irrfSemReceitasFinanceiras[1].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.irrfSemReceitasFinanceiras[1].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.irrfSemReceitasFinanceiras[2].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.irrfSemReceitasFinanceiras[2].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.irrfSemReceitasFinanceiras[2].valor=0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>IRRF Serviço PJ</label>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.model.irrfServicoPj[0].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.model.irrfServicoPj[0].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.model.irrfServicoPj[0].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.model.irrfServicoPj[1].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.model.irrfServicoPj[1].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.model.irrfServicoPj[1].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.model.irrfServicoPj[2].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.model.irrfServicoPj[2].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.model.irrfServicoPj[2].valor=0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>CSLL Retido PJ</label>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.csllRetidoPj[0].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.csllRetidoPj[0].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.csllRetidoPj[0].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.csllRetidoPj[1].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.csllRetidoPj[1].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.csllRetidoPj[1].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.csllRetidoPj[2].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.csllRetidoPj[2].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.csllRetidoPj[2].valor=0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>PIS Retido Serviços PJ</label>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.pisRetidoServicosPj[0].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.pisRetidoServicosPj[0].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.pisRetidoServicosPj[0].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.pisRetidoServicosPj[1].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.pisRetidoServicosPj[1].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.pisRetidoServicosPj[1].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.pisRetidoServicosPj[2].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.pisRetidoServicosPj[2].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.pisRetidoServicosPj[2].valor=0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>CONFINS Retido PJ</label>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.cofinsRetidoPj[0].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.cofinsRetidoPj[0].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.cofinsRetidoPj[0].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.cofinsRetidoPj[1].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.cofinsRetidoPj[1].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.cofinsRetidoPj[1].valor=0">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">R$</div>
+                                            <input type="text" class="form-control"
+                                                   onkeydown="return event.keyCode !== 69"
+                                                   app-mask-dinheiro="lucroPresumidoObj.data.model.cofinsRetidoPj[2].valor"
+                                                   ng-model="lucroPresumidoObj.data.model.cofinsRetidoPj[2].aux.valor"
+                                                   ng-init="lucroPresumidoObj.data.model.cofinsRetidoPj[2].valor=0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <hr ng-if="$index < lucroPresumidoLista.length-1" style="width: 100%; color: black; height: 1px; background-color:black;" />
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="panel-footer">
+                                <button ng-click="calcularLucroPresumido()" class="btn btn-default pull-left"><span class="glyphicon glyphicon-cog blue"></span>&nbsp;Calcular</button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel-footer">
+                                <button ng-click="limpaTabelaLucroPresumido()" class="btn btn-default center-block"><span class="glyphicon glyphicon-cog blue"></span>&nbsp;Limpar tabelas</button>
+                            </div>
+                        </div>
+                        <div class="col-md-4 ">
+                            <div class="panel-footer">
+                                <button ng-click="addTabLucroPresumido()" class="btn btn-default pull-right"><span class="glyphicon glyphicon-cog blue"></span>&nbsp;Adicionar atividade</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" ng-show="tabelaCalculo">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>CALCULO PIS/COFINS (APURAÇÃO MENSAL)</thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Mêses</td>
+                                        <td>
+                                            <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==1">Janeiro</label>
+                                            <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==2">Abril</label>
+                                            <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==3">Julho</label>
+                                            <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==4">Outubro</label>
+                                        </td>
+                                        <td>
+                                            <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==1">Fevereiro</label>
+                                            <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==2">Maio</label>
+                                            <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==3">Agosto</label>
+                                            <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==4">Novembro</label>
+                                        </td>
+                                        <td>
+                                            <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==1">Março</label>
+                                            <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==2">Junho</label>
+                                            <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==3">Setembro</label>
+                                            <label ng-if="lucroPresumidoLista[0].data.lucroPresumido.model.listaTrimestreAux.id==4">Dezembro</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Base de Cálculo de PIS e COFINS (APURAÇÃO MENSAL)</td>
+                                        <td app-show-dinheiro="baseCalcPisCofinsPriMesTriResult"></td>
+                                        <td app-show-dinheiro="baseCalcPisCofinsSegMesTriResult"></td>
+                                        <td app-show-dinheiro="baseCalcPisCofinsTerMesTriResult"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>PIS Devido no mês (0,65)</td>
+                                        <td app-show-dinheiro="pisDevNoMesPriMesTriResult"></td>
+                                        <td app-show-dinheiro="pisDevNoMesSegMesTriResult"></td>
+                                        <td app-show-dinheiro="pisDevNoMesTerMesTriResult"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>(-) COMPENSAÇÃO PIS RETIDO</td>
+                                        <td app-show-dinheiro="compPisRetPriMesTriResult"></td>
+                                        <td app-show-dinheiro="compPisRetSegMesTriResult"></td>
+                                        <td app-show-dinheiro="compPisRetTerMesTriResult"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>PIS A RECOLHER</td>
+                                        <td app-show-dinheiro="pisRecPriMesTriResult"></td>
+                                        <td app-show-dinheiro="pisRecSegMesTriResult"></td>
+                                        <td app-show-dinheiro="pisRecTerMesTriResult"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>COFINS Devido (3,00%)</td>
+                                        <td app-show-dinheiro="cofinsDevPriMesTriResult"></td>
+                                        <td app-show-dinheiro="cofinsDevSegMesTriResult"></td>
+                                        <td app-show-dinheiro="cofinsDevTerMesTriResult"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>(-) COMPENSAÇÃO COFINS RETIDO</td>
+                                        <td app-show-dinheiro="compCofinsRetidoPriMesTriResult"></td>
+                                        <td app-show-dinheiro="compCofinsRetidoSegMesTriResult"></td>
+                                        <td app-show-dinheiro="compCofinsRetidoTerMesTriResult"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>COFINS A RECOLHER</td>
+                                        <td app-show-dinheiro="cofinsRecPriMesTriResult"></td>
+                                        <td app-show-dinheiro="cofinsRecSegMesTriResult"></td>
+                                        <td app-show-dinheiro="cofinsRecTerMesTriResult"></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot></tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="col-lg-12 ">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>CALCULO IRPJ (APURAÇÃO TRIMESTRAL)</thead>
+                                <tbody>
+                                    <tr ng-repeat="lucroPresumidoObj in lucroPresumidoLista">
+                                        <td>{{lucroPresumidoObj.data.model.atividade.nome}} - BASE DE CALCULO LUCRO PRESUMIDO (DE ACORDO COM A ATIVIDADE)</td>
+                                        <td app-show-dinheiro="baseCalculoLucroPresumidoPorAtividadeResult[$index].value"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Demais Receitas (100%)</td>
+                                        <td colspan="4" app-show-dinheiro="demaisReceitas"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Base de Cálculo do IRPJ</td>
+                                        <td colspan="4" app-show-dinheiro="baseCalculoIrpj"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>IRPJ 15%</td>
+                                        <td colspan="4" app-show-dinheiro="irpjQuinzePorCento"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>LIMITE ADICIONAL</td>
+                                        <td colspan="4" app-show-dinheiro="limiteAdicional"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>ADICIONAL DE IRPJ(10%)</td>
+                                        <td colspan="4" app-show-dinheiro="adicionalDeIrpj"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>BASE DE CÁLCULO DO ADICIONAL</td>
+                                        <td colspan="4" app-show-dinheiro="baseCalculoAdicional"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>IRPJ DEVIDO</td>
+                                        <td colspan="4" app-show-dinheiro="irpjDevido"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>(-) COMPENSAÇÃO IR RETIDO</td>
+                                        <td colspan="4" app-show-dinheiro="compensacaoIrRetido"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>IR A RECOLHER</td>
+                                        <td colspan="4" app-show-dinheiro="irRecolher"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cota única</td>
+                                        <td colspan="4" app-show-dinheiro="cotaUnica"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1º Cota</td>
+                                        <td colspan="4" app-show-dinheiro="primeiraCota"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2º Cota</td>
+                                        <td colspan="4" app-show-dinheiro="segundaCota"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3º Cota</td>
+                                        <td colspan="4" app-show-dinheiro="terceiraCota"></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot></tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="col-lg-12 ">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>CALCULO CSLL (APURAÇÃO TRIMESTRAL)</thead>
+                                <tbody>
+                                    <tr ng-repeat="lucroPresumidoObj in lucroPresumidoLista">
+                                        <td>{{lucroPresumidoObj.data.model.atividade.nome}} - BASE DE CÁLCULO LUCRO PRESUMIDO DE ACORDO COM A ATIVIDADE</td>
+                                        <td app-show-dinheiro="baseCalculoLucroPresumidoAcordoAtividadeCsll[$index].value"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Demais Receitas (100%)</td>
+                                        <td colspan="4" app-show-dinheiro="demaisReceitasCsll"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Base de Cálculo da CSLL</td>
+                                        <td colspan="4" app-show-dinheiro="baseCalculoCsll"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>CSLL DEVIDA 9º</td>
+                                        <td colspan="4" app-show-dinheiro="cssDevidaCsll"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>(-) COMPENSAÇÕES CSLL RETIDA</td>
+                                        <td colspan="4" app-show-dinheiro="compensacoesCsllRetida"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>CSLL A Recolher</td>
+                                        <td colspan="4" app-show-dinheiro="cssRecolherCsll"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cota única</td>
+                                        <td colspan="4" app-show-dinheiro="cotaUnicaCsll"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1º cota</td>
+                                        <td colspan="4" app-show-dinheiro="primeiraCotaCsll"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2º cota</td>
+                                        <td colspan="4" app-show-dinheiro="segundaCotaCsll"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3º cota</td>
+                                        <td colspan="4" app-show-dinheiro="terceiraCotaCsll"></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot></tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p><p>&nbsp;</p>
+                        <table style="width: 796px; border-color: #1f0b0b; height: 1344px; background-color: #f2f0f0;" border="1">
+                            <tbody>
+                                <tr style="height: 66px;">
+                                    <td style="width: 670px; height: 132px; text-align: center;" colspan="2" rowspan="2"><strong>Atividades</strong></td>
+                                    <td style="width: 124px; height: 66px; text-align: center;" colspan="2"><strong>Percentuais Aplicáveis</strong></td>
+                                </tr>
+                                <tr style="height: 66px; border-color: #000000;">
+                                    <td style="width: 124px; height: 66px; text-align: center;" colspan="2"><strong>IRPJ&nbsp; &nbsp; &nbsp;CSLL</strong></td>
+                                </tr>
+                                <tr style="height: 49px;">
+                                    <td style="width: 125px; height: 511px; text-align: center;" rowspan="8"><strong>GRUPO 1</strong></td>
+                                    <td style="width: 545px; height: 49px;">Administração de consórcios de bens duráveis;</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;"><strong>32%</strong></td>
+                                    <td style="width: 62px; height: 49px; text-align: center;"><strong>32%</strong></td>
+                                </tr>
+                                <tr style="height: 83px;">
+                                    <td style="width: 545px; height: 83px;">Administração, locação ou cessão de bens móveis e imóveis (exceto a receita de aluguéis, quando a pessoa jurídica não exercer a atividade de locação de imóveis) e direitos de qualquer natureza;</td>
+                                    <td style="width: 62px; height: 83px; text-align: center;">32%</td>
+                                    <td style="width: 62px; height: 83px; text-align: center;">32%</td>
+                                </tr>
+                                <tr style="height: 49px;">
+                                    <td style="width: 545px; height: 49px;">Cessão de direitos de qualquer natureza;</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">32%</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">32%</td>
+                                </tr>
+                                <tr style="height: 49px;">
+                                    <td style="width: 545px; height: 49px;">Coleta e transporte de resíduos até aterros sanitários ou local de descarte;</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">32%</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">32%</td>
+                                </tr>
+                                <tr style="height: 66px;">
+                                    <td style="width: 545px; height: 66px;">Construção por administração ou por empreitada unicamente de mão de obra ou com emprego parcial de materiais;</td>
+                                    <td style="width: 62px; height: 66px; text-align: center;">32%</td>
+                                    <td style="width: 62px; height: 66px; text-align: center;">32%</td>
+                                </tr>
+                                <tr style="height: 100px;">
+                                    <td style="width: 545px; height: 100px;">Construção, recuperação, reforma, ampliação ou melhoramento de infraestrutura, no caso de contratos de concessão de serviços públicos, independentemente do emprego parcial ou total de materiais; Intermediação de negócios (inclusive representação comercial por conta de terceiros e corretagem de seguros, imóveis e outros);</td>
+                                    <td style="width: 62px; height: 100px; text-align: center;">32%</td>
+                                    <td style="width: 62px; height: 100px; text-align: center;">32%</td>
+                                </tr>
+                                <tr style="height: 66px;">
+                                    <td style="width: 545px; height: 66px;">Prestação de serviços em geral, como limpeza e locação de mão de obra, ainda que sejam fornecidos os materiais;</td>
+                                    <td style="width: 62px; height: 66px; text-align: center;">32%</td>
+                                    <td style="width: 62px; height: 66px; text-align: center;">32%</td>
+                                </tr>
+                                <tr style="height: 49px;">
+                                    <td style="width: 545px; height: 49px;">Prestação de serviços relativos ao exercício de profissões legalmente regulamentadas;</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">32%</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">32%</td>
+                                </tr>
+                                <tr style="height: 66px;">
+                                    <td style="width: 125px; height: 66px; text-align: center;"><strong>GRUPO 2</strong></td>
+                                    <td style="width: 545px; height: 66px;">Revenda para consumo de combustível derivado de petróleo, álcool etílico carburante e gás natural.</td>
+                                    <td style="width: 62px; height: 66px; text-align: center;">1,6%</td>
+                                    <td style="width: 62px; height: 66px; text-align: center;">12%</td>
+                                </tr>
+                                <tr style="height: 49px;">
+                                    <td style="width: 125px; height: 49px; text-align: center;"><strong>GRUPO 3</strong></td>
+                                    <td style="width: 545px; height: 49px;">Serviços de transporte, exceto o de cargas.</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">16%</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">12%</td>
+                                </tr>
+                                <tr style="height: 49px;">
+                                    <td style="width: 125px; height: 507px; text-align: center;" rowspan="10"><strong>GRUPO 4</strong></td>
+                                    <td style="width: 545px; height: 49px;">Atividade rural;</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">8%</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">12%</td>
+                                </tr>
+                                <tr style="height: 49px;">
+                                    <td style="width: 545px; height: 49px;">Industrialização por encomenda (materiais fornecidos pelo encomendante);</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">8%</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">12%</td>
+                                </tr>
+                                <tr style="height: 66px;">
+                                    <td style="width: 545px; height: 66px;">Loteamento de terrenos, incorporação imobiliária, construção de prédios destinados à venda, bem como a venda de imóveis construídos ou adquiridos para revenda;</td>
+                                    <td style="width: 62px; height: 66px; text-align: center;">8%</td>
+                                    <td style="width: 62px; height: 66px; text-align: center;">12%</td>
+                                </tr>
+                                <tr style="height: 49px;">
+                                    <td style="width: 545px; height: 49px;">Construção por empreitada com emprego de todos os materiais indispensáveis à sua execução, sendo tais materiais incorporados à obra;&nbsp;</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">8%</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">12%</td>
+                                </tr>
+                                <tr style="height: 49px;">
+                                    <td style="width: 545px; height: 49px;">Outras atividades não caracterizadas como prestação de serviços;</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">8%</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">12%</td>
+                                </tr>
+                                <tr style="height: 49px;">
+                                    <td style="width: 545px; height: 49px;">Representação comercial por conta própria;&nbsp;</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">8%</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">12%</td>
+                                </tr>
+                                <tr style="height: 49px;">
+                                    <td style="width: 545px; height: 49px;">Revenda de mercadorias;</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">8%</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">12%</td>
+                                </tr>
+                                <tr style="height: 49px;">
+                                    <td style="width: 545px; height: 49px;">Serviços hospitalares e de auxílio diagnóstico e terapia, fisioterapia, terapia ocupacional, fonoaudiologia, radiologia, patologia clínica, imagenologia, anatomia patológica e citopatologia, medicina nuclear e análises e patologias clínicas, exames por métodos gráficos , procedimentos endoscópicos, radioterapia, quimioterapia, diálise e oxigenoterapia hiperbárica, desde que a prestadora destes serviços seja organizada sob a forma de sociedade empresária e atenda às normas da Anvisa;</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">8%</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">12%</td>
+                                </tr>
+                                <tr style="height: 49px;">
+                                    <td style="width: 545px; height: 49px;">Transporte de cargas ;</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">8%</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">12%</td>
+                                </tr>
+                                <tr style="height: 49px;">
+                                    <td style="width: 545px; height: 49px;">Venda de produtos de fabricação própria.</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">8%</td>
+                                    <td style="width: 62px; height: 49px; text-align: center;">12%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>As pessoas jurídicas cujas atividades sejam, exclusivamente, as mencionadas abaixo, podem utilizar, para determinação do lucro presumido, o percentual de 16%, desde que as respectivas receitas não ultrapassem, em cada ano, o limite de R$ 120.000,00. Ressaltamos que a redução de 32 para 16% não se aplica aos serviços decorrentes de profissões legalmente regulamentadas, nos termos do §7º, artigo 33 da IN 1700/2017. Esta redução de percentual é aplicável apenas ao Imposto de Renda:</p>
+                        <table style="border-color: #030000;" width="499">
+                            <tbody>
+                                <tr>
+                                    <td width="499">Administração&nbsp;de&nbsp;consórcios&nbsp;de&nbsp;bens&nbsp;duráveis;</td>
+                                </tr>
+                                <tr>
+                                    <td width="499">Administração,&nbsp;locação&nbsp;ou&nbsp;cessão&nbsp;de&nbsp;bens&nbsp;móveis&nbsp;e&nbsp;imóveis&nbsp;(exceto&nbsp;a&nbsp;receita&nbsp;de&nbsp;aluguéis,&nbsp;quando&nbsp;a&nbsp;pessoa&nbsp;jurídica&nbsp;não&nbsp;exercer&nbsp;a&nbsp;atividade&nbsp;de&nbsp;locação&nbsp;de&nbsp;imóveis)&nbsp;e&nbsp;direitos&nbsp;de&nbsp;qualquer&nbsp;natureza;</td>
+                                </tr>
+                                <tr>
+                                    <td width="499">Cessão&nbsp;de&nbsp;direitos&nbsp;de&nbsp;qualquer&nbsp;natureza;</td>
+                                </tr>
+                                <tr>
+                                    <td width="499">Coleta&nbsp;e&nbsp;transporte&nbsp;de&nbsp;resíduos&nbsp;até&nbsp;aterros&nbsp;sanitários&nbsp;ou&nbsp;local&nbsp;de&nbsp;descarte;</td>
+                                </tr>
+                                <tr>
+                                    <td width="499">Construção&nbsp;por&nbsp;administração&nbsp;ou&nbsp;por&nbsp;empreitada&nbsp;unicamente&nbsp;de&nbsp;mão&nbsp;de&nbsp;obra&nbsp;ou&nbsp;com&nbsp;emprego&nbsp;parcial&nbsp;de&nbsp;materiais;</td>
+                                </tr>
+                                <tr>
+                                    <td width="499">Intermediação&nbsp;de&nbsp;negócios&nbsp;(inclusive&nbsp;representação&nbsp;comercial&nbsp;por&nbsp;conta&nbsp;de&nbsp;terceiros&nbsp;e&nbsp;corretagem&nbsp;de&nbsp;seguros,&nbsp;imóveis&nbsp;e&nbsp;outros);</td>
+                                </tr>
+                                <tr>
+                                    <td width="499">Prestação&nbsp;de&nbsp;serviços&nbsp;em&nbsp;geral,&nbsp;como&nbsp;limpeza&nbsp;e&nbsp;locação&nbsp;de&nbsp;mão&nbsp;de&nbsp;obra,&nbsp;ainda&nbsp;que&nbsp;sejam&nbsp;fornecidos&nbsp;os&nbsp;materiais;</td>
+                                </tr>
+                            </tbody>
+                        </table></p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="hidden-print rodape_busca" style="width: 1000px; height: 80px;">
+                <div class="conta">
+                    &Aacute;rea exclusiva do cliente
+                    <img src="/Content/themes/PortalCoad/img/cadeado.gif" alt="&Aacute;rea Exclusiva" width="19" height="33" />
+                </div>
+                <div class="menu_rodape">
+                    <a href="javascript:void(0);" onclick="FecharJanela();">Fechar Janela</a>
+                </div>
+                <div class="bug"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $("#testeUm").maskMoney();
+    </script>
+</body>
+</html>

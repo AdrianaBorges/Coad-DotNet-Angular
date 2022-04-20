@@ -1,0 +1,133 @@
+﻿    @model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+
+<fieldset>
+   <legend>
+        <span ng-if="!edicaoCliente">Dados básicos</span>
+        <span class="font-30 text-info" ng-if="edicaoCliente">                                                
+            <i class="fa fa-male" aria-hidden="true"></i>
+            <span class="font-16">Dados de Cadastro</span>
+        </span>        
+   </legend>
+   <div class="row" ng-if="edicaoCliente">
+        <div class="col-md-12">
+            <span class="font-16">                                                
+                <span class="glyphicon glyphicon-user"></span>
+                <label class="font-15">Cadastro</label>
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-4">
+            <label for="campo_nome">Nome</label>
+            <input type="text" class="form-control" id="campo_nome" ng-model="cliente.CLI_NOME" />
+            <div app-validation-msg="erros" for="CLI_NOME"></div>
+        </div>
+        <div class="form-group col-sm-3">
+            <label for="campo_cpf">CNPJ/CPF</label>
+            <input type="text" class="form-control" id="campo_cpf" ng-model="cliente.CLI_CPF_CNPJ" maxlength="14" />
+            <div app-validation-msg="erros" for="CLI_CPF_CNPJ"></div>
+            @*@Html.LabelFor(model => model.CLI_CPF_CNPJ)
+            @Html.TextBoxFor(model => model.CLI_CPF_CNPJ, new { @class = "form-control", ng_model = "cliente.CLI_CPF_CNPJ", maxlength = 14 })
+            @Html.ValidationMessageFor(model => model.CLI_CPF_CNPJ, null, new { app_validation_msg = "erros", @for = "CLI_CPF_CNPJ" })*@
+        </div>
+        <div class="form-group col-sm-2">
+            <label for="campo_a_c">Aos Cuidados</label>
+            <input type="text" class="form-control" id="campo_a_c" ng-model="cliente.CLI_A_C" />
+            <div app-validation-msg="erros" for="CLI_A_C"></div>
+           @* @Html.LabelFor(model => model.CLI_A_C)
+            @Html.TextBoxFor(model => model.CLI_A_C, new { @class = "form-control", ng_model = "cliente.CLI_A_C" })
+            @Html.ValidationMessageFor(model => model.CLI_A_C, null, new { app_validation_msg = "erros", @for = "CLI_A_C" })*@
+        </div>
+        <div class="form-group col-sm-3">
+            <label for="campo_TPP_ID">Tipo de Cliente</label>
+            <select id="campo_TIPO_CLI_ID" name="campo_TIPO_CLI_ID" class="form-control" ng-model="cliente.TIPO_CLI_ID"
+                    ng-options="tpc.TIPO_CLI_ID as tpc.TIPO_CLI_DESCRICAO for tpc in lstTipoCliente">
+                    <option value="">Selecione</option>
+            </select>
+            <div app-validation-msg="erros" for="TIPO_CLI_ID"></div>
+        </div>
+    </div>
+    <div class="row" ng-if="edicaoCliente != true">
+        <div class="form-group col-sm-3">
+            <label for="campo_inscricao">Inscrição Estadual</label>
+            <input type="text" class="form-control" id="campo_inscricao" ng-model="cliente.CLI_INSCRICAO" />
+            <div app-validation-msg="erros" for="CLI_INSCRICAO"></div>
+            @*@Html.LabelFor(model => model.CLI_INSCRICAO)
+            @Html.TextBoxFor(model => model.CLI_INSCRICAO, new { @class = "form-control", ng_model = "cliente.CLI_INSCRICAO" })
+            @Html.ValidationMessageFor(model => model.CLI_INSCRICAO, null, new { app_validation_msg = "erros", @for = "CLI_INSCRICAO" })*@
+        </div>
+        <div class="form-group col-sm-2">
+             <label for="campo_cod_pais">Código do País</label>
+            <input type="text" class="form-control" id="campo_cod_pais" ng-model="cliente.CLI_COD_PAIS" />
+            <div app-validation-msg="erros" for="CLI_COD_PAIS"></div>
+            @*@Html.LabelFor(model => model.CLI_COD_PAIS)
+            @Html.TextBoxFor(model => model.CLI_COD_PAIS, new { @class = "form-control", ng_model = "cliente.CLI_COD_PAIS" })
+            @Html.ValidationMessageFor(model => model.CLI_COD_PAIS, null, new { app_validation_msg = "erros", @for = "CLI_COD_PAIS" })*@
+        </div>
+    </div>
+
+    <div class="padding"></div>
+    <div>
+        <div class="row" ng-if="edicaoCliente">
+            <div class="col-md-12">
+                <span class="font-16">                        
+                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                    <label class="font-15">Emails</label>
+                </span>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="table-responsive col-sm-6 limit-div">
+                <div app-validation-msg="erros" for="ASSINATURA_EMAIL"></div>
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="email in cliente.ASSINATURA_EMAIL" ng-show="cliente.ASSINATURA_EMAIL">
+
+                            <td>
+                                <div app-editable-td="email.AEM_EMAIL" label="email.AEM_EMAIL" blur-event="confirmarEdicaoEmail"
+                                    validation-property-name="ASSINATURA_EMAIL[{{$index}}].AEM_EMAIL" validation-obj="erros" disable-label="edicaoCliente">
+                                    <input type="text" ng-model="email.AEM_EMAIL"
+                                        class="form-control float-left" ng-blur="confirmarEdicaoEmail($event)" />
+                                </div>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" ng-click="removerEmail($index)" class="btnConfirmaExclusao red" id="btexcluir" title="Excluir">
+                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                </a>
+                                <span ng-show="cliente.ASSINATURA_EMAIL.length == ($index + 1)">
+                                    <a href="javascript:void(0)" ng-click="adicionarEmail()" title="Incluir">
+                                        <span class="glyphicon glyphicon-plus blue"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr ng-hide="cliente.ASSINATURA_EMAIL.length > 0">
+                            <td colspan="7">Nenhum email adicionado. Clique para adicionar: 
+                                            <a href="javascript:void(0)" ng-click="adicionarEmail()" title="Incluir">
+                                                <span class="glyphicon glyphicon-plus blue"></span>
+                                            </a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<fieldset>    
+    <legend ng-if="!edicaoCliente">
+        <span >Endereços</span>
+    </legend>
+    
+    <div class="padding"></div>
+    @Html.Partial("Partials/_EnderecoPartial")
+</fieldset>
+
+@*@Html.Partial("Partials/_ModalEndereco")*@
+

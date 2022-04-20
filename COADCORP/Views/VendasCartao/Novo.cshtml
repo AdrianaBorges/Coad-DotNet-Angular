@@ -1,0 +1,95 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+
+<form>
+    <div ng-app="appModule">
+        <div ng-controller="VendasCartaoControler">
+            <div class="panel panel-default">
+                <div class="panel-heading bold head-panel">
+                    <i class="fa fa-list-alt fa-fw"></i> @Html.Label("Movimentação Financeira (Cartão Crédito/Débito - Novo)")
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Opções
+                            <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="#" ng-click="Incluir()">Salvar</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a href="../VendasCartao/Index">Voltar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Empresa")
+                                @Html.DropDownList("emp_id", new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "venda.EMP_ID" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Mes")
+                                @Html.DropDownList("mesatual", new SelectList(@ViewBag.ListaMes, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "venda.TVC_MES" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Ano")
+                                @Html.TextBox("anoatual", "", new { @class = "form-control", ng_model = "venda.TVC_ANO" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Fornecedor")
+                                @Html.DropDownList("for_id", new SelectList(@ViewBag.ListaFornecedor, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "venda.FOR_ID" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Crédito")
+                                @Html.TextBox("vlrCredito", "", new { @class = "form-control", ng_model = "venda.TVC_VLR_CARTAO_CRE" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Débito")
+                                @Html.TextBox("vlrDebito", "", new { @class = "form-control", ng_model = "venda.TVC_VLR_CARTAO_DEB" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-footer">
+                    <a href="javascript:history.back()" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span> Fechar</a>
+                    <button type="button" ng-click="Incluir()" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save blue"></span> Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/appScripts/VendasCartao.js")
+    @Scripts.Render("~/Content/themes/base/bootstrap-datepicker.css")
+
+}
+
+

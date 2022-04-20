@@ -1,0 +1,213 @@
+﻿    @model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+
+<fieldset>
+    <legend class="text-info">
+        <span class="font-30">
+            <i class="fa fa-male" aria-hidden="true"></i>
+            <span class="font-16">Dados de Cadastro</span>
+        </span>
+    </legend>
+    <div class="row">
+        <div class="col-md-12">
+            <span class="font-16">
+                <span class="glyphicon glyphicon-user"></span>
+                <label class="font-15">Cadastro</label>
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-3">
+            @Html.LabelFor(model => model.CLI_NOME)
+            @Html.TextBoxFor(model => model.CLI_NOME, new { @class = "form-control", ng_model = "prospect.Nome", ng_disabled = "podeEditar != true" })
+            @Html.ValidationMessageFor(model => model.CLI_NOME, null, new { app_validation_msg = "erros", @for = "Nome" })
+        </div>
+        <div class="form-group col-sm-2">
+            @Html.Label("", "Tipo de Cliente")
+            @Html.DropDownList("tipodeCLIENTES", new SelectList(ViewBag.tiposDeCliente, "Value", "Text"), "Selecione",
+                              new { @class = "form-control", ng_model = "prospect.TipoClienteId", ng_disabled = "podeEditar != true" })
+            @Html.ValidationMessageFor(model => model.CLI_A_C, null, new { app_validation_msg = "erros", @for = "TipoClienteId" })
+        </div>
+
+        <div class="form-group col-sm-3">
+            @Html.LabelFor(model => model.CLI_CPF_CNPJ)
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.CLI_CPF_CNPJ, new { @class = "form-control", ng_model = "prospect.CNPJ_CPF", maxlength = 14, ng_disabled = "podeEditar != true" })
+                <a class="input-group-addon" a href="javascript:void(0);"
+                   ng-click="abrirModalPesquisaCNPJ_CPF(prospect.TipoClienteId)"
+                   title="Checar validade CNPJ/CPF.">
+                    <i class="glyphicon glyphicon-eye-open"></i>
+                </a>
+            </div>
+            @Html.ValidationMessageFor(model => model.CLI_CPF_CNPJ, null, new { app_validation_msg = "erros", @for = "CNPJ_CPF" })
+        </div>
+
+        <div class="form-group col-sm-3">
+            @Html.LabelFor(model => model.CLI_A_C)
+            @Html.TextBoxFor(model => model.CLI_A_C, new { @class = "form-control", ng_model = "prospect.A_C", ng_disabled = "podeEditar != true" })
+            @Html.ValidationMessageFor(model => model.CLI_A_C, null, new { app_validation_msg = "erros", @for = "A_C" })
+        </div>
+
+
+    </div>
+
+    <div class="row">
+
+        <div class="form-group col-sm-3">
+            <label for="campo_inscricao">Inscrição Estadual  - Isento?</label>
+
+            <label class="switch switch switch-round switch-success" style="padding-top: 5px;">
+                <input type="checkbox" id="isentaInscricao" 
+                       ng-model="prospect.EhIsentoDeInscricaoEstadual"
+                       ng-checked="prospect.EhIsentoDeInscricaoEstadual == true"
+                       class="form-control" value="false">
+                <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+            </label>
+
+            <input type="text" class="form-control" 
+                   ng-model="prospect.InscricaoEstadual" 
+                   ng-blur="limpaInscricaoEstadual(prospect.EhIsentoDeInscricaoEstadual, prospect.InscricaoEstadual)"
+                   ng-change="limpaInscricaoEstadual(prospect.EhIsentoDeInscricaoEstadual, prospect.InscricaoEstadual)"
+                   ng-disabled="podeEditar != true" />
+
+        </div>
+
+    </div>
+
+    <section id="Carteiras">
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="font-16">
+                        <i class="fa fa-address-card" aria-hidden="true"></i>
+                        <label class="font-15">Carteiras</label>
+                    </span>
+                </div>
+            </div>
+            <div class="row" ng-if="edicaoCliente">
+                <div class="col-md-12">
+                    <span class="font-16">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        <label class="font-15">Carteiras</label>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="table-responsive col-sm-5 limit-div-3">
+                    <div app-validation-msg="erros" for="ASSINATURA_EMAIL"></div>
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Carteira</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="pro in prospect.CarteirasCliente | filter:queryCarteira | as:'listaDataFiltrada'">
+                                <td>
+                                    <div class="form-group" ng-class="{'has-error' : pro.valida == false, 'has-success' : pro.valida == true}">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control"
+                                                   ng-model="pro.CarId" id="prod_{{$index}}"
+                                                   ng-blur="checarCarteiraValida(pro.CarId, pro)" ng-disabled="podeEditar != true" />
+                                            <a href="javascript:void(0);" ng-click="abrirModalCarteira($index);" class="input-group-addon">
+                                                <i class="glyphicon glyphicon-search"></i>
+                                            </a>
+                                        </div>
+                                        <strong class="text-danger" ng-if="pro.valida == false">
+                                            Não é possível encontrar o representante.
+                                            Essa carteira pode estar vaga.
+                                        </strong>
+                                        <div app-validation-msg="erros" for="CarteirasCliente[{{$index}}].CarId"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" ng-click="removerCarteira($index)" class="btnConfirmaExclusao red" id="btexcluir" title="Excluir">
+                                        <span class="glyphicon glyphicon-remove-sign"></span>
+                                    </a>
+                                    <span ng-show="listaDataFiltrada.length == ($index + 1)">
+                                        <a href="javascript:void(0)" ng-click="adicionarLinhaCarteira()" title="Incluir">
+                                            <span class="glyphicon glyphicon-plus blue"></span>
+                                        </a>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr ng-hide="listaDataFiltrada.length > 0">
+                                <td colspan="7">
+                                    Nenhuma carteira adicionada. Clique para adicionar:
+                                    <a href="javascript:void(0)" ng-click="adicionarLinhaCarteira()" title="Incluir">
+                                        <span class="glyphicon glyphicon-plus blue"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br />
+    <section id="Emails">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="font-16">
+                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                    <label class="font-15">Emails</label>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="table-responsive col-sm-6 limit-div">
+                <div app-validation-msg="erros" for="ASSINATURA_EMAIL"></div>
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Opções de Atendimento</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="email in prospect.Emails">
+                            <td>
+                                <input type="text" ng-model="email.Email"
+                                       class="form-control float-left" ng-disabled="podeEditar != true" />
+                                <div app-validation-msg="erros" for="Emails[{{$index}}].Email"></div>
+                            </td>
+                            <td>
+                                <select id="tipoTel" name="tipoTel" class="form-control" ng-change="tipoTelefoneSelecionado(tel)" ng-disabled="podeEditar != true"
+                                        ng-model="email.TipoAtendimento"
+                                        ng-options="tipoAte.OPC_ID as tipoAte.OPC_DESCRICAO for tipoAte in lstOpcoesAtendimento">
+                                    <option value="">Selecione</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" ng-click="removerEmail($index)" class="btnConfirmaExclusao red" id="btexcluir" title="Excluir">
+                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                </a>
+                                <span ng-show="prospect.Emails.length == ($index + 1)">
+                                    <a href="javascript:void(0)" ng-click="adicionarEmail()" title="Incluir">
+                                        <span class="glyphicon glyphicon-plus blue"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr ng-hide="prospect.Emails.length > 0">
+                            <td colspan="7">
+                                Nenhuma email adicionado. Clique para adicionar:
+                                <a href="javascript:void(0)" ng-click="adicionarEmail()" title="Incluir">
+                                    <span class="glyphicon glyphicon-plus blue"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    @Html.Partial("Partials/_EnderecoProspectPartial")
+    @Html.Partial("Partials/_ModalEndereco")
+    @Html.Partial("Partials/_consultaCnpj")
+    @Html.Partial("Partials/_consultaCpf")
+</fieldset>
+

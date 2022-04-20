@@ -1,0 +1,154 @@
+﻿@using COAD.SEGURANCA.Extensions
+
+@{
+    ViewBag.Title = "GerarSped";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active"> Sped Fiscal (Processar)</li>
+    </ol>
+}
+
+
+
+@using (Html.BeginForm())
+{
+    if (TempData["Resultado"] != null)
+    {
+        string t = TempData["Resultado"].ToString();
+        @Html.Alert(t);
+        TempData.Remove("Resultado");
+    }
+    
+    <div ng-app="appModule">
+        <div class="panel panel-default" ng-controller="SpedControler" ng-init="CarregaTela(@ViewBag.emp_id)">
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-edit icon-panel"></span> Sped Fiscal (Processar)
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Mes")
+                            @Html.DropDownList("_mesatual", new SelectList(@ViewBag.ListaMes, "Value", "Text"), new { @class = "form-control", ng_model = "filtro.mesatual" })
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Ano")
+                            @Html.TextBox("_anoatual", "", new { @class = "form-control", ng_model = "filtro.anoatual" })
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.Label("Empresa")
+                            @Html.DropDownList("_emp_id", new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "filtro.emp_id", ng_change = "CarregaTela(filtro.emp_id)" })
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Versão")
+                            @Html.DropDownList("_Versao", new SelectList(@ViewBag.ListaVersao, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "filtro.versao" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <hr />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Selecione as opções abaixo:</label>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="" ng-model="CFG.REG1010_IND_EXP" ng-change="AtualizarConfigSped()">
+                                    Ocorreu averbação (conclusão) de exportação no período
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="" ng-model="CFG.REG1010_IND_CCRF" ng-change="AtualizarConfigSped()">Existem informações acerca de créditos de ICMS a serem controlados
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="" ng-model="CFG.REG1010_IND_COMB" ng-change="AtualizarConfigSped()">É comercio varejista de combustíveis com movimentação e/ou estoque no período
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="" ng-model="CFG.REG1010_IND_USINA" ng-change="AtualizarConfigSped()">O estabelecimento é produtor de açúcar e/ou álcool carburante com movimentação e/ou estoque no período
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="" ng-model="CFG.REG1010_IND_VA" ng-change="AtualizarConfigSped()">Sendo o Registro obrigatório em sua UF, existem informações a serem prestadas neste Registro
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label></label>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="" ng-model="CFG.REG1010_IND_EE" ng-change="AtualizarConfigSped()">A empresa é distribuidora de energia e ocorreu fornecimento de energia elétrica para consumidores de outra UF
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="" ng-model="CFG.REG1010_IND_CART" ng-change="AtualizarConfigSped()">
+                                    Realizou vendas com Cartão de Crédito ou de débito
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="" ng-model="CFG.REG1010_IND_FORM" ng-change="AtualizarConfigSped()">Foram emitidos documentos fiscais em papel no período em UF que exija o controle de utilização de documentos fiscais 
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="" ng-model="CFG.REG1010_IND_AER" ng-change="AtualizarConfigSped()">Realizou Transporte aéreo (cargas e/ou passageiros)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <hr />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            @Html.MostrarLinkArqSped()
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" ng-click="GerarSped()"  class="btn btn-default"><span class="glyphicon glyphicon glyphicon-cog"></span> Processar</button>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/appScripts/Sped.js")
+    @Scripts.Render("~/Scripts/appScripts/datepicker.js")
+    @Scripts.Render("~/Content/themes/base/bootstrap-datepicker.css")
+
+
+}
+
+
+
+

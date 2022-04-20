@@ -1,0 +1,169 @@
+﻿@*Esta tela sera apresentada no portal *@
+@*(Introdução, Informações Preenchimento)*@
+@*<div class="panel">
+    <div class="panel-body">
+        <div class="row">
+            <div id="Descricao" ng-show="tabela.TAB_DESCRICAO!=null&&tabela.TAB_DESCRICAO!=''" class="col-lg-12">
+                <p ng-bind-html="trustAsHtml(tabela.TAB_DESCRICAO)"></p>
+            </div>
+            <div id="Introducao" ng-show="tabconfig.TDC_INTRODUCAO==true" class="col-lg-12">
+                <p ng-bind-html="trustAsHtml(tabela.TAB_INTRODUCAO)"></p>
+            </div>
+            <div id="InfPreenchimento" ng-show="tabconfig.TDC_INF_PREENCHIMENTO==true" class="col-lg-12">
+                <p ng-bind-html="trustAsHtml(tabela.TAB_INF_PREENCHIMENTO)"></p>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<div class="row">
+    <div id="Descricao" ng-if="tabela.TAB_DESCRICAO!=null&&tabela.TAB_DESCRICAO!=''" class="col-lg-12">
+        <div class="form-group">
+            <p ng-bind-html="trustAsHtml(tabela.TAB_DESCRICAO)"></p>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-if="tabconfig.TDC_INTRODUCAO==true">
+    <div id="Introducao" class="col-lg-12">
+        <div class="form-group">
+            <p ng-bind-html="trustAsHtml(tabela.TAB_INTRODUCAO)"></p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div id="InfPreenchimento" ng-if="tabconfig.TDC_INF_PREENCHIMENTO==true" class="col-lg-12">
+        <div class="form-group">
+            <p ng-bind-html="trustAsHtml(tabela.TAB_INF_PREENCHIMENTO)"></p>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" ng-if="tabconfig.TDC_TIPO==1">
+    <div class="col-lg-4" ng-repeat="item in ParamConsulta">
+        <div class="form-group">
+            <label>{{item.label}}</label>
+            @*<input name="_valor" type="text" class="form-control" placeholder="Pesquisar..." ng-model="item.valor" />*@
+            <input name="_valor" type="text" class="form-control" placeholder="Pesquisar..." ng-model="item.valor" ng-if="item.esperado==null||item.esperado==''" />
+            <select class="form-control float-left"  size="1" ng-model="item.valor" ng-if="item.esperado!=null&&item.esperado!=''">
+                <option></option>
+                <option ng-repeat="option in listas[item.campo]">
+                    {{option}}
+                </option>
+            </select>
+            
+        </div>
+    </div>
+    <div class="col-lg-4" ng-if="ParamConsulta.length > 0">
+        <div class="form-group" style="padding-top: 23px;">
+            <a href="javascript:void(0)" class="btn btn-default" type="button" ng-click="listarTabDinamica()">
+                <span class="fa fa-search"></span>Pesquisar
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" ng-if="tabconfig.TDC_TIPO==1&&tabconfig.TDC_LAYOUT_TABELA=='LIS'">
+    <div class="col-lg-12" style="overflow-x: auto;">
+        <div class="panel panel-default" id="Tabela">
+            <table class="table table-striped table-bordered table-hover" id="tabeladinamica">
+                <thead>
+                    <tr class="bg-info">
+                        <th ng-repeat="item in tabconfig.TAB_DINAMICA_CONFIG_ITEM" ng-if="item.TCI_CAMPO_VISIVEL==true"  ng-class="{right : item.TCI_ALINHAMENTO_CAMPO=='D', left : item.TCI_ALINHAMENTO_CAMPO=='E', center : item.TCI_ALINHAMENTO_CAMPO=='C'}">
+                            <label>{{item.TCI_NOME_CAMPO}}</label>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-hide="tbitem.length>0">
+                        <td colspan="10"><span>Nenhum item encontrado para a pesquisa </span></td>
+                    </tr>
+                    <tr ng-repeat="item in tbitem">
+                        <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM" ng-if="cabec.TCI_CAMPO_VISIVEL==true"  ng-class="{right : cabec.TCI_ALINHAMENTO_CAMPO=='D', left : cabec.TCI_ALINHAMENTO_CAMPO=='E', center : cabec.TCI_ALINHAMENTO_CAMPO=='C'}">
+                            <p ng-if="cabec.TCI_TIPO_CAMPO=='D'&&item[cabec.TCI_NOME_CAMPODB]!='-'" ng-bind-html="formatarData(item[cabec.TCI_NOME_CAMPODB])"></p>
+                            <p ng-if="cabec.TCI_TIPO_CAMPO=='D'&&item[cabec.TCI_NOME_CAMPODB]=='-'">{{item[cabec.TCI_NOME_CAMPODB]}}</p>
+                            <p ng-if="cabec.TCI_TIPO_CAMPO=='F'&&item[cabec.TCI_NOME_CAMPODB]!='-'" app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]"></p>
+                            <p ng-if="cabec.TCI_TIPO_CAMPO=='F'&&item[cabec.TCI_NOME_CAMPODB]=='-'">{{item[cabec.TCI_NOME_CAMPODB]}}</p>
+                            <p ng-if="cabec.TCI_TIPO_CAMPO=='P'&&item[cabec.TCI_NOME_CAMPODB]>0">{{item[cabec.TCI_NOME_CAMPODB]}}&nbsp%</p>
+                            <p ng-if="cabec.TCI_TIPO_CAMPO=='P'&&item[cabec.TCI_NOME_CAMPODB]=='-'">{{item[cabec.TCI_NOME_CAMPODB]}}</p>
+                            <p ng-if="cabec.TCI_TIPO_CAMPO!='D'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'">{{item[cabec.TCI_NOME_CAMPODB]}}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-12" style="text-align: center" ng-if="page.numeroPaginas>1">
+        <app-pagination request-page="paginaReq" load-function="listarTabDinamica(paginaReq)" ng-if="tbitem.length>0"></app-pagination>
+    </div>
+</div>
+
+
+<div class="row" ng-if="tabconfig.TDC_TIPO==1&&tabconfig.TDC_LAYOUT_TABELA=='LSA'"">
+    <div class="panel-group" id="accordion" ng-repeat="item in tbitem" ng-init="open=false">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#{{item.TAB_ID}}" style="text-decoration:none;" ng-click="open=!open">
+                    <i class="fa blue"  ng-class="{'fa-minus-circle': open,'fa-plus-circle':!open||open==false}"></i>
+@*                    <h4 class="panel-title" ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM" ng-if="cabec.TCI_CAMPO_VISIVEL==true" ng-class="{right : cabec.TCI_ALINHAMENTO_CAMPO=='D', left : cabec.TCI_ALINHAMENTO_CAMPO=='E', center : cabec.TCI_ALINHAMENTO_CAMPO=='C'}">
+                        <LABEL>{{cabec.TCI_NOME_CAMPO}}:</LABEL> &nbsp
+                        <span ng-if="cabec.TCI_TIPO_CAMPO=='D'&&item[cabec.TCI_NOME_CAMPODB]!='-'" ng-bind-html="formatarData(item[cabec.TCI_NOME_CAMPODB])"></span>
+                        <span ng-if="cabec.TCI_TIPO_CAMPO=='D'&&item[cabec.TCI_NOME_CAMPODB]=='-'">{{item[cabec.TCI_NOME_CAMPODB]}}</span>
+                        <span ng-if="cabec.TCI_TIPO_CAMPO=='F'&&item[cabec.TCI_NOME_CAMPODB]!='-'" app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]"></span>
+                        <span ng-if="cabec.TCI_TIPO_CAMPO=='F'&&item[cabec.TCI_NOME_CAMPODB]=='-'">{{item[cabec.TCI_NOME_CAMPODB]}}</span>
+                        <span ng-if="cabec.TCI_TIPO_CAMPO=='P'&&item[cabec.TCI_NOME_CAMPODB]>0">{{item[cabec.TCI_NOME_CAMPODB]}}&nbsp%</span>
+                        <span ng-if="cabec.TCI_TIPO_CAMPO=='P'&&item[cabec.TCI_NOME_CAMPODB]=='-'">{{item[cabec.TCI_NOME_CAMPODB]}}</span>
+                        <span ng-if="cabec.TCI_TIPO_CAMPO!='D'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'">{{item[cabec.TCI_NOME_CAMPODB]}}</span>
+                    </h4>*@
+                </a>
+                <h4 class="panel-title" ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM" ng-if="cabec.TCI_CAMPO_VISIVEL==true" ng-class="{right : cabec.TCI_ALINHAMENTO_CAMPO=='D', left : cabec.TCI_ALINHAMENTO_CAMPO=='E', center : cabec.TCI_ALINHAMENTO_CAMPO=='C'}">
+                    <LABEL>{{cabec.TCI_NOME_CAMPO}}:</LABEL> &nbsp
+                    <span ng-if="cabec.TCI_TIPO_CAMPO=='D'&&item[cabec.TCI_NOME_CAMPODB]!='-'" ng-bind-html="formatarData(item[cabec.TCI_NOME_CAMPODB])"></span>
+                    <span ng-if="cabec.TCI_TIPO_CAMPO=='D'&&item[cabec.TCI_NOME_CAMPODB]=='-'">{{item[cabec.TCI_NOME_CAMPODB]}}</span>
+                    <span ng-if="cabec.TCI_TIPO_CAMPO=='F'&&item[cabec.TCI_NOME_CAMPODB]!='-'" app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]"></span>
+                    <span ng-if="cabec.TCI_TIPO_CAMPO=='F'&&item[cabec.TCI_NOME_CAMPODB]=='-'">{{item[cabec.TCI_NOME_CAMPODB]}}</span>
+                    <span ng-if="cabec.TCI_TIPO_CAMPO=='P'&&item[cabec.TCI_NOME_CAMPODB]>0">{{item[cabec.TCI_NOME_CAMPODB]}}&nbsp%</span>
+                    <span ng-if="cabec.TCI_TIPO_CAMPO=='P'&&item[cabec.TCI_NOME_CAMPODB]=='-'">{{item[cabec.TCI_NOME_CAMPODB]}}</span>
+                    <span ng-if="cabec.TCI_TIPO_CAMPO!='D'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'" ng-bind-html="trustAsHtml(item[cabec.TCI_NOME_CAMPODB])"> </span>
+                </h4>
+            </div>
+            <div id="{{item.TAB_ID}}" class="accordion-body collapse" >
+                <div class="panel-body">
+                    <ul class="list-unstyled list-icons margin-bottom-10">
+                        <li class="margin-top-6" ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM" ng-if="cabec.TCI_CAMPO_VISIVEL==false" >
+                            <i class="fa fa-arrow-circle-right"></i>
+                            <label style="font-size:small; font-style:italic;">{{cabec.TCI_NOME_CAMPO}}:</label> &nbsp
+                            <span ng-bind-html="trustAsHtml(item[cabec.TCI_NOME_CAMPODB])"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-group" id="accordion" ng-if="!tbitem.length>0">
+        <a href="#">Nenhuma funcionalidade encontrada
+        </a>
+    </div>
+    <div class="col-lg-12" style="text-align: center" ng-if="page.numeroPaginas>1">
+        <app-pagination request-page="paginaReq" load-function="listarTabDinamica(paginaReq)" ng-if="tbitem.length>0"></app-pagination>
+    </div>
+
+</div>
+
+@*(Legenda, Informações Gerais)*@
+<br />
+<div class="row">
+    <div id="Legenda" ng-if="tabconfig.TDC_LEGENDA_LAYOUT==true" class="col-lg-12">
+        <p ng-bind-html="trustAsHtml(tabela.TAB_LEGENDA_LAYOUT)"></p>
+    </div>
+</div>
+
+<div class="row">
+    <div id="InfGerais" ng-if="tabconfig.TDC_INF_GERAIS==true" class="col-lg-12">
+        <p ng-bind-html="trustAsHtml(tabela.TAB_INF_GERAIS)"></p>
+    </div>
+</div>
+<br />

@@ -1,0 +1,298 @@
+﻿
+<div app-modal="modal-assinatura" header="Informações da Assinatura" submodal>
+    <div class="row">
+        <div class="col-lg-12 limit-modal-height-32em" ng-show="objAssinatura.lstAssinatura.length > 0">
+            <div class="font-30 pull-right"><strong>Assinatura </strong><span class="label label-danger">{{numeroAssinatura }}</span></div>
+            <div style="clear:both;"></div>
+            <br />
+            <fieldset class="padding-bottom" id="assinaturas" ng-show="$parent.objAssinatura.lstAssinatura">
+                <legend>Assinaturas</legend>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-stripped">
+                        <thead>
+                            <tr>
+                                <th class="center">
+                                    Assinatura
+                                </th>
+                                <th class="center">
+                                    Assinatura Trans. P/
+                                </th>
+                                <th class="center">
+                                    Ano Coad
+                                </th>
+                                <th class="right">
+                                    Aos Cuidados
+                                </th>
+                                <th class="center">Código de Produto</th>
+                                <th colspan="2">Ações</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in objAssinatura.lstAssinatura" class="animate-repeat-all">
+                            <td class="center font-12">
+                                <strong class="label label-danger">{{item.ASN_NUM_ASSINATURA}}</strong>
+                                <span class="label label-default animate-show" ng-show="item.ASN_TRANSFERIDA == true">Transferida</span>
+                            </td>
+                            <td class="center font-12">
+                                <strong class="label label-primary">{{item.ASN_NUM_ASS_TRANSFERIDA}}</strong>
+                            </td>
+                            <td class="center">{{item.ASN_ANO_COAD}}</td>
+                            <td>{{item.ASN_A_C}}</td>
+                            <td class="center">{{item.PRO_ID}}</td>
+                            <td>
+                                <a href="javascript:void(0)" ng-click="carregarAssinatura(item.ASN_NUM_ASSINATURA)"
+                                   title="Visualizar Informações de Assinatura" class="text-success font-12">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" ng-hide="item.ASN_TRANSFERIDA == true" 
+                                   ng-click="abrirModalTransferenciaAssinatura(item.ASN_NUM_ASSINATURA)"
+                                   title="Transferir Assinatura" class="text-primary font-12">
+                                    <span class="glyphicon glyphicon-transfer"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" ng-click="abrirModalExtorno(item.ASN_NUM_ASSINATURA)"
+                                   title="Extorno de parcela" class="text-danger">
+                                    <span class="fa fa-undo font-15" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="12" ng-show="!objAssinatura.lstAssinatura || objAssinatura.lstAssinatura.length == 0">Nenhum Contrato Encontrado</td>
+                        </tr>
+                    </table>
+                </div>
+                <div app-pagination="pageAssinatura" request-page="paginaReq" load-function="listarAssinaturas(paginaReq)"></div>
+            </fieldset>
+            <fieldset class="padding-bottom" id="contratos">
+                <legend>Todos os Contratos</legend>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-stripped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Código
+                                </th>
+                                <th class="center">Data de Faturamento</th>
+                                <th class="center">Inicio de Vigência</th>
+                                <th class="center">Fim de Vigência</th>
+                                <th class="right">
+                                    Valor do Contrato
+                                </th>
+                                <th class="right">
+                                    Valor de Entrada
+                                </th>
+                                <th class="center">Número de Parcelas</th>
+                                <th class="right">Valor das Parcelas</th>
+                                @*<th>Ano de Vigência</th>*@
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in objAssinatura.lstContratos" class="animate-repeat-all">
+                            <td>
+                                {{item.CTR_NUM_CONTRATO}}
+                            </td>
+                            <td class="center" app-show-date="item.CTR_DATA_FAT" show-time></td>
+                            <td class="center" app-show-date="item.CTR_DATA_INI_VIGENCIA"></td>
+                            <td class="center" app-show-date="item.CTR_DATA_FIM_VIGENCIA"></td>
+                            <td class="right">
+                                <strong app-show-dinheiro="item.CTR_VLR_BRUTO"></strong>
+                                <span ng-if="item.CTR_CORTESIA == 1" class="label label-success">Cortesia</span>
+                            </td>
+                            <td class="right">
+                                <strong app-show-dinheiro="item.CTR_VLR_ENTRADA"></strong>
+                            </td>
+                            <td class="center"> <span class="label label-success">{{item.CTR_QTE_PARCELAS}}</span></td>
+                            <td class="right">
+                                <strong app-show-dinheiro="item.CTR_VLR_PARCELAS" class="right"></strong>
+                            </td>
+                            @*<td>{{item.CTR_ANO_VIGENCIA}}</td>*@
+                            <td>
+                                <a href="#parcelas" ng-click="carregarParcelas(item.CTR_NUM_CONTRATO, 'contratos')"
+                                   title="Visualizar Parcelas" class="text-success">
+                                    <span class="glyphicon glyphicon-usd"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="12" ng-show="!objAssinatura.lstContratos || objAssinatura.lstContratos.length == 0">Nenhum Contrato Encontrado</td>
+                        </tr>
+                    </table>
+                </div>
+                <div app-pagination="pageContratos" request-page="paginaReq" load-function="listarContratos(paginaReq)"></div>
+            </fieldset>
+            <fieldset class="padding-bottom" id="parcelas">
+                <legend>Parcelas</legend>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-stripped">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Código no PJ</th>
+                                <th class="center">Situação</th>
+                                <th class="center">Data de Vencimento</th>
+                                <th class="right">Valor das Parcelas</th>
+                                <th class="right">
+                                    Valor Pago
+                                </th>
+                                <th class="center">
+                                    Data do Pagamento
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in objAssinatura.lstParcelas" class="animate-repeat-all">
+                            <td>
+                                {{item.PAR_NUM_PARCELA}}
+                            </td>
+                            <td>{{item.PAR_COD_LEGADO}}</td>
+                            <td>
+                                <span ng-if="item.PAR_VLR_PAGO >= 0 && item.PAR_DATA_PAGTO" class="label label-success">Paga</span>
+                                <span ng-if="item.PAR_VLR_PAGO <= 0 && !item.PAR_DATA_PAGTO" class="label label-warning">Aberta</span>
+                            </td>
+                            <td class="center" app-show-date="item.PAR_DATA_VENCTO"></td>
+                            <td class="right">
+                                <strong app-show-dinheiro="item.PAR_VLR_PARCELA"></strong>
+                            </td>
+                            <td class="right">
+                                <strong app-show-dinheiro="item.PAR_VLR_PAGO"></strong>
+                            </td>
+                            <td class="center" app-show-date="item.PAR_DATA_PAGTO"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="7"
+                                ng-show="!objAssinatura.lstParcelas || objAssinatura.lstParcelas.length == 0">
+                                Selecione um contrato para visualizar a parcela.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div app-pagination="pageParcelas" request-page="paginaReq" load-function="carregarDadosDaParcela(paginaReq)"></div>
+                <span>
+                    <br />
+                    <a data-ng-href="#{{retornoParcela}}" class="button button-warning" ng-show="retornoParcela">
+                        <span class="glyphicon glyphicon-chevron-left"></span>Voltar
+                    </a>
+                </span>
+            </fieldset>
+            <fieldset class="padding-bottom">
+                <br />
+                <legend class="text-primary">Telefones / Emails</legend>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-stripped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Telefone da Assinatura
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in objAssinatura.Assinatura.ASSINATURA_TELEFONE" class="animate-repeat-all">
+                                    <td>
+                                        <span>({{item.ATE_DDD}}) {{item.ATE_TELEFONE}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-show="!objAssinatura.Assinatura.ASSINATURA_TELEFONE || objAssinatura.ASSINATURA_TELEFONE.length == 0">Nenhum telefone foi encontrado.</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="table-responsive">
+                            <table class="table table-hover table-stripped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Emails da Assinatura
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in objAssinatura.Assinatura.ASSINATURA_EMAIL" class="animate-repeat-all">
+                                    <td>
+                                        <div>
+                                            <span>{{item.AEM_EMAIL}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-show="!objAssinatura.Assinatura.ASSINATURA_EMAIL || objAssinatura.Assinatura.ASSINATURA_EMAIL == 0">Nenhum E-Mail foi encontrado.</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+        </div>
+        <div class="col-lg-12 limit-modal-height-32em">
+            <div><strong class="text-danger" ng-show="objAssinatura.lstAssinatura.length <= 0">Não há Assinaturas para Exibir.</strong></div>
+        </div>
+    </div>
+</div>
+
+
+<div data-app-modal="modal-transferencia-assinatura" data-header="Transferencia de Assinatura" submodal>
+    <div class="row">
+        <div class="col-lg-12 limit-modal-height-32em">
+            <fieldset class="padding-bottom">
+                <legend class="text-primary">Assinatura</legend>
+                <div class="row">
+                    <div class="form-group col-sm-3">
+                        <label for="assinatura">Assinatura</label>
+                        <strong class="label label-danger font-12">{{processoTransfAssiDTO.CodAssinaturaOrigem}}</strong>
+                        <div app-validation-msg="erros" for="EMP_ID"></div>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="campo_data_faturamento">Período De Acrêscimo (Mês)</label>
+                        <input type="text" id="mes" ng-model="processoTransfAssiDTO.AcrescimoNoMes" class="form-control" app-number maxlength="2" />
+                        <div app-validation-msg="erros" for="EMP_ID"></div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="Produto">Produto</label>
+                        <span ng-show="processoTransfAssiDTO.ProdutoComposicao">
+                            <a href="javascript:void(0);" ng-click="abrirModalProduto()" title="Alterar" class="clear-link">
+                                <span class="glyphicon glyphicon-refresh"></span>
+                            </a>
+                            <a href="javascript:void(0);" ng-click="removerProduto()" title="Remover" class="text-danger clear-link">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                        </span>
+                        <span ng-hide="processoTransfAssiDTO.ProdutoComposicao">
+                            <a href="javascript:void(0);" ng-click="abrirModalProduto()" title="Adicionar" class="text-info">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </a>
+                        </span>
+                        <div class="text font-15" ng-show="processoTransfAssiDTO.ProdutoComposicao">{{processoTransfAssiDTO.ProdutoComposicao.CMP_DESCRICAO}}</div>
+                        <div class="text" ng-show="!processoTransfAssiDTO.ProdutoComposicao"><span>Não Adicionado</span></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label>Observações</label>
+                        <textarea ng-model="processoTransfAssiDTO.Observacoes" class="form-control" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <button class="btn btn-info"
+                                app-switch-button="$parent.migrarAssinatura()"
+                                switch-conf="[{label : 'Migrar Assinatura', state : 'run'}, {label : 'Migrando...', state : 'running', disabled : true}]"
+                                switch-var="$parent.buttonTransfe">
+                        </button>   
+                    </div>
+                </div>
+            </fieldset>
+
+        </div>
+    </div>
+</div>
+<div app-modal="modal-produto-composicao" header="Selecione o Produto" submodal>
+
+    @Html.Partial("Partials/_ProdutoPartial")
+</div>
+
+@Html.Partial("Partials/Modais/_ModalExtornoPagamentoParcela")

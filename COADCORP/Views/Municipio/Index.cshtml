@@ -1,0 +1,120 @@
+﻿@using Coad.GenericCrud.Extensions
+
+@{
+    ViewBag.print = true;
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;
+    if (ViewBag.print == true)
+    {
+        ViewBag.printableClass = "hidden-print";
+    }
+
+    ViewBag.Title = "Index";
+
+}
+
+<script>
+    $(document).ready(function () {
+        $(":input").inputmask();
+    });
+</script>
+
+@Scripts.Render("~/Scripts/negocio/municipio.js")
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">Home </a></li>
+        <li class="active">&nbspMunicípios</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="MunicipioController" class="padding content" ng-init="buscarMunicipio();">
+        <div id="page-wrapper">
+            <div app-message></div>
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-filter"></span>&nbspFiltros
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Opções<span class="caret"></span></button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)" app-post="@Url.Action("Editar")?_cep_id=" title="Editar" class="blue">
+                                        <span class="glyphicon glyphicon-edit"></span>&nbspNovo
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="form-group">
+                                @Html.Label("Informe o município")
+                                <input id="_logradouro" type="text" ng-model="param.mun_descricao" class="form-control " placeholder="Logradouro" ng-change="buscarMunicipio()" autofocus autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button ng-click="buscarMunicipio()" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                </div>
+            </div>
+            <div class="panel panel-corp" ng-show="lstmunicipio" id="baseContent">
+                <div app-message></div>
+                <div class="panel-heading bold head-panel">
+                    <span class="glyphicon glyphicon-filter"></span>&nbspMunicípio
+                    <div class="pull-right">
+
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="table-responsive" style="padding-left: 12px; padding-right: 12px;">
+                            <table class="table table-hover table-bordered" style="padding-left: 12px;">
+                                <thead>
+                                    <tr class="info">
+                                        <th>ID </th>
+                                        <th>CEP</th>
+                                        <th>Descrição</th>
+                                        <th>Tipo</th>
+                                        <th>UF</th>
+                                        <th>Ibge</th>
+                                        <th colspan="2" style="text-align: center;">Opções</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in lstmunicipio">
+                                    <td>{{item.MUN_ID}}</td>
+                                    <td>{{item.MUN_CEP}} </td>
+                                    <td>{{item.MUN_DESCRICAO}} </td>
+                                    <td>{{item.MUN_TIPO}} </td>
+                                    <td>{{item.UF}} </td>
+                                    <td><input id="_IBGE" type="text" ng-model="item.IBGE_COD_COMPLETO" class="form-control " placeholder="Informe o código do ibge" autofocus autocomplete="off" /></td>
+                                    <td style="text-align: center;">
+                                        <a href="javascript:void(0)" ng-click="atualizarMunicipio(item)" title="Atualizar dados do município" class="blue">
+                                            <i class="fa fa-check-square"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden-print panel-footer">
+                    <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,81 @@
+﻿@using COAD.SEGURANCA.Extensions
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+@using (Html.BeginForm())
+{
+   
+    <div ng-app="appModule">
+        <div ng-controller="NotaFiscalControler" ng-init="PreparaTela()">
+            <div class="form panel panel-primary">
+                <div class="panel-heading">
+                    <i class="fa fa-search fa-fw"></i>@ViewBag.Title
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Opções
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <button type="submit">Imprimir</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    @Html.ValidationSummary(false)
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Mes")
+                                @Html.DropDownList("_mesatual", new SelectList(@ViewBag.ListaMes, "Value", "Text"), new { @class = "form-control", ng_model = "filtro.mesatual"})
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Ano")
+                                @Html.TextBox("_anoatual", "", new { @class = "form-control", ng_model = "filtro.anoatual" })
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="form-group">
+                                @Html.Label("Empresa")
+                                @Html.DropDownList("_emp_id", new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "filtro.emp_id" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="submit" class="btn btn-default">Gerar Relatório</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+}
+
+@section Scripts {
+
+    <link href="~/Content/themes/base/bootstrap-datepicker.css" rel="stylesheet" />
+    @Scripts.Render("~/Scripts/appScripts/NotaFiscal.js")
+    @Scripts.Render("~/Scripts/appScripts/datepicker.js")
+    @Scripts.Render("~/Content/themes/base/bootstrap-datepicker.css")
+
+}
+
+
+
+

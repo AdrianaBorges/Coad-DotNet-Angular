@@ -1,0 +1,182 @@
+﻿@using COAD.SEGURANCA.Extensions
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = " COADCORP - Sistema de Gestão Integrada.";
+}
+
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+
+    .quebrapagina {
+        page-break-before: always;
+    }
+</style>
+
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/appScripts/Home.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.js")
+    @Scripts.Render("~/Scripts/flot/excanvas.min.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.pie.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.time.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.resize.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.categories.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.tooltip.min.js")
+
+}
+
+<form>
+    <div ng-app="appModule">
+        <div ng-controller="HomeControler" ng-init="CarregarTela();CarregarGraficoPagamentos();canPrint=true;">
+            <div class="panel panel-corp hidden-print">
+                <div class="panel-heading ">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Mês")
+                                @Html.DropDownList("_mesatual", new SelectList(@ViewBag.ListaMes, "Value", "Text"), "Selecione o Mês", new { @class = "form-control", ng_model = "param.mes", ng_Change = "CarregarGraficoPagamentos()" })
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div class="form-group">
+                                @Html.Label("Ano")
+                                @Html.TextBox("_anoatual", "", new { @class = "form-control", ng_model = "param.ano", ng_Change = "CarregarGraficoPagamentos()" })
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Ano")
+                                <select class="form-control" ng_model="param.qtdeParcelas" ng_Change="CarregarGraficoPagamentos()">
+                                    <option value="0">Todas a Parcelas</option>
+                                    <option value="1"> 1 Parcela</option>
+                                    <option value="2"> 2 Parcelas</option>
+                                    <option value="3"> 3 Parcelas</option>
+                                    <option value="4"> 4 Parcelas</option>
+                                    <option value="5"> 5 Parcelas</option>
+                                    <option value="6"> 6 Parcelas</option>
+                                    <option value="7"> 7 Parcelas</option>
+                                    <option value="8"> 8 Parcelas</option>
+                                    <option value="9"> 9 Parcelas</option>
+                                    <option value="10"> 10 Parcelas</option>
+                                    <option value="11"> 11 Parcelas</option>
+                                    <option value="12"> 12 Parcelas</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Empresa")
+                                @Html.DropDownList("_emp_id", new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "param.emp_id", ng_change = "CarregarGraficoPagamentos()" })
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="GRUPO_ID">Grupo</label>
+                                @Html.DropDownList("GRUPO_ID", new SelectList(ViewBag.grupos, "GRUPO_ID", "GRU_DESCRICAO"), "Selecione", new { @class = "form-control", ng_model = "filtro.grupo_id", ng_Change = "CarregarGraficoPagamentos()" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3" style="padding-top:25px;">
+                            <a href="javascript:void(0)" ng-click="CarregarGraficoPagamentos()" class="btn btn-default"><i class="glyphicon glyphicon-refresh"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="baseContent" ng-class="{'panel panel-corp': baseContent, 'panel panel-corp hidden-print': !baseContent}">
+                <div class="panel-heading">
+                    <i class="fa fa-list-alt fa-fw"></i>
+                    <label id="title">RESUMO DE PAGAMENTOS</label>
+                    <div class="pull-right hidden-print">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Opções
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)" ng-click="CarregarGraficoPagamentos()">Atualizar</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint" ng-click="baseContent=true;baseContent1=false"><i class="fa fa-print"></i>&nbspImprimir</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <fusioncharts width="100%"
+                                      height="350"
+                                      type="dragcolumn2d"
+                                      datasource="{{dataSource00}}"></fusioncharts>
+                        <div fusioncharts
+                             width="100%"
+                             height="350"
+                             type="dragcolumn2d"
+                             datasource="{{dataSource00}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <fusioncharts width="100%"
+                                      height="350"
+                                      type="column2d"
+                                      datasource="{{dataSource01}}"></fusioncharts>
+                        <div fusioncharts
+                             width="100%"
+                             height="350"
+                             type="column2d"
+                             datasource="{{dataSource01}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <fusioncharts width="50%"
+                                          height="450"
+                                          type="pie3d"
+                                          datasource="{{dataSource02}}"></fusioncharts>
+                            <div fusioncharts
+                                 width="100%"
+                                 height="450"
+                                 type="pie3d"
+                                 datasource="{{dataSource02}}">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="table-responsive" style="padding-left: 12px; padding-right: 12px;">
+                                <table class="table table-hover table-bordered" style="padding-left: 12px;">
+                                    <thead>
+                                        <tr class="info">
+                                            <th style="text-align: center;">Parcelas</th>
+                                            <th style="text-align: right;">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="item in dataSource02.data">
+                                        <td style="font-size: small;">{{item.label}} Parcelas</td>
+                                        <td app-show-dinheiro="item.value" style="text-align: right"></td>
+                                    </tr>
+                                </table>
+                                <table class="table table-hover table-bordered" style="padding-left: 12px;">
+                                    <thead>
+                                        <tr class="info">
+                                            <th style="text-align: center;">Parcelas</th>
+                                            <td app-show-dinheiro="dataSource02.totaldataset" style="text-align: right"></td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+

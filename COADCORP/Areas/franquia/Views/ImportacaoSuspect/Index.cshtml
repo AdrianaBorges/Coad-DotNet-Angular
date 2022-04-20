@@ -1,0 +1,394 @@
+﻿
+@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+@using COAD.CORPORATIVO.SessionUtils
+@using GenericCrud.ActionResultTools
+@{
+    ViewBag.Title = "Importações";
+    bool gerente = (SessionContext.IsGerenteDepartamento("franquiado", true) || SessionContext.IsGerenteDepartamento("franquiador", true));
+    bool franquiador = SessionContext.IsGerenteDepartamento("franquiador", true);
+
+    bool podeFaturar = SessionUtil.PossuiPermissaoParaFaturar();
+    string podePagar = (podeFaturar) ? "1 == 1" : "1 == 2";
+    ViewBag.defer = @"defer='defer'";  
+
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li class="active">Gerenciar Agendamentos de Importação</li>         
+        
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/importacao_suspect.js")" defer="defer"></script>
+<div ng-app="appModule">    
+    <div ng-controller="ImportacaoSuspectController" class="padding content" ng-cloak 
+        data-ng-init="initList('@gerente');">
+
+        <div app-message></div>
+        <!-- Collapse -->
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel bg-grey no-border">
+                <div role="tab" id="headingOne" class="padding-bottom-10">
+                    <a role="button" class="btn btn-info text-20" style="width: 100%;" data-toggle="collapse" data-parent="#accordion" href="#panelImportacao" aria-expanded="true" aria-controls="panelImportacao" ng-click="abrirTabImportacoes()"><span class="glyphicon glyphicon-import"></span> Importações <span class="caret"></span></a>
+                </div>
+                <div id="panelImportacao" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div>
+                        <section id="importacoes">
+                            <div class="panel panel-corp">
+                                <!-- Default panel contents -->
+                                <div class="panel-heading bold head-panel">
+                                    <span class="glyphicon glyphicon-filter"></span> Filtros
+                                    <div class="pull-right">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                Opções
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu pull-right" role="menu">
+                                                <li>
+                                                    <a href="@Url.Action("Agendamento")" class="blue">Novo Agendamento</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="form-group col-lg-3">
+                                            <label for="sigla">De</label>
+                                            <input type="text" ng-model="filtro.dataInicialStr" app-date="filtro.dataInicial" class="form-control" />
+                                        </div>
+                                        <div class="form-group col-lg-3">
+                                            <label for="sigla">Até</label>
+                                            <input type="text" ng-model="filtro.dataFinalStr" app-date="filtro.dataFinal" class="form-control" />
+                                        </div>
+                                        <div class="form-group col-lg-3">
+                                            <label for="filtroStatus">Status</label>
+                                            <select id="filtroStatus" name="filtroStatus"
+                                                    class="form-control"
+                                                    ng-model="filtro.imsID"
+                                                    ng-options="obj.IMS_ID as obj.IMS_DESCRICAO for obj in lstImportacaoStatus">
+                                                <option value="">Selecione</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-lg-3">
+                                            <label>Importação Diária</label><br />
+                                            <label class="switch switch switch-round switch-success" style="padding-top: 5px;">
+                                                <input type="checkbox" id="variasCarteiras" ng-model="filtro.importacaoDiaria"
+                                                       ng-checked="filtro.importacaoDiaria == true"
+                                                       class="form-control" value="false">
+                                                <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <button type="button" class="btn btn-default" ng-click="pesquisarImportacoes()">Pesquisar</button>
+                                </div>
+                            </div>
+                            <div class="panel panel-corp">
+                                <!-- Default panel contents -->
+                                <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-shopping-cart"></span>Listagem de Importações</div>
+
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr class="bg-info">
+                                                    <th>Id</th>
+                                                    <th class="center">Data</th>
+                                                    <th class="center">Última Execução</th>
+                                                    <th>Representante</th>
+                                                    <th>Status</th>
+                                                    <th>Arquivo de Importação</th>
+                                                    <th class="right">Quantidade Total</th>
+                                                    <th class="right">Quantidade Descartada</th>
+                                                    <th colspan="7">Ações</th>
+                                                </tr>
+                                            </thead>
+                                            <tr ng-repeat="item in lstImportacoes">
+                                                <td>{{item.IMP_ID}}</td>
+                                                <td>
+                                                    <span class="label label-purple" ng-show="item.IMP_WEB_SERVICE == true">Importação Diária</span><br />
+                                                    <span app-show-date="item.IMP_DATA" show-time></span>
+                                                </td>
+                                                <td><span app-show-date="item.IMP_DATA_ULTIMA_EXECUCAO" show-time></span></td>
+                                                <td>{{item.REPRESENTANTE.REP_NOME}}</td>
+                                                <td>
+                                                    <span class="label" ng-class="{
+                                        'label-warning' : item.IMS_ID == 1 || item.IMS_ID == 6,
+                                        'label-purple' : item.IMS_ID == 6 || item.IMS_ID == 0,
+                                        'label-info' : item.IMS_ID == 4,
+                                        'label-danger' : item.IMS_ID == 5 || item.IMS_ID == 5,
+                                        'label-success' : item.IMS_ID == 2 || item.IMS_ID == 3
+                                    }">{{item.IMPORTACAO_STATUS.IMS_DESCRICAO}}</span>
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0);"
+                                                       ng-click="abrirModalNomeArquivo(item.NomeArquivo);"
+                                                       app-popover
+                                                       data-content="{{item.NomeArquivo}}"
+                                                       data-trigger="hover"
+                                                       data-direction="top">
+                                                        {{item.NomeArquivo | limitTo:25}}
+                                                        <span class="text-success"
+                                                              ng-if="item.NomeArquivo.length > 25">...</span>
+                                                    </a>
+                                                </td>
+                                                <td>{{item.IMP_QTD_SUS_TOTAL}}</td>
+                                                <td>{{item.IMP_QTD_SUS_DUPLICADA}}</td>
+                                                <td>
+                                                    <a href="javascript:void(0)" ng-show="item.IMS_ID != 4 && item.IMS_ID != 5" app-post="@Url.Action("agendamento")?impID={{item.IMP_ID}}" title="Detalhes / Executar" class="text-primary">
+                                                        <span class="glyphicon glyphicon-edit"></span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0)" ng-click="pesquisarImportados(item)"
+                                                       title="Visualizar Status dos Suspects" class="text-primary">
+                                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0)" ng-click="abrirModalResultadoDeRodizio(item.IMP_ID)"
+                                                       title="Ver Resultado de Rodizio" class="text-danger">
+                                                        <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0);" ng-click="abrirHistoricoImportacao(item.IMP_ID)"
+                                                       title="Ver historicos" class="text-primary">
+                                                        <span class="fa fa-history font-15"></span>
+                                                    </a>
+                                                </td>
+
+                                                <td>
+                                                    <a href="javascript:void(0);" ng-click="cancelarImportacao(item.IMP_ID)"
+                                                       title="Cancelar Importação" class="red" ng-show="item.IMS_ID != 4 && item.IMS_ID != 5">
+                                                        <span class="glyphicon glyphicon-remove-sign"></span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0)" ng-click="downloadPlanilhaComSuspectsComErro(item.IMP_ID)"
+                                                       title="Download dos Suspects com Erro" class="text-danger" 
+                                                       ng-show="item.IMS_ID != 4 && item.IMS_ID != 5 && item.IMP_PLANILHA_INSERIDA == true">
+                                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0)" ng-click="abrirModalUploadPlanilhaErro(item.IMP_ID)" 
+                                                       ng-show="item.IMS_ID != 4 && item.IMS_ID != 5 && item.IMP_PLANILHA_INSERIDA == true"
+
+                                                       title="Resubir Suspects com Erro" class="text-success">
+                                                        <i class="fa fa-upload" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="12" ng-show="!lstImportacoes || lstImportacoes.length == 0">Nenhum registro foi encontrado.</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <app-pagination request-page="paginaReq" load-function="pesquisarImportacoes(paginaReq)"></app-pagination>
+
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <div class="panel bg-grey no-border">
+                <div role="tab" id="headingOne" class="padding-bottom-10">
+                    <a role="button" class="btn btn-info text-20" style="width: 100%;" aria-expanded="true" aria-controls="panelImportacaoSuspect" data-toggle="collapse" data-parent="#accordion" href="#panelImportacaoSuspect"><span class="glyphicon glyphicon-import"></span> Suspects Que Fazem Parte da Importação</a>
+                </div>
+                <div id="panelImportacaoSuspect" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div>
+
+                        <section id="suspects-importacao">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div app-filtro-topo="filtrosImportacoesSuspect" model="filtroImportacoesSuspect" list="lstFiltrosUtilizados" flag-abrir="abrirFiltro" acao-pesquisar="pesquisarImportacoesSuspect()" watch-pesquisa="dispararPesquisa">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-corp">
+                                <!-- Default panel contents -->
+                                <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-shopping-cart"></span>Listagem de Importação de Suspects</div>
+
+                                <div class="panel-body">
+
+                                    <div class="table-responsive">
+
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>
+                                                        Nome
+                                                    </th>
+                                                    <th class="center">Última Execução</th>
+                                                    <th>
+                                                        CPF/CNPJ
+                                                    </th>
+                                                    <th>
+                                                        Status
+                                                    </th>
+                                                    <th>Celular</th>
+                                                    <th>
+                                                        E-Mail
+                                                    </th>
+                                                    <th>Regiao</th>
+                                                    <th colspan="2" class="center">Ações</th>
+                                                </tr>
+                                            </thead>
+                                            <tr ng-repeat="item in lstImportacoesSuspect" class="animate-repeat">
+                                                <td>
+                                                    {{item.IPS_ID}}
+                                                </td>
+                                                <td>
+                                                    {{item.IPS_NOME}}
+                                                </td>
+                                                <td><span app-show-date="item.IMP_DATA_ULTIMA_EXECUCAO" show-time></span></td>
+                                                <td>
+                                                    {{item.IPS_CPF_CNPJ}}
+                                                </td>
+                                                <td>
+                                                    <span class="label" ng-class="{
+                                                        'label-warning' : item.IMS_ID == 1,
+                                                        'label-purple' : item.IMS_ID == 0 || item.IMS_ID == 0,
+                                                        'label-info' : item.IMS_ID == 4,
+                                                        'label-danger' : item.IMS_ID == 2,
+                                                        'label-success' : item.IMS_ID == 3}">
+                                                        {{item.IMPORTACAO_STATUS.IMS_DESCRICAO}}
+                                                    </span>
+                                                </td>
+                                                <td>{{item.IPS_CELULAR}}</td>
+                                                <td>{{item.IPS_EMAIL}}</td>
+                                                <td>{{item.IPS_REGIAO}}</td>
+                                                <td>
+                                                    <a href="javascript:void(0);" ng-click="abrirClienteCurso(item.IPS_ID)"
+                                                       title="Abrir Cliente" class="text-primary" ng-show="item.IMS_ID == 4">
+                                                        <span class="fa fa-user-circle font-15"></span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0);" ng-click="abrirHistoricoImportacao(item.IMP_ID, item.IPS_ID)"
+                                                       title="Ver historicos" class="text-primary">
+                                                        <span class="fa fa-history font-15"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="15" ng-hide="lstImportacoesSuspect.length > 0">Nenhum registro foi encontrado.</td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                    <div app-pagination="pageImportacaoSuspect" request-page="paginaReq" load-function="pesquisarImportacoesSuspect (paginaReq)"></div>
+
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+         
+        </div>
+        <!-- Fim do Collapse -->
+    <div>
+        <div app-filtro-lateral="filtrosImportacoesSuspect" model="filtroImportacoesSuspect" list="lstFiltrosUtilizados" acao-pesquisar="pesquisarImportacoesSuspect()" flag-abrir="abrirFiltro">
+
+        </div>
+
+ 
+        </div>
+        <div app-modal="nome-arquivo" header="Arquivo">
+            <div>{{NomeDoArquivo}}</div>
+        </div>
+        @Html.Partial("Partials/Modais/_HistoricoImportacaoPartial")
+        @Html.Partial("Partials/Modais/_ModalResultadoImportacaoPartial")
+
+        <div app-modal="modal-upload-planilha" header="Reeimportar Planilha" submodal>
+            <div class="row">
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <form>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Arquivo de Carga</label> <!-- https://github.com/danialfarid/ng-file-upload -->
+                                    <input type="file" id="exampleInputFile" class="button button-default"
+                                           ngf-select="uploadPlanilha($file, $invalidFiles)" ngf-max-size="1MB" accept=".xls, .xlsx, .ods" ng-disabled="$parent.buttonUpload == 'updating'">
+                                    <div app-validation-msg="erros" for="NFe"></div>
+                                </div>
+                                <div class="progress" ng-show="f.progress >= 0 && !uploaded">
+                                    <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+                                         aria-valuenow="{{f.progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{f.progress}}%">
+                                        <span class="sr-only">f.progress% Complete</span>
+                                    </div>
+                                </div>
+                                {{errorMsg}}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row" ng-show="batchResp.ListErros.length > 0">
+                                <div class="col-md-12 limit-div-4">
+                                    <div class="table-responsive table-war">
+                                        <table class="table table-hover table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="min-width: 75px" id="erroBatch">
+                                                        Referência
+                                                    </th>
+                                                    <th>Mensagem</th>
+                                                </tr>
+                                            </thead>
+                                            <tr ng-repeat="item in batchResp.ListErros" class="animate-repeat">
+                                                <td class="text-danger"><strong>{{item.Contexto}}</strong></td>
+                                                <td class="text-danger">
+                                                    <strong>{{item.Mensagem}}</strong>
+                                                    <ul class="lista-sem-estilo padding-left" ng-show="item.ValidationErrors">
+                                                        <li ng-repeat-start="(key, value) in item.ValidationErrors" ng-show="$index == 0">
+                                                            <em class="text-danger">Mensagens de Validação</em>
+                                                        </li>
+                                                        <li ng-repeat-end>
+                                                            <ul class="lista-sem-estilo">
+                                                                <li ng-repeat="(key, subValue) in value">
+                                                                    <span class="text-danger">{{$parent.$parent.$index + 1}}.{{$parent.$index + 1}} {{subValue}}</span>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="uploaded === true">
+                            <button app-switch-button="atualizarSuspectsIncorretos()"
+                                    switch-conf="[{label : 'Atualizar', state : 'update'}, {label : 'Atualizando...', state : 'updating', disabled : true}]"
+                                    switch-var="$parent.buttonUpload"
+                                    class="btn btn-success">
+                                <span class="glyphicon glyphicon-refresh"></span>
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+   
+</div>  
+</div>

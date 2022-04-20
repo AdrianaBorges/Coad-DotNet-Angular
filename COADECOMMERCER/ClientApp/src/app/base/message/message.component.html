@@ -1,0 +1,9 @@
+<!-- ALERT -->
+<div *ngIf="message" class="alert margin-bottom-30" [ngClass]="{'alert-warning' : message.type == 'warning',
+     'alert-success' : message.type == 'success',
+     'alert-info' : message.type == 'info',
+     'alert-danger' : message.type == 'danger',
+     'alert-danger' : message.type == 'fail'}">
+  <button type="button" class="close" (click)="fechar()"><span aria-hidden="true">&times;</span></button>
+  {{message.message}}
+</div><!-- /ALERT -->

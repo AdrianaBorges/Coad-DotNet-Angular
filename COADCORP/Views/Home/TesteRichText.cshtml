@@ -1,0 +1,47 @@
+﻿@using COAD.SEGURANCA.Extensions
+@using COAD.COADCORP.Extensions
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewBag.Title = " COADCORP - Sistema de Gestão Integrada.";
+    
+}
+
+<form>
+    <div ng-app="appModule">
+        <div ng-controller="HomeControler">
+            <div id="page-wrapper">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-list-alt fa-fw"></i>
+                        <label id="title">DashBoard</label>
+                    </div>
+                    <div class="panel-body" app-bind-rich-text-event>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#editor-modal">Teste</a>
+                                @Html.TextEditor("")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/appScripts/Home.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.js")
+    @Scripts.Render("~/Scripts/flot/excanvas.min.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.pie.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.time.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.resize.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.categories.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.tooltip.min.js")
+
+}
+
+

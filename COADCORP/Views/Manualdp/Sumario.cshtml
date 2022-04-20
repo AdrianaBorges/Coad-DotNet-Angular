@@ -1,0 +1,257 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt_br">
+<head>
+
+    <script type="text/javascript">
+        // para obter o contexto da aplicação
+        var contextPath = "@System.Web.HttpContext.Current.Request.ApplicationPath";
+    </script>
+
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+
+    @Styles.Render("~/Content/themes/PortalCoad/css/portal.css")
+    @Styles.Render("~/Content/themes/base/jquery-ui.css")
+    @Styles.Render("~/Content/themes/base/simple-sidebar.css")
+    @Styles.Render("~/Content/themes/base/bootstrap-theme.css")
+    @Styles.Render("~/Content/themes/base/default.css")
+    @Styles.Render("~/Content/themes/base/bootstrap.css")
+    @Styles.Render("~/Content/themes/fonts/font-awesome.min.css")
+    @Styles.Render("~/Content/themes/base/coadcorp-boostrap.css")
+    @Styles.Render("~/Content/themes/assets/css/layout.css")
+
+
+    <script src="@Url.Content("~/Scripts/jquery-1.11.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/modernizr-2.5.3.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.maskMoney.js")" type="text/javascript"></script>
+
+
+    @Scripts.Render("~/Scripts/bootstrap.min.js")
+    @Scripts.Render("~/Scripts/util.js")
+    @Scripts.Render("~/Scripts/Angular/angular.min.js")
+    @Scripts.Render("~/Scripts/Angular/angular_modules/service_module.js")
+    @Scripts.Render("~/Scripts/Angular/angular_modules/directives_module.js")
+    @Scripts.Render("~/Scripts/Angular/ng-file-upload/ng-file-upload-shim.min.js")
+    @Scripts.Render("~/Scripts/Angular/ng-file-upload/ng-file-upload.min.js")
+    @Scripts.Render("~/Scripts/default.js")
+    @Scripts.Render("~/Scripts/negocio/notificacao.js")
+    @Scripts.Render("~/Scripts/negocio/controllers_plugins/info_cliente.js")
+    @Scripts.Render("~/Scripts/Angular/FusionCharts/fusioncharts.js")
+    @Scripts.Render("~/Scripts/Angular/FusionCharts/angular-fusioncharts.min.js")
+    @Scripts.Render("~/Scripts/js/plugins/tinymce/tinymce.min.js")
+    @Scripts.Render("~/Scripts/Angular/angular-sanitize.js")
+    @Scripts.Render("~/Scripts/Angular/angular-animate.js")
+    @Scripts.Render("~/Scripts/js/plugins/tinymce/tinymce_custom_app.js")
+    @Scripts.Render("~/Scripts/js/plugins/tinymce/Tinymce.js")
+    @Scripts.Render("~/Scripts/appScripts/TabelaDinamica.js?999")
+
+
+    <!-- CORE CSS -->
+    <link href="/Content/themes/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/themes/assets/css/essentials.css" rel="stylesheet" type="text/css" />
+
+    <!-- THEME CSS -->
+
+
+    <!-- PAGE LEVEL SCRIPTS -->
+    <link href="/Content/themes/assets/css/header-1.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/themes/assets/css/color_scheme/green.css" rel="stylesheet" type="text/css" id="color_scheme" />
+
+</head>
+
+
+@Scripts.Render("~/Scripts/appScripts/Manualdp.js")
+
+<body style="background-color: #fff !important;" ng-app="appModule" onselect="return false">
+    <div ng-controller="ManualdpController" ng_init="initSumario(@ViewBag.mai_id,@ViewBag.man_id,@ViewBag.mod_id);canPrint=true" style="padding-left:20px;background-color:#fff !important;" class="@ViewBag.Toggled" ng-cloak>
+        <div class="hidden-print" app-modal-erro="Modal-Erro" header="Atenção" submodal>
+            <div class="panel-body">
+                <strong>
+                    <p ng-bind-html="trustAsHtml(erro)"></p>
+                </strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 titulo" style="padding-left: 10px;">
+                <img src="/Images/Simulador/BANNER-4.png" />
+                <img src="~/Images/logo-coad-topo.png" style="float: right;" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="hidden-print col-md-3">
+                <div ng_show="mostrar">
+                    <div class="panel panel-info panel-heading bold" style="background-color: #e8e8e8 !important">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#Alerta" style="text-decoration: none;">
+                            <strong><i class="fa fa-calendar"></i>&nbspÚLTIMAS ALUALIZAÇÕES</strong>
+                        </a>
+                        <button type="button" class="close" data-dismiss="alert" ng_click="mostrar=false"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    </div>
+                    <div id="Alerta" class="row accordion-body collapse" style="overflow: none;">
+                        <div class="col-md-12" ng-repeat="item in ItensAlterados">
+                            <div class="col-md-12">
+                                <a href="#item_{{item.MAI_ID}}" style="text-decoration: none;" data-toggle="collapse" ng-click="abrirRecente(item)">
+                                    <i class="fa fa-chevron-circle-right" style="font-size: 0.8em; font-style: italic;" aria-hidden="true"></i>
+                                    <label>{{item.MAI_TITULO}}</label>
+                                    <span style="font-size: 0.8em; font-style: italic;" app_show_date="item.DATA_ALTERA" ng-if="item.DATA_ALTERA!=null"></span>
+                                    <span class="label label-danger" aria-hidden="true" ng_show="item.DATA_ALTERA==null">Novo</span>
+                                </a>
+                            </div>
+                            <div class="col-md-12">
+                                <label style="font-style: italic; font-size: 0.8em;">- {{item.MOD_DESCRICAO}}&nbsp/&nbsp{{item.MAN_ASSUNTO}}</label>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0);" ng-click="abrirTodosRecentes(item)" style="text-decoration: none; float: right; padding-right: 20px;">
+                            Ver todas
+                        </a>
+                    </div>
+                </div>
+                <div class="side-nav margin-top-30">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input id="palavrachave" type="text" ng-model="filtro.pesquisa" placeholder="pesquisar..." class="form-control" ng_change="buscarPalavraChave(filtro.pesquisa)" />
+                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="side-nav margin-bottom-60">
+                    <ul class="list-group uppercase">
+                        <li class="list-group-item" ng-repeat="item in listamodulo">
+                            <a href="javascript:void(0);" data-toggle="collapse" data-target="#buscaref{{$index}}" style="text-decoration: none;" ng-click="open=!open">
+                                <i class="fa blue" ng-class="{'fa-minus-circle': open,'fa-plus-circle':!open||open==false}"></i>
+                                {{item.MOD_DESCRICAO}}
+                            </a>
+                            <div id="buscaref{{$index}}" class="collapse" style="padding-top: 10px; padding-bottom: 10px; overflow: auto;">
+                                <ul style="margin-bottom: 1px; padding-left: 10px;">
+                                    <li ng-repeat="item1 in item.MANUAL_DP | orderBy:'MAN_ASSUNTO'" ng-if="item1.MAN_DATA_PUBLICACAO!=null">
+                                        <a href="javascript:void(0);" ng-click="abrirDocumento(item,item1)" style="font-size: 0.8em; font-style: italic;">
+                                            <i class="fa fa-chevron-circle-right blue"></i>&nbsp{{item1.MAN_ASSUNTO}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div ng_if="(!listaporassunto||listaporassunto.length==0)&&(filtro.pesquisa==null||filtro.pesquisa=='')&&(!item||item==null)">
+                    <div id="page-wrapper">
+                        <div class="panel panel-default">
+                            <div class="panel-body" style="padding-top: 14px; background-color: #ebe6e6">
+                                <h4><i class="fa fa-warning" aria-hidden="true"></i>&nbspAtenção!</h4>
+                                Caro cliente, caso algumas das novas funcionalidades desta area não estejam sendo apresentadas,
+                                exclua o cache do seu navegador ou pressione <kbd><kbd>CTRL</kbd> + <kbd>F5</kbd>.
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>
+                        A <strong>COAD</strong> criou o <strong>Manual de Depto Pessoal</strong>  pensando em facilitar o seu dia a dia.
+                        <br />
+
+                        Escolha, no menu ao lado, o assunto sobre o qual deseja consultar informações.
+                    </p>
+                    <p>
+                        Gostaríamos de ouvir a sua opinião sobre esta área.
+                        <br />
+                        Envie-nos um e-mail, <a href="javscript:void(0);" ng-click="buscarEmail()">desenvolvimento.tecnico@coad.com.br.</a>
+                    </p>
+                </div>
+
+                <div class="row" ng_if="listaporassunto.length>0&&(filtro.pesquisa==null||filtro.pesquisa=='')" style="background: url('~/Images/logo-coad-topo.png') repeat;">
+                    <div class="col-md-12" style="padding-top: 5px; padding-left: 28px">
+                        <div class="panel-heading bold" style="background-color: #e8e8e8 !important">
+                            <strong>{{detalhe.MOD_DESCRICAO}}&nbsp/&nbsp{{detalhe.MAN_ASSUNTO}}</strong>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="padding-top: 5px;" ng-repeat="item in listaporassunto" ng_if="item.MAI_DATA_PUBLICACAO!=null">
+                        <div class="col-md-1" style="border: 0px;" ng-class="{'col-md-1': open2,'col-md-1 hidden-print':!open2||open2==false}">
+                            <a class="btn btn-primary" id="btn_{{item.MAI_ID}}" name="btn_{{item.MAI_ID}}" data-toggle="collapse" href="#item_{{item.MAI_ID}}" style="float: left;" ng-click="open2=!open2">
+                                <i class="fa" style="color: #fff; font-size: 26px; padding: 0px;" ng-class="{'fa-folder-open': open2,'fa-folder':!open2||open2==false}"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-11 btn btn-primary" style="text-align: left; vertical-align: middle;" ng-class="{'col-md-11 btn btn-primary': open2,'col-md-11 btn btn-primary hidden-print':!open2||open2==false}">
+                            <label style="color: #fff;">{{$index+1}} - {{item.MAI_TITULO}}</label>
+                        </div>
+                        <div class="col-md-12 collapse" id="item_{{item.MAI_ID}}" style="padding-top: 5px;">
+                            <div class="hidden-print col-md-12" style="text-align: right; vertical-align: middle; padding: 0px;">
+                                <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i></a>
+                            </div>
+                            <div class="card card-block">
+                                <p ng-bind-html="trustAsHtml(item.MAI_DESCRICAO)" ng_if="item.MAI_DATA_PUBLICACAO!=null"></p>
+                                <p ng_if="item.MAI_DATA_PUBLICACAO==null">Este item esta sendo atualizado e esta teporariamente indisponível. Pedimos descupas pelo transtorno. </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="min-height: 340px;" ng_if="filtro.pesquisa!=null&&filtro.pesquisa!=''">
+                    <p>Foram encontrados {{page.numeroRegistros}} registros para consulta realizada.</p>
+                    <div id="pesquisa_{{item.MAI_ID}}" style="list-style-type: none;" ng-repeat="item in listaitens">
+                        <blockquote>
+                            <a href="javascript:void(0)" ng-click="abrirRecente(item)">
+                                <i class="fa fa-chevron-circle-right" style="font-size: 0.8em; font-style: italic;" aria-hidden="true"></i>
+                                <label>{{item.MAI_TITULO}} -</label>
+                                <label style="font-size: 0.7em; font-style: italic;">Publicado:</label>
+                                <span style="font-size: 0.7em; font-style: italic;" app-show-date="item.DATA_ALTERA" ng-if="item.DATA_ALTERA!=null" show-time></span>
+                                <span class="label label-danger" aria-hidden="true" ng-show="item.DATA_ALTERA==null">Novo</span>
+                            </a>
+                            <br />
+                            <label style="font-size: 0.7em; font-style: italic oblique;">{{item.MOD_DESCRICAO}} / {{item.MAN_ASSUNTO}} / {{item.MAI_TITULO}}</label>
+                        </blockquote>
+                    </div>
+                    <hr />
+                    <app-pagination request-page="paginaReq" load-function="buscarPalavraChave(filtro.pesquisa,paginaReq)"></app-pagination>
+                </div>
+
+
+                <div class="row" style="background: url('~/Images/logo-coad-topo.png') repeat;" ng_if="item!=null&&item.MAI_DATA_PUBLICACAO!=null&&(!listaporassunto||listaporassunto.length==0)&&(filtro.pesquisa==null||filtro.pesquisa=='')">
+                    <div class="col-md-12" style="padding-top: 5px; padding-left: 28px">
+                        <div class="panel-heading bold" style="background-color: #e8e8e8 !important">
+                            <strong>
+                                <a href="javascript:void(0)" ng_click="abrirAssunto(,)">
+                                    {{detalhe.MOD_DESCRICAO}}&nbsp/&nbsp{{detalhe.MAN_ASSUNTO}}
+                                </a>
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="padding-top: 5px;">
+                        <div class="col-md-1" style="border: 0px;" class="col-md-1 hidden-print">
+                            <a class="btn btn-primary" href="javascript:void(0)" style="float: left;">
+                                <i style="color: #fff; font-size: 26px; padding: 0px;" class="fa fa-folder-open"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-11 btn btn-primary" style="text-align: left; vertical-align: middle;">
+                            <label style="color: #fff;">{{item.MAI_TITULO}}</label>
+                        </div>
+                        <div class="col-md-12" id="item_{{item.MAI_ID}}" style="padding-top: 5px;">
+                            <div class="hidden-print col-md-12" style="text-align: right; vertical-align: middle; padding: 0px;">
+                                <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i></a>
+                            </div>
+                            <div class="card card-block">
+                                <p ng-bind-html="trustAsHtml(item.MAI_DESCRICAO)" ng_if="item.MAI_DATA_PUBLICACAO!=null"></p>
+                                <p ng_if="item.MAI_DATA_PUBLICACAO==null">Este item esta sendo atualizado e esta teporariamente indisponível. Pedimos descupas pelo transtorno. </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <script type="text/javascript">var plugin_path = 'Content/themes/assets/plugins/';</script>
+    <script type="text/javascript" src="Content/themes/assets/plugins/jquery/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="Content/themes/assets/js/scripts.js"></script>
+    
+</body>
+
+</html>
+

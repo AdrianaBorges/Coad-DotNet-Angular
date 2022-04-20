@@ -1,0 +1,33 @@
+﻿<div class="row">
+    <div class="col-xs-3">
+        <div class="form-group">
+            <label>
+                Estado Selecionado: 
+            </label>
+            <span><strong>{{search.TAB_STRING01}}</strong> </span> 
+       </div>
+    </div>
+    <div class="col-xs-1">
+        <div class="form-group">
+            
+        </div>
+    </div>
+    <div class="col-xs-12" style="width: 100%; height: 300px; border: none; overflow: auto;">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr class="">
+                        <th ng-repeat="item in tabrefcfg.TAB_DINAMICA_CONFIG_ITEM">
+                            <label>{{item.TCI_NOME_CAMPO}}</label>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in tabref.TAB_DINAMICA_ITEM  | filter:search:true">
+                        <td ng-repeat="cabec in tabrefcfg.TAB_DINAMICA_CONFIG_ITEM">{{item[cabec.TCI_NOME_CAMPODB]}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

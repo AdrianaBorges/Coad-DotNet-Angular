@@ -1,0 +1,109 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutosDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li><i class="fa fa-home"></i><a href="/Relatorios/Cadastro">Relatórios</a></li>
+        <li><a href="/Relatorios/Cadastro">Relatórios de Cadastro </a></li>
+        <li class="active">Etiqueta Avulsa</li>
+    </ol>
+}
+
+@{
+    ViewBag.print = true;
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;
+    if (ViewBag.print == true)
+    {
+        ViewBag.printableClass = "hidden-print";
+    }
+
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+@Scripts.Render("~/Scripts/negocio/etiqueta.js")
+
+<div ng-app="appModule">
+    <div ng-controller="EtiquetaController" data-ng-init="preparaTela()" class="padding content">
+        <div class="panel panel-default">
+            <div app-message></div>
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-print"></span>&nbspEtiqueta Avulsa
+                <div class="pull-right">
+                    <div class="btn-group">
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row padding">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr class="info">
+                                    <th>Assinatura</th>
+                                    <th>Produto</th>
+                                    <th style="text-align: center;">Opções</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="etiq in etiquetaavulsa">
+                                    <td>
+                                        <input type="text" ng-model="etiq.assinatura" maxlength="8" ng-blur="mostrarCliente($index)"
+                                               class="form-control grid-input  float-left" />
+                                        <label type="text" class="float-left" style="padding-left: 5px; padding-top: 5px;" ng-if="etiq.assinatura!=null&&etiq.assinatura!=''">{{etiq.nome_cliente}}</label>
+
+                                    </td>
+                                    <td>
+                                        <input type="text" ng-model="etiq.produto" maxlength="12" ng-blur="mostrarProduto($index)"
+                                               class="form-control grid-input  float-left" />
+                                        <label type="text" class="float-left" style="padding-left: 5px; padding-top: 5px;" ng-if="etiq.produto!=null&&etiq.produto!=''">{{etiq.nome_produto}}</label>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <a href="javascript:void(0)" ng-click="remove($index)" class="btnConfirmaExclusao red" id="btexcluir" title="Excluir">
+                                            <span class="glyphicon glyphicon-remove-sign"></span>
+                                        </a>
+                                        <span ng-show="etiquetaavulsa.length == ($index + 1)">
+                                            <a href="javascript:void(0)" ng-click="add(etiq)" title="Incluir">
+                                                <span class="glyphicon glyphicon-plus blue"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr ng-hide="etiquetaavulsa.length > 0">
+                                    <td colspan="6">
+                                        Nenhuma etiqueta adicionada. Clique para adicionar:
+                                        <a href="javascript:void(0)" ng-click="add(etiq)" title="Incluir">
+                                            <span class="glyphicon glyphicon-plus blue"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-12" ng-if="export.lnkPath!=null&&export.lnkPath!=''">
+                    <div class="form-group">
+                        <a href="{{export.lnkPath}}" ng-click="export.lnkPath=null"><i class="glyphicon glyphicon-cloud-download"></i> Donwload do arquivo ( {{export.lnkPath}} ) </a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button ng-click="ImprimirEtiquetaSolicitacao()" class="btn btn-default red" title="Imprimir etiquetas avulsas." ng-if="!etiquetaavulsa||etiquetaavulsa.length==0">
+                    <span class="glyphicon glyphicon-print red"></span>&nbsp;Emitir Etiqueta
+                </button>
+                <button ng-click="ImpEtiquetaAvulsa()" class="btn btn-default blue" title="Imprimir etiquetas avulsas." ng-if="etiquetaavulsa.length>0">
+                    <span class="glyphicon glyphicon-print blue"></span>&nbsp;Emitir Etiqueta Avulsa
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

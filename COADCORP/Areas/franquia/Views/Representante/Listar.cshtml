@@ -1,0 +1,94 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.RepresentanteDTO
+@using Coad.GenericCrud.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+@using GenericCrud.ActionResultTools
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<script src="@UrlCorp.Content("~/Scripts/negocio/representante.js")" defer="defer"></script>
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Gerenciar Representates</li>
+
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="RepresentanteController" class="padding content" ng-cloak data-ng-init="init()">
+        <div class="panel panel-corp">
+             <!-- Default panel contents -->
+            <div class="panel-heading bold"><span class="glyphicon glyphicon-user"></span> Representantes 
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Opções
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div app-filtro-topo2="filtros" model="filtro" list="lstFiltrosUtilizados" flag-abrir="abrirFiltro" acao-pesquisar="BuscarRepresentante()" watch-pesquisa="dispararPesquisa">
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr class="">
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarRepresentante()" order-property="REP_ID">Id</th>
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarRepresentante()" order-property="REP_NOME">Representante</th>
+                                <th>Usuário</th>
+                                <th>Nome Usuário</th>
+                                <th>CPF</th>
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarRepresentante()" order-property="REGIAO.RG_DESCRICAO">Região</th>
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarRepresentante()" order-property="REP_EMAIL">Email</th>
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarRepresentante()" order-property="REP_VARIAS_CARTEIRAS">Varias Carteiras</th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in representantes">
+                            <td>{{item.REP_ID}}</td>
+                            <td>{{item.REP_NOME}}</td>
+                            <td>{{item.USUARIO.USU_LOGIN}}</td>
+                            <td>{{item.USUARIO.USU_NOME}}</td>
+                            <td>{{item.USUARIO.USU_CPF}}</td>
+                            <td>{{item.REGIAO.RG_DESCRICAO}}</td>
+                            <td>{{item.REP_EMAIL}}</td>
+                            <td>
+                                <span class="label label-success" ng-if="item.REP_VARIAS_CARTEIRAS">SIM</span>
+                                <span class="label label-warning" ng-if="!item.REP_VARIAS_CARTEIRAS">NÃO</span>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" app-post="@Url.Action("Editar")?REP_ID={{item.REP_ID}}"
+                                   title="Editar" class="blue">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="12" ng-show="!representantes || representantes.length == 0">Nenhum registro foi encontrado.</td>
+                        </tr>
+                    </table>
+                </div>
+                <div app-pagination="page" request-page="paginaReq" page-request="filtro.requisicao" load-function="BuscarRepresentante(paginaReq)" ng-show="representantes && representantes.length > 1"></div>
+            </div>
+        </div>
+        <div app-filtro-lateral="filtros" model="filtro" list="lstFiltrosUtilizados" acao-pesquisar="BuscarRepresentante()" flag-abrir="abrirFiltro">
+
+        </div>
+    </div>
+</div>

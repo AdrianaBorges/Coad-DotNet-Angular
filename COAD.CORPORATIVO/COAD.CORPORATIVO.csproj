@@ -1,0 +1,2175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props" Condition="Exists('..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{720AA970-D9AE-459F-AA86-306224611411}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>COAD.CORPORATIVO</RootNamespace>
+    <AssemblyName>COAD.CORPORATIVO</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Homologacao|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Homologacao\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DocumentationFile>
+    </DocumentationFile>
+    <RegisterForComInterop>false</RegisterForComInterop>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>coadcoadcorp.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_Prod|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug_Prod\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="Boleto.Net">
+      <HintPath>..\blibliotecas\Boleto.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.3.3.0\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=3.4.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Windsor.3.4.0\lib\net45\Castle.Windsor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\Open-XML-SDK.2.7.2\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="Dropbox.Api, Version=4.0.0.0, Culture=neutral, PublicKeyToken=310f0e82fbb45d01, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dropbox.Api.4.7.0\lib\net45\Dropbox.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="GatewayApiClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MundiPagg.Gateway.Client.1.3.2\lib\net40\GatewayApiClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ionic.Zip.1.9.1.8\lib\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.CodeCoverage.Shim, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeCoverage.1.0.3\lib\netstandard1.0\Microsoft.VisualStudio.CodeCoverage.Shim.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MundiAPI.PCL, Version=0.14.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MundiAPI.PCL.0.14.2\lib\portable40-net40+sl5+win8+wp8+wpa81\MundiAPI.PCL.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NReco.PdfGenerator, Version=1.1.15.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.PdfGenerator.1.1.15\lib\net20\NReco.PdfGenerator.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenPop">
+      <HintPath>..\packages\OpenPop.NET.2.0.6.1120\lib\net40\OpenPop.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz, Version=2.5.0.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.2.5.0\lib\net40\Quartz.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RichTextEditor">
+      <HintPath>..\blibliotecas\rte\RichTextEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.5840.25917, Culture=neutral, PublicKeyToken=6aa9bc6b42b37eda, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.6\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.40804.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\EmailConfig.cs" />
+    <Compile Include="Config\IOCContainer\DbContextInstaller.cs" />
+    <Compile Include="Config\IOCContainer\DAOInstaller.cs" />
+    <Compile Include="Config\IOCContainer\ServiceInstaller.cs" />
+    <Compile Include="Config\ServiceConfigNomes.cs" />
+    <Compile Include="Config\CorporativoConfig.cs" />
+    <Compile Include="Config\Profile\AutoMapperProfile.cs" />
+    <Compile Include="DAO\ApuracaoPremiacaoMensalDAO.cs" />
+    <Compile Include="DAO\ApuracaoPremiacaoSemanaDAO.cs" />
+    <Compile Include="DAO\CampanhaVendasProdutoComposicaoDAO.cs" />
+    <Compile Include="DAO\CarrinhoComprasDAO.cs" />
+    <Compile Include="DAO\CarrinhoComprasItemDAO.cs" />
+    <Compile Include="DAO\ClientePassivelCobrancaDAO.cs" />
+    <Compile Include="DAO\CnabArquivosItemDAO.cs" />
+    <Compile Include="DAO\CnabArquivosItemErroDAO.cs" />
+    <Compile Include="DAO\CnabConfigArquivoDAO.cs" />
+    <Compile Include="DAO\CnabConfigDAO.cs" />
+    <Compile Include="DAO\CnabTipoDadosDAO.cs" />
+    <Compile Include="DAO\CnabTipoRegistroDAO.cs" />
+    <Compile Include="DAO\EnderecoVendaDAO.cs" />
+    <Compile Include="DAO\FranquiaDAO.cs" />
+    <Compile Include="DAO\FuncionalidadeSistemaRefDAO.cs" />
+    <Compile Include="DAO\ImportacaoResultadoRodizioDAO.cs" />
+    <Compile Include="DAO\ImportacaoStatusDAO.cs" />
+    <Compile Include="DAO\ImportacaoDAO.cs" />
+    <Compile Include="DAO\ImportacaoHistoricoDAO.cs" />
+    <Compile Include="DAO\ImpostoInfoFaturaItemDAO.cs" />
+    <Compile Include="DAO\InfoFaturaItemDAO.cs" />
+    <Compile Include="DAO\LocalizacaoCursoDAO.cs" />
+    <Compile Include="DAO\MundipaggClienteDAO.cs" />
+    <Compile Include="DAO\NotaFiscalConfigDAO.cs" />
+    <Compile Include="DAO\NotaFiscalConfigTipoDAO.cs" />
+    <Compile Include="DAO\NotaFiscalEventoDAO.cs" />
+    <Compile Include="DAO\NotaFiscalLoteDAO.cs" />
+    <Compile Include="DAO\NotaFiscalLoteItemDAO.cs" />
+    <Compile Include="DAO\NotaFiscalLoteItemMsgDAO.cs" />
+    <Compile Include="DAO\NotaFiscalLoteItemTipoDAO.cs" />
+    <Compile Include="DAO\NotaFiscalLoteStatusDAO.cs" />
+    <Compile Include="DAO\NotaFiscalLoteTipoDAO.cs" />
+    <Compile Include="DAO\NotaFiscalReferenciadaDAO.cs" />
+    <Compile Include="DAO\NotaFiscalStatusDAO.cs" />
+    <Compile Include="DAO\NotaFiscalTipoDAO.cs" />
+    <Compile Include="DAO\ParcelaPendenteDAO.cs" />
+    <Compile Include="DAO\PeriodoFaturamentoDAO.cs" />
+    <Compile Include="DAO\RepresentanteMetaDAO.cs" />
+    <Compile Include="DAO\SemanaPremiacaoDAO.cs" />
+    <Compile Include="DAO\SemanaPremiacaoReprDAO.cs" />
+    <Compile Include="DAO\SequencialNossoNumeroDAO.cs" />
+    <Compile Include="DAO\TipoComissaoDAO.cs" />
+    <Compile Include="DAO\TipoNegociacaoDAO.cs" />
+    <Compile Include="DAO\TipoPagamentoCampanhaVendaDAO.cs" />
+    <Compile Include="DAO\CampanhaVendaTipoPropostaDAO.cs" />
+    <Compile Include="DAO\CampanhaVendaDAO.cs" />
+    <Compile Include="DAO\RegistroLiberacaoItemDAO.cs" />
+    <Compile Include="DAO\RegistroLiberacaoTipoDAO.cs" />
+    <Compile Include="DAO\RegistroLiberacaoDAO.cs" />
+    <Compile Include="DAO\AgendaCobrancaDAO.cs" />
+    <Compile Include="DAO\AreaConsultoriaRepresentanteDAO.cs" />
+    <Compile Include="DAO\AreaConsultoriaCursoDAO.cs" />
+    <Compile Include="DAO\AssinaturaTransferenciaDAO.cs" />
+    <Compile Include="DAO\ClienteUsuarioDAO.cs" />
+    <Compile Include="DAO\CnabArquivosDAO.cs" />
+    <Compile Include="DAO\CnabDAO.cs" />
+    <Compile Include="DAO\CnabRegistrosDAO.cs" />
+    <Compile Include="DAO\ConfigAlocacaoContaDAO.cs" />
+    <Compile Include="DAO\ConfigAlocacaoDAO.cs" />
+    <Compile Include="DAO\ConfigImpostoDAO.cs" />
+    <Compile Include="DAO\ConfigImpostoImpostoDAO.cs" />
+    <Compile Include="DAO\ConfigImpostoRegiaoDAO.cs" />
+    <Compile Include="DAO\ContaRefDAO.cs" />
+    <Compile Include="DAO\FeriadoDAO.cs" />
+    <Compile Include="DAO\BandeiraCartaoDAO.cs" />
+    <Compile Include="DAO\InformativoSemanalAnaliticoDAO.cs" />
+    <Compile Include="DAO\InformativoSemanalDAO.cs" />
+    <Compile Include="DAO\InformativoSemanalEnvioDAO.cs" />
+    <Compile Include="DAO\RegistroFaturamentoDAO.cs" />
+    <Compile Include="DAO\PropostaItemComprovanteDAO.cs" />
+    <Compile Include="DAO\PropostaItemDAO.cs" />
+    <Compile Include="DAO\TipoPropostaDAO.cs" />
+    <Compile Include="DAO\PropostaDAO.cs" />
+    <Compile Include="DAO\Reflection\PreparaTabelas.cs" />
+    <Compile Include="DAO\Reflection\ExecutaProcedures.cs" />
+    <Compile Include="DAO\Reflection\PreparaPropriedades.cs" />
+    <Compile Include="DAO\RelatorioCondicaoRelatorioOperadorCondicionalDAO.cs" />
+    <Compile Include="DAO\RelatorioOperadorCondicionalDAO.cs" />
+    <Compile Include="DAO\RelatorioCondicaoDAO.cs" />
+    <Compile Include="DAO\RelatorioTipoDadoDAO.cs" />
+    <Compile Include="DAO\RelatorioJoinDAO.cs" />
+    <Compile Include="DAO\RelatorioOperadorLogicoDAO.cs" />
+    <Compile Include="DAO\TipoJoinDAO.cs" />
+    <Compile Include="DAO\RelatorioTabelaColunasDAO.cs" />
+    <Compile Include="DAO\RelatorioTabelasDAO.cs" />
+    <Compile Include="DAO\RelatorioPersonalizadoDAO.cs" />
+    <Compile Include="DAO\ImportacaoSuspectDAO.cs" />
+    <Compile Include="DAO\HistoricoPedidoDAO.cs" />
+    <Compile Include="DAO\NFeXmlDAO.cs" />
+    <Compile Include="DAO\OcorrenciaErroDAO.cs" />
+    <Compile Include="DAO\OcorrenciaRetornoDAO.cs" />
+    <Compile Include="DAO\OcorrenciaRemessaDAO.cs" />
+    <Compile Include="DAO\ParcelaAlocadaDAO.cs" />
+    <Compile Include="DAO\DocLiquidacaoDAO.cs" />
+    <Compile Include="DAO\ImpostoDAO.cs" />
+    <Compile Include="DAO\ImpostoInfoFaturaDAO.cs" />
+    <Compile Include="DAO\InfoFaturaDAO.cs" />
+    <Compile Include="DAO\PedidoParticipanteDAO.cs" />
+    <Compile Include="DAO\PedidoStatusDAO.cs" />
+    <Compile Include="DAO\ItemPedidoPedidoPagamentoDAO.cs" />
+    <Compile Include="DAO\ItemPedidoDAO.cs" />
+    <Compile Include="DAO\ProdutoComposicaoTipoPeriodoDAO.cs" />
+    <Compile Include="DAO\ParcelasRemessaDAO.cs" />
+    <Compile Include="DAO\RetornoTransacaoDAO.cs" />
+    <Compile Include="DAO\SqlDinamico\SqlDinamicoDAO.cs" />
+    <Compile Include="DAO\TabelaPrecoTipoPagamentoDAO.cs" />
+    <Compile Include="DAO\OrigemAcessoDAO.cs" />
+    <Compile Include="DAO\TipoConfigContaDAO.cs" />
+    <Compile Include="DAO\TipoRemessaDAO.cs" />
+    <Compile Include="DAO\TipoVendaDAO.cs" />
+    <Compile Include="Exceptions\ConfiguracaoLoginUnicoException.cs" />
+    <Compile Include="Exceptions\ExtornoException.cs" />
+    <Compile Include="Exceptions\RegistroLiberacaoException.cs" />
+    <Compile Include="Exceptions\ImpostoException.cs" />
+    <Compile Include="Exceptions\ServicoException.cs" />
+    <Compile Include="Exceptions\NotificacaoException.cs" />
+    <Compile Include="Exceptions\FaturamentoException.cs" />
+    <Compile Include="Exceptions\NFeException.cs" />
+    <Compile Include="Exceptions\PagamentoException.cs" />
+    <Compile Include="Exceptions\PagamentoNaoRealizadoException.cs" />
+    <Compile Include="Exceptions\PedidoException.cs" />
+    <Compile Include="Filters\Interface\IAccessControlMethod.cs" />
+    <Compile Include="Filters\AutorizarCustom.cs" />
+    <Compile Include="Jobs\EnvioLoteNfseDeNotasJob.cs" />
+    <Compile Include="Jobs\EnvioBoletosJob.cs" />
+    <Compile Include="Jobs\ImportacaoSuspectJob.cs" />
+    <Compile Include="Jobs\EnvioLoteDeNotasJob.cs" />
+    <Compile Include="Jobs\NotifyHandler\ProcessRetornoNfeNotifyHandler.cs" />
+    <Compile Include="Jobs\NotifyHandler\EnvioNfeNotifyHandler.cs" />
+    <Compile Include="Jobs\ProcessamentoRetornoLoteNfseJob.cs" />
+    <Compile Include="Jobs\ProcessamentoRetornoLoteJob.cs" />
+    <Compile Include="Jobs\RelatorioPropostasAtrasadasRepreJob.cs" />
+    <Compile Include="Jobs\RelatorioPropostasAtrasadasJob.cs" />
+    <Compile Include="Jobs\BaixaPropostaPedidoJob.cs" />
+    <Compile Include="Jobs\TesteJob.cs" />
+    <Compile Include="MapperConverters\CarteiramentoMapperConverter.cs" />
+    <Compile Include="Model\Comparators\AreaInfoMarketingDTOComparator.cs" />
+    <Compile Include="Model\Comparators\CarteiraComparator.cs" />
+    <Compile Include="Model\Comparators\CarteiraRepresentanteDTOComparator.cs" />
+    <Compile Include="Model\Comparators\ClienteTelefoneComparator.cs" />
+    <Compile Include="Model\Comparators\IClienteComparator.cs" />
+    <Compile Include="Model\Comparators\ProdutoComposicaoInfoMarketingDTOComparator.cs" />
+    <Compile Include="Model\Comparators\ProspectsTelefoneDTOComparator.cs" />
+    <Compile Include="Model\Comparators\RegiaoTabelaPrecoDTOComparator.cs" />
+    <Compile Include="Model\CondicaoPagamentoDTO.cs" />
+    <Compile Include="Model\Dto\AcaoAtendimentoDTO.cs" />
+    <Compile Include="Model\Dto\AgendaCobrancaDTO.cs" />
+    <Compile Include="Model\Dto\AgendamentoDTO.cs" />
+    <Compile Include="Model\Dto\ApuracaoPremiacaoMensalDTO.cs" />
+    <Compile Include="Model\Dto\ApuracaoPremiacaoSemanaDTO.cs" />
+    <Compile Include="Model\Dto\AreaConsultoriaCursoDTO.cs" />
+    <Compile Include="Model\Dto\AreaConsultoriaDTO.cs" />
+    <Compile Include="Model\Dto\AreaConsultoriaRepresentanteDTO.cs" />
+    <Compile Include="Model\Dto\AreaInfoMarketingDTO.cs" />
+    <Compile Include="Model\Dto\AreasDTO.cs" />
+    <Compile Include="Model\Dto\AssinaturaBuscaDTO.cs" />
+    <Compile Include="Model\Dto\AssinaturaDTO.cs" />
+    <Compile Include="Model\Dto\AssinaturaEmailDTO.cs" />
+    <Compile Include="Model\Dto\AssinaturaSenhaDTO.cs" />
+    <Compile Include="Model\Dto\AssinaturaTelefoneDTO.cs" />
+    <Compile Include="Model\Dto\AssinaturaTransferenciaDTO.cs" />
+    <Compile Include="Model\Dto\AuditoriaDTO.cs" />
+    <Compile Include="Model\Dto\BancosDTO.cs" />
+    <Compile Include="Model\Dto\BandeiraCartaoDTO.cs" />
+    <Compile Include="Model\Dto\Boleto\BoletoDTO.cs" />
+    <Compile Include="Model\Dto\Boleto\CedenteDTO.cs" />
+    <Compile Include="Model\Dto\Boleto\CorpoDTO.cs" />
+    <Compile Include="Model\Dto\Boleto\EspecieDocumentoDTO.cs" />
+    <Compile Include="Model\Dto\Boleto\InstrucaoDTO.cs" />
+    <Compile Include="Model\Dto\Boleto\MontagemDTO.cs" />
+    <Compile Include="Model\Dto\Boleto\Parametro2DTO.cs" />
+    <Compile Include="Model\Dto\Boleto\ParametroDTO.cs" />
+    <Compile Include="Model\Dto\Boleto\SacadoDTO.cs" />
+    <Compile Include="Model\Dto\BuscarClienteDTO.cs" />
+    <Compile Include="Model\Dto\CadastroGratuitoDTO.cs" />
+    <Compile Include="Model\Dto\CampanhaVendaDTO.cs" />
+    <Compile Include="Model\Dto\CampanhaVendasProdutoComposicaoDTO.cs" />
+    <Compile Include="Model\Dto\CampanhaVendaTipoPropostaDTO.cs" />
+    <Compile Include="Model\Dto\CarrinhoComprasDTO.cs" />
+    <Compile Include="Model\Dto\CarrinhoComprasItemDTO.cs" />
+    <Compile Include="Model\Dto\CarteiraAssinaturaDTO.cs" />
+    <Compile Include="Model\Dto\CarteiraClienteDTO.cs" />
+    <Compile Include="Model\Dto\CarteiraDTO.cs" />
+    <Compile Include="Model\Dto\CarteiraRepresentanteDTO.cs" />
+    <Compile Include="Model\Dto\CepBairroDTO.cs" />
+    <Compile Include="Model\Dto\CepLogradouroDTO.cs" />
+    <Compile Include="Model\Dto\Cep\CepResponseDTO.cs" />
+    <Compile Include="Model\Dto\Cep\CidadeInfoDTO.cs" />
+    <Compile Include="Model\Dto\Cep\EstadoInfoDTO.cs" />
+    <Compile Include="Model\Dto\CFOPIcmsDTO.cs" />
+    <Compile Include="Model\Dto\CFOPReferenciaDTO.cs" />
+    <Compile Include="Model\Dto\CFOTableDTO.cs" />
+    <Compile Include="Model\Dto\ChequeDevolvidoDTO.cs" />
+    <Compile Include="Model\Dto\ClassificacaoAtendimentoDTO.cs" />
+    <Compile Include="Model\Dto\ClassificacaoClienteDTO.cs" />
+    <Compile Include="Model\Dto\ClassificacaoDTO.cs" />
+    <Compile Include="Model\Dto\ClienteDto.cs" />
+    <Compile Include="Model\Dto\ClienteEnderecoDto.cs" />
+    <Compile Include="Model\Dto\ClienteHistoricoDTO.cs" />
+    <Compile Include="Model\Dto\ClienteOrigemCadastroDTO.cs" />
+    <Compile Include="Model\Dto\ClientePassivelCobrancaDTO.cs" />
+    <Compile Include="Model\Dto\ClientesProdutoDTO.cs" />
+    <Compile Include="Model\Dto\ClienteTelefoneDTO.cs" />
+    <Compile Include="Model\Dto\ClienteUsuarioDTO.cs" />
+    <Compile Include="Model\Dto\CnabArquivosDTO.cs" />
+    <Compile Include="Model\Dto\CnabArquivosItemDTO.cs" />
+    <Compile Include="Model\Dto\CnabArquivosItemErroDTO.cs" />
+    <Compile Include="Model\Dto\CnabConfigArquivoDTO.cs" />
+    <Compile Include="Model\Dto\CnabConfigDTO.cs" />
+    <Compile Include="Model\Dto\CnabDTO.cs" />
+    <Compile Include="Model\Dto\CnabRegistrosDTO.cs" />
+    <Compile Include="Model\Dto\CnabTipoDadosDTO.cs" />
+    <Compile Include="Model\Dto\CnabTipoRegistroDTO.cs" />
+    <Compile Include="Model\Dto\ColecionadorRefDTO.cs" />
+    <Compile Include="Model\Dto\ConfigAlocacaoContaDTO.cs" />
+    <Compile Include="Model\Dto\ConfigAlocacaoDTO.cs" />
+    <Compile Include="Model\Dto\ConfigImpostoDTO.cs" />
+    <Compile Include="Model\Dto\ConfigImpostoImpostoDTO.cs" />
+    <Compile Include="Model\Dto\ConfigImpostoRegiaoDTO.cs" />
+    <Compile Include="Model\Dto\ConfigSpedFiscalDTO.cs" />
+    <Compile Include="Model\Dto\ConsultorDTO.cs" />
+    <Compile Include="Model\Dto\ContaRefDTO.cs" />
+    <Compile Include="Model\Dto\ContatoDTO.cs" />
+    <Compile Include="Model\Dto\ContratoDTO.cs" />
+    <Compile Include="Model\Dto\ContratosPorRepresentanteDTO.cs" />
+    <Compile Include="Model\Dto\CSTDTO.cs" />
+    <Compile Include="Model\Dto\CSTTipoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\AcaoSalvamento\ItemReferenciaValidacaoClienteDTO.cs" />
+    <Compile Include="Model\Dto\Custons\AcaoSalvamento\SalvarClienteParamDTO.cs" />
+    <Compile Include="Model\Dto\Custons\AcaoSalvamento\SalvarClienteResultDTO.cs" />
+    <Compile Include="Model\Dto\Custons\AcaoSalvamento\SalvarPropostaResultDTO.cs" />
+    <Compile Include="Model\Dto\Custons\AgendaCobrancaCustomDto.cs" />
+    <Compile Include="Model\Dto\Custons\AlteracaoStatusDTO.cs" />
+    <Compile Include="Model\Dto\Custons\AReceberPesquisaDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Atc\UsuarioAtc.cs" />
+    <Compile Include="Model\Dto\Custons\Atc\UsuarioAtcDTO.cs" />
+    <Compile Include="Model\Dto\Custons\AutenticacaoLoginUnicoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\AutoCompleteDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Batch\BatchProgressDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Batch\NotaFiscaBatchItemDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Batch\NotaFiscalBatchDTO.cs" />
+    <Compile Include="Model\Dto\Custons\BoletosAlocadosDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Buscas\BuscarClientePorIdDTO.cs" />
+    <Compile Include="Model\Dto\Custons\CadastraSuspectComBaseNoFiltroDTO.cs" />
+    <Compile Include="Model\Dto\Custons\CalculoImpostoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\CalculoRequestImpostoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\CancelamentoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\CancelamentoItemDTO.cs" />
+    <Compile Include="Model\Dto\Custons\CartaoIntegracaoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\CarteiramentoClienteRepresentanteDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ClassGeneratorDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ClienteCustomDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ClienteProspect\BuscaClienteProspectDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ClienteProspect\CarteiraClienteProspectDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ClienteProspect\ClienteProspectDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ClienteProspect\ClienteProspectEmailDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ClienteProspect\ClienteProspectEnderecoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ClienteProspect\ClienteProspectTelefoneDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ClienteWrapper.cs" />
+    <Compile Include="Model\Dto\Custons\ContatoFranquiaDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ContextoContratoFaturamentoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ContextoFaturamentoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ContextoImportacaoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ContratoSituacaoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\CountDTO.cs" />
+    <Compile Include="Model\Dto\Custons\DadosClientePortalDTO.cs" />
+    <Compile Include="Model\Dto\Custons\DadosClienteStDTO.cs" />
+    <Compile Include="Model\Dto\Custons\DadosDeContratoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\DadosDeParcelaDTO.cs" />
+    <Compile Include="Model\Dto\Custons\DadosPedidoIntegracaoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Ecommerce\ProdutoEcommerceDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Ecommerce\UsuarioAutenticadoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Ecommerce\UsuarioEcommerce.cs" />
+    <Compile Include="Model\Dto\Custons\EmissaoPedidoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\EmissaoPedidoItemDTO.cs" />
+    <Compile Include="Model\Dto\Custons\EncaminhamentoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Enumerados\TipoTemplateNfConfigEnum.cs" />
+    <Compile Include="Model\Dto\Custons\EnvioEmail\EmailDTO.cs" />
+    <Compile Include="Model\Dto\Custons\EnvioEmail\EnvioEmailDTO.cs" />
+    <Compile Include="Model\Dto\Custons\FonteDadosTemplate\DetalhesDaNotaFiscalDTO.cs" />
+    <Compile Include="Model\Dto\Custons\FonteDadosTemplate\DetalhesEnvioBoletoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\FonteDadosTemplate\DetalhesPropostasEmAtrasoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\FonteDadosTemplate\ItemRelatorioPropostaEmAtrasoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\GeracaoNFeRequestDTO.cs" />
+    <Compile Include="Model\Dto\Custons\GeradorQuery\DadosDeFiltroDTO.cs" />
+    <Compile Include="Model\Dto\Custons\GeradorQuery\IQueryFromExpression.cs" />
+    <Compile Include="Model\Dto\Custons\GeradorQuery\MetaDadoRelatorioDTO.cs" />
+    <Compile Include="Model\Dto\Custons\GeradorQuery\MontagemQueryDTO.cs" />
+    <Compile Include="Model\Dto\Custons\GeradorQuery\MontagemQueryJoinDTO.cs" />
+    <Compile Include="Model\Dto\Custons\GeradorQuery\MontagemQuerySelectDTO.cs" />
+    <Compile Include="Model\Dto\Custons\GeradorQuery\MontagemQueryTabelasDTO.cs" />
+    <Compile Include="Model\Dto\Custons\GeradorQuery\MontagemQueryWhereDTO.cs" />
+    <Compile Include="Model\Dto\Custons\GeradorQuery\MontagemQueryWhereItemDTO.cs" />
+    <Compile Include="Model\Dto\Custons\GeradorQuery\ResultadoQueryDTO.cs" />
+    <Compile Include="Model\Dto\Custons\HistoricoAtendimentoCustonDTO.cs" />
+    <Compile Include="Model\Dto\Custons\HistoricoConcessaoAcessoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Historicos\ExtornoParcelaHistoricoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Historicos\ExtornoParcelaHistoricoItemDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Historicos\HistoricoTransAssinaturaDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ICliente.cs" />
+    <Compile Include="Model\Dto\Custons\ImportacaoSuspectResultDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ImportarClienteAgendaDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Impostos\DivisaoServicoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Impostos\RequisicaoConfigImpostoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\InserirRepresentanteResquestDTO.cs" />
+    <Compile Include="Model\Dto\Custons\IPedido.cs" />
+    <Compile Include="Model\Dto\Custons\IPedidoItem.cs" />
+    <Compile Include="Model\Dto\Custons\ItemParcelaExtornoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ItensNfeXmlPedidoResponseDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Listagens\ListagemPropostaDTO.cs" />
+    <Compile Include="Model\Dto\Custons\LoginUnicoAssinaturaDTO.cs" />
+    <Compile Include="Model\Dto\Custons\LoginUnicoRequestDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\BuscarAssinaturaMundipaggResponseDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\BuscarClienteMundipaggResponseDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\ClienteMindipaggResponseDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\ClienteMundipaggDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\CriarAssinaturaMundipaggRequestDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\CriarClienteMundipaggRequestDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\EnderecoMundipaggDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\ParametrosChaveMundipaggDTO.cs" />
+    <Compile Include="Model\Dto\Custons\NfeLinkDanfeDTO.cs" />
+    <Compile Include="Model\Dto\Custons\NotaFiscalConfigSaveRequestDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Notificacoes\NotificacaoPropostaPagaDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Notificacoes\NotificacaoRegistroLiberacaoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ObservacaoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ParcelasConciliacaoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ParcelasRetornoCustomDTO.cs" />
+    <Compile Include="Model\Dto\Custons\PedidosRetroativosSemNotaDTO.cs" />
+    <Compile Include="Model\Dto\Custons\PesquisaEnderecoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Pesquisas\GrupoDeFiltroDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Pesquisas\GruposDeFiltrosDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Pesquisas\PesquisaCampanhaVendaDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Pesquisas\PesquisaClienteDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Pesquisas\PesquisaCnabConfigDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Pesquisas\PesquisaImportacaoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Pesquisas\PesquisaImportacaoSuspectDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Planilhas\PlanilhaCnab.cs" />
+    <Compile Include="Model\Dto\Custons\ProdutoComposicaoIntegracaoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ProdutoIntegracaoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Relatorios\RelApuracaoRecebimentoCustomDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ResultadoCalculoImpostoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\WebAPI\CadastroUsuarioCustonWebAPIDTO.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\ValidaDadosClienteStResult.cs" />
+    <Compile Include="Model\Dto\EnderecoVendaDTO.cs" />
+    <Compile Include="Model\Dto\FiltersInfo\PesquisaNotaFiscalDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Pesquisas\PesquisaPedidoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Pesquisas\PesquisaPropostaDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Pesquisas\PesquisaRegistroLiberacaoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\PreviewGeracaoNotaFiscalDTO.cs" />
+    <Compile Include="Model\Dto\Custons\PreviewProcessoFaturamentoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ProcessoTransferenciaAssinaturaDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ProdutoTabelaPrecoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ProspectRepresentanteDTO.cs" />
+    <Compile Include="Model\Dto\Custons\QuantidadeClassificacaoClienteDTO.cs" />
+    <Compile Include="Model\Dto\Custons\RastreamentoAlteracaoLoginUnicoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Relatorios\RelatorioAtendimentosXVendasEfetuadasDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Relatorios\RelatorioClientesRecebidosDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Relatorios\RelatorioRodizioDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Relatorios\RelContratosCanceladosDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Relatorios\RelContratosClienteDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Relatorios\RelFaturamentoContratoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Relatorios\RelFaturamentoProdUFDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Relatorios\RelFaturamentoProdutoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Relatorios\RelFaturamentoRepresentanteDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Relatorios\RelFaturamentoUFDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Relatorios\RelRepresentanteCarteiraDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Relatorios\RelResumoCReceberDTO.cs" />
+    <Compile Include="Model\Dto\Custons\RepresentanteUsuarioDTO.cs" />
+    <Compile Include="Model\Dto\Custons\RequisicaoFaturamentoDetalheDTO.cs" />
+    <Compile Include="Model\Dto\Custons\RequisicaoFaturamentoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\RequisicaoPagamentoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\RequisicaoProdutoRenovacaoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ResultClienteDuplicadoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ResumoParcelamentoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ResumoPedidoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ResumoPropostaDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ResumoQuantidadeTipoCliente.cs" />
+    <Compile Include="Model\Dto\Custons\RetornoImportacaoResRodizioDTO.cs" />
+    <Compile Include="Model\Dto\Custons\SysPropertiesDTO.cs" />
+    <Compile Include="Model\Dto\Custons\TabelaPrecoSaveRequestDTO.cs" />
+    <Compile Include="Model\Dto\Custons\TransfAssinaturaCustomDTO.cs" />
+    <Compile Include="Model\Dto\Custons\UploadNotaFiscalDTO.cs" />
+    <Compile Include="Model\Dto\Custons\ValidacaoTypeResultDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Validacoes\ClienteInadimplenteItemDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Validacoes\ValidacaoClienteInadimplenteDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Validacoes\ValidacaoRegraDetalhesDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Validacoes\ValidacaoRegraPropostaItemDTO.cs" />
+    <Compile Include="Model\Dto\Custons\WebServiceResult.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\BuscarCEPResult.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\BuscarMunicipioResult.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\ClienteIntegracao\ClienteIntegrDTO.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\ClienteIntegracao\ClienteIntegrEnderecoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\ClienteIntegracao\ClienteIntegrMunicipioDTO.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\ClienteIntegracao\ClienteIntegrResult.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\ClienteIntegracao\ClienteIntegrTelefoneDTO.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\ClienteIntegracao\ClienteIntegrTipoClienteDTO.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\ImportacaoSuspect\ClienteImportacaoWebServiceDTO.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\LoginUnicoClienteDTO.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\LoginUnicoEnderecoClienteDTO.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\LoginUnicoInfoAssinaturaDTO.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\LoginUnicoMensagemDTO.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\LoginUnicoResultDTO.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\RenovacaoMalaResult.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\TipoClienteResult.cs" />
+    <Compile Include="Model\Dto\Custons\WebService\ValidatorWebServiceResult.cs" />
+    <Compile Include="Model\Dto\DescricaoColunasDTO.cs" />
+    <Compile Include="Model\Dto\DocLiquidacaoDTO.cs" />
+    <Compile Include="Model\Dto\EmailAtendAnexoDTO.cs" />
+    <Compile Include="Model\Dto\EmailAtendDTO.cs" />
+    <Compile Include="Model\Dto\EmailClienteDTO.cs" />
+    <Compile Include="Model\Dto\EmpresaDTO.cs" />
+    <Compile Include="Model\Dto\EmpresaRefDTO.cs" />
+    <Compile Include="Model\Dto\FeriadoDTO.cs" />
+    <Compile Include="Model\Dto\FilaCadastroDTO.cs" />
+    <Compile Include="Model\Dto\FiltersInfo\FranquiaFiltrosDTO.cs" />
+    <Compile Include="Model\Dto\FiltersInfo\PesquisaProPendAutDTO.cs" />
+    <Compile Include="Model\Dto\FiltersInfo\RepresentanteFiltrosDTO.cs" />
+    <Compile Include="Model\Dto\Formatters\CliIdFormatter.cs" />
+    <Compile Include="Model\Dto\Formatters\RepIdFormatter.cs" />
+    <Compile Include="Model\Dto\Formatters\RgIdFormatter.cs" />
+    <Compile Include="Model\Dto\FornecedorDTO.cs" />
+    <Compile Include="Model\Dto\FranquiaDTO.cs" />
+    <Compile Include="Model\Dto\FuncionalidadeSistemaRefDTO.cs" />
+    <Compile Include="Model\Dto\GridCarteiramentoDTO.cs" />
+    <Compile Include="Model\Dto\GrupoDTO.cs" />
+    <Compile Include="Model\Dto\HistAtendEmailDTO.cs" />
+    <Compile Include="Model\Dto\HistAtendUraDTO.cs" />
+    <Compile Include="Model\Dto\HistoricoAtendimentoDTO.cs" />
+    <Compile Include="Model\Dto\HistoricoPedidoDTO.cs" />
+    <Compile Include="Model\Dto\IbgeMunicipioDTO.cs" />
+    <Compile Include="Model\Dto\ImportacaoDTO.cs" />
+    <Compile Include="Model\Dto\ImportacaoHistoricoDTO.cs" />
+    <Compile Include="Model\Dto\ImportacaoResultadoRodizioDTO.cs" />
+    <Compile Include="Model\Dto\ImportacaoStatusDTO.cs" />
+    <Compile Include="Model\Dto\ImportacaoSuspectDTO.cs" />
+    <Compile Include="Model\Dto\ImpostoDTO.cs" />
+    <Compile Include="Model\Dto\ImpostoInfoFaturaDTO.cs" />
+    <Compile Include="Model\Dto\ImpostoInfoFaturaItemDTO.cs" />
+    <Compile Include="Model\Dto\InfoFaturaDTO.cs" />
+    <Compile Include="Model\Dto\InfoFaturaItemDTO.cs" />
+    <Compile Include="Model\Dto\InfoMarketingDTO.cs" />
+    <Compile Include="Model\Dto\InformacoesClientePedido.cs" />
+    <Compile Include="Model\Dto\InformativoSemanalAnaliticoDTO.cs" />
+    <Compile Include="Model\Dto\InformativoSemanalDTO.cs" />
+    <Compile Include="Model\Dto\InformativoSemanalEnvioDTO.cs" />
+    <Compile Include="Model\Dto\ItemPedidoDTO.cs" />
+    <Compile Include="Model\Dto\ItemPedidoTipoPagamentoDTO.cs" />
+    <Compile Include="Model\Dto\LinhaProdutoDTO.cs" />
+    <Compile Include="Model\Dto\LinhaProdutoInformativoDTO.cs" />
+    <Compile Include="Model\Dto\LocalizacaoCursoDTO.cs" />
+    <Compile Include="Model\Dto\MotivoCancelamentoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\BoletoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\BuscarAssinaturaDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\BuscarPlanoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\CancelamentoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\CarrinhoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\CartaoCreditoDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\CriarCartaoMundipaggDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\ConsultaDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\CriarPlanoItemMundipaggDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\BuscarPlanoItemMundipaggDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\CriarPlanoMundipaggDTO.cs" />
+    <Compile Include="Model\Dto\Custons\Mundipagg\RequisicaoDTO.cs" />
+    <Compile Include="Model\Dto\MundipaggClienteDTO.cs" />
+    <Compile Include="Model\Dto\MunicipioDTO.cs" />
+    <Compile Include="Model\Dto\NfeXmlDTO.cs" />
+    <Compile Include="Model\Dto\NivelRepresentanteDTO.cs" />
+    <Compile Include="Model\Dto\NotaFiscalConfigDTO.cs" />
+    <Compile Include="Model\Dto\NotaFiscalConfigTipoDTO.cs" />
+    <Compile Include="Model\Dto\NotaFiscalDTO.cs" />
+    <Compile Include="Model\Dto\NotaFiscalEventoDTO.cs" />
+    <Compile Include="Model\Dto\NotaFiscalItemDTO.cs" />
+    <Compile Include="Model\Dto\NotaFiscalItemOBSDTO.cs" />
+    <Compile Include="Model\Dto\NotaFiscalLoteDTO.cs" />
+    <Compile Include="Model\Dto\NotaFiscalLoteItemDTO.cs" />
+    <Compile Include="Model\Dto\NotaFiscalLoteItemMsgDTO.cs" />
+    <Compile Include="Model\Dto\NotaFiscalLoteItemTipoDTO.cs" />
+    <Compile Include="Model\Dto\NotaFiscalLoteStatusDTO.cs" />
+    <Compile Include="Model\Dto\NotaFiscalLoteTipoDTO.cs" />
+    <Compile Include="Model\Dto\NotaFiscalReferenciadaDTO.cs" />
+    <Compile Include="Model\Dto\NotaFiscalSituacaoDTO.cs" />
+    <Compile Include="Model\Dto\NotaFiscalStatusDTO.cs" />
+    <Compile Include="Model\Dto\NotaFiscalTipoDTO.cs" />
+    <Compile Include="Model\Dto\NotificacoesDTO.cs" />
+    <Compile Include="Model\Dto\OcorrenciaErroDTO.cs" />
+    <Compile Include="Model\Dto\OcorrenciaRemessaDTO.cs" />
+    <Compile Include="Model\Dto\OcorrenciaRetornoDTO.cs" />
+    <Compile Include="Model\Dto\OpcaoAtendimentoDTO.cs" />
+    <Compile Include="Model\Dto\OpcoesAtendimentoDTO.cs" />
+    <Compile Include="Model\Dto\OrigemAcessoDTO.cs" />
+    <Compile Include="Model\Dto\OrigemCadastroDTO.cs" />
+    <Compile Include="Model\Dto\PaisDTO.cs" />
+    <Compile Include="Model\Dto\ParcelaAlocadaDTO.cs" />
+    <Compile Include="Model\Dto\ParcelaAlocadaUpdateDTO.cs" />
+    <Compile Include="Model\Dto\ParcelaLiquidacaoDTO.cs" />
+    <Compile Include="Model\Dto\ParcelaPendenteDTO.cs" />
+    <Compile Include="Model\Dto\ParcelasDTO.cs" />
+    <Compile Include="Model\Dto\ParcelasRemessaDTO.cs" />
+    <Compile Include="Model\Dto\ParcelaUpdateDTO.cs" />
+    <Compile Include="Model\Dto\PedidoCRMDTO.cs" />
+    <Compile Include="Model\Dto\PedidoPagamentoDTO.cs" />
+    <Compile Include="Model\Dto\PedidoParticipanteDTO.cs" />
+    <Compile Include="Model\Dto\PedidoStatusDTO.cs" />
+    <Compile Include="Model\Dto\PeriodoFaturamentoDTO.cs" />
+    <Compile Include="Model\Dto\PrePedidoServicos.cs" />
+    <Compile Include="Model\Dto\PrioridadeAtendimentoDTO.cs" />
+    <Compile Include="Model\Dto\ProdutoComposicaoDTO.cs" />
+    <Compile Include="Model\Dto\ProdutoComposicaoInfoMarketingDTO.cs" />
+    <Compile Include="Model\Dto\ProdutoComposicaoItemDTO.cs" />
+    <Compile Include="Model\Dto\ProdutoComposicaoTipoPeriodoDTO.cs" />
+    <Compile Include="Model\Dto\ProdutoFamiliaDTO.cs" />
+    <Compile Include="Model\Dto\ProdutoPerfilDTO.cs" />
+    <Compile Include="Model\Dto\ProdutosDTO.cs" />
+    <Compile Include="Model\Dto\PropostaDTO.cs" />
+    <Compile Include="Model\Dto\PropostaItemComprovanteDTO.cs" />
+    <Compile Include="Model\Dto\PropostaItemDTO.cs" />
+    <Compile Include="Model\Dto\Prospect\ProspectDTO.cs" />
+    <Compile Include="Model\Dto\Prospect\ProspectsTelefoneDTO.cs" />
+    <Compile Include="Model\Dto\Prospect\TipoTelefoneDTO.cs" />
+    <Compile Include="Model\Dto\RegiaoDTO.cs" />
+    <Compile Include="Model\Dto\RegiaoTabelaPrecoDTO.cs" />
+    <Compile Include="Model\Dto\RegistroFaturamentoDTO.cs" />
+    <Compile Include="Model\Dto\RegistroLiberacaoDTO.cs" />
+    <Compile Include="Model\Dto\RegistroLiberacaoItemDTO.cs" />
+    <Compile Include="Model\Dto\RegistroLiberacaoTipoDTO.cs" />
+    <Compile Include="Model\Dto\RelatorioCondicaoDTO.cs" />
+    <Compile Include="Model\Dto\RelatorioCondicaoRelatorioOperadorCondicionalDTO.cs" />
+    <Compile Include="Model\Dto\RelatorioJoinDTO.cs" />
+    <Compile Include="Model\Dto\RelatorioOperadorCondicionalDTO.cs" />
+    <Compile Include="Model\Dto\RelatorioOperadorLogicoDTO.cs" />
+    <Compile Include="Model\Dto\RelatorioPersonalizadoDTO.cs" />
+    <Compile Include="Model\Dto\RelatorioTabelaColunasDTO.cs" />
+    <Compile Include="Model\Dto\RelatorioTabelasDTO.cs" />
+    <Compile Include="Model\Dto\RelatorioTipoDadoDTO.cs" />
+    <Compile Include="Model\Dto\RepresentanteDTO.cs" />
+    <Compile Include="Model\Dto\RepresentanteMetaDTO.cs" />
+    <Compile Include="Model\Dto\RetornoTransacaoDTO.cs" />
+    <Compile Include="Model\Dto\SemanaPremiacaoDTO.cs" />
+    <Compile Include="Model\Dto\SemanaPremiacaoReprDTO.cs" />
+    <Compile Include="Model\Dto\SequencialNossoNumeroDTO.cs" />
+    <Compile Include="Model\Dto\SetorAtendimento.cs" />
+    <Compile Include="Model\Dto\SpedArquivoDTO.cs" />
+    <Compile Include="Model\Dto\TabelaPrecoDTO.cs" />
+    <Compile Include="Model\Dto\TabelaPrecoTipoPagamentoDTO.cs" />
+    <Compile Include="Model\Dto\TabelasDTO.cs" />
+    <Compile Include="Model\Dto\TabSeqDTO.cs" />
+    <Compile Include="Model\Dto\TelefoneClienteDTO.cs" />
+    <Compile Include="Model\Dto\TipoAtendimentoDTO.cs" />
+    <Compile Include="Model\Dto\TipoCancelamentoDTO.cs" />
+    <Compile Include="Model\Dto\TipoClienteDTO.cs" />
+    <Compile Include="Model\Dto\TipoComplementoDTO.cs" />
+    <Compile Include="Model\Dto\TipoConfigContaDTO.cs" />
+    <Compile Include="Model\Dto\TipoDocFiscalDTO.cs" />
+    <Compile Include="Model\Dto\TipoEnderecoDTO.cs" />
+    <Compile Include="Model\Dto\TipoEnvioDTO.cs" />
+    <Compile Include="Model\Dto\TipoFornecedorDTO.cs" />
+    <Compile Include="Model\Dto\TipoJoinDTO.cs" />
+    <Compile Include="Model\Dto\TipoLogradouroDTO.cs" />
+    <Compile Include="Model\Dto\TipoNegociacaoDTO.cs" />
+    <Compile Include="Model\Dto\TipoNotificacaoDTO.cs" />
+    <Compile Include="Model\Dto\TipoPagamentoCampanhaVendaDTO.cs" />
+    <Compile Include="Model\Dto\TipoPagamentoComposicaoDTO.cs" />
+    <Compile Include="Model\Dto\TipoPagamentoDTO.cs" />
+    <Compile Include="Model\Dto\TipoPedidoCRMDTO.cs" />
+    <Compile Include="Model\Dto\TipoPeriodoAssinaturaDTO.cs" />
+    <Compile Include="Model\Dto\TipoPeriodoDTO.cs" />
+    <Compile Include="Model\Dto\TipoPessoaDTO.cs" />
+    <Compile Include="Model\Dto\TipoPrioridadeAtendimentoDTO.cs" />
+    <Compile Include="Model\Dto\TipoProdComportamentoDTO.cs" />
+    <Compile Include="Model\Dto\TipoProdutoComposicaoDTO.cs" />
+    <Compile Include="Model\Dto\TipoProdutoDTO.cs" />
+    <Compile Include="Model\Dto\TipoPropostaDTO.cs" />
+    <Compile Include="Model\Dto\TipoRemessaDTO.cs" />
+    <Compile Include="Model\Dto\TiposDeNegociosDAO.cs" />
+    <Compile Include="Model\Dto\TiposDeTelefone.cs" />
+    <Compile Include="Model\Dto\TipoTelefoneDTO.cs" />
+    <Compile Include="Model\Dto\TipoVendaDTO.cs" />
+    <Compile Include="Model\Dto\TitulacaoRefDTO.cs" />
+    <Compile Include="Model\Dto\TotalVendasCartao.cs" />
+    <Compile Include="Model\Dto\Transferencia\RepresentanteTransferenciaDTO.cs" />
+    <Compile Include="Model\Dto\Transferencia\TransferirClienteDTO.cs" />
+    <Compile Include="Model\Dto\TransportadorDTO.cs" />
+    <Compile Include="Model\Dto\UENDTO.cs" />
+    <Compile Include="Model\Dto\UFDTO.cs" />
+    <Compile Include="Model\Dto\UnidadeMedidaDTO.cs" />
+    <Compile Include="Model\Dto\UnidadeNegocioDTO.cs" />
+    <Compile Include="Model\Dto\UraCoadDTO.cs" />
+    <Compile Include="Model\Dto\UraConfigDTO.cs" />
+    <Compile Include="Model\Dto\UraDTO.cs" />
+    <Compile Include="Model\Dto\UraLogDTO.cs" />
+    <Compile Include="Model\Dto\UraProdutoAreaDTO.cs" />
+    <Compile Include="Model\Dto\UraProdutoDTO.cs" />
+    <Compile Include="Model\Dto\UraTPAtuDTO.cs" />
+    <Compile Include="Model\Dto\UrgenciaNotificacaoDTO.cs" />
+    <Compile Include="Model\Email.cs" />
+    <Compile Include="Model\Enum\GenderEnum.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Model\Enum\TypeEnum.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Model\Produto.cs" />
+    <Compile Include="Relatorio\ReportViewer.cs" />
+    <Compile Include="Repositorios\Base\CORPORATIVOContext.cs" />
+    <Compile Include="Repositorios\Contexto\ACAO_ATENDIMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\AGENDAMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\AGENDA_COBRANCA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ALOCAR_REGISTROS_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\APURACAO_PREMIACAO_MENSAL.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\APURACAO_PREMIACAO_SEMANA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\APURAR_RECEBIMENTO_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\AREAS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\AREA_CONSULTORIA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\AREA_CONSULTORIA_CURSO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\AREA_CONSULTORIA_REPRESENTANTE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\AREA_INFO_MARKETING.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ASSINATURA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ASSINATURA_EMAIL.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ASSINATURA_SENHA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ASSINATURA_TELEFONE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ASSINATURA_TRANSFERENCIA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\AUDITORIA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\BANCOS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\BANDEIRA_CARTAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\BUSCAR_HSITORICO_ATEND_SAC_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CADASTRO_GRATUITO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CAMPANHA_VENDA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CAMPANHA_VENDAS_PRODUTO_COMPOSICAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CAMPANHA_VENDA_TIPO_PROPOSTA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CARRINHO_COMPRAS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CARRINHO_COMPRAS_ITEM.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CARTEIRA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CARTEIRA_ASSINATURA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CARTEIRA_ASSINATURA_TST2.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CARTEIRA_CLIENTE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CARTEIRA_REPRESENTANTE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CARTEIRA_TRANSF.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CARTEIRA_TRANSF_ITEM.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CEP_BAIRRO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CEP_LOGRADOURO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CFOP_ICMS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CFOP_REFERENCIA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CFOP_TABLE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CHEQUE_DEVOLVIDO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLASSICACAO_CONSUMO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLASSIFICACAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLASSIFICACAO_ATENDIMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLASSIFICACAO_CLIENTE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLIENTES.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLIENTES_ENDERECO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLIENTES_ENDERECO_HISTORICO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLIENTES_HISTORICO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLIENTES_TELEFONE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLIENTES_VW.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLIENTE_PASSIVEL_COBRANCA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLIENTE_USUARIO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CNAB.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CNAB_ARQUIVOS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CNAB_ARQUIVOS_ITEM.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CNAB_ARQUIVOS_ITEM_ant.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CNAB_ARQUIVOS_ITEM_ERRO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CNAB_CONFIG.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CNAB_CONFIG_ARQUIVO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CNAB_REGISTROS_TEMP.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CNAB_TIPO_DADOS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CNAB_TIPO_REGISTRO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\COADCORP.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>COADCORP.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\COADCORP.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\COADCORP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>COADCORP.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\COLECIONADOR_REF.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONDICAO_PAGAMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONFERENCIA_FINANCEIRA_TMP.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONFIG_ALOCACAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONFIG_ALOCACAO_CONTA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONFIG_IMPOSTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONFIG_IMPOSTO_IMPOSTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONFIG_IMPOSTO_REGIAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONFIG_SPED_FISCAL.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONFIG_URA_vw.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONSULTOR.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONTATOS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONTA_REF.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONTRATOS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CST.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CST_TIPO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\DESCREVER_COLUNAS_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\DOCS_CPAGAR.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\DOC_LIQUIDACAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\EFETUAR_ALOCACAO_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\EMAIL_ATEND.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\EMAIL_ATEND_ANEXO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\EMPRESA_REF.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ENDERECO_VENDA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\FATOR_CONVERSAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\FERIADO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\FILA_CADASTRO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\FONTE_DADOS_DESCRICAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\FONTE_DADOS_TEMPLATE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\FORNECEDOR.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\FORNECEDOR_HISTORICO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\FORNECEDOR_MOV_FINAN.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\FRANQUIA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\FUNCIONALIDADE_SISTEMA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\FUNCIONALIDADE_SISTEMA_REF.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\GERENCIAMENTO_DE_TITULOS_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\GRAFICO_CONTRATOS_TIPO_PGTO_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\GRUPO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\HISTORICO_ATENDIMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\HISTORICO_PEDIDO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\HIST_ATEND_EMAIL.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\HIST_ATEND_URA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\HIST_ATEND_URA_TEMP.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\IBGE_MUNICIPIO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\IMPORTACAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\IMPORTACAO_HISTORICO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\IMPORTACAO_RESULTADO_RODIZIO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\IMPORTACAO_STATUS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\IMPORTACAO_SUSPECT.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\IMPOSTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\IMPOSTO_INFO_FATURA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\IMPOSTO_INFO_FATURA_ITEM.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\InformativoSemanal_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\INFORMATIVO_SEMANAL.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\INFORMATIVO_SEMANAL_ANALITICO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\INFORMATIVO_SEMANAL_ENVIO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\INFO_FATURA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\INFO_FATURA_ITEM.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\INFO_MARKETING.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ITEM_PEDIDO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ITEM_PEDIDO_PEDIDO_PAGAMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\LINHA_PRODUTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\LINHA_PRODUTO_INFORMATIVO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\LISTA_ACESSOS_POR_CLIENTE_VW.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\LOCALIZACAO_CURSO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\LOG_ATUALIZACAO_URA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\MOTIVO_CANCELAMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\MUNDIPAGG_ASSINATURA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\MUNDIPAGG_CLIENTE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\MUNICIPIO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\MUNICIPIO_TEMP.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NFE_XML.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NIVEL_REPRESENTANTE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL_CONFIG.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL_CONFIG_TIPO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL_EVENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL_ITEM.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL_ITEM_OBS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL_LOTE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL_LOTE_ITEM.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL_LOTE_ITEM_MSG.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL_LOTE_ITEM_TIPO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL_LOTE_STATUS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL_LOTE_TIPO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL_REFERENCIADA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL_SITUACAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL_STATUS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL_TIPO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTIFICACOES.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\OCORRENCIA_ERRO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\OCORRENCIA_REMESSA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\OCORRENCIA_RETORNO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\OPCAO_ATENDIMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ORIGEM_ACESSO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ORIGEM_CADASTRO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PAINEL_FINANCEIRO_DOC_INVALIDO_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PAINEL_FINANCEIRO_REJEICAO_BANCARIA_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PAINEL_FINANCEIRO_SINTETICO_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PAIS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PARCELAS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PARCELAS_REMESSA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PARCELA_ALOCADA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PARCELA_LIQUIDACAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PARCELA_PENDENTE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PEDIDO_CRM.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PEDIDO_PAGAMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PEDIDO_PARTICIPANTE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PEDIDO_STATUS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PERIODO_FATURAMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRIORIDADE_ATENDIMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRODUTOS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRODUTO_COMPOSICAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRODUTO_COMPOSICAO_INFO_MARKETING.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRODUTO_COMPOSICAO_ITEM.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRODUTO_COMPOSICAO_TIPO_PERIODO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRODUTO_EAN.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRODUTO_FAMILIA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRODUTO_FORNECEDOR.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRODUTO_HISTORICO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRODUTO_PERFIL.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PROPOSTA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PROPOSTA_ITEM.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PROPOSTA_ITEM_COMPROVANTE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\QTDE_ACESSOS_POR_CLIENTE_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\QTDE_ACESSOS_POR_CLIENTE_VW.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\REGIAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\REGIAO_TABELA_PRECO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\REGISTRO_FATURAMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\REGISTRO_LIBERACAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\REGISTRO_LIBERACAO_ITEM.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\REGISTRO_LIBERACAO_TIPO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RELATORIO_COMERCIAL_VENDAS_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RELATORIO_CONDICAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RELATORIO_CONDICAO_RELATORIO_OPERADOR_CONDICIONAL.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RELATORIO_FINANCEIRO_PARCELAS_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RELATORIO_FINANCEIRO_PROPOSTA_EMPRESA_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RELATORIO_JOIN.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RELATORIO_OPERADOR_CONDICIONAL.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RELATORIO_OPERADOR_LOGICO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RELATORIO_PERSONALIZADO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RELATORIO_TABELAS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RELATORIO_TABELA_COLUNAS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RELATORIO_TIPO_DADO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\REPRESENTANTE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\REPRESENTANTE_META.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RETORNO_TRANSACAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RPT_CONTRATOS_CLIENTE_REGIAO_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RPT_CONTRATOS_POR_REGIAO_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RPT_CONTRATOS_PRODUTO_REGIAO_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RPT_CONTRATOS_TIPO_PGTO_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RPT_FATURAMENTO_REP_SINT_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\SEMANA_PREMIACAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\SEMANA_PREMIACAO_REPR.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\SEQUENCIAL_NOSSO_NUMERO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\SPED_ARQUIVO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\sysdiagrams.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TABELAS_VW.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TABELA_PRECO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TABELA_PRECO_TIPO_PAGAMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TAB_DINAMICA_LINK.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TAB_SEQ.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TEMPLATE_GRUPO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TEMPLATE_HTML.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TEMP_ARQ_ALOCACAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_ATENDIMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_CANCELAMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_CLIENTE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_COMISSAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_CONFIG_CONTA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_DOC_FISCAL.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_ENDERECO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_ENVIO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_FORNECEDOR.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_JOIN.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_LOGRADOURO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_NEGOCIACAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_NOTIFICACAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_PAGAMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_PAGAMENTO_CAMPANHA_VENDA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_PAGAMENTO_COMPOSICAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_PEDIDO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_PEDIDO_CRM.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_PERIODO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_PERIODO_ASSINATURA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_PRIORIDADE_ATENDIMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_PRODUTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_PRODUTO_COMPOSICAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_PROD_COMPORTAMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_PROPOSTA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_REMESSA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_TELEFONE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_VENDA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TITULACAO_REF.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TITULO_COBRANCA_ATRASO_Result.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TOTAL_VENDAS_CARTAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TRANSPORTADOR.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\UEN.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\UF.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\UNIDADE_MEDIDA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\UNIDADE_NEGOCIO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\URA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\URA_COAD.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\URA_CONFIG.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\URA_LOG.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\URA_PRODUTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\URA_PRODUTO_AREA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\URA_TIPO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\URA_TP_ATU.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\URGENCIA_NOTIFICACAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\VW_AGENDAMENTO_COBRANCA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\VW_TITULOS_EM_ATRASO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\ApuracaoPremiacaoMensalSRV.cs" />
+    <Compile Include="Service\ApuracaoPremiacaoSemanaSRV.cs" />
+    <Compile Include="Service\Base\IServiceCorp.cs" />
+    <Compile Include="Service\Base\ServiceAdapter.cs" />
+    <Compile Include="Service\CampanhaVendasProdutoComposicaoSRV.cs" />
+    <Compile Include="Service\CarrinhoComprasItemSRV.cs" />
+    <Compile Include="Service\CarrinhoComprasSRV.cs" />
+    <Compile Include="Service\ClientePassivelCobrancaSRV.cs" />
+    <Compile Include="Service\CnabArquivosItemErroSRV.cs" />
+    <Compile Include="Service\CnabArquivosItemSRV.cs" />
+    <Compile Include="Service\CnabConfigArquivoSRV.cs" />
+    <Compile Include="Service\CnabConfigSRV.cs" />
+    <Compile Include="Service\CnabTipoDadosSRV.cs" />
+    <Compile Include="Service\CnabTipoRegistroSRV.cs" />
+    <Compile Include="Service\Custons\ClienteEcommerceSRV.cs" />
+    <Compile Include="Service\Custons\CustomEmailSRV.cs" />
+    <Compile Include="Service\Custons\LoteItemNFeSRVImpl.cs" />
+    <Compile Include="Service\Custons\LoteNFeSRVImpl.cs" />
+    <Compile Include="Service\DadosClientePortalSRV.cs" />
+    <Compile Include="Service\EnderecoVendaSRV.cs" />
+    <Compile Include="Service\FranquiaSRV.cs" />
+    <Compile Include="Service\FuncionalidadeSistemaRefSRV .cs" />
+    <Compile Include="Service\ImportacaoResultadoRodizioSRV.cs" />
+    <Compile Include="Service\ImportacaoSRV.cs" />
+    <Compile Include="Service\ImportacaoStatusSRV.cs" />
+    <Compile Include="Service\ImportacaoHistoricoSRV.cs" />
+    <Compile Include="Service\ImpostoInfoFaturaItemSRV.cs" />
+    <Compile Include="Service\InfoFaturaItemSRV.cs" />
+    <Compile Include="Service\LocalizacaoCursoSRV.cs" />
+    <Compile Include="Service\MundipaggClienteSRV.cs" />
+    <Compile Include="Service\Mundipagg\BoletoSRV.cs" />
+    <Compile Include="Service\Mundipagg\CancelamentoSRV.cs" />
+    <Compile Include="Service\Mundipagg\CarrinhoSRV.cs" />
+    <Compile Include="Service\Mundipagg\CartaoCreditoSRV.cs" />
+    <Compile Include="Service\Mundipagg\CartaoMundipaggSRV.cs" />
+    <Compile Include="Service\Mundipagg\ClienteMundipaggSRV.cs" />
+    <Compile Include="Service\Mundipagg\ConsultaSRV.cs" />
+    <Compile Include="Service\Base\MundipaggSRV.cs" />
+    <Compile Include="Service\Mundipagg\PlanoItemMundipaggSRV.cs" />
+    <Compile Include="Service\Mundipagg\PlanoMundipaggSRV.cs" />
+    <Compile Include="Service\Mundipagg\RequisicaoSRV.cs" />
+    <Compile Include="Service\NotaFiscalConfigSRV.cs" />
+    <Compile Include="Service\NotaFiscalConfigTipoSRV.cs" />
+    <Compile Include="Service\NotaFiscalEventoSRV.cs" />
+    <Compile Include="Service\NotaFiscalItemSRV.cs" />
+    <Compile Include="Service\NotaFiscalLoteItemMsgSRV.cs" />
+    <Compile Include="Service\NotaFiscalLoteItemSRV.cs" />
+    <Compile Include="Service\NotaFiscalLoteItemTipoSRV.cs" />
+    <Compile Include="Service\NotaFiscalLoteSRV.cs" />
+    <Compile Include="Service\NotaFiscalLoteStatusSRV.cs" />
+    <Compile Include="Service\NotaFiscalLoteTipoSRV.cs" />
+    <Compile Include="Service\NotaFiscalReferenciadaSRV.cs" />
+    <Compile Include="Service\NotaFiscalStatusSRV.cs" />
+    <Compile Include="Model\Dto\TipoComissaoDTO.cs" />
+    <Compile Include="Service\NotaFiscalTipoSRV.cs" />
+    <Compile Include="Service\ParcelaPendenteSRV.cs" />
+    <Compile Include="Service\PeriodoFaturamentoSRV.cs" />
+    <Compile Include="Service\RepresentanteMetaSRV.cs" />
+    <Compile Include="Service\SemanaPremiacaoReprSRV.cs" />
+    <Compile Include="Service\SemanaPremiacaoSRV.cs" />
+    <Compile Include="Service\SequencialNossoNumeroSRV.cs" />
+    <Compile Include="Service\TipoComissaoSRV.cs" />
+    <Compile Include="Service\TipoNegociacaoSRV.cs" />
+    <Compile Include="Service\TipoPagamentoCampanhaVendaSRV.cs" />
+    <Compile Include="Service\CampanhaVendaTipoPropostaSRV.cs" />
+    <Compile Include="Service\Custons\HistoricoFormatterSRV.cs" />
+    <Compile Include="Service\AgendaCobrancaSRV.cs" />
+    <Compile Include="Service\AreaConsultoriaRepresentanteSRV.cs" />
+    <Compile Include="Service\AreaConsultoriaCursoSRV.cs" />
+    <Compile Include="Service\RegistroLiberacaoItemSRV.cs" />
+    <Compile Include="Service\CampanhaVendaSRV.cs" />
+    <Compile Include="Service\RegistroLiberacaoTipoSRV.cs" />
+    <Compile Include="Service\RegistroLiberacaoSRV.cs" />
+    <Compile Include="Service\AssinaturaTransferenciaSRV.cs" />
+    <Compile Include="Service\Boleto\BoletoSRV.cs" />
+    <Compile Include="Service\ClienteUsuarioSRV.cs" />
+    <Compile Include="Service\CnabArquivosSRV.cs" />
+    <Compile Include="Service\CnabRegistrosSRV.cs" />
+    <Compile Include="Service\CnabSRV.cs" />
+    <Compile Include="Service\ConfigAlocacaoContaSRV.cs" />
+    <Compile Include="Service\ConfigAlocacaoSRV.cs" />
+    <Compile Include="Service\ConfigImpostoImpostoSRV.cs" />
+    <Compile Include="Service\ConfigImpostoRegiaoSRV.cs" />
+    <Compile Include="Service\ConfigImpostoSRV.cs" />
+    <Compile Include="Service\ContaRefSRV.cs" />
+    <Compile Include="Service\Custons\ClienteIntegracaoSRV.cs" />
+    <Compile Include="Service\Custons\CustomEmpresaSRV.cs" />
+    <Compile Include="Service\FeriadoSRV.cs" />
+    <Compile Include="Service\BandeiraCartaoSRV.cs" />
+    <Compile Include="Service\InformativoSemanalAnaliticoSRV.cs" />
+    <Compile Include="Service\InformativoSemanalEnvioSRV.cs" />
+    <Compile Include="Service\InformativoSemanalSRV.cs" />
+    <Compile Include="Service\RegistroFaturamentoSRV.cs" />
+    <Compile Include="Service\PropostaItemComprovanteSRV.cs" />
+    <Compile Include="Service\PropostaItemSRV.cs" />
+    <Compile Include="Service\TipoPropostaSRV.cs" />
+    <Compile Include="Service\PropostaSRV.cs" />
+    <Compile Include="Service\Custons\ClienteProspectSRV.cs" />
+    <Compile Include="Service\RelatorioCondicaoRelatorioOperadorCondicionalSRV.cs" />
+    <Compile Include="Service\RelatorioOperadorCondicionalSRV.cs" />
+    <Compile Include="Service\RelatorioCondicaoSRV.cs" />
+    <Compile Include="Service\RelatorioOperadadorLogicoSRV.cs" />
+    <Compile Include="Service\RelatorioTipoDadoSRV.cs" />
+    <Compile Include="Service\TipoJoinSRV.cs" />
+    <Compile Include="Service\RelatorioJoinSRV.cs" />
+    <Compile Include="Service\RelatorioTabelaColunasSRV.cs" />
+    <Compile Include="Service\RelatorioTabelasSRV.cs" />
+    <Compile Include="Service\RelatorioPersonalizadoSRV.cs" />
+    <Compile Include="Service\Custons\FormatterServiceLocalFactory.cs" />
+    <Compile Include="Service\ImportacaoSuspectSRV.cs" />
+    <Compile Include="Service\Custons\HistoricoNotificacaoSRV.cs" />
+    <Compile Include="Service\HistoricoPedidoSRV.cs" />
+    <Compile Include="Service\NFeXmlSRV.cs" />
+    <Compile Include="Service\OcorrenciaErroSRV.cs" />
+    <Compile Include="Service\OcorrenciaRetornoSRV.cs" />
+    <Compile Include="Service\OcorrenciaRemessaSRV.cs" />
+    <Compile Include="Service\ParcelaAlocadaSRV.cs" />
+    <Compile Include="Service\DocLiquidacaoSRV.cs" />
+    <Compile Include="Service\ImpostoInfoFaturaSRV.cs" />
+    <Compile Include="Service\ImpostoSRV.cs" />
+    <Compile Include="Service\InfoFaturaSRV.cs" />
+    <Compile Include="Service\ParcelasRemessaSRV.cs" />
+    <Compile Include="Service\PedidoParticipanteSRV.cs" />
+    <Compile Include="Service\PedidoStatusSRV.cs" />
+    <Compile Include="Service\ItemPedidoPedidoPagamentoSRV.cs" />
+    <Compile Include="Service\ItemPedidoSRV.cs" />
+    <Compile Include="Service\ProdutoComposicaoTipoPeriodoSRV.cs" />
+    <Compile Include="Service\RetornoTransacaoSRV.cs" />
+    <Compile Include="Service\SqlDinamico\SqlDinamicoSRV.cs" />
+    <Compile Include="Service\TabelaPrecoTipoPagamentoSRV.cs" />
+    <Compile Include="Service\OrigemAcessoSRV.cs" />
+    <Compile Include="Service\NivelRepresentanteSRV.cs" />
+    <Compile Include="DAO\AcaoAtendimentoDAO.cs" />
+    <Compile Include="DAO\AreaConsultoriaDAO.cs" />
+    <Compile Include="DAO\AssinaturaDAO.cs" />
+    <Compile Include="DAO\AssinaturaEmailDAO.cs" />
+    <Compile Include="DAO\AssinaturaSenhaDAO.cs" />
+    <Compile Include="DAO\AssinaturaTelDAO.cs" />
+    <Compile Include="DAO\AuditoriaDAO.cs" />
+    <Compile Include="DAO\BancosDAO.cs" />
+    <Compile Include="DAO\CadastroGratuitoDAO.cs" />
+    <Compile Include="DAO\CarteiraAssinaturaDAO.cs" />
+    <Compile Include="DAO\CarteiramentoDAO.cs" />
+    <Compile Include="DAO\CepBairroDAO.cs" />
+    <Compile Include="DAO\CepLogradouroDAO.cs" />
+    <Compile Include="DAO\CFOPDAO.cs" />
+    <Compile Include="DAO\ChequeDevolvidoDAO.cs" />
+    <Compile Include="DAO\ClassificacaoAtendimentoDAO.cs" />
+    <Compile Include="DAO\ClassificacaoClienteDAO.cs" />
+    <Compile Include="DAO\ClassificacaoConsumoDAO.cs" />
+    <Compile Include="DAO\ClassificacaoDAO.cs" />
+    <Compile Include="DAO\AreaInfoMarketingDAO.cs" />
+    <Compile Include="DAO\AgendamentoDAO.cs" />
+    <Compile Include="DAO\CarteiraClienteDAO.cs" />
+    <Compile Include="DAO\NivelRepresentanteDAO.cs" />
+    <Compile Include="DAO\PedidoCRMDAO.cs" />
+    <Compile Include="DAO\EmailAtendAnexoDAO.cs" />
+    <Compile Include="DAO\EmailAtendDAO.cs" />
+    <Compile Include="DAO\FilaCadastroDAO.cs" />
+    <Compile Include="DAO\HistAtendEmailDAO.cs" />
+    <Compile Include="DAO\HistAtendUraDAO.cs" />
+    <Compile Include="DAO\MotivoCancelamentoDAO.cs" />
+    <Compile Include="DAO\NotificacoesDAO.cs" />
+    <Compile Include="DAO\OrigemCadastroDAO.cs" />
+    <Compile Include="DAO\ParcelaLiquidacaoDAO.cs" />
+    <Compile Include="DAO\PrioridadeAtendimentoDAO.cs" />
+    <Compile Include="DAO\ProdutoComposicaoInfoMarketingDAO.cs" />
+    <Compile Include="DAO\InfoMarketingDAO.cs" />
+    <Compile Include="DAO\ClienteTelefoneDAO.cs" />
+    <Compile Include="DAO\ProdutoFamiliaDAO.cs" />
+    <Compile Include="DAO\TabSeqDAO.cs" />
+    <Compile Include="DAO\TipoCancelamentoDAO.cs" />
+    <Compile Include="DAO\TipoComplementoDAO.cs" />
+    <Compile Include="DAO\TipoNotificacaoDAO.cs" />
+    <Compile Include="DAO\TipoPrioridadeAtendimentoDAO.cs" />
+    <Compile Include="DAO\UENDAO.cs" />
+    <Compile Include="DAO\HistAtendDAO.cs" />
+    <Compile Include="DAO\LinhaProdutoDAO.cs" />
+    <Compile Include="DAO\LinhaProdutoInformativoDAO.cs" />
+    <Compile Include="DAO\TipoAtendimentoDAO.cs" />
+    <Compile Include="DAO\UraCoadDAO.cs" />
+    <Compile Include="DAO\UrgenciaNotificacaoDAO.cs" />
+    <Compile Include="Exceptions\AcessoADadosNaoPermitidoException.cs" />
+    <Compile Include="Exceptions\CarteiramentoException.cs" />
+    <Compile Include="Exceptions\OperadoraNaoEncontradaPorRodizioException.cs" />
+    <Compile Include="Extensions\HtmlExtensions.cs" />
+    <Compile Include="Service\AcaoAtendimentoSRV.cs" />
+    <Compile Include="Service\AgendaFranquia\FranqCarteiraSRV.cs" />
+    <Compile Include="Service\AssinaturaEmailSRV.cs" />
+    <Compile Include="Service\AssinaturaSenhaSRV.cs" />
+    <Compile Include="Service\AssinaturaTelefoneSRV.cs" />
+    <Compile Include="Service\BancosSRV.cs" />
+    <Compile Include="Service\CadastroGratuitoSRV.cs" />
+    <Compile Include="Service\CarteiraAssinaturaSRV.cs" />
+    <Compile Include="Service\CepBairro.cs" />
+    <Compile Include="Service\CepLogradouroSRV.cs" />
+    <Compile Include="Service\ChequeDevolvidoSRV.cs" />
+    <Compile Include="Service\ClassificacaoAtendimentoSRV.cs" />
+    <Compile Include="Service\ClassificacaoClienteSRV.cs" />
+    <Compile Include="Service\ClassificacaoSRV.cs" />
+    <Compile Include="DAO\ClienteDAO.cs" />
+    <Compile Include="DAO\ClienteEnderecoDAO.cs" />
+    <Compile Include="DAO\ConfigSpedFiscalDAO.cs" />
+    <Compile Include="DAO\ContextoPedido\ClienteDAO.cs" />
+    <Compile Include="DAO\ContratoDAO.cs" />
+    <Compile Include="DAO\AreasDAO.cs" />
+    <Compile Include="DAO\CarteiraRepresentanteDAO.cs" />
+    <Compile Include="DAO\CondicaoPagamentoDAO.cs" />
+    <Compile Include="DAO\TabelaPrecoDAO.cs" />
+    <Compile Include="DAO\RegiaoTabelaPrecoDAO.cs" />
+    <Compile Include="DAO\RegiaoDAO.cs" />
+    <Compile Include="DAO\TipoEnderecoDAO.cs" />
+    <Compile Include="DAO\PaisDAO.cs" />
+    <Compile Include="DAO\ProspectDAO.cs" />
+    <Compile Include="DAO\TipoDocFiscalDAO.cs" />
+    <Compile Include="DAO\TipoEnvioDAO.cs" />
+    <Compile Include="DAO\TipoFornecedorDAO.cs" />
+    <Compile Include="DAO\TipoPeriodoDAO.cs" />
+    <Compile Include="DAO\TipoProdComportamentoDAO.cs" />
+    <Compile Include="DAO\TipoProdutoComposicaoDAO.cs" />
+    <Compile Include="DAO\TipoProdutoDAO.cs" />
+    <Compile Include="DAO\ProdutoComposicaoItemDAO.cs" />
+    <Compile Include="DAO\CSTDAO.cs" />
+    <Compile Include="DAO\CSTTipoDAO.cs" />
+    <Compile Include="DAO\EmailsDeClienteDAO.cs" />
+    <Compile Include="DAO\FornecedorDAO.cs" />
+    <Compile Include="DAO\GrupoDAO.cs" />
+    <Compile Include="DAO\IbgeMunicipioDAO.cs" />
+    <Compile Include="DAO\MunicipioDAO.cs" />
+    <Compile Include="DAO\NotaFiscalDAO.cs" />
+    <Compile Include="DAO\NotaFiscalItemDAO.cs" />
+    <Compile Include="DAO\OpcaoAtendimentoDAO.cs" />
+    <Compile Include="DAO\ParcelasDAO.cs" />
+    <Compile Include="DAO\PedidoPagamentoDAO.cs" />
+    <Compile Include="DAO\ProdutoFornecedorDAO.cs" />
+    <Compile Include="DAO\ProdutosDAO.cs" />
+    <Compile Include="DAO\ProdutoComposicaoDAO.cs" />
+    <Compile Include="DAO\RepresentanteDAO.cs" />
+    <Compile Include="DAO\SpedArquivoDAO.cs" />
+    <Compile Include="DAO\TelefonesDeClienteDAO.cs" />
+    <Compile Include="DAO\TipoLogradouroDAO.cs" />
+    <Compile Include="DAO\TipoClienteDAO.cs" />
+    <Compile Include="DAO\TiposNegocioPedidoDAO.cs" />
+    <Compile Include="DAO\TiposPagamentoPedidoDAO.cs" />
+    <Compile Include="DAO\TipoTelefoneDAO.cs" />
+    <Compile Include="DAO\TotalVendasCartaoDAO.cs" />
+    <Compile Include="DAO\TransportadorDAO.cs" />
+    <Compile Include="DAO\UFDAO.cs" />
+    <Compile Include="DAO\UnidadeMedidaDAO.cs" />
+    <Compile Include="DAO\UnidadeNegocioDAO.cs" />
+    <Compile Include="DAO\UraConfigDAO.cs" />
+    <Compile Include="DAO\URADAO.cs" />
+    <Compile Include="DAO\UraLogDAO.cs" />
+    <Compile Include="DAO\UraProdutoAreaDAO.cs" />
+    <Compile Include="DAO\UraProdutoDAO.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\Base\COADCORPContext.cs" />
+    <Compile Include="Repositorios\Base\EnumTipoNF.cs" />
+    <Compile Include="Repositorios\Base\RepositorioCorp.cs" />
+    <Compile Include="Repositorios\Base\ServiceCorp.cs" />
+    <Compile Include="Service\AreaConsultoriaSRV.cs" />
+    <Compile Include="Service\CarteiramentoSRV.cs" />
+    <Compile Include="Service\ClassificacaoConsumoSRV.cs" />
+    <Compile Include="Service\ClienteEnderecoSRV.cs" />
+    <Compile Include="Service\AuditoriaSRV.cs" />
+    <Compile Include="Service\AreasSRV.cs" />
+    <Compile Include="Service\ConfigSpedFiscalSRV.cs" />
+    <Compile Include="Service\CarteiraRepresentanteSRV.cs" />
+    <Compile Include="Service\CondicaoPagamentoSRV.cs" />
+    <Compile Include="Service\AreaInfoMarketingSRV.cs" />
+    <Compile Include="Service\AgendamentoSRV.cs" />
+    <Compile Include="Service\CarteiraClienteSRV.cs" />
+    <Compile Include="Service\PedidoCRMSRV.cs" />
+    <Compile Include="Service\Dp\DpSRV.cs" />
+    <Compile Include="Service\EmailAtendAnexoSRV.cs" />
+    <Compile Include="Service\EmailAtendSRV.cs" />
+    <Compile Include="Service\FilaCadastroSRV.cs" />
+    <Compile Include="Service\HistAtendEmailSRV.cs" />
+    <Compile Include="Service\HistAtendUraSRV.cs" />
+    <Compile Include="Service\NotificacoesSRV.cs" />
+    <Compile Include="Service\OrigemCadastroSRV.cs" />
+    <Compile Include="Service\ParcelaLiquidacaoSRV.cs" />
+    <Compile Include="Service\PrioridadeAtendimentoSRV.cs" />
+    <Compile Include="Service\ProdutoComposicaoInfoMarketingSRV.cs" />
+    <Compile Include="Service\InfoMarketingSRV.cs" />
+    <Compile Include="Service\ClienteTelefoneSRV.cs" />
+    <Compile Include="Service\ProdutoFamiliaSRV.cs" />
+    <Compile Include="Service\ProfessorSRV.cs" />
+    <Compile Include="Service\TabSeqSRV.cs" />
+    <Compile Include="Service\TipoComplementoSRV.cs" />
+    <Compile Include="Service\TipoConfigContaSRV.cs" />
+    <Compile Include="Service\TipoNotificacaoSRV.cs" />
+    <Compile Include="Service\TipoPrioridadeAtendimentoSRV.cs" />
+    <Compile Include="Service\TipoRemessaSRV.cs" />
+    <Compile Include="Service\TiposDeTelefone.cs" />
+    <Compile Include="Service\TiposNegocioPedidoSRV.cs" />
+    <Compile Include="Service\TipoVendaSRV.cs" />
+    <Compile Include="Service\UENSRV.cs" />
+    <Compile Include="Service\HistAtendSRV.cs" />
+    <Compile Include="Service\LinhaProdutoInformativoSRV.cs" />
+    <Compile Include="Service\LinhaProdutoSRV.cs" />
+    <Compile Include="Service\ParcelasSRV.cs" />
+    <Compile Include="Service\TabelaPrecoSRV.cs" />
+    <Compile Include="Service\RegiaoTabelaPrecoSRV.cs" />
+    <Compile Include="Service\RegiaoSRV.cs" />
+    <Compile Include="Service\TipoAtendimentoSRV.cs" />
+    <Compile Include="Service\TipoEnderecoSRV.cs" />
+    <Compile Include="Service\PaisSRV.cs" />
+    <Compile Include="Service\ProspectSRV.cs" />
+    <Compile Include="Service\PedidoPagamentoSRV.cs" />
+    <Compile Include="Service\ProdutoComposicaoItemSRV.cs" />
+    <Compile Include="Service\RepresentanteSRV.cs" />
+    <Compile Include="Service\TipoClienteSRVProxy.cs" />
+    <Compile Include="Service\TipoDocFiscalSRV.cs" />
+    <Compile Include="Service\TipoEnvioSRV.cs" />
+    <Compile Include="Service\TipoFornecedorSRV.cs" />
+    <Compile Include="Service\TipoPeriodoSRV.cs" />
+    <Compile Include="Service\TipoProdutoComposicaoSRV.cs" />
+    <Compile Include="Service\TipoProdutoSRV.cs" />
+    <Compile Include="Service\TipoProdComportamentoSRV.cs" />
+    <Compile Include="Service\GrupoSRV.cs" />
+    <Compile Include="Service\PedidoContexto\ClienteService.cs" />
+    <Compile Include="Service\CSTTipoSRV.cs" />
+    <Compile Include="Service\AssinaturaSRV.cs" />
+    <Compile Include="Service\CFOPSRV.cs" />
+    <Compile Include="Service\ClienteSRV.cs" />
+    <Compile Include="Service\ContratoSRV.cs" />
+    <Compile Include="Service\CSTSRV.cs" />
+    <Compile Include="Service\EmailsDeClienteSRV.cs" />
+    <Compile Include="Service\FornecedorSRV.cs" />
+    <Compile Include="Service\IbgeMunicipioSRV.cs" />
+    <Compile Include="Service\MunicipioSRV.cs" />
+    <Compile Include="Service\NotaFiscalSRV.cs" />
+    <Compile Include="Service\OpcaoAtendimentoSRV.cs" />
+    <Compile Include="Service\ProdutoComposicaoSRV.cs" />
+    <Compile Include="Service\SpedArquivoSRV.cs" />
+    <Compile Include="Service\TelefonesDeClienteSRV.cs" />
+    <Compile Include="Service\TipoClienteSRV.cs" />
+    <Compile Include="Service\TipoLogradouroSRV.cs" />
+    <Compile Include="Service\TipoPagamentoPedidoSRV.cs" />
+    <Compile Include="Service\ProdutosSRV.cs" />
+    <Compile Include="Service\TipoTelefoneSRV.cs" />
+    <Compile Include="Service\TotalVendasCartaoSRV.cs" />
+    <Compile Include="Service\TransportadorSRV.cs" />
+    <Compile Include="Service\UFSRV.cs" />
+    <Compile Include="Service\UnidadeMedidaSRV.cs" />
+    <Compile Include="Service\UnidadeNegocioSRV.cs" />
+    <Compile Include="Service\UraCoadSRV.cs" />
+    <Compile Include="Service\UraConfigSRV.cs" />
+    <Compile Include="Service\UraLogSRV.cs" />
+    <Compile Include="Service\UraProdutoAreaSRV.cs" />
+    <Compile Include="Service\UraProdutoSRV.cs" />
+    <Compile Include="Service\URASRV.cs" />
+    <Compile Include="Service\UrgenciaNotificacaoSRV.cs" />
+    <Compile Include="Service\Utils\AssinaturaUtil.cs" />
+    <Compile Include="SessionUtils\SessionUtil.cs" />
+    <Compile Include="Settings\Mundipagg\ApiStt.cs" />
+    <Compile Include="Settings\Mundipagg\CoadPagStt.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Settings\Mundipagg\MundipaggStt.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Util\AgendamentoUtil.cs" />
+    <Compile Include="Util\DateUtil.cs" />
+    <Compile Include="Util\MathUtil.cs" />
+    <Compile Include="Util\MontagemSQLUtil.cs" />
+    <Compile Include="Util\UploadUtil.cs" />
+    <Compile Include="Validations\ClienteEmailOuTelefoneValidatorAttribute.cs" />
+    <Compile Include="Validations\ComposicaoItemValidatorAttribute.cs" />
+    <Compile Include="Validations\ClienteIsentoDeInscricaoAttribute.cs" />
+    <Compile Include="Validations\EmailPedidoPropostaValidatorAttribute.cs" />
+    <Compile Include="Validations\Enumerados\EmailValidacaoEnum.cs" />
+    <Compile Include="Validations\ProdutoComposicaoValidatorAttribute.cs" />
+    <Compile Include="Validations\DescontoMaximoCampanhaAttribute.cs" />
+    <Compile Include="Validations\EnderecoMunicipioValidator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="coadcoadcorp.snk" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <EmbeddedResource Include="Layout\BoletoHtml.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <EntityDeploy Include="Repositorios\Contexto\COADCORP.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>COADCORP.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Repositorios\Contexto\COADCORP.edmx.diagram">
+      <DependentUpon>COADCORP.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\COAD.COBRANCA\COAD.COBRANCA.csproj">
+      <Project>{D75DC95A-5DDB-402F-8B58-0388D075A3E8}</Project>
+      <Name>COAD.COBRANCA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\COAD.CORPORATIVO.LEGADO\COAD.CORPORATIVO.LEGADO.csproj">
+      <Project>{ecc5c7d0-7324-4062-8d0c-3c93f660af06}</Project>
+      <Name>COAD.CORPORATIVO.LEGADO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\COAD.CRYPT\COAD.CRYPT.csproj">
+      <Project>{f92b2ee8-e6a4-4d19-a318-d6b68bcee961}</Project>
+      <Name>COAD.CRYPT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\COAD.FISCAL\ClientWebServiceNfe\COAD.FISCAL.csproj">
+      <Project>{c0b6dd72-fa9a-4f88-9a95-ad81cc1cb8af}</Project>
+      <Name>COAD.FISCAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\COAD.PORTAL\COAD.PORTAL.csproj">
+      <Project>{3e6f1f9b-35a3-4ca9-9785-0737298614ef}</Project>
+      <Name>COAD.PORTAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\COAD.PROSPECTADOS\COAD.PROSPECTADOS.csproj">
+      <Project>{9ad28a84-56e0-4cd9-8fe2-3419415f75be}</Project>
+      <Name>COAD.PROSPECTADOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\COAD.SEGURANCA\COAD.SEGURANCA.csproj">
+      <Project>{2584c60a-835b-44b7-9c49-10f489de32bd}</Project>
+      <Name>COAD.SEGURANCA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\COAD.UTIL\COAD.UTIL.csproj">
+      <Project>{d5fd3775-bcf4-485f-89c7-254e6632c175}</Project>
+      <Name>COAD.UTIL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\shared\genericcrud\GenericCrud\Coad.GenericCrud.csproj">
+      <Project>{a6a9ff49-fa0d-468e-9966-31b8d7ef5a97}</Project>
+      <Name>Coad.GenericCrud</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\bancos\banrisul-logo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\bancos\bradesco-logo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\bancos\brasil-logo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\bancos\caixa-logo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\bancos\itau-logo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\bancos\santander-logo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\bancos\safra-logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="COAD.CORPORATIVO_.csproj">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Repositorios\Contexto\COADCORP.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>COADCORP.edmx</DependentUpon>
+      <LastGenOutput>COADCORP.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Repositorios\Contexto\COADCORP.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>COADCORP.edmx</DependentUpon>
+      <LastGenOutput>COADCORP.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <!-- Habilitar T4 Template no Build-->
+  <!--<ItemGroup>
+    <T4ReferencePath Include="$(VsIdePath)PublicAssemblies\" />
+    -->
+  <!-- Add more T4ReferencePath items here -->
+  <!--
+  </ItemGroup>
+  <PropertyGroup>
+    <IncludeFolders>
+      $(IncludeFolders);$(MSBuildProjectDirectory)\Include;$(VsIdePath)EntityIncludes
+    </IncludeFolders>
+  </PropertyGroup>
+  -->
+  <!-- Optionally make the import portable across VS versions -->
+  <!--
+  <PropertyGroup>
+    -->
+  <!-- Get the Visual Studio version - defaults to 10: -->
+  <!--
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
+    -->
+  <!-- Keep the next element all on one line: -->
+  <!--
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <TransformOnBuild>true</TransformOnBuild>
+    <OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
+  </PropertyGroup>
+  -->
+  <!-- This is the important line: -->
+  <!--
+  <Import Project="$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets" />-->
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este projeto faz referência a pacotes do NuGet que não estão presentes neste computador. Use a Restauração de Pacotes do NuGet para baixá-los.  Para obter mais informações, consulte http://go.microsoft.com/fwlink/?LinkID=322105. O arquivo ausente é {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets" Condition="Exists('..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

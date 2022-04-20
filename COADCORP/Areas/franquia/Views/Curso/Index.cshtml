@@ -1,0 +1,21 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutoComposicaoDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Gerenciar Cursos";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li class="active">Gerenciar Cursos</li>         
+        
+    </ol>
+}
+@Scripts.Render("~/Scripts/negocio/curso.js")
+<div ng-app="appModule">
+    <div ng-controller="CursoController" class="padding content" ng-cloak data-ng-init="initList()">
+        @Html.Partial("Partials/_CursoPartial")
+    </div>
+    
+</div>

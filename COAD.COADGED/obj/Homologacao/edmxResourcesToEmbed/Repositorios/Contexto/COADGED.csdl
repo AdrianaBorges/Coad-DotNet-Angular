@@ -1,0 +1,2748 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="COADGEDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <ComplexType Name="PUBLICACAO_fun_Result">
+    <Property Name="PUB_ID" Type="Int32" />
+    <Property Name="PUB_CONTEUDO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </ComplexType>
+  <EntityType Name="AREA_CONSULTORIA_CURSO">
+    <Key>
+      <PropertyRef Name="CMP_ID" />
+      <PropertyRef Name="ARE_CONS_ID" />
+      <PropertyRef Name="TIT_ID" />
+    </Key>
+    <Property Name="CMP_ID" Type="Int32" Nullable="false" />
+    <Property Name="ARE_CONS_ID" Type="Int32" Nullable="false" />
+    <Property Name="TIT_ID" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AREAS_CONSULTORIA">
+    <Key>
+      <PropertyRef Name="ARE_CONS_ID" />
+    </Key>
+    <Property Name="ARE_CONS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ARE_CONS_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DATA_CADASTRO" Type="DateTime" Precision="3" />
+    <Property Name="DATA_ALTERACAO" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="ARE_CABECA_MATERIA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="LIN_PRO_ID" Type="Int32" />
+    <NavigationProperty Name="AREAS_CONSULTORIA_NEWS" Relationship="Self.FK_AREAS_CONSULTORIA_NEWS_AREAS_CONSULTORIA" FromRole="AREAS_CONSULTORIA" ToRole="AREAS_CONSULTORIA_NEWS" />
+    <NavigationProperty Name="COLABORADOR" Relationship="Self.FK_COLABORADOR_AREAS_CONSULTORIA" FromRole="AREAS_CONSULTORIA" ToRole="COLABORADOR" />
+    <NavigationProperty Name="TITULACAO" Relationship="Self.FK_TITULACAO_AREAS_CONSULTORIA" FromRole="AREAS_CONSULTORIA" ToRole="TITULACAO" />
+  </EntityType>
+  <EntityType Name="AREAS_CONSULTORIA_NEWS">
+    <Key>
+      <PropertyRef Name="NEWS_ID" />
+      <PropertyRef Name="ARE_CONS_ID" />
+      <PropertyRef Name="UF_ID" />
+    </Key>
+    <Property Name="NEWS_ID" Type="Int32" Nullable="false" />
+    <Property Name="ARE_CONS_ID" Type="Int32" Nullable="false" />
+    <Property Name="UF_ID" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="AREAS_CONSULTORIA" Relationship="Self.FK_AREAS_CONSULTORIA_NEWS_AREAS_CONSULTORIA" FromRole="AREAS_CONSULTORIA_NEWS" ToRole="AREAS_CONSULTORIA" />
+    <NavigationProperty Name="AREAS_CONSULTORIA1" Relationship="Self.FK_AREAS_CONSULTORIA_NEWS_AREAS_CONSULTORIA7" FromRole="AREAS_CONSULTORIA_NEWS" ToRole="AREAS_CONSULTORIA1" />
+    <NavigationProperty Name="NEWS" Relationship="Self.FK_AREAS_CONSULTORIA_NEWS_NEWS" FromRole="AREAS_CONSULTORIA_NEWS" ToRole="NEWS" />
+    <NavigationProperty Name="UF_REF" Relationship="Self.FK_AREAS_CONSULTORIA_NEWS_UF_REF" FromRole="AREAS_CONSULTORIA_NEWS" ToRole="UF_REF" />
+  </EntityType>
+  <EntityType Name="AREAS_CONSULTORIA1">
+    <Key>
+      <PropertyRef Name="ARE_CONS_ID" />
+    </Key>
+    <Property Name="ARE_CONS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ARE_CONS_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DATA_CADASTRO" Type="DateTime" Precision="3" />
+    <Property Name="DATA_ALTERACAO" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="ARE_CABECA_MATERIA" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AREAS_CONSULTORIA_NEWS" Relationship="Self.FK_AREAS_CONSULTORIA_NEWS_AREAS_CONSULTORIA7" FromRole="AREAS_CONSULTORIA1" ToRole="AREAS_CONSULTORIA_NEWS" />
+    <NavigationProperty Name="COLABORADOR" Relationship="Self.FK_COLABORADOR_AREAS_CONSULTORIA7" FromRole="AREAS_CONSULTORIA1" ToRole="COLABORADOR" />
+    <NavigationProperty Name="PUBLICACAO_AREAS_CONSULTORIA" Relationship="Self.FK_PUBLICACAO_AREAS_CONSULTORIA_AREAS_CONSULTORIA7" FromRole="AREAS_CONSULTORIA1" ToRole="PUBLICACAO_AREAS_CONSULTORIA" />
+    <NavigationProperty Name="TITULACAO" Relationship="Self.FK_TITULACAO_AREAS_CONSULTORIA7" FromRole="AREAS_CONSULTORIA1" ToRole="TITULACAO" />
+  </EntityType>
+  <EntityType Name="CADERNO">
+    <Key>
+      <PropertyRef Name="CAD_ID" />
+    </Key>
+    <Property Name="CAD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CLI_ID" Type="Int32" Nullable="false" />
+    <Property Name="CAD_NOME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CAD_ATIVO" Type="Int32" />
+    <NavigationProperty Name="CLIENTES_REF" Relationship="Self.FK_CADERNO_CLIENTE" FromRole="CADERNO" ToRole="CLIENTES_REF" />
+    <NavigationProperty Name="CADERNO_COMPARTILHADO" Relationship="Self.FK_CADERNO_COMPARTILHADO_CADERNO" FromRole="CADERNO" ToRole="CADERNO_COMPARTILHADO" />
+    <NavigationProperty Name="CADERNO_CONTEUDO" Relationship="Self.FK_CADERNO_CONTEUDO_CADERNO" FromRole="CADERNO" ToRole="CADERNO_CONTEUDO" />
+    <NavigationProperty Name="CADERNO_NOTA" Relationship="Self.FK_CADERNO_NOTA_CADERNO" FromRole="CADERNO" ToRole="CADERNO_NOTA" />
+  </EntityType>
+  <EntityType Name="CADERNO_COMPARTILHADO">
+    <Key>
+      <PropertyRef Name="CAD_ID" />
+      <PropertyRef Name="CLI_ID" />
+    </Key>
+    <Property Name="CAD_ID" Type="Int32" Nullable="false" />
+    <Property Name="CLI_ID" Type="Int32" Nullable="false" />
+    <Property Name="DATA_ASSOCIACAO" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="CADERNO" Relationship="Self.FK_CADERNO_COMPARTILHADO_CADERNO" FromRole="CADERNO_COMPARTILHADO" ToRole="CADERNO" />
+    <NavigationProperty Name="CLIENTES_REF" Relationship="Self.FK_CADERNO_COMPARTILHADO_CLIENTES_REF" FromRole="CADERNO_COMPARTILHADO" ToRole="CLIENTES_REF" />
+  </EntityType>
+  <EntityType Name="CADERNO_CONTEUDO">
+    <Key>
+      <PropertyRef Name="CON_ID" />
+    </Key>
+    <Property Name="CON_ID" Type="Int32" Nullable="false" />
+    <Property Name="CAD_ID" Type="Int32" Nullable="false" />
+    <Property Name="CONT_OFFLINE" Type="Int32" Nullable="false" />
+    <Property Name="PUB_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CADERNO" Relationship="Self.FK_CADERNO_CONTEUDO_CADERNO" FromRole="CADERNO_CONTEUDO" ToRole="CADERNO" />
+  </EntityType>
+  <EntityType Name="CADERNO_NOTA">
+    <Key>
+      <PropertyRef Name="NTA_ID" />
+    </Key>
+    <Property Name="NTA_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CAD_ID" Type="Int32" Nullable="false" />
+    <Property Name="NTA_CONTEUDO" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NTA_OFFLINE" Type="Int32" />
+    <NavigationProperty Name="CADERNO" Relationship="Self.FK_CADERNO_NOTA_CADERNO" FromRole="CADERNO_NOTA" ToRole="CADERNO" />
+  </EntityType>
+  <EntityType Name="CAPITAL">
+    <Key>
+      <PropertyRef Name="CAP_ID" />
+    </Key>
+    <Property Name="CAP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CAP_NOME" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="PUBLICACAO_AREAS_CONSULTORIA" Relationship="Self.FK_PUBLICACAO_AREAS_CONSULTORIA_CAPITAL" FromRole="CAPITAL" ToRole="PUBLICACAO_AREAS_CONSULTORIA" />
+  </EntityType>
+  <EntityType Name="CARGOS">
+    <Key>
+      <PropertyRef Name="CRG_ID" />
+    </Key>
+    <Property Name="CRG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CRG_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="DATA_CADASTRO" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="CRG_SIGLA" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="COLABORADOR" Relationship="Self.FK_COLABORADOR_CARGOS" FromRole="CARGOS" ToRole="COLABORADOR" />
+    <NavigationProperty Name="PUBLICACAO_FLUXO_ETAPA" Relationship="Self.FK_PUBLICACAO_FLUXO_ETAPA_CARGOS" FromRole="CARGOS" ToRole="PUBLICACAO_FLUXO_ETAPA" />
+  </EntityType>
+  <EntityType Name="CLIENTES_REF">
+    <Key>
+      <PropertyRef Name="CLI_ID" />
+    </Key>
+    <Property Name="CLI_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CADERNO" Relationship="Self.FK_CADERNO_CLIENTE" FromRole="CLIENTES_REF" ToRole="CADERNO" />
+    <NavigationProperty Name="CADERNO_COMPARTILHADO" Relationship="Self.FK_CADERNO_COMPARTILHADO_CLIENTES_REF" FromRole="CLIENTES_REF" ToRole="CADERNO_COMPARTILHADO" />
+  </EntityType>
+  <EntityType Name="COLABORADOR">
+    <Key>
+      <PropertyRef Name="COL_ID" />
+    </Key>
+    <Property Name="COL_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="COL_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="COL_ATIVO" Type="Int32" />
+    <Property Name="DATA_CADASTRO" Type="DateTime" Precision="3" />
+    <Property Name="DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="CRG_ID" Type="Int32" />
+    <Property Name="ARE_CONS_ID" Type="Int32" />
+    <NavigationProperty Name="AREAS_CONSULTORIA" Relationship="Self.FK_COLABORADOR_AREAS_CONSULTORIA" FromRole="COLABORADOR" ToRole="AREAS_CONSULTORIA" />
+    <NavigationProperty Name="AREAS_CONSULTORIA1" Relationship="Self.FK_COLABORADOR_AREAS_CONSULTORIA7" FromRole="COLABORADOR" ToRole="AREAS_CONSULTORIA1" />
+    <NavigationProperty Name="CARGOS" Relationship="Self.FK_COLABORADOR_CARGOS" FromRole="COLABORADOR" ToRole="CARGOS" />
+    <NavigationProperty Name="PUBLICACAO_CICLO_APROVACAO" Relationship="Self.FK_PUBLICACAO_CICLO_APROVACAO_COLABORADOR" FromRole="COLABORADOR" ToRole="PUBLICACAO_CICLO_APROVACAO" />
+    <NavigationProperty Name="PUBLICACAO_REVISAO" Relationship="Self.FK_PUBLICACAO_REVISAO_COLABORADOR" FromRole="COLABORADOR" ToRole="PUBLICACAO_REVISAO" />
+    <NavigationProperty Name="PUBLICACAO_REVISAO_COLABORADOR" Relationship="Self.FK_PUBLICACAO_REVISAO_COLABORADOR_COLABORADOR" FromRole="COLABORADOR" ToRole="PUBLICACAO_REVISAO_COLABORADOR" />
+  </EntityType>
+  <EntityType Name="CONSULTA_EMAIL">
+    <Key>
+      <PropertyRef Name="CEM_ID" />
+    </Key>
+    <Property Name="CEM_ID" Type="Int32" Nullable="false" />
+    <Property Name="CEM_NUM_ASSINATURA" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CEM_LOGIN_RESPONDENTE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CEM_EMAIL_CONSULENTE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CEM_PERGUNTA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CEM_RESPOSTA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CEM_UF_CONSULTA" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="CEM_DATA_CADASTRO" Type="DateTime" Precision="0" />
+    <Property Name="CEM_DATE_RESPOSTA" Type="DateTime" Precision="0" />
+    <Property Name="CEM_DATA_ULTIMO_ACESSO" Type="DateTime" Precision="0" />
+    <Property Name="CEM_LOGIN_USUARIO_ULTIMO_ACESSO" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="CEM_LOGIN_USUARIO_QUE_ENCAMINHOU" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="STS_ID" Type="Int32" Nullable="false" />
+    <Property Name="COLEC_ID" Type="Int32" Nullable="false" />
+    <Property Name="GRG_ID" Type="Int32" />
+    <Property Name="VERB_ID" Type="Int32" />
+    <NavigationProperty Name="CONSULTA_EMAIL_COLECIONADOR" Relationship="Self.FK_CONSULTA_EMAIL_COLECIONADOR" FromRole="CONSULTA_EMAIL" ToRole="CONSULTA_EMAIL_COLECIONADOR" />
+    <NavigationProperty Name="CONSULTA_EMAIL_VERBETE" Relationship="Self.FK_CONSULTA_EMAIL_CONSULTA_EMAIL_VERBETE" FromRole="CONSULTA_EMAIL" ToRole="CONSULTA_EMAIL_VERBETE" />
+    <NavigationProperty Name="CONSULTA_EMAIL_GRANDE_GRUPO" Relationship="Self.FK_CONSULTA_EMAIL_GRANDE_GRUPO" FromRole="CONSULTA_EMAIL" ToRole="CONSULTA_EMAIL_GRANDE_GRUPO" />
+    <NavigationProperty Name="CONSULTA_EMAIL_STATUS" Relationship="Self.FK_CONSULTA_EMAIL_STATUS" FromRole="CONSULTA_EMAIL" ToRole="CONSULTA_EMAIL_STATUS" />
+  </EntityType>
+  <EntityType Name="CONSULTA_EMAIL_COLECIONADOR">
+    <Key>
+      <PropertyRef Name="COLEC_ID" />
+    </Key>
+    <Property Name="COLEC_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="COLEC_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="CONSULTA_EMAIL" Relationship="Self.FK_CONSULTA_EMAIL_COLECIONADOR" FromRole="CONSULTA_EMAIL_COLECIONADOR" ToRole="CONSULTA_EMAIL" />
+    <NavigationProperty Name="CONSULTA_EMAIL_GRANDE_GRUPO" Relationship="Self.FK_CONSULTA_EMAIL_COLECIONADOR_GRG" FromRole="CONSULTA_EMAIL_COLECIONADOR" ToRole="CONSULTA_EMAIL_GRANDE_GRUPO" />
+    <NavigationProperty Name="CONSULTA_EMAIL_PERFIL_COLEC" Relationship="Self.FK_CONSULTA_EMAIL_COLECIONADOR_PC" FromRole="CONSULTA_EMAIL_COLECIONADOR" ToRole="CONSULTA_EMAIL_PERFIL_COLEC" />
+    <NavigationProperty Name="CONSULTA_EMAIL_VERBETE" Relationship="Self.FK_CONSULTA_EMAIL_COLECIONADOR_VERB" FromRole="CONSULTA_EMAIL_COLECIONADOR" ToRole="CONSULTA_EMAIL_VERBETE" />
+  </EntityType>
+  <EntityType Name="CONSULTA_EMAIL_GRANDE_GRUPO">
+    <Key>
+      <PropertyRef Name="GRG_ID" />
+    </Key>
+    <Property Name="GRG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GRG_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="COLEC_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CONSULTA_EMAIL" Relationship="Self.FK_CONSULTA_EMAIL_GRANDE_GRUPO" FromRole="CONSULTA_EMAIL_GRANDE_GRUPO" ToRole="CONSULTA_EMAIL" />
+    <NavigationProperty Name="CONSULTA_EMAIL_COLECIONADOR" Relationship="Self.FK_CONSULTA_EMAIL_COLECIONADOR_GRG" FromRole="CONSULTA_EMAIL_GRANDE_GRUPO" ToRole="CONSULTA_EMAIL_COLECIONADOR" />
+  </EntityType>
+  <EntityType Name="CONSULTA_EMAIL_STATUS">
+    <Key>
+      <PropertyRef Name="STS_ID" />
+    </Key>
+    <Property Name="STS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="STS_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="CONSULTA_EMAIL" Relationship="Self.FK_CONSULTA_EMAIL_STATUS" FromRole="CONSULTA_EMAIL_STATUS" ToRole="CONSULTA_EMAIL" />
+  </EntityType>
+  <EntityType Name="CONSULTA_EMAIL_VERBETE">
+    <Key>
+      <PropertyRef Name="VERB_ID" />
+    </Key>
+    <Property Name="VERB_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VERB_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="COLEC_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CONSULTA_EMAIL" Relationship="Self.FK_CONSULTA_EMAIL_CONSULTA_EMAIL_VERBETE" FromRole="CONSULTA_EMAIL_VERBETE" ToRole="CONSULTA_EMAIL" />
+    <NavigationProperty Name="CONSULTA_EMAIL_COLECIONADOR" Relationship="Self.FK_CONSULTA_EMAIL_COLECIONADOR_VERB" FromRole="CONSULTA_EMAIL_VERBETE" ToRole="CONSULTA_EMAIL_COLECIONADOR" />
+  </EntityType>
+  <EntityType Name="FUNCIONALIDADE">
+    <Key>
+      <PropertyRef Name="FCI_ID" />
+    </Key>
+    <Property Name="FCI_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FCI_DESCRICAO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FCI_CONTEUDO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="FCI_URL" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="FCI_DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="NIV_ID" Type="Int32" />
+    <Property Name="PRO_ID" Type="Int32" />
+    <Property Name="FCI_TIPO" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="FCI_IMG01" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="FCI_IMG02" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="FCI_IMG03" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="FCI_IMG04" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="TDC_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="FCI_URL_LINK" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="FUNCIONALIDADE_NIVEL_ACESSO" Relationship="Self.FK_FUNCIONALIDADE_FUNCIONALIDADE_NIVEL_ACESSO" FromRole="FUNCIONALIDADE" ToRole="FUNCIONALIDADE_NIVEL_ACESSO" />
+    <NavigationProperty Name="PRODUTO_REF" Relationship="Self.FK_FUNCIONALIDADE_PRODUTO_REF" FromRole="FUNCIONALIDADE" ToRole="PRODUTO_REF" />
+    <NavigationProperty Name="ORIGEM_FUNCIONALIDADE" Relationship="Self.FK_ORIGEM_FUNCIONALIDADE_FUNCIONALIDADE" FromRole="FUNCIONALIDADE" ToRole="ORIGEM_FUNCIONALIDADE" />
+  </EntityType>
+  <EntityType Name="FUNCIONALIDADE_NIVEL_ACESSO">
+    <Key>
+      <PropertyRef Name="NIV_ID" />
+    </Key>
+    <Property Name="NIV_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NIV_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="FUNCIONALIDADE" Relationship="Self.FK_FUNCIONALIDADE_FUNCIONALIDADE_NIVEL_ACESSO" FromRole="FUNCIONALIDADE_NIVEL_ACESSO" ToRole="FUNCIONALIDADE" />
+  </EntityType>
+  <EntityType Name="FUNDAMENTACAO">
+    <Key>
+      <PropertyRef Name="FUN_ID" />
+    </Key>
+    <Property Name="FUN_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MAI_ID" Type="Int32" Nullable="false" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DATA_INSERT" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="TIP_ATO_ID" Type="Int32" />
+    <Property Name="MAI_NUMERO_ATO" Type="Int32" />
+    <Property Name="MAI_DATA_ATO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="ORG_ID" Type="Int32" />
+    <Property Name="MAI_NUMERO_ARTIGO" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="FUN_NUM_PARAGRAFO" Type="Int32" />
+    <Property Name="FUN_INCISO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="MANUAL_DP_ITEM" Relationship="Self.FK_FUNDAMENTACAO_MANUAL_DP_ITEM" FromRole="FUNDAMENTACAO" ToRole="MANUAL_DP_ITEM" />
+  </EntityType>
+  <EntityType Name="INFORMATIVO">
+    <Key>
+      <PropertyRef Name="INF_ANO" />
+      <PropertyRef Name="INF_NUMERO" />
+    </Key>
+    <Property Name="INF_ANO" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="INF_NUMERO" Type="Int32" Nullable="false" />
+    <Property Name="INF_DATA_INICIO" Type="DateTime" Precision="3" />
+    <Property Name="INF_DATA_FINAL" Type="DateTime" Precision="3" />
+    <Property Name="INF_DATA_PREV_POSTAGEM" Type="DateTime" Precision="3" />
+    <Property Name="INF_DATA_POSTAGEM" Type="DateTime" Precision="3" />
+    <Property Name="INF_ATIVO" Type="Int32" />
+    <Property Name="DATA_CADASTRO" Type="DateTime" Precision="3" />
+    <Property Name="DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PUBLICACAO_UF" Relationship="Self.FK_PUBLICACAO_UF_INFORMATIVO" FromRole="INFORMATIVO" ToRole="PUBLICACAO_UF" />
+  </EntityType>
+  <EntityType Name="LABELS">
+    <Key>
+      <PropertyRef Name="LBL_ID" />
+    </Key>
+    <Property Name="LBL_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LBL_NOME" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="LBL_DESCRICAO" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="LBL_ATIVO" Type="Int32" />
+    <NavigationProperty Name="PUBLICACAO" Relationship="Self.FK_PUBLICACAO_LABELS" FromRole="LABELS" ToRole="PUBLICACAO" />
+  </EntityType>
+  <EntityType Name="LINHA_PRODUTO_REF">
+    <Key>
+      <PropertyRef Name="LIN_PRO_ID" />
+    </Key>
+    <Property Name="LIN_PRO_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="NOTICIA_GRUPO_LINHA_PROD" Relationship="Self.FK_NOTICIA_GRUPO_LINHA_PROD_LINHA_PRODUTO_REF" FromRole="LINHA_PRODUTO_REF" ToRole="NOTICIA_GRUPO_LINHA_PROD" />
+  </EntityType>
+  <EntityType Name="LOG_ACESSO_PORTAL">
+    <Key>
+      <PropertyRef Name="LAP_SEQ" />
+    </Key>
+    <Property Name="LAP_SEQ" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LAP_IP_ACESSO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="LAP_DATA_ACESSO" Type="DateTime" Precision="3" />
+    <Property Name="LAP_MSG_ERRO" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="LAP_URL_ACESSO" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="NOT_ID" Type="Int32" />
+    <Property Name="PUB_ID" Type="Int32" />
+    <Property Name="OAC_ID" Type="Int32" Nullable="false" />
+    <Property Name="ASN_NUM_ASSINATURA" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LSI_EMAIL_ACESSO" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="NOT_ID_PORTAL" Type="Int32" />
+    <Property Name="PUB_ID_PORTAL" Type="Int32" />
+    <NavigationProperty Name="NOTICIA" Relationship="Self.FK_LOG_ACESSO_PORTAL_NOTICIA" FromRole="LOG_ACESSO_PORTAL" ToRole="NOTICIA" />
+    <NavigationProperty Name="ORIGEM_ACESSO_REF" Relationship="Self.FK_LOG_ACESSO_PORTAL_ORIGEM_ACESSO_REF" FromRole="LOG_ACESSO_PORTAL" ToRole="ORIGEM_ACESSO_REF" />
+    <NavigationProperty Name="PUBLICACAO" Relationship="Self.FK_LOG_ACESSO_PORTAL_PUBLICACAO" FromRole="LOG_ACESSO_PORTAL" ToRole="PUBLICACAO" />
+  </EntityType>
+  <EntityType Name="LOG_SIMULADOR">
+    <Key>
+      <PropertyRef Name="LSI_SEQ" />
+    </Key>
+    <Property Name="LSI_SEQ" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ASN_NUM_ASSINATURA" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LSI_DATA_ACESSO" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LSI_URL_ACESSO" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="LSI_IP_ACESSO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="LSI_TIPO_ACESSO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="TDC_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="LSI_EMAIL_ACESSO" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="MANUAL_DP">
+    <Key>
+      <PropertyRef Name="MAN_ID" />
+    </Key>
+    <Property Name="MAN_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MAN_ASSUNTO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MAN_DATA_PUBLICACAO" Type="DateTime" Precision="3" />
+    <Property Name="MOD_ID" Type="Int32" />
+    <Property Name="MAN_INDEX" Type="Int32" />
+    <NavigationProperty Name="MANUAL_DP_ITEM" Relationship="Self.FK_MANUAL_DP_ITEM_MANUAL_DP" FromRole="MANUAL_DP" ToRole="MANUAL_DP_ITEM" />
+    <NavigationProperty Name="MANUAL_DP_MODULO" Relationship="Self.FK_MANUAL_DP_MANUAL_DP_MODULO" FromRole="MANUAL_DP" ToRole="MANUAL_DP_MODULO" />
+    <NavigationProperty Name="MENU_DOC" Relationship="Self.FK_MENU_DOC_MANUAL_DP" FromRole="MANUAL_DP" ToRole="MENU_DOC" />
+  </EntityType>
+  <EntityType Name="MANUAL_DP_ITEM">
+    <Key>
+      <PropertyRef Name="MAI_ID" />
+    </Key>
+    <Property Name="MAI_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MAI_DESCRICAO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="USU_LOGIN_ALT" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="DATA_INSERT" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="MAI_ID_PAI" Type="Int32" />
+    <Property Name="MAN_ID" Type="Int32" Nullable="false" />
+    <Property Name="MAI_TITULO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MAI_DATA_PUBLICACAO" Type="DateTime" Precision="3" />
+    <Property Name="MAI_INDEX" Type="Int32" />
+    <Property Name="MAI_NIVEL" Type="Int32" />
+    <Property Name="TIP_ATO_ID" Type="Int32" />
+    <Property Name="MAI_NUMERO_ATO" Type="Int32" />
+    <Property Name="MAI_DATA_ATO" Type="DateTime" Precision="3" />
+    <Property Name="ORG_ID" Type="Int32" />
+    <Property Name="MAI_NUMERO_ARTIGO" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="FUNDAMENTACAO" Relationship="Self.FK_FUNDAMENTACAO_MANUAL_DP_ITEM" FromRole="MANUAL_DP_ITEM" ToRole="FUNDAMENTACAO" />
+    <NavigationProperty Name="MANUAL_DP" Relationship="Self.FK_MANUAL_DP_ITEM_MANUAL_DP" FromRole="MANUAL_DP_ITEM" ToRole="MANUAL_DP" />
+    <NavigationProperty Name="MANUAL_DP_ITEM1" Relationship="Self.FK_MANUAL_DP_ITEM_MANUAL_DP_ITEM1" FromRole="MANUAL_DP_ITEM" ToRole="MANUAL_DP_ITEM1" />
+    <NavigationProperty Name="MANUAL_DP_ITEM2" Relationship="Self.FK_MANUAL_DP_ITEM_MANUAL_DP_ITEM1" FromRole="MANUAL_DP_ITEM1" ToRole="MANUAL_DP_ITEM" />
+    <NavigationProperty Name="MANUAL_DP_LINK" Relationship="Self.FK_MANUAL_DP_ITEM_MANUAL_DP_LINK" FromRole="MANUAL_DP_ITEM" ToRole="MANUAL_DP_LINK" />
+    <NavigationProperty Name="ORGAO" Relationship="Self.FK_MANUAL_DP_ITEM_ORGAO" FromRole="MANUAL_DP_ITEM" ToRole="ORGAO" />
+    <NavigationProperty Name="TIPO_ATO" Relationship="Self.FK_MANUAL_DP_ITEM_TIPO_ATO" FromRole="MANUAL_DP_ITEM" ToRole="TIPO_ATO" />
+  </EntityType>
+  <EntityType Name="MANUAL_DP_LINK">
+    <Key>
+      <PropertyRef Name="LNK_TAG" />
+      <PropertyRef Name="MAI_ID" />
+    </Key>
+    <Property Name="LNK_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MAI_ID" Type="Int32" Nullable="false" />
+    <Property Name="LNK_DESCRICAO" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="LNK_LINK" Type="String" MaxLength="600" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="MANUAL_DP_ITEM" Relationship="Self.FK_MANUAL_DP_ITEM_MANUAL_DP_LINK" FromRole="MANUAL_DP_LINK" ToRole="MANUAL_DP_ITEM" />
+  </EntityType>
+  <EntityType Name="MANUAL_DP_MODULO">
+    <Key>
+      <PropertyRef Name="MOD_ID" />
+    </Key>
+    <Property Name="MOD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MOD_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="MANUAL_DP" Relationship="Self.FK_MANUAL_DP_MANUAL_DP_MODULO" FromRole="MANUAL_DP_MODULO" ToRole="MANUAL_DP" />
+  </EntityType>
+  <EntityType Name="MENU_DOC">
+    <Key>
+      <PropertyRef Name="MND_ID" />
+    </Key>
+    <Property Name="MND_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MND_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MAN_ID" Type="Int32" />
+    <NavigationProperty Name="MANUAL_DP" Relationship="Self.FK_MENU_DOC_MANUAL_DP" FromRole="MENU_DOC" ToRole="MANUAL_DP" />
+    <NavigationProperty Name="MENU_DOC_ITEM" Relationship="Self.FK_MENU_DOC_ITEM_MENU_DOC" FromRole="MENU_DOC" ToRole="MENU_DOC_ITEM" />
+  </EntityType>
+  <EntityType Name="MENU_DOC_ITEM">
+    <Key>
+      <PropertyRef Name="MNI_ID" />
+    </Key>
+    <Property Name="MNI_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MND_ID" Type="Int32" Nullable="false" />
+    <Property Name="MND_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MNI_ID_NODE" Type="Int32" />
+    <Property Name="MNI_MENU_SEQ" Type="Int32" />
+    <Property Name="MNI_MENU_NIVEL" Type="Int32" />
+    <Property Name="MNI_TIPO" Type="Int32" />
+    <Property Name="ITM_ATIVO" Type="Int32" />
+    <NavigationProperty Name="MENU_DOC" Relationship="Self.FK_MENU_DOC_ITEM_MENU_DOC" FromRole="MENU_DOC_ITEM" ToRole="MENU_DOC" />
+    <NavigationProperty Name="MENU_DOC_ITEM1" Relationship="Self.FK_MENU_DOC_ITEM_PAI" FromRole="MENU_DOC_ITEM" ToRole="MENU_DOC_ITEM1" />
+    <NavigationProperty Name="MENU_DOC_ITEM2" Relationship="Self.FK_MENU_DOC_ITEM_PAI" FromRole="MENU_DOC_ITEM1" ToRole="MENU_DOC_ITEM" />
+  </EntityType>
+  <EntityType Name="NEWS">
+    <Key>
+      <PropertyRef Name="NEWS_ID" />
+    </Key>
+    <Property Name="NEWS_ID" Type="Int32" Nullable="false" />
+    <Property Name="SEC_ID" Type="Int32" />
+    <Property Name="LBL_ID" Type="Int32" />
+    <Property Name="NEWS_DESCRICAO" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="NEWS_TEXTO" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="NEWS_DATA_PUB" Type="DateTime" Precision="3" />
+    <Property Name="NEWS_DATA_ENVIO" Type="DateTime" Precision="3" />
+    <Property Name="NEWS_ATIVO" Type="Boolean" />
+    <NavigationProperty Name="AREAS_CONSULTORIA_NEWS" Relationship="Self.FK_AREAS_CONSULTORIA_NEWS_NEWS" FromRole="NEWS" ToRole="AREAS_CONSULTORIA_NEWS" />
+  </EntityType>
+  <EntityType Name="NOTICIA">
+    <Key>
+      <PropertyRef Name="NOT_ID" />
+    </Key>
+    <Property Name="NOT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOT_MANCHETE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="NOT_TEXTO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="NOT_DESTAQUE_HOME" Type="Boolean" />
+    <Property Name="NOT_DESTAQUE_PERFIL" Type="Boolean" />
+    <Property Name="NGR_ID" Type="Int32" />
+    <Property Name="DATA_CADASTRO" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="TIT_ID" Type="Int32" />
+    <Property Name="PUB_ID" Type="Int32" />
+    <Property Name="DATA_PUBLICACAO" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN_PUB" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="NEWSLETTER" Type="Boolean" />
+    <NavigationProperty Name="LOG_ACESSO_PORTAL" Relationship="Self.FK_LOG_ACESSO_PORTAL_NOTICIA" FromRole="NOTICIA" ToRole="LOG_ACESSO_PORTAL" />
+    <NavigationProperty Name="NOTICIA_GRUPO" Relationship="Self.FK_NOTICIA_NOTICIA_GRUPO" FromRole="NOTICIA" ToRole="NOTICIA_GRUPO" />
+    <NavigationProperty Name="PUBLICACAO" Relationship="Self.FK_NOTICIA_PUBLICACAO" FromRole="NOTICIA" ToRole="PUBLICACAO" />
+    <NavigationProperty Name="TITULACAO" Relationship="Self.FK_NOTICIA_TITULACAO" FromRole="NOTICIA" ToRole="TITULACAO" />
+  </EntityType>
+  <EntityType Name="NOTICIA_GRUPO">
+    <Key>
+      <PropertyRef Name="NGR_ID" />
+    </Key>
+    <Property Name="NGR_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NGR_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="NOTICIA" Relationship="Self.FK_NOTICIA_NOTICIA_GRUPO" FromRole="NOTICIA_GRUPO" ToRole="NOTICIA" />
+    <NavigationProperty Name="NOTICIA_GRUPO_LINHA_PROD" Relationship="Self.FK_NOTICIA_GRUPO_LINHA_PROD_NOTICIA_GRUPO" FromRole="NOTICIA_GRUPO" ToRole="NOTICIA_GRUPO_LINHA_PROD" />
+  </EntityType>
+  <EntityType Name="NOTICIA_GRUPO_LINHA_PROD">
+    <Key>
+      <PropertyRef Name="NGR_ID" />
+      <PropertyRef Name="LIN_PRO_ID" />
+    </Key>
+    <Property Name="NGR_ID" Type="Int32" Nullable="false" />
+    <Property Name="LIN_PRO_ID" Type="Int32" Nullable="false" />
+    <Property Name="DATA_ASSOCIACAO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="LINHA_PRODUTO_REF" Relationship="Self.FK_NOTICIA_GRUPO_LINHA_PROD_LINHA_PRODUTO_REF" FromRole="NOTICIA_GRUPO_LINHA_PROD" ToRole="LINHA_PRODUTO_REF" />
+    <NavigationProperty Name="NOTICIA_GRUPO" Relationship="Self.FK_NOTICIA_GRUPO_LINHA_PROD_NOTICIA_GRUPO" FromRole="NOTICIA_GRUPO_LINHA_PROD" ToRole="NOTICIA_GRUPO" />
+  </EntityType>
+  <EntityType Name="NOTICIAS_GUARDADAS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_NOTICIA" Type="Int32" Nullable="false" />
+    <Property Name="ID_CLIENTE" Type="Int32" Nullable="false" />
+    <Property Name="TEXTO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ORGAO">
+    <Key>
+      <PropertyRef Name="ORG_ID" />
+    </Key>
+    <Property Name="ORG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ORG_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ORG_ATIVO" Type="Int32" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="DATA_CADASTRO" Type="DateTime" Precision="3" />
+    <Property Name="DATA_ALTERA" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="MANUAL_DP_ITEM" Relationship="Self.FK_MANUAL_DP_ITEM_ORGAO" FromRole="ORGAO" ToRole="MANUAL_DP_ITEM" />
+    <NavigationProperty Name="PUBLICACAO" Relationship="Self.FK_PUBLICACAO_TIPO_PUBLICACAO" FromRole="ORGAO" ToRole="PUBLICACAO" />
+  </EntityType>
+  <EntityType Name="ORIGEM_ACESSO_MENU">
+    <Key>
+      <PropertyRef Name="OAC_ID" />
+      <PropertyRef Name="OAM_MENU" />
+    </Key>
+    <Property Name="OAC_ID" Type="Int32" Nullable="false" />
+    <Property Name="OAM_MENU" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="OAM_ORDEM" Type="Int32" />
+    <NavigationProperty Name="ORIGEM_ACESSO_REF" Relationship="Self.FK_ORIGEM_ACESSO_MENU_ORIGEM_ACESSO_REF" FromRole="ORIGEM_ACESSO_MENU" ToRole="ORIGEM_ACESSO_REF" />
+    <NavigationProperty Name="ORIGEM_ACESSO_SUBMENU" Relationship="Self.FK_ORIGEM_ACESSO_SUBMENU_ORIGEM_ACESSO_MENU" FromRole="ORIGEM_ACESSO_MENU" ToRole="ORIGEM_ACESSO_SUBMENU" />
+  </EntityType>
+  <EntityType Name="ORIGEM_ACESSO_REF">
+    <Key>
+      <PropertyRef Name="OAC_ID" />
+    </Key>
+    <Property Name="OAC_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="LOG_ACESSO_PORTAL" Relationship="Self.FK_LOG_ACESSO_PORTAL_ORIGEM_ACESSO_REF" FromRole="ORIGEM_ACESSO_REF" ToRole="LOG_ACESSO_PORTAL" />
+    <NavigationProperty Name="ORIGEM_ACESSO_MENU" Relationship="Self.FK_ORIGEM_ACESSO_MENU_ORIGEM_ACESSO_REF" FromRole="ORIGEM_ACESSO_REF" ToRole="ORIGEM_ACESSO_MENU" />
+    <NavigationProperty Name="ORIGEM_FUNCIONALIDADE" Relationship="Self.FK_ORIGEM_FUNCIONALIDADE_ORIGEM_ACESSO_REF" FromRole="ORIGEM_ACESSO_REF" ToRole="ORIGEM_FUNCIONALIDADE" />
+    <NavigationProperty Name="TAB_DINAMICA_ORIGEM" Relationship="Self.FK_TAB_DINAMICA_ORIGEM_ORIGEM_ACESSO_REF" FromRole="ORIGEM_ACESSO_REF" ToRole="TAB_DINAMICA_ORIGEM" />
+  </EntityType>
+  <EntityType Name="ORIGEM_ACESSO_SUBMENU">
+    <Key>
+      <PropertyRef Name="OAC_ID" />
+      <PropertyRef Name="OAM_MENU" />
+      <PropertyRef Name="OAS_ID" />
+    </Key>
+    <Property Name="OAC_ID" Type="Int32" Nullable="false" />
+    <Property Name="OAM_MENU" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="OAS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OAS_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TDC_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="OAS_PATH_ARQUIVO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="OAS_ORDEM" Type="Int32" />
+    <NavigationProperty Name="ORIGEM_ACESSO_MENU" Relationship="Self.FK_ORIGEM_ACESSO_SUBMENU_ORIGEM_ACESSO_MENU" FromRole="ORIGEM_ACESSO_SUBMENU" ToRole="ORIGEM_ACESSO_MENU" />
+  </EntityType>
+  <EntityType Name="ORIGEM_FUNCIONALIDADE">
+    <Key>
+      <PropertyRef Name="OAC_ID" />
+      <PropertyRef Name="FCI_ID" />
+    </Key>
+    <Property Name="OAC_ID" Type="Int32" Nullable="false" />
+    <Property Name="FCI_ID" Type="Int32" Nullable="false" />
+    <Property Name="OFU_DESCRICAO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="OFU_ATIVO" Type="Boolean" />
+    <Property Name="OFU_ORDEM" Type="Int32" />
+    <Property Name="OFU_DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="OFU_LOCAL_EXIBE" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="OFU_DESCRICAO_EXIBE" Type="Boolean" />
+    <NavigationProperty Name="FUNCIONALIDADE" Relationship="Self.FK_ORIGEM_FUNCIONALIDADE_FUNCIONALIDADE" FromRole="ORIGEM_FUNCIONALIDADE" ToRole="FUNCIONALIDADE" />
+    <NavigationProperty Name="ORIGEM_ACESSO_REF" Relationship="Self.FK_ORIGEM_FUNCIONALIDADE_ORIGEM_ACESSO_REF" FromRole="ORIGEM_FUNCIONALIDADE" ToRole="ORIGEM_ACESSO_REF" />
+  </EntityType>
+  <EntityType Name="PERIODICIDADE">
+    <Key>
+      <PropertyRef Name="PRD_ID" />
+    </Key>
+    <Property Name="PRD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PRD_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="VEICULO" Relationship="Self.FK_VEICULO_PERIODICIDADE" FromRole="PERIODICIDADE" ToRole="VEICULO" />
+  </EntityType>
+  <EntityType Name="PLUBLICACAO_FLUXO">
+    <Key>
+      <PropertyRef Name="FLU_ID" />
+    </Key>
+    <Property Name="FLU_ID" Type="Int32" Nullable="false" />
+    <Property Name="FLU_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FLU_ATIVO" Type="Boolean" />
+    <NavigationProperty Name="PUBLICACAO_FLUXO_ETAPA" Relationship="Self.FK_PUBLICACAO_FLUXO_ETAPA_PLUBLICACAO_FLUXO" FromRole="PLUBLICACAO_FLUXO" ToRole="PUBLICACAO_FLUXO_ETAPA" />
+    <NavigationProperty Name="PUBLICACAO" Relationship="Self.FK_PUBLICACAO_PLUBLICACAO_FLUXO" FromRole="PLUBLICACAO_FLUXO" ToRole="PUBLICACAO" />
+  </EntityType>
+  <EntityType Name="PRODUTO_COMPOSICAO_REF">
+    <Key>
+      <PropertyRef Name="CMP_ID" />
+    </Key>
+    <Property Name="CMP_ID" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PRODUTO_REF">
+    <Key>
+      <PropertyRef Name="PRO_ID" />
+    </Key>
+    <Property Name="PRO_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="FUNCIONALIDADE" Relationship="Self.FK_FUNCIONALIDADE_PRODUTO_REF" FromRole="PRODUTO_REF" ToRole="FUNCIONALIDADE" />
+  </EntityType>
+  <EntityType Name="PUBLICACAO">
+    <Key>
+      <PropertyRef Name="PUB_ID" />
+    </Key>
+    <Property Name="PUB_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TIP_MAT_ID" Type="Int32" />
+    <Property Name="TIP_ATO_ID" Type="Int32" />
+    <Property Name="PUB_NUMERO_ATO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TVI_ID" Type="Int32" />
+    <Property Name="ORG_ID" Type="Int32" />
+    <Property Name="PUB_CONTEUDO_RESENHA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_CONTEUDO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SEC_ID" Type="Int32" />
+    <Property Name="LBL_ID" Type="Int32" />
+    <Property Name="PUB_OBS" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_DATA_ATO" Type="DateTime" Precision="3" />
+    <Property Name="PUB_DATA_PUB_ATO" Type="DateTime" Precision="3" />
+    <Property Name="PUB_DESCRICAO_NEWS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_COMPL_VEICULO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_ATIVO" Type="Int32" />
+    <Property Name="FLU_ID" Type="Int32" />
+    <Property Name="DATA_CADASTRO" Type="DateTime" Precision="3" />
+    <Property Name="DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="CABECALHO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_CONTEUDO_RVT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_CONTEUDO_RESENHA_DGT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_CONTEUDO_RESENHA_RVO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_CONTEUDO_RESENHA_RVT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_CONTEUDO_RESENHA_RDC" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_CONTEUDO_RDC" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_CONTEUDO_RVO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="LABELS" Relationship="Self.FK_PUBLICACAO_LABELS" FromRole="PUBLICACAO" ToRole="LABELS" />
+    <NavigationProperty Name="LOG_ACESSO_PORTAL" Relationship="Self.FK_LOG_ACESSO_PORTAL_PUBLICACAO" FromRole="PUBLICACAO" ToRole="LOG_ACESSO_PORTAL" />
+    <NavigationProperty Name="NOTICIA" Relationship="Self.FK_NOTICIA_PUBLICACAO" FromRole="PUBLICACAO" ToRole="NOTICIA" />
+    <NavigationProperty Name="ORGAO" Relationship="Self.FK_PUBLICACAO_TIPO_PUBLICACAO" FromRole="PUBLICACAO" ToRole="ORGAO" />
+    <NavigationProperty Name="PLUBLICACAO_FLUXO" Relationship="Self.FK_PUBLICACAO_PLUBLICACAO_FLUXO" FromRole="PUBLICACAO" ToRole="PLUBLICACAO_FLUXO" />
+    <NavigationProperty Name="PUBLICACAO_ALTERACAO_REVOGACAO" Relationship="Self.FK_PUBLICACAO_ALTERACAO_REVOGACAO_PUBLICACAO" FromRole="PUBLICACAO" ToRole="PUBLICACAO_ALTERACAO_REVOGACAO" />
+    <NavigationProperty Name="PUBLICACAO_EDITADA" Relationship="Self.FK_PUBLICACAO_EDITADA_PUBLICACAO" FromRole="PUBLICACAO" ToRole="PUBLICACAO_EDITADA" />
+    <NavigationProperty Name="PUBLICACAO_REVISAO_COLABORADOR" Relationship="Self.FK_PUBLICACAO_REVISAO_COLABORADOR_PUBLICACAO" FromRole="PUBLICACAO" ToRole="PUBLICACAO_REVISAO_COLABORADOR" />
+    <NavigationProperty Name="PUBLICACAO_REVISAO" Relationship="Self.FK_PUBLICACAO_REVISAO_PUBLICACAO" FromRole="PUBLICACAO" ToRole="PUBLICACAO_REVISAO" />
+    <NavigationProperty Name="SECOES" Relationship="Self.FK_PUBLICACAO_SECOES" FromRole="PUBLICACAO" ToRole="SECOES" />
+    <NavigationProperty Name="TIPO_ATO" Relationship="Self.FK_PUBLICACAO_TIPO_ATO" FromRole="PUBLICACAO" ToRole="TIPO_ATO" />
+    <NavigationProperty Name="TIPO_MATERIA" Relationship="Self.FK_PUBLICACAO_TIPO_MATERIA" FromRole="PUBLICACAO" ToRole="TIPO_MATERIA" />
+    <NavigationProperty Name="VEICULO" Relationship="Self.FK_PUBLICACAO_VEICULO" FromRole="PUBLICACAO" ToRole="VEICULO" />
+  </EntityType>
+  <EntityType Name="PUBLICACAO_ALTERACAO_REVOGACAO">
+    <Key>
+      <PropertyRef Name="PAR_ID" />
+    </Key>
+    <Property Name="PAR_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PUB_ID" Type="Int32" Nullable="false" />
+    <Property Name="PAR_TIPO" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TIP_ATO_ID" Type="Int32" Nullable="false" />
+    <Property Name="PUB_NUMERO_ATO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ORG_ID" Type="Int32" />
+    <Property Name="PUB_DATA_ATO" Type="DateTime" Precision="3" />
+    <Property Name="PUB_ALTERACAO_ATO" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PUBLICACAO" Relationship="Self.FK_PUBLICACAO_ALTERACAO_REVOGACAO_PUBLICACAO" FromRole="PUBLICACAO_ALTERACAO_REVOGACAO" ToRole="PUBLICACAO" />
+  </EntityType>
+  <EntityType Name="PUBLICACAO_AREAS_CONSULTORIA">
+    <Key>
+      <PropertyRef Name="PUB_ID" />
+      <PropertyRef Name="ARE_CONS_ID" />
+    </Key>
+    <Property Name="PUB_ID" Type="Int32" Nullable="false" />
+    <Property Name="ARE_CONS_ID" Type="Int32" Nullable="false" />
+    <Property Name="PUB_PAGINA_SUMARIO" Type="Int32" />
+    <Property Name="PUB_PAGINA_INDICE" Type="Int32" />
+    <Property Name="CAP_ID" Type="Int32" />
+    <Property Name="PUB_MANCHETE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_EMENTA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_EXPRESSAO" Type="String" MaxLength="99" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_MANCHETE_PORTAL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_EMENTA_PORTAL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AREAS_CONSULTORIA1" Relationship="Self.FK_PUBLICACAO_AREAS_CONSULTORIA_AREAS_CONSULTORIA7" FromRole="PUBLICACAO_AREAS_CONSULTORIA" ToRole="AREAS_CONSULTORIA1" />
+    <NavigationProperty Name="CAPITAL" Relationship="Self.FK_PUBLICACAO_AREAS_CONSULTORIA_CAPITAL" FromRole="PUBLICACAO_AREAS_CONSULTORIA" ToRole="CAPITAL" />
+    <NavigationProperty Name="PUBLICACAO_BUSCA" Relationship="Self.FK_PUBLICACAO_BUSCA_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_AREAS_CONSULTORIA" ToRole="PUBLICACAO_BUSCA" />
+    <NavigationProperty Name="PUBLICACAO_CONFIG" Relationship="Self.FK_PUBLICACAO_CONFIG_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_AREAS_CONSULTORIA" ToRole="PUBLICACAO_CONFIG" />
+    <NavigationProperty Name="PUBLICACAO_PALAVRA_CHAVE" Relationship="Self.FK_PUBLICACAO_PALAVRA_CHAVE_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_AREAS_CONSULTORIA" ToRole="PUBLICACAO_PALAVRA_CHAVE" />
+    <NavigationProperty Name="PUBLICACAO_REMISSAO" Relationship="Self.FK_PUBLICACAO_REMISSAO_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_AREAS_CONSULTORIA" ToRole="PUBLICACAO_REMISSAO" />
+    <NavigationProperty Name="PUBLICACAO_REMISSIVO" Relationship="Self.FK_PUBLICACAO_REMISSIVO_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_AREAS_CONSULTORIA" ToRole="PUBLICACAO_REMISSIVO" />
+    <NavigationProperty Name="PUBLICACAO_REVISAO_COLABORADOR" Relationship="Self.FK_PUBLICACAO_REVISAO_COLABORADOR_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_AREAS_CONSULTORIA" ToRole="PUBLICACAO_REVISAO_COLABORADOR" />
+    <NavigationProperty Name="PUBLICACAO_REVISAO" Relationship="Self.FK_PUBLICACAO_REVISAO_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_AREAS_CONSULTORIA" ToRole="PUBLICACAO_REVISAO" />
+    <NavigationProperty Name="PUBLICACAO_TITULACAO" Relationship="Self.FK_PUBLICACAO_TITULACAO_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_AREAS_CONSULTORIA" ToRole="PUBLICACAO_TITULACAO" />
+    <NavigationProperty Name="PUBLICACAO_UF" Relationship="Self.FK_PUBLICACAO_UF_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_AREAS_CONSULTORIA" ToRole="PUBLICACAO_UF" />
+  </EntityType>
+  <EntityType Name="PUBLICACAO_BUSCA">
+    <Key>
+      <PropertyRef Name="PBU_ID" />
+    </Key>
+    <Property Name="PBU_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PUB_ID" Type="Int32" Nullable="false" />
+    <Property Name="ARE_CONS_ID" Type="Int32" Nullable="false" />
+    <Property Name="PBU_PALAVRA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PUBLICACAO_AREAS_CONSULTORIA" Relationship="Self.FK_PUBLICACAO_BUSCA_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_BUSCA" ToRole="PUBLICACAO_AREAS_CONSULTORIA" />
+  </EntityType>
+  <EntityType Name="PUBLICACAO_CICLO_APROVACAO">
+    <Key>
+      <PropertyRef Name="FLU_ID" />
+      <PropertyRef Name="FLU_ETAPA_ID" />
+      <PropertyRef Name="CIC_ID" />
+    </Key>
+    <Property Name="FLU_ID" Type="Int32" Nullable="false" />
+    <Property Name="FLU_ETAPA_ID" Type="Int32" Nullable="false" />
+    <Property Name="CIC_ID" Type="Int32" Nullable="false" />
+    <Property Name="COL_ID" Type="Int32" />
+    <Property Name="CIC_DATA" Type="DateTime" Precision="3" />
+    <Property Name="CIC_OBS" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="CIC_STATUS" Type="Boolean" />
+    <NavigationProperty Name="COLABORADOR" Relationship="Self.FK_PUBLICACAO_CICLO_APROVACAO_COLABORADOR" FromRole="PUBLICACAO_CICLO_APROVACAO" ToRole="COLABORADOR" />
+    <NavigationProperty Name="PUBLICACAO_FLUXO_ETAPA" Relationship="Self.FK_PUBLICACAO_CICLO_APROVACAO_PUBLICACAO_FLUXO_ETAPA" FromRole="PUBLICACAO_CICLO_APROVACAO" ToRole="PUBLICACAO_FLUXO_ETAPA" />
+  </EntityType>
+  <EntityType Name="PUBLICACAO_CONFIG">
+    <Key>
+      <PropertyRef Name="PCF_ID" />
+    </Key>
+    <Property Name="PCF_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PUB_ID" Type="Int32" />
+    <Property Name="ARE_CONS_ID" Type="Int32" />
+    <Property Name="PCF_TIPO_ALTERACAO" Type="Int32" />
+    <Property Name="PCF_INDICE_ALFA" Type="Int32" />
+    <Property Name="PCF_INDICE_NUM" Type="Int32" />
+    <Property Name="PCF_INDICE_REVOGADO" Type="Int32" />
+    <Property Name="PCF_PUB_WEB" Type="Int32" />
+    <Property Name="PCF_PUB_IMPRESSO" Type="Int32" />
+    <Property Name="PCF_PUB_NEWS" Type="Int32" />
+    <Property Name="PCF_PUB_MOBILE" Type="Int32" />
+    <Property Name="PCF_PUB_CONSULTORIA" Type="Int32" />
+    <Property Name="PCF_PUB_WEBSERVICE" Type="Int32" />
+    <Property Name="PCF_DATA_PUB_WEB" Type="DateTime" Precision="3" />
+    <Property Name="PCF_DATA_PUB_IMPRESSO" Type="DateTime" Precision="3" />
+    <Property Name="PCF_DATA_PUB_NEWS" Type="DateTime" Precision="3" />
+    <Property Name="PCF_DATA_PUB_MOBILE" Type="DateTime" Precision="3" />
+    <Property Name="PCF_DATA_PUB_CONSULTORIA" Type="DateTime" Precision="3" />
+    <Property Name="PCF_DATA_PUB_WEBSERVICE" Type="DateTime" Precision="3" />
+    <Property Name="PCF_DATA_PUB_MANCHETE" Type="DateTime" Precision="3" />
+    <Property Name="PCF_DATA_PUB_EMENTA" Type="DateTime" Precision="3" />
+    <Property Name="DATA_CADASTRO" Type="DateTime" Precision="3" />
+    <Property Name="DATA_ALTERACAO" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PUBLICACAO_AREAS_CONSULTORIA" Relationship="Self.FK_PUBLICACAO_CONFIG_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_CONFIG" ToRole="PUBLICACAO_AREAS_CONSULTORIA" />
+  </EntityType>
+  <EntityType Name="PUBLICACAO_EDITADA">
+    <Key>
+      <PropertyRef Name="EDT_ID" />
+    </Key>
+    <Property Name="EDT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PUB_ID" Type="Int32" Nullable="false" />
+    <Property Name="EDT_HORARIO" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EDT_LIBERADA" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EDT_EDITANDO" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="PUBLICACAO" Relationship="Self.FK_PUBLICACAO_EDITADA_PUBLICACAO" FromRole="PUBLICACAO_EDITADA" ToRole="PUBLICACAO" />
+  </EntityType>
+  <EntityType Name="PUBLICACAO_FLUXO_ETAPA">
+    <Key>
+      <PropertyRef Name="FLU_ID" />
+      <PropertyRef Name="FLU_ETAPA_ID" />
+    </Key>
+    <Property Name="FLU_ID" Type="Int32" Nullable="false" />
+    <Property Name="FLU_ETAPA_ID" Type="Int32" Nullable="false" />
+    <Property Name="FLU_PRE_REQUISITO" Type="Boolean" />
+    <Property Name="FLU_OBRIGATORIO" Type="Boolean" />
+    <Property Name="CRG_ID" Type="Int32" />
+    <NavigationProperty Name="CARGOS" Relationship="Self.FK_PUBLICACAO_FLUXO_ETAPA_CARGOS" FromRole="PUBLICACAO_FLUXO_ETAPA" ToRole="CARGOS" />
+    <NavigationProperty Name="PLUBLICACAO_FLUXO" Relationship="Self.FK_PUBLICACAO_FLUXO_ETAPA_PLUBLICACAO_FLUXO" FromRole="PUBLICACAO_FLUXO_ETAPA" ToRole="PLUBLICACAO_FLUXO" />
+    <NavigationProperty Name="PUBLICACAO_CICLO_APROVACAO" Relationship="Self.FK_PUBLICACAO_CICLO_APROVACAO_PUBLICACAO_FLUXO_ETAPA" FromRole="PUBLICACAO_FLUXO_ETAPA" ToRole="PUBLICACAO_CICLO_APROVACAO" />
+  </EntityType>
+  <EntityType Name="PUBLICACAO_GRUPO_CONSULTORIA">
+    <Key>
+      <PropertyRef Name="PUB_ID" />
+      <PropertyRef Name="GRD_CONS_ID" />
+    </Key>
+    <Property Name="PUB_ID" Type="Int32" Nullable="false" />
+    <Property Name="GRD_CONS_ID" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PUBLICACAO_PALAVRA_CHAVE">
+    <Key>
+      <PropertyRef Name="PPC_ID" />
+    </Key>
+    <Property Name="PPC_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PUB_ID" Type="Int32" />
+    <Property Name="ARE_CONS_ID" Type="Int32" />
+    <Property Name="PPC_TEXTO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PUBLICACAO_AREAS_CONSULTORIA" Relationship="Self.FK_PUBLICACAO_PALAVRA_CHAVE_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_PALAVRA_CHAVE" ToRole="PUBLICACAO_AREAS_CONSULTORIA" />
+  </EntityType>
+  <EntityType Name="PUBLICACAO_REMISSAO">
+    <Key>
+      <PropertyRef Name="PRE_ID" />
+    </Key>
+    <Property Name="PRE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PUB_ID" Type="Int32" Nullable="false" />
+    <Property Name="ARE_CONS_ID" Type="Int32" Nullable="false" />
+    <Property Name="PRE_NUMERO" Type="Int32" Nullable="false" />
+    <Property Name="PRE_REMISSAO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PUBLICACAO_AREAS_CONSULTORIA" Relationship="Self.FK_PUBLICACAO_REMISSAO_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_REMISSAO" ToRole="PUBLICACAO_AREAS_CONSULTORIA" />
+  </EntityType>
+  <EntityType Name="PUBLICACAO_REMISSIVO">
+    <Key>
+      <PropertyRef Name="PRE_ID" />
+    </Key>
+    <Property Name="PRE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PUB_ID" Type="Int32" Nullable="false" />
+    <Property Name="ARE_CONS_ID" Type="Int32" Nullable="false" />
+    <Property Name="PRE_REMISSIVO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PUBLICACAO_AREAS_CONSULTORIA" Relationship="Self.FK_PUBLICACAO_REMISSIVO_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_REMISSIVO" ToRole="PUBLICACAO_AREAS_CONSULTORIA" />
+  </EntityType>
+  <EntityType Name="PUBLICACAO_REVISAO">
+    <Key>
+      <PropertyRef Name="REV_ID" />
+    </Key>
+    <Property Name="REV_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PUB_ID" Type="Int32" Nullable="false" />
+    <Property Name="ARE_CONS_ID" Type="Int32" Nullable="false" />
+    <Property Name="REV_TC" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="DIG_TC" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="REV_OR" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="COL_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="COLABORADOR" Relationship="Self.FK_PUBLICACAO_REVISAO_COLABORADOR" FromRole="PUBLICACAO_REVISAO" ToRole="COLABORADOR" />
+    <NavigationProperty Name="PUBLICACAO" Relationship="Self.FK_PUBLICACAO_REVISAO_PUBLICACAO" FromRole="PUBLICACAO_REVISAO" ToRole="PUBLICACAO" />
+    <NavigationProperty Name="PUBLICACAO_AREAS_CONSULTORIA" Relationship="Self.FK_PUBLICACAO_REVISAO_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_REVISAO" ToRole="PUBLICACAO_AREAS_CONSULTORIA" />
+  </EntityType>
+  <EntityType Name="PUBLICACAO_REVISAO_COLABORADOR">
+    <Key>
+      <PropertyRef Name="REV_ID" />
+    </Key>
+    <Property Name="REV_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PUB_ID" Type="Int32" Nullable="false" />
+    <Property Name="ARE_CONS_ID" Type="Int32" Nullable="false" />
+    <Property Name="COL_ID" Type="Int32" Nullable="false" />
+    <Property Name="DATA" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="REVISAO" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="EDITOU" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MOTIVO" Type="String" MaxLength="999" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="COLABORADOR" Relationship="Self.FK_PUBLICACAO_REVISAO_COLABORADOR_COLABORADOR" FromRole="PUBLICACAO_REVISAO_COLABORADOR" ToRole="COLABORADOR" />
+    <NavigationProperty Name="PUBLICACAO" Relationship="Self.FK_PUBLICACAO_REVISAO_COLABORADOR_PUBLICACAO" FromRole="PUBLICACAO_REVISAO_COLABORADOR" ToRole="PUBLICACAO" />
+    <NavigationProperty Name="PUBLICACAO_AREAS_CONSULTORIA" Relationship="Self.FK_PUBLICACAO_REVISAO_COLABORADOR_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_REVISAO_COLABORADOR" ToRole="PUBLICACAO_AREAS_CONSULTORIA" />
+  </EntityType>
+  <EntityType Name="PUBLICACAO_TITULACAO">
+    <Key>
+      <PropertyRef Name="PTI_ID" />
+    </Key>
+    <Property Name="PTI_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PUB_ID" Type="Int32" Nullable="false" />
+    <Property Name="ARE_CONS_ID" Type="Int32" Nullable="false" />
+    <Property Name="TIT_ID" Type="Int32" />
+    <Property Name="TIT_ID_VERBETE" Type="Int32" />
+    <Property Name="TIT_ID_SUBVERBETE" Type="Int32" />
+    <Property Name="PTI_PRINCIPAL" Type="Boolean" />
+    <NavigationProperty Name="PUBLICACAO_AREAS_CONSULTORIA" Relationship="Self.FK_PUBLICACAO_TITULACAO_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_TITULACAO" ToRole="PUBLICACAO_AREAS_CONSULTORIA" />
+  </EntityType>
+  <EntityType Name="PUBLICACAO_UF">
+    <Key>
+      <PropertyRef Name="PUB_ID" />
+      <PropertyRef Name="ARE_CONS_ID" />
+      <PropertyRef Name="UF_ID" />
+    </Key>
+    <Property Name="PUB_ID" Type="Int32" Nullable="false" />
+    <Property Name="ARE_CONS_ID" Type="Int32" Nullable="false" />
+    <Property Name="UF_ID" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="INF_ANO" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+    <Property Name="INF_NUMERO" Type="Int32" />
+    <Property Name="PUB_ATIVO" Type="Boolean" />
+    <NavigationProperty Name="INFORMATIVO" Relationship="Self.FK_PUBLICACAO_UF_INFORMATIVO" FromRole="PUBLICACAO_UF" ToRole="INFORMATIVO" />
+    <NavigationProperty Name="PUBLICACAO_AREAS_CONSULTORIA" Relationship="Self.FK_PUBLICACAO_UF_PUBLICACAO_AREAS_CONSULTORIA" FromRole="PUBLICACAO_UF" ToRole="PUBLICACAO_AREAS_CONSULTORIA" />
+    <NavigationProperty Name="UF_REF" Relationship="Self.FK_PUBLICACAO_UF_UF_REF" FromRole="PUBLICACAO_UF" ToRole="UF_REF" />
+  </EntityType>
+  <EntityType Name="RELATORIOS">
+    <Key>
+      <PropertyRef Name="REL_ID" />
+    </Key>
+    <Property Name="REL_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="REL_DESCRICAO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="REL_PATH" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="REL_TIPO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+  </EntityType>
+  <EntityType Name="SECOES">
+    <Key>
+      <PropertyRef Name="SEC_ID" />
+    </Key>
+    <Property Name="SEC_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SEC_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SEC_ATIVO" Type="Int32" />
+    <Property Name="DATA_CADASTRO" Type="DateTime" Precision="3" />
+    <Property Name="DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="DATA_EXCLUSAO" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PUBLICACAO" Relationship="Self.FK_PUBLICACAO_SECOES" FromRole="SECOES" ToRole="PUBLICACAO" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TAB_DINAMICA">
+    <Key>
+      <PropertyRef Name="TDC_ID" />
+    </Key>
+    <Property Name="TDC_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TAB_DESCRICAO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_INTRODUCAO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_OBS_LAYOUT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_LEGENDA_LAYOUT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_INF_PREENCHIMENTO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_INF_GERAIS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="TAB_DATA_INCLUSAO" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_ERRO_MSG" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TAB_DINAMICA_ITEM" Relationship="Self.FK_TAB_DINAMICA_ITEM_TAB_DINAMICA" FromRole="TAB_DINAMICA" ToRole="TAB_DINAMICA_ITEM" />
+    <NavigationProperty Name="TAB_DINAMICA_CONFIG" Relationship="Self.FK_TAB_DINAMICA_TAB_DINAMICA_CONFIG" FromRole="TAB_DINAMICA" ToRole="TAB_DINAMICA_CONFIG" />
+  </EntityType>
+  <EntityType Name="TAB_DINAMICA_CONFIG">
+    <Key>
+      <PropertyRef Name="TDC_ID" />
+    </Key>
+    <Property Name="TDC_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TDC_INTRODUCAO" Type="Boolean" Nullable="false" />
+    <Property Name="TDC_OBS_LAYOUT" Type="Boolean" Nullable="false" />
+    <Property Name="TDC_LEGENDA_LAYOUT" Type="Boolean" Nullable="false" />
+    <Property Name="TDC_INF_PREENCHIMENTO" Type="Boolean" Nullable="false" />
+    <Property Name="TDC_INF_GERAIS" Type="Boolean" Nullable="false" />
+    <Property Name="TDC_DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="TDC_DATA_INCLUSAO" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TDC_NOME_TABELA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="TDC_TIPO" Type="Int32" />
+    <Property Name="TDC_ID_TAB_REF" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="TDC_DATA_PUBLICACAO" Type="DateTime" Precision="3" />
+    <Property Name="TGR_ID" Type="Int32" />
+    <Property Name="TTA_ID" Type="Int32" />
+    <Property Name="TIT_ID" Type="Int32" />
+    <Property Name="TDC_LAYOUT_TABELA" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="TDC_PALAVRA_CHAVE" Type="Boolean" />
+    <Property Name="USU_LOGIN_PUB" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="TDC_NOME_CHAVEDB" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+    <Property Name="TDC_NOME_LISTADB" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+    <Property Name="TDC_NOME_OBS" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="TDC_DECIMAIS" Type="Int32" />
+    <Property Name="TDC_NOME_IDENTIFICADOR" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TAB_DINAMICA" Relationship="Self.FK_TAB_DINAMICA_TAB_DINAMICA_CONFIG" FromRole="TAB_DINAMICA_CONFIG" ToRole="TAB_DINAMICA" />
+    <NavigationProperty Name="TAB_DINAMICA_CONFIG_ITEM" Relationship="Self.FK_TAB_DINAMICA_CONFIG_ITEM_TAB_DINAMICA_CONFIG" FromRole="TAB_DINAMICA_CONFIG" ToRole="TAB_DINAMICA_CONFIG_ITEM" />
+    <NavigationProperty Name="TAB_DINAMICA_CONFIG1" Relationship="Self.FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_CONFIG1" FromRole="TAB_DINAMICA_CONFIG" ToRole="TAB_DINAMICA_CONFIG1" />
+    <NavigationProperty Name="TAB_DINAMICA_CONFIG2" Relationship="Self.FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_CONFIG1" FromRole="TAB_DINAMICA_CONFIG1" ToRole="TAB_DINAMICA_CONFIG" />
+    <NavigationProperty Name="TAB_DINAMICA_GRUPO" Relationship="Self.FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_GRUPO" FromRole="TAB_DINAMICA_CONFIG" ToRole="TAB_DINAMICA_GRUPO" />
+    <NavigationProperty Name="TAB_DINAMICA_LINK" Relationship="Self.FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_LINK" FromRole="TAB_DINAMICA_CONFIG" ToRole="TAB_DINAMICA_LINK" />
+    <NavigationProperty Name="TITULACAO" Relationship="Self.FK_TAB_DINAMICA_CONFIG_TITULACAO" FromRole="TAB_DINAMICA_CONFIG" ToRole="TITULACAO" />
+    <NavigationProperty Name="TAB_DINAMICA_ORIGEM" Relationship="Self.FK_TAB_DINAMICA_ORIGEM_TAB_DINAMICA_CONFIG" FromRole="TAB_DINAMICA_CONFIG" ToRole="TAB_DINAMICA_ORIGEM" />
+    <NavigationProperty Name="TAB_DINAMICA_PUBLICACAO" Relationship="Self.FK_TAB_DINAMICA_PUBLICACAO_TAB_DINAMICA_CONFIG" FromRole="TAB_DINAMICA_CONFIG" ToRole="TAB_DINAMICA_PUBLICACAO" />
+  </EntityType>
+  <EntityType Name="TAB_DINAMICA_CONFIG_ITEM">
+    <Key>
+      <PropertyRef Name="TDC_ID" />
+      <PropertyRef Name="TCI_ID" />
+    </Key>
+    <Property Name="TDC_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TCI_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TCI_TIPO_CAMPO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="TCI_TAMANHO_CAMPO" Type="Int32" />
+    <Property Name="TCI_ALINHAMENTO_CAMPO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="TCI_ORDEM_APRESENTACAO" Type="Int32" Nullable="false" />
+    <Property Name="TCI_VALOR_PADRAO" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="TCI_VALOR_ESPERADO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TCI_NOME_CAMPODB" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+    <Property Name="TCI_NOME_CAMPO" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="TCI_FORMULA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="TCI_TEXTO_HELP" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TDC_ID_TAB_REF" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="TCI_TEXTO_HELP_LINK" Type="Boolean" />
+    <Property Name="TCI_PATH_HELP_LINK" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="TCI_TARGET" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="TCI_CAMPO_PESQUISA" Type="Boolean" />
+    <Property Name="TCI_CAMPO_VISIVEL" Type="Boolean" />
+    <Property Name="TCI_CAMPO_CHAVE" Type="Boolean" />
+    <Property Name="TCI_CAMPO_LISTA" Type="Boolean" />
+    <Property Name="TCI_NOME_CHAVEDB" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+    <Property Name="TCI_NOME_LISTADB" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+    <Property Name="TCI_DECIMAIS" Type="Int32" />
+    <Property Name="TCI_NOME_CAMPO_AUX" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TAB_DINAMICA_CONFIG" Relationship="Self.FK_TAB_DINAMICA_CONFIG_ITEM_TAB_DINAMICA_CONFIG" FromRole="TAB_DINAMICA_CONFIG_ITEM" ToRole="TAB_DINAMICA_CONFIG" />
+  </EntityType>
+  <EntityType Name="TAB_DINAMICA_GRUPO">
+    <Key>
+      <PropertyRef Name="TGR_ID" />
+    </Key>
+    <Property Name="TGR_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TGR_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TGR_TIPO" Type="Int32" />
+    <NavigationProperty Name="TAB_DINAMICA_CONFIG" Relationship="Self.FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_GRUPO" FromRole="TAB_DINAMICA_GRUPO" ToRole="TAB_DINAMICA_CONFIG" />
+  </EntityType>
+  <EntityType Name="TAB_DINAMICA_ITEM">
+    <Key>
+      <PropertyRef Name="TDC_ID" />
+      <PropertyRef Name="TAB_ID" />
+    </Key>
+    <Property Name="TDC_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TAB_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TAB_STRING01" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING02" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING03" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING04" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING05" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING06" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING07" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING08" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING09" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING10" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING11" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING12" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING13" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING14" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING15" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_INT01" Type="Int32" />
+    <Property Name="TAB_INT02" Type="Int32" />
+    <Property Name="TAB_INT03" Type="Int32" />
+    <Property Name="TAB_INT04" Type="Int32" />
+    <Property Name="TAB_INT05" Type="Int32" />
+    <Property Name="TAB_INT06" Type="Int32" />
+    <Property Name="TAB_INT07" Type="Int32" />
+    <Property Name="TAB_INT08" Type="Int32" />
+    <Property Name="TAB_INT09" Type="Int32" />
+    <Property Name="TAB_INT10" Type="Int32" />
+    <Property Name="TAB_DATA01" Type="DateTime" Precision="3" />
+    <Property Name="TAB_DATA02" Type="DateTime" Precision="3" />
+    <Property Name="TAB_DATA03" Type="DateTime" Precision="3" />
+    <Property Name="TAB_DATA04" Type="DateTime" Precision="3" />
+    <Property Name="TAB_DATA05" Type="DateTime" Precision="3" />
+    <Property Name="TAB_DATA06" Type="DateTime" Precision="3" />
+    <Property Name="TAB_DATA07" Type="DateTime" Precision="3" />
+    <Property Name="TAB_DATA08" Type="DateTime" Precision="3" />
+    <Property Name="TAB_DATA09" Type="DateTime" Precision="3" />
+    <Property Name="TAB_DATA10" Type="DateTime" Precision="3" />
+    <Property Name="TAB_DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="TAB_DATA_INCLUSAO" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TAB_STRING16" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING17" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING18" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING19" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING20" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING21" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING22" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING23" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING24" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING25" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING26" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING27" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING28" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING29" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING30" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="RET_FERIADOS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING31" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING32" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING33" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING34" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING35" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING36" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING37" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING38" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING39" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING40" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING41" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING42" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING43" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING44" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING45" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING46" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING47" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING48" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING49" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING50" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING51" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING52" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING53" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING54" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING55" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING56" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING57" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING58" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING59" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TAB_STRING60" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TAB_DINAMICA" Relationship="Self.FK_TAB_DINAMICA_ITEM_TAB_DINAMICA" FromRole="TAB_DINAMICA_ITEM" ToRole="TAB_DINAMICA" />
+  </EntityType>
+  <EntityType Name="TAB_DINAMICA_LINK">
+    <Key>
+      <PropertyRef Name="LNK_TAG" />
+    </Key>
+    <Property Name="LNK_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TDC_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LNK_DESCRICAO" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="LNK_LINK" Type="String" MaxLength="600" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TAB_DINAMICA_CONFIG" Relationship="Self.FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_LINK" FromRole="TAB_DINAMICA_LINK" ToRole="TAB_DINAMICA_CONFIG" />
+  </EntityType>
+  <EntityType Name="TAB_DINAMICA_ORIGEM">
+    <Key>
+      <PropertyRef Name="OAC_ID" />
+      <PropertyRef Name="TDC_ID" />
+    </Key>
+    <Property Name="OAC_ID" Type="Int32" Nullable="false" />
+    <Property Name="TDC_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ORIGEM_ACESSO_REF" Relationship="Self.FK_TAB_DINAMICA_ORIGEM_ORIGEM_ACESSO_REF" FromRole="TAB_DINAMICA_ORIGEM" ToRole="ORIGEM_ACESSO_REF" />
+    <NavigationProperty Name="TAB_DINAMICA_CONFIG" Relationship="Self.FK_TAB_DINAMICA_ORIGEM_TAB_DINAMICA_CONFIG" FromRole="TAB_DINAMICA_ORIGEM" ToRole="TAB_DINAMICA_CONFIG" />
+  </EntityType>
+  <EntityType Name="TAB_DINAMICA_PUBLICACAO">
+    <Key>
+      <PropertyRef Name="TPU_ID" />
+    </Key>
+    <Property Name="TPU_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TDC_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="USU_LOGIN_APROV" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="TPU_DATA_LANC" Type="DateTime" Precision="3" />
+    <Property Name="TPU_DATA_APROV" Type="DateTime" Precision="3" />
+    <Property Name="TPU_OBS" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="TPU_STATUS" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="TAB_DINAMICA_CONFIG" Relationship="Self.FK_TAB_DINAMICA_PUBLICACAO_TAB_DINAMICA_CONFIG" FromRole="TAB_DINAMICA_PUBLICACAO" ToRole="TAB_DINAMICA_CONFIG" />
+  </EntityType>
+  <EntityType Name="TIPO_ATO">
+    <Key>
+      <PropertyRef Name="TIP_ATO_ID" />
+    </Key>
+    <Property Name="TIP_ATO_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TIP_ATO_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TIP_ATIVO" Type="Int32" />
+    <Property Name="DATA_CADASTRO" Type="DateTime" Precision="3" />
+    <Property Name="DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="MANUAL_DP_ITEM" Relationship="Self.FK_MANUAL_DP_ITEM_TIPO_ATO" FromRole="TIPO_ATO" ToRole="MANUAL_DP_ITEM" />
+    <NavigationProperty Name="PUBLICACAO" Relationship="Self.FK_PUBLICACAO_TIPO_ATO" FromRole="TIPO_ATO" ToRole="PUBLICACAO" />
+  </EntityType>
+  <EntityType Name="TIPO_MATERIA">
+    <Key>
+      <PropertyRef Name="TIP_MAT_ID" />
+    </Key>
+    <Property Name="TIP_MAT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TIP_MAT_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DATA_CADASTRO" Type="DateTime" Precision="3" />
+    <Property Name="DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="TIP_MAT_ATIVO" Type="Int32" />
+    <Property Name="ARE_CABECA_MATERIA" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PUBLICACAO" Relationship="Self.FK_PUBLICACAO_TIPO_MATERIA" FromRole="TIPO_MATERIA" ToRole="PUBLICACAO" />
+  </EntityType>
+  <EntityType Name="TITULACAO">
+    <Key>
+      <PropertyRef Name="TIT_ID" />
+    </Key>
+    <Property Name="TIT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TIT_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TIT_ATIVO" Type="Int32" />
+    <Property Name="TIT_TIPO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="TIT_ID_REFERENCIA" Type="Int32" />
+    <Property Name="ARE_CONS_ID" Type="Int32" />
+    <Property Name="UF_ID" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="AREAS_CONSULTORIA" Relationship="Self.FK_TITULACAO_AREAS_CONSULTORIA" FromRole="TITULACAO" ToRole="AREAS_CONSULTORIA" />
+    <NavigationProperty Name="AREAS_CONSULTORIA1" Relationship="Self.FK_TITULACAO_AREAS_CONSULTORIA7" FromRole="TITULACAO" ToRole="AREAS_CONSULTORIA1" />
+    <NavigationProperty Name="NOTICIA" Relationship="Self.FK_NOTICIA_TITULACAO" FromRole="TITULACAO" ToRole="NOTICIA" />
+    <NavigationProperty Name="TAB_DINAMICA_CONFIG" Relationship="Self.FK_TAB_DINAMICA_CONFIG_TITULACAO" FromRole="TITULACAO" ToRole="TAB_DINAMICA_CONFIG" />
+    <NavigationProperty Name="TITULACAO1" Relationship="Self.FK_TITULACAO_TITULACAO" FromRole="TITULACAO" ToRole="TITULACAO1" />
+    <NavigationProperty Name="TITULACAO2" Relationship="Self.FK_TITULACAO_TITULACAO" FromRole="TITULACAO1" ToRole="TITULACAO" />
+  </EntityType>
+  <EntityType Name="UF_REF">
+    <Key>
+      <PropertyRef Name="UF_ID" />
+    </Key>
+    <Property Name="UF_ID" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="UF_NOME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AREAS_CONSULTORIA_NEWS" Relationship="Self.FK_AREAS_CONSULTORIA_NEWS_UF_REF" FromRole="UF_REF" ToRole="AREAS_CONSULTORIA_NEWS" />
+    <NavigationProperty Name="PUBLICACAO_UF" Relationship="Self.FK_PUBLICACAO_UF_UF_REF" FromRole="UF_REF" ToRole="PUBLICACAO_UF" />
+  </EntityType>
+  <EntityType Name="VEICULO">
+    <Key>
+      <PropertyRef Name="TVI_ID" />
+    </Key>
+    <Property Name="TVI_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TVI_DESCRICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PRD_ID" Type="Int32" />
+    <Property Name="DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="TVI_ATIVO" Type="Int32" />
+    <NavigationProperty Name="PERIODICIDADE" Relationship="Self.FK_VEICULO_PERIODICIDADE" FromRole="VEICULO" ToRole="PERIODICIDADE" />
+    <NavigationProperty Name="PUBLICACAO" Relationship="Self.FK_PUBLICACAO_VEICULO" FromRole="VEICULO" ToRole="PUBLICACAO" />
+  </EntityType>
+  <EntityType Name="CONSULTA_EMAIL_PERFIL_COLEC">
+    <Key>
+      <PropertyRef Name="PC_ID" />
+      <PropertyRef Name="COLEC_ID" />
+    </Key>
+    <Property Name="PC_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="COLEC_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CONSULTA_EMAIL_COLECIONADOR" Relationship="Self.FK_CONSULTA_EMAIL_COLECIONADOR_PC" FromRole="CONSULTA_EMAIL_PERFIL_COLEC" ToRole="CONSULTA_EMAIL_COLECIONADOR" />
+  </EntityType>
+  <EntityType Name="PUBLICACAO_vw">
+    <Key>
+      <PropertyRef Name="PUB_ID" />
+    </Key>
+    <Property Name="PUB_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TIP_MAT_ID" Type="Int32" />
+    <Property Name="TIP_ATO_ID" Type="Int32" />
+    <Property Name="PUB_NUMERO_ATO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TVI_ID" Type="Int32" />
+    <Property Name="ORG_ID" Type="Int32" />
+    <Property Name="PUB_CONTEUDO_RESENHA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_CONTEUDO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SEC_ID" Type="Int32" />
+    <Property Name="LBL_ID" Type="Int32" />
+    <Property Name="PUB_OBS" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_DATA_ATO" Type="DateTime" Precision="3" />
+    <Property Name="PUB_DATA_PUB_ATO" Type="DateTime" Precision="3" />
+    <Property Name="PUB_DESCRICAO_NEWS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_COMPL_VEICULO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PUB_ATIVO" Type="Int32" />
+    <Property Name="FLU_ID" Type="Int32" />
+    <Property Name="DATA_CADASTRO" Type="DateTime" Precision="3" />
+    <Property Name="DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="USU_LOGIN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TABELA_CEST_VW">
+    <Key>
+      <PropertyRef Name="codigo_cest" />
+    </Key>
+    <Property Name="id" Type="Decimal" Precision="20" Scale="0" />
+    <Property Name="codigo_cest" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="descricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="id_item_cest_pai" Type="Decimal" Precision="20" Scale="0" />
+    <Property Name="ncm" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TABELA_TIPI_VW">
+    <Key>
+      <PropertyRef Name="ncm" />
+      <PropertyRef Name="descricao" />
+    </Key>
+    <Property Name="id" Type="Decimal" Precision="20" Scale="0" />
+    <Property Name="ncm" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="descricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="id_item_tabela_tipi_pai" Type="Decimal" Precision="20" Scale="0" />
+    <Property Name="codigo_cest" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_AREAS_CONSULTORIA_NEWS_AREAS_CONSULTORIA">
+    <End Role="AREAS_CONSULTORIA" Type="Self.AREAS_CONSULTORIA" Multiplicity="1" />
+    <End Role="AREAS_CONSULTORIA_NEWS" Type="Self.AREAS_CONSULTORIA_NEWS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AREAS_CONSULTORIA">
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Principal>
+      <Dependent Role="AREAS_CONSULTORIA_NEWS">
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_COLABORADOR_AREAS_CONSULTORIA">
+    <End Role="AREAS_CONSULTORIA" Type="Self.AREAS_CONSULTORIA" Multiplicity="0..1" />
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AREAS_CONSULTORIA">
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Principal>
+      <Dependent Role="COLABORADOR">
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TITULACAO_AREAS_CONSULTORIA">
+    <End Role="AREAS_CONSULTORIA" Type="Self.AREAS_CONSULTORIA" Multiplicity="0..1" />
+    <End Role="TITULACAO" Type="Self.TITULACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AREAS_CONSULTORIA">
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Principal>
+      <Dependent Role="TITULACAO">
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AREAS_CONSULTORIA_NEWS_AREAS_CONSULTORIA7">
+    <End Role="AREAS_CONSULTORIA1" Type="Self.AREAS_CONSULTORIA1" Multiplicity="1" />
+    <End Role="AREAS_CONSULTORIA_NEWS" Type="Self.AREAS_CONSULTORIA_NEWS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AREAS_CONSULTORIA1">
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Principal>
+      <Dependent Role="AREAS_CONSULTORIA_NEWS">
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AREAS_CONSULTORIA_NEWS_NEWS">
+    <End Role="NEWS" Type="Self.NEWS" Multiplicity="1" />
+    <End Role="AREAS_CONSULTORIA_NEWS" Type="Self.AREAS_CONSULTORIA_NEWS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NEWS">
+        <PropertyRef Name="NEWS_ID" />
+      </Principal>
+      <Dependent Role="AREAS_CONSULTORIA_NEWS">
+        <PropertyRef Name="NEWS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AREAS_CONSULTORIA_NEWS_UF_REF">
+    <End Role="UF_REF" Type="Self.UF_REF" Multiplicity="1" />
+    <End Role="AREAS_CONSULTORIA_NEWS" Type="Self.AREAS_CONSULTORIA_NEWS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UF_REF">
+        <PropertyRef Name="UF_ID" />
+      </Principal>
+      <Dependent Role="AREAS_CONSULTORIA_NEWS">
+        <PropertyRef Name="UF_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_COLABORADOR_AREAS_CONSULTORIA7">
+    <End Role="AREAS_CONSULTORIA1" Type="Self.AREAS_CONSULTORIA1" Multiplicity="0..1" />
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AREAS_CONSULTORIA1">
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Principal>
+      <Dependent Role="COLABORADOR">
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_AREAS_CONSULTORIA_AREAS_CONSULTORIA7">
+    <End Role="AREAS_CONSULTORIA1" Type="Self.AREAS_CONSULTORIA1" Multiplicity="1" />
+    <End Role="PUBLICACAO_AREAS_CONSULTORIA" Type="Self.PUBLICACAO_AREAS_CONSULTORIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AREAS_CONSULTORIA1">
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_AREAS_CONSULTORIA">
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TITULACAO_AREAS_CONSULTORIA7">
+    <End Role="AREAS_CONSULTORIA1" Type="Self.AREAS_CONSULTORIA1" Multiplicity="0..1" />
+    <End Role="TITULACAO" Type="Self.TITULACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AREAS_CONSULTORIA1">
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Principal>
+      <Dependent Role="TITULACAO">
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CADERNO_CLIENTE">
+    <End Role="CLIENTES_REF" Type="Self.CLIENTES_REF" Multiplicity="1" />
+    <End Role="CADERNO" Type="Self.CADERNO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CLIENTES_REF">
+        <PropertyRef Name="CLI_ID" />
+      </Principal>
+      <Dependent Role="CADERNO">
+        <PropertyRef Name="CLI_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CADERNO_COMPARTILHADO_CADERNO">
+    <End Role="CADERNO" Type="Self.CADERNO" Multiplicity="1" />
+    <End Role="CADERNO_COMPARTILHADO" Type="Self.CADERNO_COMPARTILHADO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CADERNO">
+        <PropertyRef Name="CAD_ID" />
+      </Principal>
+      <Dependent Role="CADERNO_COMPARTILHADO">
+        <PropertyRef Name="CAD_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CADERNO_CONTEUDO_CADERNO">
+    <End Role="CADERNO" Type="Self.CADERNO" Multiplicity="1" />
+    <End Role="CADERNO_CONTEUDO" Type="Self.CADERNO_CONTEUDO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CADERNO">
+        <PropertyRef Name="CAD_ID" />
+      </Principal>
+      <Dependent Role="CADERNO_CONTEUDO">
+        <PropertyRef Name="CAD_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CADERNO_NOTA_CADERNO">
+    <End Role="CADERNO" Type="Self.CADERNO" Multiplicity="1" />
+    <End Role="CADERNO_NOTA" Type="Self.CADERNO_NOTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CADERNO">
+        <PropertyRef Name="CAD_ID" />
+      </Principal>
+      <Dependent Role="CADERNO_NOTA">
+        <PropertyRef Name="CAD_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CADERNO_COMPARTILHADO_CLIENTES_REF">
+    <End Role="CLIENTES_REF" Type="Self.CLIENTES_REF" Multiplicity="1" />
+    <End Role="CADERNO_COMPARTILHADO" Type="Self.CADERNO_COMPARTILHADO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CLIENTES_REF">
+        <PropertyRef Name="CLI_ID" />
+      </Principal>
+      <Dependent Role="CADERNO_COMPARTILHADO">
+        <PropertyRef Name="CLI_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_AREAS_CONSULTORIA_CAPITAL">
+    <End Role="CAPITAL" Type="Self.CAPITAL" Multiplicity="0..1" />
+    <End Role="PUBLICACAO_AREAS_CONSULTORIA" Type="Self.PUBLICACAO_AREAS_CONSULTORIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAPITAL">
+        <PropertyRef Name="CAP_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_AREAS_CONSULTORIA">
+        <PropertyRef Name="CAP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_COLABORADOR_CARGOS">
+    <End Role="CARGOS" Type="Self.CARGOS" Multiplicity="0..1" />
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CARGOS">
+        <PropertyRef Name="CRG_ID" />
+      </Principal>
+      <Dependent Role="COLABORADOR">
+        <PropertyRef Name="CRG_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_FLUXO_ETAPA_CARGOS">
+    <End Role="CARGOS" Type="Self.CARGOS" Multiplicity="0..1" />
+    <End Role="PUBLICACAO_FLUXO_ETAPA" Type="Self.PUBLICACAO_FLUXO_ETAPA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CARGOS">
+        <PropertyRef Name="CRG_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_FLUXO_ETAPA">
+        <PropertyRef Name="CRG_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_CICLO_APROVACAO_COLABORADOR">
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="0..1" />
+    <End Role="PUBLICACAO_CICLO_APROVACAO" Type="Self.PUBLICACAO_CICLO_APROVACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COLABORADOR">
+        <PropertyRef Name="COL_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_CICLO_APROVACAO">
+        <PropertyRef Name="COL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_REVISAO_COLABORADOR">
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="1" />
+    <End Role="PUBLICACAO_REVISAO" Type="Self.PUBLICACAO_REVISAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COLABORADOR">
+        <PropertyRef Name="COL_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_REVISAO">
+        <PropertyRef Name="COL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_REVISAO_COLABORADOR_COLABORADOR">
+    <End Role="COLABORADOR" Type="Self.COLABORADOR" Multiplicity="1" />
+    <End Role="PUBLICACAO_REVISAO_COLABORADOR" Type="Self.PUBLICACAO_REVISAO_COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COLABORADOR">
+        <PropertyRef Name="COL_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_REVISAO_COLABORADOR">
+        <PropertyRef Name="COL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONSULTA_EMAIL_COLECIONADOR">
+    <End Role="CONSULTA_EMAIL_COLECIONADOR" Type="Self.CONSULTA_EMAIL_COLECIONADOR" Multiplicity="1" />
+    <End Role="CONSULTA_EMAIL" Type="Self.CONSULTA_EMAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONSULTA_EMAIL_COLECIONADOR">
+        <PropertyRef Name="COLEC_ID" />
+      </Principal>
+      <Dependent Role="CONSULTA_EMAIL">
+        <PropertyRef Name="COLEC_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONSULTA_EMAIL_CONSULTA_EMAIL_VERBETE">
+    <End Role="CONSULTA_EMAIL_VERBETE" Type="Self.CONSULTA_EMAIL_VERBETE" Multiplicity="0..1" />
+    <End Role="CONSULTA_EMAIL" Type="Self.CONSULTA_EMAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONSULTA_EMAIL_VERBETE">
+        <PropertyRef Name="VERB_ID" />
+      </Principal>
+      <Dependent Role="CONSULTA_EMAIL">
+        <PropertyRef Name="VERB_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONSULTA_EMAIL_GRANDE_GRUPO">
+    <End Role="CONSULTA_EMAIL_GRANDE_GRUPO" Type="Self.CONSULTA_EMAIL_GRANDE_GRUPO" Multiplicity="0..1" />
+    <End Role="CONSULTA_EMAIL" Type="Self.CONSULTA_EMAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONSULTA_EMAIL_GRANDE_GRUPO">
+        <PropertyRef Name="GRG_ID" />
+      </Principal>
+      <Dependent Role="CONSULTA_EMAIL">
+        <PropertyRef Name="GRG_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONSULTA_EMAIL_STATUS">
+    <End Role="CONSULTA_EMAIL_STATUS" Type="Self.CONSULTA_EMAIL_STATUS" Multiplicity="1" />
+    <End Role="CONSULTA_EMAIL" Type="Self.CONSULTA_EMAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONSULTA_EMAIL_STATUS">
+        <PropertyRef Name="STS_ID" />
+      </Principal>
+      <Dependent Role="CONSULTA_EMAIL">
+        <PropertyRef Name="STS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONSULTA_EMAIL_COLECIONADOR_GRG">
+    <End Role="CONSULTA_EMAIL_COLECIONADOR" Type="Self.CONSULTA_EMAIL_COLECIONADOR" Multiplicity="1" />
+    <End Role="CONSULTA_EMAIL_GRANDE_GRUPO" Type="Self.CONSULTA_EMAIL_GRANDE_GRUPO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONSULTA_EMAIL_COLECIONADOR">
+        <PropertyRef Name="COLEC_ID" />
+      </Principal>
+      <Dependent Role="CONSULTA_EMAIL_GRANDE_GRUPO">
+        <PropertyRef Name="COLEC_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONSULTA_EMAIL_COLECIONADOR_PC">
+    <End Role="CONSULTA_EMAIL_COLECIONADOR" Type="Self.CONSULTA_EMAIL_COLECIONADOR" Multiplicity="1" />
+    <End Role="CONSULTA_EMAIL_PERFIL_COLEC" Type="Self.CONSULTA_EMAIL_PERFIL_COLEC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONSULTA_EMAIL_COLECIONADOR">
+        <PropertyRef Name="COLEC_ID" />
+      </Principal>
+      <Dependent Role="CONSULTA_EMAIL_PERFIL_COLEC">
+        <PropertyRef Name="COLEC_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONSULTA_EMAIL_COLECIONADOR_VERB">
+    <End Role="CONSULTA_EMAIL_COLECIONADOR" Type="Self.CONSULTA_EMAIL_COLECIONADOR" Multiplicity="1" />
+    <End Role="CONSULTA_EMAIL_VERBETE" Type="Self.CONSULTA_EMAIL_VERBETE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONSULTA_EMAIL_COLECIONADOR">
+        <PropertyRef Name="COLEC_ID" />
+      </Principal>
+      <Dependent Role="CONSULTA_EMAIL_VERBETE">
+        <PropertyRef Name="COLEC_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FUNCIONALIDADE_FUNCIONALIDADE_NIVEL_ACESSO">
+    <End Role="FUNCIONALIDADE_NIVEL_ACESSO" Type="Self.FUNCIONALIDADE_NIVEL_ACESSO" Multiplicity="0..1" />
+    <End Role="FUNCIONALIDADE" Type="Self.FUNCIONALIDADE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FUNCIONALIDADE_NIVEL_ACESSO">
+        <PropertyRef Name="NIV_ID" />
+      </Principal>
+      <Dependent Role="FUNCIONALIDADE">
+        <PropertyRef Name="NIV_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FUNCIONALIDADE_PRODUTO_REF">
+    <End Role="PRODUTO_REF" Type="Self.PRODUTO_REF" Multiplicity="0..1" />
+    <End Role="FUNCIONALIDADE" Type="Self.FUNCIONALIDADE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PRODUTO_REF">
+        <PropertyRef Name="PRO_ID" />
+      </Principal>
+      <Dependent Role="FUNCIONALIDADE">
+        <PropertyRef Name="PRO_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ORIGEM_FUNCIONALIDADE_FUNCIONALIDADE">
+    <End Role="FUNCIONALIDADE" Type="Self.FUNCIONALIDADE" Multiplicity="1" />
+    <End Role="ORIGEM_FUNCIONALIDADE" Type="Self.ORIGEM_FUNCIONALIDADE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FUNCIONALIDADE">
+        <PropertyRef Name="FCI_ID" />
+      </Principal>
+      <Dependent Role="ORIGEM_FUNCIONALIDADE">
+        <PropertyRef Name="FCI_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FUNDAMENTACAO_MANUAL_DP_ITEM">
+    <End Role="MANUAL_DP_ITEM" Type="Self.MANUAL_DP_ITEM" Multiplicity="1" />
+    <End Role="FUNDAMENTACAO" Type="Self.FUNDAMENTACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MANUAL_DP_ITEM">
+        <PropertyRef Name="MAI_ID" />
+      </Principal>
+      <Dependent Role="FUNDAMENTACAO">
+        <PropertyRef Name="MAI_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_UF_INFORMATIVO">
+    <End Role="INFORMATIVO" Type="Self.INFORMATIVO" Multiplicity="0..1" />
+    <End Role="PUBLICACAO_UF" Type="Self.PUBLICACAO_UF" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="INFORMATIVO">
+        <PropertyRef Name="INF_ANO" />
+        <PropertyRef Name="INF_NUMERO" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_UF">
+        <PropertyRef Name="INF_ANO" />
+        <PropertyRef Name="INF_NUMERO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_LABELS">
+    <End Role="LABELS" Type="Self.LABELS" Multiplicity="0..1" />
+    <End Role="PUBLICACAO" Type="Self.PUBLICACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LABELS">
+        <PropertyRef Name="LBL_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO">
+        <PropertyRef Name="LBL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NOTICIA_GRUPO_LINHA_PROD_LINHA_PRODUTO_REF">
+    <End Role="LINHA_PRODUTO_REF" Type="Self.LINHA_PRODUTO_REF" Multiplicity="1" />
+    <End Role="NOTICIA_GRUPO_LINHA_PROD" Type="Self.NOTICIA_GRUPO_LINHA_PROD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LINHA_PRODUTO_REF">
+        <PropertyRef Name="LIN_PRO_ID" />
+      </Principal>
+      <Dependent Role="NOTICIA_GRUPO_LINHA_PROD">
+        <PropertyRef Name="LIN_PRO_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LOG_ACESSO_PORTAL_NOTICIA">
+    <End Role="NOTICIA" Type="Self.NOTICIA" Multiplicity="0..1" />
+    <End Role="LOG_ACESSO_PORTAL" Type="Self.LOG_ACESSO_PORTAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NOTICIA">
+        <PropertyRef Name="NOT_ID" />
+      </Principal>
+      <Dependent Role="LOG_ACESSO_PORTAL">
+        <PropertyRef Name="NOT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LOG_ACESSO_PORTAL_ORIGEM_ACESSO_REF">
+    <End Role="ORIGEM_ACESSO_REF" Type="Self.ORIGEM_ACESSO_REF" Multiplicity="1" />
+    <End Role="LOG_ACESSO_PORTAL" Type="Self.LOG_ACESSO_PORTAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ORIGEM_ACESSO_REF">
+        <PropertyRef Name="OAC_ID" />
+      </Principal>
+      <Dependent Role="LOG_ACESSO_PORTAL">
+        <PropertyRef Name="OAC_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LOG_ACESSO_PORTAL_PUBLICACAO">
+    <End Role="PUBLICACAO" Type="Self.PUBLICACAO" Multiplicity="0..1" />
+    <End Role="LOG_ACESSO_PORTAL" Type="Self.LOG_ACESSO_PORTAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLICACAO">
+        <PropertyRef Name="PUB_ID" />
+      </Principal>
+      <Dependent Role="LOG_ACESSO_PORTAL">
+        <PropertyRef Name="PUB_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MANUAL_DP_ITEM_MANUAL_DP">
+    <End Role="MANUAL_DP" Type="Self.MANUAL_DP" Multiplicity="1" />
+    <End Role="MANUAL_DP_ITEM" Type="Self.MANUAL_DP_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MANUAL_DP">
+        <PropertyRef Name="MAN_ID" />
+      </Principal>
+      <Dependent Role="MANUAL_DP_ITEM">
+        <PropertyRef Name="MAN_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MANUAL_DP_MANUAL_DP_MODULO">
+    <End Role="MANUAL_DP_MODULO" Type="Self.MANUAL_DP_MODULO" Multiplicity="0..1" />
+    <End Role="MANUAL_DP" Type="Self.MANUAL_DP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MANUAL_DP_MODULO">
+        <PropertyRef Name="MOD_ID" />
+      </Principal>
+      <Dependent Role="MANUAL_DP">
+        <PropertyRef Name="MOD_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MENU_DOC_MANUAL_DP">
+    <End Role="MANUAL_DP" Type="Self.MANUAL_DP" Multiplicity="0..1" />
+    <End Role="MENU_DOC" Type="Self.MENU_DOC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MANUAL_DP">
+        <PropertyRef Name="MAN_ID" />
+      </Principal>
+      <Dependent Role="MENU_DOC">
+        <PropertyRef Name="MAN_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MANUAL_DP_ITEM_MANUAL_DP_ITEM1">
+    <End Role="MANUAL_DP_ITEM" Type="Self.MANUAL_DP_ITEM" Multiplicity="0..1" />
+    <End Role="MANUAL_DP_ITEM1" Type="Self.MANUAL_DP_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MANUAL_DP_ITEM">
+        <PropertyRef Name="MAI_ID" />
+      </Principal>
+      <Dependent Role="MANUAL_DP_ITEM1">
+        <PropertyRef Name="MAI_ID_PAI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MANUAL_DP_ITEM_MANUAL_DP_LINK">
+    <End Role="MANUAL_DP_ITEM" Type="Self.MANUAL_DP_ITEM" Multiplicity="1" />
+    <End Role="MANUAL_DP_LINK" Type="Self.MANUAL_DP_LINK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MANUAL_DP_ITEM">
+        <PropertyRef Name="MAI_ID" />
+      </Principal>
+      <Dependent Role="MANUAL_DP_LINK">
+        <PropertyRef Name="MAI_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MANUAL_DP_ITEM_ORGAO">
+    <End Role="ORGAO" Type="Self.ORGAO" Multiplicity="0..1" />
+    <End Role="MANUAL_DP_ITEM" Type="Self.MANUAL_DP_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ORGAO">
+        <PropertyRef Name="ORG_ID" />
+      </Principal>
+      <Dependent Role="MANUAL_DP_ITEM">
+        <PropertyRef Name="ORG_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MANUAL_DP_ITEM_TIPO_ATO">
+    <End Role="TIPO_ATO" Type="Self.TIPO_ATO" Multiplicity="0..1" />
+    <End Role="MANUAL_DP_ITEM" Type="Self.MANUAL_DP_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO_ATO">
+        <PropertyRef Name="TIP_ATO_ID" />
+      </Principal>
+      <Dependent Role="MANUAL_DP_ITEM">
+        <PropertyRef Name="TIP_ATO_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MENU_DOC_ITEM_MENU_DOC">
+    <End Role="MENU_DOC" Type="Self.MENU_DOC" Multiplicity="1" />
+    <End Role="MENU_DOC_ITEM" Type="Self.MENU_DOC_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MENU_DOC">
+        <PropertyRef Name="MND_ID" />
+      </Principal>
+      <Dependent Role="MENU_DOC_ITEM">
+        <PropertyRef Name="MND_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MENU_DOC_ITEM_PAI">
+    <End Role="MENU_DOC_ITEM" Type="Self.MENU_DOC_ITEM" Multiplicity="0..1" />
+    <End Role="MENU_DOC_ITEM1" Type="Self.MENU_DOC_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MENU_DOC_ITEM">
+        <PropertyRef Name="MNI_ID" />
+      </Principal>
+      <Dependent Role="MENU_DOC_ITEM1">
+        <PropertyRef Name="MNI_ID_NODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NOTICIA_NOTICIA_GRUPO">
+    <End Role="NOTICIA_GRUPO" Type="Self.NOTICIA_GRUPO" Multiplicity="0..1" />
+    <End Role="NOTICIA" Type="Self.NOTICIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NOTICIA_GRUPO">
+        <PropertyRef Name="NGR_ID" />
+      </Principal>
+      <Dependent Role="NOTICIA">
+        <PropertyRef Name="NGR_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NOTICIA_PUBLICACAO">
+    <End Role="PUBLICACAO" Type="Self.PUBLICACAO" Multiplicity="0..1" />
+    <End Role="NOTICIA" Type="Self.NOTICIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLICACAO">
+        <PropertyRef Name="PUB_ID" />
+      </Principal>
+      <Dependent Role="NOTICIA">
+        <PropertyRef Name="PUB_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NOTICIA_TITULACAO">
+    <End Role="TITULACAO" Type="Self.TITULACAO" Multiplicity="0..1" />
+    <End Role="NOTICIA" Type="Self.NOTICIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TITULACAO">
+        <PropertyRef Name="TIT_ID" />
+      </Principal>
+      <Dependent Role="NOTICIA">
+        <PropertyRef Name="TIT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NOTICIA_GRUPO_LINHA_PROD_NOTICIA_GRUPO">
+    <End Role="NOTICIA_GRUPO" Type="Self.NOTICIA_GRUPO" Multiplicity="1" />
+    <End Role="NOTICIA_GRUPO_LINHA_PROD" Type="Self.NOTICIA_GRUPO_LINHA_PROD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NOTICIA_GRUPO">
+        <PropertyRef Name="NGR_ID" />
+      </Principal>
+      <Dependent Role="NOTICIA_GRUPO_LINHA_PROD">
+        <PropertyRef Name="NGR_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_TIPO_PUBLICACAO">
+    <End Role="ORGAO" Type="Self.ORGAO" Multiplicity="0..1" />
+    <End Role="PUBLICACAO" Type="Self.PUBLICACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ORGAO">
+        <PropertyRef Name="ORG_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO">
+        <PropertyRef Name="ORG_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ORIGEM_ACESSO_MENU_ORIGEM_ACESSO_REF">
+    <End Role="ORIGEM_ACESSO_REF" Type="Self.ORIGEM_ACESSO_REF" Multiplicity="1" />
+    <End Role="ORIGEM_ACESSO_MENU" Type="Self.ORIGEM_ACESSO_MENU" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ORIGEM_ACESSO_REF">
+        <PropertyRef Name="OAC_ID" />
+      </Principal>
+      <Dependent Role="ORIGEM_ACESSO_MENU">
+        <PropertyRef Name="OAC_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ORIGEM_ACESSO_SUBMENU_ORIGEM_ACESSO_MENU">
+    <End Role="ORIGEM_ACESSO_MENU" Type="Self.ORIGEM_ACESSO_MENU" Multiplicity="1" />
+    <End Role="ORIGEM_ACESSO_SUBMENU" Type="Self.ORIGEM_ACESSO_SUBMENU" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ORIGEM_ACESSO_MENU">
+        <PropertyRef Name="OAC_ID" />
+        <PropertyRef Name="OAM_MENU" />
+      </Principal>
+      <Dependent Role="ORIGEM_ACESSO_SUBMENU">
+        <PropertyRef Name="OAC_ID" />
+        <PropertyRef Name="OAM_MENU" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ORIGEM_FUNCIONALIDADE_ORIGEM_ACESSO_REF">
+    <End Role="ORIGEM_ACESSO_REF" Type="Self.ORIGEM_ACESSO_REF" Multiplicity="1" />
+    <End Role="ORIGEM_FUNCIONALIDADE" Type="Self.ORIGEM_FUNCIONALIDADE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ORIGEM_ACESSO_REF">
+        <PropertyRef Name="OAC_ID" />
+      </Principal>
+      <Dependent Role="ORIGEM_FUNCIONALIDADE">
+        <PropertyRef Name="OAC_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TAB_DINAMICA_ORIGEM_ORIGEM_ACESSO_REF">
+    <End Role="ORIGEM_ACESSO_REF" Type="Self.ORIGEM_ACESSO_REF" Multiplicity="1" />
+    <End Role="TAB_DINAMICA_ORIGEM" Type="Self.TAB_DINAMICA_ORIGEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ORIGEM_ACESSO_REF">
+        <PropertyRef Name="OAC_ID" />
+      </Principal>
+      <Dependent Role="TAB_DINAMICA_ORIGEM">
+        <PropertyRef Name="OAC_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VEICULO_PERIODICIDADE">
+    <End Role="PERIODICIDADE" Type="Self.PERIODICIDADE" Multiplicity="0..1" />
+    <End Role="VEICULO" Type="Self.VEICULO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PERIODICIDADE">
+        <PropertyRef Name="PRD_ID" />
+      </Principal>
+      <Dependent Role="VEICULO">
+        <PropertyRef Name="PRD_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_FLUXO_ETAPA_PLUBLICACAO_FLUXO">
+    <End Role="PLUBLICACAO_FLUXO" Type="Self.PLUBLICACAO_FLUXO" Multiplicity="1" />
+    <End Role="PUBLICACAO_FLUXO_ETAPA" Type="Self.PUBLICACAO_FLUXO_ETAPA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PLUBLICACAO_FLUXO">
+        <PropertyRef Name="FLU_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_FLUXO_ETAPA">
+        <PropertyRef Name="FLU_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_PLUBLICACAO_FLUXO">
+    <End Role="PLUBLICACAO_FLUXO" Type="Self.PLUBLICACAO_FLUXO" Multiplicity="0..1" />
+    <End Role="PUBLICACAO" Type="Self.PUBLICACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PLUBLICACAO_FLUXO">
+        <PropertyRef Name="FLU_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO">
+        <PropertyRef Name="FLU_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_ALTERACAO_REVOGACAO_PUBLICACAO">
+    <End Role="PUBLICACAO" Type="Self.PUBLICACAO" Multiplicity="1" />
+    <End Role="PUBLICACAO_ALTERACAO_REVOGACAO" Type="Self.PUBLICACAO_ALTERACAO_REVOGACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLICACAO">
+        <PropertyRef Name="PUB_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_ALTERACAO_REVOGACAO">
+        <PropertyRef Name="PUB_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_EDITADA_PUBLICACAO">
+    <End Role="PUBLICACAO" Type="Self.PUBLICACAO" Multiplicity="1" />
+    <End Role="PUBLICACAO_EDITADA" Type="Self.PUBLICACAO_EDITADA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLICACAO">
+        <PropertyRef Name="PUB_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_EDITADA">
+        <PropertyRef Name="PUB_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_REVISAO_COLABORADOR_PUBLICACAO">
+    <End Role="PUBLICACAO" Type="Self.PUBLICACAO" Multiplicity="1" />
+    <End Role="PUBLICACAO_REVISAO_COLABORADOR" Type="Self.PUBLICACAO_REVISAO_COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLICACAO">
+        <PropertyRef Name="PUB_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_REVISAO_COLABORADOR">
+        <PropertyRef Name="PUB_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_REVISAO_PUBLICACAO">
+    <End Role="PUBLICACAO" Type="Self.PUBLICACAO" Multiplicity="1" />
+    <End Role="PUBLICACAO_REVISAO" Type="Self.PUBLICACAO_REVISAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLICACAO">
+        <PropertyRef Name="PUB_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_REVISAO">
+        <PropertyRef Name="PUB_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_SECOES">
+    <End Role="SECOES" Type="Self.SECOES" Multiplicity="0..1" />
+    <End Role="PUBLICACAO" Type="Self.PUBLICACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SECOES">
+        <PropertyRef Name="SEC_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO">
+        <PropertyRef Name="SEC_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_TIPO_ATO">
+    <End Role="TIPO_ATO" Type="Self.TIPO_ATO" Multiplicity="0..1" />
+    <End Role="PUBLICACAO" Type="Self.PUBLICACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO_ATO">
+        <PropertyRef Name="TIP_ATO_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO">
+        <PropertyRef Name="TIP_ATO_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_TIPO_MATERIA">
+    <End Role="TIPO_MATERIA" Type="Self.TIPO_MATERIA" Multiplicity="0..1" />
+    <End Role="PUBLICACAO" Type="Self.PUBLICACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO_MATERIA">
+        <PropertyRef Name="TIP_MAT_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO">
+        <PropertyRef Name="TIP_MAT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_VEICULO">
+    <End Role="VEICULO" Type="Self.VEICULO" Multiplicity="0..1" />
+    <End Role="PUBLICACAO" Type="Self.PUBLICACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VEICULO">
+        <PropertyRef Name="TVI_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO">
+        <PropertyRef Name="TVI_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_BUSCA_PUBLICACAO_AREAS_CONSULTORIA">
+    <End Role="PUBLICACAO_AREAS_CONSULTORIA" Type="Self.PUBLICACAO_AREAS_CONSULTORIA" Multiplicity="1" />
+    <End Role="PUBLICACAO_BUSCA" Type="Self.PUBLICACAO_BUSCA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLICACAO_AREAS_CONSULTORIA">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_BUSCA">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_CONFIG_PUBLICACAO_AREAS_CONSULTORIA">
+    <End Role="PUBLICACAO_AREAS_CONSULTORIA" Type="Self.PUBLICACAO_AREAS_CONSULTORIA" Multiplicity="0..1" />
+    <End Role="PUBLICACAO_CONFIG" Type="Self.PUBLICACAO_CONFIG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLICACAO_AREAS_CONSULTORIA">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_CONFIG">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_PALAVRA_CHAVE_PUBLICACAO_AREAS_CONSULTORIA">
+    <End Role="PUBLICACAO_AREAS_CONSULTORIA" Type="Self.PUBLICACAO_AREAS_CONSULTORIA" Multiplicity="0..1" />
+    <End Role="PUBLICACAO_PALAVRA_CHAVE" Type="Self.PUBLICACAO_PALAVRA_CHAVE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLICACAO_AREAS_CONSULTORIA">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_PALAVRA_CHAVE">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_REMISSAO_PUBLICACAO_AREAS_CONSULTORIA">
+    <End Role="PUBLICACAO_AREAS_CONSULTORIA" Type="Self.PUBLICACAO_AREAS_CONSULTORIA" Multiplicity="1" />
+    <End Role="PUBLICACAO_REMISSAO" Type="Self.PUBLICACAO_REMISSAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLICACAO_AREAS_CONSULTORIA">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_REMISSAO">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_REMISSIVO_PUBLICACAO_AREAS_CONSULTORIA">
+    <End Role="PUBLICACAO_AREAS_CONSULTORIA" Type="Self.PUBLICACAO_AREAS_CONSULTORIA" Multiplicity="1" />
+    <End Role="PUBLICACAO_REMISSIVO" Type="Self.PUBLICACAO_REMISSIVO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLICACAO_AREAS_CONSULTORIA">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_REMISSIVO">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_REVISAO_COLABORADOR_PUBLICACAO_AREAS_CONSULTORIA">
+    <End Role="PUBLICACAO_AREAS_CONSULTORIA" Type="Self.PUBLICACAO_AREAS_CONSULTORIA" Multiplicity="1" />
+    <End Role="PUBLICACAO_REVISAO_COLABORADOR" Type="Self.PUBLICACAO_REVISAO_COLABORADOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLICACAO_AREAS_CONSULTORIA">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_REVISAO_COLABORADOR">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_REVISAO_PUBLICACAO_AREAS_CONSULTORIA">
+    <End Role="PUBLICACAO_AREAS_CONSULTORIA" Type="Self.PUBLICACAO_AREAS_CONSULTORIA" Multiplicity="1" />
+    <End Role="PUBLICACAO_REVISAO" Type="Self.PUBLICACAO_REVISAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLICACAO_AREAS_CONSULTORIA">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_REVISAO">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_TITULACAO_PUBLICACAO_AREAS_CONSULTORIA">
+    <End Role="PUBLICACAO_AREAS_CONSULTORIA" Type="Self.PUBLICACAO_AREAS_CONSULTORIA" Multiplicity="1" />
+    <End Role="PUBLICACAO_TITULACAO" Type="Self.PUBLICACAO_TITULACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLICACAO_AREAS_CONSULTORIA">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_TITULACAO">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_UF_PUBLICACAO_AREAS_CONSULTORIA">
+    <End Role="PUBLICACAO_AREAS_CONSULTORIA" Type="Self.PUBLICACAO_AREAS_CONSULTORIA" Multiplicity="1" />
+    <End Role="PUBLICACAO_UF" Type="Self.PUBLICACAO_UF" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLICACAO_AREAS_CONSULTORIA">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_UF">
+        <PropertyRef Name="PUB_ID" />
+        <PropertyRef Name="ARE_CONS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_CICLO_APROVACAO_PUBLICACAO_FLUXO_ETAPA">
+    <End Role="PUBLICACAO_FLUXO_ETAPA" Type="Self.PUBLICACAO_FLUXO_ETAPA" Multiplicity="1" />
+    <End Role="PUBLICACAO_CICLO_APROVACAO" Type="Self.PUBLICACAO_CICLO_APROVACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PUBLICACAO_FLUXO_ETAPA">
+        <PropertyRef Name="FLU_ID" />
+        <PropertyRef Name="FLU_ETAPA_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_CICLO_APROVACAO">
+        <PropertyRef Name="FLU_ID" />
+        <PropertyRef Name="FLU_ETAPA_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUBLICACAO_UF_UF_REF">
+    <End Role="UF_REF" Type="Self.UF_REF" Multiplicity="1" />
+    <End Role="PUBLICACAO_UF" Type="Self.PUBLICACAO_UF" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UF_REF">
+        <PropertyRef Name="UF_ID" />
+      </Principal>
+      <Dependent Role="PUBLICACAO_UF">
+        <PropertyRef Name="UF_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TAB_DINAMICA_ITEM_TAB_DINAMICA">
+    <End Role="TAB_DINAMICA" Type="Self.TAB_DINAMICA" Multiplicity="1" />
+    <End Role="TAB_DINAMICA_ITEM" Type="Self.TAB_DINAMICA_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TAB_DINAMICA">
+        <PropertyRef Name="TDC_ID" />
+      </Principal>
+      <Dependent Role="TAB_DINAMICA_ITEM">
+        <PropertyRef Name="TDC_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TAB_DINAMICA_TAB_DINAMICA_CONFIG">
+    <End Role="TAB_DINAMICA_CONFIG" Type="Self.TAB_DINAMICA_CONFIG" Multiplicity="1" />
+    <End Role="TAB_DINAMICA" Type="Self.TAB_DINAMICA" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TAB_DINAMICA_CONFIG">
+        <PropertyRef Name="TDC_ID" />
+      </Principal>
+      <Dependent Role="TAB_DINAMICA">
+        <PropertyRef Name="TDC_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TAB_DINAMICA_CONFIG_ITEM_TAB_DINAMICA_CONFIG">
+    <End Role="TAB_DINAMICA_CONFIG" Type="Self.TAB_DINAMICA_CONFIG" Multiplicity="1" />
+    <End Role="TAB_DINAMICA_CONFIG_ITEM" Type="Self.TAB_DINAMICA_CONFIG_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TAB_DINAMICA_CONFIG">
+        <PropertyRef Name="TDC_ID" />
+      </Principal>
+      <Dependent Role="TAB_DINAMICA_CONFIG_ITEM">
+        <PropertyRef Name="TDC_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_CONFIG1">
+    <End Role="TAB_DINAMICA_CONFIG" Type="Self.TAB_DINAMICA_CONFIG" Multiplicity="0..1" />
+    <End Role="TAB_DINAMICA_CONFIG1" Type="Self.TAB_DINAMICA_CONFIG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TAB_DINAMICA_CONFIG">
+        <PropertyRef Name="TDC_ID" />
+      </Principal>
+      <Dependent Role="TAB_DINAMICA_CONFIG1">
+        <PropertyRef Name="TDC_ID_TAB_REF" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_GRUPO">
+    <End Role="TAB_DINAMICA_GRUPO" Type="Self.TAB_DINAMICA_GRUPO" Multiplicity="0..1" />
+    <End Role="TAB_DINAMICA_CONFIG" Type="Self.TAB_DINAMICA_CONFIG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TAB_DINAMICA_GRUPO">
+        <PropertyRef Name="TGR_ID" />
+      </Principal>
+      <Dependent Role="TAB_DINAMICA_CONFIG">
+        <PropertyRef Name="TGR_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_LINK">
+    <End Role="TAB_DINAMICA_CONFIG" Type="Self.TAB_DINAMICA_CONFIG" Multiplicity="1" />
+    <End Role="TAB_DINAMICA_LINK" Type="Self.TAB_DINAMICA_LINK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TAB_DINAMICA_CONFIG">
+        <PropertyRef Name="TDC_ID" />
+      </Principal>
+      <Dependent Role="TAB_DINAMICA_LINK">
+        <PropertyRef Name="TDC_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TAB_DINAMICA_CONFIG_TITULACAO">
+    <End Role="TITULACAO" Type="Self.TITULACAO" Multiplicity="0..1" />
+    <End Role="TAB_DINAMICA_CONFIG" Type="Self.TAB_DINAMICA_CONFIG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TITULACAO">
+        <PropertyRef Name="TIT_ID" />
+      </Principal>
+      <Dependent Role="TAB_DINAMICA_CONFIG">
+        <PropertyRef Name="TIT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TAB_DINAMICA_ORIGEM_TAB_DINAMICA_CONFIG">
+    <End Role="TAB_DINAMICA_CONFIG" Type="Self.TAB_DINAMICA_CONFIG" Multiplicity="1" />
+    <End Role="TAB_DINAMICA_ORIGEM" Type="Self.TAB_DINAMICA_ORIGEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TAB_DINAMICA_CONFIG">
+        <PropertyRef Name="TDC_ID" />
+      </Principal>
+      <Dependent Role="TAB_DINAMICA_ORIGEM">
+        <PropertyRef Name="TDC_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TAB_DINAMICA_PUBLICACAO_TAB_DINAMICA_CONFIG">
+    <End Role="TAB_DINAMICA_CONFIG" Type="Self.TAB_DINAMICA_CONFIG" Multiplicity="1" />
+    <End Role="TAB_DINAMICA_PUBLICACAO" Type="Self.TAB_DINAMICA_PUBLICACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TAB_DINAMICA_CONFIG">
+        <PropertyRef Name="TDC_ID" />
+      </Principal>
+      <Dependent Role="TAB_DINAMICA_PUBLICACAO">
+        <PropertyRef Name="TDC_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TITULACAO_TITULACAO">
+    <End Role="TITULACAO" Type="Self.TITULACAO" Multiplicity="0..1" />
+    <End Role="TITULACAO1" Type="Self.TITULACAO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TITULACAO">
+        <PropertyRef Name="TIT_ID" />
+      </Principal>
+      <Dependent Role="TITULACAO1">
+        <PropertyRef Name="TIT_ID_REFERENCIA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="COADGEDEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AREA_CONSULTORIA_CURSO" EntityType="Self.AREA_CONSULTORIA_CURSO" />
+    <EntitySet Name="AREAS_CONSULTORIA" EntityType="Self.AREAS_CONSULTORIA" />
+    <EntitySet Name="AREAS_CONSULTORIA_NEWS" EntityType="Self.AREAS_CONSULTORIA_NEWS" />
+    <EntitySet Name="AREAS_CONSULTORIA1" EntityType="Self.AREAS_CONSULTORIA1" />
+    <EntitySet Name="CADERNO" EntityType="Self.CADERNO" />
+    <EntitySet Name="CADERNO_COMPARTILHADO" EntityType="Self.CADERNO_COMPARTILHADO" />
+    <EntitySet Name="CADERNO_CONTEUDO" EntityType="Self.CADERNO_CONTEUDO" />
+    <EntitySet Name="CADERNO_NOTA" EntityType="Self.CADERNO_NOTA" />
+    <EntitySet Name="CAPITAL" EntityType="Self.CAPITAL" />
+    <EntitySet Name="CARGOS" EntityType="Self.CARGOS" />
+    <EntitySet Name="CLIENTES_REF" EntityType="Self.CLIENTES_REF" />
+    <EntitySet Name="COLABORADOR" EntityType="Self.COLABORADOR" />
+    <EntitySet Name="CONSULTA_EMAIL" EntityType="Self.CONSULTA_EMAIL" />
+    <EntitySet Name="CONSULTA_EMAIL_COLECIONADOR" EntityType="Self.CONSULTA_EMAIL_COLECIONADOR" />
+    <EntitySet Name="CONSULTA_EMAIL_GRANDE_GRUPO" EntityType="Self.CONSULTA_EMAIL_GRANDE_GRUPO" />
+    <EntitySet Name="CONSULTA_EMAIL_STATUS" EntityType="Self.CONSULTA_EMAIL_STATUS" />
+    <EntitySet Name="CONSULTA_EMAIL_VERBETE" EntityType="Self.CONSULTA_EMAIL_VERBETE" />
+    <EntitySet Name="FUNCIONALIDADE" EntityType="Self.FUNCIONALIDADE" />
+    <EntitySet Name="FUNCIONALIDADE_NIVEL_ACESSO" EntityType="Self.FUNCIONALIDADE_NIVEL_ACESSO" />
+    <EntitySet Name="FUNDAMENTACAO" EntityType="Self.FUNDAMENTACAO" />
+    <EntitySet Name="INFORMATIVO" EntityType="Self.INFORMATIVO" />
+    <EntitySet Name="LABELS" EntityType="Self.LABELS" />
+    <EntitySet Name="LINHA_PRODUTO_REF" EntityType="Self.LINHA_PRODUTO_REF" />
+    <EntitySet Name="LOG_ACESSO_PORTAL" EntityType="Self.LOG_ACESSO_PORTAL" />
+    <EntitySet Name="LOG_SIMULADOR" EntityType="Self.LOG_SIMULADOR" />
+    <EntitySet Name="MANUAL_DP" EntityType="Self.MANUAL_DP" />
+    <EntitySet Name="MANUAL_DP_ITEM" EntityType="Self.MANUAL_DP_ITEM" />
+    <EntitySet Name="MANUAL_DP_LINK" EntityType="Self.MANUAL_DP_LINK" />
+    <EntitySet Name="MANUAL_DP_MODULO" EntityType="Self.MANUAL_DP_MODULO" />
+    <EntitySet Name="MENU_DOC" EntityType="Self.MENU_DOC" />
+    <EntitySet Name="MENU_DOC_ITEM" EntityType="Self.MENU_DOC_ITEM" />
+    <EntitySet Name="NEWS" EntityType="Self.NEWS" />
+    <EntitySet Name="NOTICIA" EntityType="Self.NOTICIA" />
+    <EntitySet Name="NOTICIA_GRUPO" EntityType="Self.NOTICIA_GRUPO" />
+    <EntitySet Name="NOTICIA_GRUPO_LINHA_PROD" EntityType="Self.NOTICIA_GRUPO_LINHA_PROD" />
+    <EntitySet Name="NOTICIAS_GUARDADAS" EntityType="Self.NOTICIAS_GUARDADAS" />
+    <EntitySet Name="ORGAO" EntityType="Self.ORGAO" />
+    <EntitySet Name="ORIGEM_ACESSO_MENU" EntityType="Self.ORIGEM_ACESSO_MENU" />
+    <EntitySet Name="ORIGEM_ACESSO_REF" EntityType="Self.ORIGEM_ACESSO_REF" />
+    <EntitySet Name="ORIGEM_ACESSO_SUBMENU" EntityType="Self.ORIGEM_ACESSO_SUBMENU" />
+    <EntitySet Name="ORIGEM_FUNCIONALIDADE" EntityType="Self.ORIGEM_FUNCIONALIDADE" />
+    <EntitySet Name="PERIODICIDADE" EntityType="Self.PERIODICIDADE" />
+    <EntitySet Name="PLUBLICACAO_FLUXO" EntityType="Self.PLUBLICACAO_FLUXO" />
+    <EntitySet Name="PRODUTO_COMPOSICAO_REF" EntityType="Self.PRODUTO_COMPOSICAO_REF" />
+    <EntitySet Name="PRODUTO_REF" EntityType="Self.PRODUTO_REF" />
+    <EntitySet Name="PUBLICACAO" EntityType="Self.PUBLICACAO" />
+    <EntitySet Name="PUBLICACAO_ALTERACAO_REVOGACAO" EntityType="Self.PUBLICACAO_ALTERACAO_REVOGACAO" />
+    <EntitySet Name="PUBLICACAO_AREAS_CONSULTORIA" EntityType="Self.PUBLICACAO_AREAS_CONSULTORIA" />
+    <EntitySet Name="PUBLICACAO_BUSCA" EntityType="Self.PUBLICACAO_BUSCA" />
+    <EntitySet Name="PUBLICACAO_CICLO_APROVACAO" EntityType="Self.PUBLICACAO_CICLO_APROVACAO" />
+    <EntitySet Name="PUBLICACAO_CONFIG" EntityType="Self.PUBLICACAO_CONFIG" />
+    <EntitySet Name="PUBLICACAO_EDITADA" EntityType="Self.PUBLICACAO_EDITADA" />
+    <EntitySet Name="PUBLICACAO_FLUXO_ETAPA" EntityType="Self.PUBLICACAO_FLUXO_ETAPA" />
+    <EntitySet Name="PUBLICACAO_GRUPO_CONSULTORIA" EntityType="Self.PUBLICACAO_GRUPO_CONSULTORIA" />
+    <EntitySet Name="PUBLICACAO_PALAVRA_CHAVE" EntityType="Self.PUBLICACAO_PALAVRA_CHAVE" />
+    <EntitySet Name="PUBLICACAO_REMISSAO" EntityType="Self.PUBLICACAO_REMISSAO" />
+    <EntitySet Name="PUBLICACAO_REMISSIVO" EntityType="Self.PUBLICACAO_REMISSIVO" />
+    <EntitySet Name="PUBLICACAO_REVISAO" EntityType="Self.PUBLICACAO_REVISAO" />
+    <EntitySet Name="PUBLICACAO_REVISAO_COLABORADOR" EntityType="Self.PUBLICACAO_REVISAO_COLABORADOR" />
+    <EntitySet Name="PUBLICACAO_TITULACAO" EntityType="Self.PUBLICACAO_TITULACAO" />
+    <EntitySet Name="PUBLICACAO_UF" EntityType="Self.PUBLICACAO_UF" />
+    <EntitySet Name="RELATORIOS" EntityType="Self.RELATORIOS" />
+    <EntitySet Name="SECOES" EntityType="Self.SECOES" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="TAB_DINAMICA" EntityType="Self.TAB_DINAMICA" />
+    <EntitySet Name="TAB_DINAMICA_CONFIG" EntityType="Self.TAB_DINAMICA_CONFIG" />
+    <EntitySet Name="TAB_DINAMICA_CONFIG_ITEM" EntityType="Self.TAB_DINAMICA_CONFIG_ITEM" />
+    <EntitySet Name="TAB_DINAMICA_GRUPO" EntityType="Self.TAB_DINAMICA_GRUPO" />
+    <EntitySet Name="TAB_DINAMICA_ITEM" EntityType="Self.TAB_DINAMICA_ITEM" />
+    <EntitySet Name="TAB_DINAMICA_LINK" EntityType="Self.TAB_DINAMICA_LINK" />
+    <EntitySet Name="TAB_DINAMICA_ORIGEM" EntityType="Self.TAB_DINAMICA_ORIGEM" />
+    <EntitySet Name="TAB_DINAMICA_PUBLICACAO" EntityType="Self.TAB_DINAMICA_PUBLICACAO" />
+    <EntitySet Name="TIPO_ATO" EntityType="Self.TIPO_ATO" />
+    <EntitySet Name="TIPO_MATERIA" EntityType="Self.TIPO_MATERIA" />
+    <EntitySet Name="TITULACAO" EntityType="Self.TITULACAO" />
+    <EntitySet Name="UF_REF" EntityType="Self.UF_REF" />
+    <EntitySet Name="VEICULO" EntityType="Self.VEICULO" />
+    <EntitySet Name="CONSULTA_EMAIL_PERFIL_COLEC" EntityType="Self.CONSULTA_EMAIL_PERFIL_COLEC" />
+    <EntitySet Name="PUBLICACAO_vw" EntityType="Self.PUBLICACAO_vw" />
+    <EntitySet Name="TABELA_CEST_VW" EntityType="Self.TABELA_CEST_VW" />
+    <EntitySet Name="TABELA_TIPI_VW" EntityType="Self.TABELA_TIPI_VW" />
+    <AssociationSet Name="FK_AREAS_CONSULTORIA_NEWS_AREAS_CONSULTORIA" Association="Self.FK_AREAS_CONSULTORIA_NEWS_AREAS_CONSULTORIA">
+      <End Role="AREAS_CONSULTORIA" EntitySet="AREAS_CONSULTORIA" />
+      <End Role="AREAS_CONSULTORIA_NEWS" EntitySet="AREAS_CONSULTORIA_NEWS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_COLABORADOR_AREAS_CONSULTORIA" Association="Self.FK_COLABORADOR_AREAS_CONSULTORIA">
+      <End Role="AREAS_CONSULTORIA" EntitySet="AREAS_CONSULTORIA" />
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TITULACAO_AREAS_CONSULTORIA" Association="Self.FK_TITULACAO_AREAS_CONSULTORIA">
+      <End Role="AREAS_CONSULTORIA" EntitySet="AREAS_CONSULTORIA" />
+      <End Role="TITULACAO" EntitySet="TITULACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AREAS_CONSULTORIA_NEWS_AREAS_CONSULTORIA7" Association="Self.FK_AREAS_CONSULTORIA_NEWS_AREAS_CONSULTORIA7">
+      <End Role="AREAS_CONSULTORIA1" EntitySet="AREAS_CONSULTORIA1" />
+      <End Role="AREAS_CONSULTORIA_NEWS" EntitySet="AREAS_CONSULTORIA_NEWS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AREAS_CONSULTORIA_NEWS_NEWS" Association="Self.FK_AREAS_CONSULTORIA_NEWS_NEWS">
+      <End Role="NEWS" EntitySet="NEWS" />
+      <End Role="AREAS_CONSULTORIA_NEWS" EntitySet="AREAS_CONSULTORIA_NEWS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AREAS_CONSULTORIA_NEWS_UF_REF" Association="Self.FK_AREAS_CONSULTORIA_NEWS_UF_REF">
+      <End Role="UF_REF" EntitySet="UF_REF" />
+      <End Role="AREAS_CONSULTORIA_NEWS" EntitySet="AREAS_CONSULTORIA_NEWS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_COLABORADOR_AREAS_CONSULTORIA7" Association="Self.FK_COLABORADOR_AREAS_CONSULTORIA7">
+      <End Role="AREAS_CONSULTORIA1" EntitySet="AREAS_CONSULTORIA1" />
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_AREAS_CONSULTORIA_AREAS_CONSULTORIA7" Association="Self.FK_PUBLICACAO_AREAS_CONSULTORIA_AREAS_CONSULTORIA7">
+      <End Role="AREAS_CONSULTORIA1" EntitySet="AREAS_CONSULTORIA1" />
+      <End Role="PUBLICACAO_AREAS_CONSULTORIA" EntitySet="PUBLICACAO_AREAS_CONSULTORIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TITULACAO_AREAS_CONSULTORIA7" Association="Self.FK_TITULACAO_AREAS_CONSULTORIA7">
+      <End Role="AREAS_CONSULTORIA1" EntitySet="AREAS_CONSULTORIA1" />
+      <End Role="TITULACAO" EntitySet="TITULACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CADERNO_CLIENTE" Association="Self.FK_CADERNO_CLIENTE">
+      <End Role="CLIENTES_REF" EntitySet="CLIENTES_REF" />
+      <End Role="CADERNO" EntitySet="CADERNO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CADERNO_COMPARTILHADO_CADERNO" Association="Self.FK_CADERNO_COMPARTILHADO_CADERNO">
+      <End Role="CADERNO" EntitySet="CADERNO" />
+      <End Role="CADERNO_COMPARTILHADO" EntitySet="CADERNO_COMPARTILHADO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CADERNO_CONTEUDO_CADERNO" Association="Self.FK_CADERNO_CONTEUDO_CADERNO">
+      <End Role="CADERNO" EntitySet="CADERNO" />
+      <End Role="CADERNO_CONTEUDO" EntitySet="CADERNO_CONTEUDO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CADERNO_NOTA_CADERNO" Association="Self.FK_CADERNO_NOTA_CADERNO">
+      <End Role="CADERNO" EntitySet="CADERNO" />
+      <End Role="CADERNO_NOTA" EntitySet="CADERNO_NOTA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CADERNO_COMPARTILHADO_CLIENTES_REF" Association="Self.FK_CADERNO_COMPARTILHADO_CLIENTES_REF">
+      <End Role="CLIENTES_REF" EntitySet="CLIENTES_REF" />
+      <End Role="CADERNO_COMPARTILHADO" EntitySet="CADERNO_COMPARTILHADO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_AREAS_CONSULTORIA_CAPITAL" Association="Self.FK_PUBLICACAO_AREAS_CONSULTORIA_CAPITAL">
+      <End Role="CAPITAL" EntitySet="CAPITAL" />
+      <End Role="PUBLICACAO_AREAS_CONSULTORIA" EntitySet="PUBLICACAO_AREAS_CONSULTORIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_COLABORADOR_CARGOS" Association="Self.FK_COLABORADOR_CARGOS">
+      <End Role="CARGOS" EntitySet="CARGOS" />
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_FLUXO_ETAPA_CARGOS" Association="Self.FK_PUBLICACAO_FLUXO_ETAPA_CARGOS">
+      <End Role="CARGOS" EntitySet="CARGOS" />
+      <End Role="PUBLICACAO_FLUXO_ETAPA" EntitySet="PUBLICACAO_FLUXO_ETAPA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_CICLO_APROVACAO_COLABORADOR" Association="Self.FK_PUBLICACAO_CICLO_APROVACAO_COLABORADOR">
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+      <End Role="PUBLICACAO_CICLO_APROVACAO" EntitySet="PUBLICACAO_CICLO_APROVACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_REVISAO_COLABORADOR" Association="Self.FK_PUBLICACAO_REVISAO_COLABORADOR">
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+      <End Role="PUBLICACAO_REVISAO" EntitySet="PUBLICACAO_REVISAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_REVISAO_COLABORADOR_COLABORADOR" Association="Self.FK_PUBLICACAO_REVISAO_COLABORADOR_COLABORADOR">
+      <End Role="COLABORADOR" EntitySet="COLABORADOR" />
+      <End Role="PUBLICACAO_REVISAO_COLABORADOR" EntitySet="PUBLICACAO_REVISAO_COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONSULTA_EMAIL_COLECIONADOR" Association="Self.FK_CONSULTA_EMAIL_COLECIONADOR">
+      <End Role="CONSULTA_EMAIL_COLECIONADOR" EntitySet="CONSULTA_EMAIL_COLECIONADOR" />
+      <End Role="CONSULTA_EMAIL" EntitySet="CONSULTA_EMAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONSULTA_EMAIL_CONSULTA_EMAIL_VERBETE" Association="Self.FK_CONSULTA_EMAIL_CONSULTA_EMAIL_VERBETE">
+      <End Role="CONSULTA_EMAIL_VERBETE" EntitySet="CONSULTA_EMAIL_VERBETE" />
+      <End Role="CONSULTA_EMAIL" EntitySet="CONSULTA_EMAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONSULTA_EMAIL_GRANDE_GRUPO" Association="Self.FK_CONSULTA_EMAIL_GRANDE_GRUPO">
+      <End Role="CONSULTA_EMAIL_GRANDE_GRUPO" EntitySet="CONSULTA_EMAIL_GRANDE_GRUPO" />
+      <End Role="CONSULTA_EMAIL" EntitySet="CONSULTA_EMAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONSULTA_EMAIL_STATUS" Association="Self.FK_CONSULTA_EMAIL_STATUS">
+      <End Role="CONSULTA_EMAIL_STATUS" EntitySet="CONSULTA_EMAIL_STATUS" />
+      <End Role="CONSULTA_EMAIL" EntitySet="CONSULTA_EMAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONSULTA_EMAIL_COLECIONADOR_GRG" Association="Self.FK_CONSULTA_EMAIL_COLECIONADOR_GRG">
+      <End Role="CONSULTA_EMAIL_COLECIONADOR" EntitySet="CONSULTA_EMAIL_COLECIONADOR" />
+      <End Role="CONSULTA_EMAIL_GRANDE_GRUPO" EntitySet="CONSULTA_EMAIL_GRANDE_GRUPO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONSULTA_EMAIL_COLECIONADOR_PC" Association="Self.FK_CONSULTA_EMAIL_COLECIONADOR_PC">
+      <End Role="CONSULTA_EMAIL_COLECIONADOR" EntitySet="CONSULTA_EMAIL_COLECIONADOR" />
+      <End Role="CONSULTA_EMAIL_PERFIL_COLEC" EntitySet="CONSULTA_EMAIL_PERFIL_COLEC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONSULTA_EMAIL_COLECIONADOR_VERB" Association="Self.FK_CONSULTA_EMAIL_COLECIONADOR_VERB">
+      <End Role="CONSULTA_EMAIL_COLECIONADOR" EntitySet="CONSULTA_EMAIL_COLECIONADOR" />
+      <End Role="CONSULTA_EMAIL_VERBETE" EntitySet="CONSULTA_EMAIL_VERBETE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FUNCIONALIDADE_FUNCIONALIDADE_NIVEL_ACESSO" Association="Self.FK_FUNCIONALIDADE_FUNCIONALIDADE_NIVEL_ACESSO">
+      <End Role="FUNCIONALIDADE_NIVEL_ACESSO" EntitySet="FUNCIONALIDADE_NIVEL_ACESSO" />
+      <End Role="FUNCIONALIDADE" EntitySet="FUNCIONALIDADE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FUNCIONALIDADE_PRODUTO_REF" Association="Self.FK_FUNCIONALIDADE_PRODUTO_REF">
+      <End Role="PRODUTO_REF" EntitySet="PRODUTO_REF" />
+      <End Role="FUNCIONALIDADE" EntitySet="FUNCIONALIDADE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ORIGEM_FUNCIONALIDADE_FUNCIONALIDADE" Association="Self.FK_ORIGEM_FUNCIONALIDADE_FUNCIONALIDADE">
+      <End Role="FUNCIONALIDADE" EntitySet="FUNCIONALIDADE" />
+      <End Role="ORIGEM_FUNCIONALIDADE" EntitySet="ORIGEM_FUNCIONALIDADE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FUNDAMENTACAO_MANUAL_DP_ITEM" Association="Self.FK_FUNDAMENTACAO_MANUAL_DP_ITEM">
+      <End Role="MANUAL_DP_ITEM" EntitySet="MANUAL_DP_ITEM" />
+      <End Role="FUNDAMENTACAO" EntitySet="FUNDAMENTACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_UF_INFORMATIVO" Association="Self.FK_PUBLICACAO_UF_INFORMATIVO">
+      <End Role="INFORMATIVO" EntitySet="INFORMATIVO" />
+      <End Role="PUBLICACAO_UF" EntitySet="PUBLICACAO_UF" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_LABELS" Association="Self.FK_PUBLICACAO_LABELS">
+      <End Role="LABELS" EntitySet="LABELS" />
+      <End Role="PUBLICACAO" EntitySet="PUBLICACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NOTICIA_GRUPO_LINHA_PROD_LINHA_PRODUTO_REF" Association="Self.FK_NOTICIA_GRUPO_LINHA_PROD_LINHA_PRODUTO_REF">
+      <End Role="LINHA_PRODUTO_REF" EntitySet="LINHA_PRODUTO_REF" />
+      <End Role="NOTICIA_GRUPO_LINHA_PROD" EntitySet="NOTICIA_GRUPO_LINHA_PROD" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LOG_ACESSO_PORTAL_NOTICIA" Association="Self.FK_LOG_ACESSO_PORTAL_NOTICIA">
+      <End Role="NOTICIA" EntitySet="NOTICIA" />
+      <End Role="LOG_ACESSO_PORTAL" EntitySet="LOG_ACESSO_PORTAL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LOG_ACESSO_PORTAL_ORIGEM_ACESSO_REF" Association="Self.FK_LOG_ACESSO_PORTAL_ORIGEM_ACESSO_REF">
+      <End Role="ORIGEM_ACESSO_REF" EntitySet="ORIGEM_ACESSO_REF" />
+      <End Role="LOG_ACESSO_PORTAL" EntitySet="LOG_ACESSO_PORTAL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LOG_ACESSO_PORTAL_PUBLICACAO" Association="Self.FK_LOG_ACESSO_PORTAL_PUBLICACAO">
+      <End Role="PUBLICACAO" EntitySet="PUBLICACAO" />
+      <End Role="LOG_ACESSO_PORTAL" EntitySet="LOG_ACESSO_PORTAL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MANUAL_DP_ITEM_MANUAL_DP" Association="Self.FK_MANUAL_DP_ITEM_MANUAL_DP">
+      <End Role="MANUAL_DP" EntitySet="MANUAL_DP" />
+      <End Role="MANUAL_DP_ITEM" EntitySet="MANUAL_DP_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MANUAL_DP_MANUAL_DP_MODULO" Association="Self.FK_MANUAL_DP_MANUAL_DP_MODULO">
+      <End Role="MANUAL_DP_MODULO" EntitySet="MANUAL_DP_MODULO" />
+      <End Role="MANUAL_DP" EntitySet="MANUAL_DP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MENU_DOC_MANUAL_DP" Association="Self.FK_MENU_DOC_MANUAL_DP">
+      <End Role="MANUAL_DP" EntitySet="MANUAL_DP" />
+      <End Role="MENU_DOC" EntitySet="MENU_DOC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MANUAL_DP_ITEM_MANUAL_DP_ITEM1" Association="Self.FK_MANUAL_DP_ITEM_MANUAL_DP_ITEM1">
+      <End Role="MANUAL_DP_ITEM" EntitySet="MANUAL_DP_ITEM" />
+      <End Role="MANUAL_DP_ITEM1" EntitySet="MANUAL_DP_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MANUAL_DP_ITEM_MANUAL_DP_LINK" Association="Self.FK_MANUAL_DP_ITEM_MANUAL_DP_LINK">
+      <End Role="MANUAL_DP_ITEM" EntitySet="MANUAL_DP_ITEM" />
+      <End Role="MANUAL_DP_LINK" EntitySet="MANUAL_DP_LINK" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MANUAL_DP_ITEM_ORGAO" Association="Self.FK_MANUAL_DP_ITEM_ORGAO">
+      <End Role="ORGAO" EntitySet="ORGAO" />
+      <End Role="MANUAL_DP_ITEM" EntitySet="MANUAL_DP_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MANUAL_DP_ITEM_TIPO_ATO" Association="Self.FK_MANUAL_DP_ITEM_TIPO_ATO">
+      <End Role="TIPO_ATO" EntitySet="TIPO_ATO" />
+      <End Role="MANUAL_DP_ITEM" EntitySet="MANUAL_DP_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MENU_DOC_ITEM_MENU_DOC" Association="Self.FK_MENU_DOC_ITEM_MENU_DOC">
+      <End Role="MENU_DOC" EntitySet="MENU_DOC" />
+      <End Role="MENU_DOC_ITEM" EntitySet="MENU_DOC_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MENU_DOC_ITEM_PAI" Association="Self.FK_MENU_DOC_ITEM_PAI">
+      <End Role="MENU_DOC_ITEM" EntitySet="MENU_DOC_ITEM" />
+      <End Role="MENU_DOC_ITEM1" EntitySet="MENU_DOC_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NOTICIA_NOTICIA_GRUPO" Association="Self.FK_NOTICIA_NOTICIA_GRUPO">
+      <End Role="NOTICIA_GRUPO" EntitySet="NOTICIA_GRUPO" />
+      <End Role="NOTICIA" EntitySet="NOTICIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NOTICIA_PUBLICACAO" Association="Self.FK_NOTICIA_PUBLICACAO">
+      <End Role="PUBLICACAO" EntitySet="PUBLICACAO" />
+      <End Role="NOTICIA" EntitySet="NOTICIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NOTICIA_TITULACAO" Association="Self.FK_NOTICIA_TITULACAO">
+      <End Role="TITULACAO" EntitySet="TITULACAO" />
+      <End Role="NOTICIA" EntitySet="NOTICIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NOTICIA_GRUPO_LINHA_PROD_NOTICIA_GRUPO" Association="Self.FK_NOTICIA_GRUPO_LINHA_PROD_NOTICIA_GRUPO">
+      <End Role="NOTICIA_GRUPO" EntitySet="NOTICIA_GRUPO" />
+      <End Role="NOTICIA_GRUPO_LINHA_PROD" EntitySet="NOTICIA_GRUPO_LINHA_PROD" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_TIPO_PUBLICACAO" Association="Self.FK_PUBLICACAO_TIPO_PUBLICACAO">
+      <End Role="ORGAO" EntitySet="ORGAO" />
+      <End Role="PUBLICACAO" EntitySet="PUBLICACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ORIGEM_ACESSO_MENU_ORIGEM_ACESSO_REF" Association="Self.FK_ORIGEM_ACESSO_MENU_ORIGEM_ACESSO_REF">
+      <End Role="ORIGEM_ACESSO_REF" EntitySet="ORIGEM_ACESSO_REF" />
+      <End Role="ORIGEM_ACESSO_MENU" EntitySet="ORIGEM_ACESSO_MENU" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ORIGEM_ACESSO_SUBMENU_ORIGEM_ACESSO_MENU" Association="Self.FK_ORIGEM_ACESSO_SUBMENU_ORIGEM_ACESSO_MENU">
+      <End Role="ORIGEM_ACESSO_MENU" EntitySet="ORIGEM_ACESSO_MENU" />
+      <End Role="ORIGEM_ACESSO_SUBMENU" EntitySet="ORIGEM_ACESSO_SUBMENU" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ORIGEM_FUNCIONALIDADE_ORIGEM_ACESSO_REF" Association="Self.FK_ORIGEM_FUNCIONALIDADE_ORIGEM_ACESSO_REF">
+      <End Role="ORIGEM_ACESSO_REF" EntitySet="ORIGEM_ACESSO_REF" />
+      <End Role="ORIGEM_FUNCIONALIDADE" EntitySet="ORIGEM_FUNCIONALIDADE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TAB_DINAMICA_ORIGEM_ORIGEM_ACESSO_REF" Association="Self.FK_TAB_DINAMICA_ORIGEM_ORIGEM_ACESSO_REF">
+      <End Role="ORIGEM_ACESSO_REF" EntitySet="ORIGEM_ACESSO_REF" />
+      <End Role="TAB_DINAMICA_ORIGEM" EntitySet="TAB_DINAMICA_ORIGEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VEICULO_PERIODICIDADE" Association="Self.FK_VEICULO_PERIODICIDADE">
+      <End Role="PERIODICIDADE" EntitySet="PERIODICIDADE" />
+      <End Role="VEICULO" EntitySet="VEICULO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_FLUXO_ETAPA_PLUBLICACAO_FLUXO" Association="Self.FK_PUBLICACAO_FLUXO_ETAPA_PLUBLICACAO_FLUXO">
+      <End Role="PLUBLICACAO_FLUXO" EntitySet="PLUBLICACAO_FLUXO" />
+      <End Role="PUBLICACAO_FLUXO_ETAPA" EntitySet="PUBLICACAO_FLUXO_ETAPA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_PLUBLICACAO_FLUXO" Association="Self.FK_PUBLICACAO_PLUBLICACAO_FLUXO">
+      <End Role="PLUBLICACAO_FLUXO" EntitySet="PLUBLICACAO_FLUXO" />
+      <End Role="PUBLICACAO" EntitySet="PUBLICACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_ALTERACAO_REVOGACAO_PUBLICACAO" Association="Self.FK_PUBLICACAO_ALTERACAO_REVOGACAO_PUBLICACAO">
+      <End Role="PUBLICACAO" EntitySet="PUBLICACAO" />
+      <End Role="PUBLICACAO_ALTERACAO_REVOGACAO" EntitySet="PUBLICACAO_ALTERACAO_REVOGACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_EDITADA_PUBLICACAO" Association="Self.FK_PUBLICACAO_EDITADA_PUBLICACAO">
+      <End Role="PUBLICACAO" EntitySet="PUBLICACAO" />
+      <End Role="PUBLICACAO_EDITADA" EntitySet="PUBLICACAO_EDITADA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_REVISAO_COLABORADOR_PUBLICACAO" Association="Self.FK_PUBLICACAO_REVISAO_COLABORADOR_PUBLICACAO">
+      <End Role="PUBLICACAO" EntitySet="PUBLICACAO" />
+      <End Role="PUBLICACAO_REVISAO_COLABORADOR" EntitySet="PUBLICACAO_REVISAO_COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_REVISAO_PUBLICACAO" Association="Self.FK_PUBLICACAO_REVISAO_PUBLICACAO">
+      <End Role="PUBLICACAO" EntitySet="PUBLICACAO" />
+      <End Role="PUBLICACAO_REVISAO" EntitySet="PUBLICACAO_REVISAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_SECOES" Association="Self.FK_PUBLICACAO_SECOES">
+      <End Role="SECOES" EntitySet="SECOES" />
+      <End Role="PUBLICACAO" EntitySet="PUBLICACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_TIPO_ATO" Association="Self.FK_PUBLICACAO_TIPO_ATO">
+      <End Role="TIPO_ATO" EntitySet="TIPO_ATO" />
+      <End Role="PUBLICACAO" EntitySet="PUBLICACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_TIPO_MATERIA" Association="Self.FK_PUBLICACAO_TIPO_MATERIA">
+      <End Role="TIPO_MATERIA" EntitySet="TIPO_MATERIA" />
+      <End Role="PUBLICACAO" EntitySet="PUBLICACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_VEICULO" Association="Self.FK_PUBLICACAO_VEICULO">
+      <End Role="VEICULO" EntitySet="VEICULO" />
+      <End Role="PUBLICACAO" EntitySet="PUBLICACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_BUSCA_PUBLICACAO_AREAS_CONSULTORIA" Association="Self.FK_PUBLICACAO_BUSCA_PUBLICACAO_AREAS_CONSULTORIA">
+      <End Role="PUBLICACAO_AREAS_CONSULTORIA" EntitySet="PUBLICACAO_AREAS_CONSULTORIA" />
+      <End Role="PUBLICACAO_BUSCA" EntitySet="PUBLICACAO_BUSCA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_CONFIG_PUBLICACAO_AREAS_CONSULTORIA" Association="Self.FK_PUBLICACAO_CONFIG_PUBLICACAO_AREAS_CONSULTORIA">
+      <End Role="PUBLICACAO_AREAS_CONSULTORIA" EntitySet="PUBLICACAO_AREAS_CONSULTORIA" />
+      <End Role="PUBLICACAO_CONFIG" EntitySet="PUBLICACAO_CONFIG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_PALAVRA_CHAVE_PUBLICACAO_AREAS_CONSULTORIA" Association="Self.FK_PUBLICACAO_PALAVRA_CHAVE_PUBLICACAO_AREAS_CONSULTORIA">
+      <End Role="PUBLICACAO_AREAS_CONSULTORIA" EntitySet="PUBLICACAO_AREAS_CONSULTORIA" />
+      <End Role="PUBLICACAO_PALAVRA_CHAVE" EntitySet="PUBLICACAO_PALAVRA_CHAVE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_REMISSAO_PUBLICACAO_AREAS_CONSULTORIA" Association="Self.FK_PUBLICACAO_REMISSAO_PUBLICACAO_AREAS_CONSULTORIA">
+      <End Role="PUBLICACAO_AREAS_CONSULTORIA" EntitySet="PUBLICACAO_AREAS_CONSULTORIA" />
+      <End Role="PUBLICACAO_REMISSAO" EntitySet="PUBLICACAO_REMISSAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_REMISSIVO_PUBLICACAO_AREAS_CONSULTORIA" Association="Self.FK_PUBLICACAO_REMISSIVO_PUBLICACAO_AREAS_CONSULTORIA">
+      <End Role="PUBLICACAO_AREAS_CONSULTORIA" EntitySet="PUBLICACAO_AREAS_CONSULTORIA" />
+      <End Role="PUBLICACAO_REMISSIVO" EntitySet="PUBLICACAO_REMISSIVO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_REVISAO_COLABORADOR_PUBLICACAO_AREAS_CONSULTORIA" Association="Self.FK_PUBLICACAO_REVISAO_COLABORADOR_PUBLICACAO_AREAS_CONSULTORIA">
+      <End Role="PUBLICACAO_AREAS_CONSULTORIA" EntitySet="PUBLICACAO_AREAS_CONSULTORIA" />
+      <End Role="PUBLICACAO_REVISAO_COLABORADOR" EntitySet="PUBLICACAO_REVISAO_COLABORADOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_REVISAO_PUBLICACAO_AREAS_CONSULTORIA" Association="Self.FK_PUBLICACAO_REVISAO_PUBLICACAO_AREAS_CONSULTORIA">
+      <End Role="PUBLICACAO_AREAS_CONSULTORIA" EntitySet="PUBLICACAO_AREAS_CONSULTORIA" />
+      <End Role="PUBLICACAO_REVISAO" EntitySet="PUBLICACAO_REVISAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_TITULACAO_PUBLICACAO_AREAS_CONSULTORIA" Association="Self.FK_PUBLICACAO_TITULACAO_PUBLICACAO_AREAS_CONSULTORIA">
+      <End Role="PUBLICACAO_AREAS_CONSULTORIA" EntitySet="PUBLICACAO_AREAS_CONSULTORIA" />
+      <End Role="PUBLICACAO_TITULACAO" EntitySet="PUBLICACAO_TITULACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_UF_PUBLICACAO_AREAS_CONSULTORIA" Association="Self.FK_PUBLICACAO_UF_PUBLICACAO_AREAS_CONSULTORIA">
+      <End Role="PUBLICACAO_AREAS_CONSULTORIA" EntitySet="PUBLICACAO_AREAS_CONSULTORIA" />
+      <End Role="PUBLICACAO_UF" EntitySet="PUBLICACAO_UF" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_CICLO_APROVACAO_PUBLICACAO_FLUXO_ETAPA" Association="Self.FK_PUBLICACAO_CICLO_APROVACAO_PUBLICACAO_FLUXO_ETAPA">
+      <End Role="PUBLICACAO_FLUXO_ETAPA" EntitySet="PUBLICACAO_FLUXO_ETAPA" />
+      <End Role="PUBLICACAO_CICLO_APROVACAO" EntitySet="PUBLICACAO_CICLO_APROVACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUBLICACAO_UF_UF_REF" Association="Self.FK_PUBLICACAO_UF_UF_REF">
+      <End Role="UF_REF" EntitySet="UF_REF" />
+      <End Role="PUBLICACAO_UF" EntitySet="PUBLICACAO_UF" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TAB_DINAMICA_ITEM_TAB_DINAMICA" Association="Self.FK_TAB_DINAMICA_ITEM_TAB_DINAMICA">
+      <End Role="TAB_DINAMICA" EntitySet="TAB_DINAMICA" />
+      <End Role="TAB_DINAMICA_ITEM" EntitySet="TAB_DINAMICA_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TAB_DINAMICA_TAB_DINAMICA_CONFIG" Association="Self.FK_TAB_DINAMICA_TAB_DINAMICA_CONFIG">
+      <End Role="TAB_DINAMICA_CONFIG" EntitySet="TAB_DINAMICA_CONFIG" />
+      <End Role="TAB_DINAMICA" EntitySet="TAB_DINAMICA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TAB_DINAMICA_CONFIG_ITEM_TAB_DINAMICA_CONFIG" Association="Self.FK_TAB_DINAMICA_CONFIG_ITEM_TAB_DINAMICA_CONFIG">
+      <End Role="TAB_DINAMICA_CONFIG" EntitySet="TAB_DINAMICA_CONFIG" />
+      <End Role="TAB_DINAMICA_CONFIG_ITEM" EntitySet="TAB_DINAMICA_CONFIG_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_CONFIG1" Association="Self.FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_CONFIG1">
+      <End Role="TAB_DINAMICA_CONFIG" EntitySet="TAB_DINAMICA_CONFIG" />
+      <End Role="TAB_DINAMICA_CONFIG1" EntitySet="TAB_DINAMICA_CONFIG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_GRUPO" Association="Self.FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_GRUPO">
+      <End Role="TAB_DINAMICA_GRUPO" EntitySet="TAB_DINAMICA_GRUPO" />
+      <End Role="TAB_DINAMICA_CONFIG" EntitySet="TAB_DINAMICA_CONFIG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_LINK" Association="Self.FK_TAB_DINAMICA_CONFIG_TAB_DINAMICA_LINK">
+      <End Role="TAB_DINAMICA_CONFIG" EntitySet="TAB_DINAMICA_CONFIG" />
+      <End Role="TAB_DINAMICA_LINK" EntitySet="TAB_DINAMICA_LINK" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TAB_DINAMICA_CONFIG_TITULACAO" Association="Self.FK_TAB_DINAMICA_CONFIG_TITULACAO">
+      <End Role="TITULACAO" EntitySet="TITULACAO" />
+      <End Role="TAB_DINAMICA_CONFIG" EntitySet="TAB_DINAMICA_CONFIG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TAB_DINAMICA_ORIGEM_TAB_DINAMICA_CONFIG" Association="Self.FK_TAB_DINAMICA_ORIGEM_TAB_DINAMICA_CONFIG">
+      <End Role="TAB_DINAMICA_CONFIG" EntitySet="TAB_DINAMICA_CONFIG" />
+      <End Role="TAB_DINAMICA_ORIGEM" EntitySet="TAB_DINAMICA_ORIGEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TAB_DINAMICA_PUBLICACAO_TAB_DINAMICA_CONFIG" Association="Self.FK_TAB_DINAMICA_PUBLICACAO_TAB_DINAMICA_CONFIG">
+      <End Role="TAB_DINAMICA_CONFIG" EntitySet="TAB_DINAMICA_CONFIG" />
+      <End Role="TAB_DINAMICA_PUBLICACAO" EntitySet="TAB_DINAMICA_PUBLICACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TITULACAO_TITULACAO" Association="Self.FK_TITULACAO_TITULACAO">
+      <End Role="TITULACAO" EntitySet="TITULACAO" />
+      <End Role="TITULACAO1" EntitySet="TITULACAO" />
+    </AssociationSet>
+    <FunctionImport Name="PUBLICACAO_fun" IsComposable="true" ReturnType="Collection(COADGEDModel.PUBLICACAO_fun_Result)">
+      <Parameter Name="frase" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="EXCLUIR_TAB_CONFIG">
+      <Parameter Name="TDC_ID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="EXCLUIR_TABELA_DINAMICA_FULL">
+      <Parameter Name="TDC_ID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="EXCLUIR_TABELA_DINAMICA_ITENS">
+      <Parameter Name="TDC_ID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="IMPORTAR_TAB_DINAMICA">
+      <Parameter Name="sqlCommand" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PUBLICACAO_proc">
+      <Parameter Name="BI" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>

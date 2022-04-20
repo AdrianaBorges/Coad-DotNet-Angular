@@ -1,0 +1,64 @@
+﻿@using COAD.SEGURANCA.Extensions
+@model  COAD.SEGURANCA.Repositorios.Base.AlterarSenha
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+
+@using (Html.BeginForm())
+{
+    if (TempData["Resultado"] != null)
+    {
+        string t = TempData["Resultado"].ToString();
+
+        @Html.Alert(t);
+
+    }
+    
+
+    <div class="form panel panel-primary">
+        <div class="panel-heading">
+            @ViewBag.Title
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger", role = "alert" })
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group">
+                    @Html.Label("LogIn")
+                    @Html.TextBoxFor(model => model.Login, new { @class = "form-control", disabled = true })
+                    @Html.HiddenFor(model => model.Login, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Login)
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group">
+                    @Html.Label("Alterar Senha")
+                    @Html.PasswordFor(model => model.Senha, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Senha)
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group">
+                    @Html.Label("Alterar Senha")
+                    @Html.PasswordFor(model => model.ConfirmaSenha, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ConfirmaSenha)
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-default">Confirma</button>
+            <a href="javascript:history.back()" class="btn btn-default" }>Voltar</a>
+        </div>
+    </div>
+}
+

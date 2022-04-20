@@ -1,0 +1,67 @@
+﻿@using COAD.SEGURANCA.Repositorios.Base
+@if(SessionContext.EhAutenticado() && SessionContext.PossuiRepresentante())
+{
+               
+            <li class="dropdown" ng-controller="NotificacaoController" data-ng-init="initNotify()" ng-cloak>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" ng-click="checaResumoNotificacacoesNaoLidas()">
+                <span class="glyphicon glyphicon-exclamation-sign"></span> <b class="caret"></b>
+                <span class="badge">{{qtdNotificacoes}}</span></a>
+                                
+                    <ul class="dropdown-menu alert-dropdown">                             
+
+                        <li ng-repeat="notify in lstResumoNotificacoes" class="separator-li">
+                            <a href="javascript:void(0)" ng-click="abreModalNotificacao(notify)" ng-class="{
+                                            
+                                    'bg-nofity-view' : !notify.NTF_VISUALIZADO                                       
+                                }">
+                                <span class="label label-default"
+                                ng-class="{
+                                    'label-info': notify.URG_NTF_ID == 'INFO',
+                                    'label-warning': notify.URG_NTF_ID == 'WARN',
+                                    'label-danger': notify.URG_NTF_ID == 'ERROR',
+                                    'label-primary': notify.URG_NTF_ID == 'PRIORITY',
+                                    'label-success': notify.URG_NTF_ID == 'SUCCESS',
+                                    'label-default': !notify.URG_NTF_ID
+                                }"> 
+                                    {{notify.URG_NTF_ID}}                                                                                          
+                            </span> &nbsp;{{ notify.NTF_DESCRICAO | limitTo:limit }}</a>
+                        </li>
+                        @*<li>
+                            <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
+                        </li>*@
+                        <li class="divider"></li>
+                        <li>
+                            <a href="/notificacoes/mostrartudo">Ver Todos</a>
+                        </li>
+                    </ul>
+                    <div app-modal="modal-notify1" header="Notificações">                       
+                          @Html.Partial("partials/_ModalVisualizarNotificacaoPartial")
+                    </div>  
+                </li>
+                @*<li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Configs"><span class="glyphicon glyphicon-cog"></span><b class="caret"></b></a>
+                    <ul class="dropdown-menu alert-dropdown">
+                        <li>
+                            <a href="#" class="menu-sempre-visivel"> <span class="label label-default"></span> Menu Sempre Visível - Ativado</a>
+                        </li>                                
+                    </ul>
+                </li>*@                
+                   
+    
+
+}

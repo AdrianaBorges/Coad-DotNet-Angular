@@ -1,0 +1,86 @@
+﻿@model  COAD.COADGED.Model.DTO.PublicacaoAreaConsultoriaDTO
+
+<div class="row">
+    <div class="form-group col-lg-3">
+        @Html.Label("Grande grupo")
+    </div>
+    <div class="form-group col-lg-3">
+        @Html.Label("Verbetes")
+    </div>
+    <div class="form-group col-lg-3">
+        @Html.Label("Subverbetes")
+    </div>
+    <div class="form-group col-lg-1">
+        <label for="sigla">Principal
+            <span class="glyphicon glyphicon-question-sign text-danger"
+                title="Indica que esta é a titulação principal para a matéria impressa" data-toggle="tooltip">
+            </span>                     
+        </label>
+    </div>
+    <div class="form-group col-lg-1">
+        @Html.Label("ação")
+    </div>
+</div>
+
+<div class="row" ng-repeat="titulacao in pub.TMP_TITULACAO" ng-show="pub.TMP_TITULACAO">
+    <div class="form-group col-lg-3">
+        <select id="ggId" class="form-control" ng-model = "pub.TMP_TITULACAO[$index].TIT_ID" ng-change = "lerVerbetes(titulacao, $index)" ng-disabled="(operacao.substring(0,1)=='V')">
+            <option value="">--Selecione--</option>
+            <option data-ng-repeat="item in pub.TMP_TITULACAO[$index].gg" ng-value="{{item.TIT_ID}}" ng-selected="titulacao.TIT_ID==item.TIT_ID">{{item.TIT_DESCRICAO}}</option>
+        </select>
+        @Html.ValidationMessageFor(model => model.PUBLICACAO_TITULACAO, null, new { app_validation_msg = "erros", @for = "TIT_ID" }) 
+    </div>
+    <div class="form-group col-lg-3" ng-show="titulacao.verbetes">
+        <select id="vbId" class="form-control" ng-model = "pub.TMP_TITULACAO[$index].TIT_ID_VERBETE" ng-change = "lerSubverbetes(titulacao, $index)" ng-disabled="(operacao.substring(0,1)=='V')">
+            <option value="">--Selecione--</option>
+            <option data-ng-repeat="item in pub.TMP_TITULACAO[$index].verbetes" ng-value="{{item.TIT_ID}}" ng-selected="titulacao.TIT_ID_VERBETE==item.TIT_ID">{{item.TIT_DESCRICAO}}</option>
+        </select>
+        @Html.ValidationMessageFor(model => model.PUBLICACAO_TITULACAO, null, new { app_validation_msg = "erros", @for = "TIT_ID_VERBETE" }) 
+    </div>
+    <div class="form-group col-lg-3" ng-show="titulacao.subverbetes">
+        <select id="svbId" class="form-control" ng-model = "pub.TMP_TITULACAO[$index].TIT_ID_SUBVERBETE" ng-change ="lerNomeSubverbete(titulacao, $index)" ng-disabled="(operacao.substring(0,1)=='V')">
+            <option value="">--Selecione--</option>
+            <option data-ng-repeat="item in pub.TMP_TITULACAO[$index].subverbetes" ng-value="{{item.TIT_ID}}" ng-selected="titulacao.TIT_ID_SUBVERBETE==item.TIT_ID">{{item.TIT_DESCRICAO}}</option>
+        </select>
+        @Html.ValidationMessageFor(model => model.PUBLICACAO_TITULACAO, null, new { app_validation_msg = "erros", @for = "TIT_ID_SUBVERBETE" }) 
+    </div>
+    <div class="form-group col-xs-1" ng-show="titulacao.subverbetes && pub.TMP_TITULACAO[$index].TIT_ID_SUBVERBETE">
+        <label class="switch switch-warning switch-round">
+            <input type="checkbox" 
+                ng-model="titulacao.PTI_PRINCIPAL" 
+                ng-checked="titulacao.PTI_PRINCIPAL == true"
+                ng-value="titulacao" 
+                ng-click="marcouPrincipal(titulacao)" 
+                ng-disabled="titulacao.PTI_PRINCIPAL == true || (operacao.substring(0,1)=='V')">
+	        <span class="switch-label" data-on="Sim" data-off="Não"></span>
+        </label>
+    </div>
+    <div class="form-group col-lg-1">
+        <span>
+            <a href="javascript:void(0)" ng-click="adicionarTitulacao(titulacao, $index)" title="Incluir" 
+                ng-if="pub.TMP_TITULACAO.length == ($index + 1) && pub.TMP_TITULACAO[$index].TIT_ID_SUBVERBETE && titulacao.subverbetes && (operacao.substring(0,1)!='V')">
+                <span class="glyphicon glyphicon-plus blue"></span>
+            </a>
+            <a href="javascript:void(0)" ng-click="removerTitulacao(titulacao, $index)" title="Excluir"
+                ng-if="titulacao.TIT_ID_SUBVERBETE && titulacao.subverbetes && (operacao.substring(0,1)!='V')">
+                <span class="glyphicon glyphicon-trash red"></span>
+            </a>
+        </span>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-lg-4">
+        @Html.LabelFor(model => model.CAP_ID)
+        <select id="Capital" class="form-control" ng-model = "pub.CAP_ID" ng-disabled="(operacao.substring(0,1)=='V')">
+            <option value="">--Selecione--</option>
+            <option data-ng-repeat="item in lst._capital" ng-value="{{item.Value}}" ng-selected="item.Value==pub.CAP_ID">{{item.Text}}</option>
+        </select>
+        @Html.ValidationMessageFor(model => model.CAP_ID, null, new { app_validation_msg = "erros", @for = "CAP_ID" }) 
+    </div>
+    <div class="form-group col-lg-8">
+        @Html.LabelFor(model => model.PUB_EXPRESSAO)
+        @Html.TextBoxFor(model => model.PUB_EXPRESSAO, new { id = "expressao", @class = "form-control", ng_model = "pub.PUB_EXPRESSAO", ng_disabled="(operacao.substring(0,1)=='V')" })
+        @Html.ValidationMessageFor(model => model.PUB_EXPRESSAO, null, new { app_validation_msg = "erros", @for = "PUB_EXPRESSAO" }) 
+    </div>
+</div>
+                     

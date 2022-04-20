@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Ocorreu um erro";
+}
+
+<h2>Erro</h2>
+
+<div>
+    <div class="panel panel-danger">
+                  <!-- Default panel contents -->
+        <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-remove-sign icon-panel"></span> 
+            Ocorreu um erro ao processar sua requisição. Tente novamente em alguns instantes. Se o problema persistir contate a equipe de TI.
+        </div>
+        <div class="panel-body">
+            <div>Detalhe do erro:</div>
+            <div>@ViewData["message"]</div>
+        </div>
+    </div>
+
+</div>

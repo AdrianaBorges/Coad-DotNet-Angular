@@ -1,0 +1,172 @@
+﻿<style type="text/css">
+    hr {
+        width: 100%;
+        height: 1px;
+        background-color: #dddddd;
+    }
+
+    
+    .titulo {
+        border-bottom: 2px double #e8e8e8;
+        color: #999;
+        background-color: #fff;
+        padding-top:20px;
+        /*box-shadow: 5px 5px 5px rgba(0,0,0,0.5);*/
+     }
+</style>
+
+<div class="row">
+    <div class="col-sm-12 titulo" style="background:url('../Images/header_1.jpg')">
+        <h4 style="">
+            <strong><i class="fa fa-chevron-circle-right blue" style="font-size: 0.8em; font-style: italic;" aria-hidden="true"></i>&nbspManual de Procedimentos - Departamento de Pessoal</strong></h4>
+        <br />
+    </div>
+</div>
+<div class="row" style="padding-top:20px;">
+    <div class="col-sm-4">
+        <div class="panel panel-info" ng_show="mostrar">
+            <div class="panel-heading bold" style="background-color: #e8e8e8 !important">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#Alerta" style="text-decoration: none;" ng-click="open0=!open0">
+                    <i class="fa blue" ng-class="{'fa-minus-circle':open0==true,'fa-plus-circle':!open0||open0==false}"></i>
+                </a>
+                <strong>Atenção, </strong>novos itens atualizados. Verifique!!
+                <button type="button" class="close" data-dismiss="alert" ng_click="mostrar=false"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div id="Alerta" class="accordion-body collapse" style="overflow:scroll;">
+                <br />
+                <ul class="menu">
+                    <ol id="item_{{item.MAI_ID}}" style="list-style-type: none;" ng-repeat="item in ItensAlterados">
+                        <a href="#{{item.MAI_ID}}" style="text-decoration: none;" ng-click="abrirDocumento(item)">
+                            <i class="fa fa-chevron-circle-right" style="font-size: 0.8em; font-style: italic;" aria-hidden="true"></i>
+                            <label>{{item.MAI_TITULO}}</label>
+                            <span style="font-size: 0.8em; font-style: italic;" app_show_date="item.DATA_ALTERA" ng-if="item.DATA_ALTERA!=null"></span>
+                            <span class="label label-danger" aria-hidden="true" ng_show="item.DATA_ALTERA==null">Novo</span>
+                        </a>
+                    </ol>
+                </ul>
+@*                <div style="padding-left: 20px; padding-bottom: 5px;">
+                    <app-pagination request-page="paginaReq" load-function="listarItensAlterados(paginaReq)"></app-pagination>
+                </div>*@
+            </div>
+        </div>
+
+        <div class="panel panel-info">
+            <div class="panel-heading bold" style="background-color: #e8e8e8 !important">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#Modulo" style="text-decoration: none;" ng-click="open=!open">
+                    <i class="fa blue" ng-class="{'fa-minus-circle':open==true,'fa-plus-circle':!open||open==false}"></i>
+                </a>
+                <strong>Selecione os Filtros</strong>
+            </div>
+            <div id="Modulo" class="accordion-body collapse in">
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            @Html.Label("Tema")
+                            <select name="selmodulo" id="selmodulo" ng-model="mselected" ng_change="detalharModulo(mselected)"
+                                ng-options="item.MOD_DESCRICAO for item in listamodulo"
+                                class="form-control">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        @Html.Label("Assunto")
+                        <select name="selassunto" id="selassunto" ng-model="aselected" ng_change="detalharAssunto(aselected)"
+                            ng-options="item.MAN_ASSUNTO for item in listaassunto"
+                            class="form-control">
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        @Html.Label("Palavra chave")
+                        <input id="palavrachave" type="text" ng-model="palavraChave" class="form-control" ng_change="buscarPalavraChave(palavraChave)" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-info" ng_if="listaporassunto.length>0">
+            <div class="panel-heading bold" style="background-color: #e8e8e8 !important">
+               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#Sumario" style="text-decoration: none;" ng-click="open1=!open1">
+                   <i class="fa blue" ng-class="{'fa-minus-circle': open1,'fa-plus-circle':!open1||open1==false}"></i>
+               </a>
+               <strong>{{mselected.MOD_DESCRICAO}}&nbsp/&nbsp{{detalhe.MAN_ASSUNTO}}</strong>
+            </div>
+            <div style="overflow: auto; padding-left: 0px;">
+                <div id="Sumario" class="accordion-body collapse in">
+                    <ul class="menu">
+                        <li id="item_{{item.MAI_ID}}" style="list-style-type: none;" ng-repeat="item in listaporassunto">
+                            <a href="#{{item.MAI_ID}}" style="text-decoration: none;" ng-click="abrirDocumento(item)">
+                                <label>{{$index+1}} - {{item.MAI_TITULO}}</label>
+                                <span class="label label-danger" ng_show="item.MAI_DATA_PUBLICACAO!=null">Novo</span>
+                            </a>
+                            <ul id="sub_{{item.MAI_ID}}" class="collapse in">
+                                <li id="item1_{{item.MAI_ID}}" style="list-style-type: none;" ng-repeat="item1 in item.MANUAL_DP_ITEM1">
+                                    <a href="#{{item1.MAI_ID}}" style="text-decoration: none;" ng-click="abrirDocumento(item1)">
+                                        <label>{{$parent.$index+1}}.{{$index+1}}-{{item1.MAI_TITULO}}</label>
+                                        <span class="label label-danger" aria-hidden="true" ng_show="item1.MAI_DATA_PUBLICACAO!=null">Novo</span>
+                                    </a>
+                                    <ul id="sub1_{{item1.MAI_ID}}" class="collapse in">
+                                        <li class="item1" id="item2_{{item.MAI_ID}}" style="list-style-type: none;" ng-repeat="item2 in item1.MANUAL_DP_ITEM1">
+                                            <a href="#{{item2.MAI_ID}}" style="text-decoration: none;" ng-click="abrirDocumento(item2)">
+                                                <label>{{$parent.$parent.$index+1}}.{{$parent.$index+1}}.{{$index+1}}-{{item2.MAI_TITULO}}</label>
+                                                <span class="label label-danger" aria-hidden="true" ng_show="item2.MAI_DATA_PUBLICACAO!=null">Novo</span>
+                                            </a>
+                                            <ul id="sub2_{{item1.MAI_ID}}" class="collapse">
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8" id="baseContent" ng_if="detalhe.MAI_TITULO!=null&&(palavraChave==null||palavraChave=='')">
+        <div class="panel panel-info">
+            <div class="panel-heading bold" style="background-color: #e8e8e8 !important">
+                <span class="glyphicon glyphicon-file blue"></span>{{detalhe.MOD_DESCRICAO}}&nbsp/&nbsp{{detalhe.MAN_ASSUNTO}}&nbsp/&nbsp<strong>{{detalhe.MAI_TITULO}}</strong>
+                <div class="pull-right hidden-print">
+                    <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i></a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <p ng-bind-html="trustAsHtml(detalhe.MAI_DESCRICAO)" ng_if="detalhe.MAI_DATA_PUBLICACAO!=null"></p>
+                <p ng_if="detalhe.MAI_DATA_PUBLICACAO==null">Este item esta sendo atualizado e esta teporariamente indisponível. Pedimos descupas pelo transtorno. </p>
+            </div>
+            <div class="hidden-print panel-footer">
+                <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8" id="baseContent" ng_if="palavraChave!=null&&palavraChave!=''">
+        <div @*class="panel panel-corp"*@ style="min-height: 340px;">
+            <div @*class="panel-body"*@>
+                <p>Foram encontrados {{page.numeroRegistros}} registros para consulta realizada.</p>
+                <div id="item_{{item.MAI_ID}}" style="list-style-type: none;" ng-repeat="item in listaitens">
+                    <blockquote>
+                        <a href="javascript:void(0)" ng-click="abrirDocumento(item)">
+                            <i class="fa fa-chevron-circle-right" style="font-size: 0.8em; font-style: italic;" aria-hidden="true"></i>
+                            <label>{{item.MAI_TITULO}} -</label>
+                            <label style="font-size: 0.7em; font-style: italic;">Publicado:</label>
+                            <span style="font-size: 0.7em; font-style: italic;" app-show-date="item.DATA_ALTERA" ng-if="item.DATA_ALTERA!=null" show-time></span>
+                            <span class="label label-danger" aria-hidden="true" ng-show="item.DATA_ALTERA==null">Novo</span>
+                        </a>
+                        <br />
+                        <label style="font-size: 0.7em; font-style: italic oblique;">{{item.MOD_DESCRICAO}} / {{item.MAN_ASSUNTO}} / {{item.MAI_TITULO}}</label>
+                    </blockquote>
+                    @*        <a href="javascript:void(0)" class="fa blue" ng-click="abrirDocumento(item)">
+                        <label>{{item.MAI_TITULO}} - Publicado:</label>
+                        <label app-show-date="item.MAI_DATA_PUBLICACAO"></label>
+                    </a>
+                    <p style="font-family: Verdana; font-size: x-small; color: lightgray">{{item.MANUAL_DP.MAN_ASSUNTO}} / {{item.MANUAL_DP.MAN_ASSUNTO}}</p>*@
+                    @*      <div style="max-height: 200px;">
+                        <p ng-bind-html="trustAsHtml(item.MAI_DESCRICAO)"></p>
+                    </div>*@
+                </div>
+                <hr />
+                <app-pagination request-page="paginaReq" load-function="buscarPalavraChave(palavraChave,paginaReq)"></app-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+

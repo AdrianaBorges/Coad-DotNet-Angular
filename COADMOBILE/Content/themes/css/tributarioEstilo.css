@@ -1,0 +1,91 @@
+﻿.listaObrigacoes
+{
+    font-size:11px;
+}
+
+.listaObrigacoes h5
+{
+    font-weight: bold;
+    color: #2A4F70;
+    border-bottom: 2px solid #CCC;
+}
+
+.titulo
+{
+    color:white;
+    background-color:#2A4F70;
+    font-style: normal;
+    font-weight: bold;
+    color: #FFF;
+    border-radius: 5px;
+    float:left;
+    padding:inherit;
+    min-width:82%;
+}
+
+.tituloCheio
+{
+    color:white;
+    background-color:#2A4F70;
+    font-style: normal;
+    font-weight: bold;
+    color: #FFF;
+    border-radius: 5px;
+    float:left;
+    padding:inherit;
+    min-width:95%;
+}
+
+.conteudo
+{
+    padding-left:13px;
+    max-width:89%;
+}
+
+.iconeCalendario {
+    width:13px;
+    float:left;
+    padding-top:2px;
+}
+
+.iconeEtiqueta {
+    width:13px;
+    float:left;
+    padding-top:2px;
+}
+
+.iconePessoa {
+    width:13px;
+    float:left;
+    padding-top:2px;
+}
+
+.iconeRodela {
+    width:13px;
+    float:left;
+    padding-top:2px;
+}
+
+.iconeFeia {
+    width:13px;
+    float:left;
+    padding-top:2px;
+}
+
+.iconeFund {
+    width:13px;
+    float:left;
+    padding-top:2px;
+}
+
+
+ .iconeObs {
+    width:13px;
+    float:left;
+    padding-top:2px;
+}
+
+.liObrigacao
+{
+    list-style-image: url('/Images/bullet.png');    
+}

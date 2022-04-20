@@ -1,0 +1,60 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="COAD.EXTENSION" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="COAD.EXTENSION.TextTemplate" #>
+<#@ import namespace="COAD.EXTENSION.TextTemplate.Model" #>
+
+<#@parameter type="COAD.EXTENSION.TextTemplate.Model.T4TemplateObjectMetadataModel" name="metadata"#>
+
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
+using System.Globalization;
+using System.Web.Security;
+using GenericCrud.Config.DataAttributes.Maps;
+using <#= metadata.RefClassNamespace#>;
+
+namespace <#=metadata.ModelNamespace#>
+{    
+	[Mapping(typeof(<#=metadata.RefClassName#>))]
+	public class <#=metadata.ClassName#>DTO
+	{<# if(metadata.CollectionProperties.Count() > 0){#>
+
+		public <#=metadata.ClassName#>DTO(){
+
+<#foreach(var pro in metadata.CollectionProperties){#>
+			this.<#=pro.Name#> = new <#=pro.ConcreteType#>();<#}#>
+
+		}
+<#}#>
+
+		// Normal Properties
+		<#
+		foreach(var pro in metadata.NormalProperties){
+		#>public <#=pro.Type#> <#=pro.Name#> { get; set; }
+		<#}#>
+
+		// Object Properties
+		<#
+		foreach(var pro in metadata.ObjectProperties){
+		#>
+
+		[IgnoreMemberMapping(Direction = MappingDirection.DestinyToSource)]
+		public virtual <#=pro.Type#> <#=pro.Name#> { get; set; }
+		<#}#>
+
+		// Collections Properties
+		<#foreach(var pro in metadata.CollectionProperties){#>
+
+		[IgnoreMemberMapping(Direction = MappingDirection.Both)]
+		public virtual <#=pro.Type#> <#=pro.Name#> { get; set; }
+<#}#>
+
+	}
+}

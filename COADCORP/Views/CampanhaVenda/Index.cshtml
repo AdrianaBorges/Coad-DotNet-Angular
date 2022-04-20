@@ -1,0 +1,208 @@
+﻿
+@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+@using COAD.CORPORATIVO.SessionUtils
+@using GenericCrud.ActionResultTools
+@{
+    ViewBag.Title = "Campanha de Vendas";
+    bool gerente = (SessionContext.IsGerenteDepartamento("franquiado", true) || SessionContext.IsGerenteDepartamento("franquiador", true));
+    bool franquiador = SessionContext.IsGerenteDepartamento("franquiador", true);
+
+    bool podeFaturar = SessionUtil.PossuiPermissaoParaFaturar();
+    string podePagar = (podeFaturar) ? "1 == 1" : "1 == 2";
+    ViewBag.defer = @"defer='defer'";  
+
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li class="active">Campanha de Vendas</li>         
+        
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/campanha_venda.js")" defer="defer"></script>
+<div ng-app="appModule">    
+    <div ng-controller="CampanhaVendaController" class="padding content" ng-cloak 
+        data-ng-init="initList('@gerente');">
+    <div class="panel panel-corp">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Opções
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li>
+                            <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                        </li>                                                                           
+                    </ul>
+                </div>
+            </div>
+      </div>
+          
+            <div class="panel-body">            
+                <div class="row">
+                    <div class="form-group col-lg-2">
+                        <label for="usu_login">Código</label>
+                        <input type="text" id="usu_login" ng-model="filtro.rliId" class="form-control" />
+                    </div>
+                    @*<div class="form-group col-lg-3"> <!-- Por hora as descrições são exatamente as mesmas.-->
+                        <label for="usu_login">Descrição</label>
+                        <input type="text" id="usu_login" ng-model="filtro.descricao" class="form-control" />
+                    </div>*@
+                    <div class="form-group col-lg-3">
+                        <label for="usu_login">Produto</label>
+                        <input type="text" id="usu_login" ng-model="filtro.produto" class="form-control" />
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="usu_login">Proposta</label>
+                        <input type="text" id="usu_login" ng-model="filtro.prtId" class="form-control" />
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="usu_login">Item de Proposta</label>
+                        <input type="text" id="usu_login" ng-model="filtro.ppiId" class="form-control" />
+                    </div>
+                </div>
+            </div> 
+        <div class="panel-footer">
+            <button type="button" class="btn btn-default" ng-click="pesquisarCampanhaVenda()">Pesquisar</button>
+        </div>
+    </div>
+    <div>
+        
+        <div app-message></div>
+                <div class="panel panel-corp">
+                <!-- Default panel contents -->
+                <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-shopping-cart"></span> Campanha de Vendas</div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                        <table class="table table-hover">
+                            <thead>
+                                <tr class="bg-info">
+                                    <th>Id</th>
+                                    <th>Descrição</th>
+                                    <th class="center">Valido a Partir De</th>
+                                    <th class="center">Valido Até</th>
+                                    <th class="right">Parcela Min</th>
+                                    <th class="right">Parcela Max</th>
+                                    <th>Status</th>
+                                    <th>Tipo de Pagamento</th>
+                                    <th>Tipos de Venda</th>
+                                    <th class="center" colspan="3">Ações</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in lstCampanhaVenda" ng-init="titleCampanhaVenda = ((item.CVE_CAMPANHA_ATIVA == true) ? 'Pausar' : 'Ativar') + ' Campanha'">
+                                <td>{{item.CVE_ID}}</td>
+                                <td>{{item.CVE_DESCRICAO}}</td>
+                                <td class="center"><span app-show-date="item.CVE_PERIODO_INICIAL"></span></td>
+                                <td class="center"><span app-show-date="item.CVE_PERIODO_FINAL"></span></td>
+                                <td class="right">{{item.CVE_NUM_PARCELA_MIN}}</td>
+                                <td class="right">{{item.CVE_NUM_PARCELA_MAX}}</td>
+                                <td class="center">
+                                    <span ng-switch="item.CVE_CAMPANHA_ATIVA">
+                                        <span ng-switch-when="true" class="label label-success">Ativo</span>
+                                        <span ng-switch-default class="label label-purple">Pausado</span>
+                                    </span>
+                                    <span class="label"></span>
+                                </td>
+                                <td>
+                                    {{item.CAMPANHA_VENDA_TIPO_PROPOSTA[0].TIPO_PROPOSTA.TPP_DESCRICAO}}
+                                    <a href="javascript:void(0)" ng-if="item.CAMPANHA_VENDA_TIPO_PROPOSTA.length > 1"
+                                       app-list-popover="item.CAMPANHA_VENDA_TIPO_PROPOSTA" label="TIPO_PROPOSTA.TPP_DESCRICAO" title="Tipo Proposta">
+                                        <span class="badge"> + {{item.CAMPANHA_VENDA_TIPO_PROPOSTA.length - 1}}</span>
+                                    </a>
+                                </td>
+                                <td>
+                                    {{item.TIPO_PAGAMENTO_CAMPANHA_VENDA[0].TIPO_PAGAMENTO.TPG_DESCRICAO}}
+                                    <a href="javascript:void(0)" ng-if="item.TIPO_PAGAMENTO_CAMPANHA_VENDA.length > 1"
+                                       app-list-popover="item.TIPO_PAGAMENTO_CAMPANHA_VENDA" label="TIPO_PAGAMENTO.TPG_DESCRICAO" title="Tipo Proposta">
+                                        <span class="badge"> + {{item.TIPO_PAGAMENTO_CAMPANHA_VENDA.length - 1}}</span>
+                                    </a>
+                                </td>
+                                <td class="center">
+                                    <a href="javascript:void(0)" app-post="@Url.Action("Editar")?cveId={{item.CVE_ID}}"
+                                       title="Editar" class="text-primary">
+                                        <span class="glyphicon glyphicon-edit"></span>                                        
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" ng-click="excluirCampanhaVenda(item.CVE_ID);"
+                                       title="Excluir" class="text-danger">
+                                        <span class="glyphicon glyphicon-remove-sign"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" ng-click="pausarOuAtivarCampanhaVenda(item.CVE_ID, item.CVE_CAMPANHA_ATIVA);"
+                                        class="text-purple" title="{{titleCampanhaVenda}}">
+                                        <i ng-class="
+                                           {
+                                                'fa fa-pause' :  item.CVE_CAMPANHA_ATIVA == true,
+                                                'fa fa-play' : item.CVE_CAMPANHA_ATIVA == null || item.CVE_CAMPANHA_ATIVA == false
+                                           }" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="12" ng-show="!lstCampanhaVenda || lstCampanhaVenda.length == 0">Nenhum registro foi encontrado.</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <app-pagination request-page="paginaReq" load-function="pesquisarCampanhaVenda(paginaReq)"></app-pagination>
+
+                </div>
+            </div>
+ 
+        </div>
+        <div app-modal="modal-detalhes-proposta" header="Detalhes">
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>
+                                        Descrição
+                                    </th>
+                                    <th>Data</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in lstRegistroLiberacaoItems" class="animate-repeat">
+                                <td>
+                                    {{item.RIT_ID}}
+                                </td>                              
+                                <td><span ng-bind-html="item.RIT_DESCRICAO"></span></td>
+                                <td app-show-date="item.RIT_DATA_CRIACAO"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="8" ng-if="lstRegistroLiberacaoItems.length <= 0" class="text">
+                                    Não foi encontrado nenhum registro.
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>       
+
+        <div id="modal-alterar-status" app-status-modal="alteracaoModal"></div> 
+
+        <div data-app-modal="modal-validacao-inadimplencia" data-header="Inadimplência">
+            @Html.Partial("Partials/Modais/_ClienteInadimplenteModalPartial")
+        </div>
+           
+</div>  
+</div>

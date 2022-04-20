@@ -1,0 +1,83 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.OcorrenciaRetornoDTO
+
+@using Coad.GenericCrud.Extensions
+
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Ocorrências dos Retornos</li>
+    </ol>
+}
+@{
+     var cbBaixar = new SelectList(
+         new List<SelectListItem>
+        {
+            new SelectListItem {Text = "Sim", Value = "1"},
+            new SelectListItem {Text = "Não", Value = "0"},
+        }, "Value", "Text"
+     );
+     
+     var cbDesAlocar = new SelectList(
+         new List<SelectListItem>
+        {
+            new SelectListItem {Text = "Sim", Value = "1"},
+            new SelectListItem {Text = "Não", Value = "0"},
+        }, "Value", "Text"
+     );
+     var cbRegistrar = new SelectList(
+         new List<SelectListItem>
+        {
+            new SelectListItem {Text = "Sim", Value = "1"},
+            new SelectListItem {Text = "Não", Value = "0"},
+        }, "Value", "Text"
+     );
+}
+
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/Ocorrencia/OcorrenciaRetorno.js")
+
+<form>
+    <div ng-app="appModule">
+        <div class="panel panel-default" ng-controller="OcorrenciaRetornoController" data-ng-init="read(@ViewBag.bco, @ViewBag.cod)">
+            <div app-message></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-1">
+                        @Html.Label("Código")
+                        @Html.TextBoxFor(model => model.OCT_CODIGO, new { @class = "form-control", ng_model = "ocorrencia.OCT_CODIGO" })
+                        @Html.ValidationMessageFor(model => model.OCT_CODIGO, null, new { app_validation_msg = "erros", @for = "OCT_CODIGO" })
+                    </div>
+                    <div class="form-group col-lg-3">
+                        @Html.Label("Banco")
+                        @Html.DropDownListFor(model => model.BAN_ID, new SelectList(@ViewBag.banco, "Value", "Text"), null, new { @class = "form-control", ng_model = "ocorrencia.BAN_ID" })
+                        @Html.ValidationMessageFor(model => model.BAN_ID, null, new { app_validation_msg = "erros", @for = "BAN_ID" })
+                    </div>
+                    <div class="form-group col-lg-2">
+                        @Html.Label("Descrição")
+                        @Html.TextBoxFor(model => model.OCT_DESCRICAO, new { @class = "form-control", ng_model = "ocorrencia.OCT_DESCRICAO" })
+                        @Html.ValidationMessageFor(model => model.OCT_DESCRICAO, null, new { app_validation_msg = "erros", @for = "OCT_DESCRICAO" })
+                    </div>
+                    <div class="form-group col-lg-2">
+                        @Html.Label("Baixar o título?")
+                        @Html.DropDownListFor(model => model.OCT_BAIXAR_TITULO, new SelectList(cbBaixar, "Value", "Text"), null, new { @class = "form-control", ng_model = "ocorrencia.OCT_BAIXAR_TITULO" })
+                        @Html.ValidationMessageFor(model => model.OCT_BAIXAR_TITULO, null, new { app_validation_msg = "erros", @for = "OCT_BAIXAR_TITULO" })
+                    </div>
+                    <div class="form-group col-lg-2">
+                        @Html.Label("Desalocar o título?")
+                        @Html.DropDownListFor(model => model.OCT_DESALOCAR_TITULO, new SelectList(cbDesAlocar, "Value", "Text"), null, new { @class = "form-control", ng_model = "ocorrencia.OCT_DESALOCAR_TITULO" })
+                        @Html.ValidationMessageFor(model => model.OCT_DESALOCAR_TITULO, null, new { app_validation_msg = "erros", @for = "OCT_DESALOCAR_TITULO" })
+                    </div>
+                    <div class="form-group col-lg-2">
+                        @Html.Label("Registrar o título?")
+                        @Html.DropDownListFor(model => model.OCT_REGISTRAR_TITULO, new SelectList(cbRegistrar, "Value", "Text"), null, new { @class = "form-control", ng_model = "ocorrencia.OCT_REGISTRAR_TITULO" })
+                        @Html.ValidationMessageFor(model => model.OCT_REGISTRAR_TITULO, null, new { app_validation_msg = "erros", @for = "OCT_REGISTRAR_TITULO" })
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span>Fechar</button>
+                <button type="button" class="btn btn-default" ng-click="salvar()"><span class="glyphicon glyphicon-floppy-save blue"></span>Salvar</button>
+            </div>
+        </div>
+    </div>
+</form>

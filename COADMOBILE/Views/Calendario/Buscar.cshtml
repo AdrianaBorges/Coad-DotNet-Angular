@@ -1,0 +1,127 @@
+﻿@model IEnumerable<COAD.PORTAL.Model.DTO.CalendarioObrigacoes.CoCalendarioDTO>
+
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Tributário","index","Home")</li>
+        <li class="active">Buscar obrigação</li>
+    </ol>
+}
+@{
+    ViewBag.Title = "Obrigações";
+}
+
+
+@Scripts.Render("~/Scripts/negocio/coObrigacoes.js")
+
+<h2>Obrigações</h2>
+
+<div ng-app="appModule">
+    <div ng-controller="CoObrigacoesController" class="padding content" data-ng-init="init();">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-filter"></span>Filtros
+           <div class="pull-right">
+               <div class="btn-group">
+                   <ul class="dropdown-menu pull-right" role="menu">
+                       <li>
+                           <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                       </li>
+                   </ul>
+               </div>
+           </div>
+            </div>
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-2">
+                        <label for="sigla">Data</label>
+                        <input type="text" id="data" ng-model="filtro.datamask" class="form-control" app-date="filtro.data" />
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="sigla">Abrangência</label>
+                        @*<input type="text" id="abrangencia" ng-model="filtro.abrangencia" class="form-control" />*@
+                        @Html.DropDownList("abrangencia", new SelectList(ViewBag.Abrangencia, "Value", "Text"), "Selecione", new { @class = "form-control", ng_model ="filtro.abrangencia" })
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="sigla">Área</label>
+                        <select name="area" class="form-control" ng-model="filtro.area"
+                                ng-options="item.COD_AREA as item.NOME_AREA for item in lstAreas">
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-2" ng-show="filtro.abrangencia=='97'" >
+                        <label for="sigla">UF</label>
+                        <select name="uf" class="form-control" ng-model="filtro.estado"
+                                ng-options="item.NUM_UF as item.COD_UF for item in lstEstados">
+                            <option value="">Selecione</option>
+                        </select>
+                        @*<input type="text" id="uf" ng-model="filtro.estado" class="form-control" />*@
+                    </div>
+                    <div class="form-group col-lg-2" ng-show="filtro.abrangencia=='98'">
+                        <label for="sigla">Município</label>
+                        <select name="municipio" class="form-control" ng-model="filtro.municipio"
+                                ng-options="item.NUM_MUNICIPIO as item.NOME_MUNICIPIO for item in lstMunicipios">
+                            <option value="">Selecione</option>
+                        </select>
+                       @* <input type="text" id="municipio" ng-model="filtro.municipio" class="form-control" />*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="listar()">Pesquisar</button>
+            </div>
+        </div>
+        <div app-message></div>
+        <div class="panel panel-default" ng-show="obrigacoes">
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-book"></span>
+                Obrigações do dia
+            </div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 20%;">
+                                    ABRANGÊNCIA
+                                </th>
+                                <th style="min-width: 76%;">
+                                    DETALHES
+                                </th>
+                                <th style="min-width: 4%;">
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in obrigacoes">
+                            <td>
+                                <input id="obrigacao{{ $index }}" type="hidden" value="/Calendario/Detalhes/{{item.CO_OBRIGACOES.NUM_OBRIGACAO}}" />
+                                {{ item.CO_OBRIGACOES.CO_ESTADOS.COD_UF }}
+                            </td>
+                            <td>
+                                {{ item.CO_OBRIGACOES.TXT_TITULO }}
+                            </td>
+                            <td>
+                                <a href="/Calendario/Detalhes/{{item.CO_OBRIGACOES.NUM_OBRIGACAO}}"><i class="glyphicon glyphicon-search"></i></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></div>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-show="obrigacoes.length < 1">            
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-book"></span>
+                Obrigações do dia
+            </div>
+            <div>
+                <h2 style="color:red">Não foram encontradas obrigações para este dia.</h2>
+            </div>
+        </div>
+    </div>
+</div>

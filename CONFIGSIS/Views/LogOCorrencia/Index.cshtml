@@ -1,0 +1,123 @@
+﻿@using COAD.SEGURANCA.Extensions;
+@model IEnumerable<COAD.SEGURANCA.Repositorios.Contexto.LOG_OCORRENCIA>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+@using (Html.BeginForm())
+{
+    if (TempData["Resultado"] != null)
+    {
+        string t = TempData["Resultado"].ToString();
+
+        @Html.Alert(t);
+    }
+    
+              
+    <div class="form panel panel-primary">
+        <div class="panel-heading">
+            <i class="fa fa-search fa-fw"></i> @ViewBag.Title
+            <div class="pull-right"></div>
+        </div>
+        <div class="panel-body">
+            @Html.ValidationSummary(false, "", new { @class = "alert alert-danger", role = "alert" })
+            <div class="col-lg-12">
+                <div class="form-group">
+                    @Html.Label("Período")
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <div class="input-group date">
+                        @Html.TextBox("_dtini", "", new { @class = "form-control datepicker" })
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1">
+                @Html.Label(" a ")
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <div class="input-group date">
+                        @Html.TextBox("_dtfim", "", new { @class = "form-control datepicker" })
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-10">
+                <div class="form-group">
+                    @Html.Label("Usuários")
+                    @Html.DropDownList("_usu_login", new SelectList(@ViewBag.listaUsuario, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Pesquisar" class="btn btn-default" />
+        </div>
+    </div>
+
+}
+
+   <div class="form panel panel-primary">
+        <div class="panel-heading">
+            <i class="fa fa-search fa-fw"></i> @ViewBag.Title
+            <div class="pull-right"></div>
+        </div>
+        <div class="panel-body">
+
+            @{
+                var grid = new WebGrid(source: Model, canPage: true, rowsPerPage: 30, canSort: true, ajaxUpdateCallback: "GridUpdate", ajaxUpdateContainerId: "grid");
+
+                if (@Model != null)
+                {
+                    var gridHtml = grid.Table(htmlAttributes: new { id = "grid" },
+                        /* headerStyle: "tabheader" ,*/ footerStyle: "paginacao",
+                        tableStyle: "tabconteudo table table-hover", alternatingRowStyle: "odd", columns: grid.Columns(
+                            grid.Column("LOG_SEQ", header: "Seq."),
+                            grid.Column("LOG_DATA", header: "Data"),
+                            grid.Column("USU_LOGIN", header: "Login"),
+                            grid.Column("LOG_MESSAGE", header: "Hsitórico"),
+                            grid.Column("LOG_IP_ACESSO", header: "IP"),
+                            grid.Column("LOG_ID_ERRO", header: "Cód. Erro"),
+                            grid.Column("ITM_PATH", header: "Caminho"),
+                            grid.Column(header: "", format: @<text><a href="@Url.Action("Detalhe", new { _log_seq = item.LOG_SEQ })"  >
+                                <span class="glyphicon glyphicon-edit"></span></a>
+                </text>, style: "colunagridacoes table-icons")
+                        )
+                    ).ToString();
+
+
+                    // var pager = grid.Pager().ToString();
+                    var pager = grid.PagerList(WebGridPagerModes.All, "Primeiro", "Anterior", "Próximo", "Último", 5, "pagination");
+                
+       
+                @(new HtmlString(gridHtml))                
+                @pager
+                       
+                }
+            }
+
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Excel" class="btn btn-default" />
+            <input type="submit" value="PDF"  class="btn btn-default"/>
+        </div>
+    </div>
+
+
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/appScripts/datepicker.js")
+    @Scripts.Render("~/Content/themes/base/bootstrap-datepicker.css")
+
+}

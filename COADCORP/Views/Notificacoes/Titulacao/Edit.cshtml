@@ -1,0 +1,61 @@
+﻿@model  COAD.COADGED.Model.DTO.TitulacaoDTO
+@{
+    ViewBag.Title = "Edit";
+}
+@using Coad.GenericCrud.Extensions
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li>@Html.ActionLink("Gerenciar Titulações","index","Titulacao")</li>
+        <li class="active">Editar Titulação</li>         
+    </ol>
+}
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/titulacao.js")
+<div class="form-lg padding" ng-app="appModule">
+    <div class="panel panel-default" ng-controller="TitulacaoController" data-ng-init="read(@ViewBag.titulacaoId)">
+            @Html.ValidationSummary(true)          
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Editar Titulação</div>
+            <div class="panel-body">  
+                 <div app-message></div>
+                 @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) 
+                 {
+                 <div class="row">
+                    <div class="form-group col-lg-2">
+                        @Html.LabelFor(model => model.ARE_CONS_ID)
+                        @Html.DropDownListFor(model => model.ARE_CONS_ID, new SelectList(@ViewBag.area, "Value", "Text"), null ,new {@class = "form-control", ng_model = "titulacao.ARE_CONS_ID" })
+                    </div>
+                    <div class="form-group col-lg-1">
+                        @Html.Label("ID")
+                        @Html.TextBoxFor(model => model.TIT_ID,  new {@class = "form-control", ng_model = "titulacao.TIT_ID", disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.TIT_ID, null, new { app_validation_msg = "erros", @for = "TIT_ID" }) 
+                    </div>
+                    <div class="form-group col-lg-5">
+                        @Html.LabelFor(model => model.TIT_ID_REFERENCIA)
+                        @Html.DropDownListFor(model => model.TIT_ID_REFERENCIA, new SelectList(@ViewBag.superior, "Value", "Text"), null ,new {@class = "form-control", ng_model = "titulacao.TIT_ID_REFERENCIA" })
+                    </div>
+                    <div class="form-group col-lg-6">
+                        @Html.LabelFor(model => model.TIT_DESCRICAO)
+                        @Html.TextBoxFor(model => model.TIT_DESCRICAO,  new {@class = "form-control", ng_model = "titulacao.TIT_DESCRICAO" })
+                        @Html.ValidationMessageFor(model => model.TIT_DESCRICAO, null, new { app_validation_msg = "erros", @for = "TIT_DESCRICAO" }) 
+                    </div>
+                 </div>
+                 <div class="row">
+                    <div class="form-group col-lg-3">
+                        @Html.LabelFor(model => model.TIT_TIPO)
+                        @Html.DropDownListFor(model => model.TIT_TIPO, new SelectList(@ViewBag.tipo, "Value", "Text"), null ,new {@class = "form-control", ng_model = "titulacao.TIT_TIPO" })
+                    </div>
+
+                    <div class="form-group col-lg-2">
+                        @Html.LabelFor(model => model.TIT_ATIVO)
+                        @Html.DropDownListFor(model => model.TIT_ATIVO, new SelectList(@ViewBag.ativo, "Value", "Text"), null ,new {@class = "form-control", ng_model = "titulacao.TIT_ATIVO" })
+                    </div>
+                 </div>
+                 }
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-primary" ng-click="salvarTitulacao()">Salvar</button>
+                <span class="float-right"><button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default">Voltar</button></span>
+            </div> 
+    </div>
+</div>

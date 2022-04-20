@@ -1,0 +1,109 @@
+﻿@using COAD.SEGURANCA.Repositorios.Base
+
+<fieldset ng-show="listaassinatura">
+    <legend class="btn btn-info" style="text-align: left;">Assinaturas</legend>
+    <div class="row padding">
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr class="info">
+                        <th>Assinatura</th>
+                        <th style="text-align: center;">Ano COAD</th>
+                        <th style="text-align: center;">Ano Remessa</th>
+                        <th style="text-align: center;">Nº Remessa</th>
+                        <th>Ini. Remessa</th>
+                        <th>Aos Cuidados</th>
+                        <th>Tipo Envio</th>
+                        <th>Adicional</th>
+                        <th style="text-align: center;">Consultas (Total)</th>
+
+                        <th style="text-align: center;" ng-if="ass.MOTIVO_CANCELAMENTO.length>0">Cancelamento</th>
+                        <th style="text-align: center;" colspan="8">Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="ass in listaassinatura | orderBy: '-ASN_ANO_REMESSA' " ng-class="{'info':  assinturaSelect==ass.ASN_NUM_ASSINATURA ,'default':assinturaSelect!=ass.ASN_NUM_ASSINATURA}">
+                        <td>{{ass.ASN_NUM_ASSINATURA}}</td>
+                        <td style="text-align: center;">{{ass.ASN_ANO_COAD}}</td>
+                        <td style="text-align: center;">{{ass.ASN_ANO_REMESSA}}</td>
+                        <td style="text-align: center;">{{ass.ASN_REMESSA}}</td>
+                        <td>
+                            <span ng-if="ass.ASN_ATV_REM=='A'">Janeiro</span>
+                            <span ng-if="ass.ASN_ATV_REM=='B'">Fevereiro</span>
+                            <span ng-if="ass.ASN_ATV_REM=='C'">Março</span>
+                            <span ng-if="ass.ASN_ATV_REM=='D'">Abril</span>
+                            <span ng-if="ass.ASN_ATV_REM=='E'">Maio</span>
+                            <span ng-if="ass.ASN_ATV_REM=='F'">Junho</span>
+                            <span ng-if="ass.ASN_ATV_REM=='G'">Julho</span>
+                            <span ng-if="ass.ASN_ATV_REM=='H'">Agosto</span>
+                            <span ng-if="ass.ASN_ATV_REM=='I'">Setembro</span>
+                            <span ng-if="ass.ASN_ATV_REM=='J'">Outubro</span>
+                            <span ng-if="ass.ASN_ATV_REM=='K'">Novembro</span>
+                            <span ng-if="ass.ASN_ATV_REM=='L'">Dezembro(L)</span>
+                            <span ng-if="ass.ASN_ATV_REM=='M'">Dezembro(H)</span>
+                        </td>
+                        <td ng-if="ass.MOTIVO_CANCELAMENTO.length==0">{{ass.ASN_A_C}}</td>
+                        <td ng-if="ass.MOTIVO_CANCELAMENTO.length==0">{{ass.ASN_NUM_TP_ENVIO}}</td>
+                        <td ng-if="ass.MOTIVO_CANCELAMENTO.length==0">{{ass.ASN_MATERIA_ADICIONAL}}</td>
+                        <td style="text-align: center;" ng-if="ass.MOTIVO_CANCELAMENTO.length>0" colspan="3">
+                            @*<a href="javascript:void(0)" ng-click="mostrarMotivoCancelamento(ass.MOTIVO_CANCELAMENTO[0])" data-toggle="tooltip" data-placement="top" app-popover data-content="Visualizar motivo de cancelamento">
+                <span class="label alert-danger">Cancelada</span>
+            </a>*@
+                        </td>
+                        <td style="text-align: center">{{ass.ASN_QTDE_CONS_CONTRATO}}</td>
+                        <td style="text-align: center;">
+                            <a href="javascript:void(0)" ng-click="selAssinatura(ass)" data-toggle="tooltip" data-placement="top" app-popover data-content="Selecionar Assinatura">
+                                <span class="fa fa-search"></span>
+                            </a>
+                        </td>
+                        <td style="text-align: center;">
+                            <a href="javascript:void(0)" ng-click="abrirModalTelefone(ass.ASN_NUM_ASSINATURA)" data-toggle="tooltip" data-placement="top" app-popover data-content="Atualizar dados do telefone.">
+                                <span class="fa fa-phone-square"></span>
+                            </a>
+                        </td>
+                        <td style="text-align: center;">
+                            <a href="javascript:void(0)" ng-click="abrirModalEmail(ass.ASN_NUM_ASSINATURA)" data-toggle="tooltip" data-placement="top" app-popover data-content="Atualizar dados da email.">
+                                <span class="fa fa-envelope"></span>
+                            </a>
+                        </td>
+                        <td style="text-align: center;">
+                            <a href="javascript:void(0)" ng-click="abrirModalAtualizarAssinatura(ass.ASN_NUM_ASSINATURA)" data-toggle="tooltip" data-placement="top" app-popover data-content="Atualizar dados da assinatura.">
+                                <span class="fa fa-cog"></span>
+                            </a>
+                        </td>
+                        <td style="text-align: center;">
+                            <a href="javascript:void(0)" ng-click="realizarAtendimento(ass)" data-toggle="tooltip" data-placement="top" app-popover data-content="Realizar Atendimento">
+                                <span class="fa fa-comments"></span>
+                            </a>
+                        </td>
+
+                       
+                        @* quando perfil representante, ñ exibi a opção de emissão de boleto avulso *@
+                        @if (SessionContext.AcessoGerente("Representante"))
+                        {
+                            <td style="text-align: center;">
+                                <a href="/Parcelas/GerarBoletos?_assinatura={{ass.ASN_NUM_ASSINATURA}}&_cli_id={{ass.CLI_ID}}" 
+                                   data-toggle="tooltip" 
+                                   data-placement="top" 
+                                   app-popover data-content="Emissão de Boletos">
+                                    <i class="fa fa-barcode" aria-hidden="true"></i>
+                                </a>
+                            </td>
+
+                        }
+
+               
+                        <td style="text-align: center;" ng-show="assinturaSelect">
+                            @if (SessionContext.AcessoGerente("SAC"))
+                            {
+                                <a href="javascript:void(0)" ng-click="mostrarTransfAssinatura(ass)" data-toggle="tooltip" data-placement="top" app-popover data-content="Transferência de assinatura (Vigência / Produto)">
+                                    <i class="fa fa-exchange red" aria-hidden="true"></i>
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</fieldset>

@@ -1,0 +1,78 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutosDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Usuários Logados</li>
+
+    </ol>
+}
+
+@Scripts.Render("~/Scripts/appScripts/Home.js")
+
+<div ng-app="appModule">
+    <div ng-controller="HomeControler" data-ng-init="mostrarUsuarioLogado()" class="padding content">
+        <div class="panel panel-default">
+            <div app-message></div>
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-user"></span>&nbspUsuários Logados
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Opções <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="javascript:void(0)" ng-click="mostrarUsuarioLogado()" title="Atualizar lista de usuários">Atualizar</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive" style="max-height: 400px; overflow: auto;">
+                    <table class="table table-hover">
+                        <thead ng-show="listaautenticado.length>0">
+                            <tr>
+                                <th style="width: 200px">Data
+                                </th>
+                                <th style="width: 200px">Acesso
+                                </th>
+                                <th style="width: 200px">Login
+                                </th>
+                                <th style="width: 200px">Email
+                                </th>
+                                <th style="width: 200px">Sessão
+                                </th>
+                                <th style="width: 200px">IP
+                                </th>
+                                <th style="text-align: center;">Logout</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listaautenticado  | orderBy:'-DATA_LOGIN'">
+                                <td>{{item.DATA_LOGIN}}</td>
+                                <td>{{item.MEIO_ACESSO}}</td>
+                                <td>{{item.USU_LOGIN}}</td>
+                                <td>{{item.EMAIL}}</td>
+                                <td>{{item.SESSION_ID}}</td>
+                                <td>{{item.IP_ACESSO}}</td>
+                                <td style="text-align: center;">
+                                    <a href="javascript:void(0)" ng-click="deslogarUsuario(item)" title="Deslogar o usuário selecionado."><span class="glyphicon glyphicon-remove red"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive btn-info" style="max-height: 600px; text-align: right; vertical-align:middle;">
+                    <p><span class="glyphicon glyphicon-user"></span> &nbsp {{listaautenticado.length}} &nbsp usuários logados no momento.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

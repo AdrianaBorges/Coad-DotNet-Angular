@@ -1,0 +1,97 @@
+﻿@model COAD.SEGURANCA.Model.PerfilModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+@using (Html.BeginForm())
+{
+    
+   
+    <div class="form panel panel-primary">
+        <div class="panel-heading">
+            <i class="fa fa-search fa-fw"></i> @ViewBag.Title
+            <div class="pull-right">
+            </div>
+        </div>
+        <div class="panel-body">
+            @Html.ValidationSummary(false)
+            <div class="form-group">
+                @Html.Label("Perfil")
+                @Html.TextBoxFor(model => model.PER_ID, "--- Selelcione ---", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PER_ID)
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Empresa")
+                @Html.DropDownListFor(model => model.EMP_ID, new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "-- Selecione --", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.EMP_ID)
+            </div>            
+            <div class="form-group">
+                @Html.Label("Departamento")
+                @Html.DropDownListFor(model => model.DP_ID, 
+                    new SelectList(@ViewBag.Departamentos, "Value", "Text"), "--- Selecione ---", new { @class = "form-control", ng_model = "usuario.DP_ID" })
+                @Html.ValidationMessageFor(model => model.DP_ID, null, new { app_validation_msg = "erros", @for = "DP_ID" })     
+            </div>
+            <div class="form-group">
+                @Html.Label("Sistema")
+                @Html.DropDownListFor(model => model.SIS_ID, new SelectList(@ViewBag.ListaSistema, "Value", "Text"), "-- Selecione --", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SIS_ID)
+            </div>            
+            <div class="form-group">
+                @Html.Label("Perfil de Gerência")
+                @Html.CheckBoxFor(model => model.GERENCIA, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.GERENCIA)
+            </div>
+            <div class="form-group">
+                @Html.Label("Situação")
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(model => model.PER_ATIVO, "0", new { @checked = 0 })Inativo</label>
+                </div>
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(model => model.PER_ATIVO, "1", new { @checked = 1 })Ativo</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        @Html.DropDownListFor(model => model.PER_HORA_INI, (List<SelectListItem>)@ViewBag.horas, "-- Selecione  --", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PER_HORA_FIM)
+                    </div>
+                </div>
+                <div class="col-lg-1">
+                    <div class="form-group">
+                        @Html.Label(" a ")
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        @Html.DropDownListFor(model => model.PER_HORA_FIM, (List<SelectListItem>)@ViewBag.horas, "-- Selecione --", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PER_HORA_FIM)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Confirma" class="btn btn-default" />
+            <a href="javascript:history.back()" class="btn btn-default" }>Voltar</a>
+        </div>
+    </div>
+       
+}
+
+
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

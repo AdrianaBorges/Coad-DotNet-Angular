@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutCadastro.cshtml";
+}
+
+
+@Scripts.Render("~/Scripts/appScripts/Portal.js")
+
+<div ng-app="appModule">
+    <div ng-controller="PortalController">
+        <div class="container">
+            <div app-message="bolinha"></div>
+            <div class="row">
+                <div class="text-left col-md-5 col-md-offset-1">
+                    <h3>BEM VINDO</h3>
+                    <p>Seja bem vindo ao portal Portal Calculador Trabalhista. É a mais nova feramenta da COAD com muitas novidades para você.</p>
+                    <p>Para acessar o portal informe seu login e senha nos campos ao lado.</p>
+                    <h2 class="size-16"><i class="fa fa-lock"></i>&nbspLOGIN</h2>
+                    <form method="post" action="#" autocomplete="off">
+                        <div class="clearfix">
+                            <div class="form-group">
+                                <input required="" type="text" ng-model="usuario.login" app-popover data-content="Email/Login" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <input required="" type="password" ng-model="usuario.senha" app-popover data-content="Senha" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <div class="form-tip pt-20">
+                                    <a class="no-text-decoration size-13 margin-top-10 block" href="#">Esqueci minha senha?</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+                                <a href="javascript:void(0)" app-popover data-content="Realizar Login" ng-click="realizarLogin(true)" class="btn btn-primary"><i class="fa fa-check"></i>LOGIN</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="text-left col-md-6">
+                    <h3><i class="fa fa-lock"></i>&nbspLogin com certificado digital</h3>
+                    <p>Certisign Login é uma solução de identificação rápida e segura por meio da Certificação Digital. Com o Certisign Login, você terá maior facilidade e agilidade em seu  cadastro e autenticação de acesso. Basta utilizar seu Certificado Digital ICP-Brasil.</p>
+                    <form action="https://autenticador.certisign.com.br/CertisignLogin/certificado/login" method="post">
+                        <input type="text" hidden="hidden" value="1734" id="id" name="id" size="50" />
+                        <input type="text" hidden="hidden" value="NSR-Serasa" id="nome" name="nome" size="50" />
+                        <input type="text" hidden="hidden" value="https://www.corp.coad.com.br/Services/LoginCertisign" id="retorno" name="retorno" size="50" />
+                        <input style="float:right" type="image" src="/Images/bt_certsign.png" alt="Submit" title="Logar com Certisign" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

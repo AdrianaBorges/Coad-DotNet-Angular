@@ -1,0 +1,112 @@
+﻿@model COAD.CORPORATIVO.Model.Dto.ClienteDto
+
+@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+
+<fieldset>
+    <legend class="btn btn-info" style="text-align: left;">Dados Cadastrais</legend>
+    <br />
+    <div class="row">
+        <div class="form-group col-sm-2" ng_if="assinturaSelect!=null">
+            @Html.Label("Assinatura")
+            <div class="btn-group">
+                <button type="button" class="btn btn-info" dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{assinturaSelect}}<span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="ass in listaassinatura | orderBy: '-ASN_ANO_REMESSA' ">
+                        <a href="javascript:void(0)" app-popover data-content="Selecionar Assinatura" ng-click="selAssinatura(ass)" class="blue">{{ass.ASN_NUM_ASSINATURA}}&nbsp</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-group col-sm-2">
+            @Html.Label("Código")
+            @Html.TextBoxFor(model => model.CLI_ID, new { @class = "form-control", ng_model = "cliente.CLI_ID", disabled = "disabled" })
+            @Html.ValidationMessageFor(model => model.CLI_ID, null, new { app_validation_msg = "erros", @for = "CLI_ID" })
+            <div app-validation-msg="erros" for="cliente.CLI_ID"></div>
+        </div>
+        <div class="form-group col-sm-4" ng_if="assinturaSelect!=null">
+            @Html.LabelFor(model => model.CLI_NOME)
+            @Html.TextBoxFor(model => model.CLI_NOME, new { @class = "form-control", ng_model = "cliente.CLI_NOME", disabled = "disabled" })
+            <div app-validation-msg="erros" for="cliente.CLI_NOME"></div>
+        </div>
+        <div class="form-group col-sm-6" ng_if="assinturaSelect==null">
+            @Html.LabelFor(model => model.CLI_NOME)
+            @Html.TextBoxFor(model => model.CLI_NOME, new { @class = "form-control", ng_model = "cliente.CLI_NOME", disabled = "disabled" })
+            <div app-validation-msg="erros" for="cliente.CLI_NOME"></div>
+        </div>
+        <div class="form-group col-sm-2">
+            @Html.Label("Ult. Alteração")
+            <div class="input-group date">
+                @Html.TextBox("dtalt", "", new { @class = "form-control datepicker", ng_model = "dtalt", app_date = "cliente.DATA_ALTERA", disabled = "disabled" })
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+            </div>
+        </div>
+        <div class="form-group col-sm-2">
+            @Html.Label("Cadastrado Em")
+            <div class="input-group date">
+                @Html.TextBox("dtcad", "", new { @class = "form-control datepicker", ng_model = "dtcad", app_date = "cliente.DATA_CADASTRO", disabled = "disabled" })
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-4">
+            @Html.LabelFor(model => model.CLI_CPF_CNPJ)
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.CLI_CPF_CNPJ, new { @class = "form-control", ng_model = "cliente.CLI_CPF_CNPJ", maxlength = 14, disabled = "disabled" })
+                <span class="input-group-addon" data-toggle="tooltip" data-placement="top" app-popover data-content="Verificar validade do cpf">
+                    <a href="javascript:void(0)" ng-click="abrirModal(1)">
+                        <i class="glyphicon glyphicon-check"></i>
+                    </a>
+                </span>
+                <span class="input-group-addon" data-toggle="tooltip" data-placement="top" app-popover data-content="Verificar validade do cnpj">
+                    <a href="javascript:void(0)" ng-click="abrirModal(2)">
+                        <i class="glyphicon glyphicon-check"></i>
+                    </a>
+                </span>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="form-group">
+                @Html.Label("Tipo de Cliente")
+                @Html.DropDownList("CLI_TP_PESSOA", new SelectList(@ViewBag.ListaTipoPessoa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "cliente.CLI_TP_PESSOA" })
+                <div app-validation-msg="erros" for="cliente.CLI_TP_PESSOA"></div>
+            </div>
+        </div>
+        <div class="form-group col-sm-3">
+            @Html.LabelFor(model => model.CLI_A_C)
+            @Html.TextBoxFor(model => model.CLI_A_C, new { @class = "form-control", ng_model = "cliente.CLI_A_C" })
+            @Html.ValidationMessageFor(model => model.CLI_A_C, null, new { app_validation_msg = "erros", @for = "CLI_A_C" })
+            <div app-validation-msg="erros" for="cliente.CLI_A_C"></div>
+        </div>
+
+        <div class="form-group col-sm-3">
+            @Html.LabelFor(model => model.CLI_INSCRICAO)
+            @Html.TextBoxFor(model => model.CLI_INSCRICAO, new { @class = "form-control", ng_model = "cliente.CLI_INSCRICAO" })
+            <div app-validation-msg="erros" for="cliente.CLI_INSCRICAO"></div>
+        </div>
+
+        
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-2">
+            @Html.LabelFor(model => model.CLI_COD_PAIS)
+            @Html.TextBoxFor(model => model.CLI_COD_PAIS, new { @class = "form-control", ng_model = "cliente.CLI_COD_PAIS" })
+            <div app-validation-msg="erros" for="cliente.CLI_COD_PAIS"></div>
+        </div>
+        <div class="form-group col-sm-2">
+            @Html.LabelFor(model => model.CLI_SUFRAMA)
+            @Html.TextBoxFor(model => model.CLI_SUFRAMA, new { @class = "form-control", ng_model = "cliente.CLI_SUFRAMA" })
+            <div app-validation-msg="erros" for="cliente.CLI_SUFRAMA"></div>
+        </div>
+        <div class="col-lg-2">
+            <div class="form-group">
+                @Html.Label("Classificação")
+                @Html.DropDownList("CLA_ID", new SelectList(@ViewBag.ListaClassificacao, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "cliente.CLA_ID" })
+                <div app-validation-msg="erros" for="cliente.CLA_ID"></div>
+            </div>
+        </div>
+    </div>
+</fieldset>

@@ -1,0 +1,51 @@
+﻿
+
+<fieldset ng-show="assinturaSelect">
+    <legend class="btn btn-info" style="text-align: left;">Notas Fiscais</legend>
+    <div class="row padding">
+         <div ng-if="!listaNotaFiscal||listaNotaFiscal.length==0">
+            <div class="alert alert-success">
+                <strong>Atenção!</strong> Não existem itens encontrados para essa pesquisa.
+            </div>
+        </div>
+        <table class="table table-striped table-bordered table-hover" id="dataTables-example" ng-if="listaNotaFiscal.length > 0">
+            <thead>
+                <tr class="info">
+                    <th style="text-align:left;">Tipo</th>
+                    <th style="text-align:right;">Numero</th>
+                    <th style="text-align:right;">Serie</th>
+                    <th style="text-align:center;">Ent/Sai</th>
+                    <th style="text-align:left;">Cli/Forn</th>
+                    <th style="text-align:center;">Situação</th>
+                    <th style="text-align:right;">Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="ite in listaNotaFiscal">
+                    <td style="text-align:left;">
+                        <span ng-if="ite.NF_TIPO==0"><label>Entrada</label></span>
+                        <span ng-if="ite.NF_TIPO==1"><label>Saida</label></span>
+                        <span ng-if="ite.NF_TIPO==2"><label>Entrada Serviço</label></span>
+                        <span ng-if="ite.NF_TIPO==3"><label>Saida Serviço</label></span>
+                    </td>
+                    <td style="text-align:right;">{{ite.NF_NUMERO}}</td>
+                    <td style="text-align:right;">{{ite.NF_SERIE}}</td>
+                    <td style="text-align:center;" app-show-date="ite.NF_DATA_ENTRADA" ng-if="ite.NF_TIPO==0||ite.NF_TIPO==2"></td>
+                    <td style="text-align:center;" app-show-date="ite.NF_DATA_SAIDA" ng-if="ite.NF_TIPO==1||ite.NF_TIPO==3"></td>
+                    <td style="text-align:left;">
+                        <span ng-if="ite.NF_TIPO==0||ite.NF_TIPO==2">{{ite.FORNECEDOR.FOR_RAZAO_SOCIAL}}</span>
+                        <span ng-if="ite.NF_TIPO==1||ite.NF_TIPO==3">{{ite.CLIENTES.CLI_NOME}}</span>
+                    </td>
+                    <td style="text-align: center">
+                        <span class="label label-info" ng_show="ite.NF_STATUS=='PEN'">Emitida</span>
+                        <span class="label label-success" ng_show="ite.NF_STATUS=='ENV'">Enviada</span>
+                        <span class="label label-warning" ng_show="ite.NF_STATUS=='CAN'">Cancelada</span>
+                        <span class="label label-success" ng_show="ite.NF_STATUS=='DEV'">Devolvida</span>
+                        <span class="label label-success" ng_show="ite.NF_STATUS=='ATI'">Normal</span>
+                    </td>
+                    <td style="text-align:right;" app-show-dinheiro="ite.NF_VLR_NOTA"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>

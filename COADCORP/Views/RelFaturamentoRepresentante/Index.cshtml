@@ -1,0 +1,348 @@
+﻿@using Coad.GenericCrud.Extensions
+
+@{
+    ViewBag.print = true;
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;
+    if (ViewBag.print == true)
+    {
+        ViewBag.printableClass = "hidden-print";
+    }
+
+    ViewBag.Title = "Index";
+
+}
+
+<script>
+    $(document).ready(function () {
+        $(":input").inputmask();
+    });
+</script>
+
+@Scripts.Render("~/Scripts/negocio/parcelas.js")
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+ 
+    
+<div ng-app="appModule">
+    <div ng-controller="ParcelasController" class="padding content" ng-init="iniRelContratoRep();canPrint=true">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i><a href="/Relatorios/Controladoria">Relatorios</a>
+                        </li>
+                        <li>
+                            <a href="/Relatorios/Controladoria">Relatórios Controladoria</a>
+                        </li>
+                        <li class="active">
+                            <span> Faturamento por Representante</span>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading bold head-panel">
+                    <span class="glyphicon glyphicon-filter"></span>Filtros
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Opções<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)" app-post="@Url.Action("Editar")?clienteId=" title="Editar" class="blue">Pesquisar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-1">
+                            @Html.Label("Sintético")
+                            <div class="form-group">
+                                <label class="switch switch switch-round">
+                                    <input type="checkbox" ng_model="filtro.ordalfabetica" ng-change="listarContratoRepData();mostragrupo=!mostragrupo">
+                                    <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Inicial")
+                                <div class="input-group date">
+                                    @Html.TextBox("dtinicial", "", new { @class = "form-control datepicker", ng_model = "dtini", app_date = "filtro.dtini" })
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Final")
+                                <div class="input-group date">
+                                    @Html.TextBox("dtfinal", "", new { @class = "form-control datepicker", ng_model = "dtfim", app_date = "filtro.dtfim" })
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Empresa")
+                                @Html.DropDownList("_emp_id", new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "filtro.emp_id", ng_change = "listarContratoRepData()" })
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Representante")
+                                <select name="_rep_nome" ng-model="filtro.representante" ng-options="item as item.REP_NOME for item in lstrepresentante" class="form-control" ng-change="listarContratoRepData()">
+                                    <option value="">---- Selecione ----</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="GRUPO_ID">Grupo</label>
+                                @Html.DropDownList("GRUPO_ID", new SelectList(ViewBag.grupos, "GRUPO_ID", "GRU_DESCRICAO"), "Selecione", new { @class = "form-control", ng_model = "filtro.grupo_id", ng_Change = "listarContratoRepData()" })
+                            </div>
+                        </div>
+                     </div>
+                    <div class="row">
+                        <div class="col-lg-2" ng-if="mostragrupo">
+                            <div class="form-group">
+                                <label for="GRUPO_ID">Tipo</label>
+                                <select class="form-control" ng-model="filtro.tipo" ng-change="listarContratoRepData()">
+                                    <option value="0">TODOS</option>
+                                    <option value="1">RENOVAÇÃO</option>
+                                    <option value="2">VENDA NOVA</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" ng-click="listarContratoRepData()"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                </div>
+            </div>
+            <div class="panel panel-default" ng-if="listacontratorepSint.length>0&&filtro.ordalfabetica==true" id="baseContent">
+                <div class="hidden-print panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span>&nbspContratos Por Representante</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="table-responsive" style="padding-left: 12px; padding-right: 12px;">
+                            <table class="table table-hover table-bordered" style="padding-left: 12px;">
+                                <thead>
+                                    <tr class="info">
+                                        <th colspan="8">
+                                            <span>COADCORP - Faturamento por Representante (Sintético) - {{filtro.dataatual}}</span> <br />
+                                            <span ng-if="filtro.representante.REP_NOME!=null">Representante - {{filtro.representante.REP_NOME}}</span>
+                                            <span ng-if="filtro.representante.REP_NOME==null">TODOS OS REPRESENTANTES</span>
+                                        </th>
+                                        <th style="text-align: right;" colspan="2">
+                                            <span ng-if="filtro.emp_id==1">COAD</span>
+                                            <span ng-if="filtro.emp_id==2">ATUALIZACAO</span>
+                                            <span ng-if="filtro.emp_id==3">CONTABIL E JURIDICA</span>
+                                            <span ng-if="filtro.emp_id==4">COAD - GRAFICA</span>
+                                            <span ng-if="filtro.emp_id==5">CORTESIA</span>
+                                            <span ng-if="filtro.emp_id==6">Franquia RJ</span>
+                                            <span ng-if="filtro.emp_id==7">PORTO MARAVILHA</span>
+                                            <span>Período:{{filtro.mes}} /  {{filtro.ano}}</span>
+                                        </th>
+                                    </tr>
+                                    <tr class="info">
+                                        <th colspan="2">
+
+                                        </th>
+                                        <th style="text-align: center;" colspan="3">
+                                            P R O D U T O S
+                                        </th>
+                                        <th style="text-align: center;" colspan="3">
+                                            T O T A I S
+                                        </th>
+                                        <th style="text-align: center;" colspan="2">
+                                            R E C E B I D O
+                                        </th>
+                                    </tr>
+                                      <tr class="info">
+                                        <th style="font-size:xx-small;">Representante</th>
+                                        <th style="font-size:xx-small;">Carteira</th>
+                                        <th style="text-align: right; font-size:xx-small;">Livros/Apostilas</th>
+                                        <th style="text-align: right; font-size:xx-small;">Curso</th>
+                                        <th style="text-align: right; font-size:xx-small;">Assinatura</th>
+                                        <th style="text-align: right; font-size:xx-small;">Renovação</th>
+                                        <th style="text-align: right; font-size:xx-small;">Venda Nova</th>
+                                        <th style="text-align: right; font-size:xx-small;">Total</th>
+                                        <th style="text-align: right; font-size:xx-small;">Recebido</th>
+                                        <th style="text-align: right; font-size:xx-small;">% Recebido</th>
+                                    </tr>
+                                </thead>
+
+                                <tr ng-repeat="item in listacontratorepSint">
+
+                                    <td style="font-size: small; font-size:xx-small;">{{item.REP_ID}} - {{item.REP_NOME}}</td>
+                                    <td style="font-size: small; font-size:xx-small;width:5%">{{item.CAR_ID}}</td>
+
+                                    <td style="text-align: right; font-size:xx-small;width:10%">
+                                        Qtd: {{item.QTDE_PRODUTOS}} /
+                                        <span app-show-dinheiro="item.VALOR_PRODUTO"></span>
+                                    </td>
+                                    <td style="text-align: right;width:10%; font-size:xx-small;">
+                                        Qtd: {{item.QTDE_CURSO}}  /
+                                        <span app-show-dinheiro="item.VALOR_CURSO"></span>
+                                    </td>
+                                    <td style="text-align: right;width:10%; font-size:xx-small;">
+                                        Qtd: {{item.QTDE_ASSINATURA}} / <span app-show-dinheiro="item.VALOR_ASSINATURA"></span>
+                                    </td>
+                                    <td style="text-align: right; font-size:xx-small;width:10%">
+                                        Qtd: {{item.QTDE_RENOVACAO}} / <span app-show-dinheiro="item.VALOR_RENOVACAO"></span>
+                                    </td>
+                                    <td  style="text-align: right; font-size:xx-small;width:10%">
+                                        Qtd: {{item.QTDE_VENDA}} / <span app-show-dinheiro="item.VALOR_VENDA"></span>
+                                    </td>
+                                    <td style="text-align: right; font-size:xx-small;width:10%">
+                                        Qtd: {{item.QTDE_CONTRATOS}} /
+                                        <span app-show-dinheiro="item.VALOR_TOTAL"></span>
+                                    </td>
+                                    <td app-show-dinheiro="item.VALOR_RECEBIDO" style="text-align: right; font-size:xx-small;width:10%"></td>
+                                    <td style="text-align: right;width:10%; font-size:xx-small;">
+                                        {{item.PERC_RECEBIDO}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive" style="padding-left: 12px; padding-right: 12px;">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr class="info">
+                                        <th style="text-align: center;" colspan="7">Total</th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td style="text-align: left;" colspan="3">
+                                        <label>Período:</label>&nbsp
+                                        {{filtro.mes}} /
+                                        {{filtro.ano}}
+                                    </td>
+                                    <td app-show-dinheiro="tolrenovacao" style="text-align: right;font-size:11px;width:10%"></td>
+                                    <td app-show-dinheiro="tolvenda" style="text-align: right;font-size:11px;width:10%"></td>
+                                    <td app-show-dinheiro="tolcontratos" style="text-align: right;font-size:11px; width:10%"></td>
+                                    <td style="text-align: right;width:20%"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" ng-if="export.lnkPath!=null&&export.lnkPath!=''">
+                        <div class="form-group">
+                            <a href="{{export.lnkPath}}" ng-click="export.lnkPath=null"><i class="glyphicon glyphicon-cloud-download"></i> Donwload do arquivo ( {{export.lnkPath}} ) </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden-print panel-footer">
+                    <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+                    <a class="btn btn-default" href="javascript:void(0)" ng-click="expPlanilhaRep(null,listacontratorepSint)" title="Exportar a tabela para o excel">
+                        <i class="fa fa-file-excel-o blue"></i>&nbspExportar
+                    </a>
+                    <a class="btn btn-default" href="/Relatorios/Controladoria">
+                        <span class="glyphicon glyphicon-chevron-left blue"></span>&nbspVoltar
+                    </a>
+                </div>
+            </div>
+
+            <div class="panel panel-default" ng-if="listacontratorep.length>0&&filtro.ordalfabetica==false" id="baseContent">
+                <div class="panel-heading bold head-panel hidden-print"><span class="glyphicon glyphicon-book"></span>&nbspContratos Por Representante</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="table-responsive" style="padding-left: 12px; padding-right: 12px;">
+                            <table class="table table-hover table-bordered" style="padding-left: 12px;">
+                                <thead>
+                                    <tr class="info">
+                                        <th colspan="10">
+                                            <i class="glyphicon glyphicon-book"></i>&nbspCOADCORP - Faturamento por Representante (Analítico) - {{filtro.dataatual}}
+                                        </th>
+                                        <th style="text-align: right;">
+                                            Período:{{filtro.mes}} / {{filtro.ano}}
+                                        </th>
+                                    </tr>
+                                    <tr class="info">
+                                        <th colspan="10">
+                                            <span ng-if="filtro.representante.REP_NOME!=null">Representante - {{filtro.representante.REP_NOME}}</span>
+                                            <span ng-if="filtro.representante.REP_NOME==null">TODOS OS REPRESENTANTES</span>
+                                        </th>
+                                        <th style="text-align: right;">
+                                            <span ng-if="filtro.emp_id==1">COAD</span>
+                                            <span ng-if="filtro.emp_id==2">ATUALIZACAO</span>
+                                            <span ng-if="filtro.emp_id==3">CONTABIL E JURIDICA</span>
+                                            <span ng-if="filtro.emp_id==4">COAD - GRAFICA</span>
+                                            <span ng-if="filtro.emp_id==5">CORTESIA</span>
+                                            <span ng-if="filtro.emp_id==6">Franquia RJ</span>
+                                            <span ng-if="filtro.emp_id==7">PORTO MARAVILHA</span>
+                                        </th>
+                                    </tr>
+                                    <tr class="info">
+                                        <th style="text-align:right;">Assinatura</th>
+                                        <th>Representante</th>
+                                        <th>Cliente</th>
+                                        <th style="text-align:center;">UF</th>
+                                        <th>Cons</th>
+                                        <th style="text-align:right;">Contrato</th>
+                                        <th style="text-align:center;">Faturamento</th>
+                                        <th style="text-align:right;">Valor-R$</th>
+                                        <th style="text-align:right;">Contrato (Ant.)</th>
+                                        <th style="text-align:center;">Faturamento (Ant.)</th>
+                                        <th style="text-align:right;">Valor-R$ (Ant.)</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in listacontratorep">
+                                    <td style="font-size: small; text-align:right;">{{item.ASN_NUM_ASSINATURA}}</td>
+                                    <td style="font-size:10px; text-align:left;width:15%">{{item.CAR_ID}} - {{item.REP_NOME}}</td>
+                                    <td style="font-size:10px; text-align:left;width:35%">{{item.CLI_NOME}}</td>
+                                    <td style="font-size: small;">{{item.UF}}</td>
+                                    <td style="font-size: small;text-align:center;">{{item.ASN_QTDE_CONS_CONTRATO}}</td>
+                                    <td style="text-align: right;">{{item.CTR_NUM_CONTRATO}}</td>
+                                    <td app-show-date="item.CTR_DATA_FAT" style="font-size: small;text-align:center;"></td>
+                                    <td app-show-dinheiro="item.VALOR_TOTAL" style="text-align: right; width:15%"></td>
+                                    <td style="text-align: right;">{{item.CTR_NUM_CONTRATO_ANT}}</td>
+                                    <td app-show-date="item.CTR_DATA_FAT_ANT" style="font-size: small;text-align:center;"></td>
+                                    <td app-show-dinheiro="item.VALOR_TOTAL_ANT" style="text-align: right; width:15%" "></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive" style="padding-left: 12px; padding-right: 12px;">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr class="info">
+                                        <th style="text-align: center;" colspan="7">Total</th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <label>Período:</label>&nbsp{{filtro.mes}} / {{filtro.ano}}
+                                    </td>
+                                    <td app-show-dinheiro="tolcontratos" style="text-align: right;"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" ng-if="export.lnkPath!=null&&export.lnkPath!=''">
+                        <div class="form-group">
+                            <a href="{{export.lnkPath}}" ng-click="export.lnkPath=null"><i class="glyphicon glyphicon-cloud-download"></i> Donwload do arquivo ( {{export.lnkPath}} ) </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden-print panel-footer">
+                    <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+                    <a class="btn btn-default" href="javascript:void(0)" ng-click="expPlanilhaRep(listacontratorep,null)" title="Exportar a tabela para o excel">
+                        <i class="fa fa-file-excel-o blue"></i>&nbspExportar
+                    </a>
+                    <a class="btn btn-default" href="/Relatorios/Controladoria">
+                        <span class="glyphicon glyphicon-chevron-left blue"></span>&nbspVoltar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

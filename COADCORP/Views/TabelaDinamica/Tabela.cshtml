@@ -1,0 +1,163 @@
+﻿@using COAD.SEGURANCA.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+@using COAD.CORPORATIVO.SessionUtils
+@using GenericCrud.Util
+@using GenericCrud.ActionResultTools
+
+@{
+    Layout = null;
+    var parentUrl = Request.UrlReferrer.ToString();
+    var dentroDeIframe = !parentUrl.Contains("corp.coad.com.br") && !parentUrl.Contains("localhost") ? true : false;
+    //Caso não seja não esteja dentro de um iframe esconde os campos
+    var hideElement = dentroDeIframe ? "display:none;" : "";
+    //Caso não seja não esteja dentro de um iframe deixa o layout renderizavel
+    var fixarLargura = dentroDeIframe ? "" : "width: 1000px;";
+}
+
+<!DOCTYPE html>
+<html lang="pt_br">
+<head>
+
+
+    <script type="text/javascript">
+        // para obter o contexto da aplicação
+        var contextPath = "@System.Web.HttpContext.Current.Request.ApplicationPath";
+        var inHomologation = @SysUtils.InHomologation().ToString().ToLower();
+    </script>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - @SysUtils.AmbienteName()</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+
+
+
+    @Styles.Render("~/Content/themes/PortalCoad/css/portal.css")
+    @Styles.Render("~/Content/themes/base/jquery-ui.css")
+    @Styles.Render("~/Content/themes/base/simple-sidebar.css")
+    @Styles.Render("~/Content/themes/base/bootstrap-theme.css")
+    @Styles.Render("~/Content/themes/base/default.css")
+    @Styles.Render("~/Content/themes/base/bootstrap.css")
+    @Styles.Render("~/Content/themes/fonts/font-awesome.min.css")
+    @Styles.Render("~/Content/themes/base/coadcorp-boostrap.css")
+
+    <script src="@Url.Content("~/Scripts/jquery-1.11.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/modernizr-2.5.3.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.maskMoney.js")" type="text/javascript"></script>
+
+
+    @Scripts.Render("~/Scripts/bootstrap.min.js")
+    @Scripts.Render("~/Scripts/util.js")
+    @Scripts.Render("~/Scripts/Angular/angular.min.js")
+    @Scripts.Render("~/Scripts/Angular/angular_modules/service_module.js")
+    @Scripts.Render("~/Scripts/Angular/angular_modules/directives_module.js")
+    @Scripts.Render("~/Scripts/Angular/ng-file-upload/ng-file-upload-shim.min.js")
+    @Scripts.Render("~/Scripts/Angular/ng-file-upload/ng-file-upload.min.js")
+    @Scripts.Render("~/Scripts/default.js")
+    @Scripts.Render("~/Scripts/negocio/notificacao.js")
+    @Scripts.Render("~/Scripts/negocio/controllers_plugins/info_cliente.js")
+    @Scripts.Render("~/Scripts/Angular/FusionCharts/fusioncharts.js")
+    @Scripts.Render("~/Scripts/Angular/FusionCharts/angular-fusioncharts.min.js")
+    @Scripts.Render("~/Scripts/js/plugins/tinymce/tinymce.min.js")
+    @Scripts.Render("~/Scripts/Angular/angular-sanitize.js")
+    @Scripts.Render("~/Scripts/Angular/angular-animate.js")
+    @Scripts.Render("~/Scripts/js/plugins/tinymce/tinymce_custom_app.js")
+    @Scripts.Render("~/Scripts/js/plugins/tinymce/Tinymce.js")
+    @Scripts.Render("~/Scripts/appScripts/TabelaDinamica.js")
+
+
+    <!-- compatibilidades com ie antigos-->
+    @Scripts.Render("~/Scripts/compatibilidades/respond.js")
+    <script type='text/javascript'>
+        function FecharJanela() {
+            ww = window.open(window.location, "_self");
+            ww.close();
+        }
+
+        function do_print() {
+            var conteudo = document.getElementById('texto').innerHTML;
+            tela_impressao = window.open('about:blank');
+            tela_impressao.document.write(conteudo);
+            tela_impressao.window.print();
+            tela_impressao.window.close();
+        }
+
+    </script>
+
+    <style type="text/css">
+
+        a[href]:after {
+            content: none !important;
+        }
+    </style>
+
+</head>
+<body class="body" ng-app="appModule" onselect="return false">
+    <div ng-controller="TabelaDinamicaController" data-ng-init="carregaTela('@ViewBag.id','@ViewBag.tipo','@ViewBag.checa',null)">
+        <div class="hidden-print" app-modal-info="Modal-Info" header="Atenção" submodal>
+            <div class="panel-body">
+                <strong><p ng-bind-html="trustAsHtml(erro)"></p></strong>
+            </div>
+        </div>
+        <div class="conteudo_popup" style="@fixarLargura">
+            <div style="@hideElement height: 110px; background-image: url('/Content/themes/PortalCoad/img/header_busca.png')">
+                <img src="/Content/themes/PortalCoad/img/header_busca.png" style="width:100%; height:100%;" />
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3" ng-if="possuibanner">
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="10000">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators" ng-if="funcionalidade.length>1">
+                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                        </ol>
+
+                        <div class="carousel-inner" role="listbox">
+                            <div ng-class="{'item active':$index==0,item:$index>0}" ng-repeat="lista in funcionalidade" title="{{lista.FCI_DESCRICAO}}">
+                                <a href="{{lista.FCI_URL_LINK}}">
+                                    <img src="{{lista.FCI_URL}}" />
+                                    <div class="carousel-caption">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <br />
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" ng-if="funcionalidade.length>1">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" ng-if="funcionalidade.length>1">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-9" ng-if="possuibanner">
+                    @Html.Partial("Partials/_PreviewPortalTabDinamica")
+                </div>
+                <div class="col-lg-12" ng-if="!possuibanner">
+                    @Html.Partial("Partials/_PreviewPortalTabDinamica")
+                </div>
+            </div>
+            <div class="rodape_busca hidden-print" style="@hideElement width: 1000px; height: 80px;">
+                <div class="conta">
+                    &Aacute;rea exclusiva do cliente
+                    <img src="/Content/themes/PortalCoad/img/cadeado.gif" alt="&Aacute;rea Exclusiva" width="19" height="33" />
+                </div>
+                <div class="menu_rodape">
+                    <a href="javascript:void(0);" onclick="FecharJanela();">Fechar Janela</a>
+                </div>
+                <div class="bug"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+

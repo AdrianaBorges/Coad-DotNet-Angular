@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="buscaModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="buscaModelStoreContainer">
+    <EntitySet Name="busca_completa_tributario" EntityType="buscaModel.Store.busca_completa_tributario" store:Type="Tables" Schema="busca" />
+  </EntityContainer>
+  <EntityType Name="busca_completa_tributario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="id_conteudo" Type="int" Nullable="false" />
+    <Property Name="id_tipo_conteudo" Type="int" Nullable="false" />
+    <Property Name="id_perfil" Type="int" />
+    <Property Name="data_conteudo" Type="datetime" />
+    <Property Name="palavras_indexadas" Type="longtext" />
+    <Property Name="idGED" Type="int" />
+  </EntityType>
+</Schema>

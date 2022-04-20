@@ -1,0 +1,60 @@
+﻿
+<div class="row hidden-print">
+
+    <div class="form-group col-lg-2">
+        <label for="sigla">Inicial</label>
+        <div class="input-group date">
+            @Html.TextBox("dtinicial", "", new { @class = "form-control datepicker", ng_model = "dtini", app_date = "filtro.dtini", date_name = "dtini01" })
+            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+        </div>
+    </div>
+
+    <div class="form-group col-lg-2">
+        <label for="sigla">Final</label>
+        <div class="input-group date">
+            @Html.TextBox("dtfinal", "", new { @class = "form-control datepicker", ng_model = "dtfim", app_date = "filtro.dtfim", date_name = "dtfim01" })
+            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+        </div>
+    </div>
+
+    <div class="form-group col-lg-2">
+        <label for="sigla">Assinatura</label>
+        <div class="input-group">
+            <span class="input-group-btn">
+                <input type="text" id="Assinatura" ng-model="filtro.assinatura" class="form-control" />
+                <!-- <button type="button" class="btn btn-primary" ng-click="pesquisarAgenda()">&nbsp<span class="glyphicon glyphicon-search"></span>&nbsp</button> -->
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group col-lg-2">
+        <label for="sigla">Cliente</label>
+        <div class="input-group">
+            <span class="input-group-btn">
+                <input type="text" id="cliente" ng-model="filtro.cliente" class="form-control" />
+                <!-- <button type="button" class="btn btn-primary" ng-click="pesquisarAgenda()">&nbsp<span class="glyphicon glyphicon-search"></span>&nbsp</button> -->
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group col-lg-2">
+        <label for="sigla">CNPJ/CPF</label>
+        <div class="input-group">
+            <span class="input-group-btn">
+                <input type="text" id="cnpj" ng-model="filtro.cnpj" class="form-control" />
+                <!-- <button type="button" class="btn btn-primary" ng-click="pesquisarAgenda()">&nbsp<span class="glyphicon glyphicon-search"></span>&nbsp</button> -->
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group col-lg-2">
+        <label for="sigla">Atendente</label>
+        <div class="input-group">
+            <span class="input-group-btn">
+                <input type="text" id="atendente" ng-model="filtro.atendente" class="form-control" />
+                 @*<button type="button" class="btn btn-primary" ng-click="pesquisarAgenda()">&nbsp<span class="glyphicon glyphicon-search"></span>&nbsp</button>*@ 
+            </span>
+        </div>
+    </div>
+
+</div>

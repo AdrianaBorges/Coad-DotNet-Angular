@@ -1,0 +1,514 @@
+﻿@using COAD.SEGURANCA.Repositorios.Base
+@Scripts.Render("~/Scripts/negocio/controllers_plugins/boleto_Avulso.js")
+@Scripts.Render("~/Scripts/appScripts/AgendaCobranca.js")
+
+    
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">Home </a></li>
+        <li class="active">&nbspAgenda de Cobrança</li>
+    </ol>
+}
+
+@{
+    ViewBag.print = true;
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;
+    if (ViewBag.print == true)
+    {
+        ViewBag.printableClass = "hidden-print";
+    }
+
+}
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+<div ng-app="appModule">
+    <div ng-controller="AgendaCobrancaController" class="padding content" data-ng-init="carregarTela();canPrint=true" ng-cloak>
+        <div app-message></div>
+
+        <div id="page-wrapper">
+            <div class="panel panel-corp">
+                <div app-message></div>
+
+                <div id="baseContent">
+                    <div class="panel-heading">
+                        <i class="glyphicon glyphicon-filter"></i>
+                        <label id="title">Filtros</label>
+
+                        <div class="pull-right hidden-print">
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default" ng-click="pesquisarAgenda()"><span class="fa fa-search"></span>&nbspPesquisar</button>
+                            </div>
+
+                            <div class="btn-group">
+                                <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+                            </div>
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    Opções
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    <li>
+                                        <a href="javascript:void(0)" ng-click="abrirModalParcelaIrregular()" class="blue">Alterar situação de parcelas</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="panel-heading bold head-panel"> </div>
+
+                <div class="panel-body">
+                    @Html.Partial("Partials/AgendaCobranca/_PesquisarAgendaCobranca")
+
+                    <!-- Controle de abas -->
+                    @Html.Partial("Partials/AgendaCobranca/_AbasPesquisaAgenda")
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Modal Atendimento  - AFB - Identificado problema -->
+        <div app-modal="Modal-Atendimento" 
+             header="Atendimento - Assinatura: {{atendimento.ASN_NUM_ASSINATURA}}">
+            
+            <div class="panel-body">
+                <div class="row">
+                    <!-- Cliente -->
+                    <div class="form-group col-sm-7">
+                        <label>Cliente</label>
+                        <input type="text" ng-model="atendimento.CLI_NOME" class="form-control" disabled="disabled" />
+                    </div>
+
+                    <!-- Origem -->
+                    <div class="form-group col-sm-2">
+                        <label>Origem</label>
+                        <select ng-model="atendimento.HAT_ORIGEM_ATEND" class="form-control" disabled="disabled">
+                            <option value="EMA">Email</option>
+                            <option value="TEL" selected="selected">Telefone</option>
+                        </select>
+                    </div>
+
+                    <!-- Tipo -->
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Tipo")
+                        <select ng-change="buscarTipoAtendimento()" ng-model="atendimento.TIP_ATEND_GRUPO" class="form-control" disabled="disabled">
+                            <option value="ATE">Atendimento</option>
+                            <option value="COB" selected="selected">Cobrança</option>
+                            <option value="REC">Reclamação</option>
+                            <option value="SOL">Solicitação</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group col-sm-9">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <label>
+                                    <strong>
+                                        Este cliente possui <span style="text-align:right;"
+                                                                  app-show-dinheiro="totaldebito"></span>  em aberto
+                                    </strong>
+                                </label>
+                            </div>
+                        </div>
+
+                       <fieldset ng-repeat="item01 in lstTitulosVencidos">
+                            <legend class="btn btn-default"
+                                    style="text-align: left;">
+                                <a data-toggle="collapse" href="#{{item01.CTR_NUM_CONTRATO}}">
+                                     Exibe débito do cliente 
+                                    <strong>Assinatura: {{item01.ASN_NUM_ASSINATURA}} </strong> -
+                                    <strong>Contrato: {{item01.CTR_NUM_CONTRATO}} / <strong>Total R$: </strong> <span app-show-dinheiro="item01.VLR_TOTAL_DEBITO"></span></strong>
+
+                                </a>
+                            </legend>
+
+                            <div id="{{item01.CTR_NUM_CONTRATO}}" class="panel-collapse collapse">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                            <tr class="info">
+                                                <th style="text-align:right;">Nº Parcela</th>
+                                                <th style="text-align:center;">Vencimento</th>
+                                                <th style="text-align:center;">Atraso</th>
+                                                <th style="text-align:right;">Valor</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in item01.PARCELAS">
+                                                <td style="text-align:right;">
+                                                    {{item.PAR_NUM_PARCELA}}
+                                                </td>
+                                                <td style="text-align:center;" app-show-date="item.PAR_DATA_VENCTO"></td>
+                                                <td style="text-align:center;">{{item.PAR_DIAS_ATRASO}}</td>
+                                                <td style="text-align:right;" app-show-dinheiro="item.PAR_VLR_PARCELA"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                       </fieldset> 
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <a href="javascript:void(0)" class="btn btn-default" ng-click="abrirModalHistorico(atendimento.CLI_ID)" data-toggle="tooltip" data-placement="top" app-popover data-content="Pesquisar Histórico">
+                    <span class="fa fa-clock-o blue"></span>&nbspHistórico
+                </a>
+                <a href="javascript:void(0)" class="btn btn-default" ng-click="abrirModalEmail(agendaANT.ASN_NUM_ASSINATURA)" data-toggle="tooltip" data-placement="top" app-popover data-content="Atualizar dados da email.">
+                    <span class="fa fa-envelope blue"></span>&nbspEmails
+                </a>
+                <a href="javascript:void(0)" class="btn btn-default" ng-click="abrirModalTelefones(atendimento,true)" data-toggle="tooltip" data-placement="top" app-popover data-content="Pesquisar Telefones">
+                    <span class="fa fa-phone-square blue"></span>&nbspTelefones
+                </a>
+            </div>
+        </div>
+
+         <!-- Modal Reagendamento --> 
+        <div app-modal="Modal-Reagendamento" header="Histórico/Agendamento - Assinatura:  {{agendaANT.ASN_NUM_ASSINATURA}} - {{agendaANT.CLI_NOME}} ">
+            <div class="panel-body">
+                <div class="row" ng_if="agendaANT.AGC_ID !=null">
+                    <div class="form-group col-sm-12">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <fieldset>
+                                    <legend>Atendimento - {{agendaANT.AGC_ID}} - <span style="text-align:Center;" app-show-date="agendaANT.AGC_DATA_AGENDA"></span> </legend>
+                                </fieldset>
+                                <label><strong>Este cliente possui <span style="text-align:right;" app-show-dinheiro="totaldebito"></span>  em aberto</strong> </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group col-sm-6">
+                        @Html.Label("Descrição Atendimento")
+                        @Html.TextArea("Historico", "", new { @class = "form-control", ng_model = "agendaANT.AGC_ASSUNTO", rows = 4, cols = 60, disabled = "disabled" })
+                    </div>
+                    <div class="form-group col-sm-6" style="overflow:auto;height:110px;">
+                        <fieldset ng-repeat="item02 in lstTitulosVencidos">
+                            <legend class="btn btn-default" style="text-align: left;">
+                                <a data-toggle="collapse" href="#{{item02.CTR_NUM_CONTRATO}}">
+                                    <strong>Contrato: {{item02.CTR_NUM_CONTRATO}} / <strong>Total R$: </strong> <span app-show-dinheiro="item02.VLR_TOTAL_DEBITO"></span></strong>
+                                </a>
+                            </legend>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr class="info">
+                                            <th style="text-align:right;">Nº Parcela</th>
+                                            <th style="text-align:center;">Vencimento</th>
+                                            <th style="text-align:center;">Atraso</th>
+                                            <th style="text-align:right;">Valor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in item02.PARCELAS">
+                                            <td style="text-align:right;">
+                                                {{item.PAR_NUM_PARCELA}}
+                                            </td>
+                                            <td style="text-align:center;" app-show-date="item.PAR_DATA_VENCTO"></td>
+                                            <td style="text-align:center;">{{item.PAR_DIAS_ATRASO}}</td>
+                                            <td style="text-align:right;" app-show-dinheiro="item.PAR_VLR_PARCELA"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="form-group col-lg-2">
+                        <label>Reagendamento</label>
+                        <label class="switch switch switch-round" style="padding-top: 5px;">
+                            <input type="checkbox" id="somenteativos" ng_model="agenda.AGC_GERAR_AGENDAMENTO" ng_change="agenda.TIP_ATEND_ID=null" class="form-control" value="false">
+                            <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                        </label>
+                    </div>
+                    <div class="form-group col-sm-3" ng_if="!agenda.AGC_GERAR_AGENDAMENTO">
+                        @Html.Label("Motívo")
+                        <select ng_model="agenda.TIP_ATEND_ID" class="form-control">
+                            <option></option>
+                            <option value="114">Cliente Insatisfeito</option>
+                            <option value="115">Cliente Solicitou Cancelamento</option>
+                            <option value="116">Cliente Não quer Encaminhar Comprovante</option>
+                            <option value="35">Encerrou Atividades</option>
+                            <option value="31">Problemas Financeiros</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Código</label>
+                            <input type="text" ng-model="agenda.CLI_ID" class="form-control" disabled="disabled" />
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Nº Parcela</label>
+                            <input type="text" ng-model="agenda.PAR_NUM_PARCELA" class="form-control" disabled="disabled" />
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group" ng_if="agenda.AGC_GERAR_AGENDAMENTO">
+                            @Html.Label("Data")
+                            <div class="input-group date">
+                                @Html.TextBox("dtaagenda", "", new { @class = "form-control datepicker", ng_model = "dtaagenda", app_date = "agenda.AGC_DATA_AGENDA" })
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-2" ng_if="agenda.AGC_GERAR_AGENDAMENTO">
+                        @Html.Label("Hora")
+                        <select ng_model="agenda.AGC_HORA_AGENDA" class="form-control">
+                            <option value="8:00">8:00</option>
+                            <option value="8:00">8:30</option>
+                            <option value="9:00">9:00</option>
+                            <option value="8:00">9:30</option>
+                            <option value="10:00">10:00</option>
+                            <option value="10:00">10:30</option>
+                            <option value="11:00">11:00</option>
+                            <option value="11:30">11:30</option>
+                            <option value="12:00">12:00</option>
+                            <option value="12:30">12:30</option>
+                            <option value="13:00">13:00</option>
+                            <option value="13:30">13:30</option>
+                            <option value="14:00">14:00</option>
+                            <option value="14:30">14:30</option>
+                            <option value="15:00">15:00</option>
+                            <option value="15:30">15:30</option>
+                            <option value="16:00">16:00</option>
+                            <option value="16:30">16:30</option>
+                            <option value="17:00">17:00</option>
+                            <option value="17:30">17:30</option>
+                            <option value="18:00">18:00</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        @Html.Label("Descrição")
+                        @Html.TextArea("Historico", "", new { @class = "form-control", ng_model = "agenda.AGC_ASSUNTO", rows = 6, cols = 60 })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0)" class="btn btn-default" ng-click="abrirModalHistorico(agendaANT.CLI_ID)" data-toggle="tooltip" data-placement="top" app-popover data-content="Pesquisar Histórico">
+                    <span class="fa fa-clock-o blue"></span>&nbspHistórico
+                </a>
+                <a href="javascript:void(0)" class="btn btn-default" ng-click="abrirModalEmail(agendaANT.ASN_NUM_ASSINATURA)" data-toggle="tooltip" data-placement="top" app-popover data-content="Atualizar dados da email.">
+                    <span class="fa fa-envelope blue"></span>&nbspEmails
+                </a>
+                <a href="javascript:void(0)" class="btn btn-default" ng-click="abrirModalTelefones(agendaANT,true)" data-toggle="tooltip" data-placement="top" app-popover data-content="Pesquisar Telefones">
+                    <span class="fa fa-phone-square blue"></span>&nbspTelefones
+                </a>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="salvarReagendamento(agenda); pesquisarAgenda();"><span class="glyphicon glyphicon-floppy-save blue"></span>&nbspSalvar</button>
+            </div>
+        </div>
+
+         <!-- Modal Boleto --> 
+        <div app-modal="Modal-Boleto" header="Boleto">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-sm-3">
+                        @Html.Label("Parcela")
+                        <input type="text" class="form-control" ng_model="avulso.PAR_NUM_PARCELA" disabled="disabled" />
+                    </div>
+                    <div class="form-group col-sm-3">
+                        @Html.Label("Vencimento")
+                        <div class="input-group date">
+                            @Html.TextBox("dtvencimento", "", new { @class = "form-control datepicker", ng_model = "dtvencimento", app_date = "avulso.PAR_DATA_VENCTO" })
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        @Html.Label("Valor")
+                        <input type="text" app-mask-dinheiro="avulso.PAR_VLR_PARCELA" ng_model="vlrparcela" class="form-control text-right" disabled="disabled" />
+                    </div>
+                    <div class="form-group col-sm-3">
+                        @Html.Label("Valor Boleto")
+                        <input type="text" app-mask-dinheiro="avulso.PAR_VLR_BOLETO" ng-model="vlrboleto" class="form-control text-right" />
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="cnab">Conta</label>
+                        <select id="contas" ng-options=" item.CTA_ID as item.CTA_CONTA for item in listacontas" class="form-control" ng-model="avulso.ctaId">
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        @Html.Label("Motívo")
+                        @Html.TextArea("Hsitorico", "", new { @class = "form-control", ng_model = "avulso.msg", rows = 6, cols = 60 })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="emitirBoleto()"><span class="fa fa-barcode blue"></span>&nbspEmitir</button>
+            </div>
+        </div>
+
+         @*Modal Histórico*@ 
+        <div app-modal="Modal-Historico" header="Historico - Assinatura: {{atendimento.ASN_NUM_ASSINATURA}}">
+            <div class="panel-body">
+                <fieldset style="padding-bottom:10px;">
+                    <legend class="btn btn-info" style="text-align: left;">Histórico (SAC)</legend>
+                    <div class="row padding" @*style="height:180px;overflow:auto;" *@>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr class="info">
+                                        <th>Assinatura</th>
+                                        <th>Data</th>
+                                        <th>Histórico</th>
+                                        <th>Solicitante</th>
+                                        <th>Tipo</th>
+                                        <th>Atendente</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="historico in listaatend">
+                                        <td>
+                                            {{historico.ASN_NUM_ASSINATURA}}
+                                        </td>
+                                        <td app-show-date="historico.HAT_DATA_HIST" show-time></td>
+                                        <td>
+                                            {{historico.HAT_DESCRICAO}}
+                                        </td>
+                                        <td>
+                                            {{historico.HAT_SOLICITANTE}}
+                                        </td>
+                                        <td>
+                                            {{historico.TIPO_ATENDIMENTO.TIP_ATEND_DESCRICAO}}
+                                        </td>
+                                        <td>
+                                            {{historico.USU_LOGIN}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div app-pagination="pagina02" request-page="paginaReq" load-function="BuscarHistorico(atendimento.CLI_ID,paginaReq)" style="text-align:center;"></div>
+                </fieldset>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+
+         @*Modal Atualizar Email*@ 
+        <div app-modal="Modal-Atualizar-Email" header="Atualizar Emails - {{atendimento.ASN_NUM_ASSINATURA}}">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr class="info">
+                                <th>Email</th>
+                                <th>Alteração</th>
+                                <th>Usuário</th>
+                                <th>Legado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="email in listaemail">
+                                <td>
+                                    <span class="float-left">{{email.AEM_EMAIL}}</span>
+                                </td>
+                                <td>
+                                    <span app-show-date="email.DATA_ALTERA" show-time class="float-left"></span>
+                                </td>
+                                <td>
+                                    <span class="float-left"> {{email.USU_LOGIN}}</span>
+                                </td>
+                                <td>
+                                    <span class="float-left">{{email.EMAIL_ID_LEGADO}}</span>
+                                </td>
+                            </tr>
+                            <tr ng-hide="listaemail.length > 0">
+                                <td colspan="7">
+                                    Nenhum email adicionado. Clique para adicionar:
+                                    <a href="javascript:void(0)" ng-click="IncluirEmail(email)" app-popover data-content="Incluir">
+                                        <span class="glyphicon glyphicon-plus blue"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+         @*Modal Telefones*@ 
+        <div app-modal="Modal-Telefones" header="Telfones - Assinatura: {{atendimento.ASN_NUM_ASSINATURA}}">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr class="info">
+                                    <th>DDD</th>
+                                    <th>Telefone</th>
+                                    <th>Contato</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="tel in listatelefone">
+                                    <td>{{tel.ATE_DDD}}</td>
+                                    <td>{{tel.ATE_TELEFONE}}</td>
+                                    <td>{{tel.ATE_CONTATO}}</td>
+                                </tr>
+                                <tr ng-hide="listatelefone.length > 0">
+                                    <td colspan="3">
+                                        Nenhum telefone encontrado!!
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div app-pagination="pagina03" request-page="paginaReq" load-function="buscarDadosTelefone(paginaReq)" style="text-align:center"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+
+         @*Modal Confirma Negociação*@ 
+        <div app-modal="Modal-Confirma-Negociacao" header="Confirma Negociação - Assinatura: {{atendimento.ASN_NUM_ASSINATURA}}">
+            <div class="modal-body">
+                <ul>
+                    <li>
+                        Ao confirmar a operação, as parcelas em atraso serão canceladas
+                        e novas parcelas serão geradas a partir da negociação realizada com o cliente.
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+
+        @*Modal-Prorrogacao*@ 
+        @Html.Partial("Partials/Modais/_ModalBoletoAvulso")
+
+    </div>
+</div>

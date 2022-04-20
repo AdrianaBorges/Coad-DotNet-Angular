@@ -1,0 +1,331 @@
+﻿<div>      
+    @Html.ValidationSummary(true)          
+            <!-- Default panel contents -->
+    <div class="panel panel-default">    
+        <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Informações da Tabela de Preço</div>
+        <div class="panel-body padding-3">  
+                <div app-message></div>
+                @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) {
+                        <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="v-padding">
+                                       
+                                        <div><span app-validation-msg="erros" for="PRODUTO_COMPOSICAO_ITEM"></span></div>  
+                                    </div>                                                        
+                                </div>
+                            </div>
+                        <div class="row">
+                            <div class="form-group col-lg-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Nome da Tabela</th>
+                                            <th ng-if="ehCurso == false">Tipo de Período</th>
+                                            <th>Preço de Venda</th>
+                                            <th>Tipo Pagamento</th>
+                                            <th>Região</th>
+                                            <th>Margem de Negociação</th>
+                                            <th>Parcelas</th>
+                                            <th>#</th>                                  
+                                        </tr>                                   
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in tabelaPreco" ng-show="tabelaPreco">
+                                            <td>{{item.TP_DESCRICAO}}</td>
+                                            <td ng-if="ehCurso == false">{{item.TIPO_PERIODO.TTP_DESCRICAO}}</td>
+                                            <td app-show-dinheiro="item.TP_PRECO_VENDA" output-model="item.TP_PRECO_VENDAMask"></td>
+                                            <td>
+                                                {{item.TABELA_PRECO_TIPO_PAGAMENTO[0].TIPO_PAGAMENTO.TPG_DESCRICAO}}
+                                                <a href="javascript:void(0)" class="" ng-if="item.TABELA_PRECO_TIPO_PAGAMENTO.length > 1" 
+                                                    app-list-popover="item.TABELA_PRECO_TIPO_PAGAMENTO" label="TIPO_PAGAMENTO.TPG_DESCRICAO" title="Tipos de Pagamento">
+                                                        <span class="badge"> + {{item.TABELA_PRECO_TIPO_PAGAMENTO.length - 1}}</span>
+                                                </a>
+                                            </td>
+                                            <td> {{item.REGIAO_TABELA_PRECO[0].REGIAO.RG_DESCRICAO}}
+                                                <a href="javascript:void(0)" class="" ng-if="item.REGIAO_TABELA_PRECO.length > 1" 
+                                                    app-list-popover="item.REGIAO_TABELA_PRECO" label="REGIAO.RG_DESCRICAO" title="Regiões">
+                                                        <span class="badge" > + {{item.REGIAO_TABELA_PRECO.length - 1}}</span>
+                                                </a>
+                                            </td>
+                                            <td><span class="label label-success">{{item.TP_MARGEM_NEGOCIACAO}}%</span></td>
+                                            <td>De <strong>{{item.TP_NUM_PARCELAS_MIN}}X</strong> até <strong>{{item.TP_NUM_PARCELAS_MAX}}X</strong></td>
+                                            <td>
+                                                <a href="javascript:void(0)" ng-click="abrirEdicaoItemTabelaPreco($index, item)" 
+                                                    class="btnConfirmaExclusao blue" id="btnEdicaoItem" title="Editar" ><span class="glyphicon glyphicon-edit"></span></a>
+                                                <a href="javascript:void(0)" ng-click="DeletarTabelaPreco($index)" 
+                                                    class="btnConfirmaExclusao red" id="btexcluir" title="Excluir"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                                                 <a href="javascript:void(0);" ng-click="abrirEdicaoItemTabelaPreco()" ng-if="$index == (tabelaPreco.length - 1)" 
+                                                     title="Adicionar Configuração">
+                                                    <span class="glyphicon glyphicon-plus"></span></a>
+                                            </td>
+                                    
+                                        </tr>
+                                        <tr ng-hide="tabelaPreco.length > 0">
+                                            <td colspan="7">Nenhum configuração de preço foi adicionada. Clique aqui para adicionar 
+                                                <a href="javascript:void(0);" ng-click="abrirEdicaoItemTabelaPreco()" 
+                                                     title="Adicionar Configuração">
+                                                    <span class="glyphicon glyphicon-plus"></span></a>.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            </div>
+                        </div>
+                }
+        </div>
+        <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default">
+                <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar
+            </button>
+@*            <button type="button" class="btn btn-primary" ng-click="salvarTabelaPreco()" ng-disabled="buttonSaveTabPreco.show == false">
+                <span class="glyphicon glyphicon-floppy-save"></span> {{buttonSaveTabPreco.label}}
+            </button>*@
+            <button  
+                  app-switch-button="salvarTabelaPreco()" 
+                  switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]" 
+                  switch-var="buttonSaveTabPreco"
+                  class="btn btn-primary">
+                  <span class="glyphicon glyphicon-floppy-save"></span>
+              </button>   
+        </div> 
+    </div>
+
+    <div app-modal="modal-tabela-preco" header="Dados da tabela de Preço" class="limit-modal-height">  
+            
+        <div>      
+                    <fieldset class="text-primary">
+                    <legend>Parametros de pagamento</legend>
+                    <div class="row"> 
+                        <div class="form-group col-lg-3">
+                            <label>Nome da Configuração</label>
+                            <input type="text" ng-model="$parent.itemTabPreco.TP_DESCRICAO" class="form-control"/>
+                            <div app-validation-msg="erros" for="TP_DESCRICAO"> </div>                                                                                                                          
+                        </div>
+@*                        <div class="form-group col-lg-3">
+                            <label>Tipo de Pagamento</label>                                   
+                            <select name="tipo_pagamento" class="form-control" ng-model="itemTabPreco.TIPO_PAGAMENTO"
+                                ng-options="item as item.TPG_DESCRICAO for item in lstTipoPagamento track by item.TPG_ID" 
+                                ng-change="tipoPagamentoSelecionado(); verificaDuplicacao();" ng-disabled="!itemTabPreco.Novo && itemTabPreco.TIPO_PAGAMENTO">
+                                <option value="">Selecione</option>
+                            </select>
+                            <div app-validation-msg="erros" for="TPG_ID"> </div>                                                     
+                        </div> *@                                     
+                        <div class="form-group col-lg-2">
+                                <label>Margem de Lucro</label>
+                                <div class="input-group" style="max-width: 82px">                                            
+                                <input type="text" ng-model="$parent.itemTabPreco.TP_MARGEM_LUCRO" class="form-control" maxlength="2" app-number/> 
+                                <div class="input-group-addon">%</div>  
+                                </div>     
+                            <div app-validation-msg="erros" for="TP_MARGEM_LUCRO"> </div>                                    
+                        </div>                        
+                        <div class="form-group col-lg-3">
+                            @Html.Label("Margem de Negociação")
+                            <div class="input-group" style="max-width: 82px">
+                                <input type="text" ng-model="$parent.itemTabPreco.TP_MARGEM_NEGOCIACAO" class="form-control" maxlength="2" 
+                                    app-number/>
+                                <div class="input-group-addon">%</div>
+                            </div>
+                            <div app-validation-msg="erros" for="TP_MARGEM_NEGOCIACAO"> </div>                                     
+                                                                                     
+                        </div>
+                        <div class="form-group col-lg-2">
+                                <label>Nº Parcela Mínima</label>
+                                <div class="input-group" style="max-width: 82px">                                        
+                                <input type="text" ng-model="$parent.itemTabPreco.TP_NUM_PARCELAS_MIN" class="form-control" maxlength="2" 
+                                    app-number ng-disabled="$parent.itemTabPreco.parcelaBloqueada == true"/> 
+                                <div class="input-group-addon">X</div>  
+                                </div>     
+                            <div app-validation-msg="erros" for="TP_MARGEM_LUCRO"> </div>                                    
+                        </div>
+                         <div class="form-group col-lg-2">
+                                <label>Nº Parcela Máxima</label>
+                                <div class="input-group" style="max-width: 82px">                                        
+                                <input type="text" ng-model="$parent.itemTabPreco.TP_NUM_PARCELAS_MAX" class="form-control" maxlength="2" 
+                                    app-number /> 
+                                <div class="input-group-addon">X</div>  
+                                </div>     
+                            <div app-validation-msg="erros" for="TP_MARGEM_LUCRO"> </div>                                    
+                        </div>
+                        <div class="form-group col-lg-2" ng-show="$parent.itemTabPreco.parcelaBloqueada == true">                                    
+	                        <label for="pendente">Permitir primeiro mês grátis</label><br />
+                            <label class="switch switch-success switch-round">
+                                <input type="checkbox" ng-model="$parent.itemTabPreco.TP_PERMITIR_CORTESIA_PRIMEIRA_PARCELA" 
+                                    ng-checked="$parent.itemTabPreco.TP_PERMITIR_CORTESIA_PRIMEIRA_PARCELA == true">
+	                            <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-3" ng-show="ehCurso">
+                                <label>Porcentagem de Serviço</label>
+                                <div class="input-group" style="max-width: 82px">                                            
+                                <input type="text" ng-model="$parent.itemTabPreco.TP_PORCENTAGEM_SERVICO" class="form-control" maxlength="2" app-number/> 
+                                <div class="input-group-addon">%</div>  
+                                </div>     
+                            <div app-validation-msg="erros" for="TP_PORCENTAGEM_SERVICO"> </div>                                    
+                        </div>                        
+                        <div class="form-group col-lg-3">
+                                @Html.Label("Preço de Venda")
+                            <div class="input-group">
+                            <div class="input-group-addon">R$</div>
+                            <input type="text" ng-model="$parent.itemTabPreco.TP_PRECO_VENDAMask" hide-when-zero="true"
+                                app-mask-dinheiro="$parent.itemTabPreco.TP_PRECO_VENDA" class="form-control" />   
+                            </div>  
+                            <div app-validation-msg="erros" for="TP_PRECO_VENDA"> </div>                                    
+                        </div>
+                        <div class="form-group col-lg-3" ng-if="ehCurso == false">
+                            <label for="tipo_periodo">Tipo de Período</label>
+                            <select id="tipo_periodo"
+                                ng-options="tp as tp.TTP_DESCRICAO for tp in lstTipoPeriodoDoProduto track by tp.TTP_ID" 
+                                ng-model="$parent.itemTabPreco.TIPO_PERIODO" ng-change="tipoPeriodoSelecionado();" 
+                                class="form-control">
+                                    <option value="">Selecione</option>
+                            </select>                                                                                                                    
+                        </div>
+                    </div>
+                    </fieldset>
+            
+                <fieldset>
+                    <legend class="text-primary">Tipos de Pagamento</legend>                            
+                <div class="row">
+                    <div class="form-group col-lg-4">
+                        <div class="table-responsive limit-div">
+                            <table class="table table-hover table-bordered">
+                                          
+                            <thead>
+                                <tr><th colspan="2">Selecione o Tipo de pagamento</th></tr>
+                                <tr>
+                                    <th>Tipo de Pagamento</th>
+                                    <th>Selecione</th>                                    
+                                </tr>                                   
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in $parent.lstTipoPagamento | filter:queryTipoPagamento">
+                                    <td>{{item.TPG_DESCRICAO}}</td>                                        
+                                    <td><a href="javascript:void(0)" ng-click="$parent.adicionarTipoPagamento(item)" 
+                                        class="blue" id="btnEdicaoItemTipoPag2" title="Editar">
+                                        <span class="glyphicon glyphicon-forward"></span></a>
+                                    
+                                </tr>
+                                <tr ng-hide="lstTipoPagamento.length > 0">
+                                    <td colspan="2">Nenhuma Tipo de Pagamento Encontrada.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5">
+                        <div class="table-responsive limit-div">
+                            <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr><th colspan="3">Tipos de Pagamento Selecionadas</th></tr>
+                                <tr>
+                                    <th>Tipo de Pagamento</th>
+                                    <th>Excluir</th>                                    
+                                </tr>                                   
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in $parent.itemTabPreco.TABELA_PRECO_TIPO_PAGAMENTO">
+
+                                    <td>{{item.TIPO_PAGAMENTO.TPG_DESCRICAO}}</td>
+                                    <td>
+                                        <a href="javascript:void(0)" ng-click="excluirTipoPagamento($index, item.TIPO_PAGAMENTO.TPG_DESCRICAO)" class="btnConfirmaExclusao red" 
+                                        id="btexcluirTipoPagamento21" title="Excluir"><span class="glyphicon glyphicon-remove-sign"></span>
+                                        </a>
+                                    </td>
+                                    
+                                </tr>
+                                <tr ng-hide="itemTabPreco.TABELA_PRECO_TIPO_PAGAMENTO.length > 0">
+                                    <td colspan="3">Nenhuma Tipo de Pagamento Selecionado.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+                <div class="row" ng-show="!$parent.itemTabPreco.TP_PRECO_VENDA">
+                    <div class="form-group col-lg-3">Informe o preço de venda.</div> 
+                </div>
+                </fieldset>   
+                <fieldset class="text-primary">
+                    <legend>Regiões</legend>                            
+                <div class="row" ng-show="$parent.itemTabPreco.TP_PRECO_VENDA">
+                    <div class="form-group col-lg-4">
+                        <div class="table-responsive limit-div">
+                            <table class="table table-hover table-bordered">
+                                          
+                            <thead>
+                                <tr><th colspan="2">Selecione as regiões</th></tr>
+                                <tr>
+                                    <th>UF</th>
+                                    <th>Selecione</th>                                    
+                                </tr>                                   
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in $parent.lstRegioes | filter:query" ng-show="$parent.lstRegioes">
+                                    <td>{{item.RG_DESCRICAO}}</td>                                        
+                                    <td><a href="javascript:void(0)" ng-click="$parent.adicionarRegiao(item)" 
+                                        class="blue" id="btnEdicaoItem2" title="Editar">
+                                        <span class="glyphicon glyphicon-forward"></span></a>
+                                    
+                                </tr>
+                                <tr ng-hide="lstRegioes.length > 0">
+                                    <td colspan="2">Nenhuma região encontrada.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5">
+                        <div class="table-responsive limit-uf">
+                            <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr><th colspan="3">Regiões Selecionadas</th></tr>
+                                <tr>
+                                    <th>UF</th>
+                                    <th>Preço</th>
+                                    <th>Excluir</th>                                    
+                                </tr>                                   
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in $parent.itemTabPreco.REGIAO_TABELA_PRECO" ng-show="$parent.itemTabPreco.REGIAO_TABELA_PRECO">
+
+                                    <td>{{item.REGIAO.RG_DESCRICAO}}</td>
+                                    @*<td><input type="text" ng-model="item.RG_TP_PRECO_VENDAMask"
+                                            app-dinheiro="item.RG_TP_PRECO_VENDA" class="form-control" ng-blur="blurAppEditable($event)" hide-when-zero="true"/></td>*@
+                                    <td app-editable-td="item.RTP_PRECO_VENDA" label="item.RTP_PRECO_VENDA" blur-event="blurAppEditable" is-money="true">
+                                        <div class="input-group">
+                                        <div class="input-group-addon">R$</div>
+                                            <input type="text" ng-model="item.RTP_PRECO_VENDAMask"
+                                            app-mask-dinheiro="item.RTP_PRECO_VENDA" class="form-control" ng-blur="blurAppEditable($event)" hide-when-zero="true"/>
+                                        </div>  
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0)" ng-click="excluirRegiao($index, item.REGIAO.RG_DESCRICAO)" class="btnConfirmaExclusao red" 
+                                        id="btexcluir21" title="Excluir"><span class="glyphicon glyphicon-remove-sign"></span>
+                                        </a>
+                                    </td>
+                                    
+                                </tr>
+                                <tr ng-hide="itemTabPreco.REGIAO_TABELA_PRECO.length > 0">
+                                    <td colspan="3">Nenhuma região Selecionada.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+                <div class="row" ng-show="!$parent.itemTabPreco.TP_PRECO_VENDA">
+                    <div class="form-group col-lg-3">Informe o preço de venda.</div> 
+                </div>
+                </fieldset>                        
+                        
+                <hr />                                         
+                    <button type="button" class="btn btn-default" ng-click="$parent.salvarEdicaoTabelaPreco()">
+                        <span class="glyphicon glyphicon-plus blue"></span> {{acaoEdit.label}}</button>
+                            
+            </div>
+        </div>  
+            
+</div>

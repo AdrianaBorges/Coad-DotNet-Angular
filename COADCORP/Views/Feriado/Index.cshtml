@@ -1,0 +1,165 @@
+﻿@Scripts.Render("~/Scripts/appScripts/feriado.js")
+
+@{
+    ViewBag.print = true;
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;
+    if (ViewBag.print == true)
+    {
+        ViewBag.printableClass = "hidden-print";
+    }
+
+    ViewBag.Title = "Index";
+    
+}
+
+<script>
+    $(document).ready(function () {
+        $(":input").inputmask();
+    });
+</script>
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">@Html.ActionLink("Relatorios", "index", "Calendário de Feriados") </a></li>
+        <li class="active">Relatórios Controladoria</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="FeriadoController" class="padding content" ng-init="buscarFeriados(@ViewBag.ano);canPrint=true" ng-cloak >
+        <div class="panel panel-corp" id="baseContent">
+            <div app-message></div>
+            <div class="panel-heading bold head-panel">
+                <label id="title"><span class="glyphicon glyphicon-calendar"></span>&nbspFeriados</label>
+                <div class="hidden-print pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            Opções
+                                    <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="javascript:void(0)" ng-click="abriModalAddItem()" title="Editar o item selecionado">Novo
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="hidden-print col-xs-12">
+                    <h3 data-year="2017">Calendário
+                        <select ng-model="filtro.fer_id" ng-change="buscarFeriados(filtro.fer_id)">
+                            <option value="2016">2016</option>
+                            <option value="2017">2017</option>
+                            <option value="2018">2018</option>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                        </select>
+                    </h3>
+                </div>
+
+                <table class="table table-hover table-bordered" style="padding-left: 12px;" ng-repeat="meses in listaferiados">
+                    <thead>
+                        <tr class="info">
+                            <th colspan="5"><strong>{{meses.MES_DESCRICAO}}</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in meses.MES_FERIADOS">
+                        <td style="width: 60%">{{item.FER_DESCRICAO}}</td>
+                        <td app-show-date="item.FER_DATA" style="width: 10%; text-align: center;"></td>
+                        <td style="width: 10%; text-align: center;">
+                            <span ng-if="item.FER_TIPO=='N'">Nacional</span>
+                            <span ng-if="item.FER_TIPO=='E'">Estadual</span>
+                            <span ng-if="item.FER_TIPO=='M'">Municipal</span>
+                        </td>
+                        <td style="width: 10%; text-align: center;">
+                            <span ng-if="item.FER_FIXO==true">Fixo</span>
+                            <span ng-if="item.FER_FIXO==false">Variável</span>
+                        </td>
+                        <td style="width: 10%; text-align: center;">
+                            <a href="javascript:void(0)" ng-click="abriModalAddItem(item)" title="Editar o item selecionado">
+                                <span class="glyphicon glyphicon-edit blue"></span>
+                            </a>
+                            <a href="javascript:void(0)" ng-click="excluirFeriado(item)" title="Exclui o item selecionado">
+                                <span class="glyphicon glyphicon-remove red"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="hidden-print panel-footer">
+                <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+            </div>
+        </div>
+        <!-- Modal detalhar registro -->
+        <div app-modal="Modal-Add-Item" header="Editar Feriado">
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    @*                    <div class="col-lg-1">
+                        <div class="form-group">
+                            @Html.Label("ID")
+                            <input id="ID" type="text" ng-model="itemselect.FER_ID" class="form-control" />
+                        </div>
+                    </div>*@
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            @Html.Label("Descrição")
+                            <input id="Descricao" type="text" ng-model="itemselect.FER_DESCRICAO" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("Data")
+                            <div class="input-group date">
+                                @Html.TextBox("dtalt", "", new { @class = "form-control datepicker", ng_model = "dtalt", app_date = "itemselect.FER_DATA" })
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Tipo")
+                            <select ng-model="itemselect.FER_TIPO" class="form-control">
+                                <option value="N">Nacional</option>
+                                <option value="E">Estadual</option>
+                                <option value="M">Municipal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Fixo")
+                            <input id="Fixo" type="checkbox" ng-model="itemselect.FER_FIXO" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="salvarFeriado(itemselect)">
+                    <span class="glyphicon glyphicon-floppy-save blue"></span>&nbspSalvar
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

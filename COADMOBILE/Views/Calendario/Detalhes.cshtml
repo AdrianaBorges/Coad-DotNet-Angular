@@ -1,0 +1,213 @@
+﻿@model COAD.PORTAL.Model.DTO.CalendarioObrigacoes.CoCalendarioDTO
+
+@{
+    ViewBag.Title = "Detalhes";
+}
+
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Tributário","index","Home")</li>
+        <li>@Html.ActionLink("Busca","Buscar","Calendario")</li>
+        <li class="active">Detalhes</li>         
+        
+    </ol>
+}
+
+@Styles.Render("~/Content/themes/css/tributarioEstilo.css")
+
+<h4>Detalhes</h4>
+
+<div class="listaObrigacoes">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 float-left">
+            <h5>@Model.CO_OBRIGACOES.TXT_TITULO</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 col-sm-4 float-left">
+            <div class="titulo">Prazo</div>
+        </div>
+        <div class="col-xs-4 col-sm-4 float-left">
+            <div class="titulo">Abrange</div>
+        </div>
+
+        <div class="col-xs-4 col-sm-4 float-left">
+            <div class="titulo">Área</div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-4 col-sm-4 float-left">
+            <span class="conteudo">
+                @if (Model.DTReferencia != null)
+                {
+                    <span style="color: #333;">De:</span> @Model.DTReferencia.ToString("dd/MM/yyyy");<br />
+                }
+            </span>
+        </div>
+        <div class="col-xs-4 col-sm-4 float-left">
+            <span class="conteudo">
+                @if (Model.CO_OBRIGACOES.CO_MUNICIPIOS != null)
+                {
+                    @Model.CO_OBRIGACOES.CO_MUNICIPIOS.NOME_MUNICIPIO@:/
+                }
+                @if (Model.CO_OBRIGACOES.CO_ESTADOS != null)
+                {
+                    @Model.CO_OBRIGACOES.CO_ESTADOS.COD_UF @:-
+                }
+                @Model.CO_OBRIGACOES.TXT_ABRANGENCIA
+            </span>
+        </div>
+
+        <div class="col-xs-4 col-sm-4 float-left">
+            <span class="conteudo">
+                @Model.CO_OBRIGACOES.CO_AREAS.NOME_AREA
+            </span>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <img src="/Images/u43_normal.png" class="iconePessoa" />
+            <div class="tituloCheio">Pessoas Obrigadas</div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <span class="conteudo">@Model.CO_OBRIGACOES.TXT_PESSOAS_OBRIGADAS</span>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <br />
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <img src="/Images/u49_normal.png" class="iconeRodela" />
+            <div class="tituloCheio">Fato Gerador</div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <span class="conteudo">@Model.CO_OBRIGACOES.TXT_FATO_GERADOR - @Model.TXT_REFERENCIA</span>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    @if (Model.CO_OBRIGACOES.TXT_PENALIDADE != null)
+    {
+        <br />
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <img src="/Images/u47_normal.png" class="iconeFeia" />
+                <div class="tituloCheio">Penalidade</div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <span class="conteudo">@Model.CO_OBRIGACOES.TXT_PENALIDADE</span>
+            </div>
+            <div class="clear"></div>
+        </div>        
+    }
+
+    @if (Model.CO_OBRIGACOES.TXT_OBSERVACAO != null)
+    {        
+        <br />
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <img src="/Images/u53_normal.png" class="iconeObs" />
+                <div class="tituloCheio">Observação</div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <span class="conteudo">@Model.CO_OBRIGACOES.TXT_OBSERVACAO</span>
+            </div>
+            <div class="clear"></div>
+        </div>
+    }
+
+    
+    @if (Model.CO_OBRIGACOES.TXT_RECOLHIMENTO != null)
+    {        
+        <br />
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <img src="/Images/u49_normal.png" class="iconeRodela" />
+                <div class="tituloCheio">Preenchimento do @Model.CO_OBRIGACOES.TXT_FORMA_ENTREGA</div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <span class="conteudo">@Model.CO_OBRIGACOES.TXT_RECOLHIMENTO</span>
+            </div>
+            <div class="clear"></div>
+        </div>  
+    }
+    
+    @if (Model.CO_OBRIGACOES.LNK_GUIARECOL != null)
+    {
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <span class="conteudo"><a href="@Model.CO_OBRIGACOES.LNK_GUIARECOL" class="linkFund" target="_blank">Ir para o site</a></span>
+            </div>
+            <div class="clear"></div>
+        </div>
+    }
+    
+    @if (Model.CO_OBRIGACOES.TXT_FUNDLEGAL != null)
+    {
+        <br />
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <img src="/Images/u91_normal.png" class="iconeFund" />
+                <div class="tituloCheio">Fundamentação Legal</div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <span class="conteudo">@Model.CO_OBRIGACOES.TXT_FUNDLEGAL</span>
+            </div>
+            <div class="clear"></div>
+        </div>
+    }
+    
+    @if (Model.CO_OBRIGACOES.LNK_ORIENTACAO != null && Model.CO_OBRIGACOES.LNK_IRSITE != null)
+    {
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <span class="conteudo">
+                    <a href="@Model.CO_OBRIGACOES.LNK_ORIENTACAO" class="orient" target="_blank">Orientação</a>
+                    <a href="@Model.CO_OBRIGACOES.LNK_IRSITE" class="orient" target="_blank">Tabela Prática</a>
+                </span>
+            </div>
+            <div class="clear"></div>
+        </div>
+    }    
+@*/
+        
+
+        <div class="Rodape">
+            @if (ViewBag.anterior != null)
+            {
+            <a href="@Url.Action("Detalhe", "Obrigacoes", new { id = ViewBag.anterior.NUM_OBRIGACAO, dataVisivel = ViewBag.anterior.DTReferencia.ToString("dd/MM/yyyy") })">< Obrigação Anterior</a>
+            }
+            <a href="@Url.Action("Listar", "Obrigacoes", new {Ano= DateTime.Now.Year.ToString()})" class="list">Listar Obrigações</a>
+            @if (ViewBag.proxima != null)
+            {
+            <a href="@Url.Action("Detalhe", "Obrigacoes", new { id = ViewBag.proxima.NUM_OBRIGACAO, dataVisivel = ViewBag.proxima.DTReferencia.ToString("dd/MM/yyyy") })" class="prox">Próxima Obrigação ></a>
+            }
+        </div>
+    *@
+</div>

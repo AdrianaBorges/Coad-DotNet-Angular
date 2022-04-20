@@ -1,0 +1,11 @@
+﻿@{
+    Layout = null;
+}
+<div class="btn-group btn-group-directive">
+	<a type="button" href="javascript:void(0)" class="btn btn-default btn-xs btn-block dropdown-toggle" data-toggle="dropdown"><span ng-show="selected[labelName]">{{selected[labelName]}}</span> <span ng-hide="selected[labelName]">{{defaultLabel}}</span> <span class="caret"></span></a>
+	<ul class="dropdown-menu limit-div dropdown-menu-directive" role="menu">
+		<li ng-show="selected"><a href="javascript:void(0)" ng-click="removerSelecao()"><i class="fa fa-remove"></i> Remover</a></li>
+        <li class="divider" ng-show="selected"></li>
+        <li ng-repeat="itm in appDropdown"><a href="javascript:void(0)" ng-click="preencherValor(itm)"><i class="{{iconClass}}"></i> {{itm[labelName]}}</a></li>
+	</ul>
+</div> 

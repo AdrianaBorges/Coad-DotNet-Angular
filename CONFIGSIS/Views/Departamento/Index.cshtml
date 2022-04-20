@@ -1,0 +1,95 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutosDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li class="active">Gerenciar Usuarios</li>         
+        
+    </ol>
+}
+
+@Scripts.Render("~/Scripts/negocio/departamento.js")
+<div ng-app="appModule">
+    <div ng-controller="DepartamentoController" class="padding content" ng-cloak>
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                        </li>                                                                           
+                                    </ul>
+                                </div>
+                            </div>
+      </div>
+          
+      <div class="panel-body">            
+           
+        <div class="row">              
+            <div class="form-group col-lg-2">
+                <label for="usu_login">Departamento</label>
+                <input type="text" id="usu_login" ng-model="filtro.nome" class="form-control"/>
+            </div>                  
+        </div>
+         
+            
+      </div>
+                  
+        <div class="panel-footer">
+            <button type="button" class="btn btn-default" ng-click="listar()">Pesquisar</button>
+        </div>
+</div>
+        <div app-message></div>
+      <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Cadastro de Departamento</div>
+          
+      <div class="panel-body">       
+                    <div class="table-responsive">     
+                            <!-- <input type="text" ng-model="dataTest" app-date/>  -->       
+                       
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>                                           
+                                            Nome
+                                        </th>
+                                        <th>Editar</th>
+                                    </tr>
+                                </thead>    
+                              <tr ng-repeat="item in lstDepartamentos">
+                                    <td>
+                                        {{item.DP_NOME}}
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0)" app-post="@Url.Action("Editar")?DP_ID={{item.DP_ID}}" title="Editar" class="blue">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                        </a>
+                                    </td>
+                                   
+                              </tr>
+                            <tr>
+                                <td colspan="8" ng-show="!lstDepartamentos && listado">Nenhum registro foi encontrado.</td>
+                                <td colspan="8" ng-show="!lstDepartamentos">Clique em pesquisar para listar.</td>
+
+                            </tr>
+
+                            </table> 
+                    </div>
+              <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+
+          </div>
+        </div>  
+    </div>   
+</div>

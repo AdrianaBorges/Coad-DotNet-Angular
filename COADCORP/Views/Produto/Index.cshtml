@@ -1,0 +1,150 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutosDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active"> Produtos</li>
+
+    </ol>
+}
+
+@Scripts.Render("~/Scripts/negocio/produtos.js")
+
+<div ng-app="appModule">
+    <div class="padding content" ng-controller="ProdutoController" ng_init="CarregaTela()">
+        <div class="panel panel-default">
+            <div app-message></div>
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+               <div class="btn-group">
+                   <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                       Opções
+                                        <span class="caret"></span>
+                   </button>
+                   <ul class="dropdown-menu pull-right" role="menu">
+                       <li>
+                           <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                       </li>
+                   </ul>
+               </div>
+           </div>
+            </div>
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-4">
+                        <label for="GRUPO_ID">Grupo</label>
+                        @Html.DropDownListFor(model => model.GRUPO_ID, new SelectList(ViewBag.grupos, "GRUPO_ID", "GRU_DESCRICAO"), "Selecione", new { @class = "form-control", ng_model = "filtro.grupoId" })
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="TIPO_PRO">Tipo de Produto</label>
+                        @Html.DropDownListFor(model => model.TIPO_PRO, new SelectList(ViewBag.tipoProd, "TIPO_PRO", "TIPO_DESCRICAO"), "Selecione", new { @class = "form-control", ng_model = "filtro.tipoProdutoId" })
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="AREA_ID">Área</label>
+                        @Html.DropDownListFor(model => model.AREA_ID, new SelectList(ViewBag.areas, "AREA_ID", "AREA_NOME"), "Selecione", new { @class = "form-control", ng_model = "filtro.areaId" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-2">
+                        <label for="sigla">Sigla</label>
+                        <input type="text" id="sigla" ng-model="filtro.sigla" class="form-control" />
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="sigla">Nome</label>
+                        <input type="text" id="nome" ng-model="filtro.nome" class="form-control" />
+                    </div>
+
+                    <div class="form-group col-lg-2">
+                        <label for="PRO_ATIVO">
+                            Ativo
+                        </label>
+                        <br />
+                        <input type="checkbox" ng-model="proativo" />
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="PRO_EXCLUIDO">
+                            Excluído
+                        </label>
+                        <br />
+                        <input type="checkbox" ng-model="proexcluido" />
+                    </div>
+
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="listar()"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-show="produtos">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Produtos</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                    <div>
+                        @Html.Messages()
+                    </div>
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr class="info">
+                                <th>Código
+                                </th>
+                                <th style="min-width: 119px">
+                                    @Html.DisplayNameFor(model => model.PRO_SIGLA)
+                                </th>
+                                <th style="min-width: 250px">
+                                    @Html.DisplayNameFor(model => model.PRO_NOME)
+                                </th>
+                                <th style="min-width: 70px">
+                                    @Html.DisplayNameFor(model => model.AREA_ID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.GRUPO_ID)
+                                </th>
+                                <th style="min-width: 130px">
+                                    @Html.DisplayNameFor(model => model.TIPO_PRO)
+                                </th>
+                                <th>Editar</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in produtos">
+                            <td>{{item.PRO_ID}}
+                            </td>
+                            <td>{{item.PRO_SIGLA}}
+                            </td>
+                            <td>{{ item.PRO_NOME}}
+                            </td>
+                            <td>{{item.AREAS.AREA_NOME}}
+                            </td>
+                            <td>{{item.GRUPO.GRU_DESCRICAO}}
+                            </td>
+                            <td>{{item.TIPO_PRODUTO.TIPO_DESCRICAO}}
+                            </td>
+                            <td style="text-align:center"><a href="javascript:void(0)" app-post="@Url.Action("Editar")?produtoId={{item.PRO_ID}}" title="Editar" class="blue"><span class="glyphicon glyphicon-edit"></span></a></td>
+                        </tr>
+                    </table>
+                    <div app-modal="modalRegiao" header="Selecione a Regiao">
+                        <div class="div-center padding form-group">
+                            <div app-message></div>
+                            <label for="regiaoSelect">Região</label>
+                            <select ng-options="reg.ID as reg.DESCRICAO for reg in regioes" ng-model="modalModel.regiaoId" id="regiaoSelect" class="form-control" ng-disabled="button.enabled === false || !regioes">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                        <button id="button-transferir" app-switch-button="trocarRegiao()" switch-var="$parent.state" switch-conf="[{label : 'Salvar', state : 'salvar'}, {label : 'Salvando...', state : 'salvando', disabled : true}]" class="btn btn-primary">Salvar</button>
+                        <button class="btn btn-default" class="close" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                    </div>
+                </div>
+                <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+            </div>
+        </div>
+    </div>
+</div>

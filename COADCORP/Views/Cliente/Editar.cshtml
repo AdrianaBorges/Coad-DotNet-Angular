@@ -1,0 +1,1118 @@
+﻿@model COAD.CORPORATIVO.Model.Dto.ClienteDto
+
+@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+
+@Scripts.Render("~/Scripts/negocio/controllers_plugins/boleto_Avulso.js")
+@Scripts.Render("~/Scripts/negocio/controllers_plugins/endereco.js")
+@Scripts.Render("~/Scripts/negocio/cliente.js")
+
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">Home </a></li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+
+    .bd-callout {
+        padding: 1.25rem;
+        margin-top: 1.25rem;
+        margin-bottom: 1.25rem;
+        border: 1px solid #eee;
+        border-left-width: .25rem;
+        border-radius: .25rem
+    }
+
+        .bd-callout h4 {
+            margin-top: 0;
+            margin-bottom: .25rem
+        }
+
+        .bd-callout p:last-child {
+            margin-bottom: 0
+        }
+
+        .bd-callout code {
+            border-radius: .25rem
+        }
+
+        .bd-callout + .bd-callout {
+            margin-top: -.25rem
+        }
+
+    .bd-callout-info {
+        border-left-color: #5bc0de
+    }
+
+        .bd-callout-info h4 {
+            color: #5bc0de
+        }
+
+    .bd-callout-warning {
+        border-left-color: #f0ad4e
+    }
+
+        .bd-callout-warning h4 {
+            color: #f0ad4e
+        }
+
+    .bd-callout-danger {
+        border-left-color: #d9534f
+    }
+
+        .bd-callout-danger h4 {
+            color: #d9534f
+        }
+
+    .bd-examples .img-thumbnail {
+        margin-bottom: .75rem
+    }
+
+    .bd-examples h4 {
+        margin-bottom: .25rem
+    }
+
+    .bd-examples p {
+        margin-bottom: 1.25rem
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="ClienteController" data-ng-init="read(@ViewBag.clienteId); buscarAssinatura(@ViewBag.clienteId); carregarAssinatura('@ViewBag.assinatura');  init('', true)" ng-cloak>
+        <div id="page-wrapper">
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading bold head-panel">
+                    <span class="glyphicon glyphicon-edit icon-panel"></span>@ViewBag.Title
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Opções <span class="caret"></span>
+                            </button>
+
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)" app-popover data-content="Salvar" ng-click="SalvarCliente()" class="blue">Salvar</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" ng-click="abrirModalPesquisarCliente()" app-popover data-content="Pesquisar Cliente">
+                                        Pesquisar
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="javascript:void(0)" onclick="window.location = '@Url.Action("Index")'">Voltar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    @Html.Partial("Partials/Cliente/_ParcialClientes")
+                    @Html.Partial("Partials/Cliente/_ParcialEnderecoCliente")
+                    @Html.Partial("Partials/Cliente/_ParcialAssinaturaCliente")
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" onclick="window.location = '@Url.Action("Index")'">
+                        <span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="SalvarCliente()" ng-if="Incluir"><span class="glyphicon glyphicon-floppy-save blue"></span>&nbspSalvar</button>
+                </div>
+            </div>
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading bold head-panel">
+                    <span>Assinatura: {{assinturaSelect}}</span>
+                    <div class="pull-right">
+
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row ">
+                        <div class="col-md-2">
+                            <div class="list-group">
+                                <a href="javascript:void(0);" ng-click="tabAtiva=0" ng-class="{'list-group-item text-center': tabAtiva!='0','list-group-item text-center active': tabAtiva=='0'}">
+                                    <h4 class="	glyphicon glyphicon-file"></h4><br />Contratos
+                                </a>
+                                <a href="javascript:void(0);" ng-click="tabAtiva=1" ng-class="{'list-group-item text-center': tabAtiva!='1','list-group-item text-center active': tabAtiva=='1'}">
+                                    <h4 class="	glyphicon glyphicon-user"></h4><br />Situação Cliente
+                                </a>
+                                <a href="javascript:void(0);" ng-click="tabAtiva=2" ng-class="{'list-group-item text-center': tabAtiva!='2','list-group-item text-center active': tabAtiva=='2'}">
+                                    <h4 class="glyphicon glyphicon-comment"></h4><br />Historico (SAC)
+                                </a>
+                                <a href="javascript:void(0);" ng-click="mostrarHistAgenda(assinturaSelect,3)" ng-class="{'list-group-item text-center': tabAtiva!='3','list-group-item text-center active': tabAtiva=='3'}">
+                                    <h4 class="glyphicon glyphicon-calendar"></h4><br />Historico (Agenda)
+                                </a>
+                                <a href="javascript:void(0);" ng-click="tabAtiva=4" ng-class="{'list-group-item text-center': tabAtiva!='4','list-group-item text-center active': tabAtiva=='4'}">
+                                    <h4 class="glyphicon glyphicon-search"></h4><br />Consultas
+                                </a>
+                                <a href="javascript:void(0);" ng-click="tabAtiva=5" ng-class="{'list-group-item text-center': tabAtiva!='5','list-group-item text-center active': tabAtiva=='5'}">
+                                    <h4 class="glyphicon glyphicon-credit-card red"></h4><br />Cheque Devolvido
+                                </a>
+                                <a href="javascript:void(0);" ng-click="tabAtiva=6" ng-class="{'list-group-item text-center': tabAtiva!='6','list-group-item text-center active': tabAtiva=='6'}">
+                                    <h4 class="glyphicon glyphicon-briefcase"></h4><br />Representante
+                                </a>
+                                <a href="javascript:void(0);" ng-click="buscarListaApuracaoConsulta(7)" ng-class="{'list-group-item text-center': tabAtiva!='7','list-group-item text-center active': tabAtiva=='7'}">
+                                    <h4 class="glyphicon glyphicon-stats"></h4><br />Estatisiticas
+                                </a>
+                                <a href="javascript:void(0);" ng-click="listarNfeCliente(8)" ng-class="{'list-group-item text-center': tabAtiva!='8','list-group-item text-center active': tabAtiva=='8'}">
+                                    <h4 class="glyphicon glyphicon-edit"></h4><br />Nota Fiscal
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div ng-if="tabAtiva==0">
+                                @Html.Partial("Partials/Cliente/_ParcialContratoCliente")
+                            </div>
+                            <div ng-if="tabAtiva==1">
+                                @Html.Partial("Partials/_SituacaoCliente")
+                            </div>
+                            <div ng-if="tabAtiva==2">
+                                @Html.Partial("Partials/Cliente/_ParcialHistoricoCliente")
+                            </div>
+                            <div ng-if="tabAtiva==3">
+                                @Html.Partial("Partials/Cliente/_ParcialAgendaCliente")
+                            </div>
+                            <div ng-if="tabAtiva==4">
+                                @Html.Partial("Partials/Cliente/_PartialConsEmail")
+                            </div>
+                            <div ng-if="tabAtiva==5">
+                                @Html.Partial("Partials/Cliente/_PartialChequeDevolvido")
+                            </div>
+                            <div ng-if="tabAtiva==6">
+                                @Html.Partial("Partials/Cliente/_PartialReprentanteCliente")
+                            </div>
+                            <div ng-if="tabAtiva==7">
+                                @Html.Partial("Partials/Cliente/_PartialEstatisticasCliente")
+                            </div>
+                            <div ng-if="tabAtiva==8">
+                                @Html.Partial("Partials/Cliente/_PartialNfeCliente")
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" onclick="window.location = '@Url.Action("Index")'">
+                        <span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="SalvarCliente()" ng-if="Incluir"><span class="glyphicon glyphicon-floppy-save blue"></span>&nbspSalvar</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal Parcelas -->
+        <div app-modal="modal-parcelas" header="Parcelas">
+            <div class="panel-body" style="overflow-y: auto; height: 370px; width: auto;">
+                <div class="table-responsive">
+                    <div class="bd-callout bd-callout-warning">
+                        <p><span class="label label-info">Baixa</span><span style="font-size:x-small">  - Data em que o pagamento da parcela foi confirmando na COAD. (Data do processamento do arquivo de retorno ou baixa manual). </span></p>
+                        <p><span class="label label-success">Pagamento</span><span style="font-size:x-small">  - Data em que o pagamento do boleto referente a parcela foi realizado na rede bancária.</span></p>
+                    </div>
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr class="info">
+                                <th>Nº Parcela</th>
+                                <th>Nosso Número</th>
+                                <th style="text-align: center;">Alocação</th>
+                                <th style="text-align: center;">Vencimento</th>
+                                <th style="text-align: center;">Baixa</th>
+                                <th class="align-right">Valor</th>
+                                <th style="text-align: center;">Situação</th>
+                                <th style="text-align: center;">Dias Atraso</th>
+                                <th style="text-align: center;">Juros</th>
+                                <th style="text-align: center;" colspan="4">Opções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listaparcelas">
+                                <td> <a href="javascript:void(0)" ng-click="mostrarNossoNumero(item.PAR_NUM_PARCELA)" title="Mostrar o codigo de barras calculado."> {{item.PAR_NUM_PARCELA}}</a></td>
+                                <td>{{item.PAR_NOSSO_NUMERO}}</td>
+                                <td style="text-align: center;">{{item.EMP_ID}} <span ng_if="item.BAN_ID!=null&&item.BAN_ID!=''">-</span>  {{item.BAN_ID}} <span app-show-date="item.PAR_DATA_ALOC"></span></td>
+                                <td style="text-align: center;" app-show-date="item.PAR_DATA_VENCTO"></td>
+                                <td style="text-align: center;" app-show-date="item.PAR_DATA_PAGTO"></td>
+                                <td app-show-dinheiro="item.PAR_VLR_PARCELA" class="align-right" style="min-width: 100px;"></td>
+                                <td style="text-align: center;">
+                                    <span ng-show="item.PAR_DATA_PAGTO==NULL&&item.DATA_EXCLUSAO!=NULL" class="label alert-warning">
+                                        Excluída
+                                    </span>
+                                    <span ng-show="item.PAR_DATA_PAGTO==NULL&&item.PAR_SITUACAO=='PRO'&&item.DATA_EXCLUSAO==NULL" class="label alert-warning">
+                                        {{item.USU_LOGIN_PRORROGACAO}} <span app-show-date="item.DATA_PRORROGACAO"></span>
+                                        Prorrogada
+                                    </span>
+                                    <span ng-show="item.PAR_DATA_PAGTO==NULL&&item.PAR_SITUACAO=='CON'&&item.DATA_EXCLUSAO==NULL" class="label alert-info">
+                                        {{item.USU_LOGIN_PRORROGACAO}} <span app-show-date="item.DATA_PRORROGACAO"></span>
+                                        Prorrogada
+                                    </span>
+                                    <span ng-show="item.PAR_DATA_PAGTO==NULL&&item.PAR_SITUACAO!='PRO'&&item.PAR_SITUACAO=='LIB'&&item.DATA_EXCLUSAO==NULL" class="label alert-warning">
+                                        <span app-show-date="item.DATA_ALTERA"></span>
+                                        Liberado
+                                    </span>
+                                    <span ng-show="item.PAR_DATA_PAGTO!=NULL" class="label alert-success">
+                                        Pago
+                                    </span>
+                                    <span ng-show="item.PAR_DATA_PAGTO==NULL&&item.PAR_SITUACAO!='PRO'&&item.PAR_SITUACAO=='NOR'&&item.DATA_EXCLUSAO==NULL"
+                                          ng-class="{'label alert-danger': item.SITUACAO=='Vencida','label alert-info': item.SITUACAO=='Aberta', 'label alert-warning': item.SITUACAO!='Pago'&&item.PAR_SITUACAO=='LIB','label alert-success': item.SITUACAO=='Pago'}">{{item.SITUACAO}}</span>
+                                </td>
+                                <td style="text-align: center;">{{item.PAR_DIAS_ATRASO}}</td>
+                                <td app-show-dinheiro="item.PAR_VLR_JUROS" class="align-right" style="min-width: 100px;"></td>
+                                <td style="text-align: center;">
+                                    <a href="javascript:void(0)" ng-click="mostrarNossoNumero(item.PAR_NUM_PARCELA)" data-toggle="tooltip" data-placement="top" app-popover data-content="Mostrar o codigo de barras calculado pelo COADCORP.">
+                                        <span class="fa fa-search"></span>
+                                    </a>
+
+                                    @if (SessionContext.AcessoGerente("SAC"))
+                                    {
+                                        <a href="javascript:void(0)" ng-click="LiberarDocVencido(item)" ng-if="item.PAR_DATA_PAGTO==null" data-toggle="tooltip" data-placement="top" app-popover data-content="Marcar a parcelas em atraso para que ela não bloqueie acesso a ura.">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                        </a>
+
+                                        <a href="javascript:void(0)" ng-click="AbrirModalBoletoAvulso(item.PAR_NUM_PARCELA)" ng-if="item.PAR_DATA_PAGTO==null" data-toggle="tooltip" data-placement="top" app-popover data-content="Emitir boleto avulso.">
+                                            <span class="fa fa-calendar"></span>
+                                        </a>
+
+                                    }
+                                    <a data-toggle="modal" href="javascript:void(0)" ng-click="AbrirModalLiquidacao(item)" data-toggle="tooltip" data-placement="top" app-popover data-content="Documento de liquidação de titulos">
+                                        <span class="fa fa-calculator"></span>
+                                    </a>
+
+
+                                    @if (SessionContext.AcessoGerente("Representante"))
+                                    {
+                                        <a href="javascript:void(0)" ng-click="AbrirModalBoletoAvulso(item.PAR_NUM_PARCELA)" ng-if="item.PAR_DATA_PAGTO==null" data-toggle="tooltip" data-placement="top" app-popover data-content="Emitir boleto avulso.">
+                                            <span class="fa fa-calendar"></span>
+                                        </a>
+                                    }
+
+                                    <a href="javascript:void(0);" ng-if="item.PAR_DATA_PAGTO==null"
+                                       app-post="@Url.Action("Boleto2aViaDownload","CobrancaEscritural")?idTitulo={{item.PAR_NUM_PARCELA}}"
+                                       ng-disabled="!item.PAR_NUM_PARCELA"
+                                       title="Gerar 2ª via do boleto">
+                                        <i class="fa fa-barcode" aria-hidden="true"></i>
+                                    </a>
+
+
+                                    @*<a href="javascript:void(0);"
+           app-post="@Url.Action("Boleto2aViaDownload","CobrancaEscritural")?idTitulo={{item.PAR_NUM_PARCELA}}"
+           ng-disabled="!item.PAR_NUM_PARCELA"
+           title="Gerar 2ª via do boleto (Teste)">
+            <i class="fa fa-barcode" aria-hidden="true"></i>
+        </a>*@
+
+
+</tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="modal-Liquidacao" data-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: aliceblue">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Liquidação</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr class="info">
+                                    <th>Nº Parcela</th>
+                                    <th>Tipo DOC.</th>
+                                    <th>Banco</th>
+                                    <th style="text-align: center;">Baixa</th>
+                                    <th style="text-align: center;">Pagamento</th>
+                                    <th style="text-align: center;">Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in listaliqparcelas">
+                                    <td>{{item.PAR_NUM_PARCELA}}</td>
+                                    <td>{{item.PLI_TIPO_DOC}}</td>
+                                    <td>{{item.BAN_ID}}</td>
+                                    <td app-show-date="item.PLI_DATA_BAIXA"></td>
+                                    <td app-show-date="item.PLI_DATA"></td>
+                                    <td app-show-dinheiro="item.PLI_VALOR" class="align-right"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- modal-Prorrogacao -->
+        @Html.Partial("Partials/Modais/_ModalBoletoAvulso")
+
+        <!-- Modal URAS -->
+        <div app-modal="modal-ura" header="URAS">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="info">
+                                <th>@Html.Label("URA")</th>
+                                <th>@Html.Label("VIP")</th>
+                                <th>@Html.Label("DDD")</th>
+                                <th>@Html.Label("Telefone")</th>
+                                <th>@Html.Label("Senha")</th>
+                                <th>@Html.Label("Assinatura")</th>
+                                <th>@Html.Label("Ativo")</th>
+                                <th>@Html.Label("id", "Tot.Consultas")</th>
+                                <th>@Html.Label("Acesso")</th>
+                                <th>@Html.Label("id", "Tot.Realizado")</th>
+                                <th>@Html.Label("Grupo")</th>
+                                @*<th style="text-align: center;">Bloquear / Liberar</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listauras">
+                                <td>{{item.uraid}}</td>
+                                <td>{{item.vip}}</td>
+                                <td>{{item.ddd}}</td>
+                                <td>{{item.telefone}}</td>
+                                <td>{{item.senha}}</td>
+                                <td>{{item.codigo}}</td>
+                                <td>{{item.pode}}</td>
+                                <td style="text-align: center">{{item.qte_cons}}</td>
+                                <td style="text-align: center">{{item.acesso}}</td>
+                                <td style="text-align: center">{{item.qte_realiz}}</td>
+                                <td style="text-align: center">{{item.grupo}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</button>
+            </div>
+        </div>
+        <!-- Modal Detalhe Consultas (ura) -->
+        <div app-modal="modal-det-consultas" header="Consultas">
+            <div class="panel-body">
+                <div class="table-responsive" style="overflow: auto; max-height: 300px;">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="info">
+                                <th>@Html.Label("URA")</th>
+                                <th>@Html.Label("Assinatura")</th>
+                                <th>@Html.Label("Data")</th>
+                                <th>@Html.Label("Ramal")</th>
+                                <th>@Html.Label("Telefone")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in detconsultas">
+                                <td>{{item.URA_ID}}</td>
+                                <td>{{item.ASN_NUM_ASSINATURA}}</td>
+                                <td app-show-date="item.HAU_DATA_CADASTRO" show-time></td>
+                                <td>{{item.HAU_RAMAL}}</td>
+                                <td>{{item.HAU_TELEFONE}}</td>
+                                <td>{{item.TEL_ID_LEGADO}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</button>
+            </div>
+        </div>
+        <!-- Modal Detalhe Consultas (Email) -->
+        <div app-modal="modal-det-consultas-email" header="Consultas">
+            <div class="panel-body">
+                <div class="table-responsive" style="overflow: auto; max-height: 300px;">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="info">
+                                <th>@Html.Label("id", "Seq.")</th>
+                                <th>@Html.Label("Assinatura")</th>
+                                <th>@Html.Label("Data")</th>
+                                <th>@Html.Label("Email")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in detconsultas">
+                                <td>{{item.HAE_ID}}</td>
+                                <td>{{item.ASN_NUM_ASSINATURA}}</td>
+                                <td app-show-date="item.HAE_DTCADASTRO"></td>
+                                <td>{{item.HAE_EMAIL}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</button>
+            </div>
+        </div>
+        <!-- Modal Atendimento -->
+        <div app-modal="modal-atendimento" header="Atendimento">
+            <div class="panel-body">
+                <div class="bd-callout bd-callout-warning">
+                    <h5 id="conveying-meaning-to-assistive-technologies"><i class="fa fa-exclamation-triangle"></i> A T E N Ç Ã O</h5>
+                    <p>Para realizar o atendimento selecione Origem, Classificação, Tipo e Atendimento. O Campo <code class="highlighter-rouge">Atendimento</code> é preenchido de acordo com a classificação e o tipo informados. </p>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label>Origem</label>
+                        <select ng_model="atendimento.HAT_ORIGEM_ATEND" class="form-control">
+                            <option value="EMA">Email</option>
+                            <option value="TEL">Telefone</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="pull-Left">
+                            <label for="sigla">Classificação</label>
+                            <div class="form-group">
+                                <select ng-model="atendimento.CLA_ATEND_ID" ng-change="buscarTipoAtendimento()" class="form-control">
+                                    <option ng-repeat="item in listaClassificacao" value="{{item.CLA_ATEND_ID}}">{{item.CLA_ATEND_DESCRICAO}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.Label("Tipo")
+                        <select ng-change="buscarTipoAtendimento()" ng_model="atendimento.TIP_ATEND_GRUPO" class="form-control">
+                            <option value="ATE">Atendimento</option>
+                            <option value="REC">Reclamação</option>
+                            <option value="SOL">Solicitação</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Atendimento <span class="badge badge-info" ng-if="lstTipoAtendimento.length>0">{{lstTipoAtendimento.length}}</span> </label>
+                        <select class="form-control" ng_model="atendimento.TIP_ATEND_ID" ng-change="verificarEtiqueta(atendimento.TIP_ATEND_ID)">
+                            <option ng-repeat="item in lstTipoAtendimento" value="{{item.TIP_ATEND_ID}}">{{item.TIP_ATEND_DESCRICAO}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" ng-show="emiteetiqueta==true">
+                    <div class="form-group col-sm-5">
+                        @Html.Label("Texto Etiqueta")
+                        <input type="text" class="form-control" ng_model="atendimento.HAT_DESCRICAO" maxlength="35" />
+                    </div>
+                    <div class="form-group col-sm-7">
+                        @Html.Label("Solicitante")
+                        @Html.TextBox("Solicitante", "", new { @class = "form-control", ng_model = "atendimento.HAT_SOLICITANTE", maxlength = "50" })
+                    </div>
+                </div>
+                <div class="bd-callout bd-callout-warning" ng-hide="emiteetiqueta==true">
+                    <p>O Campo histórico é obrigatório e o conteúdo informado abaixo é adicionado ao hístórico do cliente.</p>
+                </div>
+                <div class="row" ng-hide="emiteetiqueta==true">
+                    <div class="form-group col-sm-12">
+                        @Html.Label("Histórico")
+                        @Html.TextArea("Hsitorico", "", new { @class = "form-control", ng_model = "atendimento.HAT_DESCRICAO", rows = 6, cols = 60 })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="GravarAtendimento(atendimento)"><span class="glyphicon glyphicon-floppy-save blue"></span>&nbspSalvar</button>
+            </div>
+        </div>
+        <!-- Modal Histórico Atendimento -->
+        <div app-modal="modal-Hist-Atend" header="Histórico de Atendimento">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Assinatura")
+                        @Html.TextBox("Assinatura", "", new { @class = "form-control", ng_model = "histAtendSelect.ASN_NUM_ASSINATURA", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        @Html.Label("Ação")
+                        @Html.DropDownList("AcaoAtend", new SelectList(@ViewBag.ListaAcaoAtendimento, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_model = "histAtendSelect.ACA_ID", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-5">
+                        @Html.Label("Tipo Atendimento")
+                        @Html.DropDownList("TipoAtend", new SelectList(@ViewBag.ListaTipoAtendimento, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_model = "histAtendSelect.TIP_ATEND_ID", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Data Atendimento")
+                        <div app-show-date="histAtendSelect.HAT_DATA_HIST" class="form-control" disabled="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        @Html.Label("Solicitante")
+                        @Html.TextBox("Solicitante", "", new { @class = "form-control", ng_model = "histAtendSelect.HAT_SOLICITANTE", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-4">
+                        @Html.Label("Atendente")
+                        @Html.TextBox("Atendente", "", new { @class = "form-control", ng_model = "histAtendSelect.USU_LOGIN", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Etiqueta")
+                        <label id="Etiqueta0" class="form-control" ng-if="histAtendSelect.HAT_IMP_ETIQUETA==true">SIM</label>
+                        <label id="Etiqueta1" class="form-control" ng-if="histAtendSelect.HAT_IMP_ETIQUETA==false">NÃO</label>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Resolução")
+                        <div app-show-date="histAtendSelect.HAT_DATA_RESOLUCAO" class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        @Html.Label("Descrição")
+                        @Html.TextBox("Historico", "", new { @class = "form-control", ng_model = "histAtendSelect.HAT_TEXTO_ETIQUETA", disabled = true })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        @Html.Label("Histórico")
+                        @Html.TextArea("Historico", "", new { @class = "form-control", ng_model = "histAtendSelect.HAT_DESCRICAO", rows = 6, cols = 50, disabled = true })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</button>
+            </div>
+        </div>
+        <!-- Modal Histórico Agenda -->
+        <div app-modal="modal-Hist-Agenda" header="Histórico Agendas">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Assinatura")
+                        @Html.TextBox("Assinatura", "", new { @class = "form-control", ng_model = "histAgendaSelect.CODIGO", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-4">
+                        @Html.Label("Nome")
+                        @Html.TextBox("Contato", "", new { @class = "form-control", ng_model = "histAgendaSelect.NOME", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-4">
+                        @Html.Label("Aos Cuidados")
+                        @Html.TextBox("Contato", "", new { @class = "form-control", ng_model = "histAgendaSelect.A_C", disabled = true })
+                    </div>
+
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Contato")
+                        @Html.TextBox("Contato", "", new { @class = "form-control", ng_model = "histAgendaSelect.CONTATO", disabled = true })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Resultado")
+                        @Html.TextBox("Contato", "", new { @class = "form-control", ng_model = "histAgendaSelect.RESULTADO", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Data")
+                        @Html.TextBox("Atendimento", "", new { @class = "form-control", ng_model = "histAgendaSelect.DATA_HIST", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Agenda")
+                        @Html.TextBox("Resolucao", "", new { @class = "form-control", ng_model = "histAgendaSelect.DATA_AGENDA", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-4">
+                        @Html.Label("Atendente")
+                        @Html.TextBox("Atendente", "", new { @class = "form-control", ng_model = "histAgendaSelect.USU_LOGIN", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Etiqueta")
+                        @Html.TextBox("Etiqueta", "", new { @class = "form-control", ng_model = "histAgendaSelect.HAT_IMP_ETIQUETA", disabled = true })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        @Html.Label("Histórico (Básico)")
+                        @Html.TextArea("HistoricoB", "", new { @class = "form-control", ng_model = "histAgendaSelect.HISTORICO_BASICO", rows = 6, cols = 50, disabled = true })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        @Html.Label("Histórico (Livre)")
+                        @Html.TextArea("HistoricoL", "", new { @class = "form-control", ng_model = "histAgendaSelect.HISTORICO_LIVRE", rows = 6, cols = 50, disabled = true })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</button>
+            </div>
+        </div>
+
+        <!-- Modal Transf Assinatura -->
+        <div app-modal="Modal-Transf-Assinatura" header="Transferencia de Assinatura">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        @Html.Label("Cliente")
+                        @Html.TextBox("CLI_NOME", "", new { @class = "form-control", ng_model = "cliente.CLI_NOME", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        @Html.Label("Assinatura Orígem")
+                        @Html.TextBox("ASSINATURA", "", new { @class = "form-control", ng_model = "transferencia.ASN_NUM_ASSINATURA_ANT", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Produto/Letra")
+                        @Html.TextBox("PRODLETRA", "", new { @class = "form-control", ng_model = "transferencia.PRODLETRA", ng_change = "buscarSequenciaProd()" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        @Html.Label("Assinatura Destino")
+                        @Html.TextBox("ASSDESTINO", "", new { @class = "form-control", ng_model = "transferencia.ASN_NUM_ASSINATURA", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Ultimo Contrato")
+                        @Html.TextBox("CTR_NUM_CONTRATO", "", new { @class = "form-control", ng_model = "transferencia.CTR_NUM_CONTRATO" })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Solicitante")
+                        @Html.TextBox("SOLICITANTE", "", new { @class = "form-control", ng_model = "transferencia.SOLICITANTE" })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Ano Vigência")
+                        <select class="form-control" ng_model="transferencia.CTR_ANO_VIGENCIA">
+                            <option>Selecione</option>
+                            <option>2014</option>
+                            <option>2015</option>
+                            <option>2016</option>
+                            <option>2017</option>
+                            <option>2018</option>
+                            <option>2019</option>
+                            <option>2020</option>
+                            <option>2021</option>
+                            <option>2022</option>
+                            <option>2023</option>
+                            <option>2024</option>
+                            <option>2025</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        @Html.Label("Inicio Vigência")
+                        <div class="input-group date">
+                            <div app-show-date="transferencia.CTR_DATA_INI_VIGENCIA" class="form-control" disabled="true"></div>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        @Html.Label("Fim Vigência")
+                        <div class="input-group date">
+                            <div app-show-date="transferencia.CTR_DATA_FIM_VIGENCIA" class="form-control" disabled="true"></div>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        @Html.Label("Motivo")
+                        @Html.TextArea("HistoricoL", "", new { @class = "form-control", ng_model = "transferencia.MOTIVO", rows = 6, cols = 50 })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="transferirVigencia()">
+                    <span class="glyphicon glyphicon-floppy-save blue"></span>&nbspConfirmar
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Modal Motivo Cancel -->
+        <div app-modal="Modal-Motivo-Cancel" header="Motivo Cancelamento">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Assinatura")
+                        @Html.TextBox("Assinatura", "", new { @class = "form-control", ng_model = "motivoCancelamento.ASN_NUM_ASSINATURA", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-6">
+                        @Html.Label("Descrição")
+                        @Html.TextBox("Descricao", "", new { @class = "form-control", ng_model = "motivoCancelamento.MCA_DESCRICAO", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label>Tipo</label>
+                        @Html.TextBox("Tipo", "", new { @class = "form-control", ng_model = "motivoCancelamento.TIP_CANC_ID", disabled = true })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Contrato")
+                        @Html.TextBox("Contato", "", new { @class = "form-control", ng_model = "motivoCancelamento.CTR_NUM_CONTRATO", disabled = true })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Atualizar URA -->
+        <div app-modal="Modal-Atualizar-URA" header="Atualizar URAS">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Assinatura")
+                        @Html.TextBox("Assinatura", "", new { @class = "form-control", ng_model = "updateura.assinatura" })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Quantidade")
+                        @Html.TextBox("Quantidade", "", new { @class = "form-control", ng_model = "updateura.qtde", ng_change = "multiplicaqtdeURA()" })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Quantidade 3x")
+                        @Html.TextBox("Quantidade3x", "", new { @class = "form-control", ng_model = "updateura.qtde3x", disabled = "disabled" })
+                    </div>
+                    <div class="form-group col-sm-4">
+                        @Html.Label("Situação")
+                        <select id="uraativo" ng-model="updateura.ativo" class="form-control">
+                            <option value="true">Ativar cliente na ura</option>
+                            <option value="false">Inativar cliente na ura</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="atualizarURA()">
+                    <span class="glyphicon glyphicon-floppy-save blue"></span>&nbspAtualizar
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal Atualizar Email-->
+        <div app-modal="Modal-Atualizar-Email" header="Atualizar Emails - {{AssinaturaModal}}">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <p>
+                        <h4 class="red"><strong>Atenção:</strong></h4>
+                        Para excluir clique em
+                        <span class="glyphicon glyphicon-remove-sign red"></span>
+                        , para incluir clique em
+                        <span class="glyphicon glyphicon-plus blue"></span>
+                        e para confirmar alteração clique em
+                        <span class="glyphicon glyphicon-floppy-save blue"></span>
+                    </p>
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr class="info">
+                                <th>Email</th>
+                                <th>Tipo Atendimento</th>
+                                <th>Alteração</th>
+                                <th>Usuário</th>
+                                <th>Legado</th>
+                                <th style="text-align: center;">Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="email in listaemail">
+                                <td app-editable-td="email.AEM_EMAIL" label="email.AEM_EMAIL" blur-event="confirmarEdicaoEmail">
+                                    <input type="text" ng-model="email.AEM_EMAIL" maxlength="50"
+                                           class="form-control grid-input  float-left" ng-blur="confirmarEdicaoEmail($event)" ng-change="buscarUsuarioLogado(email)" />
+                                    <div app-validation-msg="erros" for="_emails[{{$index}}].AEM_EMAIL"></div>
+                                </td>
+                                <td>
+                                    @Html.DropDownList("TipoEmail", new SelectList(@ViewBag.ListaSetorEmail, "Value", "Text"), "---- Selecione ----", new { @class = "form-control float-left grid-combobox", ng_model = "email.OPC_ID", ng_change = "buscarUsuarioLogado(email)" })
+                                    <div app-validation-msg="erros" for="_emails[{{$index}}].OPC_ID"></div>
+                                </td>
+                                <td>
+                                    <input type="text" ng-model="dtaltera" app-date="email.DATA_ALTERA" disabled="disabled"
+                                           class="form-control grid-input  float-left" />
+                                </td>
+                                <td>
+                                    <input type="text" ng-model="email.USU_LOGIN" disabled="disabled"
+                                           class="form-control grid-input  float-left" />
+                                </td>
+                                <td>
+                                    <input type="text" ng-model="email.EMAIL_ID_LEGADO" disabled="disabled"
+                                           class="form-control grid-input  float-left" />
+                                </td>
+                                <td style="text-align: center;">
+                                    <a href="javascript:void(0)" ng-click="excluirEmailAssinatura(email,$index)" class="btnConfirmaExclusao red" id="btexcluir" app-popover data-content="Excluir">
+                                        <span class="glyphicon glyphicon-remove-sign"></span>
+                                    </a>
+                                    <span ng-show="listaemail.length == ($index + 1)">
+                                        <a href="javascript:void(0)" ng-click="IncluirEmail(email)" app-popover data-content="Incluir">
+                                            <span class="glyphicon glyphicon-plus blue"></span>
+                                        </a>
+                                    </span>
+                                    <a href="javascript:void(0)" ng-click="salvarEmail(email)" app-popover data-content="Salvar">
+                                        <span class="glyphicon glyphicon-floppy-save blue"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-hide="listaemail.length > 0">
+                                <td colspan="7">
+                                    Nenhum email adicionado. Clique para adicionar:
+                                    <a href="javascript:void(0)" ng-click="IncluirEmail(email)" app-popover data-content="Incluir">
+                                        <span class="glyphicon glyphicon-plus blue"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal Atualizar Telefone-->
+        <div app-modal="Modal-Atualizar-Telefones" header="Atualizar Telefone - {{AssinaturaModal}}">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <p>
+                        <h4 class="red"><strong>Atenção:</strong></h4>
+                        Para excluir clique em
+                        <span class="glyphicon glyphicon-remove-sign red"></span>
+                        , para incluir clique em
+                        <span class="glyphicon glyphicon-plus blue"></span>
+                        e para confirmar alteração clique em
+                        <span class="glyphicon glyphicon-floppy-save blue"></span>
+                    </p>
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr class="info">
+                                <th>DDD</th>
+                                <th>Telefone</th>
+                                <th>Tipo</th>
+                                <th>Tipo Atendimento (SAC)</th>
+                                <th>Alteração</th>
+                                <th>Usuário</th>
+                                <th>Legado</th>
+                                <th style="text-align: center;">Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="tel in listatelefone">
+                                <td>
+                                    <input type="text" ng-model="tel.ATE_DDD" maxlength="2"
+                                           class="form-control grid-input  float-left" ng-change="buscarUsuarioLogadotel(tel)" app-number />
+                                    <div app-validation-msg="erros" for="_telefones[{{$index}}].ATE_DDD"></div>
+                                </td>
+                                <td>
+                                    <input type="text" ng-model="tel.ATE_TELEFONE" maxlength="12"
+                                           class="form-control grid-input  float-left" ng-change="buscarUsuarioLogado(tel)" app-number />
+                                    <div app-validation-msg="erros" for="_telefones[{{$index}}].ATE_TELEFONE"></div>
+                                </td>
+                                <td>
+                                    @Html.DropDownList("TipoTel", new SelectList(@ViewBag.Listatipotel, "Value", "Text"), "---- Selecione ----", new { @class = "form-control float-left grid-combobox", ng_model = "tel.TIPO_TEL_ID", ng_change = "buscarUsuarioLogado(tel)" })
+                                    <div app-validation-msg="erros" for="_telefones[{{$index}}].TIPO_TEL_ID"></div>
+                                </td>
+                                <td>
+                                    @Html.DropDownList("SetorTel", new SelectList(@ViewBag.ListaSetorTelefone, "Value", "Text"), "---- Selecione ----", new { @class = "form-control float-left grid-combobox", ng_model = "tel.OPC_ID", ng_change = "buscarUsuarioLogado(tel)" })
+                                    <div app-validation-msg="erros" for="_telefones[{{$index}}].OPC_ID"></div>
+                                </td>
+                                <td>
+                                    <input type="text" ng-model="dtaltera1" app-date="tel.DATA_ALTERA" disabled="disabled"
+                                           class="form-control grid-input  float-left" />
+                                </td>
+                                <td>
+                                    <input type="text" ng-model="tel.USU_LOGIN" disabled="disabled"
+                                           class="form-control grid-input  float-left" />
+                                </td>
+                                <td>
+                                    <input type="text" ng-model="tel.TEL_ID_LEGADO" disabled="disabled"
+                                           class="form-control grid-input  float-left" />
+                                </td>
+                                <td style="text-align: center;">
+                                    <a href="javascript:void(0)" ng-click="excluirTelefoneAssinatura(tel,$index)" class="btnConfirmaExclusao red" id="btexcluir" app-popover data-content="Excluir">
+                                        <span class="glyphicon glyphicon-remove-sign"></span>
+                                    </a>
+                                    <span ng-show="listatelefone.length == ($index + 1)">
+                                        <a href="javascript:void(0)" ng-click="IncluirTelefone(tel)" app-popover data-content="Incluir">
+                                            <span class="glyphicon glyphicon-plus blue"></span>
+                                        </a>
+                                    </span>
+                                    <a href="javascript:void(0)" ng-click="salvarTelefone(tel)" app-popover data-content="Salvar">
+                                        <span class="glyphicon glyphicon-floppy-save blue"></span>
+                                    </a>
+
+                                </td>
+                            </tr>
+                            <tr ng-hide="listatelefone.length > 0">
+                                <td colspan="7">
+                                    Nenhuma telefone adicionado. Clique para adicionar:
+                                    <a href="javascript:void(0)" ng-click="IncluirTelefone(tel)" app-popover data-content="Incluir">
+                                        <span class="glyphicon glyphicon-plus blue"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <app-pagination request-page="paginaReq" load-function="buscaTelAssinatura(paginaReq)"></app-pagination>
+            </div>
+        </div>
+
+
+        <!-- Modal Atualizar Ura e dados da Assinatura -->
+        <div app-modal="Modal-Atualizar-Assinatura" header="Atualizar Assinatura">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Assinatura")
+                        <input type="text" class="form-control" ng_model="NUM_ASSINATURA" maxlength="35" ng-change="pesquisarAssinatura(NUM_ASSINATURA)" disabled="disabled" />
+                    </div>
+                    <div class="form-group col-sm-4">
+                        @Html.Label("Nome")
+                        <input type="text" class="form-control" ng_model="assinatura.CLIENTES.CLI_NOME" maxlength="35" disabled="disabled" />
+                    </div>
+                    <div class="form-group col-sm-1">
+                        @Html.Label("Produto")
+                        <input type="text" class="form-control" ng_model="assinatura.PRO_ID" maxlength="35" disabled="disabled" />
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Ano COAD")
+                        <input type="text" class="form-control" ng_model="assinatura.ASN_ANO_COAD" maxlength="35" disabled="disabled" />
+                    </div>
+                    <div class="form-group col-sm-3">
+                        @Html.Label("Aos Cuidados")
+                        <input type="text" class="form-control" ng_model="assinatura.ASN_A_C" maxlength="35" />
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Ano Remessa")
+                        <input type="text" class="form-control" ng_model="assinatura.ASN_ANO_REMESSA" maxlength="35" disabled="disabled" />
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Nº Remessa")
+                        <input type="text" class="form-control" ng_model="assinatura.ASN_REMESSA" maxlength="35" disabled="disabled" />
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Tipo Envio")
+                        <input type="text" class="form-control" ng_model="assinatura.ASN_NUM_TP_ENVIO" maxlength="35" disabled="disabled" />
+                    </div>
+                    <div class="form-group col-sm-3">
+                        @Html.Label("Consultas")
+                        <input type="text" class="form-control" ng_model="assinatura.ASN_QTDE_CONS_CONTRATO" maxlength="35" />
+                    </div>
+                    <div class="form-group col-sm-3">
+                        @Html.Label("Ini Remessa")
+                        <select ng_model="assinatura.ASN_ATV_REM" class="form-control">
+                            <option>--- Selecionar ---</option>
+                            <option value="A">Janeiro</option>
+                            <option value="B">Fevereiro</option>
+                            <option value="C">Março</option>
+                            <option value="D">Abril</option>
+                            <option value="E">Maio</option>
+                            <option value="F">Junho</option>
+                            <option value="G">Julho</option>
+                            <option value="H">Agosto</option>
+                            <option value="I">Setembro</option>
+                            <option value="J">Outubro</option>
+                            <option value="K">Novembro</option>
+                            <option value="L">Dezembro</option>
+                            <option value="M">Dezembro</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        @Html.Label("Situação")
+                        <div class="col-lg-12">
+                            <label class="pull-left">
+                                <input ng-model="assinatura.ativo" type="radio" value="0" ng-disabled="assinatura.ASN_QTDE_CONS_CONTRATO<1||assinatura.ASN_ATIVA==false" />
+                                <i></i><span class="weight-300">Inativar cliente na ura</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-12">
+                            <label class="pull-left">
+                                <input ng-model="assinatura.ativo" type="radio" value="1" ng-disabled="assinatura.ASN_QTDE_CONS_CONTRATO<1||assinatura.ASN_ATIVA==false" />
+                                <i></i><span class="weight-300">Ativar cliente na ura</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="atualizarAssinaturaURA()" ng-if="assinatura!=null">
+                    <span class="glyphicon glyphicon-floppy-save blue"></span>&nbspSalvar
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal Atualizar Ura e dados da Assinatura -->
+        <div app-modal="Modal-Pesquisar-Cliente" header="Pesquisar Cliente">
+            <div class="panel-body" ng_click="modalcli=true">
+                <div id="page-wrapper">
+                    @Html.Partial("Partials/_PesquisarCliente")
+                </div>
+            </div>
+            <div class="panel-body" style="overflow:auto;min-height:150px; max-height:300px;">
+                <div class="table-responsive">
+                    <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr class="info">
+                                <th style="min-width: 75px">ID</th>
+                                <th style="text-align: center;">Assinatura</th>
+                                <th style="min-width: 132px">CNPJ/CPF</th>
+                                <th>Nome</th>
+                                <th style="text-align: center;">Situação</th>
+                                <th style="text-align: center;" colspan="1">Opções</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in clientes">
+                            <td>{{item.CLI_ID}}</td>
+                            <td style="text-align: center;">{{item.ASN_NUM_ASSINATURA}}</td>
+                            <td>{{item.CLI_CPF_CNPJ}}</td>
+                            <td>{{item.CLI_NOME}}</td>
+                            <td style="text-align: center;">
+                                <span class="label alert-warning" ng_show="item.CLI_CONTRATO_PRORROGADO==false&&item.CLI_CONTRATO_ATIVO==true&&item.CLI_PARCELAS_ATRASO>0">Bloqueado</span>
+                                <span class="label alert-success" ng_show="item.CLI_CONTRATO_PRORROGADO==false&&item.CLI_CONTRATO_ATIVO==true&&item.CLI_PARCELAS_ATRASO<=0">Vigente</span>
+                                <span class="label alert-danger" ng_show="item.CLI_CONTRATO_PRORROGADO==false&&item.CLI_CONTRATO_ATIVO==false">Encerrado</span>
+                                <span class="label alert-warning" ng_show="item.CLI_CONTRATO_PRORROGADO==true" app-popover data-content="Este contrato esta em período de recuperação ou seja permanece ativo durante um mês após o fim da vigencia. ">Prorrogado</span>
+                            </td>
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" app-post="@Url.Action("Editar")?clienteId={{item.CLI_ID}}&assinatura={{item.ASN_NUM_ASSINATURA}}" title="Editar" class="blue">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="listar()"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                <button type="button" class="btn btn-default" ng-click="limparParametros()"><span class="glyphicon glyphicon-remove red"></span>&nbspLimpar Campos</button>
+            </div>
+        </div>
+
+
+        <!-- Modal Cancelar Contrato -->
+        <div app-modal="Modal-Cancelar-Contrato" header="Cancelar Contrato">
+            <div class="panel-body">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group col-sm-7">
+                            @Html.Label("Cliente")
+                            @Html.TextBox("CLI_NOME", "", new { @class = "form-control", ng_model = "cliente.CLI_NOME", disabled = true })
+                        </div>
+                        <div class="form-group col-sm-3">
+                            @Html.Label("Assinatura Orígem")
+                            @Html.TextBox("ASSINATURA", "", new { @class = "form-control", ng_model = "contrato.ASN_NUM_ASSINATURA", disabled = true })
+                        </div>
+                        <div class="form-group col-sm-2">
+                            @Html.Label("Ultimo Contrato")
+                            @Html.TextBox("CTR_NUM_CONTRATO", "", new { @class = "form-control", ng_model = "contrato.CTR_NUM_CONTRATO", disabled = true })
+                        </div>
+                        <div class="form-group col-sm-12">
+                            @Html.Label("Motivo")
+                            @Html.TextArea("HistoricoL", "", new { @class = "form-control", ng_model = "contrato.HISTORICO_CANCELAMENTO", rows = 6, cols = 50 })
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelarContrato(contrato)">
+                        <span class="glyphicon glyphicon-floppy-save blue"></span>&nbspConfirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Modal CPF -->
+        @Html.Partial("Partials/_consultaCpf")
+
+        <!-- Modal CNPJ -->
+        @Html.Partial("Partials/_consultaCnpj")
+
+        <!-- Modal Endereco -->
+        @Html.Partial("Partials/_ModalEndereco")
+
+
+    </div>
+</div>

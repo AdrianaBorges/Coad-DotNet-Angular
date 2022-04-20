@@ -1,0 +1,517 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    
+    <meta charset="utf-8" />
+    
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+
+
+    <style type="text/css">
+
+        #boleto_parceiro {
+            height: 416px;
+            width: 666px;
+            font-family: Arial, Helvetica, sans-serif;
+            margin-bottom: 15px;
+            border-bottom-width: 1px;
+            border-bottom-style: dashed;
+            border-bottom-color: #000000;
+        }
+
+        .am {
+            font-size: 9px;
+            color: #333333;
+            height: 10px;
+            font-weight: bold;
+            margin-bottom: 2px;
+            text-align: center;
+            width: 320px;
+            border-top-width: 1px;
+            border-right-width: 2px;
+            border-left-width: 2px;
+            border-top-style: solid;
+            border-right-style: solid;
+            border-left-style: solid;
+            border-top-color: #000000;
+            border-right-color: #000000;
+            border-left-color: #000000;
+        }
+
+        #boleto {
+            height: 416px;
+            width: 666px;
+            color: #000000;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #tb_logo {
+            height: 35px;
+            width: 666px;
+            border-bottom-width: 2px;
+            border-bottom-style: solid;
+            border-bottom-color: #000000;
+        }
+
+            #tb_logo #td_banco {
+                height: 22px;
+                width: 53px;
+                border-right-width: 2px;
+                border-left-width: 2px;
+                border-right-style: solid;
+                border-left-style: solid;
+                border-right-color: #000000;
+                border-left-color: #000000;
+                font-size: 15px;
+                font-weight: bold;
+                text-align: center;
+            }
+
+        .ld {
+            font: bold 15px Arial;
+            color: #000000
+        }
+
+        .td_7_sb {
+            height: 26px;
+            width: 7px;
+        }
+
+        .td_7_cb {
+            width: 7px;
+            border-left-width: 1px;
+            border-left-style: solid;
+            border-left-color: #000000;
+            height: 26px;
+        }
+
+        .td_2 {
+            width: 2px;
+        }
+
+        .tabelas td {
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-bottom-color: #000000;
+        }
+
+        .direito {
+            width: 178px;
+        }
+
+        .titulo {
+            font-size: 9px;
+            color: #333333;
+            height: 10px;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .var {
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            height: 13px;
+        }
+
+        .direito .var {
+            text-align: right;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div ng-app="appModule">
+        <div ng-controller="GerenciaTitulosController" class="padding content" ng-init="carregarBoletoHtml('@ViewBag.idTitulo')">
+            <div app-message=app-message></div>
+            <div id="boleto_parceiro">
+                <table border="0" cellpadding="0" cellspacing="0" id="tb_logo">
+                    <tr>
+                        <td rowspan="2" valign="bottom" style="width:150px;height:35px;">
+                          <img src="{{boleto.logo}}"  width="125" height="30"  style="padding-bottom:5px;" />
+                        </td>
+                        <td align="center" valign="bottom" style="font-size: 9px; border:none;"></td>
+                        <td rowspan="2" align="right" valign="bottom" style="width:6px;"></td>
+                        <td rowspan="2" align="right" valign="bottom" style="font-size: 15px; font-weight:bold; width:445px;"><span class="ld">RECIBO DO PAGADOR</span></td>
+                        <td rowspan="2" align="right" valign="bottom" style="width:2px;"></td>
+                    </tr>
+                    <tr>
+                        <td id="td_banco">{{boleto.Bancologo}}</td>
+                    </tr>
+                </table>
+                <table class="tabelas" style="width:666px; border-left:solid; border-left-width:2px; border-left-color:#000000;" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="td_7_sb"> </td>
+                        <td style="width: 468px;">
+                            <div class="titulo">Local do Pagamento</div>
+                            <div class="var">Pagável em qualquer banco até a data de vencimento</div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">Vencimento</div>
+                            <div class="var"> {{boleto.DtVencimento}} </div>
+                        </td>
+                        <td class="td_2"></td>
+                    </tr>
+                    <tr>
+                        <td class="td_7_sb"></td>
+                        <td>
+                            <div class="titulo">Beneficiário</div>
+                            <div class="var">{{boleto.Beneficiario}}</div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">Agência / Código do Beneficiario</div>
+                            <div class="var">{{boleto.AgenciaCodBeneficiario}}</div>
+                        </td>
+                        <td> </td>
+                    </tr>
+                </table>
+                <table class="tabelas" style="width:666px; border-left:solid; border-left-width:2px; border-left-color:#000000;" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="td_7_sb"> </td>
+                        <td style="width:103px;">
+                            <div class="titulo">Data Documento</div>
+                            <div class="var"> {{boleto.DtProcessamento}} </div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td style="width:133px;">
+                            <div class="titulo">Número Documento</div>
+                            <div class="var">{{boleto.NumeroDocumento}}</div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td style="width:62px;">
+                            <div class="titulo">Espécie Doc.</div>
+                            <div class="var">{{boleto.EspecieDoc}}</div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td style="width:36px;">
+                            <div class="titulo">Aceite</div>
+                            <div class="var">{{boleto.Aceite}}</div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td style="width:108px;">
+                            <div class="titulo">Data Processamento</div>
+                            <div class="var"> {{boleto.DtProcessamento}} </div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">Nosso Número</div>
+                            <div class="var">{{boleto.NossoNumero}}</div>
+                        </td>
+                        <td class="td_2"> </td>
+                    </tr>
+                </table>
+                <table class="tabelas" style="width:666px; border-left:solid; border-left-width:2px; border-left-color:#000000;" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="td_7_sb"> </td>
+                        <td style="width:118px;">
+                            <div class="titulo">Uso Banco</div>
+                            <div class="var"> </div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td style="width:55px;">
+                            <div class="titulo">Carteira</div>
+                            <div class="var">{{boleto.Carteira}}</div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td style="width:55px;">
+                            <div class="titulo">Espécie</div>
+                            <div class="var">{{boleto.Especie}}</div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td style="width:106px;">
+                            <div class="titulo">Quantidade</div>
+                            <div class="var">{{boleto.Quantidade}} </div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td style="width:108px;">
+                            <div class="titulo">Valor</div>
+                            <div class="var"> </div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">Valor do Documento</div>
+                            <div class="var"> {{boleto.ValorDocumento}} </div>
+                        </td>
+                        <td class="td_2"> </td>
+                    </tr>
+                </table>
+                <table class="tabelas" style="width:666px; border-left:solid; border-left-width:2px; border-left-color:#000000;" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td rowspan="5" class="td_7_sb"> </td>
+                        <td rowspan="5" valign="top">
+                            <div class="titulo" style="margin-bottom:18px;">Instruções (texto de responsabilidade do Cedente)</div>
+                            <div class="var">
+                                <p ng-bind-html="trustAsHtml(boleto.Instrucoes)" ng_if="boleto.Instrucoes!=null"></p>
+                            </div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">(-) Desconto / Abatimento</div>
+                            <div class="var"> {{boleto.VlrDescAbatimetos}}</div>
+                        </td>
+                        <td class="td_2"> </td>
+                    </tr>
+                    <tr>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">(-) Outras Deduções</div>
+                            <div class="var">{{boleto.VlrOutrasDeducoes}}</div>
+                        </td>
+                        <td class="td_2"> </td>
+                    </tr>
+                    <tr>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">(+) Multa / Mora</div>
+                            <div class="var">{{boleto.VlrMoraMulta}} </div>
+                        </td>
+                        <td class="td_2"> </td>
+                    </tr>
+                    <tr>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">(+) Outros Acréscimos</div>
+                            <div class="var"> {{boleto.VlrOutraAcrecimos}} </div>
+                        </td>
+                        <td class="td_2"> </td>
+                    </tr>
+                    <tr>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">(=) Valor Cobrado</div>
+                            <div class="var">{{boleto.ValorCobrado}} </div>
+                        </td>
+                        <td class="td_2"> </td>
+                    </tr>
+                </table>
+                <table class="tabelas" style="width:666px; height:65px; border-left:solid; border-left-width:2px; border-left-color:#000000;" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="td_7_sb"> </td>
+                        <td valign="top">
+                            <div class="titulo">Sacado</div>
+                            <div class="var" style="margin-bottom:5px; height:auto">
+                                {{boleto.NomeCpfCnpj}}<br />
+                                {{boleto.Endereco}}<br />
+                                {{boleto.BairroCidadeCep}}
+                            </div>
+                            <div class="titulo">Sacador / Avalista</div>
+                        </td>
+                        <td class="td_7_sb"> </td>
+                        <td class="direito" valign="top">
+                        </td>
+                        <td class="td_2"> </td>
+                    </tr>
+                </table>
+                <table style="width:666px; border-top:solid; border-top-width:2px; border-top-color:#000000" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="td_7_sb"> </td>
+                        <td style="width: 417px; height:62px;"></td>
+                        <td class="td_7_sb"> </td>
+                        <td valign="top"><div class="titulo" style="text-align:right;">Autenticaçao Mecânica</div></td>
+                        <td class="td_2"> </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div id="boleto">
+                <table border="0" cellpadding="0" cellspacing="0" id="tb_logo">
+                    <tr>
+                        <td rowspan="2" valign="bottom" style="width:150px;height:35px;">
+                            <img src="{{boleto.logo}}" width="125" height="30" style="padding-bottom:5px;" />
+                        </td>
+                        <td align="center" valign="bottom" style="font-size: 9px; border:none;"></td>
+                        <td rowspan="2" align="right" valign="bottom" style="width:6px;"></td>
+                        <td rowspan="2" align="right" valign="bottom" style="font-size: 15px; font-weight:bold; width:445px;"><span class="ld">{{boleto.LinhaDigivel.ValorFormatado}}</span></td>
+                        <td rowspan="2" align="right" valign="bottom" style="width:2px;"></td>
+                    </tr>
+                    <tr>
+                        <td id="td_banco">{{boleto.Bancologo}}</td>
+                    </tr>
+                </table>
+                <table class="tabelas" style="width:666px; border-left:solid; border-left-width:2px; border-left-color:#000000;" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="td_7_sb"> </td>
+                        <td style="width: 468px;">
+                            <div class="titulo">Local do Pagamento</div>
+                            <div class="var">Pagável em qualquer banco até a data de vencimento</div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">Vencimento</div>
+                            <div class="var"> {{boleto.DtVencimento}} </div>
+                        </td>
+                        <td class="td_2"> </td>
+                    </tr>
+                    <tr>
+                        <td class="td_7_sb"> </td>
+                        <td>
+                            <div class="titulo">Beneficiário</div>
+                            <div class="var">{{boleto.Beneficiario}}</div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">Agência / Código do Beneficiario</div>
+                            <div class="var">{{boleto.AgenciaCodBeneficiario}}</div>
+                        </td>
+                        <td> </td>
+                    </tr>
+                </table>
+                <table class="tabelas" style="width:666px; border-left:solid; border-left-width:2px; border-left-color:#000000;" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="td_7_sb"> </td>
+                        <td style="width:103px;">
+                            <div class="titulo">Data  Documento</div>
+                            <div class="var"> {{boleto.DtProcessamento}} </div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td style="width:133px;">
+                            <div class="titulo">Número Documento</div>
+                            <div class="var">{{boleto.NumeroDocumento}}</div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td style="width:62px;">
+                            <div class="titulo">Espécie Doc.</div>
+                            <div class="var">{{boleto.EspecieDoc}}</div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td style="width:36px;">
+                            <div class="titulo">Aceite</div>
+                            <div class="var">{{boleto.Aceite}}</div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td style="width:108px;">
+                            <div class="titulo">Data Processamento</div>
+                            <div class="var"> {{boleto.DtProcessamento}} </div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">Nosso Número</div>
+                            <div class="var">{{boleto.NossoNumero}}</div>
+                        </td>
+                        <td class="td_2"> </td>
+                    </tr>
+                </table>
+                <table class="tabelas" style="width:666px; border-left:solid; border-left-width:2px; border-left-color:#000000;" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="td_7_sb"> </td>
+                        <td style="width:118px;">
+                            <div class="titulo">Uso Banco</div>
+                            <div class="var"> </div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td style="width:55px;">
+                            <div class="titulo">Carteira</div>
+                            <div class="var">{{boleto.Carteira}}</div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td style="width:55px;">
+                            <div class="titulo">Espécie</div>
+                            <div class="var">{{boleto.Especie}}</div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td style="width:106px;">
+                            <div class="titulo">Quantidade</div>
+                            <div class="var">{{boleto.Quantidade}} </div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td style="width:108px;">
+                            <div class="titulo">Valor</div>
+                            <div class="var"> </div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">Valor do Documento</div>
+                            <div class="var"> {{boleto.ValorDocumento}} </div>
+                        </td>
+                        <td class="td_2"> </td>
+                    </tr>
+                </table>
+                <table class="tabelas" style="width:666px; border-left:solid; border-left-width:2px; border-left-color:#000000;" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td rowspan="5" class="td_7_sb"> </td>
+                        <td rowspan="5" valign="top">
+                            <div class="titulo" style="margin-bottom:18px;">Instruções (texto de responsabilidade do Cedente)</div>
+                            <div class="var">
+                                <p ng-bind-html="trustAsHtml(boleto.Instrucoes)" ng_if="boleto.Instrucoes!=null"></p>
+                            </div>
+                        </td>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">(-) Desconto / Abatimento</div>
+                            <div class="var"> </div>
+                        </td>
+                        <td class="td_2"> </td>
+                    </tr>
+                    <tr>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">(-) Outras Deduções</div>
+                            <div class="var"> </div>
+                        </td>
+                        <td class="td_2"> </td>
+                    </tr>
+                    <tr>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">(+) Multa / Mora</div>
+                            <div class="var"> </div>
+                        </td>
+                        <td class="td_2"> </td>
+                    </tr>
+                    <tr>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">(+) Outros Acréscimos</div>
+                            <div class="var"> </div>
+                        </td>
+                        <td class="td_2"> </td>
+                    </tr>
+                    <tr>
+                        <td class="td_7_cb"> </td>
+                        <td class="direito">
+                            <div class="titulo">(=) Valor Cobrado</div>
+                            <div class="var"> </div>
+                        </td>
+                        <td class="td_2"> </td>
+                    </tr>
+                </table>
+                <table class="tabelas" style="width:666px; height:65px; border-left:solid; border-left-width:2px; border-left-color:#000000;" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="td_7_sb"> </td>
+                        <td valign="top">
+                            <div class="titulo">Sacado</div>
+                            <div class="var" style="margin-bottom:5px; height:auto">
+                                {{boleto.NomeCpfCnpj}}<br />
+                                {{boleto.Endereco}}<br />
+                                {{boleto.BairroCidadeCep}}
+                            </div>
+                            <div class="titulo">Sacador / Avalista</div>
+                        </td>
+                        <td class="td_7_sb"> </td>
+                        <td class="direito" valign="top">
+                            
+                        </td>
+                        <td class="td_2"> </td>
+                    </tr>
+                </table>
+                <table style="width:666px; border-top:solid; border-top-width:2px; border-top-color:#000000" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="td_7_sb"> </td>
+                        <td style="width: 417px; height:62px;">
+                          
+                          <img src="{{boleto.BarcodeImage}}"  width="380" height="40" />
+                        </td>
+                        <td class="td_7_sb"> </td>
+                        <td valign="top"><div class="titulo" style="text-align:left;">Autenticaçao Mecânica / FICHA DE COMPENSAÇAO</div></td>
+                        <td class="td_2"> </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

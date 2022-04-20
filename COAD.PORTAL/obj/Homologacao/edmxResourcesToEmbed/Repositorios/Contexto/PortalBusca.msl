@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="buscaModelStoreContainer" CdmEntityContainer="buscaEntities">
+    <EntitySetMapping Name="busca_completa_tributario">
+      <EntityTypeMapping TypeName="buscaModel.busca_completa_tributario">
+        <MappingFragment StoreEntitySet="busca_completa_tributario">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_conteudo" ColumnName="id_conteudo" />
+          <ScalarProperty Name="id_tipo_conteudo" ColumnName="id_tipo_conteudo" />
+          <ScalarProperty Name="id_perfil" ColumnName="id_perfil" />
+          <ScalarProperty Name="data_conteudo" ColumnName="data_conteudo" />
+          <ScalarProperty Name="palavras_indexadas" ColumnName="palavras_indexadas" />
+          <ScalarProperty Name="idGED" ColumnName="idGED" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

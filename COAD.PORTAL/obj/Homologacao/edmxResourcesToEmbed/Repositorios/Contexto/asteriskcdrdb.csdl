@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="asteriskcdrdbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="asteriskcdrdbEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="coad" EntityType="asteriskcdrdbModel.coad" />
+  </EntityContainer>
+  <EntityType Name="coad">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="vip" Type="Int32" />
+    <Property Name="ddd" Type="Int32" />
+    <Property Name="telefone" Type="Int64" />
+    <Property Name="senha" Type="Int64" />
+    <Property Name="codigo" Type="String" MaxLength="11" Unicode="false" FixedLength="false" />
+    <Property Name="nome" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="pode" Type="Int32" />
+    <Property Name="qte_cons" Type="Int32" />
+    <Property Name="acesso" Type="Int32" />
+    <Property Name="qte_realiz" Type="Int32" />
+    <Property Name="grupo" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+  </EntityType>
+</Schema>

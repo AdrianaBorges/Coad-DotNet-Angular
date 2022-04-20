@@ -1,0 +1,62 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="ro-RO">
+<head profile="http://gmpg.org/xfn/11">
+    <title>COADCORP </title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-global.js"></script>
+    <link href="~/Content/themes/PortalCoad/css/backgrounds.css" rel="stylesheet" />
+    <link href="~/Content/themes/PortalCoad/css/style.css" rel="stylesheet" />
+    <!--[if IE]>
+     <script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+    <div class="wrapper">
+        <div class="mainWrapper">
+            <div class="leftHolder">
+                <div class="logocoad">
+                </div>
+                <div class="warning">
+                </div>
+            </div>
+            <div class="rightHolder">
+                <div class="message">
+                    <p>Atenção, ocorreu algum problema na sua tentativa de acessar essa página!</p>
+                </div>
+                <div class="warning">
+                    <img src="/images/Info.png" title="Oooops.... ocorreu algum problema ao tentar acessar a pagina desejada." id="warning" style="height: 160px; width: 150px;" />
+                </div>
+                <div class="bg-defaut">@TempData["stackTrace"]</div>
+                <div class="tryToMessage">
+                     <ul>
+                        <li><a href="http://www.coad.com.br/" title="Home" target="_parent">Retorne para o portal COAD.</a></li>
+                        <li>
+                            <div>@TempData["message"]</div>
+                            <div>@TempData["stackTrace"]</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <footer>
+                <p class="copy">Copyright © 2015 All rights reserved. </p>
+                <menu>
+                    <li><a href="http://www.coad.com.br/" title="Home">Home</a></li>
+                    <li><a href="http://www.coad.com.br/home/boas_vindas" title="O que mudou">O que mudou</a></li>
+                    <li><a href="http://www.coad.com.br/cursos" title="Services">Cursos</a></li>
+                    <li><a href="http://www.coad.com.br/home/produtos" title="Produtos">Produtos</a></li>
+                    <li class="last"><a href="http://www.coad.com.br/contato" title="Contato">Contato </a></li>
+                </menu>
+            </footer>
+            <!-- end footer -->
+        </div>
+    </div>
+    <!-- end .wrapper -->
+</body>
+</html>

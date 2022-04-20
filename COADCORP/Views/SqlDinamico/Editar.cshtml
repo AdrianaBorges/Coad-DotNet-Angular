@@ -1,0 +1,479 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using Coad.GenericCrud.Extensions
+@using COAD.CORPORATIVO.SessionUtils
+@using COAD.SEGURANCA.Repositorios.Base
+@{
+    ViewBag.Title = "Gerador de Consulta";
+    
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Importação de Suspects</li>
+
+    </ol>
+}
+
+@Scripts.Render("~/Scripts/negocio/sql_dinamico.js")
+
+<div ng-app="appModule">
+    <div ng-controller="SqlDinamicoController" class="padding content" ng-cloak data-ng-init="init('@ViewBag.relId')" ng-click="fecharPopOvers()">
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-transfer"></span> Gerador de Consultas
+             
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label>Descrição do Relatório</label>
+                        <input type="text" class="form-control" ng-model="relPersonalizado.REL_DESCRICAO"/>                    
+                    </div>
+                 </div>
+            </div>
+
+            <div class="panel-footer">
+                 <span>
+                      <button  
+                          app-switch-button="salvarRelatorioPersonalizado()" 
+                          switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]" 
+                          switch-var="button"
+                          class="btn btn-primary">
+                          <span class="glyphicon glyphicon-floppy-save"></span>
+                      </button>
+                     @*<button ng-click="listarTabelas()"
+                        class="btn btn-primary">
+                        <span class="glyphicon glyphicon-import"></span> Listar Tabelas
+                    </button>*@
+               </span>
+            </div>
+        </div>
+        <div app-message></div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-circle-arrow-down"></span> Tabelas do Sistema</div>
+                    <div class="panel-body limit-div-3">
+                        <label>Filtro</label>
+                        <input name="text" class="form-control"  ng-model="query.RET_NOME_TABELA"/>
+                    <div class="panel-body overflow" app-droppable="removeUfOuMunicipio(idDrag, idDrop)" 
+                        transfer-model="objRemoveUf" id-drop="drop_coluna">   
+                        <ul class="nav">
+                            <li ng-repeat="item in lstTabelas | filter:query | as: 'lstTabelasFiltradas'" role="presentation" class="animate-repeat">
+                                <a href="javascript:void(0)"
+                                        ng-click="dispararAcaoMenuClicadoTabelas($event, item, item.RET_NOME_TABELA, '#selecao_pai_' + item.RET_NOME_TABELA)" 
+                                    app-draggable model="item" id-drag="drag_consulta_tabela">
+                                                <span ng-class="
+                                                                {
+                                                                    ' glyphicon-folder-close': item.aberto == false || !item.aberto,
+                                                                    ' glyphicon-folder-open': item.aberto == true
+                                                                }"
+                                                        class="glyphicon text-muted">
+
+                                                </span>
+                                    <span class="label label-info">
+                                        {{item.RET_NOME_TABELA}}
+                                    </span>
+                                    </a>
+                                <ul id="selecao_pai_{{item.RET_NOME_TABELA}}" class="collapse" aria-expanded="true">
+                                    <li app-recursive childs="item.Colunas"  class="animate-repeat" 
+                                        ng-repeat="item in item.Colunas"
+                                            ng-click="dispararAcaoMenuClicado($event, item.COR_DESCRICAO, item, '#selecao_filho_' + item.COR_DESCRICAO)">
+                                            <a href="javascript:void(0)" app-draggable id-drag="drag_consulta_coluna" model="item">
+                                                       
+                                                    <span class="label label-warning">
+                                                        {{item.COR_DESCRICAO}}
+                                                                    
+                                                    </span>
+                                                <ul app-clone-point  class="collapse" aria-expanded="true" id="selecao_{{item.COR_DESCRICAO}}"></ul>
+                                            </a>                                 
+                                    </li>     
+                                </ul>
+                            </li>    
+                        </ul>   
+                    </div>
+                    
+                </div>
+             </div>
+            </div>
+            <div class="col-md-8" app-droppable="adicionarItemConsulta(idDrag, idDrop, objUfMunicipio)" transfer-model="objUfMunicipio" id-drop="drop_consulta">
+                <div class="panel panel-default" ng-class="{crosshair: joinMarkDTO.Passo == 0}">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-circle-arrow-down"></span> Estrutura da consulta
+
+                        <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" title="Visualizar Query" ng-click="abrirModalPreviewQuery()">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <label>Campos:</label>
+                        <span ng-repeat="item in relPersonalizado.RELATORIO_TABELA_COLUNAS">
+
+                            <span app-html-var="popOverHTML">
+                                <span class="text-info" ng-click="evitarProgacao($event)">
+                                    <span>
+                                        <label>Alias da Tabela</label>
+                                        <input type="text" class="form-control" ng-model="$parent.$parent.aliasColuna" />
+
+                                    </span>
+                                    <br />
+                                    <button type="button" class="btn btn-default btn-sm" ng-click="confirmarEdicaoAliasColuna(item, aliasColuna)">Ok</button>
+                                </span>
+                            </span>
+                            <a href="javascript:void(0)" class="clear-link" id="{{item.COR_DESCRICAO}}_{{$index}}"
+                               ng-init="obj = {$index : $index, item : item}"
+                               app-draggable model="obj" id-drag="drag_colunas"
+                               app-popover
+                               data-html-var="popOverHTML"
+                               data-popover-title="Alias"
+                               title="Alias"
+                               data-trigger="manual"
+                               data-direction="top"
+                               ng-click="abrirPopOverAlias(item.COR_DESCRICAO + '_' + $index, item, $event)">
+                                <span class="label label-warning">
+                                    {{item.COR_DESCRICAO}}
+                                    <span ng-if="item.COR_ALIAS" class="font-13">
+                                        <strong>
+                                            As
+                                            [<em>{{item.COR_ALIAS}}</em>]
+                                        </strong>
+                                    </span>
+                                </span>
+                            </a>
+                            <a href="javascript:void(0);" class="remove-link" ng-click="removerColunas($index);"> <span class="glyphicon glyphicon-remove red"></span></a>
+                        </span>
+                        <br />
+                        <div style="padding-bottom: 15px;"></div>
+                        <ul class="nav nav-tabs">
+                            <li role="presentation" ng-class="{active : tab == 1}"><a href="javascript:void(0);" ng-click="abrirTab(1);">Tabelas (Designer)</a></li>
+                            <li role="presentation" ng-class="{active : tab == 4}"><a href="javascript:void(0);" ng-click="abrirTab(4);">Tabelas (Config)</a></li>
+                            <li role="presentation" ng-class="{active : tab == 2}"><a href="javascript:void(0);" ng-click="abrirTab(2);">Agrupamento (Group By)</a></li>
+                            <li role="presentation" ng-class="{active : tab == 3}"><a href="javascript:void(0);" ng-click="abrirTab(3);">Condições</a></li>
+                        </ul>
+                        <div class="panel panel-default" ng-class="{crosshair: joinMarkDTO.Passo == 0}" ng-show="tab == 1" id="tabela-container">
+
+                            <div class="panel-body row" id="tabela-panel">
+                                <div ng-repeat="item in relPersonalizado.RELATORIO_TABELAS" class="col-md-4">
+                                    <a href="javascript:void(0);" class="remove-link" ng-click="removerTabelas($index);">
+                                        <span class="glyphicon glyphicon-remove red"></span>
+                                    </a>
+                                    <div class="border-radius" id="tab3">
+                                        <div class="label label-info table-label" app-tooltip tooltip-title="{{item.RET_NOME_TABELA}}" data-direction="top" style="width: 100%;">
+                                            {{item.RET_NOME_TABELA | limitTo: 19}} <span ng-if="item.RET_NOME_TABELA.length >= 19">...</span>
+                                        </div>
+                                        <table class="cli_campo table-div-body table-hover table-div">
+                                            <tr class="campo_{{item.RET_NOME_TABELA}}_{{$index}} text"
+                                                id="campo_{{item.RET_NOME_TABELA}}_X_{{col.COR_DESCRICAO}}" ng-repeat="col in item.Colunas">
+                                                <td>
+                                                    <span app-html-var="popOverHTML">
+                                                        <span class="text-info">
+                                                            <span>
+                                                                <a href="javascript:void(0);"
+                                                                   ng-click="iniciarMarcacaoJoin(1, item, col.COR_DESCRICAO, $index)"
+                                                                   title="Inner Join">
+
+                                                                    <span class="glyphicon glyphicon-flag"></span> Inner Join
+                                                                </a>
+                                                                <br />
+                                                                <a href="javascript:void(0);"
+                                                                   ng-click="iniciarMarcacaoJoin(2, item, col.COR_DESCRICAO, $index)"
+                                                                   title="Left Join">
+                                                                    <span class="glyphicon glyphicon-flag"></span> Left Join
+                                                                </a>
+                                                                <br />
+                                                                <a href="javascript:void(0);"
+                                                                   ng-click="iniciarMarcacaoJoin(3, item, col.COR_DESCRICAO, $index)"
+                                                                   title="Right Join">
+                                                                    <span class="glyphicon glyphicon-flag"></span> Right Join
+                                                                </a>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                    <a href="javascript:void(0)" class="clear-link" ng-show="!joinMarkDTO"
+                                                       app-draggable model="obj" id-drag="drag_remove_municipio" ng-init="obj = {$index : $index, item : item}"
+                                                       app-popover
+                                                       data-html-var="popOverHTML"
+                                                       data-popover-title="Associar á"
+                                                       title="Tipo de Associação"
+                                                       data-trigger="focus"
+                                                       data-direction="top" ng-class="{pointer: joinMarkDTO.Passo == 0}">
+                                                        {{col.COR_DESCRICAO}}
+                                                    </a>
+
+                                                    <a href="javascript:void(0)"
+                                                       class="clear-link pointer text"
+                                                       ng-show="joinMarkDTO.Passo == 0"
+                                                       ng-click="criarJoin(item, col.COR_DESCRICAO, $index)">
+                                                        {{col.COR_DESCRICAO}}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div ng-show="tab == 2" app-droppable="adicionarAgrupamento(idDrag, idDrop, objAgrupamento)" transfer-model="objAgrupamento" id-drop="drop_grupo">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <span ng-repeat="item in relPersonalizado.Agrupamentos">
+                                        <span class="label label-warning">{{item.COR_DESCRICAO}}</span>
+                                        <a href="javascript:void(0);" class="remove-link" ng-click="removerColunas($index);">
+                                            <span class="glyphicon glyphicon-remove red"></span>
+                                        </a>
+                                    </span>
+                                    <span ng-hide="relPersonalizado.Agrupamentos" class="text-muted">Nenhum agrupamento adicionado.</span>
+                                </div>
+                            </div>
+
+                        </div>Estrutura da consulta
+                        <div app-droppable="adicionarCondicaoConsulta(idDrag, idDrop, objCondicao)" transfer-model="objCondicao" id-drop="drop-condicao" ng-show="tab == 3">
+
+                            <div class="panel panel-default" ng-class="{crosshair: joinMarkDTO.Passo == 0}">
+                                <!-- Default panel contents -->
+                                @* <div class="panel-heading bold head-panel pointer" data-toggle="collapse" data-target="#tabela-condicoes">
+                    <span class="glyphicon glyphicon-circle-arrow-down"></span> Condições <span class="caret"></span>
+                </div>*@
+                                <div class="panel-body" id="tabela-condicoes">
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+
+                                            <table class="table table-hover table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Operador Lógico</th>
+                                                        <th>
+                                                            Tabela
+                                                        </th>
+                                                        <th>
+                                                            Campo
+                                                        </th>
+                                                        <th>Operador Condicional</th>
+                                                        <th>Valor</th>
+                                                        <th>Ações</th>
+                                                    </tr>
+                                                </thead>
+                                                <tr ng-repeat="item in relPersonalizado.RELATORIO_CONDICAO" class="animate-repeat">
+
+                                                    <td>
+                                                        <select ng-options="op.ROL_ID as op.ROL_DESCRICAO for op in lstOperadoresLogicos"
+                                                                ng-model="item.ROL_ID" class="form-control">
+                                                            <option value="">Selecione</option>
+                                                        </select>
+                                                    </td>
+
+                                                    <td>{{item.RELATORIO_TABELAS.RET_NOME_TABELA}}</td>
+                                                    <td>{{item.REC_CAMPO}}</td>
+                                                    <td>
+                                                        <a href="javascript:void(0);"
+                                                           ng-click="abrirModalOperadorCondicional(item)"
+                                                           title="AdicionarOperador">
+                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                        </a>
+                                                        <span ng-repeat="op in item.RELATORIO_CONDICAO_RELATORIO_OPERADOR_CONDICIONAL">
+                                                            {{op.RELATORIO_OPERADOR_CONDICIONAL.ROC_DESCRICAO}}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" ng-model="item.REC_VALOR" class="form-control" />
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="red" ng-click="removerRelatorioCondicao($index)"
+                                                           title="remover">
+                                                            <span class="glyphicon glyphicon-remove"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="10" ng-show="!relPersonalizado.RELATORIO_CONDICAO">Adicione uma condição.</td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div app-droppable="adicionarTabelaConfig(idDrag, idDrop, objCondicao)" transfer-model="objTabelaConfig" id-drop="drop-tabela-config" ng-show="tab == 4">
+                            <div class="panel panel-default">
+                                <div class="panel-body" id="tabela-config">
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        @*<th>Operador Condicional</th>*@
+                                                        <th>
+                                                            Tabela 1
+                                                        </th>
+                                                        <th>Tipo de Join</th>
+                                                        <th>
+                                                            Tabela 2
+                                                        </th>
+                                                        <th>
+                                                            Campos
+                                                        </th>
+                                                        <th>Ações</th>
+                                                    </tr>
+                                                </thead>
+                                                <tr ng-repeat="item in relPersonalizado.RELATORIO_JOIN" class="animate-repeat">
+                                                    <td>{{item.RELATORIO_TABELAS.RET_NOME_TABELA}}</td>
+                                                    <td>
+                                                        <select ng-options="op.TPJ_ID as op.TPJ_DESCRICAO for op in lstTipoJoin"
+                                                                ng-model="item.TPJ_ID" class="form-control">
+                                                            <option value="">Selecione</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>{{item.RELATORIO_TABELAS1.RET_NOME_TABELA}}</td>
+                                                    <td>{{item.REJ_NOME_CAMPO1}} = {{item.REJ_NOME_CAMPO2}}</td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="red" ng-click="removerRelatorioJoin($index)"
+                                                           title="remover">
+                                                            <span class="glyphicon glyphicon-remove"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="10" ng-show="!relPersonalizado.RELATORIO_CONDICAO">Adicione uma condição.</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div data-app-modal="modal-preview-query" data-header="Preview">
+             <div class="row">
+
+                <div class="form-group col-lg-12">
+                    
+                    <div class="panel panel-info" ng-class="{crosshair: joinMarkDTO.Passo == 0}">
+                            <!-- Default panel contents -->
+                        <div class="panel-heading bold head-panel pointer" data-toggle="collapse" data-target="#preview-query">
+                            <span class="glyphicon glyphicon-th-list"></span> Preview da Query <span class="caret"></span>
+                        </div>
+                        <div class="panel-body collapse in" aria-expanded="true" id="preview-query">
+                            <div class="panel-body">
+                                <figure class="highlight">
+                                    <pre>
+                                        {{montagemQuery}}    
+                                    </pre>
+                                </figure>                 
+                             </div>
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-default btn-sm" ng-click="mostrarPreviewResultado()">
+                                <span class="glyphicon glyphicon-eye-open"></span> Preview Resultado
+                            </button>    
+                        </div>
+                    </div>   
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    
+                    <div class="table-responsive">
+                        <div ng-show="resultado"><label>Exibindo os 5 primeiros registros</label></div>
+                        <table class="table table-hover table-bordered table-stripped">
+                            <thead>
+                                <tr>
+                                    <th ng-repeat="col in resultado.Colunas">{{limparColuna(col)}}</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in resultado.Dados" class="animate-repeat">
+                                <td ng-repeat="col in resultado.Colunas">{{item[col]}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="10" ng-show="!resultado">Clique no botão para visualizar a preview.</td>
+                                <td colspan="10" ng-show="resultado.Dados.length == 0 && listado">Nenhum resultado retornado.</td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+           </div>
+
+            <div data-app-modal="modal-operadores-condicionais" data-header="Operadores Condicionais" data-size="small">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="combo-operador-condicional">Operadores Condicionais</label>
+                        <select ng-options="op as op.ROC_DESCRICAO for op in lstOperadoresCondicionais track by op.ROC_ID"
+                                ng-model="modalOperadorCondicional.OPERADOR_CONDICIONAL" class="form-control" id="combo-operador-logico">
+                                <option value="">Selecione</option>
+                        </select>                   
+                    </div>
+                    <div class="form-group col-md-6  padding-button">
+                        <button class="btn btn-default btn-sm" ng-click="adicionarOperadorCondicional()"> <span class="glyphicon glyphicon-plus-sign"></span> Adicionar</button>
+                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">                        
+                            <div class="table-responsive">
+
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Operador</th>
+                                            <th>Deletar</th>                                        
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="item in modalOperadorCondicional.lstCondicionais" class="animate-repeat">
+                                        <td>{{item.RELATORIO_OPERADOR_CONDICIONAL.ROC_DESCRICAO}}</td>
+                                        <td>
+                                            <a href="javascript:void(0);" class="red" ng-click="removerOperadorCondicional($index)" 
+                                                                                title="remover">
+                                                                            <span class="glyphicon glyphicon-remove"></span></a>
+                                        </td>    
+                                        <tr>
+                                            <td colspan="10" ng-show="!modalOperadorCondicional.lstCondicionais">Clique em pesquisar para listar.</td>
+                                        </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" ng-click="confirmarOperadoresCondicionais()"> <span class="glyphicon glyphicon-ok"></span> Confirmar</button>
+                </div>            
+            </div>          
+             
+    </div>
+    <div class="row">
+                <div class="col-md-4">
+                    <button type="button" onclick="window.location = '@Url.Action("relatorioBase","SqlDinamico")'" class="btn btn-default" ng-disabled="button == 'saved'">
+                    <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar</button>
+            <span ng-show="relPersonalizado.REL_ID">
+                <button  
+                    app-switch-button="excluirRelatorioPersonalizado(true)" 
+                    switch-conf="[{label : 'Excluir', state : 'del'}, {label : 'Excluindo...', state : 'excluded', disabled : true}]" 
+                    switch-var="buttonDel"
+                    class="btn btn-danger">
+                    <span class="glyphicon glyphicon-floppy-remove"></span>
+                </button>
+            </span>
+                </div>   
+            </div>
+    </div>
+    </div>

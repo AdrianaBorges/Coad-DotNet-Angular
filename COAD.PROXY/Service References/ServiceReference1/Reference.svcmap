@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5e0e6c37-6826-4854-b1fb-fb4984d16a10" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:48701/CoadService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="CoadService.xsd" MetadataType="Schema" ID="b71821c4-fda9-48b4-a546-07c0c56a549d" SourceId="1" SourceUrl="http://localhost:48701/CoadService.svc?xsd=xsd0" />
+    <MetadataFile FileName="CoadService.wsdl" MetadataType="Wsdl" ID="78c6d39d-bbf0-4ccd-8f4f-76b3048b1f78" SourceId="1" SourceUrl="http://localhost:48701/CoadService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="CoadService1.xsd" MetadataType="Schema" ID="00aca9ad-2958-43b0-8f3b-cbfea54e079b" SourceId="1" SourceUrl="http://localhost:48701/CoadService.svc?xsd=xsd1" />
+    <MetadataFile FileName="CoadService2.xsd" MetadataType="Schema" ID="a646cec2-29e0-470d-88b0-4d714c82cf9d" SourceId="1" SourceUrl="http://localhost:48701/CoadService.svc?xsd=xsd2" />
+    <MetadataFile FileName="CoadService1.wsdl" MetadataType="Wsdl" ID="e67c3675-31fe-45be-a06e-f1797bc5ee56" SourceId="1" SourceUrl="http://localhost:48701/CoadService.svc?wsdl" />
+    <MetadataFile FileName="CoadService.disco" MetadataType="Disco" ID="eeca3f8b-1a39-4ada-9c38-e68f1c4f6675" SourceId="1" SourceUrl="http://localhost:48701/CoadService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

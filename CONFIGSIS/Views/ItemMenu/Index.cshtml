@@ -1,0 +1,241 @@
+﻿
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li class="active">Gerenciar Itens de Menu</li>         
+        
+    </ol>
+}
+
+<style type="text/css">
+
+    .body {
+        background-color: #e8e8e8 !important;
+
+    }
+</style>
+
+
+@Scripts.Render("~/Scripts/appScripts/itemmenu.js")
+<div ng-app="appModule">
+    <div ng-controller="ItemMenuControler" class="padding content" ng-cloak>
+    <div class="panel panel-corp">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-warning btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                        </li>                                                                           
+                                    </ul>
+                                </div>
+                            </div>
+      </div>
+          
+      <div class="panel-body">            
+           
+        <div class="row">              
+            <div class="form-group col-lg-3">
+                <label for="usu_login">Nome do Menu</label>
+                <input type="text" id="usu_login" ng-model="filtro.nome" class="form-control"/>
+            </div>                      
+            <div class="form-group col-lg-3">
+                <label for="usu_login">Sistema</label>
+                 @Html.DropDownList("SIS_ID", (SelectList) ViewBag.ListaSistema, 
+                    "Selecione" ,new {@class = "form-control", ng_model = "filtro.SIS_ID" })
+            </div> 
+            <div class="form-group col-lg-3">
+                <label for="usu_login">Nível</label>
+                          @Html.DropDownList("ITM_MENU_NIVEL", (SelectList)@ViewBag.ListaNivel, "Selecione", new { @class = "form-control" , ng_model =                                "filtro.ITM_MENU_NIVEL" })
+            </div>                  
+        </div>
+      </div>
+                  
+        <div class="panel-footer">
+            <button type="button" class="btn btn-primary" ng-click="listarItensDeMenu()">Pesquisar</button>
+        </div>
+</div>
+        <div app-message></div>
+<div class="row">
+        <div class="col-md-4">
+                    <div class="panel panel-corp">
+                          <!-- Default panel contents -->
+      
+                          <div class="panel-heading bold"><span class="glyphicon glyphicon-th-list"></span> Itens de Menu</div>
+          
+                          <div class="panel-body overflow">   
+                                <ul class="nav">
+                                    <li ng-repeat="item in itensDeMenu" role="presentation" class="animate-repeat">
+                                        <a href="javascript:void(0)" ng-click="dispararAcaoMenuClicado($event, item.ITM_ID, item, '#pai_' + item.ITM_ID)">
+                                                        <span ng-class="
+                                                                        {
+                                                                            ' glyphicon-folder-close': item.aberto == false || !item.aberto,
+                                                                            ' glyphicon-folder-open': item.aberto == true
+                                                                        }"
+                                                             class="glyphicon text-muted">
+
+                                                        </span>
+                                            <span>
+                                                {{item.ITM_DESCRICAO}} 
+                                                <span ng-click="abrirSubMenusNoGrid($event, item)" class="glyphicon glyphicon-chevron-right"></span>
+                                            </span>
+                                            </a>
+                                        <ul id="pai_{{item.ITM_ID}}" class="collapse" aria-expanded="true">
+                                            <li app-recursive childs="item.subMenus"  class="animate-repeat" ng-repeat="item in item.subMenus" 
+                                                    ng-click="dispararAcaoMenuClicado($event, item.ITM_ID, item, '#filho_' + item.ITM_ID)">
+                                                    <a href="javascript:void(0)">{{tipo}}
+                                                        <span ng-show="item.ITM_TIPO == '0'">
+                                                            <span ng-class="
+                                                                        {
+                                                                            ' glyphicon-folder-close': item.aberto == false || !item.aberto,
+                                                                            ' glyphicon-folder-open': item.aberto == true
+                                                                        }"
+                                                             class="glyphicon text-muted">
+
+                                                        </span>
+                                                        </span>
+                                                        <span ng-show="item.ITM_TIPO == '1'" class="glyphicon glyphicon-tasks text-muted">
+                                                        </span>
+                                                            <span>
+                                                                {{item.ITM_DESCRICAO}}
+                                                                <span ng-click="abrirSubMenusNoGrid($event, item)" class="glyphicon glyphicon-chevron-right"></span>
+                                                            </span>
+                                                        <ul app-clone-point  class="collapse" aria-expanded="true" id="filho_{{item.ITM_ID}}"></ul>
+                                                    </a>         
+                        
+                                            </li>     
+                                        </ul>
+                                    </li>    
+                                </ul>    
+                             <div app-pagination="page" request-page="paginaReq" load-function="listarItensDeMenu(paginaReq)"></div>          
+                            </div>
+                    </div>
+        </div>
+      
+
+        <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="panel panel-corp" ng-show="itemPai">
+                              <!-- Default panel contents -->
+      
+                              <div class="panel-heading bold"><span class="glyphicon glyphicon-th-list"></span> Menu pai</div>
+          
+                              <div class="panel-body">   
+                                         
+                                                <div class="table-responsive"> 
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>     
+                                                                <th>Id</th>
+                                                                <th>Descrição</th>
+                                                                <th>Path</th>
+                                                                <th>Nível</th>
+                                                                <th>Id, Ord.</th>
+                                                                <th>Situação</th>
+                                                                <th>#</th>                            
+                                                            </tr>
+                                                        </thead>
+                                                        <tr ng-click="obterSubMenus(itemPai.ITM_ID, item)">                                    
+                                                            <td>{{itemPai.ITM_ID}}</td>                       
+                                                            <td>{{itemPai.ITM_DESCRICAO}}</td>
+                                                            <td>{{itemPai.ITM_NOME_ARQUIVO}}</td>
+                                                            <td>{{itemPai.ITM_MENU_NIVEL}}</td>
+                                                            <td>{{itemPai.ITM_MENU_SEQ}}</td>
+                                                            <td>
+                                                                <span class="label label-success" ng-if="itemPai.ITM_ATIVO == 1">SIM</span>
+                                                                <span class="label label-warning" ng-if="!itemPai.ITM_ATIVO || item.ITM_ATIVO == 0">NÃO</span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="javascript:void(0)" app-post="@Url.Action("Editar")?ITM_ID={{itemPai.ITM_ID}}" 
+                                                                    title="Editar" class="blue">
+                                                                    <span class="glyphicon glyphicon-edit"></span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="9" ng-show="!itemPai && listado">Nenhum registro foi encontrado.</td>
+                                                            <td colspan="9" ng-show="!itemPai">Clique em pesquisar para listar.</td>
+                                                        </tr>
+                                                    </table> 
+                                            </div>    
+                                  </div>
+         
+                                </div> 
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                        <div class="panel panel-corp">
+                                  <!-- Default panel contents -->
+      
+                                  <div class="panel-heading bold"><span class="glyphicon glyphicon-th-list"></span> Menus</div>
+          
+                                  <div class="panel-body">   
+                                           
+                                                <div class="table-responsive">     
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>     
+                                                                    <th>Id</th>
+                                                                    <th>Menu Pai</th>
+                                                                    <th>Descrição</th>
+                                                                    <th>Path</th>
+                                                                    <th>Nível</th>
+                                                                    <th>Id, Ord.</th>
+                                                                    <th>Situação</th>
+                                                                    <th>#</th>                            
+                                                                </tr>
+                                                            </thead>
+                                                            <tr ng-repeat="item in itensDeMenuGrid" ng-click="obterSubMenus(item.ITM_ID, item)" class="animate-repeat">                                    
+                                                                <td>{{item.ITM_ID}}</td>
+                                                                <td>
+                                                                    <span ng-if="item.ITEM_MENU2" class="label label-primary">{{item.ITEM_MENU2.ITM_DESCRICAO}}</span>
+                                                                    <span ng-if="!item.ITEM_MENU2" class="label label-default">Não se aplica</span>
+                                                                </td>                            
+                                                                <td>{{item.ITM_DESCRICAO}}</td>
+                                                                <td>{{item.ITM_NOME_ARQUIVO}}</td>
+                                                                <td>{{item.ITM_MENU_NIVEL}}</td>
+                                                                <td>{{item.ITM_MENU_SEQ}}</td>
+                                                                <td>
+                                                                    <span class="label label-success" ng-if="item.ITM_ATIVO == 1">SIM</span>
+                                                                    <span class="label label-warning" ng-if="!item.ITM_ATIVO || item.ITM_ATIVO == 0">NÃO</span>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="javascript:void(0)" app-post="@Url.Action("Editar")?ITM_ID={{item.ITM_ID}}" 
+                                                                        title="Editar" class="blue">
+                                                                        <span class="glyphicon glyphicon-edit"></span>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="10" ng-show="itensDeMenu.length == 0 && listado">Nenhum registro foi encontrado.</td>
+                                                                <td colspan="10" ng-show="!itensDeMenu">Clique em pesquisar para listar.</td>
+                                                            </tr>
+                                                        </table> 
+                                                </div>          
+                                          <div app-pagination="paginaItemMenuGrid" request-page="paginaReq" load-function="listarItensDeMenu(paginaReq, 'grid')"></div>          
+
+                                      </div>
+         
+                                    </div> 
+                </div>
+                    </div>
+    </div>
+</div>
+       
+    </div>   
+</div>

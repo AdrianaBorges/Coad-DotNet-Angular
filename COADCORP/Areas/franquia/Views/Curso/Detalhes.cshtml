@@ -1,0 +1,153 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutoComposicaoDTO
+
+@{
+    ViewBag.Title = "Edit";
+}
+@using Coad.GenericCrud.Extensions
+
+    @section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li>@Html.ActionLink("Gerenciar Produtos","index","Produto")</li>
+        <li class="active">Editar Produtos</li>         
+        
+    </ol>
+}
+    
+@Scripts.Render("~/Scripts/negocio/produtos_composicao.js")
+<div class="form-lg padding" ng-app="appModule">
+
+    <div class="panel panel-default" ng-controller="ProdutoComposicaoController" data-ng-init="read(@ViewBag.composicaoId)">
+       
+            @Html.ValidationSummary(true)          
+                  <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Informações da Composição</div>
+            <div class="panel-body">  
+                 <div app-message></div>
+                 @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) {
+                <div class="row">
+                    <div class="form-group col-lg-5">
+                        @Html.HiddenFor(model => model.CMP_ID)
+                        @Html.LabelFor(model => model.CMP_DESCRICAO)
+                        @Html.TextBoxFor(model => model.CMP_DESCRICAO,  new {@class = "form-control", ng_model = "produtocomposicao.CMP_DESCRICAO", disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.CMP_DESCRICAO, null, new { app_validation_msg = "erros", @for = "CMP_DESCRICAO" })    
+                    </div>
+                    <div class="form-group col-lg-5">
+                        @Html.LabelFor(model => model.CMP_NOME_ESTRANGEIRO)
+                        @Html.TextBoxFor(model => model.CMP_NOME_ESTRANGEIRO, new {@class = "form-control", ng_model = "produtocomposicao.CMP_NOME_ESTRANGEIRO", disabled = "disabled"})
+                        @Html.ValidationMessageFor(model => model.CMP_NOME_ESTRANGEIRO, null, new { app_validation_msg = "erros", @for = "CMP_NOME_ESTRANGEIRO" })                   
+                    </div>
+                    <div class="form-group col-lg-2">
+                        @Html.LabelFor(model => model.CMP_VLR_VENDA)
+                        @Html.TextBoxFor(model => model.CMP_VLR_VENDA, new {@class = "form-control", ng_model = "produtocomposicao.CMP_VLR_VENDAMask", style = "max-width: 92px" ,app_mask_dinheiro = "produtocomposicao.CMP_VLR_VENDA", disabled = "disabled"})
+                        @Html.ValidationMessageFor(model => model.CMP_VLR_VENDA, null, new { app_validation_msg = "erros", @for = "CMP_VLR_VENDA" })                   
+                    </div>                  
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-2">
+               
+                    <div class="form-group col-lg-3">
+                        @Html.LabelFor(model => model.TIPO_PRO_ID)        
+                        @Html.DropDownListFor(model => model.TIPO_PRO_ID, new SelectList(ViewBag.tiposProduto, "TIPO_PRO_ID", "TIPO_PRO_DESCRICAO"), "Selecione", new {@class = "form-control", ng_model = "produtocomposicao.TIPO_PRO_ID", disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.TIPO_PRO_ID, null, new { app_validation_msg = "erros", @for = "TIPO_PRO_ID" })
+                    </div>
+                       </div>
+                </div>
+                 }
+                    <div class="row">
+                        <div class="col-lg-12"><strong>Composições</strong></div>
+                    </div>
+                    <div class="line"></div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="v-padding">
+                            </div>                                                        
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>Quantidade/Consultas</th>
+                                    <th>Tipo de Periodo</th>
+                                    <th>Preço Unitário</th>
+                                    <th>Visualizar</th>
+                                    
+                                </tr>                                   
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in produtocomposicao.PRODUTO_COMPOSICAO_ITEM" ng-show="produtocomposicao.PRODUTO_COMPOSICAO_ITEM">
+                                    <td>{{item.NomeDoProduto}}</td>
+                                    <td>{{item.CMI_QTDE}}</td>
+                                    <td>{{item.TIPO_PERIODO.TTP_DESCRICAO}}</td>
+                                    <td app-show-dinheiro="item.CMI_PRECO_UNIT"></td>
+                                    <td><a href="javascript:void(0)" ng-click="abrirEdicaoItem($index, item)" class="btnConfirmaExclusao blue" id="btnEdicaoItem" title="Visualizar" ><span class="glyphicon glyphicon-search"></span></a>
+                                    
+                                </tr>
+                                <tr ng-hide="produtocomposicao.PRODUTO_COMPOSICAO_ITEM.length > 0">
+                                    <td colspan="7">Nenhuma composição adicionada.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>               
+            </div>
+
+         <div class="panel-footer">               
+                <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default">Voltar</button>
+        </div>
+        <div app-modal="modalComposicaoItem" header="Selecione">      
+                <div class="panel panel-default">
+                    <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Informações da Composição</div>
+                    <div class="panel-body">     
+                        <div app-message></div>
+                           <div class="row">
+                               <div class="form-group col-lg-6">
+                                   @Html.Label("Produto do item")
+                                   
+                                   <select name="produto_composicao" class="form-control" ng-model="$parent.composicaoitem.PRODUTOSCombo"  ng-options="item as item.PRO_NOME for item in $parent.lstprodutos track by item.PRO_ID" ng-change="$parent.produtoSelecionado(composicaoitem)" disabled="disabled">
+                                       <option value="">Selecione</option>
+
+                                   </select>
+                                  @* @Html.ValidationMessageFor(model => model.PRO_ID, null, new { app_validation_msg = "erros", @for = "PROD_ID", disabled = "disabled" })                   *@
+                              </div>   
+                               <div class="form-group col-lg-6">
+                                    @Html.LabelFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().TTP_ID)                        
+                                   <select name="tipo_periodo" class="form-control" ng-model="$parent.composicaoitem.TIPO_PERIODOCombo"  ng-options="item as item.TTP_DESCRICAO for item in $parent.lsttipoperiodo track by item.TTP_ID" ng-change="$parent.tipoPeriodoSelecionado(composicaoitem)" disabled="disabled">
+                                       <option value="">Selecione</option>
+                                   </select>
+                                    @Html.ValidationMessageFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().TTP_ID, null, new { app_validation_msg = "erros", @for = "TTP_ID" })                   
+                               </div> 
+                              @* <div class="form-group col-lg-2">
+                                    @Html.LabelFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_PRECO_TOTAL)
+                                    @Html.TextBoxFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_PRECO_TOTAL, new {@class = "form-control", style = "max-width: 92px", ng_model = "$parent.composicaoitem.CMI_PRECO_TOTALMask", app_mask_dinheiro = "$parent.composicaoitem.CMI_PRECO_TOTAL"})
+                                    @Html.ValidationMessageFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_PRECO_TOTAL, null, new { app_validation_msg = "erros", @for = "CMI_PRECO_TOTAL" })                   
+                               </div>*@
+                            </div>
+                            <div class="row">                               
+                               <div class="form-group col-lg-4">
+                                    @Html.LabelFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_PRECO_UNIT)
+                                    @Html.TextBoxFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_PRECO_UNIT, new {@class = "form-control", style = "max-width: 92px", ng_model = "$parent.composicaoitem.CMI_PRECO_UNITMask", app_mask_dinheiro = "$parent.composicaoitem.CMI_PRECO_UNIT", disabled = "disabled"})
+                                    @Html.ValidationMessageFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_PRECO_UNIT, null, new { app_validation_msg = "erros", @for = "CMI_PRECO_UNIT" })                   
+                               </div>
+                               <div class="form-group col-lg-3">
+                                    @Html.LabelFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_QTDE)                        
+                                    @Html.TextBoxFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_QTDE, new {@class = "form-control", style = "max-width: 60px", ng_model = "$parent.composicaoitem.CMI_QTDE", maxlength = "4", onkeyup = "OnlyNumber(this)", disabled = "disabled"})
+                                    @Html.ValidationMessageFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_QTDE, null, new { app_validation_msg = "erros", @for = "CMI_QTDE" })                   
+                               </div> 
+                               <div class="form-group col-lg-5">
+                                    @Html.LabelFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_QTDE_PERIODO)
+                                    @Html.TextBoxFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_QTDE_PERIODO, new {@class = "form-control", style = "max-width: 60px", ng_model = "$parent.composicaoitem.CMI_QTDE_PERIODO", maxlength = "4", onkeyup = "OnlyNumber(this)", disabled = "disabled"})
+                                    @Html.ValidationMessageFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_QTDE_PERIODO, null, new { app_validation_msg = "erros", @for = "CMI_QTDE_PERIODO" })                   
+                               </div>
+                               
+                            </div>
+                            <div class="row">                                                                
+                            </div>  
+                        </div>
+                    </div>                    
+           </div>
+    </div>
+    </div>

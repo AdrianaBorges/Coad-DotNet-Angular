@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutLogado.cshtml";
+}
+
+
+@Scripts.Render("~/Scripts/appScripts/Portal.js")
+
+<style>
+    h1 {
+        display: block;
+        font-size: 2em;
+        -webkit-margin-before: 0.67em;
+        -webkit-margin-after: 0.67em;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+        font-weight: bold;
+    }
+
+    #glb-materia .materia-titulo h1 {
+        color: #444;
+        font-family: "ProximaNova-Semibold";
+        font-size: 44px;
+        font-weight: normal;
+        letter-spacing: -2px;
+        word-wrap: break-word;
+        line-height: 40px;
+    }
+
+
+    #glb-materia .materia-titulo h2 {
+        font-size: 18px;
+        letter-spacing: -0.004em;
+    }
+
+    #glb-materia .materia-titulo h2 {
+        color: #999;
+        line-height: 24px;
+        padding-top: 1.1em;
+        word-wrap: break-word;
+    }
+
+
+    /*font-family: sans-serif;*/
+</style>
+
+
+<div ng-app="appModule">
+    <div ng-controller="PortalController" ng-init="init(8);buscarNoticia(@ViewBag.id);">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9">
+                    <br />
+                    <p class="label label-success">
+                        <span>Publicado em: </span>
+                        <span app-show-date="noticia.DATA_PUBLICACAO"></span>
+                    </p>
+                    <h1 class="materia-titulo" ng-bind-html="trustAsHtml(noticia.NOT_MANCHETE)"></h1>
+                    <div ng-bind-html="trustAsHtml(noticia.NOT_TEXTO)"></div>
+                    <div ng-repeat="widget in lstwidgetsc" ng-bind-html="trustAsHtml(widget.FUNCIONALIDADE.FCI_CONTEUDO)"></div>
+                </div>
+                <div class="col-sm-3">
+                    <div ng-repeat="widget in lstwidgetsd" ng-bind-html="trustAsHtml(widget.FUNCIONALIDADE.FCI_CONTEUDO)"></div>
+                </div>
+            </div>
+        </div>
+        <!-- / -->
+        <section class="alternate padding-xxs">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-lg-4 col-sm-8 col-lg-offset-4 col-md-offset-2 col-sm-offset-2">
+                        <h5 class="letter-spacing-1">INSCREVA-SE NA NOSSA NEWSLETTER</h5>
+                        <div class="input-group">
+                            <input id="newsletter_subscribe_email" type="text" class="form-control" placeholder="Informe seu email...">
+                            <span class="input-group-btn">
+                                <button id="newsletter_subscribe_btn" class="btn btn-primary" type="button">ENVIAR</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

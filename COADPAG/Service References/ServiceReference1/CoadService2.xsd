@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons.WebService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons.WebService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:48701/CoadService.svc?xsd=xsd6" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost:48701/CoadService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons" />
+  <xs:import schemaLocation="http://localhost:48701/CoadService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons.WebService.ClienteIntegracao" />
+  <xs:complexType name="RenovacaoMalaResult">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons" base="q1:WebServiceResult">
+        <xs:sequence>
+          <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Result" nillable="true" type="q2:ArrayOfstring" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RenovacaoMalaResult" nillable="true" type="tns:RenovacaoMalaResult" />
+  <xs:complexType name="LoginUnicoResultDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Assinaturas" nillable="true" type="tns:ArrayOfLoginUnicoInfoAssinaturaDTO" />
+      <xs:element minOccurs="0" name="Cadastrado" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Cliente" nillable="true" type="tns:LoginUnicoClienteDTO" />
+      <xs:element minOccurs="0" name="Conhecimento" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Contador" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Data1" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DataAtualizacao" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DataCadastro" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DataRepositorio" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DataUltimoLogin" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Empresa" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Expiracao" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IdStacio" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="LoginUnico" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Mensagem" nillable="true" type="tns:LoginUnicoMensagemDTO" />
+      <xs:element minOccurs="0" name="OabFlag" type="xs:boolean" />
+      <xs:element minOccurs="0" name="OabNrFicha" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OabNrInscricao" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OabStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Perfil" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Permisao" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Pesquisa" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Public" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="QtdSessoes" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ReceberNovidade" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Senha" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Sucesso" type="xs:boolean" />
+      <xs:element minOccurs="0" name="TipoUsuario" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Usuario" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Vigencia" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LoginUnicoResultDTO" nillable="true" type="tns:LoginUnicoResultDTO" />
+  <xs:complexType name="ArrayOfLoginUnicoInfoAssinaturaDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LoginUnicoInfoAssinaturaDTO" nillable="true" type="tns:LoginUnicoInfoAssinaturaDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLoginUnicoInfoAssinaturaDTO" nillable="true" type="tns:ArrayOfLoginUnicoInfoAssinaturaDTO" />
+  <xs:complexType name="LoginUnicoInfoAssinaturaDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodAssinatura" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Senha" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LoginUnicoInfoAssinaturaDTO" nillable="true" type="tns:LoginUnicoInfoAssinaturaDTO" />
+  <xs:complexType name="LoginUnicoClienteDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AreaAtuacao" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CPF" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DataNascimento" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Endereco" nillable="true" type="tns:LoginUnicoEnderecoClienteDTO" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Nome" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Profissao" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Sexo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Telefone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Trab" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LoginUnicoClienteDTO" nillable="true" type="tns:LoginUnicoClienteDTO" />
+  <xs:complexType name="LoginUnicoEnderecoClienteDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Bairro" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CEP" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Cidade" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Complemento" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Logradouro" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Numero" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UF" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LoginUnicoEnderecoClienteDTO" nillable="true" type="tns:LoginUnicoEnderecoClienteDTO" />
+  <xs:complexType name="LoginUnicoMensagemDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Mensagem" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tipo" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LoginUnicoMensagemDTO" nillable="true" type="tns:LoginUnicoMensagemDTO" />
+  <xs:complexType name="ValidatorWebServiceResult">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons" base="q3:WebServiceResult">
+        <xs:sequence>
+          <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ValidationMessage" nillable="true" type="q4:ArrayOfKeyValueOfstringArrayOfstringty7Ep6D1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ValidatorWebServiceResult" nillable="true" type="tns:ValidatorWebServiceResult" />
+  <xs:complexType name="BuscarCEPResult">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons" base="q5:WebServiceResult">
+        <xs:sequence>
+          <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons.WebService.ClienteIntegracao" minOccurs="0" name="Endereco" nillable="true" type="q6:ClienteIntegrEnderecoDTO" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BuscarCEPResult" nillable="true" type="tns:BuscarCEPResult" />
+  <xs:complexType name="BuscarMunicipioResult">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q7="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons" base="q7:WebServiceResult">
+        <xs:sequence>
+          <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons.WebService.ClienteIntegracao" minOccurs="0" name="Municipios" nillable="true" type="q8:ArrayOfClienteIntegrMunicipioDTO" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BuscarMunicipioResult" nillable="true" type="tns:BuscarMunicipioResult" />
+  <xs:complexType name="TipoClienteResult">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q9="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons" base="q9:WebServiceResult">
+        <xs:sequence>
+          <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons.WebService.ClienteIntegracao" minOccurs="0" name="TiposClientes" nillable="true" type="q10:ArrayOfClienteIntegrTipoClienteDTO" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TipoClienteResult" nillable="true" type="tns:TipoClienteResult" />
+</xs:schema>

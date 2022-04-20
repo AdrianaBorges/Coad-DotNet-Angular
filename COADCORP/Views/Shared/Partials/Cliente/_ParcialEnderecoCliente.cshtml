@@ -1,0 +1,83 @@
+﻿@using Coad.GenericCrud.Extensions
+
+<fieldset>
+    <legend class="btn btn-info" style="text-align: left;">Endereços</legend>
+    <div class="row padding">
+        <div class="table-responsive">
+            <div app-validation-msg="erros"></div>
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr class="info">
+                        <th>Tipo</th>
+                        <th>Cep</th>
+                        <th>UF</th>
+                        <th>Município</th>
+                        <th>Bairro</th>
+                        <th>Logradouro</th>
+                        <th>Numero</th>
+                        <th>Complemento</th>
+                        <th style="text-align: center;" colspan="3">Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="end in cliente.CLIENTES_ENDERECO" ng-show="cliente.CLIENTES_ENDERECO">
+                        <td>{{end.END_TIPO}} - {{end.TIPO_ENDERECO.TP_END_DESCRICAO}}</td>
+                        <td>
+                            {{end.END_CEP}}
+                            @Html.ValidationMessage("END_CEP", null, new { app_validation_msg = "erros", @for = "_cliente.CLIENTES_ENDERECO[{{$index}}].END_CEP" })
+                        </td>
+                        <td>
+                            {{end.END_UF}}
+                            @Html.ValidationMessage("END_UF", null, new { app_validation_msg = "erros", @for = "_cliente.CLIENTES_ENDERECO[{{$index}}].END_UF" })
+                        </td>
+                        <td>
+                            {{end.END_MUNICIPIO}}
+                            @Html.ValidationMessage("END_MUNICIPIO", null, new { app_validation_msg = "erros", @for = "_cliente.CLIENTES_ENDERECO[{{$index}}].END_MUNICIPIO" })
+                        </td>
+                        <td>
+                            {{end.END_BAIRRO}}
+                            @Html.ValidationMessage("END_BAIRRO", null, new { app_validation_msg = "erros", @for = "_cliente.CLIENTES_ENDERECO[{{$index}}].END_BAIRRO" })
+                        </td>
+                        <td>
+                            {{end.END_LOGRADOURO}}
+                            @Html.ValidationMessage("END_LOGRADOURO", null, new { app_validation_msg = "erros", @for = "_cliente.CLIENTES_ENDERECO[{{$index}}].END_LOGRADOURO" })
+                        </td>
+                        <td>
+                            {{end.END_NUMERO}}
+                            @Html.ValidationMessage("END_NUMERO", null, new { app_validation_msg = "erros", @for = "_cliente.CLIENTES_ENDERECO[{{$index}}].END_NUMERO" })
+                        </td>
+                        <td>
+                            {{end.END_COMPLEMENTO}}
+                            @Html.ValidationMessage("END_COMPLEMENTO", null, new { app_validation_msg = "erros", @for = "_cliente.CLIENTES_ENDERECO[{{$index}}].END_COMPLEMENTO" })
+                        </td>
+                        <td style="text-align: center;">
+                            <a href="javascript:void(0)" ng-click="ExcluirEndereco(end, $index)" class="btnConfirmaExclusao blue" id="btnEdicaoItem" app-popover data-content="Clique aqui para excluir este endereço">
+                                <span class="fa fa-times"></span>
+                            </a>
+                        </td>
+                        <td style="text-align: center;">
+                            <a href="javascript:void(0)" ng-click="AlterarEndereco(end, $index)" class="btnConfirmaExclusao blue" id="btnEdicaoItem" app-popover data-content="Editar">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                        </td>
+                        <td style="text-align: center;">
+                            <span ng-show="cliente.CLIENTES_ENDERECO.length == ($index + 1) && podeAdicionar()">
+                                <a href="javascript:void(0)" ng-click="AlterarEndereco()" app-popover data-content="Incluir">
+                                    <span class="glyphicon glyphicon-plus blue"></span>
+                                </a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr ng-hide="cliente.CLIENTES_ENDERECO.length > 0">
+                        <td colspan="10">
+                            Nenhuma endereço adicionado. Clique para adicionar:
+                            <a href="javascript:void(0)" ng-click="AlterarEndereco()" app-popover data-content="Incluir">
+                                <span class="glyphicon glyphicon-plus blue"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</fieldset>

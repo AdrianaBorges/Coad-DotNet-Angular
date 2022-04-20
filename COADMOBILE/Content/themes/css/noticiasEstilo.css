@@ -1,0 +1,9 @@
+﻿#noticiasDetalhe .descricao
+{
+    color:#990000;
+}
+
+#noticiasDetalhe .verbete
+{
+    font:bold 16px Trebuchet MS, Arial, Helvetica, sans-serif;
+}

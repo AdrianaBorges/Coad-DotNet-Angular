@@ -1,0 +1,50 @@
+﻿@model  COAD.COADGED.Model.DTO.AreasDTO
+@{
+    ViewBag.Title = "Edit";
+}
+@using Coad.GenericCrud.Extensions
+    @section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li>@Html.ActionLink("Gerenciar Areas","index","Areas")</li>
+        <li class="active">Detalhes do Areas</li>         
+    </ol>
+}
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/areas.js")
+<div class="form-lg padding" ng-app="appModule">
+
+    <div class="panel panel-default" ng-controller="AreasController" data-ng-init="read(@ViewBag.areaId)">
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-search icon-panel"></span> Detalhes da Area</div>
+
+            <div class="panel-body">  
+                <div app-message></div>               
+                <div class="row">
+                    <div class="form-group col-lg-2">
+                        @Html.Label("ID")
+                        @Html.TextBoxFor(model => model.ARE_CONS_ID,  new {@class = "form-control", ng_model = "areas.ARE_CONS_ID", disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.ARE_CONS_DESCRICAO, null, new { app_validation_msg = "erros", @for = "ARE_CONS_ID" }) 
+                    </div>
+                    <div class="form-group col-lg-10">
+                        @Html.LabelFor(model => model.ARE_CONS_DESCRICAO)
+                        @Html.TextBoxFor(model => model.ARE_CONS_DESCRICAO, new {@class = "form-control", ng_model = "areas.ARE_CONS_DESCRICAO", disabled = "disabled"})                 
+                    </div>                    
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Modelo para o cabeçalho das matérias desta area ou colecionador</div>
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <div style="overflow: scroll; height:150px;" ng-bind-html="areas.ARE_CABECA_MATERIA"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="panel-footer">
+                <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span>Fechar</button>
+            </div>
+    </div>
+
+</div>

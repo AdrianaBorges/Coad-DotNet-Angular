@@ -1,0 +1,145 @@
+﻿
+@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+@using COAD.CORPORATIVO.SessionUtils
+@using GenericCrud.ActionResultTools
+@{
+    ViewBag.Title = "JOBS do Sistema";
+    bool gerente = (SessionContext.IsGerenteDepartamento("franquiado", true) || SessionContext.IsGerenteDepartamento("franquiador", true));
+    bool franquiador = SessionContext.IsGerenteDepartamento("franquiador", true);
+
+    bool podeFaturar = SessionUtil.PossuiPermissaoParaFaturar();
+    string podePagar = (podeFaturar) ? "1 == 1" : "1 == 2";
+    ViewBag.defer = @"defer='defer'";  
+
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li class="active">Gerenciar Jobs</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/jobs.js")" defer="defer"></script>
+<div ng-app="appModule">    
+    <div ng-controller="JobsController" class="padding content" ng-cloak data-ng-init="initList();">
+    <div class="panel panel-corp">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Opções
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li>
+                            <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                        </li>                                                                           
+                    </ul>
+                </div>
+            </div>
+      </div>
+          
+            <div class="panel-body">            
+                @*<div class="row">
+                    <div class="form-group col-lg-3">
+                        <label for="sigla">Descrição</label>
+                        <input type="text" ng-model="filtro.descricao" class="form-control" />
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="sigla">Grupo</label>
+                        <select name="grupo_filtro" class="form-control" ng-model="filtro.tgrId" style="width:110px;"
+                                ng-options="item.TGR_ID as item.TGR_DESCRICAO for item in lstTemplateGrupo">
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+                </div>*@
+            </div> 
+        <div class="panel-footer">
+            <button type="button" class="btn btn-default" ng-click="pesquisarJobAgendamento()">Pesquisar</button>
+        </div>
+    </div>
+    <div>
+        <div app-message></div>
+            <div class="panel panel-corp">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-shopping-cart"></span>Listagem de Templates</div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                    <table class="table">
+                        <thead>
+                            <tr class="bg-info">
+                                <th>Id</th>
+                                <th>Nome</th>
+                                <th>Itens Pendentes</th>
+                                <th>Ativo</th>
+                                <th class="center">Última Execução</th>
+                                <th>Executando</th>
+                                <th style="min-width: 160px;">Progresso</th>
+                                <th colspan="2">#</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in lstJobs" ng-class="{'linha-desativada' : !item.JOB_ATIVADO}">
+                            <td>{{item.JOB_ID}}</td>
+                            <td>{{item.JOB_NOME}}</td>
+                            <td>{{item.JobPendingItensDescFormatted}}</td>
+                            <td>
+                                <label class="switch switch-success switch-round">
+                                    <input type="checkbox" ng-model="item.JOB_ATIVADO" ng-checked="item.JOB_ATIVADO == true" 
+                                           ng-change="ligarDesligarJob(item.JOB_ID)">
+                                    <span class="switch-label" data-on="Lig" data-off="Des"></span>
+                                </label>
+                            </td>
+                            <td class="center"><span app-show-date="item.JOB_DATA_ULTIMA_EXECUCAO" show-time></span></td>
+                            <td>
+                                <span ng-show="item.JOB_ATIVADO">
+                                    <span ng-if="item.JOB_EXECUTANDO"><img src="@Url.Content("~/Content/themes/base/images/Double Ring-1s-35px.gif")"/></span>
+                                    <span class="label label-warning" ng-if="!item.JOB_EXECUTANDO">Não</span>
+                                </span>
+                                <span ng-show="!item.JOB_ATIVADO">
+                                    <span class="label label-default">Não</span>
+                                </span>
+                            </td>
+                            <td>
+                                <div ng-show="item.JOB_EXECUTANDO && item.ItensRestantes > 0">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+                                             aria-valuenow="{{item.JOB_BATCH_PROGRESS}}" aria-valuemin="0" aria-valuemax="100" style="width: {{item.JOB_BATCH_PROGRESS}}%" title="{{item.JOB_BATCH_PROGRESS}}% Completos">
+                                            <span class="sr-only">{{item.JOB_BATCH_PROGRESS}}% Completo</span>
+                                        </div>
+                                    </div>
+                                    <div>{{item.JOB_BATCH_NOME}}</div>
+                                    <div> <strong><em>{{item.JOB_BATCH_PROCESSED_ITENS}}</em></strong> de <strong><em>{{item.JOB_BATCH_TOTAL_ITENS}}</em></strong></div>
+                                </div> 
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" ng-click="executarManualmenteJob(item.JOB_ID)" ng-show="item.JOB_ID != 7 && item.JOB_ATIVADO == true"
+                                   title="Executar Agora" class="text-primary font-21">
+                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="12" ng-show="!lstJobs || lstJobs.length == 0">Nenhum registro foi encontrado.</td>
+                        </tr>
+                    </table>
+                </div>
+                <app-pagination request-page="paginaReq" load-function="pesquisarJobAgendamento(paginaReq)"></app-pagination>
+            </div>
+        </div>
+ 
+        </div>
+           
+</div>  
+</div>

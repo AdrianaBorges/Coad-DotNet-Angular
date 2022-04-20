@@ -1,0 +1,109 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.RepresentanteDTO
+@using Coad.GenericCrud.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading bold head-panel">
+        <span class="glyphicon glyphicon-filter"></span> Filtros
+        <div class="pull-right">
+            <div class="btn-group">
+                <button type="button" class="btn btn-warning btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    Opções
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu">
+                    <li>
+                        <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <div class="row">
+            <div class="form-group col-lg-2">
+                <label for="usu_login">Representante</label>
+                <input type="text" id="usu_login" ng-model="filtro.nome" class="form-control" />
+            </div>
+            <div class="col-md-2">
+                <label>Uen Logada</label>
+                <label class="switch switch-success switch-round">
+                    <input type="checkbox" ng-model="filtro.uenLogada" id="antecipada" ng-checked="filtro.uenLogada == true" class="ng-pristine ng-valid"><span class="switch-label" data-on="Sim" data-off="Não"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <button type="button" class="btn btn-primary" ng-click="buscarTodosOsRepresentanteDoCliente()">Pesquisar</button>
+    </div>
+</div>
+
+<div app-message></div>
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+
+    <div class="panel-heading bold"><span class="glyphicon glyphicon-user"></span> Representantes</div>
+
+    <div class="panel-body">
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Representante
+                        </th>
+                        <th>Carteira</th>
+                        <th>Região</th>
+                        <th>Nível de Representante</th>
+
+                        @if (SessionContext.IsAdmDepartamento("TI") || SessionContext.IsAdmDepartamento("Franquiador"))
+                        {
+                            <th>UEN</th>
+                        }
+                        <th>Varias carteiras</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in representantes">
+                    <td>{{item.Representante.REP_ID}}</td>
+                    <td>
+                        {{item.Representante.REP_NOME}}
+                    </td>
+                    <td>{{item.CarId}}</td>
+                    <td>
+                        {{item.Regiao}}
+                    </td>
+                    <td>
+                        <span class="label label-info">{{item.Representante.NIVEL_Representante.NRP_DESCRICAO}}</span>
+                    </td>
+                    @if (SessionContext.IsAdmDepartamento("TI") || SessionContext.IsAdmDepartamento("Franquiador"))
+                    {
+                        <td>{{item.Uen}}</td>
+                    }
+                    <td>
+                        <span class="label label-success" ng-if="item.REP_VARIAS_CARTEIRAS">SIM</span>
+                        <span class="label label-warning" ng-if="!item.REP_VARIAS_CARTEIRAS">NÃO</span>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" ng-click="adicionarRepresentante(item)"
+                           title="Editar" class="blue">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="7" ng-show="representantes.length == 0 && listado">Nenhum registro foi encontrado.</td>
+                    <td colspan="7" ng-show="!representantes">Clique em pesquisar para listar.</td>
+                </tr>
+            </table>
+        </div>
+        <div app-pagination="page" request-page="paginaReq" load-function="buscarTodosOsRepresentanteDoCliente(paginaReq)"></div>
+    </div>
+
+</div>  

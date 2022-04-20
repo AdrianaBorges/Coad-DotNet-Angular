@@ -1,0 +1,222 @@
+﻿@model  COAD.COADGED.Model.DTO.PublicacaoAreaConsultoriaDTO
+
+<ul class="nav nav-pills">
+    <li class="active"><a data-toggle="pill" href="#portalMateria" ng-click="buscarTexto('Integra', pub.PUBLICACAO.PUB_CONTEUDO, 'PUB_CONTEUDO')">Matéria</a></li>
+    <li><a data-toggle="pill" href="#portalManchete" ng-click="buscarTexto('ManchetePt', pub.PUB_MANCHETE_PORTAL, 'PUB_MANCHETE_PORTAL')">Manchete</a></li>
+    <li><a data-toggle="pill" href="#portalEmenta" ng-click="buscarTexto('EmentaPt', pub.PUB_EMENTA_PORTAL, 'PUB_EMENTA_PORTAL')">Ementa</a></li>
+    <li><a data-toggle="pill" href="#portalLocal" ng-click="_localizacaoCarregar()">Localização</a></li>
+    <li><a data-toggle="pill" href="#portalPalavras">Palavras Chave</a></li>
+    <li><a data-toggle="pill" href="#portalPublicar" ng-click="carregarTexto('Publicar', pub.PUBLICAR_PORTAL, 'PUBLICAR_PORTAL', true, true)">Publicar</a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="portalMateria" class="tab-pane fade in active">
+        <div class="panel panel-default">
+            <div class="panel-body">                
+                <div class="row">                    
+                    <div class="form-group col-lg-12">
+                        @*@Html.Hidden("pt", new { @class = "form-control", ng_model = "pub.PUBLICACAO.PUB_CONTEUDO", app_rich_editor = "Integra" })
+
+                        <div>
+                            @Html.Raw(@ViewBag.PUB_CONTEUDO)
+                        </div>*@
+                        <div class="row">
+                            <div class="form-group col-sm-12">
+                                <div app-editor="pub.PUBLICACAO.PUB_CONTEUDO" data-fullscreen="true" app-editor-model="editor.pug" editor-model="editor" id="publicacao_conteudo" data-force-model="true" class="limit-div-4" data-disabled="(operacao.substring(0,1)=='V')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12" data-ng-disabled="pub.PUBLICACAO.PUB_CONTEUDO">
+                        <span class="float-left"><button id="btParagrafo" type="button" ng-click="converterEmParagrafoUnico('Integra')" class="btn btn-primary">Parágrafo Único</button></span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUBLICACAO.PUB_CONTEUDO">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=PDF&campo=PUB_CONTEUDO&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">PDF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUBLICACAO.PUB_CONTEUDO">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=RTF&campo=PUB_CONTEUDO&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">RTF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUBLICACAO.PUB_CONTEUDO">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=HTML&campo=PUB_CONTEUDO&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">HTML</span></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="portalManchete" class="tab-pane fade">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        <div class="form-group col-sm-12">
+                            <div app-editor="pub.PUB_MANCHETE_PORTAL" data-fullscreen="true" app-editor-model="portal.manchete" editor-model="editor" id="publicacao_manchete" data-force-model="true" class="limit-div-4" data-disabled="(operacao.substring(0,1)=='V')">
+                            </div>
+                        </div>
+                        @*@Html.Hidden("ptManchete", new { @class = "form-control", ng_model = "pub.PUB_MANCHETE_PORTAL", app_rich_editor = "ManchetePt" })
+                        <div>
+                            @Html.Raw(@ViewBag.PUB_MANCHETE_PORTAL)
+                        </div>*@
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUB_MANCHETE_PORTAL">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=PDF&campo=PUB_MANCHETE_PORTAL&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">PDF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUB_MANCHETE_PORTAL">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=RTF&campo=PUB_MANCHETE_PORTAL&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">RTF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUB_MANCHETE_PORTAL">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=HTML&campo=PUB_MANCHETE_PORTAL&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">HTML</span></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="portalLocal" class="tab-pane fade">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        @* portal *@
+                        @Html.LabelFor(model => model.PUBLICACAO.LBL_ID)
+                        <select id="label" class="form-control" ng-model = "pub.PUBLICACAO.LBL_ID" ng-disabled="(operacao.substring(0,1)=='V')">
+                            <option value="">Selecione</option>
+                            <option data-ng-repeat="item in lst._label" ng-value="{{item.Value}}" ng-selected="pub.PUBLICACAO.LBL_ID==item.Value">{{item.Text}}</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.PUBLICACAO.LBL_ID, null, new { app_validation_msg = "erros", @for = "PUBLICACAO.LBL_ID" }) 
+                    </div>
+                    <div class="form-group col-lg-6">
+                        @* news *@
+                        @Html.LabelFor(model => model.PUBLICACAO.SEC_ID)
+                        <select id="secao" class="form-control" ng-model = "pub.PUBLICACAO.SEC_ID" ng-disabled="(operacao.substring(0,1)=='V')">
+                            <option value="">Selecione</option>
+                            <option data-ng-repeat="item in lst._secao" ng-value="{{item.Value}}" ng-selected="pub.PUBLICACAO.SEC_ID==item.Value">{{item.Text}}</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.PUBLICACAO.SEC_ID, null, new { app_validation_msg = "erros", @for = "PUBLICACAO.SEC_ID" }) 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        @* news *@
+                        @Html.LabelFor(model => model.PUBLICACAO.PUB_DESCRICAO_NEWS)
+                        @Html.TextBoxFor(model => model.PUBLICACAO.PUB_DESCRICAO_NEWS, new { @class = "form-control", ng_model = "pub.PUBLICACAO.PUB_DESCRICAO_NEWS", ng_disabled="(operacao.substring(0,1)=='V')" })
+                        @Html.ValidationMessageFor(model => model.PUBLICACAO.PUB_DESCRICAO_NEWS, null, new { app_validation_msg = "erros", @for = "PUBLICACAO.PUB_DESCRICAO_NEWS" }) 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="portalPalavras" class="tab-pane fade">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row" ng-repeat="palavraChave in pub.TMP_PALAVRA_CHAVE" ng-show="pub.TMP_PALAVRA_CHAVE">
+                    <div class="form-group col-lg-11">
+                        @Html.Label("{{$index+1}}ª Palavra chave")
+                        @Html.TextBoxFor(model => model.PUBLICACAO_PALAVRA_CHAVE, new { @class = "form-control", ng_model = "pub.TMP_PALAVRA_CHAVE[$index].PPC_TEXTO", ng_disabled="(operacao.substring(0,1)=='V')" })
+                        @Html.ValidationMessageFor(model => model.PUBLICACAO_PALAVRA_CHAVE, null, new { app_validation_msg = "erros", @for = "PPC_TEXTO" }) 
+                    </div>
+                    <div class="form-group col-lg-1" ng-if="palavraChave.PPC_TEXTO && (operacao.substring(0,1)!='V')">
+                        @Html.Label("ação")<br>
+                        <span>
+                            <a href="javascript:void(0)" ng-click="adicionarPalavraChave()" title="Incluir" 
+                                ng-if="palavraChave.PPC_TEXTO && pub.TMP_PALAVRA_CHAVE.length == ($index+1)">
+                                <span class="glyphicon glyphicon-plus blue"></span>
+                            </a>
+                            <a href="javascript:void(0)" ng-click="removerPalavraChave(palavraChave, $index)" title="Excluir"
+                                ng-if="palavraChave.PPC_TEXTO">
+                                <span class="glyphicon glyphicon-trash red"></span>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="portalEmenta" class="tab-pane fade">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        <div app-editor="pub.PUB_EMENTA_PORTAL" data-fullscreen="true" app-editor-model="portal.ementaPortal" editor-model="editor" id="publicacao_ementa_portal" data-force-model="true" class="limit-div-4" data-disabled="(operacao.substring(0,1)=='V')">
+                        </div>
+                        @*@Html.Hidden("ptEmenta", new { @class = "form-control", ng_model = "pub.PUB_EMENTA_PORTAL", app_rich_editor = "EmentaPt" })
+                        <div>
+                            @Html.Raw(@ViewBag.PUB_EMENTA_PORTAL)
+                        </div>*@
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUB_EMENTA_PORTAL">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=PDF&campo=PUB_EMENTA_PORTAL&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">PDF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUB_EMENTA_PORTAL">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=RTF&campo=PUB_EMENTA_PORTAL&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">RTF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUB_EMENTA_PORTAL">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=HTML&campo=PUB_EMENTA_PORTAL&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">HTML</span></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="portalPublicar" class="tab-pane fade">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        @*<div app-editor="pub.PUBLICAR_PORTAL" app-editor-model="portal.publicar" editor-model="editor" id="publicacao_publicar" data-force-model="true" class="limit-div-4">
+                        </div>*@
+                        @*@Html.Hidden("ptPublicar", new { @class = "form-control", ng_model = "pub.PUBLICAR_PORTAL", app_rich_editor = "Publicar" })
+                        <div>
+                            @Html.Raw(@ViewBag.Publicar)
+                        </div>*@
+                        <div app-html="pub.PUBLICAR_PORTAL"></div>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="(operacao.substring(0,1)=='V')">
+                        @Html.Label("Publicado no portal em:") {{pub.publicadoWeb}}
+                        <br><span class="float-left"><button id="btWeb" type="button" ng-click="publicarWEB()" class="btn btn-primary" ng-disabled="(operacao.substring(0,1)=='V') || pub.PUBLICAR_PORTAL.length==0 || pub.PUB_CONTEUDO.length==0 || pub.PUB_MANCHETE.length==0">Portal: íntegra e manchete</button></span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="(operacao.substring(0,1)=='V')">
+                        @Html.Label("Publicado na NEWS em:") {{pub.publicadoNews}}
+                        <br><span class="float-left"><button id="btNews" type="button" ng-click="publicarNEWS()" class="btn btn-primary" ng-disabled="(operacao.substring(0,1)=='V') || pub.PUBLICAR_PORTAL.length==0 || pub.PUB_CONTEUDO.length==0 || pub.PUB_MANCHETE.length==0 || pub.PUBLICACAO.PUB_DESCRICAO_NEWS.length==0">Publicar na NEWS</button></span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="(operacao.substring(0,1)=='V')">
+                        @Html.Label("Ementa publicada em:") {{pub.publicadoEmenta}}
+                        <br><span class="float-left"><button id="btEmenta" type="button" ng-click="publicarEmenta()" class="btn btn-primary" ng-disabled="(operacao.substring(0,1)=='V') || pub.PUBLICAR_PORTAL.length==0 || pub.PUB_CONTEUDO.length==0 || pub.PUB_MANCHETE.length==0 || pub.PUB_EMENTA.length==0">Publicar Ementa</button></span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUBLICAR_PORTAL">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=PDF&campo=PUBLICAR_PORTAL&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">PDF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUBLICAR_PORTAL">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=RTF&campo=PUBLICAR_PORTAL&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">RTF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUBLICAR_PORTAL">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=HTML&campo=PUBLICAR_PORTAL&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">HTML</span></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

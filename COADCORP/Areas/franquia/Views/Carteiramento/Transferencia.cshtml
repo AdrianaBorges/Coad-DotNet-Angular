@@ -1,0 +1,432 @@
+﻿@using COAD.SEGURANCA.Repositorios.Base
+@model  COAD.CORPORATIVO.Model.Dto.ProdutosDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li class="active">Transferir carteira</li>         
+        
+    </ol>
+}
+
+<style type="text/css">
+
+    .body {
+        background-color: #e8e8e8 !important;
+
+    }
+</style>
+
+
+@Scripts.Render("~/Scripts/negocio/carteiramento.js")
+<div ng-app="appModule">
+    <div ng-controller="CarteiramentoController" class="padding content" ng-cloak data-ng-init="initTransferencia('@ViewBag.RG_ID', '@ViewBag.franquiador');">
+    
+      <div class="panel panel-corp margin-auto">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-transfer" id="breadcrumbs-globe"></span> Transferência de Suspect 
+           
+      </div>
+          
+     <div class="panel-body"> 
+            <ul class="nav nav-tabs">
+                          <li role="presentation" ng-class="{active : transferenciaDTO.tipo == 'representante'}">
+                              <a href="javascript:void(0)" ng-click="selectAbaRepresentante()">
+                                  <span class="glyphicon glyphicon-user"></span>
+                                  <span class="glyphicon glyphicon-transfer"></span>
+                                  <span class="glyphicon glyphicon-user"></span>
+                                  Representante
+                              </a>
+
+                          </li>
+                          <li role="presentation" ng-class="{active : transferenciaDTO.tipo == 'rodizioLogado'}">
+                              <a href="javascript:void(0)" ng-click="selectAbaRodizioLogado()">
+                                  <span class="glyphicon glyphicon-user"></span>
+                                  <span class="glyphicon glyphicon-transfer"></span>
+                                  <span class="glyphicon glyphicon-log-in"></span>
+                                  Rodizio Ope. Logadas
+                              </a>
+
+                          </li>
+                          <li role="presentation" ng-class="{active : transferenciaDTO.tipo == 'rodizioGeral'}">
+                              <a href="javascript:void(0)" ng-click="selectAbaRodizioGeral()">
+                                  <span class="glyphicon glyphicon-user"></span>
+                                  <span class="glyphicon glyphicon-transfer"></span>
+                                  <span class="glyphicon glyphicon-globe"></span>
+                                  Rodizo Geral da Região
+                              </a>
+            </ul>
+ 
+        <div app-message></div>
+         <br />
+        <div class="row collapse in" id="infos">
+            <div class="col-sm-4">                
+                <div class="panel panel-default" style="min-height: 340px;">
+                          <!-- Default panel contents -->
+      
+                          <div class="panel-heading bold"><span class="glyphicon glyphicon-user"></span> Representantes</div>          
+                          <div class="panel-body">
+
+                              @if (SessionContext.IsGerenteDepartamento("FRANQUIADOR", true) || SessionContext.IsGerenteDepartamento("TI", true))
+                              {
+                                <div class="row">                       
+                                    <div class="form-group col-lg-12">
+                                         <label for="selectRegiao">Região</label> 
+                                         <select ng-options="reg.RG_ID as reg.RG_DESCRICAO for reg in regioes" 
+                                                    ng-model="filtro.RG_ID_REPRESENTANTE" class="form-control"
+                                             ng-change="regiaoRepresentanteSelecionado()">
+                                                    <option value="">Selecione</option>
+                                         </select>
+                                    </div>
+                                </div>                       
+                              }
+                                        <div class="table-responsive">     
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>     
+                                                            <th>
+                                                                Representante
+                                                            </th>
+                                                            <th>Multiplas Carteiras</th>
+                                                            <th>#</th>                            
+                                                        </tr>
+                                                    </thead>    
+                                                    <tr ng-repeat="item in representantes" ng-class="{info: item.REP_ID == representante.REP_ID}">                                    
+                                                        <td>
+                                                             {{item.REP_NOME}}   
+                                                        </td>
+                                                        <td>
+                                                            <span class="label label-success" ng-if="item.REP_VARIAS_CARTEIRAS">SIM</span>
+                                                            <span class="label label-warning" ng-if="!item.REP_VARIAS_CARTEIRAS">NÃO</span>
+                                                        </td>
+                                                        <td>
+                                                            <a href="javascript:void(0)" ng-click="selecionarRepresentante(item)" title="Editar" class="blue">
+                                                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="5" ng-hide="representantes" class="text">
+                                                            Não foi encontrado nenhum registro.
+                                                        </td>
+                                                    </tr>
+                                                </table> 
+                                        </div>          
+                                  
+                              
+                                    <div app-pagination="page" request-page="paginaReq" load-function="listarRepresentantes(paginaReq)"></div>
+                                </div>
+                            </div>  
+             </div>
+             <div class="col-sm-4">
+                    <div class="panel panel-default" style="min-height: 340px;">
+                              <!-- Default panel contents -->
+      
+                              <div class="panel-heading bold"><span class="glyphicon glyphicon-record"></span> 
+                                  Carteiras 
+                              </div>
+                                   
+                                  <div class="panel-body">  
+                                        <div class="table-responsive">     
+                                            <table class="table table-hover">
+                                                <thead ng-show="carteiramentos">
+                                                    <tr>      
+                                                        <th>                                           
+                                                            Código
+                                                        </th>                                                        
+                                                        <th>
+                                                            Região
+                                                        </th>
+                                                        <th>Multiplos Representantes</th>                                                        
+                                                        <th>
+                                                            Ações
+                                                        </th>                                       
+                                                    </tr>
+                                                </thead>    
+                                              <tr ng-repeat="item in carteiramentos">
+                                                    <td>
+                                                        <span class="label label-info">{{item.CAR_ID}}</span>
+                                                    </td> 
+                                                    <td>
+                                                        {{item.REGIAO.RG_DESCRICAO}}
+                                                    </td>
+                                                  <td>
+                                                        <span class="label label-success" ng-if="item.CAR_VARIOS_REPRESENTANTES">SIM</span>
+                                                        <span class="label label-warning" ng-if="!item.CAR_VARIOS_REPRESENTANTES">NÃO</span>
+                                                    </td>
+                                                    <td>                                                      
+                                                        <a href="javascript:void(0)" ng-click="selecionarCarteiraTransferencia(item)" 
+                                                            title="Selecionar" class="text-success">
+                                                                <span class="glyphicon glyphicon-check"></span>
+                                                       </a>
+                                                    </td>                                  
+                                    
+                                              </tr>
+                                                <tr>
+                                                    <td colspan="5" ng-hide="carteiramentos" class="text">
+                                                        Não foi encontrado nenhum registro.
+                                                    </td>
+                                                </tr>
+                                            </table> 
+                                    </div>
+                                  </div>
+                        
+         
+                    </div>  
+             </div>
+            <div class="col-sm-3">
+                
+                <div class="panel panel-default" style="min-height: 340px;" ng-show="transferenciaDTO.tipo == 'representante'">
+                              <!-- Default panel contents -->
+      
+                              <div class="panel-heading bold"><span class="glyphicon glyphicon-transfer"></span> Transferência de Clientes </div>
+                
+                                  <div class="panel-body"> 
+                                      <form>
+                                          <div class="form-group row" ng-show="qtdClientes || qtdClientes == 0">
+                                                <div class="col-sm-8">
+                                                    <label for="car_ori">Qtd. clientes da carteira de origem</label>
+                                                </div>
+                                                <div class="col-sm-2">                                                    
+                                                    <div style="font-size: 15px; padding: 3px;" class="badge">{{qtdClientes}}</div>                                             
+                                                </div>                                   
+                                          </div>
+                                          <div class="form-group row">
+                                               <div class="col-sm-10" ng-show="transferenciaDTO.CAR_ID_ORIGEM">
+                                                   <label for="car_ori">Cód Carteira de Origem</label>
+                                                   <div class="text">
+                                                      
+                                                       <span class="label label-success"> {{transferenciaDTO.CAR_ID_ORIGEM}}
+                                                      </span>
+                                                   </div>                                                   
+                                               </div>          
+                                              <div class="col-sm-2 form-padding-top" ng-show="transferenciaDTO.CAR_ID_ORIGEM">
+                                                  <a href="javascript:void(0)" ng-click="deselecionarCarteiraTransferenciaOrigem()" 
+                                                            title="Retirar" class="text-danger">
+                                                                <span class="glyphicon glyphicon-remove"></span>
+                                                       </a>
+                                              </div>                                    
+                                          </div>
+                                          <div class="form-group row">
+                                              <div class="col-sm-10" ng-show="transferenciaDTO.CAR_ID_DESTINO">
+                                                  <label for="car_ori">Cód Carteira de Destino</label>
+                                                   <div class="text">
+                                                      <span class="label label-success">
+                                                           {{transferenciaDTO.CAR_ID_DESTINO}}
+                                                      </span>
+                                                   </div> 
+                                              </div>
+                                              <div class="col-sm-2 form-padding-top" ng-show="transferenciaDTO.CAR_ID_DESTINO">
+                                                  <a href="javascript:void(0)" ng-click="deselecionarCarteiraTransferenciaDestino()" 
+                                                            title="Retirar" class="text-danger">
+                                                                <span class="glyphicon glyphicon-remove"></span>
+                                                       </a>
+                                              </div>
+                                              
+                                          </div>
+                                          <div class="form-group row">
+                                              <div class="col-sm-6">
+                                                  
+                                            <button type="button" class="btn btn-default" 
+                                                ng-click="showResume()" 
+                                                ng-show="transferenciaDTO.CAR_ID_ORIGEM && transferenciaDTO.CAR_ID_DESTINO">
+                                                Continuar
+                                            </button>
+                                                
+                                              </div>
+                                          </div>
+
+                                      </form>
+                                  </div>
+             </div>
+
+                   <div class="panel panel-default" style="min-height: 340px;" ng-show="transferenciaDTO.tipo == 'rodizioLogado'">
+                              <!-- Default panel contents -->
+      
+                              <div class="panel-heading bold"><span class="glyphicon glyphicon-user"></span> Representantes Logados</div>
+                
+                                  <div class="panel-body"> 
+                                       @if (SessionContext.IsGerenteDepartamento("FRANQUIADOR", true) || SessionContext.IsGerenteDepartamento("TI", true))
+                                       {
+                                            <div class="row">                       
+                                                <div class="form-group col-lg-12">
+                                                     <label for="selectRegiao">Região</label> 
+                                                     <select ng-options="reg.RG_ID as reg.RG_DESCRICAO for reg in regioes" 
+                                                                ng-model="transferenciaDTO.RG_ID" class="form-control" ng-change="listarRepresentantesLogados();">
+                                                         <!-- Traz os representantes logandos quando houver regiao selecionada-->
+                                                                <option value="">Selecione</option>
+                                                     </select>
+                                                </div>
+                                            </div>                       
+                                          }
+                                       <form>
+                                            <div class="form-group row" ng-show="qtdClientes">
+                                                <div class="col-sm-8">
+                                                    <label for="car_ori">Qtd. clientes da carteira de origem</label>
+                                                </div>
+                                                <div class="col-sm-2">                                                    
+                                                    <div style="font-size: 15px; padding: 3px;" class="badge">{{qtdClientes}}</div>                                             
+                                                </div>                                   
+                                          </div>
+                                          <div class="form-group row">
+                                               <div class="col-sm-10" ng-show="transferenciaDTO.CAR_ID_ORIGEM">
+                                                   <label for="car_ori">Cód Carteira da</label>
+                                                   <div class="text">
+                                                      <span class="label label-success"> {{transferenciaDTO.CAR_ID_ORIGEM}}
+                                                      </span>
+                                                   </div>                                                   
+                                               </div>          
+                                          </div>
+                                      <div class="table-responsive">     
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <tr>     
+                                                            <th>
+                                                                Representantes
+                                                            </th>              
+                                                        </tr>
+                                                    </thead>    
+                                                    <tr ng-repeat="item in representantesLogados">                                    
+                                                        <td>
+                                                             {{item.REP_NOME}}   
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="5" ng-hide="representantesLogados" class="text">
+                                                            Não existe representantes logados nessa região
+                                                        </td>
+                                                    </tr>
+                                                </table>                                         
+                                        </div>  
+                                  <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <button type="button" class="btn btn-default" ng-click="showResume()" 
+                                                ng-show="transferenciaDTO.CAR_ID_ORIGEM && transferenciaDTO.tipo == 'rodizioLogado'">
+                                                Continuar
+                                            </button>
+                                        </div>
+                                    </div>
+                                  </form>
+                             </div>
+                                    
+                 </div>
+                <div class="panel panel-default" style="min-height: 340px;" ng-show="transferenciaDTO.tipo == 'rodizioGeral'">
+                              <!-- Default panel contents -->
+      
+                              <div class="panel-heading bold"><span class="glyphicon glyphicon-user"></span> Representantes</div>
+                
+                                  <div class="panel-body"> 
+                                       @if (SessionContext.IsGerenteDepartamento("FRANQUIADOR", true) || SessionContext.IsGerenteDepartamento("TI", true))
+                                       {
+                                            <div class="row">                       
+                                                <div class="form-group col-lg-12">
+                                                     <label for="selectRegiao">Região</label> 
+                                                     <select ng-options="reg.RG_ID as reg.RG_DESCRICAO for reg in regioes" 
+                                                                ng-model="transferenciaDTO.RG_ID" class="form-control">
+                                                                <option value="">Selecione</option>
+                                                     </select>
+                                                </div>
+                                            </div>                       
+                                          }
+                                      <form>
+                                          <div class="form-group row" ng-show="qtdClientes">
+                                                <div class="col-sm-8">
+                                                    <label for="car_ori">Qtd. clientes da carteira de origem</label>
+                                                </div>
+                                                <div class="col-sm-2">                                                    
+                                                    <div style="font-size: 15px; padding: 3px;" class="badge">{{qtdClientes}}</div>                                             
+                                                </div>                                   
+                                          </div>
+                                          <div class="form-group row">
+                                               <div class="col-sm-10" ng-show="transferenciaDTO.CAR_ID_ORIGEM">
+                                                   <label for="car_ori">Cód Carteira da</label>
+                                                   <div class="text">
+                                                      <span class="label label-success"> {{transferenciaDTO.CAR_ID_ORIGEM}}
+                                                      </span>
+                                                   </div>                                                   
+                                               </div>
+                                          
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <button type="button" class="btn btn-default" ng-click="showResume()" 
+                                                        ng-show="transferenciaDTO.CAR_ID_ORIGEM && transferenciaDTO.tipo == 'rodizioGeral'">
+                                                        Continuar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                      </form>                                 
+                                    
+                 </div>
+             </div>
+             </div>
+         </div>
+        </div>
+         <div app-modal="modal-resumo" header="Revise os detalhes">
+            
+            <form role="form">         
+                <div>                   
+                    <div> <span class="glyphicon glyphicon-warning-sign float-left" id="warning-span"></span>
+                         <div id="msg-resumo" class="alert alert-warning float-left">
+                             Atenção! Revise os detalhes da operação. Depois marque que foi revisado para continuar.</div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div id="div-resumo-transferencia-suspect">
+                    <div class="form-group"> 
+                        <label for="campoTipo">Tipo Operação: </label>
+                        <div class="padding resumo-info"><span class="glyphicon glyphicon-arrow-right"></span> {{resumeModel.DestTipo}}</div>                                
+                    </div>
+                    <div class="form-group"> 
+                        <label for="campoRepresentanteOrigem">Código da Carteira de Origem: </label>  
+                        <div class="padding resumo-info"><span class="glyphicon glyphicon-arrow-right"></span>{{resumeModel.carteiraOrigem}}</div>
+                    </div>
+                    <div class="form-group" ng-if="resumeModel.tipo == 'representante'"> 
+                        <label for="campoRepresentanteDestino">Código da Carteira de Destino: </label>
+                        <div class="padding resumo-info"><span class="glyphicon glyphicon-arrow-right"></span>{{resumeModel.carteiraDestino}}</div>  
+                    </div>
+                    <div class="form-group" ng-if="resumeModel.tipo && resumeModel.tipo != 'representante'"> 
+                        <label for="campoRepresentanteDestino">Distribuir para representantes da Região: </label>
+                        <div class="padding resumo-info"><span class="glyphicon glyphicon-arrow-right"></span>{{resumeModel.RegiaoDestino.RG_DESCRICAO}}</div>  
+                    </div>
+                </div>
+                <div class="form-group">
+                    Foi revisado <input type="checkbox" id="chkTransferir" ng-model="$parent.checado" ng-click="transState = 'reset'" />                    
+                </div>
+                <button ng-show="$parent.checado === true" id="button-transferir" app-switch-button="transferirCarteira()" switch-conf="[{label : 'Transferir', state : 'transferir'}, {label : 'Transferindo...', state : 'transferindo', disabled : true}]" switch-var="$parent.buttonTransfer" class="btn btn-primary"></button>
+                <button class="btn btn-default close" data-dismiss="modal" aria-label="Close" ng-click="$parent.checado = false">Cancelar</button>
+            </form>                
+         </div>   
+
+            <div app-modal="resultado" header="Resumo">
+
+                <div class="table-responsive limit-modal-height">
+                     <table class="table table-bordered table-striped">                                    
+                        <thead>
+                            <tr>
+                                <th>Representante</th>
+                                <th>Suspects Recebidos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="obj in resumo">
+                                <td>{{obj.NOME}}</td>
+                                <td>{{obj.QtdClientesTransferidos}}</td>
+                            </tr>
+                        </tbody>                                    
+                    </table>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#resultado">
+                         Fechar
+                    </button>
+                </div>
+            </div>
+    </div>
+</div>
+</div>

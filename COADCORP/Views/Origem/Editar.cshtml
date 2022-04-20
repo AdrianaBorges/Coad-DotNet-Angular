@@ -1,0 +1,207 @@
+﻿@Scripts.Render("~/Scripts/appScripts/origem.js")
+
+@using Coad.GenericCrud.Extensions
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active"><i class="fa fa-desktop"></i>&nbspOrigem</li>
+    </ol>
+}
+
+<div ng-app="appModule">
+    <div ng-controller="OrigemController" ng-init="init(@ViewBag.origem)" class="padding content">
+        <div id="page-wrapper">
+            <div class="panel panel-default">
+                <div app-message></div>
+                <div class="panel-heading">
+                    <span class="fa fa-table fa-fw"></span>&nbspOrigem
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Opções<span class="caret"></span></button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="/Origem/Editar?id=">Novo</a>
+                                </li>
+                                <li><a href="/Origem/Index">Fechar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("ID")
+                                <input id="ID" type="text" ng-model="ORIGEM_ACESSO.OAC_ID" class="form-control " placeholder="" autofocus autocomplete="off" disabled="disabled">
+                                <div app-validation-msg="erros" for="ORIGEM_ACESSO.OAC_ID"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                @Html.Label("Informe a Descrição")
+                                <input id="Descrição" type="text" ng-model="ORIGEM_ACESSO.OAC_DESCRICAO" class="form-control " placeholder="Descrição" autofocus autocomplete="off">
+                                <div app-validation-msg="erros" for="_origem.ORIGEM_ACESSO"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="fa fa-table fa-fw"></span>&nbspFuncionalidades
+                    <div class="pull-right">
+                        <div class="btn-group">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <h4 class="page-header weight-300 margin-top-60">Funcionalidades
+                            </h4>
+                            <div style="max-height: 300px; overflow: auto;">
+                                <div class="panel-group" id="accordion" ng-if="listafuncionalidade" ng-repeat="item in listafuncionalidade">
+                                    <div class="panel panel-default" draggable="true" ondragstart="drag(event)" width="336" height="69">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#{{item.FCI_ID}}">
+                                                    <i class="fa fa-cogs"></i>&nbsp{{item.FCI_DESCRICAO}}
+                                                </a>
+                                                <a href="javascript:void(0);" ng-click="addItem(item)">
+                                                    <i class="fa fa-forward blue" style="float: right;"></i>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="{{item.FCI_ID}}" class="accordion-body collapse">
+                                            <div class="panel-body">
+                                                <ul class="list-unstyled list-icons margin-bottom-10">
+                                                    <li class="margin-top-6">
+                                                        <i class="fa fa-angle-right"></i>
+                                                        <a href="#">{{item.FCI_OBSERVACAO}}</a>
+                                                    </li>
+                                                </ul>
+                                                <p ng-bind-html="trustAsHtml(item.FCI_CONTEUDO)" ng-if="item.FCI_CONTEUDO"></p>
+                                                <br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-group" id="accordion" ng-if="!listafuncionalidade.length>0">
+                                    <a href="#">Nenhuma funcionalidade encontrada
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="form-group">
+                            <h4 class="page-header weight-300 margin-top-60">Funcionalidades selecionadas
+                            </h4>
+                            <div style="max-height: 300px; overflow: auto;" ondrop="drop(event)" ondragover="allowDrop(event)" id="selecionada">
+                                <div class="panel-group" id="accordion" ng-if="listfuncselecionadas.length>0" ng-repeat="item in listfuncselecionadas">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#d{{$index}}">
+                                                    <i class="fa fa-check-square-o"></i>&nbsp{{item.OFU_DESCRICAO}}
+                                                </a>
+                                                <a href="javascript:void(0);" ng-click="removeItem($index)" style="float: right;">
+                                                    <i class="fa fa-times-circle red" style="float: right;"></i>
+                                                </a>
+                                                <a href="javascript:void(0)" ng_click="ordenarDown(item,$index)" title="Ordenar o item selecionado" style="float: right;">
+                                                    <span class="glyphicon glyphicon-arrow-down blue" ng_show="listfuncselecionadas.length>1"></span>
+                                                </a>
+                                                <a href="javascript:void(0)" ng_click="ordenarUp(item,$index)" title="Ordenar o item selecionado" style="float: right;">
+                                                    <span class="glyphicon glyphicon-arrow-up blue" ng_show="listfuncselecionadas.length>1"></span>
+                                                </a>
+
+                                            </h4>
+                                        </div>
+                                        <div id="d{{$index}}" class="accordion-body collapse">
+                                            <div class="panel-body">
+                                                <div class="col-lg-8">
+                                                    <div class="form-group">
+                                                        @Html.Label("Descrição")
+                                                        <input id="OFU_DESCRICAO" type="text" ng-model="item.OFU_DESCRICAO" class="form-control " placeholder="" autofocus autocomplete="off">
+                                                        <div app-validation-msg="erros" for="item.OFU_DESCRICAO"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        @Html.Label("Exibe Descrição")
+                                                        <input type="checkbox" ng-model="item.OFU_DESCRICAO_EXIBE" class="form-control" value="" />
+                                                        <div app-validation-msg="erros" for="item.OFU_DESCRICAO_EXIBE"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        @Html.Label("Local Exibição")
+                                                        <select ng-model="item.OFU_LOCAL_EXIBE" class="form-control">
+                                                            <option value="LES">LATERAL ESQUERDA</option>
+                                                            <option value="LDI">LATERAL DIREIRA</option>
+                                                            <option value="CPA">CENTRO PAGINA</option>
+                                                            <option value="RPA">RODAPE PAGINA</option>
+                                                        </select>
+                                                        <div app-validation-msg="erros" for="item.OFU_LOCAL_EXIBE"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        @Html.Label("Indice")
+                                                        <input id="OFU_ORDEM" type="text" ng-model="item.OFU_ORDEM" class="form-control" placeholder="" autofocus autocomplete="off" disabled="disabled">
+                                                        <div app-validation-msg="erros" for="item.OFU_ORDEM"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        @Html.Label("Ativo")
+                                                        <input type="checkbox" ng-model="item.OFU_ATIVO" class="form-control" value="" />
+                                                        <div app-validation-msg="erros" for="item.OFU_ATIVO"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        @Html.Label("Alteração")
+                                                        @Html.TextBox("OFU_DATA_ALTERA", "", new { @class = "form-control", ng_model = "dtalteracao", app_date = "item.OFU_DATA_ALTERA", disabled = "disabled" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        @Html.Label("Usuário")
+                                                        <input type="text" ng-model="item.USU_LOGIN" class="form-control" value="" disabled="disabled" />
+                                                        <div app-validation-msg="erros" for="item.USU_LOGIN"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-group" id="accordion" ng-if="!listfuncselecionadas.length>0">
+                                    <a href="#">Nenhuma funcionalidade selecionada para esta origem
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <a href="/Origem/Index" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</a>
+                    <button ng-click="SalvarOrigem()" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save blue"></span>&nbspSalvar</button>
+                    <button ng-click="Excluir()" class="btn btn-default" ng-show="tabela.TDC_ID!=null&&tabela.TDC_ID!=''"><span class="glyphicon  glyphicon-remove-sign red"></span>&nbspExcluir</button>
+                </div>
+            </div>
+
+        </div>
+        @Html.Messages()
+
+        @*modal-preview - editor --- Popup modal*@
+        <div app-init-editor="editor"></div>
+
+    </div>
+</div>
+
+
+

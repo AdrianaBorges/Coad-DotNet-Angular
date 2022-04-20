@@ -1,0 +1,128 @@
+﻿
+@if(ViewBag.mostraTudo != null || ViewBag.mostraTudo == true){
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" disabled="disabled">
+                                            Opções
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                            <li>
+                                                <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                            </li>                                                                           
+                                        </ul>
+                                    </div>
+                                </div>
+            </div>
+          
+            <div class="panel-body">            
+                <div class="row">              
+                    <div class="form-group col-lg-3">
+                        <label for="sigla">Data Inicial</label>
+                        <input type="text" ng-model="filtro.dataInicialMask" app-date="filtro.dataInicial" class="form-control"/>
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="sigla">Data Final</label>
+                        <input type="text" ng-model="filtro.dataFinalMask" app-date="filtro.dataFinal" class="form-control"/>
+                    </div>          
+                </div>
+            
+            </div>
+                  
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="listarHistoricosDoCliente()">Pesquisar</button>
+            </div>
+    </div>
+}
+else if (ViewBag.mostraTudo == null || ViewBag.mostraTudo == false)
+{
+      <div class="row padding">              
+            <div class="form-group col-lg-3">
+                <label for="sigla">Data Inicial</label>
+                <input type="text" ng-model="filtro.dataInicialMask" app-date="filtro.dataInicial" class="form-control"/>
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="sigla">Data Final</label>
+                <input type="text" ng-model="filtro.dataFinalMask" app-date="filtro.dataFinal" class="form-control"/>
+            </div>   
+          <div class="form-group col-lg-2" style="padding-top: 24px">
+                        <button type="button" class="btn btn-default" ng-click="$parent.abreAbaHistoricoCliente()"><span class="glyphicon glyphicon-search"></span></button>
+          </div>         
+        </div>             
+}      
+
+      <div class="panel panel-default">
+      <!-- Default panel contents -->
+      
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Historicos</div>
+          
+      <div class="panel-body limit-modal-height-1">   
+                    
+                    <div class="table-responsive">     
+                            <div class="text padding"><strong>Cliente: </strong>{{clienteModal.CLI_NOME}}</div>
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>      
+                                        <th>                                           
+                                            Data
+                                        </th>
+                                        <th>
+                                            Tipo
+                                        </th> 
+                                        <th>                                           
+                                            Descrição
+                                        </th>
+                                        <th>Representante</th>                                        
+                                    </tr>
+                                </thead>    
+                              <tr ng-repeat="item in lstHistoricos" class="animate-repeat">
+                                    <td app-show-date="item.HAT_DATA_HIST" show-time>
+                                        
+                                    </td>                                    
+                                    <td>
+                                        <span ng-switch="item.ACA_ID">
+                                            <span ng-class="{   
+                                                'label label-success' : item.ACA_ID == 7 || item.ACA_ID == 17 || item.ACA_ID == 20,
+                                                'label label-warning' : item.ACA_ID == 8,
+                                                'label label-danger' : item.ACA_ID == 9,
+                                                'label label-default' : item.ACA_ID == 10 ||  item.ACA_ID == 12,
+                                                'label label-primary' :  item.ACA_ID == 6 || item.ACA_ID == 13 || item.ACA_ID == 14 || item.ACA_ID == 15 || item.ACA_ID == 18,
+                                                'label label-danger' : item.ACA_ID == 16,
+                                                'label label-info' : item.ACA_ID == 11 || item.ACA_ID == 19  || item.ACA_ID == 21
+                                                }">
+                                                {{item.ACAO_ATENDIMENTO.ACA_DESCRICAO}}
+                                            </span>
+                                        </span> 
+                                    </td>   
+                                    <td>
+                                        {{item.HAT_DESCRICAO}}
+                                    </td>  
+                                    <td>
+                                        <span ng-if="item.REPRESENTANTE.REP_NOME">
+                                            {{item.REPRESENTANTE.REP_NOME}}
+                                        </span>
+                                        <span ng-if="!item.REPRESENTANTE.REP_NOME && item.AGENDAMENTO.REPRESENTANTE.REP_NOME">
+                                            {{item.AGENDAMENTO.REPRESENTANTE.REP_NOME}}
+                                        </span>
+                                        <span ng-if="!item.REPRESENTANTE.REP_NOME && item.AGENDAMENTO.REPRESENTANTE.REP_NOME && 
+                                            !item.AGENDAMENTO.REPRESENTANTE.REP_NOME">----</span>
+                                    </td>
+                              </tr>
+                                <tr>
+                                    <td colspan="5" ng-hide="lstHistoricos" class="text">
+                                        Não foi encontrado nenhum registro.
+                                    </td>
+                                </tr>
+                            </table> 
+                    </div>
+          @if (ViewBag.mostraTudo == null || ViewBag.mostraTudo == false)
+          {
+              <div app-pagination="paginaHistorico" request-page="paginaReq" load-function="listarHistoricos(paginaReq)"></div>
+          }
+
+          </div>
+         
+        </div>

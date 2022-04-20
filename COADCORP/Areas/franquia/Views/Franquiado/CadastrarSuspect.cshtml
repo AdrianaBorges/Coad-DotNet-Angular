@@ -1,0 +1,106 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+
+@{
+    ViewBag.Title = "Editar";
+}
+@using Coad.GenericCrud.Extensions
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Clientes (Cadastrar)</li>
+    </ol>
+}
+<script src="~/Scripts/negocio/controllers_plugins/telefone.js"></script>
+<script src="~/Scripts/negocio/controllers_plugins/info_marketing.js"></script>
+<script src="~/Scripts/negocio/controllers_plugins/info_cliente.js"></script>
+@Scripts.Render("~/Scripts/negocio/cliente.js")
+
+<div ng-app="appModule">
+    <div class="panel panel-default" ng-controller="ClienteController" data-ng-init="read('@ViewBag.clienteId', true); init('@ViewBag.RG_ID'); inicializarInfos(@ViewBag.clienteId);
+        initClienteTelefone(); initInfoCliente('@ViewBag.abrirModal', '@ViewBag.clienteId');" ng-cloak>
+        <!-- Default panel contents -->
+ 
+            @Html.ValidationSummary(true)          
+                  <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel blue"></span> Cadastrar Cliente
+                    
+                        <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"
+                                            aria-expanded="false" ng-disabled="button == 'saved'">
+                                            Opções
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                             <li>
+                                                <a href="@Url.Action("Index")" title="Voltar" class="blue"> Voltar</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" title="Salvar" ng-click="salvarClienteFranquia()" class="blue">Salvar</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" title="Informações" ng-click="abreModalCliente(cliente.CLI_ID)" class="blue">Informações do cliente</a>
+                                            </li>
+                                            <li ng-show="prospect.ID">
+                                                <a href="javascript:void(0)" app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}" 
+                                                    app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?" class="btnConfirmaExclusao blue" title="Excluir"> Excluir</a>
+                                            </li>                                                                                                                    
+                                        </ul>
+                                    </div>
+                                </div>
+                     
+                     
+            </div>
+
+            <div class="panel-body">  
+                <div app-message></div>
+                 @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) {
+                    @Html.Partial("_ClienteParcial")
+                                 
+                     <div app-model-bind source-model="CLIENTES_TELEFONE" target-model="cliente.CLIENTES_TELEFONE">
+                         @Html.Partial("Partials/_TelefonePartial")
+                     </div>                     
+                   <div app-model-bind source-model="infoMarketing" target-model="cliente.INFO_MARKETING">
+                         @Html.Partial("Partials/_InfoMarketingPartial")
+                   </div>
+                       <div>
+                        <fieldset>
+                                <legend>Região de Interesse</legend>
+                    
+                                <div class="row">                       
+                                    <div class="form-group col-lg-3">
+                                         <label for="selectRegiao">Região</label> 
+                                         <select ng-options="reg.RG_ID as reg.RG_DESCRICAO for reg in lstRegioesParaCadastroSuspect" 
+                                                    ng-model="cliente.RegiaoIdParaRodizio" id="selectRegiao1" class="form-control">
+                                                    <option value="">Selecione</option>
+                                         </select>
+                                    </div>
+                                </div>
+                        </fieldset>
+                     </div>
+                 }
+            </div>
+
+         <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default" ng-disabled="button == 'saved'">
+                <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar</button>
+              <button  
+                  app-switch-button="salvarClienteFranquiaGerente()" 
+                  switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]" 
+                  switch-var="button"
+                  class="btn btn-default">
+                  <span class="glyphicon glyphicon-floppy-save blue"></span>
+              </button>
+
+           <span ng-show="prospect.ID">
+                <button type="button" class="btn btn-danger" 
+                    app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}" app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?">
+                    <span class="glyphicon glyphicon-remove-sign"></span> Excluir</button>
+
+            </span>         
+        </div> 
+           @Html.Partial("Partials/_ModalClientePartial")
+      </div>
+</div>

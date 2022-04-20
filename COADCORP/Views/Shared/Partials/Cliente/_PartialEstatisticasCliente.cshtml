@@ -1,0 +1,93 @@
+﻿
+<fieldset ng-show="assinturaSelect">
+    <legend class="btn btn-info" style="text-align: left;">Historico Consultas</legend>
+    <div class="row padding">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr class="info">
+                    <th>Assinatura</th>
+                    <th>Período</th>
+                    <th style="text-align: center">Consultas (Total)</th>
+                    <th style="text-align: center">Realizadas (URA-RJ)</th>
+                    <th style="text-align: center">Realizadas (URA-MG)</th>
+                    <th style="text-align: center">Realizadas (URA-PR)</th>
+                    <th style="text-align: center">Realizadas (EMAIL)</th>
+                    <th style="text-align: center">Realizadas (TOTAL)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="ConsEmail in listaApuracaoConsulta">
+                    <td style="width: 20%">{{ConsEmail.codigo}}</td>
+                    <td style="width: 40%">{{ConsEmail.periodo}}</td>
+                    <td style="width: 10%; text-align: center">
+                        &nbsp{{ConsEmail.contratadas}}
+                    </td>
+                    <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdurarj>0">
+                        {{ConsEmail.qtdurarj}}
+                    </td>
+                    <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdurarj<=0">{{ConsEmail.qtdurarj}}</td>
+                    <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtduramg>0">{{ConsEmail.qtduramg}}</td>
+                    <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtduramg<=0">
+                        {{ConsEmail.qtduramg}}
+                    </td>
+                    <td style="width: 10%; text-align: center">{{ConsEmail.qtdurapr}}</td>
+                    <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdemail>0">{{ConsEmail.qtdemail}}</td>
+                    <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdemail<=0">
+                        {{ConsEmail.qtdemail}}
+                    </td>
+                    <td style="width: 10%; text-align: center">
+                        <span class="label alert-danger" ng_if="ConsEmail.qtdtotal>(ConsEmail.contratadas*3)" data-toggle="tooltip" data-placement="top" app-popover data-content="O cliente ultrapassou o limite de consultas contratadas.">{{ConsEmail.qtdtotal}}</span>
+                        <span ng-if="ConsEmail.qtdtotal==0">{{ConsEmail.qtdtotal}}</span>
+                        <span data-toggle="tooltip" data-placement="top" app-popover data-content="Total de consultas." ng-if="ConsEmail.qtdtotal>0&&ConsEmail.qtdtotal<=(ConsEmail.contratadas*3)">{{ConsEmail.qtdtotal}}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div ng-if="!listaApuracaoConsulta||listaApuracaoConsulta.length==0">
+        <div class="alert alert-success">
+            <strong>Atenção!</strong> Não existem itens encontrados para essa pesquisa.
+        </div>
+    </div>
+    <legend class="btn btn-info" style="text-align: left;">Tabelas Acessadas</legend>
+    <div class="row padding">
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="pull-Left">
+                    <label for="sigla">Mês</label>
+                    <div class="form-group">
+                        @Html.DropDownList("_mes", new SelectList(@ViewBag.ListaMes, "Value", "Text"), null, new { placeholder = "Selecione o Mês", @class = "form-control", ng_model = "filtro.mes", ng_change = "listarAcessoTabelas()" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="pull-Left">
+                    <label for="sigla">Ano</label>
+                    <input type="text" id="ano" ng_model="filtro.ano" class="form-control" ng-change="listarAcessoTabelas()" />
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr class="info">
+                        <th style="text-align: left;">Tabela</th>
+                        <th style="text-align: right;">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in listaAcessoTabelas | orderBy:'NOME_TABELA'">
+                        <td style="text-align: left;">{{item.NOME_TABELA}}</td>
+                        <td style="text-align: right;">{{item.QTDE}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div ng-if="!listaAcessoTabelas||listaAcessoTabelas.length==0">
+            <div class="alert alert-success">
+                <strong>Atenção!</strong> Não existem itens encontrados para essa pesquisa.
+            </div>
+        </div>
+    </div>
+</fieldset>

@@ -1,0 +1,55 @@
+﻿@using COAD.SEGURANCA.Extensions
+
+@{
+    ViewBag.Title = "ImportarXML";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+
+@using (Html.BeginForm("ImportarXML", "NotaFiscal", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    if (TempData["Resultado"] != null)
+    {
+        string t = TempData["Resultado"].ToString();
+        @Html.Alert(t);
+        TempData.Remove("Resultado");
+    }
+
+   
+    <div class="form panel panel-primary">
+        <div class="panel-heading">
+            <i class="fa fa-list-alt fa-fw"></i> @Html.Label("Nota Fiscal (Importar)")
+            <div class="pull-right">
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="form-group">
+                            @Html.Label("Empresa")
+                            @Html.DropDownList("_emp_id", new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "emp_id" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <input name="uploadFile" type="file" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Processar" id="btnSubmit" class="btn btn-default" />
+        </div>
+    </div>
+
+}

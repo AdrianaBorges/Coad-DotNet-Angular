@@ -1,0 +1,114 @@
+﻿@using COAD.SEGURANCA.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+@using COAD.CORPORATIVO.SessionUtils
+@using GenericCrud.Util
+@using GenericCrud.ActionResultTools
+
+@{
+    Layout = null;
+}
+
+<html lang="en">
+<head>
+    <script type="text/javascript">
+        // para obter o contexto da aplicação
+        var contextPath = "@System.Web.HttpContext.Current.Request.ApplicationPath";
+        var inHomologation = @SysUtils.InHomologation().ToString().ToLower();
+    </script>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - @SysUtils.AmbienteName()</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
+
+    @Html.Partial("Partials/_recursosStaticosPartial")
+
+    <link href="~/Content/themes/assets/login/ct-paper.css" rel="stylesheet" />
+    <link href="~/Content/themes/assets/login/demo.css" rel="stylesheet" />
+    <link href="~/Content/themes/assets/login/examples.css" rel="stylesheet" />
+
+    @Scripts.Render("~/Scripts/negocio/login.js")
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+
+</head>
+<body class="full-screen login">
+    <nav class="navbar navbar-ct-transparent navbar-fixed-top" role="navigation-demo" id="register-navbar">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://corp.coad.com.br/"> COADCORP</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navigation-example-2">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="http://www.coad.com.br" class="btn btn-simple">Sobre a COAD</a>
+                    </li>
+                    <li>
+                        <a href="../presentation.html#examples" class="btn btn-simple">Ajuda</a>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-->
+    </nav>
+    <div class="wrapper" ng-app="appModule" onselect="return false" ng-controller="LoginController">
+        <div class="background" style="background-image: url('../Images/login/blue.jpg');">
+            <div app-message class="filter-black"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-1 col-sm-7 col-xs-12">
+                        <div class="info info-horizontal">
+                            <div class="icon icon-info">
+                                <i class="fa fa-info-circle"></i>
+                            </div>
+                            <div class="description">
+                                <h3>Importante</h3>
+                                <p>
+                                    Para recuperar sua senha informe seu LOGIN e EMAIL cadastrados no sistema. Caso os dados estejam corretos, uma nova senha
+                                    sera enviada para o email informado. Após receber a nova senha, acesse o COADCORP.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-5 col-xs-12">
+                        <div class="demo-card">
+                            <h3 class="title"><img src="~/favicon.ico" style="height:30px; padding-bottom:6px;" /> Recuperar Senha</h3>
+
+                            <form class="register-form">
+                                <div class="form-group">
+                                    @Html.Label("LOGIN")
+                                    @Html.TextBox("_login", "", new { @class = "form-control", placeholder = "Informe o Login", ng_model = "filtro.login" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("EMAIL")
+                                    @Html.TextBox("_Email", "", new { @class = "form-control", placeholder = "Informe o Email", ng_model = "filtro.email" })
+                                </div>
+                                <button class="btn btn-danger btn-block" ng-click="gerarSenhaTemporaria()">Enviar</button><p></p>
+                            </form>
+                            <div class="forgot">
+                                @Html.ActionLink("Voltar", "Login", "Login", new { @class = "btn btn-simple btn-primary btn-block" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-footer text-center">
+                <h6>&copy; 2018, COADCORP <img src="~/favicon.ico" height="12px;" /> Um produto COAD</h6>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

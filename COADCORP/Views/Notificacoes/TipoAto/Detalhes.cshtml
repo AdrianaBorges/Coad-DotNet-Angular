@@ -1,0 +1,44 @@
+﻿@model  COAD.COADGED.Model.DTO.TipoAtoDTO
+@{
+    ViewBag.Title = "Edit";
+}
+@using Coad.GenericCrud.Extensions
+    @section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li>@Html.ActionLink("Gerenciar Tipos de Atos","index","TipoAto")</li>
+        <li class="active">Detalhes do Tipo de Ato</li>         
+    </ol>
+}
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/tipoAto.js")
+<div class="form-lg padding" ng-app="appModule">
+
+    <div class="panel panel-default" ng-controller="TipoAtoController" data-ng-init="read(@ViewBag.tipoAtoId)">
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-search icon-panel"></span> Detalhes do Tipo de Ato</div>
+
+            <div class="panel-body">  
+                <div app-message></div>               
+                <div class="row">
+                    <div class="form-group col-lg-1">
+                        @Html.Label("ID")
+                        @Html.TextBoxFor(model => model.TIP_ATO_ID,  new {@class = "form-control", ng_model = "tipoAto.TIP_ATO_ID", disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.TIP_ATO_DESCRICAO, null, new { app_validation_msg = "erros", @for = "TIP_ATO_ID" }) 
+                    </div>
+                    <div class="form-group col-lg-9">
+                        @Html.LabelFor(model => model.TIP_ATO_DESCRICAO)
+                        @Html.TextBoxFor(model => model.TIP_ATO_DESCRICAO, new {@class = "form-control", ng_model = "tipoAto.TIP_ATO_DESCRICAO", disabled = "disabled"})                 
+                    </div>                    
+                    <div class="form-group col-lg-2">
+                        @Html.LabelFor(model => model.TIP_ATIVO)
+                        @Html.DropDownListFor(model => model.TIP_ATIVO, new SelectList(@ViewBag.ativo, "Value", "Text"), null ,new {@class = "form-control", ng_model = "tipoAto.TIP_ATIVO", disabled = "disabled" })
+                    </div>                    
+                </div>
+            </div>
+            
+            <div class="panel-footer">
+                <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default">Voltar</button>
+            </div>
+    </div>
+
+</div>

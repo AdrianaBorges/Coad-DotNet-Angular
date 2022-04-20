@@ -1,0 +1,43 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.OcorrenciaRemessaDTO
+
+@using Coad.GenericCrud.Extensions
+
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Ocorrências das Remessas</li>
+    </ol>
+}
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/Ocorrencia/OcorrenciaRemessa.js")
+
+<form>
+    <div ng-app="appModule">
+        <div class="panel panel-default" ng-controller="OcorrenciaRemessaController" data-ng-init="read(@ViewBag.bco, @ViewBag.cod)">
+            <div app-message></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-1">
+                        @Html.Label("Código")
+                        @Html.TextBoxFor(model => model.OCM_CODIGO, new { @class = "form-control", ng_model = "ocorrencia.OCM_CODIGO" })
+                        @Html.ValidationMessageFor(model => model.OCM_CODIGO, null, new { app_validation_msg = "erros", @for = "OCM_CODIGO" })
+                    </div>
+                    <div class="form-group col-lg-3">
+                        @Html.Label("Banco")
+                        @Html.DropDownListFor(model => model.BAN_ID, new SelectList(@ViewBag.banco, "Value", "Text"), null, new { @class = "form-control", ng_model = "ocorrencia.BAN_ID" })
+                        @Html.ValidationMessageFor(model => model.BAN_ID, null, new { app_validation_msg = "erros", @for = "BAN_ID" })
+                    </div>
+                    <div class="form-group col-lg-8">
+                        @Html.Label("Descrição")
+                        @Html.TextBoxFor(model => model.OCM_DESCRICAO, new { @class = "form-control", ng_model = "ocorrencia.OCM_DESCRICAO" })
+                        @Html.ValidationMessageFor(model => model.OCM_DESCRICAO, null, new { app_validation_msg = "erros", @for = "OCM_DESCRICAO" })
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span>Fechar</button>
+                <button type="button" class="btn btn-default" ng-click="salvar()"><span class="glyphicon glyphicon-floppy-save blue"></span>Salvar</button>
+            </div>
+        </div>
+    </div>
+</form>

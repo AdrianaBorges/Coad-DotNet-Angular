@@ -1,0 +1,86 @@
+﻿                 
+@using COAD.SEGURANCA.Repositorios.Base
+   <div app-modal="modal-reencarteiramento" header="Reencarteiramento" size="small">
+                         <ul class="nav nav-tabs">
+            
+          <li role="presentation" ng-class="{active : tab == 1}"><a href="#" ng-click="selecionarTabReencarteirar(1)">Rodizio</a></li>
+          <li role="presentation" ng-class="{active : tab == 2}"><a href="#" ng-click="selecionarTabReencarteirar(2)">Seleção Manual</a></li>
+            
+      </ul>
+       
+        @if(SessionContext.IsGerenteDepartamento("franquiador"))
+        {
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <br />
+                    <label for="selectRegiao">Região</label> 
+                    <select ng-options="reg.RG_ID as reg.RG_DESCRICAO for reg in lstRegioesDoCliente"
+                            ng-model="$parent.modalCarteiramento.RG_ID" id="selectRegiao1" class="form-control"
+                        ng-change="listarRepresentantesParaReencarteiramentos()">
+                            <option value="">Selecione</option>
+                    </select>
+                </div>
+            </div>      
+        }          
+        <div ng-show="tab == 1" class="animate-show">
+            <div class="panel panel-corp">
+                                  <!-- Default panel contents -->
+      
+                
+                <div class="panel-footer">
+                    <button class="btn btn-primary" 
+                        app-switch-button="reencarteirarPorRodizio()"
+                        switch-conf="[{label : 'Rodar rodizio', state : 'run'}, {label : 'Rodando...', state : 'running', disabled : true}]"
+                        switch-var="$parent.buttonRodizo"></button>
+                </div>
+            </div>
+            </div>
+                  
+                  
+            <div ng-show="tab == 2" class="animate-show">
+     
+                         <div>
+                              <div class="panel panel-corp">
+                                  <!-- Default panel contents -->
+      
+                                  <div class="panel-heading"><span class="glyphicon glyphicon-user"></span> REPRESENTANTES</div>          
+                                  <div class="panel-body">   
+                    
+                                                <div class="table-responsive">     
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>     
+                                                                    <th>
+                                                                        Representante
+                                                                    </th>
+                                                                    <th>#</th>                            
+                                                                </tr>
+                                                            </thead>    
+                                                            <tr ng-repeat="item in lstRepresentantesReencarteiramento">                                    
+                                                                <td>
+                                                                     {{item.REP_NOME}}   
+                                                                </td>
+                                                                <td>
+                                                                    <a href="javascript:void(0)" ng-click="reencarteirar(item.REP_ID)" title="Reencarteirar" 
+                                                                        ng-hide="podeEncarteirar == false">                                                                                                                        
+                                                                        <span class="glyphicon glyphicon-circle-arrow-down"></span>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="5" ng-hide="lstRepresentantesReencarteiramento" class="text">
+                                                                    Não foi encontrado nenhum registro.
+                                                                </td>
+                                                            </tr>
+                                                        </table> 
+                                                </div>          
+                                          <div app-pagination="paginaRepresentanteReencarteiramento" 
+                                              request-page="paginaReq" load-function="listarRepresentantesParaReencarteiramentos(paginaReq)"></div>          
+
+                                      </div>
+         
+                                    </div>
+            </div>
+          </div>
+        </div>
+   

@@ -1,0 +1,24 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutosDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li class="active">Gerenciar Clientes</li>         
+        
+    </ol>
+}
+<script src="~/Scripts/negocio/controllers_plugins/info_cliente.js"></script>
+<script src="~/Scripts/negocio/controllers_plugins/historico_cliente.js"></script>
+@Scripts.Render("~/Scripts/negocio/cliente.js")
+<div>
+    <div ng-controller="ClienteController" class="padding content" ng-cloak data-ng-init="readCliente(@ViewBag.clienteId)">
+ 
+        @Html.Partial("Partials/_HistoricoClientePartial")
+
+    </div>   
+</div>

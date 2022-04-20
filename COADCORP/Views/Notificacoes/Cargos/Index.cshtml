@@ -1,0 +1,99 @@
+﻿<!-- ALT: 23/06/2015 - disponibilizando os dados e métodos javascript -->
+@model  COAD.COADGED.Model.DTO.CargosDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Cadastro de Cargos para a Redação e Editoração";     
+}
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li class="active">Gerenciar Cargos</li>         
+    </ol>
+}
+
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/cargos.js")
+
+<!-- ALT: 23/06/2015 - abrindo Angular para a aplicação -->
+<div ng-app="appModule">
+    <div ng-controller="CargosController" class="padding content">
+        <div class="panel panel-default">
+            <!-- ALT: 23/06/2015 - pequeno menu à direita -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Opções
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                            </li>                                                                           
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ALT: 23/06/2015 - buscar/pesquisar -->
+            <div class="panel-body"> 
+                <div class="row">              
+                    <div class="form-group col-lg-10">
+                        <label for="cargo">Cargo</label>
+                        <input type="text" id="cargo" ng-model="filtro.cargo" class="form-control"/>
+                    </div>             
+                </div>          
+            </div>
+
+            <!-- ALT: 23/06/2015 - botão pesquisar -->
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="listar()">Pesquisar</button>
+            </div>
+        </div>
+        
+        <div class="panel panel-default"  ng-show="cargos">
+            <!-- ALT: 23/06/2015 - exibindo dados pesquisados -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Cadastro de Cargos </div>
+            <div class="panel-body">         
+                <div class="table-responsive">     
+                    <!-- ALT: 23/06/2015 - mensagens ocorridas nesta tela -->
+                    <div>
+                        @Html.Messages()
+                        <div app-message></div>
+                    </div>
+
+                    <!-- ALT: 23/06/2015 - registros deste módulo -->
+                    <table class="table table-hover table-bordered">
+                        <!-- ALT: 23/06/2015 - exibindo campos do cabeçalho -->
+                        <thead>
+                            <tr>                               
+                                <th style="min-width: 119px">
+                                    @Html.DisplayNameFor(model => model.CRG_ID)
+                                </th>
+                                <th style="min-width: 250px">
+                                    @Html.DisplayNameFor(model => model.CRG_DESCRICAO)
+                                </th>                                                                                                           
+                                <th>Detalhes</th>
+                                <th>Editar</th>
+                                <!--<th>Deletar</th>-->
+                            </tr>
+                        </thead>
+                        <!-- ALT: 23/06/2015 - exibindo os dados e os botões de operações -->
+                        <tr ng-repeat="item in cargos">
+                            <td>
+                                {{item.CRG_ID}}
+                            </td>
+                            <td>
+                                {{item.CRG_DESCRICAO}}
+                            </td>
+                            <td><a href="javascript:void(0)" app-post="@Url.Action("Detalhes")?cargoId={{item.CRG_ID}}" title="Detalhes" class="blue"><span class="glyphicon glyphicon-search"></span></a></td>
+                            <td><a href="javascript:void(0)" app-post="@Url.Action("Editar")?cargoId={{item.CRG_ID}}" title="Editar" class="blue"><span class="glyphicon glyphicon-edit"></span></a></td>
+                            <!-- <td><a href="javascript:void(0)" app-confirm="@Url.Action("Remover")?cargoId={{item.CRG_ID}}" app-msg="Deseja realmente excluir o produto [{{item.CRG_DESCRICAO}}] ?" class="btnConfirmaExclusao red" id="btexcluir" title="Excluir" value="Deletar"><span class="glyphicon glyphicon-remove-sign"></span></a></td> -->
+                        </tr>
+                    </table>                       
+                </div>
+                <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+            </div>
+        </div>
+    </div>
+</div>

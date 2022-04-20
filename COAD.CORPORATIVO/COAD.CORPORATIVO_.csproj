@@ -1,0 +1,366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{720AA970-D9AE-459F-AA86-306224611411}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>COAD.CORPORATIVO</RootNamespace>
+    <AssemblyName>COAD.CORPORATIVO</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>coadcoadcorp.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DAO\AssinaturaDAO.cs" />
+    <Compile Include="DAO\AuditoriaDAO.cs" />
+    <Compile Include="DAO\BrindeDAO.cs" />
+    <Compile Include="DAO\CFOPDAO.cs" />
+    <Compile Include="DAO\ClassificacaoConsumoDAO.cs" />
+    <Compile Include="DAO\ClienteDAO.cs" />
+    <Compile Include="DAO\ClienteEnderecoDAO.cs" />
+    <Compile Include="DAO\ContratoDAO.cs" />
+    <Compile Include="DAO\CSTDAO.cs" />
+    <Compile Include="DAO\CSTTipoDAO.cs" />
+    <Compile Include="DAO\EmailsDeClienteDAO.cs" />
+    <Compile Include="DAO\FornecedorDAO.cs" />
+    <Compile Include="DAO\GrupoDAO.cs" />
+    <Compile Include="DAO\IbgeMunicipioDAO.cs" />
+    <Compile Include="DAO\MunicipioDAO.cs" />
+    <Compile Include="DAO\NotaFiscalDAO.cs" />
+    <Compile Include="DAO\NotaFiscalItemDAO.cs" />
+    <Compile Include="DAO\OpcaoAtendimentoDAO.cs" />
+    <Compile Include="DAO\ParcelasDAO.cs" />
+    <Compile Include="DAO\PedidoDAO.cs" />
+    <Compile Include="DAO\PedidoItemDAO.cs" />
+    <Compile Include="DAO\PedidoPagamentoDAO.cs" />
+    <Compile Include="DAO\PrePedidoDAO.cs" />
+    <Compile Include="DAO\ProdutoFornecedorDAO.cs" />
+    <Compile Include="DAO\ProdutosDAO.cs" />
+    <Compile Include="DAO\Produto_ComposicaoDAO.cs" />
+    <Compile Include="DAO\RepresentanteDAO.cs" />
+    <Compile Include="DAO\SpedArquivoDAO.cs" />
+    <Compile Include="DAO\TelefonesDeClienteDAO.cs" />
+    <Compile Include="DAO\TipoLogradouroDAO.cs" />
+    <Compile Include="DAO\TiposDeClienteDAO.cs" />
+    <Compile Include="DAO\TiposNegocioPedidoDAO.cs" />
+    <Compile Include="DAO\TiposPagamentoPedidoDAO.cs" />
+    <Compile Include="DAO\TipoTelefoneDAO.cs" />
+    <Compile Include="DAO\TransportadorDAO.cs" />
+    <Compile Include="DAO\UFDAO.cs" />
+    <Compile Include="DAO\UnidadeMedidaDAO.cs" />
+    <Compile Include="Model\CfopTable.cs" />
+    <Compile Include="Model\Fornecedor.cs" />
+    <Compile Include="Model\Municipio.cs" />
+    <Compile Include="Model\NotaFiscal.cs" />
+    <Compile Include="Model\Produto.cs" />
+    <Compile Include="Model\Transportador.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\Base\EnumTipoNF.cs" />
+    <Compile Include="Repositorios\Base\RepositorioCorp.cs" />
+    <Compile Include="Repositorios\Base\ServiceCorp.cs" />
+    <Compile Include="Repositorios\Contexto\AREAS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ASSINATURA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ASSINATURA_EMAIL.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ASSINATURA_TELEFONE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\AUDITORIA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\BRINDE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CARTEIRA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CARTEIRA_ASSINATURA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CFOP_ICMS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CFOP_REFERENCIA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CFOP_TABLE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLASSICACAO_CONSUMO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLASSIFICACAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLIENTES.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLIENTES_ENDERECO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLIENTES_ENDERECO_HISTORICO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLIENTES_HISTORICO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\COADCORP.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>COADCORP.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\COADCORP.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\COADCORP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>COADCORP.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONTATOS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONTRATOS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CST.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CST_TIPO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\DOCS_CPAGAR.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\EMPRESA_REF.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\FORNECEDOR.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\FORNECEDOR_HISTORICO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\GRUPO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\IBGE_MUNICIPIO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\MUNICIPIO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTA_FISCAL_ITEM.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\OPCAO_ATENDIMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PARCELAS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PEDIDO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PEDIDO_PAGAMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRE_PEDIDO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRE_PEDIDO_EMAIL.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRE_PEDIDO_STATUS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRE_PEDIDO_TELEFONE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRODUTOS.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRODUTO_COMPOSICAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRODUTO_COMPOSICAO_ITEM.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRODUTO_FORNECEDOR.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRODUTO_HISTORICO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\REPRESENTANTE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\SPED_ARQUIVO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_CLIENTE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_ENVIO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_LOGRADOURO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_PAGAMENTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_PEDIDO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_PRODUTO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_PRODUTO_COMPOSICAO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_TELEFONE.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TRANSPORTADOR.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\UF.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\UNIDADE_MEDIDA.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\UNIDADE_NEGOCIO.cs">
+      <DependentUpon>COADCORP.tt</DependentUpon>
+    </Compile>
+<<<<<<< .mine
+    <Compile Include="Service\ClassificacaoConsumoSRV.cs" />
+=======
+    <Compile Include="Service\BrindeSRV.cs" />
+>>>>>>> .r77
+    <Compile Include="Service\ClienteEnderecoSRV.cs" />
+    <Compile Include="Service\AuditoriaSRV.cs" />
+    <Compile Include="Service\CSTTipoSRV.cs" />
+    <Compile Include="Service\AssinaturaSRV.cs" />
+    <Compile Include="Service\CFOPSRV.cs" />
+    <Compile Include="Service\ClienteSRV.cs" />
+    <Compile Include="Service\ContratoSRV.cs" />
+    <Compile Include="Service\CSTSRV.cs" />
+    <Compile Include="Service\EmailsDeClienteSRV.cs" />
+    <Compile Include="Service\FornecedorSRV.cs" />
+    <Compile Include="Service\IbgeMunicipioSRV.cs" />
+    <Compile Include="Service\MunicipioSRV.cs" />
+    <Compile Include="Service\NotaFiscalSRV.cs" />
+    <Compile Include="Service\OpcaoAtendimentoSRV.cs" />
+    <Compile Include="Service\PedidoPagamentoSRV.cs" />
+    <Compile Include="Service\PedidoSRV.cs" />
+    <Compile Include="Service\PrePedidoSRV.cs" />
+    <Compile Include="Service\ProdutoComposicaoSRV.cs" />
+    <Compile Include="Service\SpedArquivoSRV.cs" />
+    <Compile Include="Service\TelefonesDeClienteSRV.cs" />
+    <Compile Include="Service\TipoClientePedidoSRV.cs" />
+    <Compile Include="Service\TipoLogradouroSRV.cs" />
+    <Compile Include="Service\TipoPagamentoPedidoSRV.cs" />
+    <Compile Include="Service\TiposNegocioPedidoSRV.cs" />
+    <Compile Include="Service\ProdutosSRV.cs" />
+    <Compile Include="Service\TipoTelefoneSRV.cs" />
+    <Compile Include="Service\TransportadorSRV.cs" />
+    <Compile Include="Service\UFSRV.cs" />
+    <Compile Include="Service\UnidadeMedidaSRV.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="coadcoadcorp.snk" />
+    <None Include="packages.config" />
+    <EntityDeploy Include="Repositorios\Contexto\COADCORP.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>COADCORP.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Repositorios\Contexto\COADCORP.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>COADCORP.edmx</DependentUpon>
+      <LastGenOutput>COADCORP.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Repositorios\Contexto\COADCORP.edmx.diagram">
+      <DependentUpon>COADCORP.edmx</DependentUpon>
+    </None>
+    <None Include="Repositorios\Contexto\COADCORP.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>COADCORP.edmx</DependentUpon>
+      <LastGenOutput>COADCORP.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\COAD.SEGURANCA\COAD.SEGURANCA.csproj">
+      <Project>{2584c60a-835b-44b7-9c49-10f489de32bd}</Project>
+      <Name>COAD.SEGURANCA</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

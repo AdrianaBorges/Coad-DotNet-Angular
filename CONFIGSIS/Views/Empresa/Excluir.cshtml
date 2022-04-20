@@ -1,0 +1,230 @@
+﻿@model COAD.SEGURANCA.Model.EmpresaModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+
+@using (Html.BeginForm())
+{
+ 
+<div class="form panel panel-primary">
+    <div class="panel-heading">
+        <i class="fa fa-search fa-fw"></i> @ViewBag.Title
+        <div class="pull-right">
+        </div>
+    </div>
+    <div class="panel-body">
+        @Html.ValidationSummary(false)
+        <div class="col-lg-2">
+            <div class="form-group">
+                @Html.Label("ID")
+                @Html.TextBoxFor(model => model.EMP_ID, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_ID)
+            </div>
+        </div>
+        <div class="col-lg-10">
+            <div class="form-group">
+                @Html.Label("Razão Social")
+                @Html.TextBoxFor(model => model.EMP_RAZAO_SOCIAL, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_RAZAO_SOCIAL)
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="form-group">
+                @Html.Label("Nome Fantasia")
+                @Html.TextBoxFor(model => model.EMP_NOME_FANTASIA, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_NOME_FANTASIA)
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="form-group">
+                @Html.Label("CNPJ")
+                @Html.TextBoxFor(model => model.EMP_CNPJ, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_CNPJ)
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                @Html.Label("Inscrição Estadual")
+                @Html.TextBoxFor(model => model.EMP_IE, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_IE)
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="form-group">
+                @Html.Label("IM")
+                @Html.TextBoxFor(model => model.EMP_IM, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_IM)
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="form-group">
+                @Html.Label("SUFRAMA")
+                @Html.TextBoxFor(model => model.EMP_SUFRAMA, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_SUFRAMA)
+            </div>
+        </div>
+        <div class="col-lg-10">
+            <div class="form-group">
+                @Html.Label("Logradouro")
+                @Html.TextBoxFor(model => model.EMP_LOGRADOURO, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_LOGRADOURO)
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="form-group">
+                @Html.Label("Numero")
+                @Html.TextBoxFor(model => model.EMP_NUMERO, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_NUMERO)
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="form-group">
+                @Html.Label("Complemento")
+                @Html.TextBoxFor(model => model.EMP_COMPLEMENTO, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_COMPLEMENTO)
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="form-group">
+                @Html.Label("Bairro")
+                @Html.TextBoxFor(model => model.EMP_BAIRRO, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_BAIRRO)
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="form-group">
+                @Html.Label("Cidade")
+                @Html.TextBoxFor(model => model.CID_ID, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.CID_ID)
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                @Html.Label("CEP")
+                @Html.TextBoxFor(model => model.EMP_CEP, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_CEP)
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="form-group">
+                @Html.Label("Telefone")
+                @Html.TextBoxFor(model => model.EMP_TEL1, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_TEL1)
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                @Html.Label("Telefone")
+                @Html.TextBoxFor(model => model.EMP_TEL2, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_TEL2)
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="form-group">
+                @Html.Label("Telefone")
+                @Html.TextBoxFor(model => model.EMP_TEL3, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_TEL3)
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="form-group">
+                @Html.Label("Email")
+                @Html.TextBoxFor(model => model.EMP_EMAIL, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_EMAIL)
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Site")
+                @Html.TextBoxFor(model => model.EMP_SITE, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_SITE)
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Ultima NFE")
+                @Html.TextBoxFor(model => model.EMP_ULTIMA_NFE, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_ULTIMA_NFE)
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Ag. Cedente")
+                @Html.TextBoxFor(model => model.EMP_CNR_AGCEDENTE, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_CNR_AGCEDENTE)
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Área")
+                @Html.TextBoxFor(model => model.EMP_AREA, new { @class = "form-control", disabled = true })
+                @Html.ValidationMessageFor(model => model.EMP_AREA)
+            </div>
+
+
+            <div class="form-group">
+                @Html.Label("Tipo")
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(model => model.EMP_TIPO, "0", new { disabled = true })Filial</label>
+                </div>
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(model => model.EMP_TIPO, "1" , new { disabled = true })Matriz</label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="panel-footer">
+        <input type="submit" value="Confirma" class="btn btn-default" />
+        <a href="javascript:history.back()" class="btn btn-default" }>Voltar</a>
+    </div>
+
+    @Html.HiddenFor(model => model.EMP_ID)
+    @Html.HiddenFor(model => model.EMP_RAZAO_SOCIAL)
+    @Html.HiddenFor(model => model.EMP_NOME_FANTASIA)
+    @Html.HiddenFor(model => model.EMP_CNPJ)
+    @Html.HiddenFor(model => model.EMP_IE)
+    @Html.HiddenFor(model => model.EMP_IM)
+    @Html.HiddenFor(model => model.EMP_SUFRAMA)
+    @Html.HiddenFor(model => model.EMP_LOGRADOURO)
+    @Html.HiddenFor(model => model.EMP_NUMERO)
+    @Html.HiddenFor(model => model.EMP_COMPLEMENTO)
+    @Html.HiddenFor(model => model.EMP_BAIRRO)
+    @Html.HiddenFor(model => model.CID_ID)
+    @Html.HiddenFor(model => model.EMP_CEP)
+    @Html.HiddenFor(model => model.EMP_TEL1)
+    @Html.HiddenFor(model => model.EMP_TEL2)
+    @Html.HiddenFor(model => model.EMP_TEL3)
+    @Html.HiddenFor(model => model.EMP_EMAIL)
+    @Html.HiddenFor(model => model.EMP_SITE)
+    @Html.HiddenFor(model => model.EMP_ULTIMA_NFE)
+    @Html.HiddenFor(model => model.EMP_CNR_AGCEDENTE)
+    @Html.HiddenFor(model => model.EMP_AREA)
+    @Html.HiddenFor(model => model.EMP_TIPO)
+</div>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,58 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+
+<div class="panel" ng-class="{
+                                            'panel-info': notify.URG_NTF_ID == 'INFO',
+                                            'panel-warning': notify.URG_NTF_ID == 'WARN',
+                                            'panel-danger': notify.URG_NTF_ID == 'ERROR',
+                                            'panel-primary': notify.URG_NTF_ID == 'PRIORITY',
+                                            'panel-success': notify.URG_NTF_ID == 'SUCCESS',
+                                            'panel-default': !notify.URG_NTF_ID
+                                        }">
+                 <div class="panel-heading"><span
+                     
+                     ng-class="{            'glyphicon glyphicon-info-sign': notify.URG_NTF_ID == 'INFO' || notify.URG_NTF_ID == 'PRIORITY',
+                                            'glyphicon glyphicon-warning-sign': notify.URG_NTF_ID == 'WARN',
+                                            'glyphicon glyphicon-minus-sign': notify.URG_NTF_ID == 'ERROR',
+                                            'glyphicon glyphicon-ok-sign': notify.URG_NTF_ID == 'SUCCESS',
+                                            'glyphicon glyphicon-circle-arrow-down': !notify.URG_NTF_ID
+                                        }"></span> Descrição das Notificações</div>     
+                <div class="panel-body limit-modal-height">   
+                      <fieldset>
+                                   <legend>{{$parent.notify.URG_NTF_ID}}</legend>
+                                   <div class="row">
+                                        <div class="form-group col-sm-2 text">
+                                               @Html.Label("Tipo"): 
+                                                {{$parent.notify.TIPO_NOTIFICACAO.TP_NTF_DESCRICAO}}
+                                        </div>
+                                  </div>
+                                  <div class="row">
+                                        <div class="form-group col-sm-12">
+                                              @Html.Label("Descrição")
+                                                <textarea class="form-control" disabled="disabled" ng-model="$parent.notify.NTF_DESCRICAO"></textarea>                                          
+                                        </div> 
+                                   </div>
+                                </fieldset>
+                                <span ng-if="notify.TP_NTF_ID == 1">
+                                    @Html.Partial("Partials/_NotificacaoAgendaPartial")
+                                </span>
+                           </div>
+                            <div class="panel-footer">
+                                 <button ng-class="{            
+                                            'btn btn-info': notify.URG_NTF_ID == 'INFO',
+                                            'btn btn-warning': notify.URG_NTF_ID == 'WARN',
+                                            'btn btn-danger': notify.URG_NTF_ID == 'ERROR',
+                                            'btn btn-primary': notify.URG_NTF_ID == 'PRIORITY',
+                                            'btn btn-success': notify.URG_NTF_ID == 'SUCCESS',
+                                            'btn btn-default': !notify.URG_NTF_ID
+                                        }" data-dismiss="modal" data-toggle="tooltip" data-placement="right" title="Fecha a notificação">Ok</button>
+                                <button ng-if="notify.TP_NTF_ID == 1" 
+                                    class="btn btn-default"  data-placement="right" 
+                                    title="Abre a tela de edição do cliente." ng-click="IrParaCliente()">Ir Para Cliente</button>
+
+                             </div>
+                    <div>                         
+                  </div>            
+                 
+                        
+
+                </div>  

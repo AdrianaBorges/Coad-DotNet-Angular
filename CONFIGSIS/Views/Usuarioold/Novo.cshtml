@@ -1,0 +1,212 @@
+﻿@using COAD.SEGURANCA.Extensions
+@model COAD.SEGURANCA.Repositorios.Contexto.USUARIO
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+
+@using (Html.BeginForm())
+{
+     <div ng-app="appModule">
+       <div ng-controller="PerfilControler" data-ng-init="CarregarPerfilUsuario('');CarregaPerfis(@ViewBag.emp_id)">
+          <div class="form panel panel-primary">
+             <div class="panel-heading">
+                <i class="fa fa-search fa-fw"></i> @ViewBag.Title
+                <div class="pull-right">
+                </div>
+             </div>
+             <div class="panel-body">
+                    @Html.ValidationSummary(false, "", new { @class = "alert alert-danger", role = "alert" })    
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.Label("Login")
+                            @Html.HiddenFor(model => Model.EMP_ID)
+                            @Html.TextBoxFor(model => model.USU_LOGIN, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.USU_LOGIN)
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.Label("Data Cadastro")
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.USU_DATA_CAD, new { @class = "form-control datepicker", disabled = true })
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                            @Html.HiddenFor(model => model.USU_DATA_CAD)
+                            @Html.ValidationMessageFor(model => model.USU_DATA_CAD)
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.Label("Expira Em")
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.USU_DATA_EXPIRA, new { @class = "form-control datepicker" })
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                            @Html.HiddenFor(model => model.USU_DATA_EXPIRA)
+                            @Html.ValidationMessageFor(model => model.USU_DATA_EXPIRA)
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            @Html.Label("Nome")
+                            @Html.TextBoxFor(model => model.USU_NOME, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.USU_NOME)
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            @Html.Label("Empresa")
+                            @Html.DropDownListFor(model => model.EMP_ID, new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            @Html.Label("Email")
+                            @Html.TextBoxFor(model => model.USU_EMAIL, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.USU_EMAIL)
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("Situação")
+                            <div class="radio">
+                                <label>@Html.RadioButtonFor(model => model.USU_ATIVO, "0", new { @checked = "1" })Inativo</label>
+                            </div>
+                            <div class="radio">
+                                <label>@Html.RadioButtonFor(model => model.USU_ATIVO, "1", new { @checked = "0" })Ativo</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("Tipo")
+                            <div class="radio">
+                                <label>@Html.RadioButtonFor(model => model.USU_ADMIN, "0", new { @checked = true })Padrão</label>
+                            </div>
+                            <div class="radio">
+                                <label>@Html.RadioButtonFor(model => model.USU_ADMIN, "1", new { @checked = false })Administrador/Master</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             <div class="panel-body">
+                    <div class="col-lg-12">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#grdPerfil">Perfil</a>
+                                    </h4>
+                                </div>
+
+                                <div id="grdPerfil" class="panel-collapse collapse in">
+                                    <div>
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>@Html.Label("Perfil")</th>
+                                                    <th>@Html.Label("Padrão")</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in lista">
+                                                    <td>{{item.PER_ID}}</td>
+
+                                                    <td>
+                                                        <input type="checkbox" ng-model="item.PUS_DEFAULT" ng-checked="item.PUS_DEFAULT==true" ng-true-value="1" ng-false-value="0"></td>
+                                                    <td>
+                                                        <a href="javascript:void(0)" ng-click="apagaitem(item)" title="">
+                                                            <span class="glyphicon glyphicon-remove-sign"></span></a>
+
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" name="PerfilUsuario" value="{{item.PER_ID}}" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" name="PerfilUsuarioDef" value="{{item.PUS_DEFAULT}}" />
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <!-- Janela Modal -->
+                                    <div class="form-group">
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Adicionar Perfil</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">Adicionar Perfil</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>@Html.Label("Perfil")</th>
+
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="item in listaperfil">
+                                                                <td>{{item.PER_ID}}</td>
+                                                                <td>
+                                                                    <a href="javascript:void(0)" ng-click="additem(item)" title="">
+                                                                        <span class="glyphicon glyphicon-ok"></span></a></td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Janela Modal -->
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             <div class="panel-footer">
+                    <input type="submit" value="Confirma" class="btn btn-default"/>
+                    <a href="javascript:history.back()" class="btn btn-default" }>Voltar</a>
+                </div>
+          </div>
+       </div>
+    </div>
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/appScripts/perfil.js")
+    @Scripts.Render("~/Scripts/appScripts/datepicker.js")
+    @Scripts.Render("~/Content/themes/base/bootstrap-datepicker.css")
+}

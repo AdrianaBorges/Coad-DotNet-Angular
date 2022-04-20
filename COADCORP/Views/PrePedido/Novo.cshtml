@@ -1,0 +1,773 @@
+﻿@{
+    ViewBag.TitleDadosCadastrais = " DADOS CADASTRAIS ";
+    ViewBag.TitleDadosPagamento = " FORMA DE PAGAMENTO ";
+    ViewBag.DadosIniciais = " INFORMAÇÕES INICIAIS ";
+    ViewBag.DadosPedido = " DADOS DO PEDIDO ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var usuario = COAD.SEGURANCA.Repositorios.Base.SessionContext.autenticado;
+}
+@Scripts.Render("~/Scripts/FuncoesPrePedido.js")
+@Scripts.Render("~/Scripts/negocio/pedido.js")
+
+<div class="row" ng-app="appModule">
+    <div ng-controller="PedidoController" data-ng-init="iniciarComboBox(); init(@Json.Encode(usuario));">
+        <div app-modal="modal_clientes" header="Selecione os Clientes">
+            <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           
+      </div>
+          
+      <div class="panel-body"> 
+          <div class="row">
+              <div class="form-group col-lg-6">
+                  <label for="sigla">Cnpj</label>
+                  <input type="text" id="cnpj" ng-model="$parent.filtro.cnpj" class="form-control"/>
+              </div>      
+              <div class="form-group col-lg-6">
+                  <label for="sigla">Nome </label>
+                  <input type="text" id="nome_estrangeiro" ng-model="$parent.filtro.nome" class="form-control"/>
+              </div>
+          </div>          
+      </div>
+    <div class="panel-footer">
+              <button type="button" class="btn btn-default" ng-click="$parent.getLstClientes()">Pesquisar</button>
+          </div>
+    </div>
+          <div class="panel panel-default"  ng-show="lstclientes">
+          <!-- Default panel contents -->
+          <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Cadastro de Composição de Produtos</div>
+          
+          <div class="panel-body">         
+                    <div class="table-responsive">     
+                            <!-- <input type="text" ng-model="dataTest" app-date/>  -->       
+                       
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>                               
+                                    
+                                        <th style="min-width: 260px">
+                                            @*//@Html.DisplayNameFor(model => model.CMP_DESCRICAO)*@
+                                            Id
+                                        </th>
+                                        <th style="min-width: 250px">
+                                           @* @Html.DisplayNameFor(model => model.CMP_NOME_ESTRANGEIRO)*@
+                                            Cnpj/Cpf
+                                        </th>
+                                        <th>
+                                           @* @Html.DisplayNameFor(model => model.PRODUTOS)*@
+                                            Descrição
+                                        </th>                                    
+                                        <th style="min-width: 130px">
+                                           @* @Html.DisplayNameFor(model => model.TIPO_ENVIO)*@
+                                        </th>
+                                        <th>Escolher</th>
+                                    </tr>
+                                </thead>    
+                              <tr ng-repeat="item in lstclientes">
+                                    <td>
+                                        {{item.CLI_ID}}
+                                    </td>                                    
+                                    <td>
+                                        {{ item.CLI_CPF_CNPJ}}
+                                    </td>   
+                                    <td>
+                                        {{ item.CLI_NOME}}
+                                    </td>                             
+                                    <td>
+                                        {{item.TIPO_ENVIO.TIPO_ENVIO_DESCRICAO}}
+                                    </td>
+                                    <td><a href="javascript:void(0)" ng-click="$parent.incluirCliente(item)" title="Detalhes" class="blue"><span class="glyphicon glyphicon-plus"></span></a></td>
+                                   
+                              </tr>
+                            </table> 
+                    </div>
+              <app-pagination request-page="paginaReq" load-function="getLstClientes(paginaReq)"></app-pagination>
+
+          </div>
+        </div>
+      </div>
+        <div style="color:white;height:30px;" id="mensagem" name="mensagem">
+            
+        </div>        
+        <button class="btn btn-default" ng-click="quickTest()">quick</button>
+        <div class="col-lg-0">
+            &nbsp; 
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group">
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+                <div app-message>
+
+                </div>
+            </div>
+            @*@Html.TextBox("data", DateTime.Now.ToString("dd/MM/yy HH:mm "), new { @class = "form-control", placeholder="Data", disabled = true })*@
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    @ViewBag.DadosIniciais 
+                </div>
+                <div class="panel-body">
+                    <input type="hidden" id="tipoClienteProspect" name="tipoClienteProspect" ng-model="tipoClienteProspect"/>
+                    <input type="hidden" id="codigoClienteProspect" name="codigoClienteProspect" ng-model="codigoClienteProspect" />
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("", "Data Pedido")
+                                @Html.TextBox("dataPedido", DateTime.Now.ToString("dd/MM/yy HH:mm"), new { @class = "form-control", onkeyup = @"OnlyNumber(this);", disabled = true })
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div class="form-group">
+                                @Html.Label("", "Ano")
+                                @Html.TextBox("anobase", "", new { @class = "form-control", placeholder = "Ano", onkeyup = @"OnlyNumber(this);", @maxlength = "2", ng_model = "prepedido.anobase", disabled = true })
+                                <div app-validation-msg="erros" for="anobase"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div class="form-group">
+                                @Html.Label("", "Período")
+                                @Html.TextBox("periodo", "", new { @class = "form-control", placeholder = "Período", @maxlength = "1", ng_model = "prepedido.periodo" })
+                                <div app-validation-msg="erros" for="periodo"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div class="form-group">
+                                @Html.Label("", "Semana")
+                                @Html.TextBox("semana", "", new { @class = "form-control", placeholder = "Semana", @maxlength = "2", ng_model = "prepedido.semana" })
+                                @*@Html.ValidationMessage("Funciona")*@
+                                <div app-validation-msg="erros" for="semana"></div>
+                            </div>
+                        </div>                
+                        <div class="col-lg-3    ">
+                            <div class="form-group">
+                                @Html.Label("", "Empresa")
+                                <!--<a href="javascript:void(0);" data-toggle="modal" data-target="#empresaModal">
+                                    <span id="escolherEmpresa" class="glyphicon glyphicon-search" style = "float:right;"></span>
+                                </a>-->
+                                @*@Html.TextBox("empresa", "", new { @class = "form-control", placeholder="Empresa", ng_model="empresaEscolhida", @maxlength="12" }*@
+                                @Html.DropDownList("empresa", new SelectList(ViewBag.empresasCadastradas, "Value", "Text"), new { @class = "form-control", ng_model = "prepedido.empresa" })
+                                @*@Html.ValidationMessage("Funciona")*@
+                                <div app-validation-msg="erros" for="empresa"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("", "Código Operadora")
+                                @Html.TextBox("codrepoperador", COAD.SEGURANCA.Repositorios.Base.SessionContext.autenticado.USU_LOGIN, new { @class = "form-control", ng_model="codrepoperador", placeholder = "Cod. Repr/Oper", @maxlength = "12", @readonly = "readonly" })
+                                @*@Html.ValidationMessage("Funciona")*@
+                            </div>
+                        </div>                        
+                      </div>
+                      <div class="row">
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("", "Represent/Operadora")
+                                @Html.TextBox("operadora", COAD.SEGURANCA.Repositorios.Base.SessionContext.autenticado.USU_NOME, new { @class = "form-control", ng_model="operadora", placeholder = "Operadora", @maxlength = "12", @readonly = "readonly" })
+                                @*@Html.ValidationMessage("Funciona")*@
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("", "Brinde")
+                                @Html.DropDownList("brinde", new SelectList(ViewBag.brindes, "BRI_ID", "BRI_DESCRICAO"), "Selecione",  new { @class = "form-control", placeholder = "Brinde", ng_model = "prepedido.brindeid" })
+                               @* @Html.TextBox("brinde", "", new { @class = "form-control", placeholder = "Brinde", ng_model = "prepedido.brindeid" })*@
+                               @* @Html.ValidationMessage("Funciona")*@
+                               <div app-validation-msg="erros" for="brindeid"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2" style="padding-top:20px">
+                            <div class="form-group">
+                                @Html.Label("", "Entrega de material em mãos:")
+                            </div>
+                        </div>
+                        <div class="col-lg-1" style="padding-top:35px">
+                            <div class="form-group">
+                                @Html.Label("", "Pasta")
+                                @Html.CheckBox("pastaprod", false, new { ng_model = "prepedido.pastaprod" })
+                            </div>
+                        </div>
+                        <div class="col-lg-1" style="padding-top:35px">
+                            <div class="form-group">
+                                @Html.Label("", "Livro")
+                                @Html.CheckBox("livroprod", false, new { ng_model = "prepedido.livroprod" })
+                            </div>
+                        </div>
+                        <div class="col-lg-2" style="padding-top:35px">
+                            <div class="form-group">
+                                @Html.Label("", "CD-ROM")
+                                @Html.CheckBox("cdromprod", false, new { ng_model = "prepedido.cdromprod" })
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    @ViewBag.TitleDadosCadastrais 
+                </div>
+                <div class="panel-body"> 
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            Buscar Dados do Cliente: <a href="javascript:void(0)" ng-click="abreModalClientes(prepedido)">
+                                <span id="buscarProspectPorCodigo3" class="glyphicon glyphicon-search"></span>
+                            </a>
+                            <div app-validation-msg="erros" for="CLI_ID"></div>   
+                        </div>
+                        
+                      
+                    </div>
+                    <div ng-show="prepedido.cliente.CLI_ID">
+                        <div class="row"> 
+                        
+                                                @*<div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        <label>Cliente/Prospect</label>
+                                                        <select class="form-control" ng-disabled="$index > 0" ng-change="limparCampos(); " ng-model="prepedido.prospectClienteOpt">
+                                                            <option value="">Selecione</option>
+                                                            <option value="Prospect">Prospect</option>
+                                                            <option value="Cliente">Cliente</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2"  ng-disabled="$index > 0" ng-show="prepedido.prospectClienteOpt != 'Cliente' && prepedido.prospectClienteOpt != 'Prospect'">
+                                                    <div class="form-group">
+                                                    </div>
+                                                </div>
+                                                <a href="javascript:void(0)" ng-click="abreModalClientes(prepedido)" style = "float:right;">
+                                                            <span id="buscarProspectPorCodigo3" class="glyphicon glyphicon-search"></span>
+                                                </a>
+
+                                                <div class="col-lg-2" ng-disabled="$index > 0" ng-show="prepedido.prospectClienteOpt == 'Cliente'">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "Código Cliente")
+                                                        <a href="javascript:void(0)" ng-click="recuperarDadosCliente(prepedido.cliente.CLI_ID);" style = "float:right;">
+                                                            <span id="buscarClientePorCodigo" class="glyphicon glyphicon-search" style = "float:right;"></span>
+                                                        </a>
+                                                        @Html.TextBox("codigocliente", "", new { @class = "form-control", placeholder = "Código Cliente", @maxlength = "12", ng_disabled = "$index > 0", ng_model = "prepedido.cliente.CLI_ID" })
+                                                        @Html.ValidationMessage("Funciona")
+                                                    </div>
+                                                </div>
+                                                *@
+                                                @*<div class="col-lg-2" ng-disabled="$index > 0" ng-show="prepedido.prospectClienteOpt == 'Prospect'">
+                                                        <a href="javascript:void(0)" ng-click="abreModalClientes(prepedido)">
+                                                            <span id="buscarProspectPorCodigo3" class="glyphicon glyphicon-search"></span>
+                                                        </a>
+                                                    <div class="form-group">
+                                                        @Html.Label("", "Código Prospect")
+                                                        <a href="javascript:void(0)" ng-click="recuperarDadosProspect(prepedido.cliente.CLI_ID);"style = "float:right;">
+                                                            <span id="buscarProspectPorCodigo" class="glyphicon glyphicon-search"></span>
+                                                        </a>
+                                                        @Html.TextBox("codigoProspect", "", new { @class = "form-control", placeholder = "Código Prospect", @maxlength = "12", ng_disabled = "$index > 0", ng_model = "prepedido.cliente.CLI_ID" })
+                                                        @Html.ValidationMessage("Funciona")
+                                                    </div>
+                                                </div> *@                       
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <a href="javascript:void(0)" ng-click="abreModalClientes(prepedido)">
+                                                                <span id="buscarProspectPorCodigo2" class="glyphicon glyphicon-search"></span>
+                                                        </a>
+                                                        @Html.Label("", "Nome/Razão Social")
+                                                        @Html.TextBox("nome", "", new { @class = "form-control", placeholder = "Nome", ng_model = "prepedido.cliente.CLI_NOME" })
+                                                        <div app-validation-msg="erros" for="CLI_ID"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "AC")
+                                                        @Html.TextBox("aoscuidados", "", new { @class = "form-control", placeholder = "Nome", ng_model = "prepedido.cliente.CLI_A_C" })
+                                                        @*@Html.ValidationMessage("Funciona")*@
+                                                        <div app-validation-msg="erros" for="cliente.CLI_A_C"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "Tipo de cliente")
+                                                        <select id="tipodecliente" name="tipodecliente" class = "form-control" ng-model="prepedido.cliente.CLI_TP_PESSOA" ng-options="tipoCli.Value as tipoCli.Text for tipoCli in lstTiposDeCliente">
+                                                            <option value="">Selecione</option>
+                                                        </select>
+                                                        @*@Html.DropDownList("tipodecliente", new SelectList(ViewBag.tiposDeCliente, "Value", "Text"), new { @class = "form-control", ng_model="tipodecliente" })*@
+                                                        @*@Html.TextBox("tipodecliente", "", new { @class = "form-control", placeholder="Tipo de cliente" })*@
+                                                        <div app-validation-msg="erros" for="cliente.CLI_TP_PESSOA"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "Inscrição Estadual")
+                                                        @Html.TextBox("inscestadual", "", new { @class = "form-control", placeholder = "Inscrição Estadual", @maxlength = "14", ng_model = "prepedido.cliente.CLI_INSCRICAO" })
+                                                        @*@Html.ValidationMessage("Funciona")*@
+                                
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "CPF/CNPJ")
+                                                        @Html.TextBox("cpfcnpj", "", new { @class = "form-control", placeholder = "CPF/CNPJ", @maxlength = "14", onkeyup = @"OnlyNumber(this);", ng_model = "prepedido.cliente.CLI_CPF_CNPJ" })
+                                                        @*@Html.ValidationMessage("Funciona")*@
+                                                        <div app-validation-msg="erros" for="cpfcnpj"></div>
+                                                    </div>
+                                                </div>
+                                            </div>                  
+                                            <div class="row">
+                                                <div class="col-lg-7">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "Endereço de Entrega")
+                                                        @Html.TextBox("enderecofaturamento", "", new { @class = "form-control", placeholder = "Endereço faturamento", ng_model = "prepedido.cliente.ENDERECO_ENTREGA.END_LOGRADOURO" })
+                                                        @*@Html.ValidationMessage("Funciona")*@
+                                                        <div app-validation-msg="erros" for="cliente.ENDERECO_ENTREGA.END_LOGRADOURO"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-1">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "Número")
+                                                        @Html.TextBox("numerofaturamento", "", new { @class = "form-control", placeholder = "Núm.", onkeyup = @"OnlyNumber(this);", ng_model = "prepedido.cliente.ENDERECO_ENTREGA.END_NUMERO" })
+                                                        @*@Html.ValidationMessage("Funciona")*@
+                                                        <div app-validation-msg="erros" for="cliente.ENDERECO_ENTREGA.END_NUMERO"></div>
+                                                    </div>
+                                                </div>
+                        
+                                                    <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "Complemento")
+                                                        @Html.TextBox("complementoentrega", "", new { @class = "form-control", placeholder = "Complemento", ng_model = "prepedido.cliente.ENDERECO_ENTREGA.END_COMPLEMENTO" })
+                                                        @*@Html.ValidationMessage("Funciona")*@
+                                                        <div app-validation-msg="erros" for="complementoentrega"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "CEP")
+                                                        @Html.TextBox("cepentrega", "", new { @class = "form-control", placeholder = "CEP", @maxlength = "8", onkeyup = @"OnlyNumber(this);", ng_model = "prepedido.cliente.ENDERECO_ENTREGA.END_CEP" })
+                                                        @*@Html.ValidationMessage("Funciona")*@
+                                                        <div app-validation-msg="erros" for="cliente.ENDERECO_ENTREGA.END_CEP"></div>
+                                                    </div>
+                                                </div>
+                       
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "Bairro")
+                                                        @Html.TextBox("bairroentrega", "", new { @class = "form-control", placeholder = "Bairro", ng_model = "prepedido.cliente.ENDERECO_ENTREGA.END_BAIRRO" })
+                                                        @*@Html.ValidationMessage("Funciona")*@
+                                                        <div app-validation-msg="erros" for="cliente.ENDERECO_ENTREGA.END_BAIRRO"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-5">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "Município")
+                                                        @Html.TextBox("municipioentrega", "", new { @class = "form-control", placeholder = "Município", ng_model = "prepedido.cliente.ENDERECO_ENTREGA.END_MUNICIPIO" })
+                                                        @*@Html.ValidationMessage("Funciona")*@
+                                                        <div app-validation-msg="erros" for="cliente.ENDERECO_ENTREGA.END_MUNICIPIO"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-1">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "UF")
+                                                        @Html.TextBox("ufentrega", "", new { @class = "form-control", placeholder = "UF", ng_model = "prepedido.cliente.ENDERECO_ENTREGA.UF" })
+                                                        @*@Html.ValidationMessage("Funciona")*@
+                                                        <div app-validation-msg="erros" for="cliente.ENDERECO_ENTREGA.UF"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-7">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "Endereço faturamento")
+                                                        @Html.TextBox("enderecofaturamento", "", new { @class = "form-control", placeholder = "Endereço faturamento", ng_model = "prepedido.cliente.ENDERECO_FATURAMENTO.END_LOGRADOURO" })
+                                                        @*@Html.ValidationMessage("Funciona")*@
+                                                        <div app-validation-msg="erros" for="cliente.ENDERECO_FATURAMENTO.END_BAIRRO"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-1">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "Número")
+                                                        @Html.TextBox("numerofaturamento", "", new { @class = "form-control", placeholder = "Núm.", onkeyup = @"OnlyNumber(this);", ng_model = "prepedido.cliente.ENDERECO_FATURAMENTO.END_NUMERO" })
+                                                        @*@Html.ValidationMessage("Funciona")*@
+                                                        <div app-validation-msg="erros" for="cliente.ENDERECO_FATURAMENTO.END_NUMERO"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "Complemento")
+                                                        @Html.TextBox("complementofaturamento", "", new { @class = "form-control", placeholder = "Complemento", ng_model = "prepedido.cliente.ENDERECO_FATURAMENTO.END_COMPLEMENTO" })
+                                                        @*@Html.ValidationMessage("Funciona")*@
+                                                        <div app-validation-msg="erros" for="complementofaturamento"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "CEP")
+                                                        @Html.TextBox("cepfaturamento", "", new { @class = "form-control", placeholder = "CEP", @maxlength = "8", onkeyup = @"OnlyNumber(this);", ng_model = "prepedido.cliente.ENDERECO_FATURAMENTO.END_CEP" })
+                                                        @*@Html.ValidationMessage("Funciona")*@
+                                                        <div app-validation-msg="erros" for="cliente.ENDERECO_FATURAMENTO.END_CEP"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "Bairro")
+                                                        @Html.TextBox("bairrofaturamento", "", new { @class = "form-control", placeholder = "Bairro", ng_model = "prepedido.cliente.ENDERECO_FATURAMENTO.END_BAIRRO" })
+                                                        @*@Html.ValidationMessage("Funciona")*@
+                                                        <div app-validation-msg="erros" for="cliente.ENDERECO_FATURAMENTO.END_BAIRRO"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-5">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "Município")
+                                                        @Html.TextBox("municipiofaturamento", "", new { @class = "form-control", placeholder = "Município", ng_model = "prepedido.cliente.ENDERECO_FATURAMENTO.END_MUNICIPIO" })
+                                                        @*@Html.ValidationMessage("Funciona")*@
+                                                        <div app-validation-msg="erros" for="cliente.ENDERECO_FATURAMENTO.END_MUNICIPIO"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-1">
+                                                    <div class="form-group">
+                                                        @Html.Label("", "UF")
+                                                        @Html.TextBox("uffaturamento", "", new { @class = "form-control", placeholder = "UF", ng_model = "prepedido.cliente.ENDERECO_FATURAMENTO.UF" })
+                                                        @*@Html.ValidationMessage("Funciona")*@
+                                                        <div app-validation-msg="erros" for="cliente.ENDERECO_FATURAMENTO.UF"></div>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                    </div>      
+                                   
+               </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    @ViewBag.DadosPedido
+                    <a href="javascript:void(0)" ng-click="novoPedido();" style = "float:right;color:white;">
+                        Adicionar pedido &nbsp<span class="glyphicon glyphicon-plus"></span>
+                    </a>
+                </div>
+                <div class="panel-body" ng-repeat="dadosDoPedido in prepedido.lstDadosPedido">
+                    <div>
+                        <div>
+                            <div><b>Pedido {{$index + 1}}</b> <a href="javascript:void" title="Excluir pedido" ng-click="removePedido(dadosDoPedido)" ng-if="$index > 0" class="red"><span class="glyphicon glyphicon-remove-sign"></span></a></div> 
+                        </div>
+                    </div>
+                    <div>
+                        <div style="background-color:#337AB7;" class="col-lg-12">
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 5px">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.Label("", "Tipo de negócio")
+                                @Html.DropDownList("tiponegocioprod", new SelectList(ViewBag.tiposdenegocio, "Value", "Text"), new { @class = "form-control", ng_change = "selecionarEmpresa(selecionado)", ng_model = "dadosDoPedido.tiponegocioprod" })
+                                @*@Html.ValidationMessage("Funciona")*@
+                                <div app-validation-msg="erros" for="lstDadosPedido[{{$index}}].tiponegocioprod"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.Label("", "Produto")                                
+                                <select id="produto" name="produtoProd" class = "form-control" ng-model="dadosDoPedido.prodDto" ng-change="produtoSelecionado($index)" ng-options="produto as produto.CMP_DESCRICAO for produto in lstProdutos track by produto.PRO_ID">
+                                    <option value="">Selecione</option>
+                                </select>
+                                <div app-validation-msg="erros" for="lstDadosPedido[{{$index}}].CMP_ID"></div>
+                                @*@Html.ValidationMessage("Funciona")*@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.Label("", "Vigência inicio")                                
+                                <div class="input-group date">
+                                    @Html.TextBox("inicioVigenciaprod", "", new { @class = "form-control", @maxlength = "10", ng_model = "dadosDoPedido.inicioVigenciaprod2", placeholder = "Inicio Vigência", app_date = "dadosDoPedido.inicioVigenciaprod" })
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                </div>
+                                <div app-validation-msg="erros" for="lstDadosPedido[{{$index}}].inicioVigenciaprod"></div>
+                                @*@Html.ValidationMessage("Funciona")*@
+                            </div>
+                        </div>                         
+                    </div>
+                    <div class="row">   
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("", "Vigência fim")
+                                <div class="input-group date">
+                                    @Html.TextBox("fimVigenciaprod", "", new { @class = "form-control", @maxlength = "10", ng_model = "dadosDoPedido.fimVigenciaprod2", placeholder = "Fim Vigência", app_date = "dadosDoPedido.fimVigenciaprod"})
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                </div>
+                                <div app-validation-msg="erros" for="lstDadosPedido[{{$index}}].fimVigenciaprod"></div>
+                                @*@Html.ValidationMessage("Funciona")*@
+                            </div>
+                        </div>                                           
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("", "Valor")
+                                @Html.TextBox("valor", "", new { @class = "form-control", @maxlength = "11", ng_model = "dadosDoPedido.valorMask", placeholder = "Valor", ng_change="CalcularDesconto(dadosDoPedido);", app_mask_dinheiro = "dadosDoPedido.valor", disabled="disabled"})
+                                @*@Html.ValidationMessage("Funciona")*@
+                                <div app-validation-msg="erros" for="lstDadosPedido[{{$index}}].valor"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("", "Desc. %")
+                                @Html.TextBox("desconto", "", new { @class = "form-control", onkeyup = @"OnlyNumber(this);", @maxlength = "2", ng_model = "dadosDoPedido.desconto", placeholder = "Desconto", ng_change="CalcularDesconto(dadosDoPedido);" })
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.Label("", "Total")
+                                <input type="text" class="form-control" maxlength = "11" ng-model="dadosDoPedido.totalMask" placeholder="Total" app-mask-dinheiro="dadosDoPedido.total" disabled="disabled"/>
+                                @*@Html.TextBox("total", "", new { @class = "form-control", onkeyup = @"MascaraValor(this);", @maxlength = "11", ng_model = "dadosDoPedido.total", placeholder = "Total", @readonly="readonly" })*@
+                                @*@Html.ValidationMessage("Funciona")*@
+                                <div app-validation-msg="erros" for="lstDadosPedido[{{$index}}].total"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6" style="display: none;">
+                            <div class="form-group">
+                                @Html.Label("", "Pedido")
+                                @Html.TextBox("pedido", "", new { @class = "form-control", disabled = true, ng_model = "dadosDoPedido.pedidoprod", placeholder = "Pedido", @readonly="readonly" })
+                            </div>
+                        </div>   
+                    </div>
+                    <div class="col-lg-12 padding">
+                        <a href="javascript:void(0)" ng-click="novoTelefone(dadosDoPedido);" ng-hide="dadosDoPedido.lstDeTelefones.length >= 5" style = "float:left;">
+                            Adicionar Telefone &nbsp<span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                    </div>
+                      <div class="row" ng-repeat="telefoneCliente in dadosDoPedido.lstDeTelefones">
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    @Html.Label("", "Setor")
+                                    <select id="setortelefone" name="setortelefone" class = "form-control" ng-model="telefoneCliente.idsetor" ng-options="setorTelefoneCli.Value as setorTelefoneCli.Text for setorTelefoneCli in lstSetorDeTelefone" ng-change="validaTelefone(dadosDoPedido, telefoneCliente)">
+                                        <option value="">Selecione</option>
+                                    </select>
+                                    <div app-validation-msg="erros" for="lstDadosPedido[{{$parent.$index}}].lstDeTelefones[{{$index}}].idsetor"></div>
+                                </div>
+                            </div>                            
+                          <div class="col-lg-2">
+                                <div class="form-group">
+                                    @Html.Label("", "Tipo")
+                                    <select id="tipotelefone" name="tipotelefone" class = "form-control" ng-model="telefoneCliente.tipo" ng-options="tipoTelefoneCli.Value as tipoTelefoneCli.Text for tipoTelefoneCli in listaTiposDeTelefone">
+                                        <option value="">Selecione</option>
+                                    </select>
+                                    <div app-validation-msg="erros" for="lstDadosPedido[{{$parent.$index}}].lstDeTelefones[{{$index}}].tipo"></div>
+                                </div>
+                           </div>                          
+                          <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("", "Telefone")
+                                @Html.TextBox("telefone", "", new { @class = "form-control", placeholder = "Telefone", @maxlength = "10", onkeyup = @"OnlyNumber(this);", ng_model = "telefoneCliente.telefone" })
+                                @*@Html.ValidationMessage("Funciona")*@
+                                <div app-validation-msg="erros" for="lstDadosPedido[{{$parent.$index}}].lstDeTelefones[{{$index}}].telefone"></div>
+                            </div>
+                          </div>
+                           <div class="col-lg-2" ng-if="$index > 0">
+                               <div class="form-group rem-tel-email">
+                                   <a href="javascript:void" title="Excluir telefone" ng-click="removeTelefone(dadosDoPedido, telefoneCliente)" class="red"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                               </div>                               
+                           </div>
+
+                    </div>
+                    <div class="padding">
+
+                    </div>
+                    <div class="col-lg-12 padding">
+                        <a href="javascript:void(0)" ng-click="novoEmail(dadosDoPedido);" ng-hide="dadosDoPedido.lstDeEmails.length >= 6" style = "float:left;">
+                            Adicionar E-mail &nbsp<span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                    </div>
+                    
+                        <div ng-repeat="emailCliente in dadosDoPedido.lstDeEmails"  class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.Label("", "Email")
+                                    @Html.TextBox("email", "", new { @class = "form-control", placeholder = "Email", ng_model = "emailCliente.email" })
+                                    @*@Html.ValidationMessage("Funciona")*@
+                                    <div app-validation-msg="erros" for="lstDadosPedido[{{$parent.$index}}].lstDeEmails[{{$index}}].email"></div>
+
+                                </div>
+                            </div>                        
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    @Html.Label("", "Setor")
+                                    <select id="setoremail" name="setoremail" class = "form-control" ng-model="emailCliente.idtipo" ng-options="setorEmailCli.Value as setorEmailCli.Text for setorEmailCli in lstSetorDeEmails" ng-change="validaEmail(dadosDoPedido, emailCliente)">
+                                        <option value="">Selecione</option>
+                                    </select>
+                                    @*@Html.DropDownList("tipodecliente", new SelectList(ViewBag.tiposDeCliente, "Value", "Text"), new { @class = "form-control", ng_model="tipodecliente" })*@
+                                    @*@Html.TextBox("tipodecliente", "", new { @class = "form-control", placeholder="Tipo de cliente" })*@
+                                    @*@Html.ValidationMessage("Funciona")*@
+                                    <div app-validation-msg="erros" for="lstDadosPedido[{{$parent.$index}}].lstDeEmails[{{$index}}].idtipo"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2" ng-if="$index > 0">
+                               <div class="form-group rem-tel-email">
+                                   <a href="javascript:void" title="Excluir email" ng-click="removeEmail(dadosDoPedido, emailCliente)" class="red"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                               </div>                               
+                           </div>
+                        </div>
+                </div>
+            </div>
+                        
+            <input type="button" style="float:right;" value="Forma de pagamento" ng-click="validarDadosIniciaisFormulario();" />
+        </div>
+        <div app-modal="empresaModal" header="Escolher formas de pagamento">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    @ViewBag.TitleDadosPagamento                    
+                    <!--<a href="javascript:void(0)" ng-click="novaFormaDePagamento();" style = "float:right;color:white;">
+                        Adicionar forma de pagamento &nbsp<span class="glyphicon glyphicon-plus"></span>
+                    </a>-->
+                </div>
+                <div class="panel-body" ng-repeat="formaDePagamento in prepedido.lstFormaPagamento" ng-controller="FormaPagamentoController">       
+                    <div app-message="messageFormPagamento">
+
+                    </div>
+                    <input type="button" ng-click="$parent.SalvarPedido();" style="float:right;" ng-if="$index == 0" ng-disabled="validarFormulario();" value="Finalizar pedido"/>
+                    <div>
+                        <div>
+                            <div><b>Forma de pagamento referente ao pedido {{$index + 1}}</b></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="background-color:#337AB7;" class="col-lg-12">
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 5px">                                                   
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("", "Cond. de pagamento")
+                                @Html.DropDownList("condicaoDePagamento", new SelectList(ViewBag.tiposDePagamento, "Value", "Text"), new { @class = "form-control", ng_model = "formaDePagamento.condicaoDePagamento", ng_change = "selecionarFormaDePagamento(formaDePagamento.condicaoDePagamento, formaDePagamento);" })
+                                @*@Html.ValidationMessage("Funciona")*@
+                                <div app-validation-msg="errosFormaPagamento" for="lstFormaPagamento[{{$index}}].condicaoDePagamento"></div>
+                            </div>
+                        </div>                
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                @Html.Label("", "Forma de pagto(Entrada + Parcela)")                                
+                                <select id="formapagtoprod" name="formapagtoprod" class = "form-control" ng-disabled="lstTipoPagamento.length <= 0 || condicaoPagamento == '' " ng-model="formaDePagamento.formapagtoprod" ng-options="tipoPag.Value as tipoPag.Text for tipoPag in lstTipoPagamento">
+                                    <option value="">Selecione</option>
+                                </select>
+                                @*@Html.ValidationMessage("Funciona")*@
+                                <div app-validation-msg="errosFormaPagamento" for="lstFormaPagamento[{{$index}}].formapagtoprod"></div>
+                            </div>
+                        </div>  
+                    </div>          
+                    <div class="row">
+                        <div class="col-lg-4" ng-show = "formaDePagamento.condicaoDePagamento == 1">
+                            <div class="form-group">
+                                @Html.Label("", "Valor ent. ou pag. único")
+                                @Html.TextBox("entrada", "", new { @class = "form-control", placeholder = "Entrada", onkeyup = @"MascaraValor(this);", @maxlength = "11", ng_model = "formaDePagamento.entradaMask", ng_disabled = "formaDePagamento.condicaoDePagamento != 1", app_mask_dinheiro="formaDePagamento.entrada", ng_change = "calculoParcelaChange();" })
+                                @*@Html.ValidationMessage("Funciona")*@
+                                <div app-validation-msg="errosFormaPagamento" for="lstFormaPagamento[{{$index}}].condicaoDePagamento"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-1" ng-show="formaDePagamento.condicaoDePagamento == 1">
+                            <div class="form-group">
+                                @Html.Label("", "Nº.Par.")
+                                @Html.TextBox("qteparcelas", "", new { @class = "form-control", placeholder = "N° Par.", onkeyup = @"OnlyNumber(this);", @maxlength = "2", ng_model = "formaDePagamento.qteparcelas", ng_disabled = "formaDePagamento.condicaoDePagamento != 1", ng_change = "calcularParcelas()" })
+                                @*@Html.ValidationMessage("Funciona")*@
+                                <div app-validation-msg="errosFormaPagamento" for="lstFormaPagamento[{{$index}}].condicaoDePagamento"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2" ng-show="formaDePagamento.condicaoDePagamento == 1">
+                            <div class="form-group">
+                                @Html.Label("", "Val. das parc.")
+                                @Html.TextBox("valorparcelas", "", new { @class = "form-control", placeholder = "Val. Parcelas", onkeyup = @"MascaraValor(this);", @maxlength = "11", ng_model = "formaDePagamento.valorparcelasMask", app_mask_dinheiro="formaDePagamento.valorparcelas", disabled = true })
+                                @*@Html.ValidationMessage("Funciona")*@
+                                <div app-validation-msg="errosFormaPagamento" for="lstFormaPagamento[{{$index}}].valorparcelas"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("", "Valor total")
+                                @Html.TextBox("total", "", new { @class = "form-control", placeholder = "Valor total", @maxlength = "11", ng_model = "formaDePagamento.totalMask", disabled = "disabled", app_mask_dinheiro="formaDePagamento.total",  })
+                                @*@Html.ValidationMessage("Funciona")*@
+                                <div app-validation-msg="errosFormaPagamento" for="lstFormaPagamento[{{$index}}].condicaoDePagamento"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3" ng-show="formaDePagamento.condicaoDePagamento == 1">
+                            <div class="form-group">
+                                @Html.Label("", "Venc° 2ª parc.")                               
+                                <div class="input-group date">
+                                    @Html.TextBox("vencsegparcela", "", new { @class = "form-control", @maxlength = "10",placeholder = "Venc. 2ª parc.", ng_model = "formaDePagamento.vencsegparcela2", app_date = "formaDePagamento.vencsegparcela"})
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                </div>                                
+                                @*@Html.ValidationMessage("Funciona")*@
+                                <div app-validation-msg="errosFormaPagamento" for="lstFormaPagamento[{{$index}}].vencsegparcela"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" ng-hide="!formaDePagamento.formapagtoprod || formaDePagamento.formapagtoprod == '7' || formaDePagamento.formapagtoprod == '1'">
+                        @*<div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("", "Tipo de documento")
+                                @Html.TextBox("tipodocumento", "", new { @class = "form-control", placeholder = "Tipo de documento", ng_model = "formaDePagamento.tipodocumento" })
+                                @Html.ValidationMessage("Funciona")
+                            </div>
+                        </div>*@
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("", "N° do documento(CR, CD ou Cheque)")
+                                @Html.TextBox("numdocumento", "", new { @class = "form-control", placeholder = "N° do documento(CR, CD, Cheque ou cartão)", ng_model = "formaDePagamento.numdocumento" })
+                                @*@Html.ValidationMessage("Funciona")*@
+                                <div app-validation-msg="errosFormaPagamento" for="lstDadosPedido[{{$parent.$index}}].lstDeEmails[{{$index}}].email"></div>
+                            </div>
+                        </div>                  
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("", "Banco")
+                                @Html.TextBox("bancoprod", "", new { @class = "form-control", placeholder = "Banco", ng_model = "formaDePagamento.bancoprod" })
+                                @*@Html.ValidationMessage("Funciona")*@
+                                <div app-validation-msg="errosFormaPagamento" for="lstDadosPedido[{{$parent.$index}}].lstDeEmails[{{$index}}].email"></div>
+                            </div>
+                        </div>
+                        @*
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("", "N° Autorização do cartão")
+                                @Html.TextBox("numautorizacaoprod", "", new { @class = "form-control", placeholder = "Nº", ng_model = "formaDePagamento.numautorizacaoprod" })
+                                @Html.ValidationMessage("Funciona")
+                            </div>
+                        </div>
+                        *@
+                    </div>
+                    <div class="row"> 
+                        @*
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("", "Código Segurança")
+                                @Html.TextBox("numsegurancaprod", "", new { @class = "form-control", placeholder = "Cód Seg", ng_model = "formaDePagamento.numsegurancaprod" })
+                                @Html.ValidationMessage("Funciona")
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("", "Data de val. do cartão")
+                                @Html.TextBox("datavalidadecartaoprod", "", new { @class = "form-control", placeholder = "Data de val. do cartão", ng_model = "formaDePagamento.datavalidadecartaoprod" })
+                                @Html.ValidationMessage("Funciona")
+                            </div>
+                        </div>
+                        *@
+                        <div class="col-lg-3" ng-show="formaDePagamento.formapagtoprod == '3' || formaDePagamento.formapagtoprod == '8'">
+                            <div class="form-group">
+                                @Html.Label("", "Cheque bom para")
+                                <div class="input-group date">
+                                    @Html.TextBox("chequebompara", "", new { @class = "form-control", @maxlength = "10", placeholder = "Cheque bom para", ng_model = "formaDePagamento.chequebompara2", app_date = "formaDePagamento.chequebompara" })
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                </div>   
+                                @*@Html.ValidationMessage("Funciona")*@
+                                <div app-validation-msg="errosFormaPagamento" for="lstDadosPedido[{{$parent.$index}}].lstDeEmails[{{$index}}].email"></div>
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("", "Observações")
+                                @Html.TextArea("observacaoprod", "", new { @class = "form-control", ng_model = "formaDePagamento.observacaoprod", rows = "3", style = "resize:none" })
+                                @Html.ValidationMessage("Funciona")
+                            </div>
+                        </div>                    
+                    </div>                
+                </div>
+            </div>      
+        </div>      
+     
+    </div>
+</div>

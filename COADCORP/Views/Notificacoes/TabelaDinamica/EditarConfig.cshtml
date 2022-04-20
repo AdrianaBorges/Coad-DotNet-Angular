@@ -1,0 +1,194 @@
+﻿@Scripts.Render("~/Scripts/appScripts/TabelaDinamica.js")
+
+
+<div ng-app="appModule">
+    <div ng-controller="TabelaDinamicaController">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i> @Html.ActionLink("Home", "index", "Home")
+                        </li>
+                        <li class="active">
+                            <i class="fa fa-desktop"></i>Configurar Tabela Dinâmica
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-table fa-fw"></i>Configurar Tabela Dinâmica
+                    <div class="pull-right">
+                        <div class="btn-group">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <fieldset>
+                        <legend>Configuração</legend>
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="form-group">
+                                    @Html.Label("Informe o nome da tabela")
+                                    <input id="_nometabela" type="text" ng-model="item.TDC_NOME_TABELA" class="form-control " placeholder="Nome da tabela" autofocus autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <input type="checkbox" ng-model="item.TDC_INTRODUCAO" />
+                                Possui introdução fazendo uma breve descrição da tabela
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="checkbox" ng-model="item.TDC_OBS_LAYOUT" />
+                                Possui informações sobre o layout
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <input type="checkbox" ng-model="item.TDC_LEGENDA_LAYOUT" />
+                                Possui legenda referentes aos campos da tabela
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="checkbox" ng-model="item.TDC_INF_PREENCHIMENTO" />
+                                Possui informações quanto ao preenchimento dos campos da tabela
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <input type="checkbox" ng-model="item.TDC_INF_GERAIS" />
+                                Possui informações gerais sobre a tabela
+                            </div>
+                        </div>
+                        <legend>Campos da tabela</legend>
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: center;">Ordem
+                                    </th>
+                                    <th>Campo
+                                    </th>
+                                    <th>Tipo
+                                    </th>
+                                    <th>Tamanho
+                                    </th>
+                                    <th style="text-align: center;">Alinhamento
+                                    </th>
+                                    <th style="text-align: center;">Referencia
+                                    </th>
+                                    <th style="text-align: center;">Editar
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-hide="listatabelaconfig.length > 0">
+                                    <td colspan="10"><a href="#" ng_click="abrejanelaAddItem()" title="Adicionar o novo item">Click no botão ao lado para adicionar um item <i class="fa fa-plus"></i></a></td>
+                                </tr>
+                                <tr ng-repeat="item in listatabelaconfig">
+                                    <td>{{item.TCI_ORDEM_APRESENTACAO}}</td>
+                                    <td>{{item.TCI_NOME_CAMPO}}</td>
+                                    <td ng-if="item.TCI_TIPO_CAMPO=='D'">Data</td>
+                                    <td ng-if="item.TCI_TIPO_CAMPO=='N'">Numero</td>
+                                    <td ng-if="item.TCI_TIPO_CAMPO=='S'">Texto</td>
+                                    <td ng-if="item.TCI_TIPO_CAMPO=='F'">Moeda</td>
+                                    <td>{{item.TCI_TAMANHO_CAMPO}}</td>
+                                    <td ng-if="item.TCI_ALINHAMENTO_CAMPO=='D'">Direita</td>
+                                    <td ng-if="item.TCI_ALINHAMENTO_CAMPO=='N'">Esquerda</td>
+                                    <td ng-if="item.TCI_ALINHAMENTO_CAMPO=='S'">Centro</td>
+                                    <td>{{item.TCI_NOME_CAMPODB}}</td>
+                                    <td style="text-align: center;">
+                                        <a href="#" ng_click="abrejanelaAddItem(item)" title="Editar o item selecionado"><i class="fa fa-edit"></i></a>
+                                        <a href="javascript:void(0)" ng_click="removeItem($index)" class="btnConfirmaExclusao red" title="Excluir o registro selecionado">
+                                            <span class="glyphicon glyphicon-remove-sign"></span>
+                                        </a>
+                                        <span ng-show="listatabelaconfig.length == ($index + 1)">
+                                            <a href="javascript:void(0)" ng_click="abrejanelaAddItem()" title="Adicionar o novo item">
+                                                <span class="glyphicon glyphicon-plus blue"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </fieldset>
+                </div>
+                <div class="panel-footer">
+                    <input type="button" ng-click="selecionar('../TabelaDinamica/Index')" class="btn btn-default" value="Voltar">
+                    <input type="button" ng-click="SalvarConfig()" class="btn btn-default" value="Salvar">
+                </div>
+            </div>
+        </div>
+        @*modal-add-item --- Popup modal*@
+        <div id="modal-add-item" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Adicionar Itens na tabela</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    @Html.Label("id", "SEQ.")
+                                    <input id="_seq" type="text" ng-model="item1.TCI_ORDEM_APRESENTACAO" class="form-control " placeholder="Nome da tabela" disabled>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    @Html.Label("Nome do Campo")
+                                    <input id="_nomecampo" type="text" ng-model="item1.TCI_NOME_CAMPO" class="form-control " placeholder="Nome da tabela" autofocus autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    @Html.Label("Tipo")
+                                    <select class="form-control" ng-model="item1.TCI_TIPO_CAMPO">
+                                        <option value="D">Data</option>
+                                        <option value="N">Numero</option>
+                                        <option value="S">Texto</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    @Html.Label("Tamanho")
+                                    <input id="_tamanho" type="text" ng-model="item1.TCI_TAMANHO_CAMPO" class="form-control " placeholder="Nome da tabela" autofocus autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    @Html.Label("Alinhamento")
+                                    <select class="form-control" ng-model="item1.TCI_ALINHAMENTO_CAMPO">
+                                        <option value="D">Direita</option>
+                                        <option value="N">Esquerda</option>
+                                        <option value="S">Centro</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    @Html.Label("Referencia")
+                                    <input id="_Referencia" type="text" ng-model="item1.TCI_NOME_CAMPODB" class="form-control " placeholder="Referencia" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-default" ng-click="addItem(item1)">Confirma</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

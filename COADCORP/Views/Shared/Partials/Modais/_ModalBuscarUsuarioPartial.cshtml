@@ -1,0 +1,94 @@
+﻿@using COAD.CORPORATIVO.SessionUtils
+<div>
+      <div>            
+           
+        <div class="row">              
+            <div class="form-group col-xs-3">
+                <label for="nome">Login</label>
+                <input type="text" id="nome1" ng-model="$parent.filtroUsuario.login" class="form-control" />
+            </div>
+            <div class="form-group col-xs-3">
+                <label for="sigla">CPF</label>
+                <input type="text" id="cnpf-cpf" ng-model="$parent.filtroUsuario.cpf" class="form-control" maxlength="14"/>
+            </div>
+            <div class="form-group col-xs-2">
+                <label for="sigla">CPF exato.
+                    <span class="glyphicon glyphicon-question-sign text-danger"
+                    title="Selecione 'não' caso queira que a busca procure por parte do cnpj/cpf do usuario. (Pesquisa mais lenta)." 
+                        data-toggle="tooltip">
+                    </span>                     
+                </label>
+                <br />
+                <label class="switch switch-warning switch-round">
+                    <input type="checkbox" id="checkbox_buscacnpj" 
+                        ng-model="$parent.filtroUsuario.cpfExato" 
+                        ng-checked="$parent.filtroUsuario.cpfExato == true">
+	                <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                </label>
+               
+            </div>
+            <div class="form-group col-xs-2">
+                <label for="email">Email</label>
+                <input type="text" id="email" ng-model="$parent.filtroUsuario.email" class="form-control"/>
+            </div>
+        </div>
+          <button type="button" class="btn btn-default" ng-click="listarUsuarios()">Pesquisar</button>
+      </div>
+</div>      
+<br />
+<div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Lista de Usuário</div>
+          
+      <div class="panel-body">       
+                    <div class="table-responsive limit-modal">     
+                            <!-- <input type="text" ng-model="dataTest" app-date/>  -->       
+                       
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>                                           
+                                            Login
+                                        </th>
+                                        <th>Nome</th>
+                                        <th style="min-width: 132px">                                           
+                                            CPF
+                                        </th>
+                                        <th>
+                                            Emails
+                                        </th>      
+                                        <th>Ações</th>                                   
+                                    </tr>
+                                </thead>    
+                              <tr ng-repeat="item in lstUsuarios" class="animate-repeat">
+                                    <td>
+                                        {{item.USU_LOGIN}}
+                                    </td>
+                                    <td>
+                                        {{item.USU_NOME}}
+                                    </td>
+                                    <td>
+                                        {{item.USU_CPF}}
+                                    </td>   
+                                    <td>
+                                        {{item.USU_EMAIL}}
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0);" ng-click="adicionarUsuario(item);" title="Adicionar" class="text-info">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </a>
+                                    </td>
+                              </tr>
+                            <tr>
+                                <td colspan="7" ng-show="lstUsuarios.length == 0 && usuarioListado">Nenhum registro foi encontrado. 
+                                </td>
+                                <td colspan="7" ng-show="!lstUsuarios">Clique em pesquisar para listar.</td>
+
+                            </tr>
+
+                            </table> 
+                    </div>
+              <div app-pagination="paginaUsuario" request-page="paginaReq" load-function="listarUsuarios(paginaReq)"></div>
+
+          </div>
+        </div>  

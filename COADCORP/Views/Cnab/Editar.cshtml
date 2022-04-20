@@ -1,0 +1,304 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using COAD.CORPORATIVO.SessionUtils
+
+@{
+    ViewBag.Title = "Editar";
+    bool podeEditar = SessionUtil.PossuiPermissaoParaEditarProspect();
+    ViewBag.defer = "defer='defer'";
+}
+@using Coad.GenericCrud.Extensions
+@using GenericCrud.ActionResultTools
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Config de CNAB (Editar)</li>
+    </ol>
+}
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+<script src="@UrlCorp.Content("~/Scripts/negocio/cnab.js")" @ViewBag.defer></script>
+
+<div ng-app="appModule">
+    <div class="panel panel-corp" ng-controller="CnabController" data-ng-init="initEdicao('@ViewBag.cncID')" ng-cloak>
+        <!-- Default panel contents -->
+ 
+            @Html.ValidationSummary(true)          
+                  <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Editar Config CNAB
+                    
+                        <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"
+                                            aria-expanded="false" ng-disabled="button == 'saved'">
+                                            Opções
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                             <li>
+                                                <a href="@Url.Action("index")" title="Voltar" class="blue"> Voltar</a>
+                                            </li>
+                                          @*  <li>
+                                                <a href="javascript:void(0)" title="Salvar" ng-click="salvarClienteFranquia()" class="blue">Salvar</a>
+                                            </li>*@
+                                    @*        <li>
+                                                <a href="javascript:void(0)" title="Informações" ng-click="abreModalCliente(prospect.CLI_ID)" class="blue">Informações do prospect</a>
+                                            </li>*@
+                                            <li ng-show="prospect.ID">
+                                                <a href="javascript:void(0)" app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}" 
+                                                    app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?" class="btnConfirmaExclusao blue" title="Excluir"> Excluir</a>
+                                            </li>                                                                                                                    
+                                        </ul>
+                                    </div>
+                                </div>
+                     
+                     
+            </div>
+
+            <div class="panel-body">  
+                <div app-message></div>
+                
+<fieldset>
+    <legend class="text-info">
+        <span class="font-30">
+            <i class="fa fa-cogs" aria-hidden="true"></i>
+            <span class="font-16">Definições Gerais da Arquivo CNAB</span>
+        </span>
+    </legend>
+    <section id="dados-cadastrais">
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label>Código Cnab</label>
+                <input type="text" class="form-control" ng-model="cnabConfig.CNC_CODIGO_CNAB" />
+                <div app-validation-msg="erros" data-for="CNC_CODIGO_CNAB"></div>
+            </div>
+            <div class="form-group col-sm-3">
+                <label>Desc Tipo de Remessa</label>
+                <input type="text" class="form-control" ng-model="cnabConfig.CNC_ARQUIVO" />
+                <div app-validation-msg="erros" data-for="CNC_CODIGO_CNAB"></div>
+            </div>
+            <div class="form-group col-sm-3">
+                <label for="campo_BAN_ID">Banco</label>
+                <select id="campo_BAN_ID" name="campo_BAN_ID" class="form-control" ng-model="cnabConfig.BAN_ID"
+                        ng-options="ban.BAN_ID as ban.BAN_ID + ' - ' + ban.BAN_NOME for ban in lstBancos">
+                    <option value="">Selecione</option>
+                </select>
+                <div app-validation-msg="erros" for="BAN_ID"></div>
+            </div>
+            <div class="form-group col-sm-3">
+                <label for="campo_EMP_ID">Empresa</label>
+                <select id="campo_EMP_ID" name="campo_EMP_ID" class="form-control" ng-model="cnabConfig.EMP_ID"
+                        ng-options="emp.EMP_ID as emp.EMP_NOME_FANTASIA for emp in lstEmpresas">
+                    <option value="">Selecione</option>
+                </select>
+                <div app-validation-msg="erros" for="EMP_ID"></div>
+            </div>
+        </div>
+    </section>
+    </fieldset>
+<fieldset id="config">
+    <legend class="text-info">
+        <span class="font-30">
+            <i class="fa fa-file-code-o" aria-hidden="true"></i>
+            <span class="font-16">Config do Arquivo</span>
+        </span>
+    </legend>
+    <br />
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel no-border" ng-repeat="cnabCfgArq in cnabConfig.CNAB_CONFIG_ARQUIVO">
+            <div role="tab" id="headingOne" class="padding-bottom-10">
+                <a role="button" class="btn btn-info text-20" style="width: 100%;" data-toggle="collapse" data-parent="#accordion"
+                   href="#cnabConfigArquivo_{{$index}}" aria-expanded="false" aria-controls="panelImportacao" ng-click="abrirTabImportacoes()">
+                    <span class="glyphicon glyphicon-import"></span> Configuração {{$index + 1}}
+                    <span ng-if="cnabCfgArq.CCA_DESCRICAO">
+                        - {{cnabCfgArq.CCA_DESCRICAO | limitTo: 40}}
+                        <span ng-if="cnabCfgArq.CCA_DESCRICAO.length > 40">...</span>
+                    </span>
+                    <span class="caret"></span>
+                    <span class="close" ng-click="deletarLinhaArquivo($index)"><span aria-hidden="true">&times;</span></span>
+                </a>
+            </div>
+            <div id="cnabConfigArquivo_{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div>
+                    <section>
+                        <section id="definicoes_arquivo_{{$index}}">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span class="font-16">
+                                        <i class="fa fa-cog" aria-hidden="true"></i>
+                                        <label class="font-15">Definições do Arquivo</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-3">
+                                    <label>Descrição</label>
+                                    <input type="text" class="form-control" ng-model="cnabCfgArq.CCA_DESCRICAO" />
+                                    <div app-validation-msg="erros" data-for="CCA_DESCRICAO"></div>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label for="campo_CCA_TIPO">Tipo de Registro</label>
+                                    <select id="campo_CCA_TIPO" name="campo_CCA_TIPO" class="form-control" ng-model="cnabCfgArq.CCA_TIPO"
+                                            ng-options="tr.CTR_ID as tr.CTR_ID + ' - ' + tr.CTR_DESCRICAO for tr in lstTipoRegistro">
+                                        <option value="">Selecione</option>
+                                    </select>
+                                    <div app-validation-msg="erros" for="CCA_TIPO"></div>
+                                </div>
+                                <div class="form-group col-sm-2 padding-button">
+                                    <a class="btn btn-success" ng-click="abrirModalUploadPlanilha($index)">
+                                        <i class="fa fa-upload"></i> Subir Planilha
+                                    </a>
+                                </div>
+                                <div class="form-group col-sm-2 padding-button" ng-show="cnabCfgArq.CCA_ID">
+                                    <a class="btn btn-danger" ng-click="downloadPlanilhaComSuspectsComErro(cnabCfgArq.CCA_ID)">
+                                        <i class="fa fa-download"></i> Baixar Planilha
+                                    </a>
+                                </div>
+                                <div class="col-sm-1 padding-button">
+                                    <a class="text-danger" href="javascript:void(0)" ng-click="deletarTodosCnabs(cnabCfgArq)" app-tootip title="Deletar das as linhas">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+                        <section id="detalhamento_arquivo">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span class="font-16">
+                                        <span class="glyphicon glyphicon-list"></span>
+                                        <label class="font-15">Detalhamento do CNAB</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <br />
+                            <div ng-hide="cnabCfgArq.CNAB.length > 0">
+                                <span class="text-muted">Adicionar Configuração de Detalhamento</span>
+                                <a href="javascript:void(0);" ng-click="adicionarLinhaDetalhamento(cnabCfgArq)"
+                                   title="Adicionar" class="text-primary">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </a>
+                            </div>
+                            <br />
+                            <div>
+                                <div class="row" ng-repeat="cnab in cnabCfgArq.CNAB">
+                                    <div class="form-group col-sm-2">
+                                        <label>Campo</label>
+                                        <input type="text" class="form-control" ng-model="cnab.CNB_CAMPO" />
+                                        <div app-validation-msg="erros" data-for="CNB_CAMPO"></div>
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <label for="campo_CCA_TIPO_DADOS">Tipo</label>
+                                        <select id="campo_CCA_TIPO_DADOS" name="campo_CCA_TIPO_DADOS" class="form-control" ng-model="cnab.CNB_TIPO"
+                                                ng-options="td.CTD_ID as td.CTD_DESCRICAO for td in lstTipoDados">
+                                            <option value="">Selecione</option>
+                                        </select>
+                                        <div app-validation-msg="erros" for="CNB_TIPO"></div>
+                                    </div>
+                                    <div class="form-group col-sm-1">
+                                        <label>Inicio</label>
+                                        <input type="text" class="form-control" ng-model="cnab.CNB_INICIO" app-number />
+                                        <div app-validation-msg="erros" data-for="CNB_INICIO"></div>
+                                    </div>
+                                    <div class="form-group col-sm-1">
+                                        <label>Fim</label>
+                                        <input type="text" class="form-control" ng-model="cnab.CNB_FINAL" app-number />
+                                        <div app-validation-msg="erros" data-for="CNB_FINAL"></div>
+                                    </div>
+                                    <div class="form-group col-sm-1">
+                                        <label>Tamanho</label>
+                                        <input type="text" class="form-control" ng-model="cnab.CNB_TAMANHO" app-number />
+                                        <div app-validation-msg="erros" data-for="CNB_TAMANHO"></div>
+                                    </div>
+                                    <div class="form-group col-sm-1">
+                                        <label>Decimais</label>
+                                        <input type="text" class="form-control" ng-model="cnab.CNB_DECIMAL" app-number />
+                                        <div app-validation-msg="erros" data-for="CNB_DECIMAL"></div>
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label>Conteúdo</label>
+                                        <input type="text" class="form-control" ng-model="cnab.CNB_CONTEUDO" />
+                                        <div app-validation-msg="erros" data-for="CNB_CONTEUDO"></div>
+                                    </div>
+                                    <div class="col-sm-1 padding-button">
+                                        <a class="text-danger" href="javascript:void(0)" ng-click="deletarLinhaDetalhamento($index, cnabCfgArq)" app-tootip title="Deletar linha">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </a>
+                                        <a href="javascript:void(0);" ng-click="adicionarLinhaDetalhamento(cnabCfgArq)"
+                                           title="Adicionar" class="text-primary" ng-if="$last">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <span class="text-muted">Adicionar Configuração de Arquivo</span>
+        <a href="javascript:void(0);" ng-click="adicionarLinhaArquivo()"
+           title="Adicionar" class="text-primary">
+            <span class="glyphicon glyphicon-plus"></span>
+        </a>
+    </div>
+</fieldset>
+</div>
+        
+        <div app-modal="modal-upload-planilha" header="Upload Dados do Cnab" submodal>
+            <div class="row">
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <form>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Arquivo de Carga</label> <!-- https://github.com/danialfarid/ng-file-upload -->
+                                    <input type="file" id="exampleInputFile" class="button button-default"
+                                           ngf-select ng-model="file" ngf-max-size="1MB" accept=".xlsx" ng-disabled="$parent.buttonUpload == 'updating'">
+                                    <div app-validation-msg="erros" for="NFe"></div>
+                                </div>
+                                <div class="progress" ng-show="f.progress >= 0 && !uploaded">
+                                    <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+                                         aria-valuenow="{{f.progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{f.progress}}%">
+                                        <span class="sr-only">f.progress% Complete</span>
+                                    </div>
+                                </div>
+                                {{errorMsg}}
+                            </div>
+                        </div>
+                        <div ng-show="file">
+                            <button app-switch-button="inserirAtualizarPlanilhaCarga(file)"
+                                    switch-conf="[{label : 'Confirmar', state : 'update'}, {label : 'Processando...', state : 'updating', disabled : true}]"
+                                    switch-var="$parent.buttonUpload"
+                                    class="btn btn-success">
+                                <span class="glyphicon glyphicon-refresh"></span>
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+   
+
+            <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("index", "cnab")'" class="btn btn-default" ng-disabled="button == 'saved'">
+                <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar</button>
+                <button 
+                    app-switch-button="salvarCnabConfig()" 
+                    switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]" 
+                    switch-var="button"
+                    class="btn btn-default">
+                    <span class="glyphicon glyphicon-floppy-save blue"></span>
+                </button>
+
+
+        </div> 
+    </div>
+</div>

@@ -1,0 +1,145 @@
+﻿<div app-modal="modal-enviar-email" header="Enviar link de email" submodal>
+    <div class="row">
+        <div class="col-lg-12 limit-modal-height-32em">
+            <fieldset>
+                <legend>Envio de 
+                      <span ng-switch="modalEnvioEmail.boleto">  
+                        <span ng-switch-when="true">boleto</span>
+                        <span ng-switch-default>E-Mail resumo da negociação da proposta</span>
+                      </span>
+                </legend>
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <label for="assinatura">Assinatura</label>
+                        <select name="assinatura" class="form-control" ng-model="$parent.objAssinatura"
+                                ng-options="item as item.ASN_NUM_ASSINATURA for item in lstAssinatura"
+                                ng-change="assinaturaSelecionada()">
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="padding-bottom">
+                <legend class="text-primary">Selecione os Emails</legend>
+                <div>
+                    <a href="javascript:void(0);" ng-click="habilitarEmailCustomizado()" title="Adicionar Novo Email" class="text-info">
+                        <span class="glyphicon" ng-class="{
+                                        'glyphicon-plus' : !modalEnvioEmail.emailCustomizadoHabilitado,
+                                        'glyphicon-minus' : modalEnvioEmail.emailCustomizadoHabilitado == true
+                                      }"></span>
+                    </a>
+                </div>
+                <div class="row" ng-show="modalEnvioEmail.emailCustomizadoHabilitado">
+                    <div class="col-md-3">
+                        <label>Novo E-Mail</label>
+                        <div class="form-group" ng-class="{'has-error' : $parent.modalEnvioEmail.emailValido == false, 'has-success' : $parent.modalEnvioEmail.emailValido == true}">
+                            <input type="text" class="form-control" ng-model="$parent.emailCustom" ng-blur="checarEmailValido($parent.emailCustom)" />
+                        </div>
+                        </div>
+                    <div class="col-md-3 padding-button padding-bottom">
+                        <button 
+                                ng-click="adicionarEmailCustom()" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                Adicionar
+                        </button> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-stripped table-bordered"> 
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Emails do Cliente
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in lstEmailsDoCliente" class="animate-repeat-all">
+                                    <td>
+                                        <a href="javascript:void(0);" ng-click="$parent.adicionarEmail(item.AEM_EMAIL)" class="text-success font-12"
+                                           title="Enviar Email" id="emails_do_cliente_{{$index}}">
+                                            <span class="label label-success">{{item.AEM_EMAIL}}</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-show="!lstEmailsDoCliente || lstEmailsDoCliente.length == 0">Nenhum E-Mail foi encontrado.</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-stripped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Emails da Assinatura
+                                        </th>
+                                    </tr>
+                                </thead>                                
+                                <tr ng-repeat="item in lstEmails" class="animate-repeat-all">
+                                    <td>
+                                        <a href="javascript:void(0);" ng-click="adicionarEmail(item.AEM_EMAIL)"
+                                           title="Enviar Email" class="text-success font-12">
+                                            <span class="label label-success">{{item.AEM_EMAIL}}</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-show="(!lstEmails || lstEmails.length == 0) && !$parent.modalEnvioEmail.EmailCustom">Nenhum E-Mail foi encontrado.</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>                
+
+            </fieldset>
+            <fieldset class="padding-bottom">
+                <legend class="text-primary">E-Mails Que Serão Enviados</legend>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-stripped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Emails de Envio
+                                        </th>
+                                        <th>#</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in modalEnvioEmail.LstEmail" class="animate-repeat-all">
+                                    <td>
+                                        <span class="label label-success">{{item.Email}}</span>
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0);" ng-click="removerEmail($index)"
+                                           title="Remover" class="text-danger font-12">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" ng-show="(!modalEnvioEmail.LstEmail || modalEnvioEmail.LstEmail.length == 0) && !$parent.modalEnvioEmail.EmailCustom">Nenhum E-Mail foi encontrado.</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>   
+                <div class="row" ng-show="modalEnvioEmail.LstEmail.length > 0">
+                    <div class="col-md-4">
+                        <button app-switch-button="enviarEmailPagamento()"
+                                switch-conf="[{label : 'Enviar E-Mail', state : 'save'}, {label : 'Enviando E-Mails...', state : 'saved', disabled : true}]"
+                                switch-var="$parent.buttonEnviarEmail"
+                                class="btn btn-primary">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                    </div>
+                </div>
+             </fieldset>
+</div>
+    </div>
+</div>

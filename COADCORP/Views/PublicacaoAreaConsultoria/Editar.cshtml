@@ -1,0 +1,199 @@
+﻿@model  COAD.COADGED.Model.DTO.PublicacaoAreaConsultoriaDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Registro da matéria";
+}
+
+@Scripts.Render("~/Scripts/negocio/COADGED/publicacaoAreaConsultoria.js")
+
+@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
+
+<div ng-app="appModule">
+    <div id="idMateria" ng-controller="PublicacaoAreaConsultoriaController"
+         data-ng-init="semMenu(); _dadosLoginCarregar(@ViewBag.publicacaoId, @ViewBag.colecionadorId, '@ViewBag.cabecaMateria', '@ViewBag.revisao', '@ViewBag.operacao')" ng-cloak>
+
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "index", "Home")</li>
+            <li>@Html.ActionLink("Gerenciar Matérias", "index", "PublicacaoAreaConsultoria")</li>
+            <li class="active">{{operacao}}</li>
+            <li class="active">Colaborador <span class="label label-default">{{_colaboradorNome}}</span></li>
+            <li class="active">Perfil <span class="label label-default">{{_cargo}} ({{_cargoSigla}})</span></li>
+            <li class="active">Colecionador <span class="label label-default">{{_colecionadorNome}}</span></li>
+        </ol>
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-edit icon-panel" data-ng-if="'@ViewBag.operacao'!='C'"></span><span data-ng-if="'@ViewBag.operacao'!='C'">{{operacao}}</span>
+                <span class="glyphicon glyphicon-search icon-panel" data-ng-if="'@ViewBag.operacao'=='C'"></span><span data-ng-if="'@ViewBag.operacao'=='C'">{{operacao}}</span>
+                <span ng-if="carregouTudo && pub.PUB_ID_PORTAL && pub.linkMateria">
+                    :
+                    <a href="{{pub.linkMateria}}" ng-click="checarLinkMateria()" target="_blank" data-toggle="tooltip" title="Clique aqui para ler esta matéria já publicada no Portal COAD">
+                        {{pub.linkMateria}}
+                    </a>
+                </span>
+
+                <a href="javascript:void(0)" ng-mouseover="quemEdita(@ViewBag.publicacaoId)" ng-click="acessadaPor(@ViewBag.publicacaoId)" style="float:right;" data-toggle="tooltip" title="" data-original-title="Quem está editando? {{quemEstaEditando}}">
+                    <span class="glyphicon glyphicon-user blue"></span>
+                    Matéria nº {{pub.PUB_ID}}
+                </a>
+
+                <!-- ALT: 25/10/2017 - MODAL - Exibindo quem acessou a matéria -->
+                <div app-modal="acessadaPor" header="Matéria: @ViewBag.publicacaoId - Usuários que a acessaram">
+                    <div id="idAcessadaPor" class="panel panel-default">
+                        <div class="panel-body">
+                            <table class="table table-hover table-bordered" style="max-height:670px; overflow-y:auto;">
+                                <thead>
+                                    <tr class="warning">
+                                        <th style="min-width: 030px">Usuário</th>
+                                        <th style="min-width: 030px">Acesso</th>
+                                        <th style="min-width: 030px">Hora/Acesso</th>
+                                        <th style="min-width: 030px">Hora/Liberação</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in acessada">
+                                    <td>{{item.USU_LOGIN}}</td>
+                                    <td data-ng-if="item.EDT_EDITANDO==0">Visualização (somente leitura)</td>
+                                    <td data-ng-if="item.EDT_EDITANDO==1">Edição</td>
+                                    <td>{{item.EDT_HORARIO | date: "dd/MM/yyyy hh:mm:ss"}}</td>
+                                    <td>{{item.EDT_LIBERADA | date: "dd/MM/yyyy hh:mm:ss"}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="panel-footer">
+                            <button type="button" class="btn btn-default" Onclick="angular.element('#acessadaPor').modal('hide')"><span class="glyphicon glyphicon-off red"></span> Sair</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            @Html.ValidationSummary(true)
+
+            <div "app-bind-rich-text-event">
+                <div class="panel-body">
+                    <h5 class="btn btn-lg btn-warning" data-ng-if="salvando || !carregouTudo" style="font:bold 12px arial, verdana; color:white">
+                        <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Por favor, aguarde...
+                    </h5>
+
+                    <div app-message></div>
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { role = "form" }))
+                    {
+                        <ul data-ng-if="carregouTudo" class="nav nav-pills">
+                            <li data-ng-if="carregouTudo" class="active"><a data-toggle="pill" href="#home" data-ng-init="_basicoCarregar()" ng-click="_basicoCarregar()">Home</a></li>
+                            <li data-ng-if="carregouTudo"><a data-toggle="pill" href="#origem" data-ng-click="_origemCarregar()">Origem</a></li>
+                            <li data-ng-if="carregouTudo"><a data-toggle="pill" href="#veiculacao" data-ng-click="_veiculacaoCarregar()">Veiculação</a></li>
+                            <li data-ng-if="carregouTudo"><a data-toggle="pill" href="#revogacao" data-ng-click="_revogacaoCarregar()">Revogação</a></li>
+                            <li data-ng-if="carregouTudo"><a data-toggle="pill" href="#revigoracao" data-ng-click="_revigoracaoCarregar()">Revigoração</a></li>
+                            <li data-ng-if="carregouTudo"><a data-toggle="pill" href="#alteracao" data-ng-click="_alteracaoCarregar()">Alteração</a></li>
+                            <li data-ng-if="carregouTudo"><a data-toggle="pill" href="#titulacao" data-ng-click="lerGg(); _titulacaoCarregar()">Titulação</a></li>
+                            <li data-ng-if="carregouTudo"><a data-toggle="pill" href="#portal" data-ng-click="buscarTexto('Integra', pub.PUBLICACAO.PUB_CONTEUDO, 'PUB_CONTEUDO')">Portal</a></li>
+                            <li data-ng-if="carregouTudo"><a data-toggle="pill" href="#impresso" data-ng-click="buscarTexto('Resenha', pub.PUBLICACAO.PUB_CONTEUDO_RESENHA, 'PUB_CONTEUDO_RESENHA')">Impresso</a></li>
+                            <li data-ng-if="carregouTudo"><a data-toggle="pill" href="#obs">Obs</a></li>
+                            <li data-ng-if="carregouTudo">
+                                <a data-toggle="pill" href=""
+                                   id="btSalvar"
+                                   data-ng-click="acionarGravacao(false, pub.operacao, pub.revisao)"
+                                   data-ng-if="(operacao.substring(0,1)!='V' && pub.revisao!='0' && pub.ARE_CONS_ID && pub.PUBLICACAO.TIP_MAT_ID && pub.PUBLICACAO.PUB_ATIVO && (pub.PUB_UF[0].INF_ANO != '')) == true"
+                                   title="Salvar matéria" data-toggle="tooltip">
+                                    <span class="glyphicon glyphicon-save-file"></span>
+                                </a>
+                            </li>
+
+                            <li data-ng-if="!salvando && carregouTudo"><a data-toggle="pill" href="#sair" data-ng-click="sairDaMateria()" title="Sair da matéria" data-toggle="tooltip"><span class="glyphicon glyphicon-off red"></span></a></li>
+
+                            <div data-ng-click="acionarGravacao(false, pub.operacao, pub.revisao)"
+                                 data-ng-if="carregouTudo && (operacao.substring(0,1)!='V' && pub.revisao=='0' && pub.ARE_CONS_ID && pub.PUBLICACAO.TIP_MAT_ID && pub.PUBLICACAO.PUB_ATIVO && (pub.PUB_UF[0].INF_ANO != '')) == true"
+                                 style="float:right;" progress-bar="" id="hoursChart3" class="" data-total="30" data-bar-class="progress-bar-success" data-show-percent="true"
+                                 data-complete="salvarEm" data-complete-label="%" data-label="Segundos p/salvar automaticamente: " data-title="Clique e salve agora" data-toggle="tooltip">
+                            </div>
+
+                        </ul>
+
+
+                        <div class="tab-content">
+                            <div id="home" class="tab-pane fade in active" data-ng-if="carregouTudo">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        @Html.Partial("_basico")
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="origem" class="tab-pane fade">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        @Html.Partial("_origem")
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="veiculacao" class="tab-pane fade">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        @Html.Partial("_veiculacao")
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="revogacao" class="tab-pane fade">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        @Html.Partial("_revogacao")
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="revigoracao" class="tab-pane fade">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        @Html.Partial("_revigoracao")
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="alteracao" class="tab-pane fade">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        @Html.Partial("_alteracao")
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="titulacao" class="tab-pane fade">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        @Html.Partial("_titulacao")
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="portal" class="tab-pane fade">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        @Html.Partial("_portal")
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="impresso" class="tab-pane fade">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        @Html.Partial("_impresso")
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="obs" class="tab-pane fade">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="form-group col-lg-12">
+                                            @Html.LabelFor(model => model.PUBLICACAO.PUB_OBS)
+                                            @Html.TextAreaFor(model => model.PUBLICACAO.PUB_OBS, new { @class = "form-control", ng_model = "pub.PUBLICACAO.PUB_OBS", ng_disabled = "(operacao.substring(0,1)=='V')" })
+                                            @Html.ValidationMessageFor(model => model.PUBLICACAO.PUB_OBS, null, new { app_validation_msg = "erros", @for = "PUBLICACAO.PUB_OBS" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div app-init-editor="editor" data-fullscreen="true" data-is-open="showDescricaoDados"></div> 
+    </div>
+</div>

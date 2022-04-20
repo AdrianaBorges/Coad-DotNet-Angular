@@ -1,0 +1,8 @@
+<ul class="pagination {{paginatorClass}}">
+  <li><a (click)="voltarPagina($event);">&laquo;</a></li>
+  <li *ngFor="let pag of lstPaginas" [ngClass]="{active: pag == pagina.pagina || pag < 0}">
+    <a *ngIf="pag > 0" (click)="goToPage(pag, $event)">{{pag}}</a>
+    <a *ngIf="pag < 0">...</a>
+  </li>
+  <li><a (click)="avancarPagina($event);">&raquo;</a></li>
+</ul>

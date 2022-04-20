@@ -1,0 +1,184 @@
+﻿@using COAD.SEGURANCA.Extensions
+@model COAD.SEGURANCA.Repositorios.Contexto.PERFIL
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+ 
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+ }
+
+
+@using (Html.BeginForm())
+{
+    if (TempData["Erro"] != null)
+    {
+        string t = TempData["Erro"].ToString();
+
+        @Html.Alert(t);
+    }
+
+    <div ng-app="appModule">
+        <div ng-controller="PerfilControler" >
+            <div class="form panel panel-primary">
+                @Html.ValidationSummary(false)
+                <div class="panel-heading">
+                    <i class="fa fa-search fa-fw"></i> @ViewBag.Title
+                    <div class="pull-right">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            @Html.Label("Sistema")
+                            @Html.DropDownListFor(model => model.SIS_ID, new SelectList(@ViewBag.ListaSistema, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_change = "CarregarPerfis(model.SIS_ID)", ng_model = "model.SIS_ID"  })
+                            @Html.ValidationMessageFor(model => model.SIS_ID)
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            @Html.Label("Perfil")
+                            @Html.DropDownListFor(model => model.PER_ID, new SelectList(@ViewBag.ListaPefil, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", id = "cmbPerfil", ng_options="item.PER_ID as item.PER_ID for item in listaperfis", ng_change = "CarregarItemMenu()", ng_model = "model.PER_ID" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form panel panel-primary">
+                <div class="panel-heading">
+                    @ViewBag.Title
+                </div>
+                <div class="col-lg-12 panel-footer">
+                    <div class="form-group">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.Label("Menu")
+                        </div>
+                    </div>        
+                    <div class="col-lg-2">     
+                        <div class="form-group">    
+                                <a href="#" title="">
+                                            <span class="glyphicon glyphicon-search"></span>Acesso</a>                                      
+                        </div>
+                    </div>
+                    <div class="col-lg-2">     
+                        <div class="form-group">                                          
+                            <a href="javascript:void(0)"  title="">
+                                            <span class="glyphicon glyphicon-plus"></span>Incluir</a>                                      
+                        </div>
+                    </div>
+                    <div class="col-lg-2">     
+                        <div class="form-group">   
+                            <a href="javascript:void(0)"  title="">
+                                            <span class="glyphicon glyphicon-edit"></span>Editar</a>                                                                             
+                            </div>
+                    </div>
+                    <div class="col-lg-2">     
+                        <div class="form-group">                                          
+                            <a href="javascript:void(0)"  title="">
+                                            <span class="glyphicon glyphicon-remove-sign"></span>Exclui</a>                                      
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <ul  ng-repeat="item in listaitemmenu">
+                                <li  style="text-decoration-style:none; list-style-type: none; padding: 0px; margin: 0px;"> 
+                                     
+                                    <input ng-click="marcartodos(item)"  type="checkbox" name="MenuNivAcesso" ng-model="item.MenuNivAcesso" ng-checked="item.MenuNivAcesso"  />
+                                    <a class="dropdown-toggle"  data-toggle="collapse" data-parent="#accordion" href="#{{item.MenuText}}" >{{item.MenuText}}</a> 
+                                    <div id="{{item.MenuText}}" class="panel-collapse collapse in" >
+                                        <ul  ng-repeat="subitem in item.MenuItens"  style="text-decoration-style:none;  list-style-type: none; padding: 0px; margin: 0px;">
+
+                                            <li ng-if="subitem.MenuItens==0" class="dropdown" style="list-style-type: none; padding-top: 5px; margin: 2px;">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">{{subitem.MenuText}}</div>
+                                            </div>        
+                                            <div class="col-lg-2">     
+                                                <div class="form-group">        
+                                                <input  ng-click="marcarlinha(item,subitem)"  type="checkbox" name="MenuNivAcesso"   ng-model="subitem.MenuNivAcesso" ng-checked="subitem.MenuNivAcesso"  />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2">     
+                                                <div class="form-group">                                          
+                                                <input ng-click="marcarreverso(item,subitem)"  type="checkbox" name="MenuNivInsert"  ng-model="subitem.MenuNivInsert" ng-checked="subitem.MenuNivInsert" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2">     
+                                                <div class="form-group">                                          
+                                                <input ng-click="marcarreverso(item,subitem)" type="checkbox" name="MenuNivEdit"    ng-model="subitem.MenuNivEdit" ng-checked="subitem.MenuNivEdit"  />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2">     
+                                                <div class="form-group">                                          
+                                                <input ng-click="marcarreverso(item,subitem)" type="checkbox" name="MenuNivDelete"  ng-model="subitem.MenuNivDelete" ng-checked="subitem.MenuNivDelete" />
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li ng-if="subitem.MenuItens!=0" class="dropdown" style="list-style-type: none; padding-top: 5px; margin: 2px;">
+                                                <input ng-click="marcartodos(subitem)"  type="checkbox" name="MenuNivAcesso" ng-model="subitem.MenuNivAcesso" ng-checked="subitem.MenuNivAcesso"  />
+                                                <a class="dropdown-toggle"  data-toggle="collapse" data-parent="#accordion" href="#{{subitem.MenuText}}" >{{subitem.MenuText}}</a> 
+                                                <div id="{{subitem.MenuText}}" class="panel-collapse collapse in" >
+                                                <ul  ng-repeat="subsubitem in subitem.MenuItens"  style="text-decoration-style:none;  list-style-type: none; padding: 0px; margin: 0px;">
+                                                    <li ng-if="subsubitem.MenuItens==0" class="dropdown" style="list-style-type: none; padding-top: 5px; margin: 2px;">
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">{{subsubitem.MenuText}}</div>
+                                                        </div>
+                                                        <div class="col-lg-2">     
+                                                            <div class="form-group">        
+                                                            <input  ng-click="marcarlinha(subitem,subsubitem)"  type="checkbox" name="MenuNivAcesso"   ng-model="subsubitem.MenuNivAcesso" ng-checked="subsubitem.MenuNivAcesso"  />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-2">     
+                                                            <div class="form-group">                                          
+                                                            <input ng-click="marcarreverso(subitem,subsubitem)"  type="checkbox" name="MenuNivInsert"  ng-model="subsubitem.MenuNivInsert" ng-checked="subsubitem.MenuNivInsert" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-2">     
+                                                            <div class="form-group">                                          
+                                                            <input ng-click="marcarreverso(subitem,subsubitem)" type="checkbox" name="MenuNivEdit"    ng-model="subsubitem.MenuNivEdit" ng-checked="subsubitem.MenuNivEdit"  />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-2">     
+                                                            <div class="form-group">                                          
+                                                            <input ng-click="marcarreverso(subitem,subsubitem)" type="checkbox" name="MenuNivDelete"  ng-model="subsubitem.MenuNivDelete" ng-checked="subsubitem.MenuNivDelete" />
+                                                            </div>
+                                                        </div>
+
+                                                    </li>
+                                                </ul>
+                                                </div>    
+                                        </li>
+                                             
+                                        </ul>
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" ng-click="Confirmar()" class="btn btn-default">Confirma</button>
+                    <a href="javascript:history.back()" class="btn btn-default" }>Voltar</a>
+                </div>
+            </div>
+        </div>
+   </div>
+  
+    
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/appScripts/perfil.js")
+    
+}

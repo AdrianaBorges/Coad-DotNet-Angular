@@ -1,0 +1,299 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">Home </a></li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+
+    .bd-callout {
+        padding: 1.25rem;
+        margin-top: 1.25rem;
+        margin-bottom: 1.25rem;
+        border: 1px solid #eee;
+        border-left-width: .25rem;
+        border-radius: .25rem
+    }
+
+        .bd-callout h4 {
+            margin-top: 0;
+            margin-bottom: .25rem
+        }
+
+        .bd-callout p:last-child {
+            margin-bottom: 0
+        }
+
+        .bd-callout code {
+            border-radius: .25rem
+        }
+
+        .bd-callout + .bd-callout {
+            margin-top: -.25rem
+        }
+
+    .bd-callout-info {
+        border-left-color: #5bc0de
+    }
+
+        .bd-callout-info h4 {
+            color: #5bc0de
+        }
+
+    .bd-callout-warning {
+        border-left-color: #f0ad4e
+    }
+
+        .bd-callout-warning h4 {
+            color: #f0ad4e
+        }
+
+    .bd-callout-danger {
+        border-left-color: #d9534f
+    }
+
+        .bd-callout-danger h4 {
+            color: #d9534f
+        }
+
+    .bd-examples .img-thumbnail {
+        margin-bottom: .75rem
+    }
+
+    .bd-examples h4 {
+        margin-bottom: .25rem
+    }
+
+    .bd-examples p {
+        margin-bottom: 1.25rem
+    }
+</style>
+
+<script src="~/Scripts/appScripts/ura.js"></script>
+
+<div ng-app="appModule">
+    <div ng-controller="URAControler" class="padding content">
+        <div class="panel panel-default">
+            <div app-message></div>
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-edit icon-panel"></span> @ViewBag.Title
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Opções <span class="caret"></span>
+                        </button>
+
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="javascript:void(0)" ng-click="abrirModalPesquisarCliente()" app-popover data-content="Pesquisar Cliente">
+                                    Pesquisar
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="javascript:void(0)" onclick="window.location = '@Url.Action("Index")'">Voltar</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.Label("URA")
+                        @Html.DropDownList("URA", new SelectList(@ViewBag.ListaUras, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_change = "CarregarProdutos()", ng_model = "filtro.URA_ID" })
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="form-group">
+                        @Html.Label("Produtos")
+                        @Html.DropDownList("Produtos", new SelectList(@ViewBag.ListaProdutos, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_options = "item.PRO_ID as item.PRODUTOS.PRO_SIGLA for item in listaprodutos", ng_change = "listarConfig()", ng_model = "filtro.PRO_ID" })
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <fieldset ng-show="filtro.PRO_ID">
+                        <legend class="btn btn-info" style="text-align: left;"><i class="fa fa-edit "></i>&nbspSituação do Item</legend>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="" ng-model="filtro.URA_VIP" ng-change="EditarUraProd()">Produto VIP
+                            </label>
+                            <label>
+                                <input type="checkbox" value="" ng-model="filtro.URA_ATIVA" ng-change="EditarUraProd()">Produto Ativo na Ura
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6" style="padding:0px;">
+            <div class="panel panel-default" ng-show="filtro.PRO_ID">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-edit icon-panel"></span> Estados
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <fieldset>
+                            <legend class="btn btn-info" style="text-align: left;">
+                                <a href="javascript:void(0)" ng-click="CarregarUF()" data-toggle="modal" data-target="#myModalUF">
+                                    <i class="glyphicon-plus"></i>&nbspUnidade Federativa (UF)
+                                </a>
+                            </legend>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>@Html.Label("Sigla")</th>
+                                            <th style="text-align: center;">Excluir</th>
+                                            <th style="text-align: center;">Areas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in listaUf">
+                                            <td>{{item.UF_SIGLA_ACESSO}}</td>
+                                            <td style="text-align: center;">
+                                                <a href="javascript:void(0);" ng-click="apagaitem(item)" title="">
+                                                    <span class="fa fa-times red"></span>
+                                                </a>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <a href="javascript:void(0);" ng-click="buscarProdAreas(item)" title="">
+                                                    <span class="glyphicon glyphicon-search"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6" style="padding-left:5px;padding-right:0px;">
+            <div class="panel panel-default" ng-show="filtro.UF_SIGLA_ACESSO!=null">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-edit icon-panel"></span> Areas {{filtro.URA_ID}} /  {{filtro.PRO_ID}} / {{filtro.UF_SIGLA_ACESSO}}
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <fieldset>
+                            <legend class="btn btn-info" style="text-align: left;">
+                                <a href="javascript:void(0)" ng-click="CarregarAreas()" data-toggle="modal" data-target="#myModalAreas">
+                                    <i class="glyphicon-plus"></i>&nbspAdicionar Area
+                                </a>
+                            </legend>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>@Html.Label("ID")</th>
+                                            <th>@Html.Label("Descrição")</th>
+                                            <th style="text-align: center;">Excluir</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item00 in listaProdAreas">
+                                            <td>{{item00.ACO_ID}}</td>
+                                            <td>{{item00.AREA_CONSULTORIA.ACO_DESCRICAO}}</td>
+                                            <td style="text-align: center;">
+                                                <a href="javascript:void(0);" ng-click="apagaarea(item00)" title="">
+                                                    <span class="fa fa-times red"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                </div>
+            </div>
+
+        </div>
+        <!-- Modal Ufs-->
+            <div class="modal fade" id="myModalUF" tabindex="-1" role="dialog" aria-labelledby="myModalLabelUF" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 id="myModalLabelUF">Adicionar UF</h4>
+                        </div>
+                        <div class="modal-body" style="overflow: auto; max-height: 400px;">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr class="info">
+                                        <th>@Html.Label("UF")</th>
+                                        <th>@Html.Label("Descrição")</th>
+                                        <th>Selecionar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in listaufpesp">
+                                        <td>{{item.UF_SIGLA}}</td>
+                                        <td>{{item.UF_DESCRICAO}}</td>
+                                        <td>
+                                            <a href="javascript:void(0)" ng-click="additem(item)" title="" data-dismiss="modal">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Janela Modal -->
+            <!-- Modal Areas-->
+            <div class="modal fade" id="myModalAreas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Adicionar Areas</h4>
+                        </div>
+                        <div class="modal-body" style="overflow: auto; max-height: 400px;">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr class="info">
+                                        <th>@Html.Label("ID")</th>
+                                        <th>@Html.Label("Descrição")</th>
+                                        <th>Selecionar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item01 in listaareapesp">
+                                        <td>{{item01.ACO_ID}}</td>
+                                        <td>{{item01.ACO_DESCRICAO}}</td>
+                                        <td>
+                                            <a href="javascript:void(0)" ng-click="addarea(item01)" title="" data-dismiss="modal">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Janela Modal -->
+
+    </div>
+</div>

@@ -1,0 +1,216 @@
+﻿@model COAD.COADGED.Model.DTO.FuncionalidadeDTO
+
+@Scripts.Render("~/Scripts/appScripts/funcionalidade.js")
+
+@using COAD.SEGURANCA.Extensions
+@using Coad.GenericCrud.Extensions
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active"><i class="fa fa-desktop"></i>&nbspFuncionalidade</li>
+    </ol>
+}
+
+@using (Html.BeginForm("Salvar", "Funcionalidade", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    if (TempData["Resultado"] != null)
+    {
+        string t = TempData["Resultado"].ToString();
+        @Html.Alert(t);
+        TempData.Remove("Resultado");
+    }
+
+    <div ng-app="appModule">
+        <div ng-controller="FuncionalidadeController"  data-ng-init="init(@ViewBag.fci_id)" class="padding content">
+            <div id="page-wrapper">
+                <div class="panel panel-default">
+                    <div app-message></div>
+                    <div class="panel-heading">
+                        <span class="fa fa-table fa-fw"></span>&nbspFuncionalidade
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Opções<span class="caret"></span></button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="/Funcionalidade/Editar?id=">Editar</a>
+                                </li>
+                                <li><a href="/Funcionalidade/Index">Fechar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-1">
+                                <div class="form-group">
+                                    @Html.Label("ID")
+                                    @Html.TextBoxFor(Model => Model.FCI_ID, new { @class = "form-control", disabled = "disabled" })
+                                    @Html.HiddenFor(Model => Model.FCI_ID)
+                                    @Html.HiddenFor(Model => Model.FCI_URL, new { ng_model = "funcionalidade.FCI_URL" })
+                                    <div app-validation-msg="erros" for="funcionalidade.FCI_ID"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.Label("Informe a Descrição")
+                                    @Html.TextBoxFor(Model => Model.FCI_DESCRICAO, new { @class = "form-control" })
+                                    <div app-validation-msg="erros" for="funcionalidade.FCI_DESCRICAO"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.Label("Produto")
+                                    @Html.DropDownListFor(Model => Model.PRO_ID, new SelectList(@ViewBag.listaproduto, "Value", "Text"), "---- Selecione ----", new { @class = "form-control" })
+                                    <div app-validation-msg="erros" for="funcionalidade.PRO_ID"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    @Html.Label("Tipo")
+                                    <select class="form-control" data-val="true" id="FCI_TIPO" name="FCI_TIPO" ng-model="funcionalidade.FCI_TIPO" ng-change="verificaTipo(funcionalidade.FCI_TIPO)">
+                                        <option value="">---- Selecione ----</option>
+                                        <option value="BAN">BANNER</option>
+                                        <option value="CAR">CAROUSEL</option>
+                                        <option value="IMG">IMAGEM</option>
+                                        <option value="FUN">FUNCIONALIDADE</option>
+                                        <option value="NOV">NOVIDADES</option>
+                                    </select>
+                                    <div app-validation-msg="erros" for="funcionalidade.FCI_TIPO"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    @Html.Label("Selecione a Tabela")
+                                    @Html.DropDownListFor(Model => Model.TDC_ID , new SelectList(@ViewBag.ListaTabRef, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "funcionalidade.TDC_ID"})
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    @Html.Label("Informe o Link")
+                                    @Html.TextBoxFor(Model => Model.FCI_URL_LINK, new { @class = "form-control" })
+                                    <div app-validation-msg="erros" for="funcionalidade.FCI_URL_LINK"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="row" ng-if="funcionalidade.FCI_TIPO=='BAN'||funcionalidade.FCI_TIPO=='IMG'">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>URL<small class="text-muted block">&nbsp(Tamanho max. arquivo: 10Mb (bmp/jpg/png))</small></label>
+                                            <input id="uploadFile" name="uploadFile" type="file" class="form-control" />
+                                            <small class="text-muted block" style="font-style: italic;" ng-if="funcionalidade.FCI_URL!=null">Imagem atual&nbsp @Html.DisplayFor(Model => Model.FCI_URL)</small>
+                                            <a href="javascript:void(0);" app-popover data-content="Excluir a imagem selecionada." ng-click="excluirImagem(0)" ng-if="funcionalidade.FCI_URL"><i class="fa fa-times-circle red"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            @Html.Label("Conteudo")
+                                            @Html.TextAreaFor(Model => Model.FCI_CONTEUDO, new { ng_model = "funcionalidade.FCI_CONTEUDO", @class = "form-control", rows = "13" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" ng-if="funcionalidade.FCI_TIPO=='CAR'">
+                                    <div class="col-lg-12">
+                                        <label>Imagem<small class="text-muted block">&nbsp(Tamanho max. arquivo: 10Mb (bmp/jpg/png))</small></label>
+                                        <input id="FCI_IMG01" name="FCI_IMG01" type="file" class="form-control" />
+                                        <small class="text-muted block" style="font-style: italic;" ng-if="funcionalidade.FCI_IMG01!=null">Imagem atual&nbsp @Html.TextBoxFor(Model => Model.FCI_IMG01, new { ng_model = "funcionalidade.FCI_IMG01", style = "border:0px;" })
+                                        </small>
+                                        <a href="javascript:void(0);" app-popover data-content="Excluir a imagem selecionada." ng-click="excluirImagem(1)" ng-if="funcionalidade.FCI_IMG01"><span class="fa fa-times-circle red"></span></a>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label>Imagem<small class="text-muted block">&nbsp(Tamanho max. arquivo: 10Mb (bmp/jpg/png))</small></label>
+                                        <input id="FCI_IMG02" name="FCI_IMG02" type="file" class="form-control" />
+                                        <small class="text-muted block" style="font-style: italic;" ng-if="funcionalidade.FCI_IMG02!=null">Imagem atual&nbsp @Html.TextBoxFor(Model => Model.FCI_IMG02, new { ng_model = "funcionalidade.FCI_IMG02", style = "border:0px;" })
+                                        </small>
+                                        <a href="javascript:void(0);" app-popover data-content="Excluir a imagem selecionada." ng-click="excluirImagem(2)" ng-if="funcionalidade.FCI_IMG02"><span class="fa fa-times-circle red"></span></a>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label>Imagem<small class="text-muted block">&nbsp(Tamanho max. arquivo: 10Mb (bmp/jpg/png))</small></label>
+                                        <input id="FCI_IMG03" name="FCI_IMG03" type="file" class="form-control" />
+                                        <small class="text-muted block" style="font-style: italic;" ng-if="funcionalidade.FCI_IMG03!=null">Imagem atual&nbsp @Html.TextBoxFor(Model => Model.FCI_IMG03, new { ng_model = "funcionalidade.FCI_IMG03", style = "border:0px;" })
+                                        </small>
+                                        <a href="javascript:void(0);" app-popover data-content="Excluir a imagem selecionada." ng-click="excluirImagem(3)" ng-if="funcionalidade.FCI_IMG03"><i class="fa fa-times-circle red"></i></a>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label>Imagem<small class="text-muted block">&nbsp(Tamanho max. arquivo: 10Mb (bmp/jpg/png))</small></label>
+                                        <input id="FCI_IMG04" name="FCI_IMG04" type="file" class="form-control" />
+                                        <small class="text-muted block" style="font-style: italic;" ng-if="funcionalidade.FCI_IMG04!=null">Imagem atual&nbsp @Html.TextBoxFor(Model => Model.FCI_IMG04, new { ng_model = "funcionalidade.FCI_IMG04", style = "border:0px;" })
+                                        </small>
+                                        <a href="javascript:void(0);" app-popover data-content="Excluir a imagem selecionada." ng-click="excluirImagem(4)" ng-if="funcionalidade.FCI_IMG04"><i class="fa fa-times-circle red"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="row" ng-if="funcionalidade.FCI_TIPO=='BAN'||funcionalidade.FCI_TIPO=='IMG'">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            @Html.Label("Preview")
+                                            <p ng-bind-html="trustAsHtml(funcionalidade.FCI_CONTEUDO)" ng-if="funcionalidade.FCI_CONTEUDO"></p>
+                                            @*<input name="FCI_CONTEUDO" type="text" ng-model="funcionalidade.FCI_CONTEUDO" class="form-control" autofocus autocomplete="off" style="width:0px;border:0px;">*@
+                                            <div app-validation-msg="erros" for="funcionalidade.FCI_CONTEUDO"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" ng-if="funcionalidade.FCI_TIPO=='CAR'">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            @Html.Label("Preview")
+                                            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="10000">
+                                                <!-- Indicators -->
+                                                <ol class="carousel-indicators">
+                                                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active" ng-if="funcionalidade.FCI_IMG01!=null"></li>
+                                                    <li data-target="#carousel-example-generic" data-slide-to="1" ng-if="funcionalidade.FCI_IMG02!=null"></li>
+                                                    <li data-target="#carousel-example-generic" data-slide-to="2" ng-if="funcionalidade.FCI_IMG03!=null"></li>
+                                                    <li data-target="#carousel-example-generic" data-slide-to="3" ng-if="funcionalidade.FCI_IMG04!=null"></li>
+                                                </ol>
+                                                <!-- Wrapper for slides -->
+                                                <div class="carousel-inner" role="listbox">
+                                                    <div class="item active" ng-if="funcionalidade.FCI_IMG01!=null">
+                                                        <img src="{{funcionalidade.FCI_IMG01}}" style="margin: auto; height: 300px; width: 200px;" />
+                                                    </div>
+                                                    <div class="item" ng-if="funcionalidade.FCI_IMG02!=null">
+                                                        <img src="{{funcionalidade.FCI_IMG02}}" style="margin: auto; height: 300px; width: 200px;" />
+                                                    </div>
+                                                    <div class="item" ng-if="funcionalidade.FCI_IMG03!=null">
+                                                        <img src="{{funcionalidade.FCI_IMG03}}" style="margin: auto; height: 300px; width: 200px;" />
+                                                    </div>
+                                                    <div class="item" ng-if="funcionalidade.FCI_IMG04!=null">
+                                                        <img src="{{funcionalidade.FCI_IMG04}}" style="margin: auto; height: 300px; width: 200px;" />
+                                                    </div>
+                                                </div>
+                                                <!-- Controls -->
+                                                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                                    <span class="sr-only">Next</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="/Funcionalidade/Index" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</a>
+                        <button type="submit" id="btnSalvar" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save blue"></span>&nbspSalvar</button>
+                        <a href="javascript:void(0);" ng-click="excluir()" class="btn btn-default"><span class="glyphicon  glyphicon-remove-sign red"></span>&nbspExcluir</a>
+                    </div>
+                </div>
+            </div>
+
+            @Html.Messages()
+
+            @*modal-preview - editor --- Popup modal*@
+            <div app-init-editor="editor"></div>
+
+        </div>
+    </div>
+}

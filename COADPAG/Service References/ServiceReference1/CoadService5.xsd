@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:48701/CoadService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GatewayApiClient.DataContracts.EnumTypes" />
+  <xs:import schemaLocation="http://localhost:48701/CoadService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Coad.GenericCrud.ActionResultUtils" />
+  <xs:complexType name="DadosPedidoIntegracaoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CEP" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UF" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="bairro" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="chavepedido" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="cidade" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="cli_id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="cmp_id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="complemento" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="dddCelular" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="dddComercial" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="endereco" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="erro" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="foneCelular" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="foneComercial" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="formapgto" type="xs:int" />
+      <xs:element minOccurs="0" name="idpedido" type="xs:int" />
+      <xs:element minOccurs="0" name="mensagem" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="nome" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="numero" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="numeroDocumento" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="numeroparcelas" type="xs:int" />
+      <xs:element minOccurs="0" name="recorrente" type="xs:int" />
+      <xs:element minOccurs="0" name="senha" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="tipoDocumento" type="xs:int" />
+      <xs:element minOccurs="0" name="tipoEndereco" type="xs:int" />
+      <xs:element minOccurs="0" name="tipoPessoa" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DadosPedidoIntegracaoDTO" nillable="true" type="tns:DadosPedidoIntegracaoDTO" />
+  <xs:complexType name="CartaoIntegracaoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="anoExpiracao" type="xs:int" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/GatewayApiClient.DataContracts.EnumTypes" minOccurs="0" name="bandeira" nillable="true" type="q1:CreditCardBrandEnum" />
+      <xs:element minOccurs="0" name="codigoSeguranca" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="erro" type="xs:int" />
+      <xs:element minOccurs="0" name="ipeHash" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ipeId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="meioDePagamento" type="xs:int" />
+      <xs:element minOccurs="0" name="mensagem" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="mesExpiracao" type="xs:int" />
+      <xs:element minOccurs="0" name="numeroCartao" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="portador" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="valor" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CartaoIntegracaoDTO" nillable="true" type="tns:CartaoIntegracaoDTO" />
+  <xs:complexType name="WebServiceResult">
+    <xs:sequence>
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Coad.GenericCrud.ActionResultUtils" minOccurs="0" name="Message" nillable="true" type="q2:Message" />
+      <xs:element minOccurs="0" name="Success" type="xs:boolean" />
+      <xs:element minOccurs="0" name="TempoDeExecucao" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WebServiceResult" nillable="true" type="tns:WebServiceResult" />
+</xs:schema>

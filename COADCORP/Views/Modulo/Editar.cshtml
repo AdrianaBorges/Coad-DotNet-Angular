@@ -1,0 +1,59 @@
+﻿@using Coad.GenericCrud.Extensions
+
+@{
+    ViewBag.Title = "Index";     
+}
+
+@Scripts.Render("~/Scripts/appScripts/Manualdp.js")
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">Home </a></li>
+        <li class="active">&nbspCadastro de Módulos</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+<div ng-app="appModule">
+    <div class="padding content" ng-controller="ManualdpController" data-ng-init="initModulo(@ViewBag.modid)" ng-cloak>
+        <div id="page-wrapper">
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading bold head-panel">
+                    <span class="glyphicon glyphicon-filter"></span>&nbspAssunto
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Opções<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="#" onclick="window.location = '@Url.Action("Index")'">Fechar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            @Html.Label("Descrição")
+                            <input type="text" class="form-control" ng-model="item.MOD_DESCRICAO" />
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</button>
+                    <button type="button" class="btn btn-default" ng-click="salvarModulo()"><span class="glyphicon glyphicon-floppy-save blue"></span>&nbspSalvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,108 @@
+﻿@{
+    Layout = null;
+}
+<div class="alert alert-filtro alert-default padding-5 margin-bottom-30">
+    <div class="row">
+        <div class="col-md-8">           
+            <form class="form-inline">
+                <div class="form-group">
+                    <label><strong>Filtros: </strong></label>
+                </div>
+                <div class="form-group" ng-repeat="itm in appFiltroTopo2[0].filtros | orderBy:'ordem'" ng-show="$index <= 3">
+                    <div ng-switch="itm.tipo" class="form-group margin-right-sm">
+                        <div ng-switch-when="data" class="form-group">
+                            <label for="{{itm.chave + '_' + $index}}">{{itm.label}}</label>
+                            <input type="text"
+                                   id="{{itm.chave + '_' + $index}}"
+                                   name="{{itm.chave + '_' + $index}}"
+                                   date-name="{{itm.chave + '_' + $index}}"
+                                   ng-model="$parent.model[itm.chave + 'STR']"
+                                   app-date="$parent.model[itm.chave]"
+                                   class="form-control form-control-filtro" />
+                        </div>
+                        <div ng-switch-when="toogle">
+                            <label class="switch switch-success switch-round">
+                                <input type="checkbox" ng-model="$parent.model[itm.chave]" id="{{itm.chave + '_' + $index}}" ng-checked="$parent.model[itm.chave] == true">
+                                <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                            </label>
+                        </div>
+                        <div ng-switch-when="select" class="dropdown-line">
+                            <span app-dropdown="itm.listCombo" ng-model="$parent.model[itm.chave]" data-key-name="value" data-label-name="label" data-default-label="{{itm.label}}" ng-change="pesquisar();"></span>
+                        </div>
+                        <div ng-switch-when="autocomplete">
+                            <div app-select2="$parent.model[itm.chave]"
+                                 item-var="$parent.itm.dados.objeto"
+                                 ng-model="$parent.model[itm.chave + 'STR']"
+                                 result-list="$parent.$parent[$parent.$parent.itm.lstAutoCompleteName]"
+                                 search-param="itm.autoCompleteParam"
+                                 load-function="$parent.$parent[itm.funcaoAutoComplete](itm.autoCompleteParam)"
+                                 list-value="value"
+                                 list-label="label"
+                                 ctrl-var="itm.select2Ctrl"
+                                 start-with-full-list="false"></div>
+                        </div>
+                        <div ng-switch-when="grupo">
+                            <div ng-repeat="grp in itm.grupo">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <input type="radio"
+                                               id="{{itm.chave + '_' + $index + '_' + $parent.$index}}"
+                                               name="{{itm.chave + '_' + $parent.$index}}"
+                                               ng-model="$parent.$parent.model[grp.chave]"
+                                               ng-value="grp.valor" />
+                                    </div>
+                                    <div class="col-md-10">
+                                        <label for="{{itm.chave + '_' + $index + '_' + $parent.$index}}" class="label-right" app-tooltip data-placement="top" tooltip-title="{{grp.label}}">
+                                            {{grp.label | limitTo: 16}} <span ng-if="grp.label.length > 16">...</span> <span class="label label-info">{{grp.Count}}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                        <div ng-switch-default>
+                            <label for="{{itm.chave + '_' + $index}}" " class="margin-right-sm">{{itm.label}}: </label>
+                            <input type="text"
+                                   id="{{itm.chave + '_' + $index}}"
+                                   name="{{itm.chave + '_' + $index}}"
+                                   ng-model="$parent.model[itm.chave]"
+                                   class="form-control form-control-filtro"
+                                   maxlength="{{itm.maxLength}}" />
+                        </div>
+                    </div>
+                </div>
+                <div>
+
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <form class="form-inline pull-right">
+                <div class="form-group">
+                    <input type="text"
+                           id="{{appFiltroTopo2[0].queryFilter.chave}}"
+                           name="{{appFiltroTopo2[0].queryFilter.chave}}"
+                           ng-model="model[appFiltroTopo2[0].queryFilter.chave]"
+                           class="form-control form-control-filtro"
+                           placeholder="Digite o Termo de Busca"
+                           maxlength="{{appFiltroTopo2[0].queryFilter.maxLength}}" />
+                </div>
+                <a href="javascript:void" class="btn btn-default btn-icon" ng-click="pesquisar()" style="font-size: 16px" title="pesquisar..."><span class="glyphicon glyphicon-search"></span></a>
+                <a href="javascript:void(0)" ng-click="removerTodos()" class="btn btn-default btn-icon">
+                    <span class="glyphicon glyphicon-remove text-danger" title="Remover Todos"></span>
+                </a>
+            </form> 
+        </div>
+    </div>
+    @*<div class="row" ng-show="list">
+        <div class="form-group ">
+            <div class="padding">
+                <span ng-repeat="itm in list | orderBy:'ordem' | as:'listOrdenada'" class="float-left">
+                    <span class="label label-info"><span ng-if="itm.token.filterName">{{itm.token.filterName}} <span ng-if="itm.token.filterName && itm.token.label">>></span> </span> {{itm.token.label}}</span>
+                    <a href="javascript:void(0);" class="remove-link-filtro" ng-click="removerFiltro(itm.chave, $index);"> <span class="glyphicon glyphicon-remove red"></span></a>
+                </span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>*@
+</div>

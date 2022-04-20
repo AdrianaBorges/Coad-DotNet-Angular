@@ -1,0 +1,79 @@
+﻿@model  COAD.CORPORATIVO.Model.Email
+@using COAD.CORPORATIVO.SessionUtils
+@Scripts.Render("~/Scripts/negocio/email.js")
+@using Coad.GenericCrud.Extensions
+@using GenericCrud.ActionResultTools
+@{ ViewBag.Title = "Enviar e-mail"; }
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Enviar e-mail</li>
+    </ol>
+}
+
+
+<style type="text/css">
+    #editor {
+        left: -260px;
+    }
+</style>
+
+<div>
+    <div class="panel panel-default" ng-controller="EmailController" data-ng-init="initEnviar()">
+        <!-- Default panel contents -->
+
+    <div class="panel-body">
+
+        <!--<div app-message></div>-->
+
+        <fieldset>
+
+            <legend class="text-info">
+
+                <span class="font-30">
+
+                    <i class="fa fa-male" aria-hidden="true"></i>
+                    <span class="font-16">Enviar e-mail</span>
+
+                </span>
+
+            </legend>
+
+            <section id="dados">
+
+                <div class="row">
+
+                    <div class="form-group col-sm-12">
+                        <label>Para:</label>
+                        <input type="text" class="form-control" ng-model="email.Para" />
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label>Assunto:</label>
+                        <input type="text" class="form-control" ng-model="email.Assunto" />
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label>Conte&uacute;do</label>
+                        <textarea class="form-control" ng-model="email.ConteudoHtml"></textarea>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </fieldset>
+    </div>
+
+         <div class="panel-footer">
+
+            <button type="button" onclick="window.location = '@Url.Action("index", "email")'" class="btn btn-default" ng-disabled="button == 'saved'" style="padding:7px 12px 4px 12px;">
+                <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar</button>
+            <button type="button" ng-click="enviarEmail()" class="btn btn-default" style="padding:7px 12px 4px 12px;">
+                <span class="glyphicon glyphicon-floppy-save blue"></span>
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,84 @@
+﻿@using COAD.SEGURANCA.Extensions
+
+@{
+    ViewBag.Title = "ImportarXML";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/appScripts/NotaFiscal.js")
+    @Scripts.Render("~/Scripts/appScripts/datepicker.js")
+    @Scripts.Render("~/Content/themes/base/bootstrap-datepicker.css")
+
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+
+@using (Html.BeginForm("ImportarXML", "NotaFiscal", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    if (TempData["Resultado"] != null)
+    {
+        string t = TempData["Resultado"].ToString();
+        @Html.Alert(t);
+        TempData.Remove("Resultado");
+    }
+
+   
+    <div class="panel panel-default" ng-controller="NotaFiscalControler" ng-cloak>
+        <!-- Default panel contents -->
+        <div class="panel panel-default">
+            <div app-message></div>
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-edit icon-panel"></span>&nbspNota Fiscal (Importar)
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <span class="glyphicon glyphicon-info-sign blue" aria-hidden="true"></span>
+                                <span class="sr-only">Observação:</span>
+                                <label>Para importar os dados de uma nota fiscal voce deve proceder da seguinte forma: </label>
+                                <ul>
+                                    <li>Informe a empresa desejada.</li>
+                                    <li>Selecione um arquivo com extensão XML.</li>
+                                    <li>Clique no botão processar para realizar a importação da nota.</li>
+                                    <li>Caso ocorra algum erro uma mensagem correspondente ao problema encontrado sera apresentada.</li>
+                                </ul>
+                                <label>Após a conclusão da importação, o sistema permanecerá na mesma tela para que outra nota seja importada caso seja necessário. </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="form-group">
+                            @Html.Label("Empresa")
+                            @Html.DropDownList("_emp_id", new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "emp_id" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-8">
+                        @Html.Label("Selecione o Arquivo")
+                        <input name="uploadFile" type="file" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="submit" id="btnSubmit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save blue"></span>&nbspProcessar</button>
+        </div>
+    </div>
+  
+}

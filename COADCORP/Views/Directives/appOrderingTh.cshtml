@@ -1,0 +1,12 @@
+﻿@{
+    Layout = null;
+}
+<a href="javascript:void(0)" ng-click="ordernar()" class="clear-link nowrap" ng-class="{
+    'text-primary': appOrderingTh.property == orderProperty, 
+    'text-muted' : appOrderingTh.property != orderProperty
+   }">
+    <span ng-transclude></span>
+    <span class="fa fa-sort sort-icon" ng-if="appOrderingTh.property != orderProperty"></span>
+    <span class="fa fa-sort-asc text-primary sort-icon" ng-if="appOrderingTh.property == orderProperty && appOrderingTh.order == 'ASC'"></span>
+    <span class="fa fa-sort-desc text-primary sort-icon" ng-if="appOrderingTh.property == orderProperty && appOrderingTh.order == 'DESC'"></span>
+</a>

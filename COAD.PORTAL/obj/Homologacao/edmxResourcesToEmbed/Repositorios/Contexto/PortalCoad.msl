@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="coadModelStoreContainer" CdmEntityContainer="coadEntities">
+    <EntitySetMapping Name="clientes">
+      <EntityTypeMapping TypeName="coadModel.clientes">
+        <MappingFragment StoreEntitySet="clientes">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="perfil" ColumnName="perfil" />
+          <ScalarProperty Name="usuario" ColumnName="usuario" />
+          <ScalarProperty Name="senha" ColumnName="senha" />
+          <ScalarProperty Name="permissao" ColumnName="permissao" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="cpf" ColumnName="cpf" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="sobrenome" ColumnName="sobrenome" />
+          <ScalarProperty Name="empresa" ColumnName="empresa" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="endereco" ColumnName="endereco" />
+          <ScalarProperty Name="numero" ColumnName="numero" />
+          <ScalarProperty Name="complemento" ColumnName="complemento" />
+          <ScalarProperty Name="bairro" ColumnName="bairro" />
+          <ScalarProperty Name="cep" ColumnName="cep" />
+          <ScalarProperty Name="cidade" ColumnName="cidade" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="telefone" ColumnName="telefone" />
+          <ScalarProperty Name="conhecimento" ColumnName="conhecimento" />
+          <ScalarProperty Name="public" ColumnName="public" />
+          <ScalarProperty Name="vigencia" ColumnName="vigencia" />
+          <ScalarProperty Name="trab" ColumnName="trab" />
+          <ScalarProperty Name="profissao" ColumnName="profissao" />
+          <ScalarProperty Name="sexo" ColumnName="sexo" />
+          <ScalarProperty Name="data_nascimento" ColumnName="data_nascimento" />
+          <ScalarProperty Name="area_atuacao" ColumnName="area_atuacao" />
+          <ScalarProperty Name="receber_novidades" ColumnName="receber_novidades" />
+          <ScalarProperty Name="cadastrado" ColumnName="cadastrado" />
+          <ScalarProperty Name="data1" ColumnName="data1" />
+          <ScalarProperty Name="expiracao" ColumnName="expiracao" />
+          <ScalarProperty Name="tipo_usuario" ColumnName="tipo_usuario" />
+          <ScalarProperty Name="contador" ColumnName="contador" />
+          <ScalarProperty Name="dataCadastro" ColumnName="dataCadastro" />
+          <ScalarProperty Name="data_atualizacao" ColumnName="data_atualizacao" />
+          <ScalarProperty Name="cnpj" ColumnName="cnpj" />
+          <ScalarProperty Name="id_estacio" ColumnName="id_estacio" />
+          <ScalarProperty Name="oab_flag" ColumnName="oab_flag" />
+          <ScalarProperty Name="oab_nr_inscricao" ColumnName="oab_nr_inscricao" />
+          <ScalarProperty Name="oab_status" ColumnName="oab_status" />
+          <ScalarProperty Name="dt_ultimo_login" ColumnName="dt_ultimo_login" />
+          <ScalarProperty Name="qtd_sessoes" ColumnName="qtd_sessoes" />
+          <ScalarProperty Name="oab_nr_ficha" ColumnName="oab_nr_ficha" />
+          <ScalarProperty Name="data_repositorio" ColumnName="data_repositorio" />
+          <ScalarProperty Name="pesquisa" ColumnName="pesquisa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="idc_agregado">
+      <EntityTypeMapping TypeName="coadModel.idc_agregado">
+        <MappingFragment StoreEntitySet="idc_agregado">
+          <ScalarProperty Name="idc_agregado_id" ColumnName="idc_agregado_id" />
+          <ScalarProperty Name="idc_agregado_nome" ColumnName="idc_agregado_nome" />
+          <ScalarProperty Name="idc_agregado_valor" ColumnName="idc_agregado_valor" />
+          <ScalarProperty Name="idc_agregado_data" ColumnName="idc_agregado_data" />
+          <ScalarProperty Name="idc_agregado_orientacao" ColumnName="idc_agregado_orientacao" />
+          <ScalarProperty Name="idc_agregado_ordem" ColumnName="idc_agregado_ordem" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="noticias">
+      <EntityTypeMapping TypeName="coadModel.noticias">
+        <MappingFragment StoreEntitySet="noticias">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_prod" ColumnName="id_prod" />
+          <ScalarProperty Name="id_tipo" ColumnName="id_tipo" />
+          <ScalarProperty Name="texto" ColumnName="texto" />
+          <ScalarProperty Name="nota" ColumnName="nota" />
+          <ScalarProperty Name="destaque" ColumnName="destaque" />
+          <ScalarProperty Name="newsletter" ColumnName="newsletter" />
+          <ScalarProperty Name="link_file" ColumnName="link_file" />
+          <ScalarProperty Name="data_cadastro" ColumnName="data_cadastro" />
+          <ScalarProperty Name="destaque_home" ColumnName="destaque_home" />
+          <ScalarProperty Name="destaque_perfil" ColumnName="destaque_perfil" />
+          <ScalarProperty Name="destaque_fixo_home" ColumnName="destaque_fixo_home" />
+          <ScalarProperty Name="destaque_fixo_perfil" ColumnName="destaque_fixo_perfil" />
+          <ScalarProperty Name="publicar" ColumnName="publicar" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="noticias_busca">
+      <EntityTypeMapping TypeName="coadModel.noticias_busca">
+        <MappingFragment StoreEntitySet="noticias_busca">
+          <ScalarProperty Name="id_grupo" ColumnName="id_grupo" />
+          <ScalarProperty Name="id_noticia" ColumnName="id_noticia" />
+          <ScalarProperty Name="verbete" ColumnName="verbete" />
+          <ScalarProperty Name="id_prod" ColumnName="id_prod" />
+          <ScalarProperty Name="id_tipo" ColumnName="id_tipo" />
+          <ScalarProperty Name="texto" ColumnName="texto" />
+          <ScalarProperty Name="data_cadastro" ColumnName="data_cadastro" />
+          <ScalarProperty Name="publicar" ColumnName="publicar" />
+          <ScalarProperty Name="texto_integra" ColumnName="texto_integra" />
+          <ScalarProperty Name="verbete_integra" ColumnName="verbete_integra" />
+          <ScalarProperty Name="descricao" ColumnName="descricao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="noticias_conteudo">
+      <EntityTypeMapping TypeName="coadModel.noticias_conteudo">
+        <MappingFragment StoreEntitySet="noticias_conteudo">
+          <ScalarProperty Name="id_grupo" ColumnName="id_grupo" />
+          <ScalarProperty Name="id_noticia" ColumnName="id_noticia" />
+          <ScalarProperty Name="verbete" ColumnName="verbete" />
+          <ScalarProperty Name="subverbete" ColumnName="subverbete" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="noticias_grupos">
+      <EntityTypeMapping TypeName="coadModel.noticias_grupos">
+        <MappingFragment StoreEntitySet="noticias_grupos">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_tipo" ColumnName="id_tipo" />
+          <ScalarProperty Name="descricao" ColumnName="descricao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="noticias_permissoes">
+      <EntityTypeMapping TypeName="coadModel.noticias_permissoes">
+        <MappingFragment StoreEntitySet="noticias_permissoes">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_grupo" ColumnName="id_grupo" />
+          <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="id_permissao" ColumnName="id_permissao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="noticias_tipos">
+      <EntityTypeMapping TypeName="coadModel.noticias_tipos">
+        <MappingFragment StoreEntitySet="noticias_tipos">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_area" ColumnName="id_area" />
+          <ScalarProperty Name="descricao" ColumnName="descricao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tab_30">
+      <EntityTypeMapping TypeName="coadModel.tab_30">
+        <MappingFragment StoreEntitySet="tab_30">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="colec" ColumnName="colec" />
+          <ScalarProperty Name="gg" ColumnName="gg" />
+          <ScalarProperty Name="vb" ColumnName="vb" />
+          <ScalarProperty Name="svb" ColumnName="svb" />
+          <ScalarProperty Name="complemento" ColumnName="complemento" />
+          <ScalarProperty Name="tipo_materia" ColumnName="tipo_materia" />
+          <ScalarProperty Name="expressao_ato" ColumnName="expressao_ato" />
+          <ScalarProperty Name="num" ColumnName="num" />
+          <ScalarProperty Name="org" ColumnName="org" />
+          <ScalarProperty Name="pagina" ColumnName="pagina" />
+          <ScalarProperty Name="informativo" ColumnName="informativo" />
+          <ScalarProperty Name="ano" ColumnName="ano" />
+          <ScalarProperty Name="modulo" ColumnName="modulo" />
+          <ScalarProperty Name="titulo" ColumnName="titulo" />
+          <ScalarProperty Name="dataCadastro" ColumnName="dataCadastro" />
+          <ScalarProperty Name="idGED" ColumnName="idGED" />
+          <ScalarProperty Name="GED_revoga_altera" ColumnName="GED_revoga_altera" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tab_30_html">
+      <EntityTypeMapping TypeName="coadModel.tab_30_html">
+        <MappingFragment StoreEntitySet="tab_30_html">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="colec" ColumnName="colec" />
+          <ScalarProperty Name="modulo" ColumnName="modulo" />
+          <ScalarProperty Name="html" ColumnName="html" />
+          <ScalarProperty Name="idGED" ColumnName="idGED" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tab_31">
+      <EntityTypeMapping TypeName="coadModel.tab_31">
+        <MappingFragment StoreEntitySet="tab_31">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="colec" ColumnName="colec" />
+          <ScalarProperty Name="gg" ColumnName="gg" />
+          <ScalarProperty Name="vb" ColumnName="vb" />
+          <ScalarProperty Name="svb" ColumnName="svb" />
+          <ScalarProperty Name="complemento" ColumnName="complemento" />
+          <ScalarProperty Name="tipo_materia" ColumnName="tipo_materia" />
+          <ScalarProperty Name="expressao_ato" ColumnName="expressao_ato" />
+          <ScalarProperty Name="num" ColumnName="num" />
+          <ScalarProperty Name="org" ColumnName="org" />
+          <ScalarProperty Name="pagina" ColumnName="pagina" />
+          <ScalarProperty Name="informativo" ColumnName="informativo" />
+          <ScalarProperty Name="ano" ColumnName="ano" />
+          <ScalarProperty Name="modulo" ColumnName="modulo" />
+          <ScalarProperty Name="titulo" ColumnName="titulo" />
+          <ScalarProperty Name="dataCadastro" ColumnName="dataCadastro" />
+          <ScalarProperty Name="LABEL" ColumnName="LABEL" />
+          <ScalarProperty Name="Destino" ColumnName="Destino" />
+          <ScalarProperty Name="Revisar" ColumnName="Revisar" />
+          <ScalarProperty Name="datadoato" ColumnName="datadoato" />
+          <ScalarProperty Name="publicacao" ColumnName="publicacao" />
+          <ScalarProperty Name="diario" ColumnName="diario" />
+          <ScalarProperty Name="ementa" ColumnName="ementa" />
+          <ScalarProperty Name="status_colec" ColumnName="status_colec" />
+          <ScalarProperty Name="status_vb" ColumnName="status_vb" />
+          <ScalarProperty Name="newsletter" ColumnName="newsletter" />
+          <ScalarProperty Name="secao" ColumnName="secao" />
+          <ScalarProperty Name="desc_news" ColumnName="desc_news" />
+          <ScalarProperty Name="classiBuscaAvancada" ColumnName="classiBuscaAvancada" />
+          <ScalarProperty Name="idGED" ColumnName="idGED" />
+          <ScalarProperty Name="GED_revoga_altera" ColumnName="GED_revoga_altera" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tab_31_html">
+      <EntityTypeMapping TypeName="coadModel.tab_31_html">
+        <MappingFragment StoreEntitySet="tab_31_html">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="colec" ColumnName="colec" />
+          <ScalarProperty Name="modulo" ColumnName="modulo" />
+          <ScalarProperty Name="html" ColumnName="html" />
+          <ScalarProperty Name="bug" ColumnName="bug" />
+          <ScalarProperty Name="idGED" ColumnName="idGED" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VW_BuscarNoticias">
+      <EntityTypeMapping TypeName="coadModel.VW_BuscarNoticias">
+        <MappingFragment StoreEntitySet="VW_BuscarNoticias">
+          <ScalarProperty Name="nmid" ColumnName="nmid" />
+          <ScalarProperty Name="nmid_prod" ColumnName="nmid_prod" />
+          <ScalarProperty Name="nmid_tipo" ColumnName="nmid_tipo" />
+          <ScalarProperty Name="nmtexto" ColumnName="nmtexto" />
+          <ScalarProperty Name="nmnota" ColumnName="nmnota" />
+          <ScalarProperty Name="nmdestaque" ColumnName="nmdestaque" />
+          <ScalarProperty Name="nmnewsletter" ColumnName="nmnewsletter" />
+          <ScalarProperty Name="nmlink_file" ColumnName="nmlink_file" />
+          <ScalarProperty Name="nmdata_cadastro" ColumnName="nmdata_cadastro" />
+          <ScalarProperty Name="nmdestaque_home" ColumnName="nmdestaque_home" />
+          <ScalarProperty Name="nmdestaque_perfil" ColumnName="nmdestaque_perfil" />
+          <ScalarProperty Name="nmdestaque_fixo_home" ColumnName="nmdestaque_fixo_home" />
+          <ScalarProperty Name="nmdestaque_fixo_perfil" ColumnName="nmdestaque_fixo_perfil" />
+          <ScalarProperty Name="ncid_grupo" ColumnName="ncid_grupo" />
+          <ScalarProperty Name="ncid_noticia" ColumnName="ncid_noticia" />
+          <ScalarProperty Name="ncverbete" ColumnName="ncverbete" />
+          <ScalarProperty Name="ncsubverbete" ColumnName="ncsubverbete" />
+          <ScalarProperty Name="ngid" ColumnName="ngid" />
+          <ScalarProperty Name="ngid_tipo" ColumnName="ngid_tipo" />
+          <ScalarProperty Name="ngdescricao" ColumnName="ngdescricao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

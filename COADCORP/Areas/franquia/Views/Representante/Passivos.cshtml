@@ -1,0 +1,355 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutosDTO
+@using Coad.GenericCrud.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><a href="~/Home/Index">Home</a></li>
+        <li class="active">Painel Representantes</li>        
+        
+    </ol>
+}
+
+<style type="text/css">
+
+    .body {
+        background-color: #e8e8e8 !important;
+
+    }
+</style>
+
+<script src="~/Scripts/negocio/controllers_plugins/info_cliente.js"></script>
+@Scripts.Render("~/Scripts/negocio/representante.js")
+<div>
+    <div ng-controller="RepresentanteController" class="padding content" ng-cloak data-ng-init="initRelatorioPassivos()">
+        <div app-message></div>     
+        
+                          <div class="panel panel-corp">
+          
+                              <div class="panel-body">                                                    
+                                  <div class="row">
+                                  @if (SessionContext.IsGerenteDepartamento("Franquiador", true) || SessionContext.IsGerenteDepartamento("TI", true))
+                                  {
+                                      <div class="col-md-3">
+                                          <form id="regiao-filter">
+                                                <div class="form-group">                                    
+                                                    <label for="REGIAO_ID">Regiao</label>
+                                                    @Html.DropDownList("RG_ID", 
+                                                new SelectList(ViewBag.regioes, "RG_ID", "RG_DESCRICAO"), "Selecione" ,
+                                                new {@class = "form-control", ng_model = "filtro.RG_ID" })
+              
+                                                </div>
+                                           </form>
+                                        </div>
+                                  }
+                                        <div class="col-md-3">
+                                            <label>De:</label>
+                                            <input type="text" id="dataInicialFiltro" ng-model="data" app-date="filtro.data" class="form-control"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Até:</label>
+                                            <input type="text" id="dataFinalFiltro" ng-model="dataFinal" app-date="filtro.dataFinal" class="form-control"/>
+                                        </div>
+                                  </div>
+                                  
+                                  </div>
+                              
+                                <div class="panel-footer">
+                                    <button type="button" class="btn btn-default" ng-click="loadRelatoriosDePassivos()">Pesquisar</button>
+                                </div>
+         
+                        </div>       
+         <div class="row"> 
+                
+        <div class="col-sm-12">  
+                <div class="panel panel-corp">
+                <div class="panel-heading"><span class="glyphicon glyphicon-dashboard"></span> Relatorio de Passivos (Operadoras Logadas)</div>
+      
+                    <div class="panel-body">
+                            <div class="table-responsive">     
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>      
+                                        <th>                                           
+                                            Ordem
+                                        </th>
+                                        <th>
+                                            Representante
+                                        </th>   
+                                        <th>Região</th>                        
+                                        <th>
+                                            Telefone Suspect
+                                        </th>            
+                                        <th>Pre Reserva Suspect</th>
+                                        <th>Total novos</th>
+                                        <th>Telefone Lead e Cliente</th>
+                                        <th>Pre Reserva Lead e Cliente</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>    
+                              <tr ng-repeat="item in relatorioPassivosRepresentanteLogados">
+                                    <td>
+                                        {{item.Ordem}}
+                                    </td>  
+                                    <td>
+                                        {{item.REP_NOME}}
+                                    </td>                                                      
+                                    <td>{{item.RG_DESCRICAO}}</td>
+                                    <td>
+                                        {{item.PassivosRecebidos}}
+                                    </td>                       
+                                      <td>
+                                        {{item.PreReservasRecebidas}}
+                                    </td>                       
+                                    <td>
+                                        {{item.PassivosRecebidos + item.PreReservasRecebidas}}
+                                    </td>
+                                    <td>
+                                        {{item.Encaminhados}}
+                                    </td>                       
+                                    <td>
+                                        {{item.EncaminhadosPR}}
+                                    </td>
+                                    <td>
+                                        {{item.PassivosRecebidos + item.PreReservasRecebidas + item.Encaminhados + item.EncaminhadosPR}}
+                                    </td>
+                              </tr>
+                                <tr>
+                                    <td colspan="10" ng-hide="relatorioPassivosRepresentanteLogados" class="text">
+                                        Não foi encontrado nenhum registro.
+                                    </td>
+                                </tr>
+                            </table> 
+                        </div>
+                        <div app-pagination request-page="paginaReq" load-function="listarRelatorioDePassivosRepresentanteLogados(paginaReq)"></div>
+                       </div>
+                    </div>                      
+               </div>      
+             
+        <div class="col-sm-12">  
+                <div class="panel panel-corp">
+                <div class="panel-heading"><span class="glyphicon glyphicon-dashboard"></span> Todos</div>
+      
+                    <div class="panel-body">
+                            <div class="table-responsive">     
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>      
+                                        <th>                                           
+                                            Ordem
+                                        </th>
+                                        <th>
+                                            Representante
+                                        </th>                    
+                                        <th>Região</th>       
+                                        <th>
+                                            Telefone Suspect
+                                        </th>            
+                                        <th>Pre Reserva Suspect</th>
+                                        <th>Total novos</th>
+                                        <th>Telefone Lead e Cliente</th>
+                                        <th>Pre Reserva Lead e Cliente</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>    
+                              <tr ng-repeat="item in relatorioPassivos" ng-if="$index < (relatorioPassivos.length - 1)">
+                                    <td>
+                                        {{item.Ordem}}
+                                    </td>  
+                                    <td>
+                                        {{item.REP_NOME}}
+                                    </td>  
+                                    <td>
+                                        {{item.RG_DESCRICAO}}
+                                    </td>                                                      
+                                    <td>
+                                        {{item.PassivosRecebidos}}
+                                    </td>                       
+                                      <td>
+                                        {{item.PreReservasRecebidas}}
+                                    </td>                       
+                                    <td>
+                                        {{item.PassivosRecebidos + item.PreReservasRecebidas}}
+                                    </td>
+                                    <td>
+                                        {{item.Encaminhados}}
+                                    </td>                       
+                                    <td>
+                                        {{item.EncaminhadosPR}}
+                                    </td>
+                                    <td>
+                                        {{item.PassivosRecebidos + item.PreReservasRecebidas + item.Encaminhados + item.EncaminhadosPR}}
+                                    </td>
+                              </tr>                               
+                                <tr>
+                                    <td colspan="10" ng-hide="relatorioPassivos" class="text">
+                                        Não foi encontrado nenhum registro.
+                                    </td>
+                                </tr>
+                                <tfoot>
+                                     <tr>
+                                        <td colspan="3">
+                                            Total
+                                        </td>                                                 
+                                        <td>
+                                            {{relatorioPassivosTotal.PassivosRecebidos}}
+                                        </td>                       
+                                          <td>
+                                            {{relatorioPassivosTotal.PreReservasRecebidas}}
+                                        </td>                       
+                                        <td>
+                                            {{relatorioPassivosTotal.PassivosRecebidos + total.PreReservasRecebidas}}
+                                        </td>
+                                        <td>
+                                            {{relatorioPassivosTotal.Encaminhados}}
+                                        </td>                       
+                                        <td>
+                                            {{relatorioPassivosTotal.EncaminhadosPR}}
+                                        </td>
+                                        <td>
+                                            {{relatorioPassivosTotal.PassivosRecebidos + relatorioPassivosTotal.PreReservasRecebidas + relatorioPassivosTotal.Encaminhados + relatorioPassivosTotal.EncaminhadosPR}}
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table> 
+                        </div>
+                        <div app-pagination request-page="paginaReq" load-function="listarRelatorioPassivos(paginaReq)"></div>
+                       </div>
+                    </div>                      
+               </div>
+             
+        <div class="col-sm-12">  
+        <div class="panel panel-corp">
+        <div class="panel-heading"><span class="glyphicon glyphicon-dashboard"></span> Passivos Novos</div>
+      
+            <div class="panel-body">
+                    <div class="table-responsive">     
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>      
+                                <th>                                           
+                                    Código
+                                </th>
+                                <th>
+                                    Data / Hora
+                                </th>                           
+                                <th>
+                                    Cliente
+                                </th>            
+                                <th>
+                                    Representante que criou
+                                </th>
+                                <th>
+                                    Região do representante que criou
+                                </th>
+                                <th>
+                                    Representante que recebeu
+                                </th>
+                                <th>
+                                    Região do Representante que recebeu
+                                </th>
+                            </tr>
+                        </thead>    
+                        <tr ng-repeat="item in lstSuspectsCadastradosNoDia">
+                            <td>{{item.CLI_ID}}</td>
+                            <td app-show-date="item.DATA" show-time>
+                            </td>                                                      
+                            <td>
+                                {{item.CLI_NOME}}
+                            </td>                       
+                            <td>
+                                {{item.REP_NOME_DEMANDANTE}}
+                            </td>                       
+                            <td>
+                                {{item.RG_DESCRICAO_DEMANDANTE}}
+                            </td>                       
+                            <td>
+                                {{item.REP_NOME}}
+                            </td>                       
+                            <td>
+                                {{item.RG_DESCRICAO}}
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td colspan="7" ng-hide="lstSuspectsCadastradosNoDia" class="text">
+                                Não foi encontrado nenhum registro.
+                            </td>
+                        </tr>
+                    </table> 
+                </div>
+                <div app-pagination request-page="paginaReq" load-function="listarSuspectsCadastradosNoDia(paginaReq)"></div>
+                </div>
+            </div>                      
+        </div>                   
+        <div class="col-sm-12">  
+        <div class="panel panel-corp">
+        <div class="panel-heading"><span class="glyphicon glyphicon-dashboard"></span> Passivos Encaminhados</div>
+      
+            <div class="panel-body">
+                    <div class="table-responsive">     
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>      
+                                <th>                                           
+                                    Código
+                                </th>
+                                <th>
+                                    Hora
+                                </th>                           
+                                <th>
+                                    Cliente
+                                </th>            
+                                <th>
+                                    Representante que atendeu
+                                </th>
+                                <th>
+                                    Regiao do representante que atendeu
+                                </th>
+                                <th>
+                                    Representante que recebeu
+                                </th>
+                                <th>
+                                    Regiao do representante que recebeu
+                                </th>
+                            </tr>
+                        </thead>    
+                        <tr ng-repeat="item in lstClientesComPrioridade">
+                            <td>{{item.CLI_ID}}</td>
+                            <td app-show-date="item.DATA" show-time>
+                            </td>                                                      
+                            <td>
+                                {{item.CLIENTES.CLI_NOME}}
+                            </td>                       
+                            <td>
+                                {{item.REPRESENTANTE1.REP_NOME}}
+                            </td>                       
+                            <td>
+                                {{item.REPRESENTANTE1.REGIAO.RG_DESCRICAO}}
+                            </td>                       
+                            <td>
+                                {{item.REPRESENTANTE.REP_NOME}}
+                            </td>                       
+                            <td>
+                                {{item.REPRESENTANTE.REGIAO.RG_DESCRICAO}}
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td colspan="7" ng-hide="lstClientesComPrioridade" class="text">
+                                Não foi encontrado nenhum registro.
+                            </td>
+                        </tr>
+                    </table> 
+                </div>
+                <div app-pagination request-page="paginaReq" load-function="listarClientesComPrioridade(paginaReq)"></div>
+                </div>
+            </div>                      
+        </div>        
+    </div>
+
+        @Html.Partial("Partials/_ModalClientePartial")
+    </div>   
+</div>

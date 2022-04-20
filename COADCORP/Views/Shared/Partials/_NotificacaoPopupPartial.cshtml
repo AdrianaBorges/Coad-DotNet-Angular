@@ -1,0 +1,30 @@
+﻿<div id="notificacao-popup" ng-show="notifyPopup" class="animate-show-no-border" ng-click="abreModalNotificacao(notifyPopup )">
+
+    <div class="panel panel-default">
+        <button type="button" class="close" ng-click="fecharNotificacaPopup($event)"><span aria-hidden="true">&times;</span></button>    
+                <div class="panel-body limit-modal-height">
+                                <div class="row">
+                                    <div class="form-group col-sm-12 text">
+                                       <label>Notificação</label><br />                                            
+                                       <span class="label font-11" ng-class="{'label-info': notifyPopup.URG_NTF_ID == 'INFO',
+                                            'label-warning': notifyPopup.URG_NTF_ID == 'WARN',
+                                            'label-danger': notifyPopup.URG_NTF_ID == 'ERROR',
+                                            'label-primary': notifyPopup.URG_NTF_ID == 'PRIORITY',
+                                            'label-success': notifyPopup.URG_NTF_ID == 'SUCCESS',
+                                            'label-default': !notifyPopup.URG_NTF_ID}">
+                                           {{notifyPopup.URGENCIA_NOTIFICACAO.URG_NTF_DESCRICAO}}
+                                       </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-12">
+                                        <figure>
+                                            <pre style="white-space:initial;min-height: 60px; max-height: 60px">{{notifyPopup.NTF_DESCRICAO}}</pre>
+                                        </figure>                                         
+                                    </div> 
+                                </div>
+                           </div>
+                    <div>                         
+                  </div>
+    </div>  
+</div>

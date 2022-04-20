@@ -1,0 +1,110 @@
+﻿@Scripts.Render("~/Scripts/negocio/email.js")
+@using Coad.GenericCrud.Extensions
+@using GenericCrud.ActionResultTools
+@{
+    ViewBag.Title = "E-mails";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">Home </a></li>
+        <li class="active">E-mails</li>
+    </ol>
+
+}
+
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+<div>
+
+    <div ng-controller="EmailController" class="padding content" data-ng-init="init()">
+
+        <div class="form-group col-lg-12">
+
+            <div class="form-group col-lg-3 panel panel-default">
+                
+                <div ng-repeat="email in lstEmails" class="panel panel-default" style="border: 0px; padding: 7px; margin-bottom: 7px; margin-top: 7px;">
+
+                    <input type="radio" name="assuntos" value="{{email.Id}}" 
+                           ng-click="SelecionarEmail(email.Id)" />&nbsp;{{email.Assunto}}
+                    
+                </div>
+
+            </div>
+
+            <div ng-model="emailSelecionado" class="form-group col-lg-9" style="border: 0px;">
+
+                <div class="form-group col-lg-12 panel panel-default" style="border: 0px; padding: 7px; margin-bottom: 0px;">
+
+                    <div class="form-group col-lg-2 panel panel-default" style="border: 0px; padding: 7px; margin-bottom: 0px;text-align:right;">
+                        De:
+                    </div>
+
+                    <div class="form-group col-lg-10 panel panel-default" style="border: 0px; padding: 7px; margin-bottom: 0px;">
+                        {{emailSelecionado.De}}
+                    </div>
+
+                </div>
+
+                <div class="form-group col-lg-12 panel panel-default" style="border: 0px; padding: 7px; margin-bottom: 0px;">
+
+                    <div class="form-group col-lg-2 panel panel-default" style="border: 0px; padding: 7px; margin-bottom: 0px;text-align:right;">
+                        Para:
+                    </div>
+
+                    <div class="form-group col-lg-10 panel panel-default" style="border: 0px; padding: 7px; margin-bottom: 0px;">
+                        {{emailSelecionado.Para}}
+                    </div>
+
+                </div>
+
+                <div class="form-group col-lg-12 panel panel-default" style="border: 0px; padding: 7px; margin-bottom: 0px;">
+
+                    <div class="form-group col-lg-2 panel panel-default" style="border: 0px; padding: 7px; margin-bottom: 0px;text-align:right;">
+                        Data:
+                    </div>
+
+                    <div class="form-group col-lg-10 panel panel-default" style="border: 0px; padding: 7px; margin-bottom: 0px;">
+                        {{emailSelecionado.Data | date : "dd/MM/yyyy HH:mm"}}
+                    </div>
+
+                </div>
+
+
+                <div class="form-group col-lg-12 panel panel-default" style="border: 0px; padding: 7px; margin-bottom: 0px;">
+
+                    <div class="form-group col-lg-2 panel panel-default" style="border: 0px; padding: 7px; margin-bottom: 0px;text-align:right;">
+                        Assunto:
+                    </div>
+
+                    <div class="form-group col-lg-10 panel panel-default" style="border: 0px; padding: 7px; margin-bottom: 0px;">
+                        {{emailSelecionado.Assunto}}
+                    </div>
+
+                </div>
+                
+                <div ng-model="emailSelecionado" class="form-group col-lg-9">
+
+                    <br />
+                    <div class="form-group col-lg-12">
+
+                        <div ng-bind-html="trustHTML(emailSelecionado.ConteudoHtml)"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,128 @@
+﻿@using COAD.SEGURANCA.Extensions
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewBag.Title = " COADCORP - Sistema de Gestão Integrada.";
+}
+
+@*@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+
+}*@
+
+<form>
+    <div ng-app="appModule">
+        <div ng-controller="HomeControler">
+            @*ng-init="AtualizarGraficos()">*@
+            <div class="row" >
+                <div class="col-lg-12" style="text-align: center;padding-top:40px;">
+                    @*<iframe width="550" height="400" id="iframe_container" src="https://prezi.com/embed/cxnzb-mlyefo/?bgcolor=ffffff&amp;lock_to_path=1&amp;autoplay=0&amp;autohide_ctrls=0&amp;landing_data=bHVZS2czc0xGT0NBaGpZTXNiVHNFUCtMWXdTMjZjV2Q&amp;landing_sign=UwA-d_v-8JR4KS06NR5VLMzQv1nVjdb_NqnZY5RzQh4" frameborder="0" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen=""></iframe>*@
+                    <img src="~/Images/imgPrincipal.jpg" width="600" height="470" />
+                    @*<img src="~/Images/imgPrincipal_geral.jpg" width="500" height="450" />*@
+                </div>
+
+
+
+
+
+                @*                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-list-alt fa-fw"></i>
+                            <label id="title"></label>
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Opções
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li><a href="#" ng-click="AtualizarGraficos()">Atualizar</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        @Html.Label("Mes")
+                                        @Html.DropDownList("_mesatual", new SelectList(@ViewBag.ListaMes, "Value", "Text"), new { @class = "form-control", ng_model = "mesatual",  ng_change = "AtualizarGraficos()" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        @Html.Label("Ano")
+                                        @Html.TextBox("_anoatual","",new { @class = "form-control", ng_model = "anoatual"})
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        @Html.Label("Região")
+                                        @Html.DropDownList("_regiao_uf", new SelectList(@ViewBag.ListaRegiao, "Value", "Text", "RJ"), new { @class = "form-control", ng_model = "regiao_uf", ng_change = "AtualizarGraficos()" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flot-line-chart"></div>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-list-alt fa-fw"></i>Gráfico de Torta
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Opções
+                            <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li><a href="#" ng-click="AtualizarGraficos()">Atualizar</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flot-pie-chart"></div>
+                            </div>
+                            <div id="hover"></div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>*@
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/appScripts/Home.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.js")
+    @Scripts.Render("~/Scripts/flot/excanvas.min.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.pie.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.time.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.resize.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.categories.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.tooltip.min.js")
+
+}
+
+

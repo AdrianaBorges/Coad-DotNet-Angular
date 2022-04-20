@@ -1,0 +1,59 @@
+﻿<!-- ALT: 30/09/2015 - disponibilizando os dados e métodos javascript -->
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Departamento Pessoal";     
+}
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Departamento Pessoal</li>
+    </ol>
+}
+
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/Dp/dpGerente.js")
+
+<!-- ALT: 23/06/2015 - abrindo Angular para a aplicação -->
+<div ng-app="appModule">
+    <div ng-controller="DpController" class="padding content" data-ng-init="init()" ng-cloak>
+        <div class="panel panel-default">
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-filter"></span> Departamento Pessoal / @TempData["msg"]
+                <div class="pull-right">
+                    <div class="btn-group">
+                    </div>
+                </div>
+            </div>
+            <!-- ALT: 23/06/2015 - buscar/pesquisar -->
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-3">
+                        <label for="dpEmpresa">Empresa:</label>
+                        @Html.DropDownList("filtro.dpEmpresa", new SelectList(@ViewBag.dpEmpresa, "Value", "Text"), "", new { @class = "form-control", ng_model = "filtro.dpEmpresa" })
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="dpCpf">CPF:</label>
+                        <input type="text" id="dpCpf" ng-model="filtro.dpCpf" class="form-control" maxlength="11" placeholder="CPF: apenas números" ng-blur="checaCPF('@ViewBag.cpf')" />
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="dpAno">Ano:</label>
+                        @Html.DropDownList("filtro.dpAno", new SelectList(@ViewBag.dpAno, "Value", "Text"), "", new { @class = "form-control", ng_model = "filtro.dpAno" })
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="dpMes">Mês de Competência:</label>
+                        @Html.DropDownList("filtro.dpMes", new SelectList(@ViewBag.dpMes, "Value", "Text"), "", new { @class = "form-control", ng_model = "filtro.dpMes" })
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="dpAdiantamento">Pagamento </label>
+                        @Html.DropDownList("filtro.dpPeriodo", new SelectList(@ViewBag.dpPeriodo, "Value", "Text"), "", new { @class = "form-control", ng_model = "filtro.dpPeriodo" })
+                    </div>
+                </div>
+            </div>
+            <!-- ALT: 23/06/2015 - botão pesquisar -->
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="dpContracheque()" title="Emissão do Recibo de Pagamento" ng-disabled="!filtro.dpCpf || !isNumber(filtro.dpCpf) || filtro.dpCpf.length != 11">
+                    <span class="glyphicon glyphicon-print blue"></span> Recibo de Pagamento</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,267 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/Scripts/appScripts/Portal.js")
+
+ 
+<div ng-app="appModule">
+    <div ng-controller="PortalController" ng-init="initDadosPagamento(@ViewBag.IpeId,'@ViewBag.IpeHash');">
+        <div class="container">
+            <div class="row process-wizard process-wizard-primary">
+                <div class="col-xs-3 process-wizard-step complete">
+                    <div class="text-center process-wizard-stepnum">Passo 1</div>
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <a href="/Cadastro/Planos" class="process-wizard-dot"></a>
+                    <div class="process-wizard-info text-center">Selecione o produto desejado</div>
+                </div>
+
+                <div class="col-xs-3 process-wizard-step complete">
+                    <!-- complete -->
+                    <div class="text-center process-wizard-stepnum">Passo 2</div>
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <a href="/Cadastro/Identificacao" class="process-wizard-dot"></a>
+                    <div class="process-wizard-info text-center">Identificação do cliente</div>
+                </div>
+
+                <div class="col-xs-3 process-wizard-step complete">
+                    <!-- complete -->
+                    <div class="text-center process-wizard-stepnum">Passo 3</div>
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <a href="/Cadastro/DadosFaturamento" class="process-wizard-dot"></a>
+                    <div class="process-wizard-info text-center">Selecione a condição de pagamento e complete seus dados.</div>
+                </div>
+
+                <div class="col-xs-3 process-wizard-step active">
+                    <!-- active -->
+                    <div class="text-center process-wizard-stepnum">Passo 4</div>
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <a href="javascript:void(0);" class="process-wizard-dot"></a>
+                    <div class="process-wizard-info text-center">Confirme o pagamento.</div>
+                </div>
+
+            </div>
+            <form class="row clearfix">
+                <div class="col-md-12">
+                    <div app-message="erro"></div>
+                </div>
+                <div class="col-lg-7 col-sm-7">
+                    <div class="box-static box-border-top padding-30">
+                        <div class="row nomargin-bottom">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Resumo da compra</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <span class="clearfix">
+                                    <strong class="pull-left">Descrição</strong>
+                                    <span class="pull-right">Valor</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label class="pull-left">Consultoria ATC 5 consultas e 5 usuários</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label class="pull-left">Quantidade 1 </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label class="pull-left">Valor Unitário R$&nbsp</label>
+                                <span class="pull-right" app-show-dinheiro="cartao.valor" show-simbolo="false" ng-model="cartao.valor"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <strong>Voce recebera a confirmação da compra no email </strong>(<a href="#">{{cartao.email}}</a>).
+                        </div>
+                    </div>
+                    <div class="box-static box-border-top padding-30">
+                        <div class="row nomargin-bottom">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Dados de Faturamento</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="pull-left">{{cartao.endereco}} - {{cartao.numero}}</label><label class="pull-left" ng-if="cartao.complemento!=null">&nbsp - {{cartao.complemento}}</label>
+                            </div>
+                            <div class="col-md-12">
+                                <label>{{cartao.bairro}}</label>
+                            </div>
+                            <div class="col-md-12">
+                                <label>{{cartao.CEP}} - {{cartao.cidade}} - {{cartao.UF}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-5 col-sm-5">
+                    <div class="box-static box-border-top padding-30">
+                        <div class="row nomargin-bottom">
+                            <div class="col-lg-12 nomargin clearfix">
+                                <label class="radio pull-left nomargin-top">
+                                    <input ng-model="cartao.formapgto" type="radio" value="1" />
+                                    <i></i><span class="weight-300">Boleto</span>
+                                </label>
+                            </div>
+                            <div class="col-lg-12 nomargin clearfix">
+                                <label class="radio pull-left">
+                                    <input ng-model="cartao.formapgto" type="radio" value="2" />
+                                    <i></i><span class="weight-300">Cartão de Credito</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="box-static box-border-top padding-30" ng-if="cartao.formapgto==2">
+                        <div class="box-title">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Pagamento</h4>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Nome Impresso no Cartão *</label>
+                                    <input ng-model="cartao.portador" type="text" class="form-control required" autocomplete="off" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Selecione a Bandeira *</label>
+                                    <select ng-model="cartao.bandeira" class="form-control pointer required">
+                                        <option value="">Select...</option>
+                                        <option value="1">Visa</option>
+                                        <option value="2">Mastercard</option>
+                                        <option value="3">Hipercard</option>
+                                        <option value="4">Amex</option>
+                                        <option value="5">Diners</option>
+                                        <option value="6">Elo</option>
+                                        <option value="7">Aura</option>
+                                        <option value="8">Discover</option>
+                                        <option value="9">CasaShow</option>
+                                        <option value="10">Havan</option>
+                                        <option value="11">HugCard</option>
+                                        <option value="12">AndarAki</option>
+                                        <option value="13">LeaderCard</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Numero do Cartão *</label>
+                                    <input ng-model="cartao.numeroCartao" type="text" class="form-control required" autocomplete="off" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Vencimento do Cartão *</label>
+                                    <div class="row nomargin-bottom">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <select ng-model="cartao.mesExpiracao" class="form-control pointer required">
+                                                <option value="0">Mês</option>
+                                                <option value="01">01 - Janeiro</option>
+                                                <option value="02">02 - Fevereiro</option>
+                                                <option value="03">03 - Março</option>
+                                                <option value="04">04 - Abril</option>
+                                                <option value="05">05 - Maio</option>
+                                                <option value="06">06 - Junho</option>
+                                                <option value="07">07 - Julho</option>
+                                                <option value="08">08 - Agosto</option>
+                                                <option value="09">09 - Setembro</option>
+                                                <option value="10">10 - Outubro</option>
+                                                <option value="11">11 - Novembro</option>
+                                                <option value="12">12 - Dezembro</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-6">
+                                            <select ng-model="cartao.anoExpiracao" class="form-control pointer required">
+                                                <option value="0">Ano</option>
+                                                <option value="2015">2015</option>
+                                                <option value="2016">2016</option>
+                                                <option value="2017">2017</option>
+                                                <option value="2018">2018</option>
+                                                <option value="2019">2019</option>
+                                                <option value="2020">2020</option>
+                                                <option value="2021">2021</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                                <option value="2025">2025</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label>Código de Seguraça *</label>
+                                    <input ng-model="cartao.codigoSeguranca" type="text" class="form-control required" autocomplete="off" maxlength="3" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <hr ng-if="cartao.formapgto==2" />
+                    <div class="box-static box-border-top padding-30">
+                        <div class="box-title">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <span class="clearfix">
+                                        <span class="pull-right" app-show-dinheiro="cartao.valor" show-simbolo="false"></span>
+                                        <strong class="pull-left">Subtotal: R$</strong>
+                                    </span>
+                                    <span class="clearfix">
+                                        <span class="pull-right">0.00</span>
+                                        <span class="pull-left">Desconto: R$</span>
+                                    </span>
+
+                                    <hr />
+
+                                    <span class="clearfix">
+                                        <span class="pull-right" app-show-dinheiro="cartao.valor" show-simbolo="false"></span>
+                                        <strong class="pull-left">TOTAL: R$</strong>
+                                    </span>
+
+                                    <hr />
+                                    <a ng-click="realizarPagamento();" href="javascript:void(0);" class="btn btn-primary btn-lg btn-block size-15"><i class="fa fa-mail-forward"></i>Confirmar Pagamento</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

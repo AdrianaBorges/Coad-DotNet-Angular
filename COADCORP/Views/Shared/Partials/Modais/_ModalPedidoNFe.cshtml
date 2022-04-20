@@ -1,0 +1,139 @@
+﻿<div app-modal="modal-nfe" header="Nota(s) Fiscal(s) Gerada(s)" submodal>
+    <ul class="nav nav-tabs">
+        <li role="presentation" ng-class="{active : tab == 1}"><a href="javascript:void(0);" ng-click="mudarTabNotaFiscal();">Notas Fiscais</a></li>
+        <li role="presentation" ng-class="{active : tab == 2}"><a href="javascript:void(0);" ng-click="mudarTabInfLote();">Informações do Lote</a></li>
+    </ul>
+    <div class="row" ng-show="tab == 1">
+        <div class="form-group col-lg-12 limit-modal-height table-responsive">
+            <h4>Notas de Produto</h4>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th class="right">Número da Nota</th>
+                        <th class="right">Chave da Nota</th>
+                        <th class="right">Situação</th>
+                        <th>Valor da Nota</th>
+                        <th>Número de Contrato</th>
+                        <th class="center">Data de Emisão</th>
+                        <th colspan="1">
+                            Ações
+                        </th>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in lstNFe" class="animate-repeat">
+                    <td>
+                        <span ng-switch="item.NF_TIPO">
+                            <span ng-switch-when="0">Entrada</span>
+                            <span ng-switch-when="1">Saída</span>
+                        </span>
+                    </td>
+                    <td class="right">
+                        {{item.NF_NUMERO}}
+                    </td>
+                    <td class="right">
+                        {{item.NF_CHAVE}}
+                    </td>
+                    <td style="text-align: center;">
+                        <span class="label" ng-class="{
+                                            'label-info' : item.NST_ID == 1,
+                                            'label-success' : item.NST_ID == 2,
+                                            'label-danger' : item.NST_ID == 3,
+                                            'label-warning' : item.NST_ID == 4
+                                        }">{{item.NOTA_FISCAL_STATUS.NST_DESCRICAO}}</span>
+                    </td>
+                    <td class="center">
+                        <span app-show-dinheiro="item.NF_VLR_NOTA"></span>
+                    </td>
+                    <td>
+                        {{item.CTR_NUM_CONTRATO}}
+                    </td>
+                    <td>
+                        <span app-show-date="item.NF_DATA_EMISSAO" data-show-time></span>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);" ng-click="baixarNotaFiscal(item.NF_ID)"
+                           title="Download da Nota Fiscal" class="text-danger">
+                            <span class="glyphicon glyphicon-download"></span>
+                        </a>
+                        <a href="javascript:void(0);" ng-click="gerarLinkDanfe(item.NF_ID)"
+                           title="Visualizar DANFE da NFe" class="text-danger">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8" ng-if="lstNFe.length <= 0" class="text">
+                        Não foi encontrado nenhum registro.
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="form-group col-lg-12 limit-modal-height table-responsive">
+            <h4>Notas de Serviço</h4>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th class="right">Número da Nota</th>
+                        <th class="right">Situação</th>
+                        <th>Valor da Nota</th>
+                        <th>Número de Contrato</th>
+                        <th class="center">Data de Emisão</th>
+                        <th colspan="1">
+                            Ações
+                        </th>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in lstNFse" class="animate-repeat">
+                    <td>
+                        <span ng-switch="item.NF_TIPO">
+                            <span ng-switch-when="2">Entrada</span>
+                            <span ng-switch-when="3">Saída</span>
+                        </span>
+                    </td>
+                    <td class="right">
+                        {{item.NF_NUMERO}}
+                    </td>
+                    <td style="text-align: center;">
+                        <span class="label" ng-class="{
+                                            'label-info' : item.NST_ID == 1,
+                                            'label-success' : item.NST_ID == 2,
+                                            'label-danger' : item.NST_ID == 3,
+                                            'label-warning' : item.NST_ID == 4
+                                        }">{{item.NOTA_FISCAL_STATUS.NST_DESCRICAO}}</span>
+                    </td>
+                    <td class="center">
+                        <span app-show-dinheiro="item.NF_VLR_NOTA"></span>
+                    </td>
+                    <td>
+                        {{item.CTR_NUM_CONTRATO}}
+                    </td>
+                    <td>
+                        <span app-show-date="item.NF_DATA_EMISSAO" data-show-time></span>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);" ng-click="baixarNotaFiscal(item.NF_ID)"
+                           title="Download da Nota Fiscal" class="text-danger">
+                            <span class="glyphicon glyphicon-download"></span>
+                        </a>
+                        <a href="javascript:void(0);" ng-click="gerarLinkDanfe(item.NF_ID)" ng-show="item.NF_COD_VERIFICACAO"
+                           title="Visualizar Detalhamento da NFse" class="text-danger">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8" ng-if="lstNFse.length <= 0" class="text">
+                        Não foi encontrado nenhum registro.
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" ng-show="tab == 2">
+        @Html.Partial("Partials/Modais/_ModalLoteNFe")
+    </div>
+</div>

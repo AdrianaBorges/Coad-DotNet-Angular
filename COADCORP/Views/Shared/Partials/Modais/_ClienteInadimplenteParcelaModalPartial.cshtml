@@ -1,0 +1,57 @@
+﻿<div data-app-modal="modal-validacao-inadimplencia-parcelas" data-header="Inadimplência">
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered table-stripped">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Código no PJ</th>
+                    <th>Código Item Proposta</th>
+                    <th>Código Item Pedido</th>
+                    <th class="center">Situação</th>
+                    <th class="center">Data de Vencimento</th>
+                    <th class="right">Valor das Parcelas</th>
+                    <th class="right">
+                        Valor Pago
+                    </th>
+                    <th class="center">
+                        Data do Pagamento
+                    </th>
+                </tr>
+            </thead>
+            <tr ng-repeat="item in lstParcelasModal" class="animate-repeat-all">
+                <td>
+                    {{item.PAR_NUM_PARCELA}}
+                </td>
+                <td>{{item.PAR_COD_LEGADO}}</td>
+                <td>
+                    <span ng-show="item.PPI_ID">
+                        <a href="javascript:void(0)" ng-click="abrirPropostaPorItem(item.PPI_ID)" title="Abrir a Proposta"> {{item.PPI_ID}}</a>
+                    </span>
+                </td>
+                <td>
+                    <span ng-show="item.IPE_ID">
+                        <a href="javascript:void(0)" ng-click="abrirPedidoPorItem(item.IPE_ID)" title="Abrir a Proposta"> {{item.IPE_ID}}</a>
+                    </span>
+                </td>
+                <td>
+                    <span ng-if="item.PAR_VLR_PAGO >= 0 && item.PAR_DATA_PAGTO" class="label label-success">Paga</span>
+                    <span ng-if="item.PAR_VLR_PAGO <= 0 && !item.PAR_DATA_PAGTO" class="label label-warning">Aberta</span>
+                </td>
+                <td class="center" app-show-date="item.PAR_DATA_VENCTO"></td>
+                <td class="right">
+                    <strong app-show-dinheiro="item.PAR_VLR_PARCELA"></strong>
+                </td>
+                <td class="right">
+                    <strong app-show-dinheiro="item.PAR_VLR_PAGO"></strong>
+                </td>
+                <td class="center" app-show-date="item.PAR_DATA_PAGTO"></td>
+            </tr>
+            <tr>
+                <td colspan="9"
+                    ng-show="!lstParcelasModal || lstParcelasModal.length == 0">
+                    Não há parcelas vencidas.
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

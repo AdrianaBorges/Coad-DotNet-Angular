@@ -1,0 +1,122 @@
+﻿<div data-app-modal="modal-validacao-inadimplencia" data-header="Inadimplência">
+
+    <div class="padding">
+        <div id="conteudo">
+            <div>
+                <div class="text-warning padding-bottom-10">
+                    <span class="font-30">
+                        <i class="fa fa-ban" aria-hidden="true"></i>
+                        <span class="font-16">O Cliente está Inadimplente</span>
+                    </span>
+                </div>
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>
+                            Código
+                        </label>
+                        <div class="text-muted">
+                            {{ValidacaoInadimplencia.ClienteInadimplente.CodigoCliente}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>
+                            Cliente
+                        </label>
+                        <div class="text-muted">
+                            {{ValidacaoInadimplencia.ClienteInadimplente.NomeCliente}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>
+                            CPF/CNPJ
+                        </label>
+                        <div class="text-muted">
+                            {{ValidacaoInadimplencia.ClienteInadimplente.cpfCnpj}}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>
+                            Parcelas em Aberto
+                        </label>
+                        <a href="javascript:void(0)" ng-click="abrirModalDetalhesParcelas(ValidacaoInadimplencia.ClienteInadimplente.Parcelas)" title="Ver Parcelas">
+                            <div class="badge">
+                                {{ValidacaoInadimplencia.ClienteInadimplente.Parcelas.length}}
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <label>
+                            Visualizar
+                        </label>
+                        <div>
+                            <a href="javascript:void(0);" title="Ver em prospect" class="font-20"
+                               ng-click="abrirClienteEmProspect(ValidacaoInadimplencia.ClienteInadimplente.CodigoCliente);">
+                                <i class="fa fa-address-book" aria-hidden="true"></i>
+
+                            </a>
+                            <a href="javascript:void(0);" title="Ver na posição de clientes" class="font-20"
+                               ng-click="abrirClienteNaPosicaoDeCliente(ValidacaoInadimplencia.ClienteInadimplente.CodigoCliente);">
+                                <i class="fa fa-address-card" aria-hidden="true"></i>
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row limit-div-5" ng-show="ValidacaoInadimplencia.ClientesSimilaresInadimplentes.length > 0">
+                    <div class="padding text-muted">Clientes Inadimplentes Similares</div>
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>
+                                            Cliente
+                                        </th>
+                                        <th>CPF/CNPJ</th>
+                                        <th>Parcelas em Aberto</th>
+                                        <th>Visualizar</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in ValidacaoInadimplencia.ClientesSimilaresInadimplentes" class="animate-repeat">
+                                    <td>
+                                        {{item.CodigoCliente}}
+                                    </td>
+                                    <td>
+                                        {{item.NomeCliente}}
+                                    </td>
+                                    <td>
+                                        {{item.cpfCnpj}}
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0)" ng-click="abrirModalDetalhesParcelas(item.Parcelas)" title="Ver Parcelas">
+                                            <span class="badge">{{item.Parcelas.length}}</span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0);" title="Ver em prospect" class="font-17"
+                                           ng-click="abrirClienteEmProspect(item.CodigoCliente);">
+                                            <i class="fa fa-address-book" aria-hidden="true"></i>
+
+                                        </a>
+                                        <a href="javascript:void(0);" title="Ver na posição de clientes" class="font-17"
+                                           ng-click="abrirClienteNaPosicaoDeCliente(item.CodigoCliente);">
+                                            <i class="fa fa-address-card" aria-hidden="true"></i>
+
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8" ng-if="ValidacaoInadimplencia.ClientesSimilaresInadimplentes.length <= 0" class="text">
+                                        Não foi encontrado nenhum registro.
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("Partials/Modais/_ClienteInadimplenteParcelaModalPartial")

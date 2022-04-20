@@ -1,0 +1,177 @@
+﻿
+@*<fieldset>
+    <legend>Telefone</legend>
+            
+        <div class="row padding">
+            <div class="col-md-1">
+                <label>DDD</label>
+                <input type="text" ng-model="prospect.Telefone.DDD" maxlength="2"  style="width: 40px;" 
+                        class="form-control" app-number ng-disabled="podeEditar != true"/>
+                <div app-validation-msg="erros" for="Telefone.DDD"></div>
+            </div>
+            <div class="col-md-2">
+                <label>Telefone</label>
+                <input type="text" ng-model="prospect.Telefone.Telefone" 
+                        class="form-control" maxlength="9" app-number ng-disabled="podeEditar != true"/>
+                <div app-validation-msg="erros" for="Telefone.Telefone"></div>
+            </div>
+            <div class="col-md-2">
+                <label>Contato</label>
+                <input type="text" ng-model="prospect.Telefone.Contato" maxlength="12" 
+                        class="form-control" ng-disabled="podeEditar != true"/>  
+            </div>
+            <div class="col-md-2">
+                <label>Ramal</label>
+                <input type="text" ng-model="prospect.Telefone.Ramal" maxlength="12" 
+                        class="form-control" ng-disabled="podeEditar != true"/>  
+            </div>
+        </div>
+</fieldset>
+<fieldset>
+    <legend>Celular</legend>
+        <div class="row padding">
+            <div class="col-md-1">
+                <label>DDD</label>
+                <input type="text" ng-model="prospect.Celular.DDD" maxlength="2"  style="width: 40px;" 
+                        class="form-control" app-number ng-disabled="podeEditar != true"/>
+                
+                <div app-validation-msg="erros" for="Celular.DDD"></div>
+            </div>
+            <div class="col-md-2">
+                <label>Telefone</label>
+                <input type="text" ng-model="prospect.Celular.Telefone" 
+                        class="form-control" maxlength="9" app-number ng-disabled="podeEditar != true"/>
+                <div app-validation-msg="erros" for="Celular.Telefone"></div>
+            </div>
+            <div class="col-md-2">
+                <label>Contato</label>
+                <input type="text" ng-model="prospect.Celular.Contato" maxlength="12" 
+                        class="form-control" ng-disabled="podeEditar != true"/>  
+            </div>
+            <div class="col-md-2">
+                <label>Ramal</label>
+                <input type="text" ng-model="prospect.Celular.Ramal" maxlength="12" 
+                        class="form-control" ng-disabled="podeEditar != true"/>  
+            </div>
+        </div>
+</fieldset> 
+<fieldset>
+    <legend>FAX</legend>
+            
+         <div class="row padding">
+            <div class="col-md-1">
+                <label>DDD</label>
+                <input type="text" ng-model="prospect.Fax.DDD" maxlength="2"  style="width: 40px;" 
+                        class="form-control" app-number ng-disabled="podeEditar != true"/>
+                <div app-validation-msg="erros" for="Fax.DDD"></div>
+            </div>
+            <div class="col-md-2">
+                <label>Telefone</label>
+                <input type="text" ng-model="prospect.Fax.Telefone" 
+                        class="form-control" maxlength="9" app-number ng-disabled="podeEditar != true"/>
+                <div app-validation-msg="erros" for="Fax.Telefone"></div>
+            </div>
+            <div class="col-md-2">
+                <label>Contato</label>
+                <input type="text" ng-model="prospect.Fax.Contato" maxlength="12" 
+                        class="form-control" ng-disabled="podeEditar != true"/>  
+            </div>
+            <div class="col-md-2">
+                <label>Ramal</label>
+                <input type="text" ng-model="prospect.Fax.Ramal" maxlength="12" 
+                        class="form-control" ng-disabled="podeEditar != true"/>  
+            </div>
+        </div>
+</fieldset>*@     
+
+
+<section id="telefones">
+    <div class="row" ng-if="!edicaoCliente">
+        <div class="col-md-12">
+            <span class="font-16">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <label class="font-15">Telefones</label>
+            </span>
+        </div>
+    </div>
+    <div class="row padding">
+        <span class="font-16" ng-if="edicaoCliente">
+            <i class="fa fa-phone" aria-hidden="true"></i>
+            <label class="font-15">Telefones</label>
+        </span>
+        <div class="table-responsive">
+            <div app-validation-msg="erros" for="ASSINATURA_TELEFONE"></div>
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tipo de Telefone</th>
+                        <th>DDD</th>
+                        <th>Telefone</th>
+                        <th>Contato</th>
+                        <th>Ramal</th>
+                        <th>Ação de Atendimento</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="tel in PROSPECT_TELEFONE">
+                        <td>
+                            <select id="tipoTel" name="tipoTel" class="form-control"
+                                    ng-disabled="podeEditar != true"
+                                    ng-change="tipoTelefoneSelecionado(tel)"
+                                    ng-model="tel.TipoTelefone"
+                                    ng-options="tipoTel.TIPO_TEL_ID as tipoTel.TIPO_TEL_DESCRICAO for tipoTel in lstTipoTelefone">
+                                <option value="">Selecione</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" ng-model="tel.DDD" maxlength="2" ng-disabled="podeEditar != true"
+                                   class="form-control grid-input  float-left" style="width: 41px;" app-number />
+                            <div app-validation-msg="erros" for="Telefones[{{$index}}].DDD"></div>
+                        </td>
+                        <td>
+                            <input type="text" ng-model="tel.Telefone" ng-disabled="podeEditar != true"
+                                   class="form-control grid-input float-left" maxlength="9" app-number />
+                            <div app-validation-msg="erros" for="Telefones[{{$index}}].Telefone"></div>
+                        </td>
+                        <td>
+                            <input type="text" ng-model="tel.Contato" maxlength="12" ng-disabled="podeEditar != true"
+                                   class="form-control grid-input  float-left" />
+                        </td>
+                        <td>
+                            <input type="text" ng-model="tel.Ramal" maxlength="12" ng-disabled="podeEditar != true"
+                                   class="form-control grid-input  float-left" />
+                        </td>
+                        <td>
+                            <select id="tipoTel{{$index}}" name="tipoTel{{$index}}" class="form-control" 
+                                    ng-change="tipoTelefoneSelecionado(tel)" ng-disabled="podeEditar != true"
+                                    ng-model="tel.TipoAtendimento"
+                                    ng-options="tipoAte.OPC_ID as tipoAte.OPC_DESCRICAO for tipoAte in lstOpcoesAtendimento">
+                                <option value="">Selecione</option>
+                            </select>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" ng-click="RemoverTelefone($index)" class="btnConfirmaExclusao red" id="btexcluir" title="Excluir">
+                                <span class="glyphicon glyphicon-remove-sign"></span>
+                            </a>
+                            <span ng-show="PROSPECT_TELEFONE.length == ($index + 1)">
+                                <a href="javascript:void(0)" ng-click="AdicionarTelefone(tel)" title="Incluir">
+                                    <span class="glyphicon glyphicon-plus blue"></span>
+                                </a>
+                            </span>
+                        </td>
+
+                    </tr>
+                    <tr ng-hide="PROSPECT_TELEFONE.length > 0">
+                        <td colspan="6">
+                            Nenhuma telefone adicionado. Clique para adicionar:
+                            <a href="javascript:void(0)" ng-click="AdicionarTelefone(tel)" title="Incluir">
+                                <span class="glyphicon glyphicon-plus blue"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>     

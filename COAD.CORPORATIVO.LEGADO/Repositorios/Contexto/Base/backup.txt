@@ -1,0 +1,712 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="corporativo2Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="corporativo2ModelStoreContainer">
+          <EntitySet Name="AGENDA" EntityType="corporativo2Model.Store.AGENDA" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ASSINATURA" EntityType="corporativo2Model.Store.ASSINATURA" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="cart_coad" EntityType="corporativo2Model.Store.cart_coad" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CLIENTES" EntityType="corporativo2Model.Store.CLIENTES" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EMAILS" EntityType="corporativo2Model.Store.EMAILS" store:Type="Tables" store:Schema="dbo" store:Name="EMAILS">
+            <DefiningQuery>SELECT 
+      [EMAILS].[ASSINATURA] AS [ASSINATURA], 
+      [EMAILS].[E_MAIL] AS [E_MAIL], 
+      [EMAILS].[PRINCIPAL_SN] AS [PRINCIPAL_SN], 
+      [EMAILS].[DT_LISTAGEM_CONF] AS [DT_LISTAGEM_CONF], 
+      [EMAILS].[AUTOID] AS [AUTOID], 
+      [EMAILS].[DH_SUBIR] AS [DH_SUBIR], 
+      [EMAILS].[DH_SUBIU] AS [DH_SUBIU], 
+      [EMAILS].[SETOR] AS [SETOR], 
+      [EMAILS].[DECISOR] AS [DECISOR], 
+      [EMAILS].[DATA_INSERT] AS [DATA_INSERT], 
+      [EMAILS].[DATA_ALTERA] AS [DATA_ALTERA]
+      FROM [dbo].[EMAILS] AS [EMAILS]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="HIST_ATEND" EntityType="corporativo2Model.Store.HIST_ATEND" store:Type="Tables" store:Schema="dbo" store:Name="HIST_ATEND">
+            <DefiningQuery>SELECT 
+      [HIST_ATEND].[DATA_SOLIC] AS [DATA_SOLIC], 
+      [HIST_ATEND].[ASSINATURA] AS [ASSINATURA], 
+      [HIST_ATEND].[HISTORICO] AS [HISTORICO], 
+      [HIST_ATEND].[SOLICITANTE] AS [SOLICITANTE], 
+      [HIST_ATEND].[ACAO] AS [ACAO], 
+      [HIST_ATEND].[DATA_RESOLUCAO] AS [DATA_RESOLUCAO], 
+      [HIST_ATEND].[GRUPO] AS [GRUPO], 
+      [HIST_ATEND].[DATA_EMISSAO_FICHA] AS [DATA_EMISSAO_FICHA], 
+      [HIST_ATEND].[DH_SUBIR] AS [DH_SUBIR], 
+      [HIST_ATEND].[DH_SUBIU] AS [DH_SUBIU], 
+      [HIST_ATEND].[SAC_TIPO_ID] AS [SAC_TIPO_ID]
+      FROM [dbo].[HIST_ATEND] AS [HIST_ATEND]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SEQ_PROD" EntityType="corporativo2Model.Store.SEQ_PROD" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TELEFONES2" EntityType="corporativo2Model.Store.TELEFONES2" store:Type="Tables" store:Schema="dbo" store:Name="TELEFONES2">
+            <DefiningQuery>SELECT 
+      [TELEFONES2].[ASSINATURA] AS [ASSINATURA], 
+      [TELEFONES2].[DDD_TEL] AS [DDD_TEL], 
+      [TELEFONES2].[TIPO] AS [TIPO], 
+      [TELEFONES2].[DH_SUBIR] AS [DH_SUBIR], 
+      [TELEFONES2].[DH_SUBIU] AS [DH_SUBIU], 
+      [TELEFONES2].[id] AS [id], 
+      [TELEFONES2].[SETOR] AS [SETOR], 
+      [TELEFONES2].[TELEFONE] AS [TELEFONE], 
+      [TELEFONES2].[DATA_INSERT] AS [DATA_INSERT], 
+      [TELEFONES2].[DATA_ALTERA] AS [DATA_ALTERA]
+      FROM [dbo].[TELEFONES2] AS [TELEFONES2]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+        <EntityType Name="AGENDA">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+            <PropertyRef Name="DATA_HIST" />
+            <PropertyRef Name="HORA_HIST" />
+          </Key>
+          <Property Name="CODIGO" Type="varchar" Nullable="false" MaxLength="8" />
+          <Property Name="DATA_HIST" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="HORA_HIST" Type="varchar" Nullable="false" MaxLength="5" />
+          <Property Name="HISTORICO_BASICO" Type="varchar" MaxLength="200" />
+          <Property Name="HISTORICO_LIVRE" Type="text" />
+          <Property Name="CONTATO" Type="smallint" />
+          <Property Name="RESULTADO" Type="smallint" />
+          <Property Name="DATA_AGENDA" Type="varchar" MaxLength="10" />
+          <Property Name="HORA_AGENDA" Type="varchar" MaxLength="5" />
+          <Property Name="DATA_REAL_CANC" Type="varchar" MaxLength="10" />
+          <Property Name="CARTEIRA" Type="varchar" MaxLength="7" />
+          <Property Name="NOME" Type="varchar" MaxLength="40" />
+          <Property Name="A_C" Type="varchar" MaxLength="40" />
+          <Property Name="TIPO_ATEND" Type="smallint" />
+          <Property Name="TAREFA" Type="smallint" />
+          <Property Name="CARTEIRA_ATEND" Type="varchar" MaxLength="7" />
+          <Property Name="ID" Type="int" />
+          <Property Name="IDINC" Type="int" />
+          <Property Name="cancelamentoMotivo_id" Type="int" />
+        </EntityType>
+        <EntityType Name="ASSINATURA">
+          <Key>
+            <PropertyRef Name="CODIGO_UNIX" />
+          </Key>
+          <Property Name="CODIGO_UNIX" Type="varchar" Nullable="false" MaxLength="8" />
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="ANO_COAD" Type="varchar" MaxLength="2" />
+          <Property Name="ATV_REM" Type="varchar" MaxLength="1" />
+          <Property Name="CORTESIA" Type="varchar" MaxLength="1" />
+          <Property Name="A_C" Type="varchar" MaxLength="35" />
+          <Property Name="E_MAIL" Type="varchar" MaxLength="50" />
+          <Property Name="EX_BTC" Type="varchar" MaxLength="1" />
+          <Property Name="PART_BTC" Type="varchar" MaxLength="1" />
+          <Property Name="MAT_ADIC" Type="varchar" MaxLength="20" />
+          <Property Name="REMESSA" Type="varchar" MaxLength="2" />
+          <Property Name="ANO_REMESSA" Type="varchar" MaxLength="4" />
+          <Property Name="DT_SUSP_REM_DIASC" Type="varchar" MaxLength="10" />
+          <Property Name="MALA_OFERTA" Type="varchar" MaxLength="3" />
+          <Property Name="ULT_PASTA" Type="varchar" MaxLength="4" />
+          <Property Name="REENVIO_PASTA_SN" Type="varchar" MaxLength="1" />
+          <Property Name="NUM_TP_ENVIO" Type="varchar" MaxLength="9" />
+          <Property Name="DT_GRAV_PASTA" Type="varchar" MaxLength="10" />
+          <Property Name="DATA_ASSINATURA" Type="varchar" MaxLength="10" />
+          <Property Name="MAT_ADIC2" Type="varchar" MaxLength="20" />
+          <Property Name="DT_DEVOL_PASTA" Type="varchar" MaxLength="10" />
+          <Property Name="ENTREGADOR" Type="varchar" MaxLength="30" />
+          <Property Name="RETIRAR_DE_MAOS" Type="varchar" MaxLength="1" />
+          <Property Name="COD_CURSO" Type="varchar" MaxLength="6" />
+          <Property Name="COD_LIVRO" Type="varchar" MaxLength="6" />
+          <Property Name="MES_REFERENCIA" Type="int" />
+          <Property Name="PROSPECTADO" Type="varchar" MaxLength="8" />
+          <Property Name="AUTOID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CNPJ_CPF" Type="varchar" MaxLength="20" />
+          <Property Name="DH_SUBIR" Type="varchar" MaxLength="19" />
+          <Property Name="DH_SUBIU" Type="varchar" MaxLength="19" />
+          <Property Name="DATA_ALTERA" Type="datetime" />
+          <Property Name="DATA_INSERT" Type="datetime" />
+        </EntityType>
+        <EntityType Name="cart_coad">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+          </Key>
+          <Property Name="CODIGO" Type="varchar" Nullable="false" MaxLength="8" />
+          <Property Name="NOME" Type="varchar" MaxLength="35" />
+          <Property Name="A_C" Type="varchar" MaxLength="35" />
+          <Property Name="TIPO" Type="varchar" MaxLength="10" />
+          <Property Name="LOGRAD" Type="varchar" MaxLength="50" />
+          <Property Name="NUMERO" Type="varchar" MaxLength="6" />
+          <Property Name="TIPO_COMPL" Type="varchar" MaxLength="10" />
+          <Property Name="COMPL" Type="varchar" MaxLength="15" />
+          <Property Name="TIPO_COMPL2" Type="varchar" MaxLength="10" />
+          <Property Name="COMPL2" Type="varchar" MaxLength="15" />
+          <Property Name="TIPO_COMPL3" Type="varchar" MaxLength="10" />
+          <Property Name="COMPL3" Type="varchar" MaxLength="15" />
+          <Property Name="BAIRRO" Type="varchar" MaxLength="20" />
+          <Property Name="MUNIC" Type="varchar" MaxLength="30" />
+          <Property Name="UF" Type="varchar" MaxLength="2" />
+          <Property Name="CEP" Type="varchar" MaxLength="9" />
+          <Property Name="DDD_TEL" Type="varchar" MaxLength="4" />
+          <Property Name="TELEFONE" Type="varchar" MaxLength="8" />
+          <Property Name="DDD_FAX" Type="varchar" MaxLength="4" />
+          <Property Name="FAX" Type="varchar" MaxLength="8" />
+          <Property Name="E_MAIL" Type="varchar" MaxLength="50" />
+          <Property Name="CARGO" Type="varchar" MaxLength="30" />
+          <Property Name="PROF" Type="varchar" MaxLength="30" />
+          <Property Name="IDENTIFICACAO" Type="varchar" MaxLength="1" />
+          <Property Name="DATA_CADASTRO" Type="varchar" MaxLength="10" />
+          <Property Name="MXM_CODIGO" Type="varchar" MaxLength="15" />
+          <Property Name="cep_status" Type="varchar" MaxLength="1" />
+          <Property Name="TP_PESSOA" Type="varchar" MaxLength="1" />
+          <Property Name="id_ceps" Type="int" />
+          <Property Name="DH_SUBIR" Type="varchar" MaxLength="19" />
+          <Property Name="DH_SUBIU" Type="varchar" MaxLength="19" />
+          <Property Name="DATA_ALTERA" Type="datetime" />
+          <Property Name="DATA_INSERT" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CLIENTES">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+          </Key>
+          <Property Name="CODIGO" Type="varchar" Nullable="false" MaxLength="8" />
+          <Property Name="CGC" Type="varchar" MaxLength="18" />
+          <Property Name="INSCRICAO" Type="varchar" MaxLength="16" />
+          <Property Name="AUTOID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DH_SUBIR" Type="varchar" MaxLength="19" />
+          <Property Name="DH_SUBIU" Type="varchar" MaxLength="19" />
+          <Property Name="DATA_ALTERA" Type="datetime" />
+          <Property Name="DATA_INSERT" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'corporativo2.dbo.EMAILS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="EMAILS">
+          <Key>
+            <PropertyRef Name="ASSINATURA" />
+            <PropertyRef Name="E_MAIL" />
+            <PropertyRef Name="AUTOID" />
+          </Key>
+          <Property Name="ASSINATURA" Type="varchar" Nullable="false" MaxLength="8" />
+          <Property Name="E_MAIL" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="PRINCIPAL_SN" Type="varchar" MaxLength="1" />
+          <Property Name="DT_LISTAGEM_CONF" Type="varchar" MaxLength="10" />
+          <Property Name="AUTOID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DH_SUBIR" Type="varchar" MaxLength="19" />
+          <Property Name="DH_SUBIU" Type="varchar" MaxLength="19" />
+          <Property Name="SETOR" Type="varchar" MaxLength="20" />
+          <Property Name="DECISOR" Type="varchar" MaxLength="50" />
+          <Property Name="DATA_INSERT" Type="datetime" />
+          <Property Name="DATA_ALTERA" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'corporativo2.dbo.HIST_ATEND' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="HIST_ATEND">
+          <Key>
+            <PropertyRef Name="DATA_SOLIC" />
+            <PropertyRef Name="ASSINATURA" />
+          </Key>
+          <Property Name="DATA_SOLIC" Type="datetime" Nullable="false" />
+          <Property Name="ASSINATURA" Type="varchar" Nullable="false" MaxLength="8" />
+          <Property Name="HISTORICO" Type="varchar" MaxLength="100" />
+          <Property Name="SOLICITANTE" Type="varchar" MaxLength="50" />
+          <Property Name="ACAO" Type="varchar" MaxLength="50" />
+          <Property Name="DATA_RESOLUCAO" Type="datetime" />
+          <Property Name="GRUPO" Type="int" />
+          <Property Name="DATA_EMISSAO_FICHA" Type="datetime" />
+          <Property Name="DH_SUBIR" Type="varchar" MaxLength="19" />
+          <Property Name="DH_SUBIU" Type="varchar" MaxLength="19" />
+          <Property Name="SAC_TIPO_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="SEQ_PROD">
+          <Key>
+            <PropertyRef Name="COD_PROD" />
+            <PropertyRef Name="LETRA" />
+          </Key>
+          <Property Name="COD_PROD" Type="varchar" Nullable="false" MaxLength="2" />
+          <Property Name="LETRA" Type="varchar" Nullable="false" MaxLength="1" />
+          <Property Name="SEQUENCIA" Type="varchar" MaxLength="4" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'corporativo2.dbo.TELEFONES2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="TELEFONES2">
+          <Key>
+            <PropertyRef Name="ASSINATURA" />
+            <PropertyRef Name="DDD_TEL" />
+            <PropertyRef Name="TIPO" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="ASSINATURA" Type="varchar" Nullable="false" MaxLength="8" />
+          <Property Name="DDD_TEL" Type="varchar" Nullable="false" MaxLength="4" />
+          <Property Name="TIPO" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="DH_SUBIR" Type="varchar" MaxLength="19" />
+          <Property Name="DH_SUBIU" Type="varchar" MaxLength="19" />
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SETOR" Type="varchar" MaxLength="20" />
+          <Property Name="TELEFONE" Type="varchar" MaxLength="10" />
+          <Property Name="DATA_INSERT" Type="datetime" />
+          <Property Name="DATA_ALTERA" Type="datetime" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="corporativo2Model" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="corporativo2Entities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="AGENDA" EntityType="corporativo2Model.AGENDA" />
+          <EntitySet Name="HIST_ATEND" EntityType="corporativo2Model.HIST_ATEND" />
+          <EntitySet Name="SEQ_PROD" EntityType="corporativo2Model.SEQ_PROD" />
+          <EntitySet Name="ASSINATURA" EntityType="corporativo2Model.ASSINATURA" />
+          <EntitySet Name="cart_coad" EntityType="corporativo2Model.cart_coad" />
+          <EntitySet Name="CLIENTES" EntityType="corporativo2Model.CLIENTES" />
+          <EntitySet Name="EMAILS" EntityType="corporativo2Model.EMAILS" />
+          <EntitySet Name="TELEFONES2" EntityType="corporativo2Model.TELEFONES2" />
+          <AssociationSet Name="cart_coadCLIENTES" Association="corporativo2Model.cart_coadCLIENTES">
+            <End Role="cart_coad" EntitySet="cart_coad" />
+            <End Role="CLIENTES" EntitySet="CLIENTES" />
+          </AssociationSet>
+          <AssociationSet Name="cart_coadASSINATURA" Association="corporativo2Model.cart_coadASSINATURA">
+            <End Role="cart_coad" EntitySet="cart_coad" />
+            <End Role="ASSINATURA" EntitySet="ASSINATURA" />
+          </AssociationSet>
+          <AssociationSet Name="ASSINATURAEMAILS" Association="corporativo2Model.ASSINATURAEMAILS">
+            <End Role="ASSINATURA" EntitySet="ASSINATURA" />
+            <End Role="EMAILS" EntitySet="EMAILS" />
+          </AssociationSet>
+          <AssociationSet Name="TELEFONES2ASSINATURA" Association="corporativo2Model.TELEFONES2ASSINATURA">
+            <End Role="TELEFONES2" EntitySet="TELEFONES2" />
+            <End Role="ASSINATURA" EntitySet="ASSINATURA" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AGENDA">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+            <PropertyRef Name="DATA_HIST" />
+            <PropertyRef Name="HORA_HIST" />
+          </Key>
+          <Property Name="CODIGO" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="false" />
+          <Property Name="DATA_HIST" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="HORA_HIST" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
+          <Property Name="HISTORICO_BASICO" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="HISTORICO_LIVRE" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="CONTATO" Type="Int16" />
+          <Property Name="RESULTADO" Type="Int16" />
+          <Property Name="DATA_AGENDA" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="HORA_AGENDA" Type="String" MaxLength="5" Unicode="false" FixedLength="false" />
+          <Property Name="DATA_REAL_CANC" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="CARTEIRA" Type="String" MaxLength="7" Unicode="false" FixedLength="false" />
+          <Property Name="NOME" Type="String" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="A_C" Type="String" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="TIPO_ATEND" Type="Int16" />
+          <Property Name="TAREFA" Type="Int16" />
+          <Property Name="CARTEIRA_ATEND" Type="String" MaxLength="7" Unicode="false" FixedLength="false" />
+          <Property Name="ID" Type="Int32" />
+          <Property Name="IDINC" Type="Int32" />
+          <Property Name="cancelamentoMotivo_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="HIST_ATEND">
+          <Key>
+            <PropertyRef Name="DATA_SOLIC" />
+            <PropertyRef Name="ASSINATURA" />
+          </Key>
+          <Property Name="DATA_SOLIC" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ASSINATURA" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="false" />
+          <Property Name="HISTORICO" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="SOLICITANTE" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="ACAO" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DATA_RESOLUCAO" Type="DateTime" Precision="3" />
+          <Property Name="GRUPO" Type="Int32" />
+          <Property Name="DATA_EMISSAO_FICHA" Type="DateTime" Precision="3" />
+          <Property Name="DH_SUBIR" Type="String" MaxLength="19" Unicode="false" FixedLength="false" />
+          <Property Name="DH_SUBIU" Type="String" MaxLength="19" Unicode="false" FixedLength="false" />
+          <Property Name="SAC_TIPO_ID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SEQ_PROD">
+          <Key>
+            <PropertyRef Name="COD_PROD" />
+            <PropertyRef Name="LETRA" />
+          </Key>
+          <Property Name="COD_PROD" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+          <Property Name="LETRA" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="false" />
+          <Property Name="SEQUENCIA" Type="String" MaxLength="4" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="ASSINATURA">
+          <Key>
+            <PropertyRef Name="CODIGO_UNIX" />
+          </Key>
+          <Property Type="String" Name="CODIGO_UNIX" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CODIGO" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ANO_COAD" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ATV_REM" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CORTESIA" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="A_C" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="E_MAIL" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EX_BTC" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PART_BTC" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MAT_ADIC" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="REMESSA" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ANO_REMESSA" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DT_SUSP_REM_DIASC" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MALA_OFERTA" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ULT_PASTA" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="REENVIO_PASTA_SN" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="NUM_TP_ENVIO" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DT_GRAV_PASTA" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DATA_ASSINATURA" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MAT_ADIC2" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DT_DEVOL_PASTA" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ENTREGADOR" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="RETIRAR_DE_MAOS" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COD_CURSO" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COD_LIVRO" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="MES_REFERENCIA" />
+          <Property Type="String" Name="PROSPECTADO" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="AUTOID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="CNPJ_CPF" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DH_SUBIR" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DH_SUBIU" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="DATA_ALTERA" Precision="3" />
+          <Property Type="DateTime" Name="DATA_INSERT" Precision="3" />
+          <NavigationProperty Name="cart_coad" Relationship="corporativo2Model.cart_coadASSINATURA" FromRole="ASSINATURA" ToRole="cart_coad" />
+          <NavigationProperty Name="EMAILS" Relationship="corporativo2Model.ASSINATURAEMAILS" FromRole="ASSINATURA" ToRole="EMAILS" />
+          <NavigationProperty Name="TELEFONES2" Relationship="corporativo2Model.TELEFONES2ASSINATURA" FromRole="ASSINATURA" ToRole="TELEFONES2" />
+        </EntityType>
+        <EntityType Name="cart_coad">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+          </Key>
+          <Property Type="String" Name="CODIGO" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="NOME" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="A_C" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TIPO" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="LOGRAD" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="NUMERO" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TIPO_COMPL" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COMPL" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TIPO_COMPL2" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COMPL2" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TIPO_COMPL3" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COMPL3" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BAIRRO" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MUNIC" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="UF" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CEP" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DDD_TEL" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TELEFONE" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DDD_FAX" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FAX" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="E_MAIL" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CARGO" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PROF" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="IDENTIFICACAO" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DATA_CADASTRO" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MXM_CODIGO" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cep_status" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TP_PESSOA" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="id_ceps" />
+          <Property Type="String" Name="DH_SUBIR" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DH_SUBIU" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="DATA_ALTERA" Precision="3" />
+          <Property Type="DateTime" Name="DATA_INSERT" Precision="3" />
+          <NavigationProperty Name="CLIENTES" Relationship="corporativo2Model.cart_coadCLIENTES" FromRole="cart_coad" ToRole="CLIENTES" />
+          <NavigationProperty Name="ASSINATURA" Relationship="corporativo2Model.cart_coadASSINATURA" FromRole="cart_coad" ToRole="ASSINATURA" />
+        </EntityType>
+        <EntityType Name="CLIENTES">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+          </Key>
+          <Property Type="String" Name="CODIGO" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CGC" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="INSCRICAO" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="AUTOID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="DH_SUBIR" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DH_SUBIU" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="DATA_ALTERA" Precision="3" />
+          <Property Type="DateTime" Name="DATA_INSERT" Precision="3" />
+          <NavigationProperty Name="cart_coad" Relationship="corporativo2Model.cart_coadCLIENTES" FromRole="CLIENTES" ToRole="cart_coad" />
+        </EntityType>
+        <EntityType Name="EMAILS">
+          <Key>
+            <PropertyRef Name="ASSINATURA" />
+            <PropertyRef Name="E_MAIL" />
+            <PropertyRef Name="AUTOID" />
+          </Key>
+          <Property Type="String" Name="ASSINATURA" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="E_MAIL" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PRINCIPAL_SN" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DT_LISTAGEM_CONF" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="AUTOID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="DH_SUBIR" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DH_SUBIU" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SETOR" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DECISOR" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="DATA_INSERT" Precision="3" />
+          <Property Type="DateTime" Name="DATA_ALTERA" Precision="3" />
+          <NavigationProperty Name="ASSINATURA1" Relationship="corporativo2Model.ASSINATURAEMAILS" FromRole="EMAILS" ToRole="ASSINATURA" />
+        </EntityType>
+        <EntityType Name="TELEFONES2">
+          <Key>
+            <PropertyRef Name="ASSINATURA" />
+            <PropertyRef Name="DDD_TEL" />
+            <PropertyRef Name="TIPO" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="String" Name="ASSINATURA" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DDD_TEL" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TIPO" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DH_SUBIR" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DH_SUBIU" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="SETOR" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TELEFONE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="DATA_INSERT" Precision="3" />
+          <Property Type="DateTime" Name="DATA_ALTERA" Precision="3" />
+          <NavigationProperty Name="ASSINATURA1" Relationship="corporativo2Model.TELEFONES2ASSINATURA" FromRole="TELEFONES2" ToRole="ASSINATURA" />
+        </EntityType>
+        <Association Name="cart_coadCLIENTES">
+          <End Type="corporativo2Model.cart_coad" Role="cart_coad" Multiplicity="1" />
+          <End Type="corporativo2Model.CLIENTES" Role="CLIENTES" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="cart_coad">
+              <PropertyRef Name="CODIGO" />
+            </Principal>
+            <Dependent Role="CLIENTES">
+              <PropertyRef Name="CODIGO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="cart_coadASSINATURA">
+          <End Type="corporativo2Model.cart_coad" Role="cart_coad" Multiplicity="0..1" />
+          <End Type="corporativo2Model.ASSINATURA" Role="ASSINATURA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cart_coad">
+              <PropertyRef Name="CODIGO" />
+            </Principal>
+            <Dependent Role="ASSINATURA">
+              <PropertyRef Name="CODIGO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ASSINATURAEMAILS">
+          <End Type="corporativo2Model.ASSINATURA" Role="ASSINATURA" Multiplicity="1" />
+          <End Type="corporativo2Model.EMAILS" Role="EMAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINATURA">
+              <PropertyRef Name="CODIGO_UNIX" />
+            </Principal>
+            <Dependent Role="EMAILS">
+              <PropertyRef Name="ASSINATURA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TELEFONES2ASSINATURA">
+          <End Type="corporativo2Model.TELEFONES2" Role="TELEFONES2" Multiplicity="*" />
+          <End Type="corporativo2Model.ASSINATURA" Role="ASSINATURA" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINATURA">
+              <PropertyRef Name="CODIGO_UNIX" />
+            </Principal>
+            <Dependent Role="TELEFONES2">
+              <PropertyRef Name="ASSINATURA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="corporativo2ModelStoreContainer" CdmEntityContainer="corporativo2Entities">
+          <EntitySetMapping Name="AGENDA">
+            <EntityTypeMapping TypeName="corporativo2Model.AGENDA">
+              <MappingFragment StoreEntitySet="AGENDA">
+                <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+                <ScalarProperty Name="DATA_HIST" ColumnName="DATA_HIST" />
+                <ScalarProperty Name="HORA_HIST" ColumnName="HORA_HIST" />
+                <ScalarProperty Name="HISTORICO_BASICO" ColumnName="HISTORICO_BASICO" />
+                <ScalarProperty Name="HISTORICO_LIVRE" ColumnName="HISTORICO_LIVRE" />
+                <ScalarProperty Name="CONTATO" ColumnName="CONTATO" />
+                <ScalarProperty Name="RESULTADO" ColumnName="RESULTADO" />
+                <ScalarProperty Name="DATA_AGENDA" ColumnName="DATA_AGENDA" />
+                <ScalarProperty Name="HORA_AGENDA" ColumnName="HORA_AGENDA" />
+                <ScalarProperty Name="DATA_REAL_CANC" ColumnName="DATA_REAL_CANC" />
+                <ScalarProperty Name="CARTEIRA" ColumnName="CARTEIRA" />
+                <ScalarProperty Name="NOME" ColumnName="NOME" />
+                <ScalarProperty Name="A_C" ColumnName="A_C" />
+                <ScalarProperty Name="TIPO_ATEND" ColumnName="TIPO_ATEND" />
+                <ScalarProperty Name="TAREFA" ColumnName="TAREFA" />
+                <ScalarProperty Name="CARTEIRA_ATEND" ColumnName="CARTEIRA_ATEND" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDINC" ColumnName="IDINC" />
+                <ScalarProperty Name="cancelamentoMotivo_id" ColumnName="cancelamentoMotivo_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HIST_ATEND">
+            <EntityTypeMapping TypeName="corporativo2Model.HIST_ATEND">
+              <MappingFragment StoreEntitySet="HIST_ATEND">
+                <ScalarProperty Name="DATA_SOLIC" ColumnName="DATA_SOLIC" />
+                <ScalarProperty Name="ASSINATURA" ColumnName="ASSINATURA" />
+                <ScalarProperty Name="HISTORICO" ColumnName="HISTORICO" />
+                <ScalarProperty Name="SOLICITANTE" ColumnName="SOLICITANTE" />
+                <ScalarProperty Name="ACAO" ColumnName="ACAO" />
+                <ScalarProperty Name="DATA_RESOLUCAO" ColumnName="DATA_RESOLUCAO" />
+                <ScalarProperty Name="GRUPO" ColumnName="GRUPO" />
+                <ScalarProperty Name="DATA_EMISSAO_FICHA" ColumnName="DATA_EMISSAO_FICHA" />
+                <ScalarProperty Name="DH_SUBIR" ColumnName="DH_SUBIR" />
+                <ScalarProperty Name="DH_SUBIU" ColumnName="DH_SUBIU" />
+                <ScalarProperty Name="SAC_TIPO_ID" ColumnName="SAC_TIPO_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SEQ_PROD">
+            <EntityTypeMapping TypeName="corporativo2Model.SEQ_PROD">
+              <MappingFragment StoreEntitySet="SEQ_PROD">
+                <ScalarProperty Name="COD_PROD" ColumnName="COD_PROD" />
+                <ScalarProperty Name="LETRA" ColumnName="LETRA" />
+                <ScalarProperty Name="SEQUENCIA" ColumnName="SEQUENCIA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ASSINATURA">
+            <EntityTypeMapping TypeName="corporativo2Model.ASSINATURA">
+              <MappingFragment StoreEntitySet="ASSINATURA">
+                <ScalarProperty Name="DATA_INSERT" ColumnName="DATA_INSERT" />
+                <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+                <ScalarProperty Name="DH_SUBIU" ColumnName="DH_SUBIU" />
+                <ScalarProperty Name="DH_SUBIR" ColumnName="DH_SUBIR" />
+                <ScalarProperty Name="CNPJ_CPF" ColumnName="CNPJ_CPF" />
+                <ScalarProperty Name="AUTOID" ColumnName="AUTOID" />
+                <ScalarProperty Name="PROSPECTADO" ColumnName="PROSPECTADO" />
+                <ScalarProperty Name="MES_REFERENCIA" ColumnName="MES_REFERENCIA" />
+                <ScalarProperty Name="COD_LIVRO" ColumnName="COD_LIVRO" />
+                <ScalarProperty Name="COD_CURSO" ColumnName="COD_CURSO" />
+                <ScalarProperty Name="RETIRAR_DE_MAOS" ColumnName="RETIRAR_DE_MAOS" />
+                <ScalarProperty Name="ENTREGADOR" ColumnName="ENTREGADOR" />
+                <ScalarProperty Name="DT_DEVOL_PASTA" ColumnName="DT_DEVOL_PASTA" />
+                <ScalarProperty Name="MAT_ADIC2" ColumnName="MAT_ADIC2" />
+                <ScalarProperty Name="DATA_ASSINATURA" ColumnName="DATA_ASSINATURA" />
+                <ScalarProperty Name="DT_GRAV_PASTA" ColumnName="DT_GRAV_PASTA" />
+                <ScalarProperty Name="NUM_TP_ENVIO" ColumnName="NUM_TP_ENVIO" />
+                <ScalarProperty Name="REENVIO_PASTA_SN" ColumnName="REENVIO_PASTA_SN" />
+                <ScalarProperty Name="ULT_PASTA" ColumnName="ULT_PASTA" />
+                <ScalarProperty Name="MALA_OFERTA" ColumnName="MALA_OFERTA" />
+                <ScalarProperty Name="DT_SUSP_REM_DIASC" ColumnName="DT_SUSP_REM_DIASC" />
+                <ScalarProperty Name="ANO_REMESSA" ColumnName="ANO_REMESSA" />
+                <ScalarProperty Name="REMESSA" ColumnName="REMESSA" />
+                <ScalarProperty Name="MAT_ADIC" ColumnName="MAT_ADIC" />
+                <ScalarProperty Name="PART_BTC" ColumnName="PART_BTC" />
+                <ScalarProperty Name="EX_BTC" ColumnName="EX_BTC" />
+                <ScalarProperty Name="E_MAIL" ColumnName="E_MAIL" />
+                <ScalarProperty Name="A_C" ColumnName="A_C" />
+                <ScalarProperty Name="CORTESIA" ColumnName="CORTESIA" />
+                <ScalarProperty Name="ATV_REM" ColumnName="ATV_REM" />
+                <ScalarProperty Name="ANO_COAD" ColumnName="ANO_COAD" />
+                <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+                <ScalarProperty Name="CODIGO_UNIX" ColumnName="CODIGO_UNIX" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cart_coad">
+            <EntityTypeMapping TypeName="corporativo2Model.cart_coad">
+              <MappingFragment StoreEntitySet="cart_coad">
+                <ScalarProperty Name="DATA_INSERT" ColumnName="DATA_INSERT" />
+                <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+                <ScalarProperty Name="DH_SUBIU" ColumnName="DH_SUBIU" />
+                <ScalarProperty Name="DH_SUBIR" ColumnName="DH_SUBIR" />
+                <ScalarProperty Name="id_ceps" ColumnName="id_ceps" />
+                <ScalarProperty Name="TP_PESSOA" ColumnName="TP_PESSOA" />
+                <ScalarProperty Name="cep_status" ColumnName="cep_status" />
+                <ScalarProperty Name="MXM_CODIGO" ColumnName="MXM_CODIGO" />
+                <ScalarProperty Name="DATA_CADASTRO" ColumnName="DATA_CADASTRO" />
+                <ScalarProperty Name="IDENTIFICACAO" ColumnName="IDENTIFICACAO" />
+                <ScalarProperty Name="PROF" ColumnName="PROF" />
+                <ScalarProperty Name="CARGO" ColumnName="CARGO" />
+                <ScalarProperty Name="E_MAIL" ColumnName="E_MAIL" />
+                <ScalarProperty Name="FAX" ColumnName="FAX" />
+                <ScalarProperty Name="DDD_FAX" ColumnName="DDD_FAX" />
+                <ScalarProperty Name="TELEFONE" ColumnName="TELEFONE" />
+                <ScalarProperty Name="DDD_TEL" ColumnName="DDD_TEL" />
+                <ScalarProperty Name="CEP" ColumnName="CEP" />
+                <ScalarProperty Name="UF" ColumnName="UF" />
+                <ScalarProperty Name="MUNIC" ColumnName="MUNIC" />
+                <ScalarProperty Name="BAIRRO" ColumnName="BAIRRO" />
+                <ScalarProperty Name="COMPL3" ColumnName="COMPL3" />
+                <ScalarProperty Name="TIPO_COMPL3" ColumnName="TIPO_COMPL3" />
+                <ScalarProperty Name="COMPL2" ColumnName="COMPL2" />
+                <ScalarProperty Name="TIPO_COMPL2" ColumnName="TIPO_COMPL2" />
+                <ScalarProperty Name="COMPL" ColumnName="COMPL" />
+                <ScalarProperty Name="TIPO_COMPL" ColumnName="TIPO_COMPL" />
+                <ScalarProperty Name="NUMERO" ColumnName="NUMERO" />
+                <ScalarProperty Name="LOGRAD" ColumnName="LOGRAD" />
+                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+                <ScalarProperty Name="A_C" ColumnName="A_C" />
+                <ScalarProperty Name="NOME" ColumnName="NOME" />
+                <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENTES">
+            <EntityTypeMapping TypeName="corporativo2Model.CLIENTES">
+              <MappingFragment StoreEntitySet="CLIENTES">
+                <ScalarProperty Name="DATA_INSERT" ColumnName="DATA_INSERT" />
+                <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+                <ScalarProperty Name="DH_SUBIU" ColumnName="DH_SUBIU" />
+                <ScalarProperty Name="DH_SUBIR" ColumnName="DH_SUBIR" />
+                <ScalarProperty Name="AUTOID" ColumnName="AUTOID" />
+                <ScalarProperty Name="INSCRICAO" ColumnName="INSCRICAO" />
+                <ScalarProperty Name="CGC" ColumnName="CGC" />
+                <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMAILS">
+            <EntityTypeMapping TypeName="corporativo2Model.EMAILS">
+              <MappingFragment StoreEntitySet="EMAILS">
+                <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+                <ScalarProperty Name="DATA_INSERT" ColumnName="DATA_INSERT" />
+                <ScalarProperty Name="DECISOR" ColumnName="DECISOR" />
+                <ScalarProperty Name="SETOR" ColumnName="SETOR" />
+                <ScalarProperty Name="DH_SUBIU" ColumnName="DH_SUBIU" />
+                <ScalarProperty Name="DH_SUBIR" ColumnName="DH_SUBIR" />
+                <ScalarProperty Name="AUTOID" ColumnName="AUTOID" />
+                <ScalarProperty Name="DT_LISTAGEM_CONF" ColumnName="DT_LISTAGEM_CONF" />
+                <ScalarProperty Name="PRINCIPAL_SN" ColumnName="PRINCIPAL_SN" />
+                <ScalarProperty Name="E_MAIL" ColumnName="E_MAIL" />
+                <ScalarProperty Name="ASSINATURA" ColumnName="ASSINATURA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TELEFONES2">
+            <EntityTypeMapping TypeName="corporativo2Model.TELEFONES2">
+              <MappingFragment StoreEntitySet="TELEFONES2">
+                <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+                <ScalarProperty Name="DATA_INSERT" ColumnName="DATA_INSERT" />
+                <ScalarProperty Name="TELEFONE" ColumnName="TELEFONE" />
+                <ScalarProperty Name="SETOR" ColumnName="SETOR" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="DH_SUBIU" ColumnName="DH_SUBIU" />
+                <ScalarProperty Name="DH_SUBIR" ColumnName="DH_SUBIR" />
+                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+                <ScalarProperty Name="DDD_TEL" ColumnName="DDD_TEL" />
+                <ScalarProperty Name="ASSINATURA" ColumnName="ASSINATURA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

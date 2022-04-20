@@ -1,0 +1,74 @@
+﻿@model COAD.SEGURANCA.Repositorios.Contexto.LOG_OCORRENCIA
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+@using (Html.BeginForm())
+{
+ 
+
+    <div class="form panel panel-primary">
+        <div class="panel-heading">
+            <i class="fa fa-search fa-fw"></i> @ViewBag.Title
+            <div class="pull-right"></div>
+        </div>
+        <div class="panel-body">
+            @Html.ValidationSummary(false)
+            <div class="form-group">
+                <div class="col-lg-6">
+                    @Html.Label("Erro")
+                    @Html.TextBoxFor(model => model.LOG_ID_ERRO, new { @class = "form-control", Disabled = true })
+                </div>
+                <div class="col-lg-6">
+                    @Html.Label("Data")
+                    @Html.TextBoxFor(model => model.LOG_DATA, new { @class = "form-control", Disabled = true })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-12">
+                    @Html.HiddenFor(model => model.LOG_SEQ)
+                    @Html.Label("Erro (Descrição)")
+                    @Html.TextAreaFor(model => model.LOG_MESSAGE, new { @class = "form-control", Disabled = true, rows = 6 })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-lg-12">
+                    @Html.Label("IP")
+                    @Html.TextBoxFor(model => model.LOG_IP_ACESSO, new { @class = "form-control", Disabled = true })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-12">
+                    @Html.Label("Path")
+                    @Html.TextBoxFor(model => model.ITM_PATH, new { @class = "form-control", Disabled = true })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-12">
+                    @Html.Label("Usuário")
+                    @Html.TextBoxFor(model => model.USU_LOGIN, new { @class = "form-control", Disabled = true })
+                </div>
+            </div>
+
+        </div>
+
+        <div class="panel-footer">
+            <a href="javascript:history.back()" class="btn btn-default" }>Voltar</a>
+        </div>
+    </div>
+
+}

@@ -1,0 +1,139 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.RepresentanteDTO
+@using Coad.GenericCrud.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li class="active">Gerenciar Representates</li>         
+        
+    </ol>
+}
+
+@*<style type="text/css">
+
+    .body {
+        background-color: #e8e8e8 !important;
+
+    }
+</style>*@
+
+
+@Scripts.Render("~/Scripts/negocio/regiao.js")
+<div ng-app="appModule">
+    <div ng-controller="RegiaoController" class="padding content" ng-cloak>
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                        </li>                                                                           
+                                    </ul>
+                                </div>
+                            </div>
+      </div>
+          
+      <div class="panel-body">            
+           
+        <div class="row">              
+            <div class="form-group col-lg-2">
+                <label for="usu_login">Região</label>
+                <input type="text" id="usu_login" ng-model="filtro.descricao" class="form-control"/>
+            </div>
+            <div class="form-group col-lg-2">
+                <label for="empresa">Empresa</label>
+                <input type="text" id="empresa" ng-model="filtro.empRazaoSocial" class="form-control"/>
+            </div>
+            <div class="form-group col-lg-3">
+               
+                <label for="uf">UF</label>
+                    @Html.DropDownList("uf", 
+                    new SelectList(ViewBag.lstUF, "UF_SIGLA", "UF_SIGLA"), "Selecione" ,
+                    new {@class = "form-control", ng_model = "filtro.uf", ng_change="getMunicipioPorUf()"})     
+            </div>
+            <div class="form-group col-sm-3">
+                <label for="mun">Municipio</label> 
+                <select ng-options="mun.MUN_ID as mun.MUN_DESCRICAO for mun in municipios"
+                        ng-model="filtro.munId" id="mun" class="form-control">
+                        <option value="">Selecione</option>
+                </select>
+            </div>
+            <div class="form-group col-lg-4">
+               
+                <label for="uen_id">UEN</label>
+                    @Html.DropDownList("uen_id", 
+                    new SelectList(ViewBag.lstUen, "UEN_ID", "UEN_DESCRICAO"), "Selecione" ,
+                    new {@class = "form-control", ng_model = "filtro.UEN_ID"})                
+            </div>             
+              
+         
+            
+      </div>
+                  
+        <div class="panel-footer">
+            <button type="button" class="btn btn-primary" ng-click="listarRegiao()">Pesquisar</button>
+        </div>
+    </div>
+  </div>
+        <div app-message></div>
+        
+        <div class="panel panel-default">
+                    <!-- Default panel contents -->
+      
+                    <div class="panel-heading bold"><span class="glyphicon glyphicon-user"></span> Regiões</div>
+          
+                    <div class="panel-body">   
+                    
+                                <div class="table-responsive">     
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>     
+                                                    <th>
+                                                        Descrição
+                                                    </th>
+                                                    <th>Empresa</th>
+                                                    <th>Franquia</th>
+                                                    <th>UEN</th>                                                           
+                                                    <th>#</th>                            
+                                                </tr>
+                                            </thead>    
+                                            <tr ng-repeat="item in lstRegioes">                                    
+                                                <td>
+                                                    {{item.RG_DESCRICAO}}   
+                                                </td>
+                                                <td>{{item.EMPRESA.EMP_RAZAO_SOCIAL}}</td>
+                                                <td>
+                                                    <span class="label label-success" ng-if="item.RG_FRANQUIA">SIM</span>
+                                                    <span class="label label-warning" ng-if="!item.RG_FRANQUIA">NÃO</span>
+                                                </td>                                                
+                                                <td>{{item.UEN.UEN_DESCRICAO}}</td>
+                                                <td>
+                                                    <a href="javascript:void(0)" app-post="@Url.Action("Editar")?RG_ID={{item.RG_ID}}" 
+                                                        title="Editar" class="blue">
+                                                        <span class="glyphicon glyphicon-edit"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" ng-show="lstRegioes.length == 0 && listado">Nenhum registro foi encontrado.</td>
+                                                <td colspan="4" ng-show="!lstRegioes">Clique em pesquisar para listar.</td>
+                                            </tr>
+                                        </table> 
+                                </div>          
+                            <div app-pagination request-page="paginaReq" load-function="listarRegiao(paginaReq)"></div>     
+
+                        </div>         
+                    </div>  
+    </div>   
+</div>

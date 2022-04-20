@@ -1,0 +1,141 @@
+﻿@model IEnumerable<COAD.PORTAL.Model.DTO.CalendarioObrigacoes.CoCalendarioDTO>
+
+@{
+    ViewBag.Title = "Tributário COAD";
+}
+
+@section breadcrumbs {
+}
+@Styles.Render("~/Content/themes/css/tributarioEstilo.css")
+
+<script>
+    $(document).ready(function () {
+        $('.collapseItem').collapse();
+
+        $(document).ready(function () {
+            $('.linhaRedirecionavel').click(function () {
+                window.location = $(this).data('href');
+                return false;
+            });
+        });
+    });
+</script>
+
+<h2>COAD Informações Confiáveis</h2>
+<div id="listaObrigacoes">
+    <div class="accordion">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#hsobrigacoes">
+                    @Html.DisplayName("Obrigações de hoje")
+                </a>
+            </div>
+            <div id="hsobrigacoes" class="accordion-body collapseItem in">
+                <div class="accordion-inner">
+                    <ul>
+                        @if (Model.Count() <= 0)
+                        {
+                            <li>Não há obrigações para hoje!</li>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                            <li class="liObrigacao">
+                                <a href="@Url.Action("Detalhes", "Calendario", new { id = item.CO_OBRIGACOES.NUM_OBRIGACAO })"  class="prox showLoaderImage">
+                                    @if (item.CO_OBRIGACOES != null && item.CO_OBRIGACOES.CO_ESTADOS != null && !string.IsNullOrEmpty(item.CO_OBRIGACOES.CO_ESTADOS.COD_UF))
+                                    {
+                                        var texto = item.CO_OBRIGACOES.CO_ESTADOS.COD_UF + " - ";
+                                        @texto
+                                    }
+                                    else
+                                    {
+                                        var texto = "Federal - ";
+                                        @texto
+                                    }
+
+                                    @Html.DisplayFor(modelItem => item.CO_OBRIGACOES.TXT_TITULO)
+                                </a>
+                            </li>
+                            }
+                        }
+                    </ul>
+                    <a href="@Url.Action("Buscar", "Calendario")"  class="prox">Pesquisar obrigações</a>
+                </div>
+            </div>
+            <br />
+
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#hsnoticias">Notícias
+                    </a>
+                </div>
+                <div id="hsnoticias" class="accordion-body collapseItem in">
+                    <div class="accordion-inner">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 80%;">Verbete
+                                    </th>
+                                    <th style="min-width: 20%;">Descrição
+                                    </th>
+                                </tr>
+                            </thead>
+                            @foreach (var noticia in ViewBag.Noticias)
+                            {
+                                <tr class="linhaRedirecionavel showLoaderImage" data-href="/Noticias/Detalhes/@(noticia.nmid)">
+                                    <td>
+                                        @(noticia.ncverbete)
+                                    </td>
+                                    <td>
+                                        @(noticia.ngdescricao)
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                        <a href="@Url.Action("Busca", "Noticias")"  class="prox">Pesquisar notícias</a>
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#hsindices">Índices Econômicos
+                    </a>
+                </div>
+                <div id="hsindices" class="accordion-body collapseItem">
+                    <div class="accordion-inner">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 34%;">ÍNDICE
+                                    </th>
+                                    <th style="min-width: 33%;">VALOR
+                                    </th>
+                                    <th style="min-width: 33%;">DATA
+                                    </th>
+                                </tr>
+                            </thead>
+                            @foreach (var indice in ViewBag.IndicesEconomico)
+                            {
+                                <tr>
+                                    <td>
+                                        @(indice.idc_agregado_nome)
+                                    </td>
+                                    <td>
+                                        @(indice.idc_agregado_valor)
+                                    </td>
+                                    <td>
+                                        @(indice.idc_agregado_data)
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

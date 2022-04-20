@@ -1,0 +1,89 @@
+﻿@model COAD.SEGURANCA.Model.DepartamentoDTO
+
+@{
+    ViewBag.Title = "Editar";
+}
+@using Coad.GenericCrud.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Clientes (Editar)</li>
+    </ol>
+}
+@Scripts.Render("~/Scripts/negocio/departamento.js")
+
+<div ng-app="appModule">
+    <div class="panel panel-default" ng-controller="DepartamentoController" data-ng-init="read('@ViewBag.DP_ID')" ng-cloak>
+        <!-- Default panel contents -->
+                  <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel blue"></span> Editar Departamento
+                    
+                        <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"
+                                            aria-expanded="false" ng-disabled="button == 'saved'">
+                                            Opções
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                             <li>
+                                                <a href="@Url.Action("Index")" title="Voltar" class="blue"> Voltar</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" title="Salvar" ng-click="salvar()" class="blue">Salvar</a>
+                                            </li>
+                                            <li ng-show="prospect.ID">
+                                                <a href="javascript:void(0)" app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}" 
+                                                    app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?" class="btnConfirmaExclusao blue" title="Excluir"> Excluir</a>
+                                            </li>                                                                                                                    
+                                        </ul>
+                                    </div>
+                                </div>
+                     
+                     
+            </div>
+
+            <div class="panel-body">  
+                <div app-message></div>
+                 @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) {                         
+                     
+                    <fieldset>
+                        <legend>Dados básicos</legend>
+                    
+                        <div class="row"> 
+                            <div class="form-group col-sm-4">
+                                @Html.Label("Departamento")
+                                @Html.TextBoxFor(model => model.DP_NOME,  new {@class = "form-control", 
+                                ng_model = "departamento.DP_NOME", maxlength = "15" })
+                                @Html.ValidationMessageFor(model => model.DP_NOME, null, new { app_validation_msg = "erros", @for = "DP_NOME" })                                                          </div>                                           
+                        </div>
+                    </fieldset>  
+                 }
+            </div>
+
+         <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default" ng-disabled="button == 'saved' || buttonDel == 'deleting'">
+                <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar</button>
+              <button  
+                  app-switch-button="salvar()" 
+                  switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]" 
+                  switch-var="button"
+                  class="btn btn-default" ng-disabled="bloqueiaSalvamento && bloqueiaSalvamento === true || buttonDel == 'deleting'">
+                  <span class="glyphicon glyphicon-floppy-save blue"></span>
+              </button>
+
+           <span ng-show="departamento.DP_ID">
+                <button type="button" class="btn btn-danger" ng-disabled="button == 'saved'"
+                     app-switch-button="deletarDepartamento()" 
+                  switch-conf="[{label : 'Excluir', state : 'del'}, {label : 'Excluindo...', state : 'deleting', disabled : true}]" 
+                  switch-var="buttonDel"
+                  class="btn btn-default" ng-disabled="bloqueiaSalvamento && bloqueiaSalvamento === true">
+                    <span class="glyphicon glyphicon-remove-sign"></span></button>
+            </span>         
+        </div> 
+               
+      </div>
+</div>

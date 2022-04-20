@@ -1,0 +1,41 @@
+﻿@model IEnumerable<COAD.COADGED.Model.DTO.CadernoDTO>
+
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Tributário","index","Home")</li>
+        <li class="active">Cadernos</li>
+    </ol>
+}
+@{
+    ViewBag.Title = "Cadernos";
+}
+<h2>Meus Cadernos</h2>
+@Scripts.Render("~/Scripts/negocio/coCaderno.js")
+<div ng-app="appModule">
+    <div ng-controller="CadernoController" class="padding content" data-ng-init="init();">
+        <div class="row">
+            <div class="col-lg-8">
+            </div>
+            <div class="col-lg-2">
+                <input type="text" class="form-control" ng-model="titCaderno" id="tituloCaderno" placeholder="Título do Caderno" maxlength="10">
+            </div>         
+            <div class="col-lg-2">
+                <a href="Adicionar?titulocaderno={{titCaderno}}" class="btn btn-primary form-control">Adicionar Caderno</a>
+            </div>
+        </div>
+
+        <br />
+        <div class="row">
+            @foreach (var item in Model) {
+                <div class="col-md-2">
+                    <a href="/Caderno/Caderno?id=@item.CAD_ID.ToString()" class="btn btn-default form-control">@Html.DisplayFor(modelItem => item.CAD_NOME)</a>
+                    @*<button type="button" class="btn btn-default form-control" ng-click="AcessarCaderno('@item.CAD_ID')">@Html.DisplayFor(modelItem => item.CAD_NOME)</button>
+                    @Html.DisplayFor(modelItem => item.CAD_ID)
+                    @Html.DisplayFor(modelItem => item.CLI_ID)*@
+                </div>
+                <div class=" col-md-1">
+                </div>
+            }
+        </div>
+    </div>
+</div>

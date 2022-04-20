@@ -1,0 +1,141 @@
+﻿@model IEnumerable<COAD.CORPORATIVO.Model.Dto.ProdutosDTO>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PRO_SIGLA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PRO_NOME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PRO_ID_DERVADO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PRO_RECEBE_MALA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PRO_STATUS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NCM_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GRUPO_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DATA_CADASTRO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DATA_ALTERA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PRO_UN_COMPRA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PRO_UN_VEND)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PRO_PRECO_COMPRA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PRO_PRECO_CUSTO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AREA_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PRO_PRECO_VENDA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TIPO_PRO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TPC_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DATA_EXCLUSAO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.USU_LOGIN_EXCLUSAO)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PRO_SIGLA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PRO_NOME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PRO_ID_DERVADO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PRO_RECEBE_MALA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PRO_STATUS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NCM_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GRUPO_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DATA_CADASTRO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DATA_ALTERA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PRO_UN_COMPRA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PRO_UN_VEND)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PRO_PRECO_COMPRA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PRO_PRECO_CUSTO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AREA_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PRO_PRECO_VENDA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TIPO_PRO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TPC_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DATA_EXCLUSAO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.USU_LOGIN_EXCLUSAO)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PRO_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PRO_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PRO_ID })
+        </td>
+    </tr>
+}
+
+</table>

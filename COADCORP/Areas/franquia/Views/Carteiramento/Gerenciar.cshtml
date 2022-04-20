@@ -1,0 +1,421 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutosDTO
+@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li class="active">Gerenciar Carteira</li>       
+        
+    </ol>
+}
+
+@{
+     
+    bool franquiador = SessionContext.IsGerenteDepartamento("franquiador");
+}
+
+<style type="text/css">
+
+    .body {
+        background-color: #e8e8e8 !important;
+
+    }
+</style>
+
+
+@Scripts.Render("~/Scripts/negocio/carteiramento.js")
+<div ng-app="appModule">
+    <div ng-controller="CarteiramentoController" class="padding content" ng-cloak data-ng-init="init('@franquiador');">
+    @*<div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-warning btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                        </li>                                                                           
+                                    </ul>
+                                </div>
+                            </div>
+      </div>
+          
+      <div class="panel-body">            
+           
+        <div class="row">              
+            <div class="form-group col-lg-2">
+                <label for="usu_login">Departamento</label>
+                <input type="text" id="usu_login" ng-model="filtro.nome" class="form-control"/>
+            </div>                  
+        </div>
+         
+            
+      </div>
+                  
+        <div class="panel-footer">
+            <button type="button" class="btn btn-primary" ng-click="listarRepresentantes()">Pesquisar</button>
+        </div>
+</div>*@
+        <div app-message></div>
+        <div class="row collapse in" id="infos">
+            <div class="col-sm-5">
+                <div class="panel panel-corp" style="min-height: 340px;">
+                          <!-- Default panel contents -->
+      
+                          <div class="panel-heading bold"><span class="glyphicon glyphicon-user"></span> Representantes</div>
+          
+                          <div class="panel-body">   
+                    
+                                           @if(SessionContext.IsGerenteDepartamento("FRANQUIADOR", true)){
+                                            <div class="row">                       
+                                                <div class="form-group col-lg-12">
+                                                     <label for="selectRegiao">Região</label> 
+                                                     <select ng-options="reg.RG_ID as reg.RG_DESCRICAO for reg in regioes" 
+                                                                ng-model="filtro.RG_ID_REPRESENTANTE" class="form-control"
+                                                         ng-change="regiaoRepresentanteSelecionado()">
+                                                                <option value="">Selecione</option>
+                                                     </select>
+                                                </div>
+                                            </div>                       
+                                          }
+                                        <div class="table-responsive">     
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>     
+                                                            <th>
+                                                                Representante
+                                                            </th>
+                                                            <th>Multiplas Carteiras</th>
+                                                            <th>#</th>                            
+                                                        </tr>
+                                                    </thead>    
+                                                    <tr ng-repeat="item in representantes" ng-class="{info: item.REP_ID == representante.REP_ID}">                                    
+                                                        <td>
+                                                             {{item.REP_NOME}}   
+                                                        </td>
+                                                        <td>
+                                                            <span class="label label-success" ng-if="item.REP_VARIAS_CARTEIRAS">SIM</span>
+                                                            <span class="label label-warning" ng-if="!item.REP_VARIAS_CARTEIRAS">NÃO</span>
+                                                        </td>
+                                                        <td>
+                                                            <a href="javascript:void(0)" ng-click="selecionarRepresentante(item)" title="Editar" class="blue">
+                                                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="5" ng-hide="representantes" class="text">
+                                                            Não foi encontrado nenhum registro.
+                                                        </td>
+                                                    </tr>
+                                                </table> 
+                                        </div>          
+                                  
+                              
+                                    <div app-pagination="page" request-page="paginaReq" load-function="listarRepresentantes(paginaReq)"></div>
+                                </div>
+                            </div>  
+             </div>
+             <div class="col-sm-4">
+                    <div class="panel panel-corp" style="min-height: 340px;">
+                              <!-- Default panel contents -->
+      
+                              <div class="panel-heading bold"><span class="glyphicon glyphicon-user"></span> 
+                                  Carteiras 
+                                  <div class="pull-right" ng-if="representante">
+                                        <a href="javascript:void(0)" ng-click="AbreModalIncluirCarteiramento()" title="Incluir" class="btn btn-default btn-xs blue">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </a>
+                                 </div>
+
+                              </div>
+                                   
+                                  <div class="panel-body">  
+                                        <div class="table-responsive">     
+                                            <table class="table table-hover">
+                                                <thead ng-show="carteiramentos">
+                                                    <tr>      
+                                                        <th>                                           
+                                                            Código
+                                                        </th>                                                        
+                                                        <th>
+                                                            Região
+                                                        </th>
+                                                        <th>Multiplos Representantes</th>                                                        
+                                                        <th>
+                                                            Ações
+                                                        </th>                                       
+                                                    </tr>
+                                                </thead>    
+                                              <tr ng-repeat="item in carteiramentos">
+                                                    <td>
+                                                        <span class="label label-info">{{item.CAR_ID}}</span>
+                                                    </td> 
+                                                    <td>
+                                                        {{item.REGIAO.RG_DESCRICAOx}}
+                                                    </td>
+                                                  <td>
+                                                        <span class="label label-success" ng-if="item.CAR_VARIOS_REPRESENTANTES">SIM</span>
+                                                        <span class="label label-warning" ng-if="!item.CAR_VARIOS_REPRESENTANTES">NÃO</span>
+                                                    </td>
+                                                    <td>
+                                                       <a href="javascript:void(0)" ng-click="AbreModalTrocarCarteiramento(item.CAR_ID)" title="Trocar" class="blue">
+                                                                <span class="glyphicon glyphicon-retweet"></span>
+                                                       </a>
+                                                      @* <a href="javascript:void(0)" ng-click="filtrarUsuariosPorCarteira(item)" title="Ver todos" class="blue">
+                                                                <span class="glyphicon glyphicon-eye-open" data-toggle="collapse" data-target="#infos"></span>
+                                                            </a>*@
+                                                        
+                                                        <a href="javascript:void(0)" ng-click="RemoverCarteiramento(item.CAR_ID)" title="Remover Carteira" class="red">
+                                                                <span class="glyphicon glyphicon-trash"></span>
+                                                            </a>
+                                                      @*  <a href="javascript:void(0)" ng-click="SelecionarCarteiraTransferencia(item)" 
+                                                            title="Transferir Clientes" class="text-warning">
+                                                                <span class="glyphicon glyphicon-random"></span>
+                                                       </a>*@
+                                                    </td>                                  
+                                    
+                                              </tr>
+                                                <tr>
+                                                    <td colspan="5" ng-hide="carteiramentos" class="text">
+                                                        Não foi encontrado nenhum registro.
+                                                    </td>
+                                                </tr>
+                                            </table> 
+                                    </div>
+                                  </div>
+                        
+         
+                    </div>  
+             </div>
+            <div class="col-sm-3">
+                    <div class="panel panel-corp" style="min-height: 340px;" ng-if="!transferenciaDTO">
+                              <!-- Default panel contents -->
+      
+                              <div class="panel-heading bold"><span class="glyphicon glyphicon-user"></span> Informação dos Clientes </div>
+                
+                                  <div class="panel-body">  
+                                        
+                                      <div class="table-responsive">     
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>      
+                                                        <th>                                           
+                                                            Tipo de Cliente
+                                                        </th>
+                                                        <th>
+                                                            Quantidade
+                                                        </th>                                       
+                                                    </tr>
+                                                </thead>    
+                                              <tr ng-repeat="item in resumoQuantidadeTipoCliente.QuantidadeClassificacaoClienteDTO">
+                                                    <td>
+                                                        {{item.CLA_CLI_DESCRICAO}}
+                                                    </td>  
+                                                    <td>
+                                                        {{item.QUANTIDADE}}
+                                                    </td>                                  
+                                    
+                                              </tr>
+                                             <tr>
+                                                 <td>Total:</td>
+                                                 <td>{{resumoQuantidadeTipoCliente.Total}}</td>
+                                             </tr>
+                                                <tr>
+                                                    <td colspan="5" ng-hide="resumoQuantidadeTipoCliente.QuantidadeClassificacaoClienteDTO" class="text">
+                                                        Não foi encontrado nenhum registro.
+                                                    </td>
+                                                </tr>
+                                            </table> 
+                                    </div>
+                                  </div>
+                        
+         
+                    </div>  
+                <div class="panel panel-corp" style="min-height: 340px;" ng-if="transferenciaDTO">
+                              <!-- Default panel contents -->
+      
+                              <div class="panel-heading bold"><span class="glyphicon glyphicon-user"></span> Transferência de Clientes </div>
+                
+                                  <div class="panel-body"> 
+                                      <form>
+                                          <div class="form-group row">
+                                               <div class="col-sm-10">
+                                                   <label for="car_ori">Carteira de Origem</label>
+                                                   <input type="text" class="form-control" ng-model="transferenciaDTO.carteiramentoOrigem.CAR_ID" disabled="disabled"/>
+                                               </div>          
+                                              <div class="col-sm-2 form-padding-top">
+                                                  <a href="javascript:void(0)" ng-click="DeselecionarCarteiraTransferenciaOrigem()" 
+                                                            title="Retirar" class="text-danger">
+                                                                <span class="glyphicon glyphicon-remove"></span>
+                                                       </a>
+                                              </div>                                    
+                                          </div>
+                                          <div class="form-group row">
+                                              <div class="col-sm-10">
+                                                  <label for="car_ori">Carteira de Destino</label>
+                                                  <input type="text" class="form-control" ng-model="transferenciaDTO.carteiramentoDestino.CAR_ID" disabled="disabled"/>
+                                              </div>
+                                              <div class="col-sm-2 form-padding-top">
+                                                  <a href="javascript:void(0)" ng-click="DeselecionarCarteiraTransferenciaDestino()" 
+                                                            title="Retirar" class="text-danger">
+                                                                <span class="glyphicon glyphicon-remove"></span>
+                                                       </a>
+                                              </div>
+                                              
+                                          </div>
+
+                                      </form>
+                                  </div>
+                        
+         
+                    </div>  
+
+             </div>
+         </div>
+           <div class="row" style="display:none;">
+             <div class="col-sm-12">
+                <div class="panel panel-corp">
+                          <!-- Default panel contents -->
+      
+                          <div class="panel-heading bold"><span class="glyphicon glyphicon-user"></span> Clientes da Carteira
+                              <div class="pull-right">
+                                  <a href="javascript:void(0)" title="Ver todos" class="blue">
+                                        <span class="glyphicon glyphicon-chevron-up" data-toggle="collapse" data-target="#infos"></span>
+                                  </a>
+                              </div>
+                          </div>
+          
+                          <div class="panel-body">                    
+                                        <div class="table-responsive" ng-show="clientes">     
+                                            <div class="row">
+                                                <div class="col-sm-5 form-group">
+                                                    <label for="nome">Nome: </label>
+                                                    <input type="text" id="nome" ng-model="filtro.nome" class="form-control"/>
+                                                </div>
+                                                <div class="col-sm-2 padding-button">
+                                                    
+                                                      <button type="button" class="btn btn-default" ng-click="listarClientesRepresentante()">
+                                                          <span class="glyphicon glyphicon-search"></span>
+                                                      </button>
+                                                </div>
+                                            </div>
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>     
+                                                            <th>                                           
+                                                                Cnpj/Cpf
+                                                            </th>
+                                                            <th>                                           
+                                                                Nome
+                                                            </th>      
+                                                            <th>
+                                                                Tipo
+                                                            </th>    
+                                                            <th>#</th>                            
+                                                        </tr>
+                                                    </thead>    
+                                                    <tr ng-repeat="item in clientes">                                    
+                                                        <td>
+                                                            {{ item.CLI_CPF_CNPJ}}
+                                                        </td>   
+                                                        <td>
+                                                            {{ item.CLI_NOME}}
+                                                        </td>        
+                                                        <td>
+                                                            <span class="label" ng-class="{
+                                                                'label-warning' : 
+                                                                item.CLA_CLI_ID == 1,
+                                                                'label-success' : 
+                                                                item.CLA_CLI_ID == 2,
+                                                                'label-info' : 
+                                                                item.CLA_CLI_ID == 3,}">
+                                                                {{item.CLASSIFICACAO_CLIENTE.CLA_CLI_DESCRICAO}}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <a href="javascript:void(0)" app-post="@Url.Action("Editar")?REP_ID={{item.REP_ID}}" title="Editar" class="blue">
+                                                                <span class="glyphicon glyphicon-edit"></span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="5" ng-hide="representantes" class="text">
+                                                            Não foi encontrado nenhum registro.
+                                                        </td>
+                                                    </tr>
+                                                </table> 
+                                        </div>          
+                                  <div app-pagination="paginaClientes" ng-show="paginaClientes" request-page="paginaReq"
+                                       load-function="listarClientesRepresentante(paginaReq)"></div>          
+                              <div class="text" ng-hide="clientes">Selecione um Representante</div>
+                              </div>
+         
+                            </div>  
+             </div>
+         </div>
+        <div app-modal="modalCarteiras" header="Carteiras">
+            
+                    <div class="panel panel-corp">
+                              <!-- Default panel contents -->
+      
+                              <div class="panel-heading bold"><span class="glyphicon glyphicon-user"></span> Carteiras</div>
+          
+                                  <div class="panel-body">  
+                                        <div class="table-responsive">     
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>      
+                                                        <th>                                           
+                                                            Código
+                                                        </th>
+                                                       <th>
+                                                            Região
+                                                        </th>
+                                                        <th>Multiplos Representantes</th>
+                                                        <th>Ações</th>                                     
+                                                    </tr>
+                                                </thead>    
+                                              <tr ng-repeat="item in carteiramentosEscolha" class="text">
+                                                    <td>
+                                                        <span class="label label-info">{{item.CAR_ID}}</span>
+                                                    </td>   
+                                                    <td>
+                                                        {{item.REGIAO.RG_DESCRICAO}}
+                                                    </td>
+                                                  <td>
+                                                        <span class="label label-success" ng-if="item.CAR_VARIOS_REPRESENTANTES">SIM</span>
+                                                        <span class="label label-warning" ng-if="!item.CAR_VARIOS_REPRESENTANTES">NÃO</span>
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0)" ng-click="IncluirOuTrocarCarteira(item.CAR_ID)" title="Adicionar" role="button">
+                                                             <span class="glyphicon glyphicon-ok-sign"></span>
+                                                       </a>
+                                                    </td>                                  
+                                    
+                                              </tr>
+                                                <tr>
+                                                    <td colspan="5" ng-hide="carteiramentosEscolha" class="text">
+                                                        Não foi encontrado nenhum registro.
+                                                    </td>
+                                                </tr>
+                                            </table> 
+                                             <div app-pagination="paginaCarteirasEscolha" ng-show="paginaCarteirasEscolha" request-page="paginaReq" 
+                                                 load-function="listarCarteirasParaEscolha(paginaReq)"></div>          
+                                            
+                                    </div>
+                                  </div>                       
+         
+                    </div>
+        </div>
+    </div>   
+</div>

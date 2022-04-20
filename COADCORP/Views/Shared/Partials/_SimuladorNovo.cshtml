@@ -1,0 +1,877 @@
+﻿@{
+
+    ViewBag.print = true;
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;
+    if (ViewBag.print == true)
+    {
+
+        ViewBag.printableClass = "hidden-print";
+    }
+    Layout = null;
+    ViewBag.Title = "Index";
+
+}
+
+
+<div ng-if="tabconfig.TDC_TIPO==2&&tabconfig.TDC_ID!=null&&tabconfig.TDC_ID!=''">
+    <div app-message></div>
+    @*(Introdução, Informações Preenchimento)*@
+    <fieldset ng-show="tabela.TAB_DESCRICAO!=null&&tabela.TAB_DESCRICAO!=''">
+        <legend style="text-align: left;">
+            <strong>
+                <h4 ng-bind-html="trustAsHtml(tabela.TAB_DESCRICAO)"></h4>
+            </strong>
+        </legend>
+    </fieldset>
+    <div class="hidden-print">
+        <div class="row" ng-show="tabconfig.TDC_INTRODUCAO==true">
+            <div id="Introducao" class="col-lg-12">
+                <div class="form-group">
+                    <p ng-bind-html="trustAsHtml(tabela.TAB_INTRODUCAO)"></p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="InfPreenchimento" ng-show="tabconfig.TDC_INF_PREENCHIMENTO==true" class="col-lg-12">
+                <div class="form-group">
+                    <p ng-bind-html="trustAsHtml(tabela.TAB_INF_PREENCHIMENTO)"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*Simulador (Apresentação do Simulador selecionado no menu)*@
+    <div class="hidden-print panel panel-default" id="Calculo" ng-if="calculado!=true">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-cog blue"></span>&nbsp&nbspPreencha os campos abaixo para realizar o calculo
+        </div>
+        <fieldset ng-if="tabconfig.TDC_LAYOUT_TABELA!='LRE'">
+            <div class="panel-body">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div ng-repeat="item in tabela.TAB_DINAMICA_ITEM" class="col-xs-11">
+                            <div ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="cabec.TCI_FORMULA==null||cabec.TCI_FORMULA==''">
+                                <div class="col-lg-7">
+                                    <div class="form-group">
+                                        <label>{{cabec.TCI_NOME_CAMPO}} </label>
+                                        <form action="" class="ls-form ls-form-inline" data-ls-module="form"></form>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="form-group" app-popover data-direction="left" data-content="{{cabec.TCI_TEXTO_HELP}}" ng-if="cabec.TCI_TEXTO_HELP!=null&&cabec.TCI_TEXTO_HELP!=''">
+                                        <div class="input-group" ng-if="(cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO=='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='') ">
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='D'">.....</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='F'">R$</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='P'">&nbsp%</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='D'">
+                                                <span class="glyphicon glyphicon-calendar blue"></span>
+                                            </div>
+                                            <input type="text" style="width: 150px" app-mask-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-model="B[$index]" maxlength="15" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='F'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='P'" />
+                                            <input type="text" style="width: 150px" ng-model="item[$index]" app-date="item[cabec.TCI_NOME_CAMPODB]" date-name="item_{{$index}}" maxlength="10" class="form-control datepicker" ng-if="cabec.TCI_TIPO_CAMPO=='D'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='D'" />
+                                        </div>
+                                        <div class="input-group" ng-show="cabec.TDC_ID_TAB_REF!=null&&cabec.TDC_ID_TAB_REF!=''">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in retornos[limpaMascara(cabec.TDC_ID_TAB_REF)]" value="{{option[cabec.TCI_NOME_CHAVEDB]}}">{{option[cabec.TCI_NOME_LISTADB]}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group" ng-show="(cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='')">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in listas[cabec.TCI_NOME_CAMPODB]" value="{{option}}">{{option}}</option>
+                                            </select>
+                                            <a href="javascript:void(0)" ng_click="mostrarTabReferencia(cabec.TDC_ID_TAB_REF,cabec.TCI_NOME_CAMPO)" ng-show="(cabec.TDC_ID_TAB_REF!=''&&cabec.TDC_ID_TAB_REF!=null)">
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null"></span>
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="Clique aqui para ter acesso a consulta." ng-show="cabec.TCI_TEXTO_HELP==''||cabec.TCI_TEXTO_HELP==null"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-if="cabec.TCI_TEXTO_HELP==null||cabec.TCI_TEXTO_HELP==''">
+                                        <div class="input-group" ng-if="(cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO=='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='') ">
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='D'">.....</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='F'">R$</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='P'">&nbsp%</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='D'">
+                                                <span class="glyphicon glyphicon-calendar blue"></span>
+                                            </div>
+                                            <input type="text" style="width: 150px" app-mask-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-model="B[$index]" maxlength="15" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='F'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='P'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" app-date="item[$index]" date-name="item_{{$index}}" maxlength="10" class="form-control datepicker" ng-if="cabec.TCI_TIPO_CAMPO=='D'" />
+
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='D'" />
+                                        </div>
+                                        <div class="input-group" ng-show="cabec.TDC_ID_TAB_REF!=null&&cabec.TDC_ID_TAB_REF!=''">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in retornos[limpaMascara(cabec.TDC_ID_TAB_REF)]" value="{{option[cabec.TCI_NOME_CHAVEDB]}}">{{option[cabec.TCI_NOME_LISTADB]}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group" ng-show="(cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='')">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in listas[cabec.TCI_NOME_CAMPODB]" value="{{option}}">{{option}}</option>
+                                            </select>
+                                            <a href="javascript:void(0)" ng_click="mostrarTabReferencia(cabec.TDC_ID_TAB_REF,cabec.TCI_NOME_CAMPO)" ng-show="(cabec.TDC_ID_TAB_REF!=''&&cabec.TDC_ID_TAB_REF!=null)">
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null"></span>
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="Clique aqui para ter acesso a consulta." ng-show="cabec.TCI_TEXTO_HELP==''||cabec.TCI_TEXTO_HELP==null"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset ng-if="tabconfig.TDC_LAYOUT_TABELA=='LRE'">
+            <div class="panel-body">
+                <div class="panel-heading">
+                    <div class="row">
+                        <table ng-repeat="item in tabela.TAB_DINAMICA_ITEM" class="col-xs-12">
+                            <tr>
+                                <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index==0)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                                    <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                                </td>
+                                <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index==0)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                                    <div class="form-group" app-popover data-direction="left" data-content="{{cabec.TCI_TEXTO_HELP}}" ng-if="cabec.TCI_TEXTO_HELP!=null&&cabec.TCI_TEXTO_HELP!=''">
+                                        <div class="input-group" ng-if="(cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO=='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='') ">
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='D'">.....</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='F'">R$</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='P'">&nbsp%</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='D'">
+                                                <span class="glyphicon glyphicon-calendar blue"></span>
+                                            </div>
+                                            <input type="text" style="width: 150px" app-mask-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-model="B[$index]" maxlength="15" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='F'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='P'" />
+                                            <input type="text" style="width: 150px" ng-model="item[$index]" app-date="item[cabec.TCI_NOME_CAMPODB]" date-name="item_{{$index}}" maxlength="10" class="form-control datepicker" ng-if="cabec.TCI_TIPO_CAMPO=='D'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='D'" />
+                                        </div>
+                                        <div class="input-group" ng-show="cabec.TDC_ID_TAB_REF!=null&&cabec.TDC_ID_TAB_REF!=''">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in retornos[limpaMascara(cabec.TDC_ID_TAB_REF)]" value="{{option[cabec.TCI_NOME_CHAVEDB]}}">{{option[cabec.TCI_NOME_LISTADB]}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group" ng-show="(cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='')">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in listas[cabec.TCI_NOME_CAMPODB]" value="{{option}}">{{option}}</option>
+                                            </select>
+                                            <a href="javascript:void(0)" ng_click="mostrarTabReferencia(cabec.TDC_ID_TAB_REF,cabec.TCI_NOME_CAMPO)" ng-show="(cabec.TDC_ID_TAB_REF!=''&&cabec.TDC_ID_TAB_REF!=null)">
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null"></span>
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="Clique aqui para ter acesso a consulta." ng-show="cabec.TCI_TEXTO_HELP==''||cabec.TCI_TEXTO_HELP==null"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-if="cabec.TCI_TEXTO_HELP==null||cabec.TCI_TEXTO_HELP==''">
+                                        <div class="input-group" ng-if="(cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO=='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='') ">
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='D'">.....</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='F'">R$</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='P'">&nbsp%</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='D'">
+                                                <span class="glyphicon glyphicon-calendar blue"></span>
+                                            </div>
+                                            <input type="text" style="width: 150px" app-mask-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-model="B[$index]" maxlength="15" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='F'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='P'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" app-date="item[$index]" date-name="item_{{$index}}" maxlength="10" class="form-control datepicker" ng-if="cabec.TCI_TIPO_CAMPO=='D'" />
+
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='D'" />
+                                        </div>
+                                        <div class="input-group" ng-show="cabec.TDC_ID_TAB_REF!=null&&cabec.TDC_ID_TAB_REF!=''">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in retornos[limpaMascara(cabec.TDC_ID_TAB_REF)]" value="{{option[cabec.TCI_NOME_CHAVEDB]}}">{{option[cabec.TCI_NOME_LISTADB]}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group" ng-show="(cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='')">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in listas[cabec.TCI_NOME_CAMPODB]" value="{{option}}">{{option}}</option>
+                                            </select>
+                                            <a href="javascript:void(0)" ng_click="mostrarTabReferencia(cabec.TDC_ID_TAB_REF,cabec.TCI_NOME_CAMPO)" ng-show="(cabec.TDC_ID_TAB_REF!=''&&cabec.TDC_ID_TAB_REF!=null)">
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null"></span>
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="Clique aqui para ter acesso a consulta." ng-show="cabec.TCI_TEXTO_HELP==''||cabec.TCI_TEXTO_HELP==null"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index==1)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                                    <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                                </td>
+                                <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index==1)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                                    <div class="form-group" app-popover data-direction="left" data-content="{{cabec.TCI_TEXTO_HELP}}" ng-if="cabec.TCI_TEXTO_HELP!=null&&cabec.TCI_TEXTO_HELP!=''">
+                                        <div class="input-group" ng-if="(cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO=='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='') ">
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='D'">.....</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='F'">R$</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='P'">&nbsp%</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='D'">
+                                                <span class="glyphicon glyphicon-calendar blue"></span>
+                                            </div>
+                                            <input type="text" style="width: 150px" app-mask-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-model="B[$index]" maxlength="15" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='F'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='P'" />
+                                            <input type="text" style="width: 150px" ng-model="item[$index]" app-date="item[cabec.TCI_NOME_CAMPODB]" date-name="item_{{$index}}" maxlength="10" class="form-control datepicker" ng-if="cabec.TCI_TIPO_CAMPO=='D'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='D'" />
+                                        </div>
+                                        <div class="input-group" ng-show="cabec.TDC_ID_TAB_REF!=null&&cabec.TDC_ID_TAB_REF!=''">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in retornos[limpaMascara(cabec.TDC_ID_TAB_REF)]" value="{{option[cabec.TCI_NOME_CHAVEDB]}}">{{option[cabec.TCI_NOME_LISTADB]}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group" ng-show="(cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='')">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in listas[cabec.TCI_NOME_CAMPODB]" value="{{option}}">{{option}}</option>
+                                            </select>
+                                            <a href="javascript:void(0)" ng_click="mostrarTabReferencia(cabec.TDC_ID_TAB_REF,cabec.TCI_NOME_CAMPO)" ng-show="(cabec.TDC_ID_TAB_REF!=''&&cabec.TDC_ID_TAB_REF!=null)">
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null"></span>
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="Clique aqui para ter acesso a consulta." ng-show="cabec.TCI_TEXTO_HELP==''||cabec.TCI_TEXTO_HELP==null"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-if="cabec.TCI_TEXTO_HELP==null||cabec.TCI_TEXTO_HELP==''">
+                                        <div class="input-group" ng-if="(cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO=='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='') ">
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='D'">.....</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='F'">R$</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='P'">&nbsp%</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='D'">
+                                                <span class="glyphicon glyphicon-calendar blue"></span>
+                                            </div>
+                                            <input type="text" style="width: 150px" app-mask-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-model="B[$index]" maxlength="15" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='F'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='P'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" app-date="item[$index]" date-name="item_{{$index}}" maxlength="10" class="form-control datepicker" ng-if="cabec.TCI_TIPO_CAMPO=='D'" />
+
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='D'" />
+                                        </div>
+                                        <div class="input-group" ng-show="cabec.TDC_ID_TAB_REF!=null&&cabec.TDC_ID_TAB_REF!=''">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in retornos[limpaMascara(cabec.TDC_ID_TAB_REF)]" value="{{option[cabec.TCI_NOME_CHAVEDB]}}">{{option[cabec.TCI_NOME_LISTADB]}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group" ng-show="(cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='')">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in listas[cabec.TCI_NOME_CAMPODB]" value="{{option}}">{{option}}</option>
+                                            </select>
+                                            <a href="javascript:void(0)" ng_click="mostrarTabReferencia(cabec.TDC_ID_TAB_REF,cabec.TCI_NOME_CAMPO)" ng-show="(cabec.TDC_ID_TAB_REF!=''&&cabec.TDC_ID_TAB_REF!=null)">
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null"></span>
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="Clique aqui para ter acesso a consulta." ng-show="cabec.TCI_TEXTO_HELP==''||cabec.TCI_TEXTO_HELP==null"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="item['TAB_STRING27']=='1ºTrimestre'&&($index>=2&&$index<5)">
+                                    <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                                </td>
+                                <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="item['TAB_STRING27']=='2ºTrimestre'&&($index>=5&&$index<8)">
+                                    <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                                </td>
+                                <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="item['TAB_STRING27']=='3ºTrimestre'&&($index>=8&&$index<11)">
+                                    <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                                </td>
+                                <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="item['TAB_STRING27']=='4ºTrimestre'&&($index>=11&&$index<14)">
+                                    <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index==2)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                                    <label>{{cabec.TCI_NOME_CAMPO_AUX}}</label>
+                                </td>
+                                <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index>=2&&$index<5)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                                    <div class="form-group" app-popover data-direction="left" data-content="{{cabec.TCI_TEXTO_HELP}}" ng-if="cabec.TCI_TEXTO_HELP!=null&&cabec.TCI_TEXTO_HELP!=''">
+                                        <div class="input-group" ng-if="(cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO=='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='') ">
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='D'">.....</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='F'">R$</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='P'">&nbsp%</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='D'">
+                                                <span class="glyphicon glyphicon-calendar blue"></span>
+                                            </div>
+                                            <input type="text" style="width: 150px" app-mask-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-model="B[$index]" maxlength="15" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='F'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='P'" />
+                                            <input type="text" style="width: 150px" ng-model="item[$index]" app-date="item[cabec.TCI_NOME_CAMPODB]" date-name="item_{{$index}}" maxlength="10" class="form-control datepicker" ng-if="cabec.TCI_TIPO_CAMPO=='D'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='D'" />
+                                        </div>
+                                        <div class="input-group" ng-show="cabec.TDC_ID_TAB_REF!=null&&cabec.TDC_ID_TAB_REF!=''">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in retornos[limpaMascara(cabec.TDC_ID_TAB_REF)]" value="{{option[cabec.TCI_NOME_CHAVEDB]}}">{{option[cabec.TCI_NOME_LISTADB]}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group" ng-show="(cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='')">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in listas[cabec.TCI_NOME_CAMPODB]" value="{{option}}">{{option}}</option>
+                                            </select>
+                                            <a href="javascript:void(0)" ng_click="mostrarTabReferencia(cabec.TDC_ID_TAB_REF,cabec.TCI_NOME_CAMPO)" ng-show="(cabec.TDC_ID_TAB_REF!=''&&cabec.TDC_ID_TAB_REF!=null)">
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null"></span>
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="Clique aqui para ter acesso a consulta." ng-show="cabec.TCI_TEXTO_HELP==''||cabec.TCI_TEXTO_HELP==null"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-if="cabec.TCI_TEXTO_HELP==null||cabec.TCI_TEXTO_HELP==''">
+                                        <div class="input-group" ng-if="(cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO=='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='') ">
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='D'">.....</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='F'">R$</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='P'">&nbsp%</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='D'">
+                                                <span class="glyphicon glyphicon-calendar blue"></span>
+                                            </div>
+                                            <input type="text" style="width: 150px" app-mask-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-model="B[$index]" maxlength="15" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='F'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='P'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" app-date="item[$index]" date-name="item_{{$index}}" maxlength="10" class="form-control datepicker" ng-if="cabec.TCI_TIPO_CAMPO=='D'" />
+
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='D'" />
+                                        </div>
+                                        <div class="input-group" ng-show="cabec.TDC_ID_TAB_REF!=null&&cabec.TDC_ID_TAB_REF!=''">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in retornos[limpaMascara(cabec.TDC_ID_TAB_REF)]" value="{{option[cabec.TCI_NOME_CHAVEDB]}}">{{option[cabec.TCI_NOME_LISTADB]}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group" ng-show="(cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='')">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in listas[cabec.TCI_NOME_CAMPODB]" value="{{option}}">{{option}}</option>
+                                            </select>
+                                            <a href="javascript:void(0)" ng_click="mostrarTabReferencia(cabec.TDC_ID_TAB_REF,cabec.TCI_NOME_CAMPO)" ng-show="(cabec.TDC_ID_TAB_REF!=''&&cabec.TDC_ID_TAB_REF!=null)">
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null"></span>
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="Clique aqui para ter acesso a consulta." ng-show="cabec.TCI_TEXTO_HELP==''||cabec.TCI_TEXTO_HELP==null"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index==5)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                                    <label>{{cabec.TCI_NOME_CAMPO_AUX}}</label>
+                                </td>
+                                <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index>=5&&$index<8)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                                    <div class="form-group" app-popover data-direction="left" data-content="{{cabec.TCI_TEXTO_HELP}}" ng-if="cabec.TCI_TEXTO_HELP!=null&&cabec.TCI_TEXTO_HELP!=''">
+                                        <div class="input-group" ng-if="(cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO=='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='') ">
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='D'">.....</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='F'">R$</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='P'">&nbsp%</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='D'">
+                                                <span class="glyphicon glyphicon-calendar blue"></span>
+                                            </div>
+                                            <input type="text" style="width: 150px" app-mask-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-model="B[$index]" maxlength="15" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='F'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='P'" />
+                                            <input type="text" style="width: 150px" ng-model="item[$index]" app-date="item[cabec.TCI_NOME_CAMPODB]" date-name="item_{{$index}}" maxlength="10" class="form-control datepicker" ng-if="cabec.TCI_TIPO_CAMPO=='D'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='D'" />
+                                        </div>
+                                        <div class="input-group" ng-show="cabec.TDC_ID_TAB_REF!=null&&cabec.TDC_ID_TAB_REF!=''">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in retornos[limpaMascara(cabec.TDC_ID_TAB_REF)]" value="{{option[cabec.TCI_NOME_CHAVEDB]}}">{{option[cabec.TCI_NOME_LISTADB]}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group" ng-show="(cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='')">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in listas[cabec.TCI_NOME_CAMPODB]" value="{{option}}">{{option}}</option>
+                                            </select>
+                                            <a href="javascript:void(0)" ng_click="mostrarTabReferencia(cabec.TDC_ID_TAB_REF,cabec.TCI_NOME_CAMPO)" ng-show="(cabec.TDC_ID_TAB_REF!=''&&cabec.TDC_ID_TAB_REF!=null)">
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null"></span>
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="Clique aqui para ter acesso a consulta." ng-show="cabec.TCI_TEXTO_HELP==''||cabec.TCI_TEXTO_HELP==null"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-if="cabec.TCI_TEXTO_HELP==null||cabec.TCI_TEXTO_HELP==''">
+                                        <div class="input-group" ng-if="(cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO=='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='') ">
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='D'">.....</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='F'">R$</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='P'">&nbsp%</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='D'">
+                                                <span class="glyphicon glyphicon-calendar blue"></span>
+                                            </div>
+                                            <input type="text" style="width: 150px" app-mask-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-model="B[$index]" maxlength="15" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='F'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='P'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" app-date="item[$index]" date-name="item_{{$index}}" maxlength="10" class="form-control datepicker" ng-if="cabec.TCI_TIPO_CAMPO=='D'" />
+
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='D'" />
+                                        </div>
+                                        <div class="input-group" ng-show="cabec.TDC_ID_TAB_REF!=null&&cabec.TDC_ID_TAB_REF!=''">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in retornos[limpaMascara(cabec.TDC_ID_TAB_REF)]" value="{{option[cabec.TCI_NOME_CHAVEDB]}}">{{option[cabec.TCI_NOME_LISTADB]}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group" ng-show="(cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='')">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in listas[cabec.TCI_NOME_CAMPODB]" value="{{option}}">{{option}}</option>
+                                            </select>
+                                            <a href="javascript:void(0)" ng_click="mostrarTabReferencia(cabec.TDC_ID_TAB_REF,cabec.TCI_NOME_CAMPO)" ng-show="(cabec.TDC_ID_TAB_REF!=''&&cabec.TDC_ID_TAB_REF!=null)">
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null"></span>
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="Clique aqui para ter acesso a consulta." ng-show="cabec.TCI_TEXTO_HELP==''||cabec.TCI_TEXTO_HELP==null"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index==8)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                                    <label>{{cabec.TCI_NOME_CAMPO_AUX}}</label>
+                                </td>
+                                <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index>=8&&$index<11)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                                    <div class="form-group" app-popover data-direction="left" data-content="{{cabec.TCI_TEXTO_HELP}}" ng-if="cabec.TCI_TEXTO_HELP!=null&&cabec.TCI_TEXTO_HELP!=''">
+                                        <div class="input-group" ng-if="(cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO=='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='') ">
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='D'">.....</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='F'">R$</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='P'">&nbsp%</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='D'">
+                                                <span class="glyphicon glyphicon-calendar blue"></span>
+                                            </div>
+                                            <input type="text" style="width: 150px" app-mask-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-model="B[$index]" maxlength="15" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='F'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='P'" />
+                                            <input type="text" style="width: 150px" ng-model="item[$index]" app-date="item[cabec.TCI_NOME_CAMPODB]" date-name="item_{{$index}}" maxlength="10" class="form-control datepicker" ng-if="cabec.TCI_TIPO_CAMPO=='D'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='D'" />
+                                        </div>
+                                        <div class="input-group" ng-show="cabec.TDC_ID_TAB_REF!=null&&cabec.TDC_ID_TAB_REF!=''">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in retornos[limpaMascara(cabec.TDC_ID_TAB_REF)]" value="{{option[cabec.TCI_NOME_CHAVEDB]}}">{{option[cabec.TCI_NOME_LISTADB]}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group" ng-show="(cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='')">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in listas[cabec.TCI_NOME_CAMPODB]" value="{{option}}">{{option}}</option>
+                                            </select>
+                                            <a href="javascript:void(0)" ng_click="mostrarTabReferencia(cabec.TDC_ID_TAB_REF,cabec.TCI_NOME_CAMPO)" ng-show="(cabec.TDC_ID_TAB_REF!=''&&cabec.TDC_ID_TAB_REF!=null)">
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null"></span>
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="Clique aqui para ter acesso a consulta." ng-show="cabec.TCI_TEXTO_HELP==''||cabec.TCI_TEXTO_HELP==null"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-if="cabec.TCI_TEXTO_HELP==null||cabec.TCI_TEXTO_HELP==''">
+                                        <div class="input-group" ng-if="(cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO=='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='') ">
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='D'">.....</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='F'">R$</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='P'">&nbsp%</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='D'">
+                                                <span class="glyphicon glyphicon-calendar blue"></span>
+                                            </div>
+                                            <input type="text" style="width: 150px" app-mask-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-model="B[$index]" maxlength="15" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='F'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='P'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" app-date="item[$index]" date-name="item_{{$index}}" maxlength="10" class="form-control datepicker" ng-if="cabec.TCI_TIPO_CAMPO=='D'" />
+
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='D'" />
+                                        </div>
+                                        <div class="input-group" ng-show="cabec.TDC_ID_TAB_REF!=null&&cabec.TDC_ID_TAB_REF!=''">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in retornos[limpaMascara(cabec.TDC_ID_TAB_REF)]" value="{{option[cabec.TCI_NOME_CHAVEDB]}}">{{option[cabec.TCI_NOME_LISTADB]}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group" ng-show="(cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='')">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in listas[cabec.TCI_NOME_CAMPODB]" value="{{option}}">{{option}}</option>
+                                            </select>
+                                            <a href="javascript:void(0)" ng_click="mostrarTabReferencia(cabec.TDC_ID_TAB_REF,cabec.TCI_NOME_CAMPO)" ng-show="(cabec.TDC_ID_TAB_REF!=''&&cabec.TDC_ID_TAB_REF!=null)">
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null"></span>
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="Clique aqui para ter acesso a consulta." ng-show="cabec.TCI_TEXTO_HELP==''||cabec.TCI_TEXTO_HELP==null"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index==11)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                                    <label>{{cabec.TCI_NOME_CAMPO_AUX}}</label>
+                                </td>
+                                <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index>=11&&$index<14)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                                    <div class="form-group" app-popover data-direction="left" data-content="{{cabec.TCI_TEXTO_HELP}}" ng-if="cabec.TCI_TEXTO_HELP!=null&&cabec.TCI_TEXTO_HELP!=''">
+                                        <div class="input-group" ng-if="(cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO=='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='') ">
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='D'">.....</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='F'">R$</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='P'">&nbsp%</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='D'">
+                                                <span class="glyphicon glyphicon-calendar blue"></span>
+                                            </div>
+                                            <input type="text" style="width: 150px" app-mask-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-model="B[$index]" maxlength="15" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='F'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='P'" />
+                                            <input type="text" style="width: 150px" ng-model="item[$index]" app-date="item[cabec.TCI_NOME_CAMPODB]" date-name="item_{{$index}}" maxlength="10" class="form-control datepicker" ng-if="cabec.TCI_TIPO_CAMPO=='D'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='D'" />
+                                        </div>
+                                        <div class="input-group" ng-show="cabec.TDC_ID_TAB_REF!=null&&cabec.TDC_ID_TAB_REF!=''">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in retornos[limpaMascara(cabec.TDC_ID_TAB_REF)]" value="{{option[cabec.TCI_NOME_CHAVEDB]}}">{{option[cabec.TCI_NOME_LISTADB]}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group" ng-show="(cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='')">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in listas[cabec.TCI_NOME_CAMPODB]" value="{{option}}">{{option}}</option>
+                                            </select>
+                                            <a href="javascript:void(0)" ng_click="mostrarTabReferencia(cabec.TDC_ID_TAB_REF,cabec.TCI_NOME_CAMPO)" ng-show="(cabec.TDC_ID_TAB_REF!=''&&cabec.TDC_ID_TAB_REF!=null)">
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null"></span>
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="Clique aqui para ter acesso a consulta." ng-show="cabec.TCI_TEXTO_HELP==''||cabec.TCI_TEXTO_HELP==null"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-if="cabec.TCI_TEXTO_HELP==null||cabec.TCI_TEXTO_HELP==''">
+                                        <div class="input-group" ng-if="(cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO=='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='') ">
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='D'">.....</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='F'">R$</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='P'">&nbsp%</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='D'">
+                                                <span class="glyphicon glyphicon-calendar blue"></span>
+                                            </div>
+                                            <input type="text" style="width: 150px" app-mask-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-model="B[$index]" maxlength="15" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='F'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO=='P'" />
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" app-date="item[$index]" date-name="item_{{$index}}" maxlength="10" class="form-control datepicker" ng-if="cabec.TCI_TIPO_CAMPO=='D'" />
+
+                                            <input type="text" style="width: 150px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right" ng-if="cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='D'" />
+                                        </div>
+                                        <div class="input-group" ng-show="cabec.TDC_ID_TAB_REF!=null&&cabec.TDC_ID_TAB_REF!=''">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in retornos[limpaMascara(cabec.TDC_ID_TAB_REF)]" value="{{option[cabec.TCI_NOME_CHAVEDB]}}">{{option[cabec.TCI_NOME_LISTADB]}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group" ng-show="(cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!='')&&(cabec.TDC_ID_TAB_REF==null||cabec.TDC_ID_TAB_REF=='')">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 150px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in listas[cabec.TCI_NOME_CAMPODB]" value="{{option}}">{{option}}</option>
+                                            </select>
+                                            <a href="javascript:void(0)" ng_click="mostrarTabReferencia(cabec.TDC_ID_TAB_REF,cabec.TCI_NOME_CAMPO)" ng-show="(cabec.TDC_ID_TAB_REF!=''&&cabec.TDC_ID_TAB_REF!=null)">
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null"></span>
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px" app-popover data-content="Clique aqui para ter acesso a consulta." ng-show="cabec.TCI_TEXTO_HELP==''||cabec.TCI_TEXTO_HELP==null"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="panel-footer">
+            <button ng-click="calcularOpe()" class="btn btn-default"><span class="glyphicon glyphicon-cog blue"></span>&nbspCalcular</button>
+        </div>
+    </div>
+
+    <div id="baseContent" ng-if="calculado==true">
+        <fieldset>
+            <legend style="text-align: left;"><strong>Memória de Calculo</strong></legend>
+            <table ng-repeat="item in tabela.TAB_DINAMICA_ITEM" class="col-xs-12" ng-if="tabconfig.TDC_LAYOUT_TABELA=='LRE'">
+                <tr>
+                    <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index==0)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                        <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="item['TAB_STRING27']=='1ºTrimestre'&&($index>=2&&$index<5)">
+                        <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                    </td>
+                    <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="item['TAB_STRING27']=='2ºTrimestre'&&($index>=5&&$index<8)">
+                        <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                    </td>
+                    <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="item['TAB_STRING27']=='3ºTrimestre'&&($index>=8&&$index<11)">
+                        <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                    </td>
+                    <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="item['TAB_STRING27']=='4ºTrimestre'&&($index>=11&&$index<14)">
+                        <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index==2)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                        <label>{{cabec.TCI_NOME_CAMPO_AUX}}</label>
+                    </td>
+                    <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index>=2&&$index<5)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                        <div ng-if="cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO==''">
+                            <label app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]<0&&cabec.TCI_TIPO_CAMPO=='F'"></label>
+                            <label app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]>=0&&cabec.TCI_TIPO_CAMPO=='F'"></label>
+                            <label app-show-Inteiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]>=0&&cabec.TCI_TIPO_CAMPO=='N'"></label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO=='P'">{{item[cabec.TCI_NOME_CAMPODB]}} %</label>
+                            @*<label ng-if="cabec.TCI_TIPO_CAMPO=='D'" app-show-date="item[cabec.TCI_NOME_CAMPODB]"></label>*@
+                            <label ng-if="cabec.TCI_TIPO_CAMPO=='D'">{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO!='D'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='N'">{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                        </div>
+                        <div ng-show="cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!=''">
+                            <label>{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index==5)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                        <label>{{cabec.TCI_NOME_CAMPO_AUX}}</label>
+                    </td>
+                    <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index>=5&&$index<8)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                        <div ng-if="cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO==''">
+                            <label app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]<0&&cabec.TCI_TIPO_CAMPO=='F'"></label>
+                            <label app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]>=0&&cabec.TCI_TIPO_CAMPO=='F'"></label>
+                            <label app-show-Inteiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]>=0&&cabec.TCI_TIPO_CAMPO=='N'"></label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO=='P'">{{item[cabec.TCI_NOME_CAMPODB]}} %</label>
+                            @*<label ng-if="cabec.TCI_TIPO_CAMPO=='D'" app-show-date="item[cabec.TCI_NOME_CAMPODB]"></label>*@
+                            <label ng-if="cabec.TCI_TIPO_CAMPO=='D'">{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO!='D'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='N'">{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                        </div>
+                        <div ng-show="cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!=''">
+                            <label>{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index==8)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                        <label>{{cabec.TCI_NOME_CAMPO_AUX}}</label>
+                    </td>
+                    <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index>=8&&$index<11)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                        <div ng-if="cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO==''">
+                            <label app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]<0&&cabec.TCI_TIPO_CAMPO=='F'"></label>
+                            <label app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]>=0&&cabec.TCI_TIPO_CAMPO=='F'"></label>
+                            <label app-show-Inteiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]>=0&&cabec.TCI_TIPO_CAMPO=='N'"></label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO=='P'">{{item[cabec.TCI_NOME_CAMPODB]}} %</label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO=='D'">{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO!='D'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='N'">{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                        </div>
+                        <div ng-show="cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!=''">
+                            <label>{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index==11)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                        <label>{{cabec.TCI_NOME_CAMPO_AUX}}</label>
+                    </td>
+                    <td ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="($index>=11&&$index<14)&&(cabec.TCI_FORMULA==null||cabec.TCI_FORMULA=='')">
+                        <div ng-if="cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO==''">
+                            <label app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]<0&&cabec.TCI_TIPO_CAMPO=='F'"></label>
+                            <label app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]>=0&&cabec.TCI_TIPO_CAMPO=='F'"></label>
+                            <label app-show-Inteiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]>=0&&cabec.TCI_TIPO_CAMPO=='N'"></label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO=='P'">{{item[cabec.TCI_NOME_CAMPODB]}} %</label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO=='D'">{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO!='D'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='N'">{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                        </div>
+                        <div ng-show="cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!=''">
+                            <label>{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                        </div>
+                    </td>
+                </tr>
+                
+            </table>
+            <table ng-repeat="item in tabela.TAB_DINAMICA_ITEM" class="col-xs-12" ng-if="tabconfig.TDC_LAYOUT_TABELA!='LRE'">
+                <tr ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="cabec.TCI_FORMULA==null||cabec.TCI_FORMULA==''">
+                    <td>
+                        <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                    </td>
+                    <td style="width: 250px; text-align: right;">
+                        <div ng-if="cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO==''">
+                            <label app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]<0&&cabec.TCI_TIPO_CAMPO=='F'"></label>
+                            <label app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]>=0&&cabec.TCI_TIPO_CAMPO=='F'"></label>
+                            <label app-show-Inteiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]>=0&&cabec.TCI_TIPO_CAMPO=='N'"></label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO=='P'">{{item[cabec.TCI_NOME_CAMPODB]}} %</label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO=='D'">{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO!='D'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='N'">{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                        </div>
+                        <div ng-show="cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!=''">
+                            <label>{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+
+        <fieldset ng-if="tabconfig.TDC_LAYOUT_TABELA!='REG'&&tabconfig.TDC_LAYOUT_TABELA!='LRE'">
+            <legend style="text-align: left; padding-top:15px;"><strong>Resultados</strong></legend>
+            <table ng-repeat="item in tabela.TAB_DINAMICA_ITEM" class="col-xs-12">
+                <tr ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-show="cabec.TCI_FORMULA!=null&&cabec.TCI_FORMULA!=''">
+                    <td>
+                        <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                    </td>
+                    <td style="width: 250px; text-align: right;">
+                        <div ng-if="cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO==''">
+                            <label app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]<0&&cabec.TCI_TIPO_CAMPO=='F'"></label>
+                            <label app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]>=0&&cabec.TCI_TIPO_CAMPO=='F'"></label>
+                            <label app-show-Inteiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]>=0&&cabec.TCI_TIPO_CAMPO=='N'"></label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO=='P'">{{item[cabec.TCI_NOME_CAMPODB]}} %</label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO=='D'">{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO!='D'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='N'">{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                        </div>
+                        <div ng-if="cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!=''">
+                            <label>{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset ng-if="tabconfig.TDC_LAYOUT_TABELA=='LRE'">
+            <legend style="text-align: left; padding-top:15px;"><strong>Resultados</strong></legend>
+            <table ng-repeat="item in tabela.TAB_DINAMICA_ITEM" class="col-xs-12">
+                <tr ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-show="cabec.TCI_FORMULA!=null&&cabec.TCI_FORMULA!=''&&cabec.TCI_CAMPO_VISIVEL==true">
+                    <td>
+                        <label> {{cabec.TCI_NOME_CAMPO}}</label>
+                    </td>
+                    <td style="width: 250px; text-align: right;">
+                        <div ng-if="cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO==''">
+                            <label app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]<0&&cabec.TCI_TIPO_CAMPO=='F'"></label>
+                            <label app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]>=0&&cabec.TCI_TIPO_CAMPO=='F'"></label>
+                            <label app-show-Inteiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]>=0&&cabec.TCI_TIPO_CAMPO=='N'"></label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO=='P'">{{item[cabec.TCI_NOME_CAMPODB]}} %</label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO=='D'">{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                            <label ng-if="cabec.TCI_TIPO_CAMPO!='D'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='N'">{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                        </div>
+                        <div ng-if="cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!=''">
+                            <label>{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+
+            <table ng-repeat="item in tabela.TAB_DINAMICA_ITEM" class="table table-hover table-bordered">
+                <thead>
+                    <tr class="info">
+                        <th ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="item['TAB_STRING27']=='1ºTrimestre'&&($index>=2&&$index<5)">
+                            <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                        </th>
+                        <th ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="item['TAB_STRING27']=='1ºTrimestre'&&($index>=2&&$index<5)">
+                            <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                        </th>
+                        <th ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="item['TAB_STRING27']=='2ºTrimestre'&&($index>=5&&$index<8)">
+                            <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                        </th>
+                        <th ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="item['TAB_STRING27']=='2ºTrimestre'&&($index>=5&&$index<8)">
+                            <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                        </th>
+                        <th ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="item['TAB_STRING27']=='3ºTrimestre'&&($index>=8&&$index<11)">
+                            <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                        </th>
+                        <th ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="item['TAB_STRING27']=='3ºTrimestre'&&($index>=8&&$index<11)">
+                            <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                        </th>
+                        <th ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="item['TAB_STRING27']=='4ºTrimestre'&&($index>=11&&$index<14)">
+                            <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                        </th>
+                        <th ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-if="item['TAB_STRING27']=='4ºTrimestre'&&($index>=11&&$index<14)">
+                            <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                        </th>
+                        <th></th>
+                    </tr>
+                    <tr class="info">
+                        <th style="text-align:right;" ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" ng-show="cabec.TCI_FORMULA!=null&&cabec.TCI_FORMULA!=''&&cabec.TCI_CAMPO_VISIVEL!=true">
+                          <label>{{cabec.TCI_NOME_CAMPO}}</label>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="width: 250px; text-align: right;" ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" ng-show="cabec.TCI_FORMULA!=null&&cabec.TCI_FORMULA!=''&&cabec.TCI_CAMPO_VISIVEL!=true">
+                            <div ng-if="cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO==''">
+                                <label app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]<0&&cabec.TCI_TIPO_CAMPO=='F'"></label>
+                                <label app-show-dinheiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]>=0&&cabec.TCI_TIPO_CAMPO=='F'"></label>
+                                <label app-show-Inteiro="item[cabec.TCI_NOME_CAMPODB]" ng-if="item[cabec.TCI_NOME_CAMPODB]>=0&&cabec.TCI_TIPO_CAMPO=='N'"></label>
+                                <label ng-if="cabec.TCI_TIPO_CAMPO=='P'">{{item[cabec.TCI_NOME_CAMPODB]}} %</label>
+                                <label ng-if="cabec.TCI_TIPO_CAMPO=='D'">{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                                <label ng-if="cabec.TCI_TIPO_CAMPO!='D'&&cabec.TCI_TIPO_CAMPO!='P'&&cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='N'">{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                            </div>
+                            <div ng-if="cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!=''">
+                                <label>{{item[cabec.TCI_NOME_CAMPODB]}}</label>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+
+        <div class="hidden-print panel-footer col-lg-12" style="text-align: center">
+            <button ng-click="limparCalculo()" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span>Novo Calculo</button>
+            <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+        </div>
+    </div>
+
+    @*Simulador (Legenda, Informações Gerais)*@
+
+    <br />
+    <div class="row">
+        <div id="Legenda" ng-show="tabconfig.TDC_LEGENDA_LAYOUT==true" class="col-lg-12">
+            <p ng-bind-html="trustAsHtml(tabela.TAB_LEGENDA_LAYOUT)"></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="InfGerais" ng-show="tabconfig.TDC_INF_GERAIS==true" class="col-lg-12">
+            <p ng-bind-html="trustAsHtml(tabela.TAB_INF_GERAIS)"></p>
+        </div>
+    </div>
+    <br />
+
+    @*modal-consulta --- Popup modal*@
+    <div id="modal-inf-adicional" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: aliceblue">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-flash"></span>Informações Adicionais -- {{nometelapesquisa}} </h4>
+                </div>
+                <div class="modal-body" style="width: 100%; height: 500px; border: none; overflow: auto;">
+                    <div>
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-4" ng-repeat="item in ParamConsulta">
+                                    <div class="form-group">
+                                        <label>{{item.label}}</label>
+                                        <input name="_valor" type="text" class="form-control" placeholder="Pesquisar..." ng-model="item.valor" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4" ng-if="ParamConsulta.length > 0">
+                                    <div class="form-group" style="padding-top: 23px;">
+                                        <a href="javascript:void(0)" class="btn btn-default" type="button" ng-click="listarTabDinamica(paginaReq,tabref.TDC_ID)">
+                                            <span class="fa fa-search"></span>Pesquisar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="panel panel-default" id="Tabela">
+                                <table class="table table-striped table-bordered table-hover" id="tabeladinamica">
+                                    <thead>
+                                        <tr class="bg-info">
+                                            <th ng-repeat="item in tabrefcfg.TAB_DINAMICA_CONFIG_ITEM">
+                                                <label>{{item.TCI_NOME_CAMPO}}</label>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-hide="tbitem.length>0">
+                                            <td colspan="10"><span>Nenhum item encontrado para a pesquisa </span></td>
+                                        </tr>
+                                        <tr ng-repeat="item in tbitem">
+                                            <td ng-repeat="cabec in tabrefcfg.TAB_DINAMICA_CONFIG_ITEM">
+                                                <p>{{item[cabec.TCI_NOME_CAMPODB]}}</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-lg-12" style="text-align: center">
+                            <app-pagination request-page="paginaReq" load-function="listarTabDinamica(paginaReq,tabref.TDC_ID)" ng-show="tbitem.length>0"></app-pagination>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-if="tabconfig.TDC_TIPO==3&&tabconfig.TDC_ID!=null&&tabconfig.TDC_ID!=''">
+    @Html.Partial("Partials/_PreviewPortalTabDinamica")
+</div>

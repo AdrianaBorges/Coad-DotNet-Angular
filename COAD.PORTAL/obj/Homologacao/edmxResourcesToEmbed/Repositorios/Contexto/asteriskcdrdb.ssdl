@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="asteriskcdrdbModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="asteriskcdrdbModelStoreContainer">
+    <EntitySet Name="coad" EntityType="asteriskcdrdbModel.Store.coad" store:Type="Tables" Schema="asteriskcdrdb" />
+  </EntityContainer>
+  <EntityType Name="coad">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="vip" Type="int" />
+    <Property Name="ddd" Type="int" />
+    <Property Name="telefone" Type="bigint" />
+    <Property Name="senha" Type="bigint" />
+    <Property Name="codigo" Type="varchar" MaxLength="11" />
+    <Property Name="nome" Type="varchar" MaxLength="255" />
+    <Property Name="pode" Type="int" />
+    <Property Name="qte_cons" Type="int" />
+    <Property Name="acesso" Type="int" />
+    <Property Name="qte_realiz" Type="int" />
+    <Property Name="grupo" Type="varchar" MaxLength="1" />
+  </EntityType>
+</Schema>

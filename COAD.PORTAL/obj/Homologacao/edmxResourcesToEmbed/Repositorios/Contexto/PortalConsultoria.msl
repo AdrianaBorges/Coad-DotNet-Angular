@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="consultoriaModelStoreContainer" CdmEntityContainer="consultoriaEntities">
+    <EntitySetMapping Name="arquivos">
+      <EntityTypeMapping TypeName="consultoriaModel.arquivos">
+        <MappingFragment StoreEntitySet="arquivos">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_chamada" ColumnName="id_chamada" />
+          <ScalarProperty Name="arquivo" ColumnName="arquivo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="colecionadores">
+      <EntityTypeMapping TypeName="consultoriaModel.colecionadores">
+        <MappingFragment StoreEntitySet="colecionadores">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="menu_coadcorp" ColumnName="menu_coadcorp" />
+          <ScalarProperty Name="tipo_portal" ColumnName="tipo_portal" />
+          <ScalarProperty Name="observacao" ColumnName="observacao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="consultores">
+      <EntityTypeMapping TypeName="consultoriaModel.consultores">
+        <MappingFragment StoreEntitySet="consultores">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="usuario" ColumnName="usuario" />
+          <ScalarProperty Name="senha" ColumnName="senha" />
+          <ScalarProperty Name="colec" ColumnName="colec" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="filial" ColumnName="filial" />
+          <ScalarProperty Name="dataCadastro" ColumnName="dataCadastro" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="consultoria">
+      <EntityTypeMapping TypeName="consultoriaModel.consultoria">
+        <MappingFragment StoreEntitySet="consultoria">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="usuario" ColumnName="usuario" />
+          <ScalarProperty Name="cod_consultor" ColumnName="cod_consultor" />
+          <ScalarProperty Name="cod_supervisor" ColumnName="cod_supervisor" />
+          <ScalarProperty Name="cod_cq" ColumnName="cod_cq" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="colec" ColumnName="colec" />
+          <ScalarProperty Name="gg" ColumnName="gg" />
+          <ScalarProperty Name="verbete" ColumnName="verbete" />
+          <ScalarProperty Name="pergunta" ColumnName="pergunta" />
+          <ScalarProperty Name="resposta_consultor" ColumnName="resposta_consultor" />
+          <ScalarProperty Name="resposta_supervisor" ColumnName="resposta_supervisor" />
+          <ScalarProperty Name="resposta_cq" ColumnName="resposta_cq" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="dataCadastro" ColumnName="dataCadastro" />
+          <ScalarProperty Name="dataRespConsultor" ColumnName="dataRespConsultor" />
+          <ScalarProperty Name="dataRespSupervisor" ColumnName="dataRespSupervisor" />
+          <ScalarProperty Name="dataUltimoAcesso" ColumnName="dataUltimoAcesso" />
+          <ScalarProperty Name="codFuncUltimoAcesso" ColumnName="codFuncUltimoAcesso" />
+          <ScalarProperty Name="codFuncConsultEncam" ColumnName="codFuncConsultEncam" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="consultoria_bkp">
+      <EntityTypeMapping TypeName="consultoriaModel.consultoria_bkp">
+        <MappingFragment StoreEntitySet="consultoria_bkp">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="usuario" ColumnName="usuario" />
+          <ScalarProperty Name="cod_consultor" ColumnName="cod_consultor" />
+          <ScalarProperty Name="cod_supervisor" ColumnName="cod_supervisor" />
+          <ScalarProperty Name="cod_cq" ColumnName="cod_cq" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="colec" ColumnName="colec" />
+          <ScalarProperty Name="gg" ColumnName="gg" />
+          <ScalarProperty Name="verbete" ColumnName="verbete" />
+          <ScalarProperty Name="pergunta" ColumnName="pergunta" />
+          <ScalarProperty Name="resposta_consultor" ColumnName="resposta_consultor" />
+          <ScalarProperty Name="resposta_supervisor" ColumnName="resposta_supervisor" />
+          <ScalarProperty Name="resposta_cq" ColumnName="resposta_cq" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="dataCadastro" ColumnName="dataCadastro" />
+          <ScalarProperty Name="dataRespConsultor" ColumnName="dataRespConsultor" />
+          <ScalarProperty Name="dataRespSupervisor" ColumnName="dataRespSupervisor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="consultoria_busca_nao_encontrada">
+      <EntityTypeMapping TypeName="consultoriaModel.consultoria_busca_nao_encontrada">
+        <MappingFragment StoreEntitySet="consultoria_busca_nao_encontrada">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+          <ScalarProperty Name="id_consultor" ColumnName="id_consultor" />
+          <ScalarProperty Name="data_requisicao" ColumnName="data_requisicao" />
+          <ScalarProperty Name="data_resposta" ColumnName="data_resposta" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="txt_pergunta" ColumnName="txt_pergunta" />
+          <ScalarProperty Name="txt_resposta" ColumnName="txt_resposta" />
+          <ScalarProperty Name="palavra" ColumnName="palavra" />
+          <ScalarProperty Name="cli_email" ColumnName="cli_email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="titulos_pesquisa">
+      <EntityTypeMapping TypeName="consultoriaModel.titulos_pesquisa">
+        <MappingFragment StoreEntitySet="titulos_pesquisa">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="titulo" ColumnName="titulo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="consultoria_log_update">
+      <EntityTypeMapping TypeName="consultoriaModel.consultoria_log_update">
+        <MappingFragment StoreEntitySet="consultoria_log_update">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="usuario" ColumnName="usuario" />
+          <ScalarProperty Name="cod_consultor" ColumnName="cod_consultor" />
+          <ScalarProperty Name="cod_supervisor" ColumnName="cod_supervisor" />
+          <ScalarProperty Name="cod_cq" ColumnName="cod_cq" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="colec" ColumnName="colec" />
+          <ScalarProperty Name="gg" ColumnName="gg" />
+          <ScalarProperty Name="verbete" ColumnName="verbete" />
+          <ScalarProperty Name="pergunta" ColumnName="pergunta" />
+          <ScalarProperty Name="resposta_consultor" ColumnName="resposta_consultor" />
+          <ScalarProperty Name="resposta_supervisor" ColumnName="resposta_supervisor" />
+          <ScalarProperty Name="resposta_cq" ColumnName="resposta_cq" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="dataCadastro" ColumnName="dataCadastro" />
+          <ScalarProperty Name="dataRespConsultor" ColumnName="dataRespConsultor" />
+          <ScalarProperty Name="dataRespSupervisor" ColumnName="dataRespSupervisor" />
+          <ScalarProperty Name="dataUltimoAcesso" ColumnName="dataUltimoAcesso" />
+          <ScalarProperty Name="codFuncUltimoAcesso" ColumnName="codFuncUltimoAcesso" />
+          <ScalarProperty Name="insert_or_upudate" ColumnName="insert_or_upudate" />
+          <ScalarProperty Name="data_do_registro" ColumnName="data_do_registro" />
+          <ScalarProperty Name="codFuncConsultEncam" ColumnName="codFuncConsultEncam" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

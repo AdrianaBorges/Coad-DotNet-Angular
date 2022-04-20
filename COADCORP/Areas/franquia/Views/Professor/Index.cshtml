@@ -1,0 +1,143 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.RepresentanteDTO
+@using Coad.GenericCrud.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li class="active">Gerenciar Professor</li>         
+        
+    </ol>
+}
+
+@*<style type="text/css">
+
+    .body {
+        background-color: #e8e8e8 !important;
+
+    }
+</style>*@
+
+@{
+    
+    bool adm = (SessionContext.IsAdmDepartamento("TI") || SessionContext.IsAdmDepartamento("Franquiador"));
+}
+
+@Scripts.Render("~/Scripts/negocio/professor.js")
+<div ng-app="appModule">
+    <div ng-controller="ProfessorController" class="padding content" ng-cloak data-ng-init="init('@adm')">
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-warning btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                        </li>                                                                           
+                                    </ul>
+                                </div>
+                            </div>
+      </div>
+          
+      <div class="panel-body">            
+           
+        <div class="row">              
+            <div class="form-group col-lg-2">
+                <label for="usu_login">Professor</label>
+                <input type="text" id="usu_login" ng-model="filtro.nome" class="form-control"/>
+            </div>
+            @if (SessionContext.IsAdmDepartamento("TI") || SessionContext.IsAdmDepartamento("Franquiador"))
+            {
+            <div class="form-group col-lg-4">
+               
+                <label for="uen_id">UEN</label>
+                    @Html.DropDownList("uen_id", 
+                    new SelectList(ViewBag.lstUen, "UEN_ID", "UEN_DESCRICAO"), "Selecione" ,
+                    new {@class = "form-control", ng_model = "filtro.UEN_ID", ng_change = "uenSelecionado()"})                
+                </div>               
+            }
+            @if (SessionContext.IsGerenteDepartamento("FRANQUIADOR", true) || SessionContext.IsGerenteDepartamento("TI", true))
+            {
+                <div class="form-group col-sm-3">
+                    <label for="selectRegiao">Região</label> 
+                    <select ng-options="reg.RG_ID as reg.RG_DESCRICAO for reg in regioes"
+                            ng-model="filtro.RG_ID" id="selectRegiao1" class="form-control">
+                            <option value="">Selecione</option>
+                    </select>
+                </div>
+            }         
+         
+            
+      </div>
+      </div>       
+    <div class="panel-footer">
+        <button type="button" class="btn btn-primary" ng-click="listarProfessoresComUsuario()">Pesquisar</button>
+    </div>
+    
+</div>
+        <div app-message></div>
+        
+                <div class="panel panel-default">
+                          <!-- Default panel contents -->
+      
+                          <div class="panel-heading bold"><span class="glyphicon glyphicon-user"></span> Representantes</div>
+          
+                          <div class="panel-body">   
+                    
+                                        <div class="table-responsive">     
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>     
+                                                            <th>
+                                                                Professor
+                                                            </th>
+                                                            <th>Usuário</th>
+                                                            @if (SessionContext.IsAdmDepartamento("TI") || SessionContext.IsAdmDepartamento("Franquiador"))
+                                                            {
+                                                                <th>UEN</th>
+                                                            }
+                                                            <th>Região</th>
+                                                            <th>#</th>                            
+                                                        </tr>
+                                                    </thead>    
+                                                    <tr ng-repeat="item in professores">                                    
+                                                        <td>
+                                                             {{item.REP_NOME}}   
+                                                        </td>
+                                                        <td><span class="label label-primary">{{item.USUARIO.USU_LOGIN}}</span></td>
+                                                        @if (SessionContext.IsAdmDepartamento("TI") || SessionContext.IsAdmDepartamento("Franquiador"))
+                                                        {
+                                                            <td>{{item.UEN.UEN_DESCRICAO}}</td>
+                                                        }
+                                                        <td>
+                                                             <span class="label label-success">{{item.REGIAO.RG_DESCRICAO}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <a href="javascript:void(0)" app-post="@Url.Action("Editar")?REP_ID={{item.REP_ID}}" 
+                                                                title="Editar" class="blue">
+                                                                <span class="glyphicon glyphicon-edit"></span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="5" ng-show="professores.length == 0 && listado">Nenhum registro foi encontrado.</td>
+                                                        <td colspan="5" ng-show="!professores">Clique em pesquisar para listar.</td>
+                                                    </tr>
+                                                </table> 
+                                        </div>          
+                                  <div app-pagination="page" request-page="paginaReq" load-function="listarProfessoresComUsuario(paginaReq)"></div>          
+
+                              </div>
+         
+                            </div>  
+    </div>   
+</div>

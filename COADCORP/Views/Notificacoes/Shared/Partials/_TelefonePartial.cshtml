@@ -1,0 +1,59 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+         
+        <fieldset>
+            <legend>Telefones</legend>
+                <div class="row padding">                        
+                <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tipo de Telefone</th>
+                        <th>DDD</th>
+                        <th>Telefone</th>
+                        <th>Ações</th>
+                                    
+                    </tr>                                   
+                </thead>
+                <tbody>
+                    <tr ng-repeat="tel in CLIENTES_TELEFONE" ng-show="CLIENTES_TELEFONE">
+                        <td app-editable-td="tel.TIPO_TEL_ID" label="tel.TIPO_TEL_ID" blur-event="blurTipoTel">
+                          <select id="tipoTel" name="tipoTel" class = "form-control"
+                               ng-model="tel.TIPO_TEL_ID"
+                               ng-options="tipoTel.TIPO_TEL_ID as tipoTel.TIPO_TEL_ID for tipoTel in lstTipoTelefone"
+                               ng-blur="blurTipoSetor($event)">
+                                       <option value="">Selecione</option>
+                             </select> 
+                        </td>
+                        <td app-editable-td="tel.CLI_TEL_DDD" label="tel.CLI_TEL_DDD" blur-event="confirmarEdicaoDDD">
+                            
+                            <input type="text" ng-model="tel.CLI_TEL_DDD" maxlength="2" app-number
+                                class="form-control grid-input  float-left" ng-blur="confirmarEdicaoDDD($event)"/>                                       
+                        </td>  
+                        <td app-editable-td="tel.CLI_TEL_TELEFONE" label="tel.CLI_TEL_TELEFONE" blur-event="confirmarEdicaoTel">
+                            
+                            <input type="text" ng-model="tel.CLI_TEL_TELEFONE" maxlength="12" 
+                                class="form-control grid-input  float-left" ng-blur="confirmarEdicaoTel($event)"/>                                       
+                        </td>                                  
+                        <td>                                       
+                            <a href="javascript:void(0)" ng-click="ExcluirTelefone($index)" class="btnConfirmaExclusao red" id="btexcluir" title="Excluir">
+                                <span class="glyphicon glyphicon-remove-sign"></span>
+                            </a>
+                            <span ng-show="CLIENTES_TELEFONE.length == ($index + 1)">
+                                <a href="javascript:void(0)" ng-click="IncluirTelefone(tel)" title="Incluir">
+                                    <span class="glyphicon glyphicon-plus blue"></span>
+                                </a>
+                            </span>
+                        </td>
+                                    
+                    </tr>
+                    <tr ng-hide="CLIENTES_TELEFONE.length > 0">
+                        <td colspan="4">Nenhuma telefone adicionado. Clique para adicionar: 
+                            <a href="javascript:void(0)" ng-click="IncluirTelefone(tel)" title="Incluir">
+                                    <span class="glyphicon glyphicon-plus blue"></span>
+                                </a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+            </div>
+        </fieldset>     

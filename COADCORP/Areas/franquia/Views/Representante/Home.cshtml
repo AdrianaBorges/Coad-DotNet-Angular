@@ -1,0 +1,226 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutosDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><a href="~/Home/Index">Home</a></li>
+        <li class="active">Painel Representantes</li>        
+        
+    </ol>
+}
+
+<style type="text/css">
+
+    .body {
+        background-color: #e8e8e8 !important;
+
+    }
+</style>
+
+<script src="~/Scripts/negocio/controllers_plugins/info_cliente.js"></script>
+@Scripts.Render("~/Scripts/negocio/representante_home.js")
+<div>
+    <div ng-controller="RepresentanteHomeController" class="padding content" ng-cloak data-ng-init="initHomeRepresentante()">
+        <div app-message></div>
+        @*<div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold "><span class="glyphicon glyphicon-filter"></span> Filtros
+                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" disabled="disabled">
+                                            Opções
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                            <li>
+                                                <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                            </li>                                                                           
+                                        </ul>
+                                    </div>
+                                </div>
+            </div>
+          
+            <div class="panel-body">            
+                <div class="row">              
+                    <div class="form-group col-lg-3">
+                        <label for="sigla">Data Inicial</label>
+                        <input type="text" id="dataInicial" ng-model="filtro.dataInicialMask" app-date="filtro.dataInicial" class="form-control"/>
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="sigla">Data Final</label>
+                        <input type="text" id="dataFinal" ng-model="filtro.dataFinalMask" app-date="filtro.dataFinal" class="form-control"/>
+                    </div>          
+                </div>
+            
+            </div>
+                  
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="listarHistoricosDoCliente()">Pesquisar</button>
+            </div>
+    </div>    *@ 
+
+        
+        
+                          <div class="panel panel-corp">
+          
+                              <div class="panel-body">                                                    
+                                        <div id="data-field"><input type="text" id="dataFiltro" ng-model="data" app-date="filtro.data" class="form-control"/></div>
+                              </div>
+         
+                        </div>
+        
+        <div class="row"> 
+                
+        <div class="col-sm-12">  
+                <div class="panel panel-corp">
+          
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="panel panel-success">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-2">
+                                                <span class="glyphicon glyphicon-info-sign fa-2x"></span>
+                                            </div>
+                                            <div class="col-xs-9 text-right">
+                                                <div class="huge">{{qtdNotificacoes}}</div>
+                                                <div>Notificações!</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="/Notificacoes/MostrarTudo" target="_new">
+                                        <div class="panel-footer">
+                                            <span class="pull-left">Ver todos</span>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-2">
+                                                <i class="glyphicon glyphicon-flash fa-2x"></i>
+                                            </div>
+                                            <div class="col-xs-9 text-right">
+                                                <div class="huge">{{paginaPrioridades.numeroRegistros}}</div>
+                                                <div>Prioridades</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="#prioridades">
+                                        <div class="panel-footer">
+                                            <span class="pull-left">Ver todos</span>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-2">
+                                                <i class="glyphicon glyphicon-screenshot fa-2x"></i>
+                                            </div>
+                                            <div class="col-xs-9 text-right">
+                                                <div class="huge">{{pageAgendamentoAtrasado.numeroRegistros}}</div>
+                                                <div>Agend. Atrasados</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="#agendamentos-2">
+                                        <div class="panel-footer">
+                                            <span class="pull-left">Ver todos</span>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                               <div class="col-lg-3 col-md-6">
+                                <div class="panel panel-warning">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-2">
+                                                <i class="glyphicon glyphicon-user fa-2x"></i>
+                                            </div>
+                                            <div class="col-xs-9 text-right">
+                                                <div class="huge">{{resumoQuantidadeTipoCliente.Total}}</div>
+                                                <div>Clientes Da Carteira</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="#agendamentos-2">
+                                        <div class="panel-footer">
+                                            <span class="pull-left">Ver todos</span>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+         
+                        </div>                      
+               </div>                          
+        </div>
+               
+        @Html.Partial("Partials/_homeDashBoardPartial")
+        
+         <div class="row"> 
+                
+        <div class="col-sm-6">  
+                <div class="panel panel-corp">
+                <div class="panel-heading"><span class="glyphicon glyphicon-dashboard"></span> Quantidades de Clientes na carteira</div>
+      
+                    <div class="panel-body">
+                            <div class="table-responsive">     
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>      
+                                        <th>                                           
+                                            Tipo de Cliente
+                                        </th>
+                                        <th>
+                                            Quantidade
+                                        </th>                                       
+                                    </tr>
+                                </thead>    
+                              <tr ng-repeat="item in resumoQuantidadeTipoCliente.QuantidadeClassificacaoClienteDTO">
+                                    <td>
+                                        {{item.CLA_CLI_DESCRICAO}}
+                                    </td>  
+                                    <td>
+                                        {{item.QUANTIDADE}}
+                                    </td>                                  
+                                    
+                              </tr>
+                             <tr>
+                                 <td>Total:</td>
+                                 <td>{{resumoQuantidadeTipoCliente.Total}}</td>
+                             </tr>
+                                <tr>
+                                    <td colspan="5" ng-hide="resumoQuantidadeTipoCliente.QuantidadeClassificacaoClienteDTO" class="text">
+                                        Não foi encontrado nenhum registro.
+                                    </td>
+                                </tr>
+                            </table> 
+                        </div>
+                       </div>
+                    </div>                      
+               </div>                          
+        </div>
+
+        @Html.Partial("Partials/_ModalClientePartial")
+    </div>   
+</div>

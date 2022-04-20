@@ -1,0 +1,617 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Detalhes da Proposta";
+    ViewBag.print = true;
+}
+
+@section breadcrumbs {
+
+@*    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Listagem de Pedidos</li>
+
+    </ol>*@
+
+    <!-- page title -->
+				<header id="page-header">
+					<h1>Proposta</h1>
+					<ol class="breadcrumb">
+						<li>@Html.ActionLink("Home", "index", "Home")</li>
+                        <li class="active">Detalhes da Proposta</li>
+					</ol>
+				</header>
+}
+
+<div id="baseContent">    
+   @Html.Partial("Partials/_cssPrintPartial")
+    @Scripts.Render("~/Scripts/negocio/proposta.js")
+    
+    <style type="text/css">
+
+        div.body {
+        background-color: transparent;
+
+        }
+        .break-line {
+            /*page-break-after: left;*/
+        }
+        
+        /*@@page {
+        size: 5.5in 8.5in;
+        }
+
+        @@media print {
+            .non-printable, .fancybox-outer {
+                display: none;
+            }
+
+            .printable, #printDiv {
+                display: block;
+            }
+        }*/
+    </style>
+
+    <div ng-app="appModule" class="body-transp">
+        <div ng-controller="PropostaController" class="padding content" ng-cloak ng-init="read(@ViewBag.prtId); canPrint = true">
+  
+            <!-- Coadcorp-->
+            <div>
+		    <!-- mobile settings -->
+		    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
+
+		    <!-- WEB FONTS -->
+		    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800&amp;subset=latin,latin-ext,cyrillic,cyrillic-ext" rel="stylesheet" type="text/css" />
+
+
+		    <!-- WRAPPER -->
+		    <div ng-repeat="propostaItem in proposta.PROPOSTA_ITEM" ng-init="propostaItem.subTotal = (propostaItem.PPI_QTD * propostaItem.PPI_VALOR_UNITARIO)">			
+               <!-- 
+				    ASIDE 
+				    Keep it outside of #wrapper (responsive purpose)			    <!-- 
+				    MIDDLE 
+			    -->
+			    <section>
+
+				    <div class="padding-20">
+
+					    <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row" ng-if="propostaItem.PST_ID == 5">
+                                    <div class="col-md-12 col-xs-12">
+                                        <div class="alert alert-not-fixed alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-warning-sign"></span>
+                                            Essa proposta foi cancelada!!
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" ng-if="propostaItem.PST_ID == 6">
+                                    <div class="col-md-12 col-xs-12">
+                                        <div class="alert alert-not-fixed alert-warning" role="alert">
+                                            <span class="glyphicon glyphicon-warning-sign"></span>
+                                            Esse proposta precisa ter seu desconto aprovado pelo gerente antes de ser faturado!!
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-6 text-left">
+
+                                        <h4><strong>Detalhes do Cliente</strong></h4>
+                                        <ul class="list-unstyled">
+                                            <li><strong>Código:</strong> {{proposta.INFO_CLIENTE.CLI_ID}}</li>
+                                            <li><strong>Código do Prospect:</strong> {{propostaItem.PROSP_ID}}</li>
+                                            <li><strong>Nome:</strong> {{proposta.INFO_CLIENTE.CLI_NOME}}</li>
+                                            <li><strong>CPF/CNPJ:</strong> {{proposta.INFO_CLIENTE.CLI_CPF_CNPJ}}</li>
+                                            <li><strong>Tipo de Pessoa:</strong> {{proposta.INFO_CLIENTE.TIPO_CLIENTE.TIPO_CLI_DESCRICAO}}</li>
+                                            <li ng-if="proposta.INFO_CLIENTE.TIPO_CLIENTE.TIPO_CLI_ID != 2"><strong>Ao cuidados:</strong> {{proposta.INFO_CLIENTE.CLI_A_C}}</li>
+                                        </ul>
+
+                                    </div>
+
+                                    <div class="col-md-6 col-xs-6 text-right">
+
+                                        <h4><strong>Detalhes do proposta</strong></h4>
+                                        <ul class="list-unstyled">
+                                            <li><strong>Cod proposta:</strong> {{propostaItem.PRT_ID}}</li>
+                                            <li><strong>Cod Item Proposta:</strong> {{propostaItem.PPI_ID}}</li>
+                                            <li><strong>Tipo de Proposta:</strong> {{proposta.TIPO_PROPOSTA.TPP_DESCRICAO}}</li> 											
+ 											<li ng-if="proposta.UEN_ID == 1"><strong>Turma:</strong> {{propostaItem.PRT_IDENTIFICACAO_TURMA}}</li>
+                                            <li><strong>Tipo de Negociação:</strong> {{proposta.TIPO_NEGOCIACAO.TNE_DESCRICAO}}</li>
+                                            <li>
+                                                <strong>Cart Representante:</strong> {{proposta.REPRESENTANTE.REP_COD_CARTEIRA_ANTIGO}}
+                                                <span ng-if="!proposta.REPRESENTANTE.REP_COD_CARTEIRA_ANTIGO">Indisponível</span>
+                                            </li>
+                                            <li><strong>Data da Proposta:</strong> <span app-show-date="proposta.DATA_CADASTRO"></span></li>
+                                            <li><strong>E-Mail de Contato:</strong> {{proposta.PRT_EMAIL_CONTATO}}</li>
+                                            <li><strong>E-Mail da Nota Fiscal:</strong> {{proposta.PRT_EMAIL_NOTA_FISCAL}}</li>
+                                        </ul>
+
+                                    </div>
+
+                                </div>
+
+                                <p class="nomargin nopadding">
+                                    <strong>Detalhes dos itens</strong>
+                                </p><br><!-- no P margin for printing - use <br> instead -->
+
+
+                                <div class="table-responsive">
+                                    <table class="table table-condensed nomargin">
+                                        <thead>
+                                            <tr>
+                                                <th>Name do Item</th>
+                                                <th ng-show="proposta.UEN_ID == 1">Localização</th>
+                                                <th ng-show="proposta.TPP_ID == 3">
+                                                    Assinatura Origem
+                                                </th>
+                                                <th ng-show="proposta.TPP_ID == 2 || proposta.TPP_ID == 3">Assinatura</th>
+                                                <th ng-show="proposta.TPP_ID == 1">Período Bônus</th>
+                                                <th>Quantidade</th>
+                                                <th ng-show="proposta.TPP_ID == 2">Consultas</th>
+                                                <th>Preço unitário</th>
+                                                <th>Parcelas</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div><strong>{{propostaItem.PRODUTO_COMPOSICAO.CMP_DESCRICAO}}</strong></div>
+                                                    <small>Produto de venda</small>
+                                                    <strong ng-if="propostaItem.PPI_CORTESIA == true">(Cortesia)</strong>
+                                                </td>
+                                                <td ng-show="proposta.UEN_ID == 1">
+                                                    <strong>{{propostaItem.LOCALIZACAO_CURSO.LOC_DESCRICAO}}</strong>
+                                                </td>
+                                                <td ng-show="proposta.TPP_ID == 3">
+                                                    <strong>{{propostaItem.PPI_ASN_NUM_ASS_CANC}}</strong>
+                                                </td>
+                                                <td ng-show="proposta.TPP_ID == 2">
+                                                    <strong>{{propostaItem.ASN_NUM_ASSINATURA}}</strong>
+                                                </td>
+                                                <td ng-show="proposta.TPP_ID == 1">{{propostaItem.PPI_PERIODO_MES_BONUS}}</td>
+                                                <td>{{propostaItem.PPI_QTD}}</td>
+                                                <td ng-show="proposta.TPP_ID == 2 || proposta.TPP_ID == 3">{{propostaItem.PPI_QTD_CONSULTA}}</td>
+                                                <td app-show-dinheiro="propostaItem.PPI_VALOR_UNITARIO"></td>
+                                                <td><span ng-show="propostaItem.TPG_ID != 9">{{propostaItem.PPI_QTD_PARCELAS}} X </span><span ng-show="propostaItem.TPG_ID != 9" app-show-dinheiro="propostaItem.PPI_VALOR_PARCELA"></span></td>
+                                                <td app-show-dinheiro="propostaItem.PPI_TOTAL"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <hr class="nomargin-top" />
+                                <div ng-if="propostaItem.PEDIDO_PARTICIPANTE.length > 0">
+                                    <p class="nomargin nopadding">
+                                        <strong>Participantes</strong>
+                                    </p><br><!-- no P margin for printing - use <br> instead -->
+
+                                    <div class="table-responsive">
+                                        <table class="table table-condensed nomargin">
+                                            <thead>
+                                                <tr>
+                                                    <th>Participante N°</th>
+                                                    <th>
+                                                        Nome
+                                                    </th>
+                                                    <th>
+                                                        CPF
+                                                    </th>
+                                                    <th>
+                                                        E-Mail
+                                                    </th>
+                                                    <th>DDD</th>
+                                                    <th>Telefone</th>
+                                                </tr>
+                                            </thead>
+                                            <tr ng-repeat="item in propostaItem.PEDIDO_PARTICIPANTE" class="animate-repeat">
+                                                <td>{{$index + 1}}</td>
+                                                <td>
+                                                    {{item.PPR_NOME}}
+                                                </td>
+                                                <td>
+                                                    {{item.PPR_CPF_CNPJ}}
+                                                </td>
+                                                <td>
+                                                    {{item.PPR_EMAIL}}
+                                                </td>
+                                                <td>
+                                                    {{item.PPR_DDD}}
+                                                </td>
+                                                <td>
+                                                    {{item.PPR_TELEFONE}}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <hr class="nomargin-top" />
+                                </div>
+                                <p class="nomargin nopadding">
+                                    <strong>Detalhes de pagamento</strong>
+                                </p><br><!-- no P margin for printing - use <br> instead -->
+                                @*   <div ng-if="propostaItem
+        .ITEM_PEDIDO_PEDIDO_PAGAMENTO[0]
+        .PEDIDO_PAGAMENTO.TPG_ID == 9">
+        <label>Código de Autorização: </label> {{propostaItem.AUTHORIZATION_CODE}}</div>*@
+                                <br />
+                                <div class="table-responsive">
+                                    <table class="table table-condensed nomargin">
+                                        <thead>
+                                            <tr>
+                                                <th>Tipo de Pagamento</th>
+                                                <th>Entrada</th>
+                                                <th>Parcela(s)</th>
+                                                <th>Valor da Parcela</th>
+                                                <th>Data de Vencimento</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-if="propostaItem.PPI_CORTESIA != true">
+                                                <td>
+                                                    {{propostaItem.TIPO_PAGAMENTO.TPG_DESCRICAO}}
+                                                    <span ng-if="propostaItem.PST_ID == 7 || propostaItem.PST_ID == 3">(<strong>Pago</strong>)</span>
+                                                </td>
+                                                <td app-show-dinheiro="propostaItem.PPI_VALOR_ENTRADA"></td>
+                                                <td><span ng-show="propostaItem.TPG_ID != 9">{{propostaItem.PPI_QTD_PARCELAS}}X</span></td>
+                                                <td>
+                                                    <span app-show-dinheiro="propostaItem.PPI_VALOR_PARCELA"></span>
+                                                    <span ng-show="propostaItem.TPG_ID == 9">Em {{propostaItem.PPI_QTD_PARCELAS}}X</span>
+                                                </td>
+                                                <td app-show-date="propostaItem.PPI_DATA_VENCIMENTO"></td>
+                                            </tr>
+                                            <tr ng-if="propostaItem.PPI_CORTESIA == true">
+                                                <td colspan="5"><strong>Cortesia</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12 text-right">
+
+                                        <ul class="list-unstyled">
+                                            <li><strong>Total:</strong> <span app-show-dinheiro="propostaItem.PPI_TOTAL"></span></li>
+                                        </ul>
+
+                                        @*<a class="btn btn-default" href="#">MAKE A PAYMENT</a>*@
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-xs-6 text-left">
+                                        <h4>
+                                            <strong>
+                                                Endereço do cliente
+                                                <span ng-switch="proposta.INFO_CLIENTE.CLIENTES_ENDERECO[0].END_TIPO">
+                                                    <span ng-switch-when="1">Entrega</span>
+                                                    <span ng-switch-when="2">Faturamento</span>
+                                                </span>
+
+                                            </strong>
+                                        </h4>
+
+                                        <address>
+                                            <span ng-if="proposta.INFO_CLIENTE.CLIENTES_ENDERECO[0].END_LOGRADOURO">{{proposta.INFO_CLIENTE.CLIENTES_ENDERECO[0].END_LOGRADOURO}} <br></span>
+                                            <span ng-if="proposta.INFO_CLIENTE.CLIENTES_ENDERECO[0].END_NUMERO">{{proposta.INFO_CLIENTE.CLIENTES_ENDERECO[0].END_NUMERO}}<br></span>
+                                            <span ng-if="proposta.INFO_CLIENTE.CLIENTES_ENDERECO[0].END_BAIRRO">{{proposta.INFO_CLIENTE.CLIENTES_ENDERECO[0].END_BAIRRO}}<br></span>
+                                            <span ng-if="proposta.INFO_CLIENTE.CLIENTES_ENDERECO[0].END_MUNICIPIO">{{proposta.INFO_CLIENTE.CLIENTES_ENDERECO[0].END_MUNICIPIO}}<br></span>
+                                            <span ng-if="proposta.INFO_CLIENTE.CLIENTES_ENDERECO[0].END_UF">{{proposta.INFO_CLIENTE.CLIENTES_ENDERECO[0].END_UF}}<br></span>
+                                            <span ng-if="proposta.INFO_CLIENTE.CLIENTES_ENDERECO[0].END_CEP">{{proposta.INFO_CLIENTE.CLIENTES_ENDERECO[0].END_CEP}}<br></span>
+
+                                            Phone:({{proposta.INFO_CLIENTE.ASSINATURA_TELEFONE[0].ATE_DDD}}) {{proposta.INFO_CLIENTE.ASSINATURA_TELEFONE[0].ATE_TELEFONE}}<br>
+                                            Email:{{proposta.INFO_CLIENTE.ASSINATURA_EMAIL[0].AEM_EMAIL}}
+                                        </address>
+
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+
+                                        <h4>
+                                            <strong>
+                                                Endereço do cliente
+                                                <span ng-switch="proposta.INFO_CLIENTE.CLIENTES_ENDERECO[1].END_TIPO">
+                                                    <span ng-switch-when="1">Entrega</span>
+                                                    <span ng-switch-when="2">Faturamento</span>
+                                                </span>
+
+                                            </strong>
+                                        </h4>
+                                        {{proposta.INFO_CLIENTE.CLIENTES_ENDERECO[0].END_LOGRADOURO}}
+                                        <address>
+                                            <span ng-if="proposta.INFO_CLIENTE.CLIENTES_ENDERECO[1].END_LOGRADOURO">{{proposta.INFO_CLIENTE.CLIENTES_ENDERECO[1].END_LOGRADOURO}} <br></span>
+                                            <span ng-if="proposta.INFO_CLIENTE.CLIENTES_ENDERECO[1].END_NUMERO">{{proposta.INFO_CLIENTE.CLIENTES_ENDERECO[1].END_NUMERO}}<br></span>
+                                            <span ng-if="proposta.INFO_CLIENTE.CLIENTES_ENDERECO[1].END_BAIRRO">{{proposta.INFO_CLIENTE.CLIENTES_ENDERECO[1].END_BAIRRO}}<br></span>
+                                            <span ng-if="proposta.INFO_CLIENTE.CLIENTES_ENDERECO[1].END_MUNICIPIO">{{proposta.INFO_CLIENTE.CLIENTES_ENDERECO[1].END_MUNICIPIO}}<br></span>
+                                            <span ng-if="proposta.INFO_CLIENTE.CLIENTES_ENDERECO[1].END_UF">{{proposta.INFO_CLIENTE.CLIENTES_ENDERECO[1].END_UF}}<br></span>
+                                            <span ng-if="proposta.INFO_CLIENTE.CLIENTES_ENDERECO[1].END_CEP">{{proposta.INFO_CLIENTE.CLIENTES_ENDERECO[1].END_CEP}}<br></span>
+
+                                            Phone:({{proposta.INFO_CLIENTE.ASSINATURA_TELEFONE[1].ATE_DDD}}) {{proposta.INFO_CLIENTE.ASSINATURA_TELEFONE[1].ATE_TELEFONE}}<br>
+                                            Email:{{proposta.INFO_CLIENTE.ASSINATURA_EMAIL[1].AEM_EMAIL}}
+                                        </address>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-xs-12 text-left">
+                                        <h4><strong>Observações da Proposta</strong></h4>
+                                        <span>{{proposta.PRT_OBSERVACOES}}</span>
+                                    </div>
+                                    <div class="col-xs-12 text-left">
+                                        <h4><strong>Observações da Nota Fiscal</strong></h4>
+                                        <span>{{proposta.PRT_OBSERVACOES_NOTA_FISCAL}}</span>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4>
+                                            <strong>
+                                                Dados de Pagamento
+                                            </strong>
+                                        </h4>
+                                        <div ng-repeat="comp in propostaItem.PROPOSTA_ITEM_COMPROVANTE" class="row">
+                                            <br />
+                                            <div class="col-md-12">
+                                                <h5> <strong>Comprovante - {{$index + 1}} ({{comp.TIPO_PAGAMENTO.TPG_DESCRICAO}})</strong></h5>
+                                                <div ng-show="comp.TPG_ID == 9">
+                                                    <span>
+                                                        <strong>Bandeira:</strong>
+                                                        <span>{{comp.BANDEIRA_CARTAO.BAC_DESCRICAO}}</span>
+                                                    </span>
+                                                    <div>
+                                                        <strong>
+                                                            Número do Cartão:
+                                                        </strong>
+                                                        <span>{{comp.PIC_NUMERO_CARTAO}}</span>
+                                                    </div>
+
+                                                    <div>
+                                                        <strong>Venc. do Cartão:</strong>
+                                                        <span app-show-month="comp.PIC_VENC_CARTAO"></span>
+                                                    </div>
+                                                </div>
+                                                <div ng-show="comp.TPG_ID != 9">
+                                                    <span ng-show="comp.TPG_ID == 8 || comp.TPG_ID == 10">
+                                                        <strong>Banco:</strong>
+                                                        <span>{{comp.BANCOS.BAN_NOME}}</span>
+                                                    </span>
+                                                    <div>
+                                                        <strong>
+                                                            Número do
+                                                            <span ng-switch="comp.TPG_ID">
+                                                                <span ng-switch-when="8">Cheque</span>
+                                                                <span ng-switch-when="10">Comprovante</span>
+                                                                <span ng-switch-default>Documento</span>
+                                                            </span>:
+                                                        </strong>
+                                                        <span>{{comp.PIC_NUMERO_DOCUMENTO}}</span>
+                                                    </div>
+                                                    <div ng-show="item.TPG_ID == 8">
+                                                        <strong>UF:</strong>
+                                                        <span>{{comp.UF.UF_NOME}}</span>
+                                                    </div>
+                                                    <div ng-show="comp.TPG_ID == 7 || comp.TPG_ID == 10">
+                                                        <strong>Código de Referência:</strong>
+                                                        <span>{{comp.PIC_COD_REFERENCIA}}</span>
+                                                    </div>
+                                                    <div>
+                                                        <strong>Data de Pagamento:</strong>
+                                                        <span app-show-date="comp.PIC_DATA_PAGAMENTO"></span>
+                                                    </div>
+                                                    <div>
+                                                        <strong>Informações Complementares:</strong><br />
+                                                        <span>{{comp.PIC_TEXTO}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="break-line"></div>
+
+                                <section ng-if="propostaItem.INFO_FATURA || propostaItem.INFO_FATURA1">
+                                    <h4>
+                                        <strong>
+                                            Retenções e Impostos
+                                        </strong>
+                                    </h4>
+                                    <div class="row" ng-if="propostaItem.INFO_FATURA1">
+                                        <div class="col-md-12">
+                                            <hr class="nomargin-top" />
+                                            <p class="nomargin nopadding">
+                                                <strong>Impostos Aplicados Na Entrada</strong>
+                                            </p><br><!-- no P margin for printing - use <br> instead -->
+                                            <div class="row">
+                                                <div class="col-lg-7 col-xs-7">
+                                                    <label for="impostos">Valores de Imposto</label>
+                                                    <ul class="list-unstyled">
+                                                        <li>
+                                                            <strong class="font-13 text-muted">Valor Bruto:</strong>
+                                                            <strong class="font-12 " app-show-dinheiro="propostaItem.INFO_FATURA1.IFF_VALOR_BRUTO"></strong>
+                                                        </li>
+                                                        <li>
+                                                            <strong class="font-13 text-muted">Total Percentual de Impostos:</strong>
+                                                            <strong class="font-12 ">{{propostaItem.INFO_FATURA1.IFF_PERCENTUAL_TOTAL_DESCONTADO}}%</strong>
+                                                        </li>
+                                                        <li>
+                                                            <strong class="font-13 text-muted">Total de Impostos:</strong>
+                                                            <strong class="font-12 " app-show-dinheiro="propostaItem.INFO_FATURA1.IFF_TOTAL_DESCONTADO"></strong>
+
+                                                        </li>
+                                                        <li>
+                                                            <strong class="font-13 text-muted">Total Líquido:</strong>
+                                                            <strong class="font-12 " app-show-dinheiro="propostaItem.INFO_FATURA1.IFF_TOTAL_LIQUIDO"></strong>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-lg-5 col-xs-5" ng-if="propostaItem.INFO_FATURA1">
+                                                    <label for="impostos">Impostos Aplicados</label>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover table-bordered table-striped">
+                                                            <tbody>
+                                                                <tr ng-repeat="item in propostaItem.INFO_FATURA1.IMPOSTO_INFO_FATURA" class="animate-repeat">
+                                                                    <td class="text">
+                                                                        {{item.IMPOSTO.IMP_NOME}} ({{item.IIF_PERCENTUAL_DESCONTO}}%) - <span app-show-dinheiro="item.IIF_VALOR_DESCONTO"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr ng-hide="propostaItem.INFO_FATURA1.IMPOSTO_INFO_FATURA.length > 0">
+                                                                    <td>Nenhum imposto.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="text-muted col-lg-12 col-xs-2" ng-if="!propostaItem.INFO_FATURA1">Sem Informações de fatura</div>
+                                            </div>
+                                            <div ng-show="propostaItem.INFO_FATURA1.INFO_FATURA_ITEM">
+
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover table-bordered table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Perc. do Valor</th>
+                                                                <th>Tipo</th>
+                                                                <th>
+                                                                    Valor Bruto
+                                                                </th>
+                                                                <th>
+                                                                    Desconto
+                                                                </th>
+                                                                <th>
+                                                                    Perc. Desc
+                                                                </th>
+                                                                <th>Valor Líquido</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="item in propostaItem.INFO_FATURA1.INFO_FATURA_ITEM" class="animate-repeat">
+                                                                <td class="text">
+                                                                    {{item.IFI_PERCENTUAL_REFERENCIA}}%
+                                                                </td>
+                                                                <td class="text">{{item.NOTA_FISCAL_CONFIG_TIPO.NCT_DESCRICAO}}</td>
+                                                                <td class="text" app-show-dinheiro="item.IFI_VALOR_BRUTO"></td>
+                                                                <td class="text" app-show-dinheiro="item.IFI_TOTAL_DESCONTADO"></td>
+                                                                <td class="text">
+                                                                    <span app-show-dinheiro="item.IFI_PERCENTUAL_TOTAL_DESCONTADO" data-show-simbolo="false"></span>%
+                                                                </td>
+                                                                <td class="text" app-show-dinheiro="item.IFI_TOTAL_LIQUIDO"></td>
+                                                            </tr>
+                                                            <tr ng-hide="propostaItem.INFO_FATURA1.INFO_FATURA_ITEM.length > 0">
+                                                                <td colspan="6">Não há detalhes para exibir.</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="propostaItem.INFO_FATURA">
+                                        <div class="col-md-12">
+                                            <hr class="nomargin-top" />
+                                            <p class="nomargin nopadding">
+                                                <strong>Impostos Aplicados Na Parcela</strong>
+                                            </p><br><!-- no P margin for printing - use <br> instead -->
+                                            <div class="row">
+                                                <div class="col-lg-7 col-xs-7">
+                                                    <label for="impostos">Valores de Imposto</label>
+                                                    <ul class="list-unstyled">
+                                                        <li>
+                                                            <strong class="font-13 text-muted">Valor Bruto:</strong>
+                                                            <strong class="font-12 " app-show-dinheiro="propostaItem.INFO_FATURA.IFF_VALOR_BRUTO"></strong>
+                                                        </li>
+                                                        <li>
+                                                            <strong class="font-13 text-muted">Total Percentual de Impostos:</strong>
+                                                            <strong class="font-12 ">{{propostaItem.INFO_FATURA.IFF_PERCENTUAL_TOTAL_DESCONTADO}}%</strong>
+                                                        </li>
+                                                        <li>
+                                                            <strong class="font-13 text-muted">Total de Impostos:</strong>
+                                                            <strong class="font-12 " app-show-dinheiro="propostaItem.INFO_FATURA.IFF_TOTAL_DESCONTADO"></strong>
+
+                                                        </li>
+                                                        <li>
+                                                            <strong class="font-13 text-muted">Total Líquido:</strong>
+                                                            <strong class="font-12 " app-show-dinheiro="propostaItem.INFO_FATURA.IFF_TOTAL_LIQUIDO"></strong>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-lg-5 col-xs-5" ng-if="propostaItem.INFO_FATURA">
+                                                    <label for="impostos">Impostos Aplicados</label>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover table-bordered table-striped">
+                                                            <tbody>
+                                                                <tr ng-repeat="item in propostaItem.INFO_FATURA.IMPOSTO_INFO_FATURA" class="animate-repeat">
+                                                                    <td class="text">
+                                                                        {{item.IMPOSTO.IMP_NOME}} ({{item.IIF_PERCENTUAL_DESCONTO}}%) - <span app-show-dinheiro="item.IIF_VALOR_DESCONTO"></span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr ng-hide="propostaItem.INFO_FATURA.IMPOSTO_INFO_FATURA.length > 0">
+                                                                    <td>Nenhum imposto.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="text-muted col-lg-12 col-xs-2" ng-if="!propostaItem.INFO_FATURA">Sem Informações de fatura</div>
+                                            </div>
+                                            <div ng-show="propostaItem.INFO_FATURA.INFO_FATURA_ITEM">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover table-bordered table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Perc. do Valor</th>
+                                                                <th>Tipo</th>
+                                                                <th>
+                                                                    Valor Bruto
+                                                                </th>
+                                                                <th>
+                                                                    Desconto
+                                                                </th>
+                                                                <th>
+                                                                    Perc. Desc
+                                                                </th>
+                                                                <th>Valor Líquido</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="item in propostaItem.INFO_FATURA.INFO_FATURA_ITEM" class="animate-repeat">
+                                                                <td class="text">
+                                                                    {{item.IFI_PERCENTUAL_REFERENCIA}}%
+                                                                </td>
+                                                                <td class="text">{{item.NOTA_FISCAL_CONFIG_TIPO.NCT_DESCRICAO}}</td>
+                                                                <td class="text" app-show-dinheiro="item.IFI_VALOR_BRUTO"></td>
+                                                                <td class="text" app-show-dinheiro="item.IFI_TOTAL_DESCONTADO"></td>
+                                                                <td class="text">
+                                                                    <span app-show-dinheiro="item.IFI_PERCENTUAL_TOTAL_DESCONTADO" data-show-simbolo="false"></span>%
+                                                                </td>
+                                                                <td class="text" app-show-dinheiro="item.IFI_TOTAL_LIQUIDO"></td>
+                                                            </tr>
+                                                            <tr ng-hide="propostaItem.INFO_FATURA.INFO_FATURA_ITEM.length > 0">
+                                                                <td colspan="6">Não há detalhes para exibir.</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+					    </div>
+
+					    <div class="panel panel-default text-right hidden-print" ng-if="$last">
+						    <div class="panel-body">
+							    <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i> Imprimir</a>
+						    </div>
+					    </div>
+
+				    </div>
+			    </section>
+			    <!-- /MIDDLE -->
+		    </div>      
+
+            </div>
+        </div>
+    </div>
+</div>

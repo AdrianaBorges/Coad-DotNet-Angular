@@ -1,0 +1,157 @@
+﻿<div app-message></div>
+        <div>
+            <ul class="nav nav-tabs">
+                          <li role="presentation" ng-class="{active : transferenciaDto.tipo == 'representante'}"><a href="javascript:void(0)" ng-click="selectAbaRepresentante()">Representante</a></li>
+                          <li role="presentation" ng-class="{active : transferenciaDto.tipo == 'rodizioLogado'}"><a href="javascript:void(0)" ng-click="selectAbaRodizioLogado()">Rodizio Ope. Logadas</a></li>
+                          <li role="presentation" ng-class="{active : transferenciaDto.tipo == 'rodizioGeral'}"><a href="javascript:void(0)" ng-click="selectAbaRodizioGeral()">Rodizo Geral da Região</a></li>
+                        </ul>
+            <div class="middle-size-user-info float-left"> 
+                    <div class="panel panel-default">
+                    <div class="panel-heading">Representante de Origem</div>
+                    <div class="panel-body eq-height">    
+                        <form role="form">
+                             <div class="form-group">
+                                <label for="selectRegiao">Região</label>
+                                <select ng-options="reg.RG_ID as reg.RG_DESCRICAO for reg in regioes"
+                                     ng-model="RegiaoOrigemId" id="selectRegiao1" ng-show="regioes.length > 1" class="form-control" 
+                                    ng-change="regiaoOrigemSelecionado()">
+                                        <option value="">Selecione</option>
+                                </select>
+                                 <div ng-hide="regioes.length > 1">{{regioes[0].DESCRICAO}}</div>
+                             </div>            
+                            <div class="form-group" ng-show="representantesComCarteiramento">
+                               <label for="regiaoSelect">Representante de origem</label>
+                                <select ng-change="aoSelecionaRepresentanteOrigem()" ng-options="reg.ID as reg.NOME for reg in representantesComCarteiramento" ng-model="transferenciaDto.SlpCodeOrigem" id="regiaoSelect" class="form-control">
+                                     <option value="">Selecione</option>
+                                </select>
+                            </div>
+                             <div class="form-group" ng-if="qtdCarteiramentos"> 
+                                <label for="campoTipo">Quantidade de Carteiramentos: </label>
+                                <div class="padding resumo-info">
+                                    <span class="glyphicon glyphicon-arrow-right"></span>{{qtdCarteiramentos}}
+                                </div>
+                             </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="middle-size-user-info float-left" id="div_escolha"> 
+                    <div class="panel panel-default">
+                    <div class="panel-heading">Transferir para</div>
+                    <div class="panel-body eq-height">
+                        <div ng-show="transferenciaDto.tipo == 'representante'">
+                            <form role="form">
+                                <div class="form-group">
+                                   <label for="selectRegiao">Região</label>
+                                    <select ng-options="reg.ID as reg.DESCRICAO for reg in regioes" ng-show="regioes.length > 1" ng-model="RegiaoDestinoId" id="selectRegiao" class="form-control" ng-change="regiaoDestinoSelecionado()">
+                                            <option value="">Selecione</option>
+                                    </select>
+                                    <div ng-hide="regioes.length > 1">{{regioes[0].DESCRICAO}}</div>
+                                </div>           
+                                <div class="form-group" ng-show="representantes">
+                                   <label for="regiaoSelectDestino">Representante de Destino</label>
+                                    <select ng-options="reg.ID as reg.NOME for reg in representantes | filter:query" ng-model="transferenciaDto.SlpCodeDestino" id="regiaoSelectDestino" class="form-control">
+                                            <option value="">Selecione</option>
+                                    </select>                                    
+                                </div>                               
+                            </form>
+                        </div>
+                        <div ng-show="transferenciaDto.tipo != 'representante'">
+                            <form role="form">           
+                                <div class="form-group">
+                                   <label for="regiaoSelectDestino">Região</label>
+                                    <select ng-options="reg.ID as reg.DESCRICAO for reg in regioes" ng-show="regioes.length > 1" ng-model="transferenciaDto.RegiaoId" id="regiaoSelectDestino1" class="form-control" ng-change="pegaRepresentantes()">
+                                            <option value="">Selecione</option>
+                                    </select>
+                                    <div ng-hide="regioes.length > 1">{{regioes[0].DESCRICAO}}</div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>       
+            <div class="middle-size-user-info float-left" ng-show="transferenciaDto.tipo != 'representante'"> 
+                    <div class="panel panel-default">
+                    <div class="panel-heading">Representantes {{semantica}}</div>
+                    <div class="panel-body eq-height">
+                        <div>
+                            <form role="form">           
+                                <div class="form-group handle-overflow" id="div_representantes_logadas">
+                                   <table class="table table-bordered">
+
+                                       <thead>
+                                           <tr>
+                                                <th>Representante</th>
+                                           </tr>
+                                       </thead>
+                                       <tbody>
+                                           <tr ng-repeat="op in representantes">
+                                                <td>{{op.SlpName}}</td>
+                                           </tr>
+                                       </tbody>
+                                                                              
+                                   </table>
+                                <table class="table">
+                                    
+                                    <thead>
+                                        <tr>
+                                            <th>Representante</th>
+                                            <th>Suspects Recebidos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="obj in resumo">
+                                            <td>{{obj.NOME}}</td>
+                                            <td>{{obj.QtdSuspectsTransferidos}}</td>
+                                        </tr>
+                                    </tbody>
+                                    
+                                </table>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <div class="clear"></div>
+        <div><button class="btn btn-primary" ng-click="showResume()">Continuar</button></div>
+        <div app-modal="modal-resumo" header="Revise os detalhes">
+            
+            <form role="form">         
+                <div>                   
+                    <div> <span class="glyphicon glyphicon-warning-sign float-left" id="warning-span"></span> <div id="msg-resumo" class="alert alert-warning float-left">Atenção! Revise os detalhes da operação. Depois marque que foi revisado para continuar.</div></div>
+                </div>
+                <div class="clear"></div>
+                <div id="div-resumo-transferencia-suspect">
+                    <div class="form-group"> 
+                        <label for="campoTipo">Tipo Operação: </label>
+                        <div class="padding resumo-info"><span class="glyphicon glyphicon-arrow-right"></span> {{resumeModel.DestTipo}}</div>                                
+                    </div>
+                    <div class="form-group"> 
+                        <label for="campoRepresentanteOrigem">Representante de Origem: </label>  
+                        <div class="padding resumo-info"><span class="glyphicon glyphicon-arrow-right"></span>{{resumeModel.RepresentanteOrigem.NOME}}</div>
+                    </div>
+                    <div class="form-group" ng-if="resumeModel.tipo == 'representante'"> 
+                        <label for="campoRepresentanteDestino">Representante de Destino: </label>
+                        <div class="padding resumo-info"><span class="glyphicon glyphicon-arrow-right"></span>{{resumeModel.RepresentanteDestino.NOME}}</div>  
+                    </div>
+                    <div class="form-group" ng-if="resumeModel.tipo && resumeModel.tipo != 'representante'"> 
+                        <label for="campoRepresentanteDestino">Distribuir para representantes da Região: </label>
+                        <div class="padding resumo-info"><span class="glyphicon glyphicon-arrow-right"></span>{{resumeModel.RegiaoDestino.DESCRICAO}}</div>  
+                    </div>
+                </div>
+                <div class="form-group">
+                    Foi revisado <input type="checkbox" id="chkTransferir" ng-model="$parent.checado" ng-click="transState = 'reset'" />                    
+                </div>
+                <button ng-show="$parent.checado === true" id="button-transferir" app-switch-button="transferir()" switch-conf="[{label : 'Transferir', state : 'transferir'}, {label : 'Transferindo...', state : 'transferindo', disabled : true}]" switch-var="$parent.transState" class="btn btn-primary">Salvar</button>
+                <button class="btn btn-default" class="close" data-dismiss="modal" aria-label="Close" ng-click="$parent.checado = false">Cancelar</button>
+            </form>                
+         </div>
+            <div app-modal="modal-resumo" header="Revise os detalhes">
+                
+                <div class="table-responsive">
+
+                </div>
+            </div>

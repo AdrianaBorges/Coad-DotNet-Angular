@@ -1,0 +1,674 @@
+﻿@using COAD.SEGURANCA.Extensions
+@model COAD.CORPORATIVO.Repositorios.Contexto.NOTA_FISCAL
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+<form>
+    <div ng-app="appModule">
+        <div ng-controller="NotaFiscalControler">
+            <div class="form panel panel-primary">
+                <div class="panel-heading head-panel">
+                    <i class="fa fa-list-alt fa-fw"></i> Nota Fiscal
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Opções
+                        <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="javascript:Void(0)" ng-click="Confirmar()">Salvar</a></li>
+                                <li class="divider"></li>
+                                <li><a href="../NotaFiscal/Pesquisar">Voltar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Nº Nota Fiscal")
+                            @Html.TextBoxFor(model => model.NF_NUMERO, new { @class = "form-control", ng_model = "nf.NF_NUMERO" })
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Tipo")
+                            @Html.DropDownListFor(model => model.NF_TIPO, new SelectList(@ViewBag.ListaTipoNF, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_change = "mostrarImpostos(nf.NF_TIPO)", ng_model = "nf.NF_TIPO" })
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("id", "Tipo. Docto")
+                            @Html.DropDownListFor(model => model.TDF_ID, new SelectList(@ViewBag.ListaTipoDoc, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "nf.TDF_ID" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("Natureza da Operação")
+                            @Html.HiddenFor(model => model.NF_STATUS)
+                            @Html.DropDownListFor(model => model.CFOP, new SelectList(@ViewBag.Listacfop, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "nf.CFOP" })
+                        </div>
+                    </div>
+                    <div class="col-lg-1">
+                        <div class="form-group" style="width: 60px; float: left;">
+                            @Html.Label("CFOP")
+                            @Html.TextBoxFor(model => model.CFOPENT, new { @class = "form-control", ng_model = "nf.CFOPENT" })
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Data Emissão")
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.NF_DATA_EMISSAO, new { @class = "form-control datepicker", ng_model = "dtemissao", app_date = "nf.NF_DATA_EMISSAO" })
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Empresa")
+                            @Html.DropDownListFor(model => model.EMP_ID, new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "nf.EMP_ID" })
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            @Html.Label("Chave de Acesso")
+                            @Html.TextBoxFor(model => model.NF_CHAVE, new { @class = "form-control", ng_model = "nf.NF_CHAVE" })
+                            @Html.ValidationMessageFor(model => model.NF_CHAVE)
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Nº do Protocolo")
+                            @Html.TextBoxFor(model => model.NF_PROTOCOLO_AUT, new { @class = "form-control", ng_model = "nf.NF_PROTOCOLO_AUT" })
+                            @Html.ValidationMessageFor(model => model.NF_PROTOCOLO_AUT)
+                        </div>
+                    </div>
+                    <div class="col-lg-1">
+                        <div class="form-group" style="width: 60px; float: left;">
+                            @Html.Label("Série")
+                            @Html.TextBoxFor(model => model.NF_SERIE, new { @class = "form-control", ng_model = "nf.NF_SERIE" })
+                            @Html.ValidationMessageFor(model => model.NF_SERIE)
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Data Entrada")
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.NF_DATA_ENTRADA, new { @class = "form-control datepicker", ng_model = "dtentrada", app_date = "nf.NF_DATA_ENTRADA" })
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form panel panel-primary">
+                <div class="panel-heading head-panel">
+                    <i class="fa fa-list-alt fa-fw"></i> Fornecedor
+                    <div class="pull-right">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group" style="width: 290px; float: left;">
+                                @Html.Label("CNPJ")
+                                <div class="form-group input-group" style="width: 160px;">
+                                    @Html.TextBoxFor(model => model.FORNECEDOR.FOR_CNPJ, new { @class = "form-control", ng_model = "nf.FORNECEDOR.FOR_CNPJ" })
+                                    @Html.HiddenFor(model => model.FOR_ID, new { @class = "form-control", ng_model = "nf.FOR_ID" })
+                                    @Html.ValidationMessageFor(model => model.FORNECEDOR.FOR_CNPJ)
+                                    <span class="input-group-btn">
+                                        <a href="javascript:void(0)" class="btn btn-default" ng-click="BuscarFornecedor()"><span class="fa fa-refresh"></span></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="form-group">
+                                @Html.Label("Razão Social")
+                                @Html.TextBoxFor(model => model.FORNECEDOR.FOR_RAZAO_SOCIAL, new { @class = "form-control", ng_model = "nf.FORNECEDOR.FOR_RAZAO_SOCIAL"})
+                                @Html.ValidationMessageFor(model => model.FORNECEDOR.FOR_RAZAO_SOCIAL)
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("CEP")
+                                @Html.TextBoxFor(model => model.FORNECEDOR.FOR_CEP, new { @class = "form-control", ng_model = "nf.FORNECEDOR.FOR_CEP"})
+                                @Html.ValidationMessageFor(model => model.FORNECEDOR.FOR_CEP)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.Label("Endereço")
+                                @Html.TextBoxFor(model => model.FORNECEDOR.FOR_ENDERECO, new { @class = "form-control", ng_model = "nf.FORNECEDOR.FOR_ENDERECO"})
+                                @Html.ValidationMessageFor(model => model.FORNECEDOR.FOR_ENDERECO)
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Numero")
+                                @Html.TextBoxFor(model => model.FORNECEDOR.FOR_END_NUMERO, new { @class = "form-control", ng_model = "nf.FORNECEDOR.FOR_END_NUMERO"})
+                                @Html.ValidationMessageFor(model => model.FORNECEDOR.FOR_ENDERECO)
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Bairro")
+                                @Html.TextBoxFor(model => model.FORNECEDOR.FOR_BAIRRO, new { @class = "form-control", ng_model = "nf.FORNECEDOR.FOR_BAIRRO"})
+                                @Html.ValidationMessageFor(model => model.FORNECEDOR.FOR_BAIRRO)
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Municipio")
+                                @Html.HiddenFor(model => model.FORNECEDOR.MUN_ID, new { ng_model = "nf.FORNECEDOR.MUN_ID" })
+                                @Html.TextBoxFor(model => model.FORNECEDOR.MUNICIPIO.MUN_DESCRICAO, new { @class = "form-control", ng_keyup = "pesquisarMunicipio(nf.FORNECEDOR.MUNICIPIO.MUN_DESCRICAO)", ng_model = "nf.FORNECEDOR.MUNICIPIO.MUN_DESCRICAO", placeholder = "Nome da cidade", autofocus = true, @autocomplete = "off"})
+                                @Html.PesquisaCidade("FORNECEDOR_MUNICIPIO_MUN_DESCRICAO")
+                                @Html.ValidationMessageFor(model => model.FORNECEDOR.MUNICIPIO.MUN_DESCRICAO)
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("id", "Insc. Estadual")
+                                @Html.TextBoxFor(model => model.FORNECEDOR.FOR_INSCRICAO, new { @class = "form-control", ng_model = "nf.FORNECEDOR.FOR_INSCRICAO"})
+                                @Html.ValidationMessageFor(model => model.FORNECEDOR.FOR_INSCRICAO)
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Telefone")
+                                @Html.TextBoxFor(model => model.FORNECEDOR.FOR_TEL, new { @class = "form-control", ng_model = "nf.FORNECEDOR.FOR_TEL" })
+                                @Html.ValidationMessageFor(model => model.FORNECEDOR.FOR_TEL)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form panel panel-primary" ng-show="mostraservico">
+                <div class="panel-heading head-panel">
+                    <i class="fa fa-list-alt fa-fw"></i> Outros
+                    <div class="pull-right">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Tipo Consumo")
+                            @Html.DropDownListFor(model => model.NF_COD_CONSUMO, new SelectList(@ViewBag.ListaClassificao, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "nf.NF_COD_CONSUMO" })
+                            @Html.ValidationMessageFor(model => model.NF_COD_CONSUMO)
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Tipo Ligação")
+                            @Html.DropDownListFor(model => model.NF_TIPO_LIGACAO, new SelectList(@ViewBag.ListaTipoLigacao, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "nf.NF_TIPO_LIGACAO" })
+                            @Html.ValidationMessageFor(model => model.NF_TIPO)
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Grupo de Tensão")
+                            @Html.DropDownListFor(model => model.NF_COD_GRUPO_TENSAO, new SelectList(@ViewBag.ListaGrupoTensao, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_change = "BuscarCfopEntrada()", ng_model = "nf.NF_COD_GRUPO_TENSAO" })
+                            @Html.ValidationMessageFor(model => model.NF_COD_GRUPO_TENSAO)
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Valor PIS")
+                            @Html.TextBoxFor(model => model.NF_VLR_PIS, new { @class = "form-control", ng_model = "nf.NF_VLR_PIS" })
+                            @Html.ValidationMessageFor(model => model.NF_VLR_PIS)
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Valor COFINS")
+                            @Html.TextBoxFor(model => model.NF_VLR_COFINS, new { @class = "form-control", ng_model = "nf.NF_VLR_COFINS" })
+                            @Html.ValidationMessageFor(model => model.NF_VLR_ST)
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1">
+                        <div class="form-group">
+                            @Html.Label("ICMS")
+                            @Html.TextBoxFor(model => model.NF_ALIQ_ICMS_SERV, new { @class = "form-control", ng_model = "nf.NF_ALIQ_ICMS_SERV" })
+                            @Html.ValidationMessageFor(model => model.NF_ALIQ_ICMS_SERV)
+                        </div>
+                    </div>
+                    <div class="col-lg-1">
+                        <div class="form-group">
+                            @Html.Label("CST")
+                            @Html.TextBoxFor(model => model.CST_ID_SERV, new { @class = "form-control", ng_model = "nf.CST_ID_SERV" })
+                            @Html.ValidationMessageFor(model => model.CST_ID_SERV)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form panel panel-primary">
+                <div class="panel-heading head-panel">
+                    <i class="fa fa-list-alt fa-fw"></i> Impostos
+                    <div class="pull-right">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("Base ICMS")
+                            @Html.TextBoxFor(model => model.NF_BASE_CALC_ICMS, new { @class = "form-control", ng_model = "nf.NF_BASE_CALC_ICMS" })
+                            @Html.ValidationMessageFor(model => model.NF_BASE_CALC_ICMS)
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("Valor ICMS")
+                            @Html.TextBoxFor(model => model.NF_VLR_ICMS, new { @class = "form-control", ng_model = "nf.NF_VLR_ICMS" })
+                            @Html.ValidationMessageFor(model => model.NF_VLR_ICMS)
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Base ST")
+                            @Html.TextBoxFor(model => model.NF_BASE_CALC_ST, new { @class = "form-control", ng_model = "nf.NF_BASE_CALC_ST" })
+                            @Html.ValidationMessageFor(model => model.NF_BASE_CALC_ST)
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Valor ST")
+                            @Html.TextBoxFor(model => model.NF_VLR_ST, new { @class = "form-control", ng_model = "nf.NF_VLR_ST" })
+                            @Html.ValidationMessageFor(model => model.NF_VLR_ST)
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Total Produtos")
+                            @Html.TextBoxFor(model => model.NF_VLR_PROD, new { @class = "form-control", ng_model = "nf.NF_VLR_PROD" })
+                            @Html.ValidationMessageFor(model => model.NF_VLR_PROD)
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Frete")
+                            @Html.TextBoxFor(model => model.NF_VLR_FRETE, new { @class = "form-control", ng_model = "nf.NF_VLR_FRETE" })
+                            @Html.ValidationMessageFor(model => model.NF_VLR_FRETE)
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Seguro")
+                            @Html.TextBoxFor(model => model.NF_VLR_SEGURO, new { @class = "form-control", ng_model = "nf.NF_VLR_SEGURO" })
+                            @Html.ValidationMessageFor(model => model.NF_VLR_SEGURO)
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Desconto")
+                            @Html.TextBoxFor(model => model.NF_VLR_DESCONTO, new { @class = "form-control", ng_model = "nf.NF_VLR_DESCONTO" })
+                            @Html.ValidationMessageFor(model => model.NF_VLR_DESCONTO)
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("id", "D. Acessórias")
+                            @Html.TextBoxFor(model => model.NF_VLR_OUTRAS, new { @class = "form-control", ng_model = "nf.NF_VLR_OUTRAS" })
+                            @Html.ValidationMessageFor(model => model.NF_VLR_ST)
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("IPI")
+                            @Html.TextBoxFor(model => model.NF_VLR_IPI, new { @class = "form-control", ng_model = "nf.NF_VLR_IPI" })
+                            @Html.ValidationMessageFor(model => model.NF_VLR_IPI)
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Total da Nota")
+                            @Html.TextBoxFor(model => model.NF_VLR_NOTA, new { @class = "form-control", ng_model = "nf.NF_VLR_NOTA" })
+                            @Html.ValidationMessageFor(model => model.NF_VLR_NOTA)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form panel panel-primary" ng-show="mostra">
+                <div class="panel-heading head-panel">
+                    <i class="fa fa-list-alt fa-fw"></i> Transportador
+                    <div class="pull-right">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group" style="width: 200px; float: left;">
+                                @Html.Label("CPF/CNPJ")
+                                <div class="form-group input-group" style="width: 180px;">
+                                    @Html.TextBoxFor(model => model.TRANSPORTADOR.TRA_CNPJ, new { @class = "form-control", ng_model = "nf.TRANSPORTADOR.TRA_CNPJ" })
+                                    @Html.HiddenFor(model => model.TRA_ID, new { @class = "form-control", ng_model = "nf.TRA_ID" })
+                                    @Html.ValidationMessageFor(model => model.TRANSPORTADOR.TRA_CNPJ)
+                                    <span class="input-group-btn">
+                                        <a href="javascript:void(0)" class="btn btn-default" ng-click="BuscarTransportador()"><span class="fa fa-refresh"></span></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                @Html.Label("Razão Social")
+                                @Html.TextBoxFor(model => model.TRANSPORTADOR.TRA_RAZAO_SOCIAL, new { @class = "form-control", ng_model = "nf.TRANSPORTADOR.TRA_RAZAO_SOCIAL" })
+                                @Html.ValidationMessageFor(model => model.TRANSPORTADOR.TRA_RAZAO_SOCIAL)
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Frete por Conta")
+                                @Html.DropDownListFor(model => model.NF_FRETE_TIPO, new SelectList(@ViewBag.ListaTipoFrete, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "nf.NF_FRETE_TIPO" })
+                                @Html.ValidationMessageFor(model => model.NF_FRETE_TIPO)
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Codigo ANTT")
+                                @Html.TextBoxFor(model => model.NF_RNTRC, new { @class = "form-control", ng_model = "nf.NF_RNTRC" })
+                                @Html.ValidationMessageFor(model => model.NF_RNTRC)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Placa")
+                                @Html.TextBoxFor(model => model.NF_PLACA, new { @class = "form-control", ng_model = "nf.NF_PLACA" })
+                                @Html.ValidationMessageFor(model => model.NF_PLACA)
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("UF")
+                                @Html.DropDownListFor(model => model.NF_PLACA_UF, new SelectList(@ViewBag.ListaUf, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "nf.NF_PLACA_UF" })
+                                @Html.ValidationMessageFor(model => model.NF_PLACA_UF)
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.Label("Endereço")
+                                @Html.TextBoxFor(model => model.TRANSPORTADOR.TRA_ENDERECO, new { @class = "form-control", ng_model = "nf.TRANSPORTADOR.TRA_ENDERECO"})
+                                @Html.ValidationMessageFor(model => model.TRANSPORTADOR.TRA_ENDERECO)
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div class="form-group">
+                                @Html.Label("Numero")
+                                @Html.TextBoxFor(model => model.TRANSPORTADOR.TRA_END_NUMERO, new { @class = "form-control", ng_model = "nf.TRANSPORTADOR.TRA_END_NUMERO"})
+                                @Html.ValidationMessageFor(model => model.TRANSPORTADOR.TRA_END_NUMERO)
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Município")
+                                @Html.HiddenFor(model => model.TRANSPORTADOR.MUN_ID, new { ng_model = "nf.TRANSPORTADOR.MUN_ID" })
+                                @Html.TextBoxFor(model => model.TRANSPORTADOR.MUNICIPIO.MUN_DESCRICAO, new { @class = "form-control", ng_keyup = "pesquisarMunicipio2(nf.TRANSPORTADOR.MUNICIPIO.MUN_DESCRICAO)", ng_model = "nf.TRANSPORTADOR.MUNICIPIO.MUN_DESCRICAO", placeholder = "Nome da cidade", autofocus = true, @autocomplete = "off"})
+                                @Html.PesquisaCidade2("TRANSPORTADOR_MUNICIPIO_MUN_DESCRICAO")
+                                @Html.ValidationMessageFor(model => model.TRANSPORTADOR.MUNICIPIO.MUN_DESCRICAO)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group" style="float: left; width: 100px;">
+                                @Html.Label("Insc. Estadual")
+                                @Html.TextBoxFor(model => model.TRANSPORTADOR.TRA_INSCRICAO, new { @class = "form-control", ng_model = "nf.TRANSPORTADOR.TRA_INSCRICAO"})
+                                @Html.ValidationMessageFor(model => model.TRANSPORTADOR.TRA_INSCRICAO)
+                            </div>
+                            <div class="form-group" style="float: left; width: 110px; padding-left: 6px;">
+                                @Html.Label("Qtde")
+                                @Html.TextBoxFor(model => model.NF_QTDE, new { @class = "form-control", ng_model = "nf.NF_QTDE" })
+                                @Html.ValidationMessageFor(model => model.NF_QTDE)
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group" style="float: left; width: 110px; padding-right: 4px;">
+                                @Html.Label("Espécie")
+                                @Html.TextBoxFor(model => model.NF_ESPECIE, new { @class = "form-control", ng_model = "nf.NF_ESPECIE" })
+                                @Html.ValidationMessageFor(model => model.NF_ESPECIE)
+                            </div>
+                            <div class="form-group" style="float: right; width: 100px;">
+                                @Html.Label("Marca")
+                                @Html.TextBoxFor(model => model.NF_MARCA, new { @class = "form-control", ng_model = "nf.NF_MARCA" })
+                                @Html.ValidationMessageFor(model => model.NF_MARCA)
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Numeração")
+                                @Html.TextBoxFor(model => model.NF_NUMERACAO, new { @class = "form-control", ng_model = "nf.NF_NUMERACAO" })
+                                @Html.ValidationMessageFor(model => model.NF_NUMERACAO)
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Peso Bruto")
+                                @Html.TextBoxFor(model => model.NF_PESO_BRUTO, new { @class = "form-control", ng_model = "nf.NF_PESO_BRUTO" })
+                                @Html.ValidationMessageFor(model => model.NF_PESO_BRUTO)
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Peso Líquido")
+                                @Html.TextBoxFor(model => model.NF_PESO_LIQUIDO, new { @class = "form-control", ng_model = "nf.NF_PESO_LIQUIDO" })
+                                @Html.ValidationMessageFor(model => model.NF_PESO_LIQUIDO)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form panel panel-primary" ng-show="mostra">
+                <div class="panel-heading head-panel">
+                    <i class="fa fa-list-alt fa-fw"></i> Dados do Produto/Servico
+                    <div class="pull-right">
+                        <a href="javascript:void(0)" style="float: right; color: white;" ng-click="additem()" ng-show="mostra">(+) Adicionar</a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="modal-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>@Html.Label("Produto/Servico")</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in nf.NOTA_FISCAL_ITEM">
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <div class="form-group" style="width: 160px; float: left;">
+                                                    <input type="hidden" ng-model="item.NF_NUMERO" />
+                                                    <input type="hidden" ng-model="item.NF_SERIE" />
+                                                    <input type="hidden" ng-model="item.NF_TIPO" />
+                                                    <input type="hidden" ng-model="item.NCM_ID" />
+                                                    @Html.Label("Código")
+                                                    @Html.Hidden("index", new { ng_model = "$index" })
+                                                    <div class="form-group input-group" style="width: 140px; float: left;">
+                                                        <input type="text" ng-model="item.PRO_ID" ng-blur="MostrarProduto(item.PRO_ID,$index)" class="form-control" />
+                                                        <span class="input-group-btn">
+                                                            <a href="javascript:void(0)" class="btn btn-default" ng-click="AbrejanelaProduto($index)"><span class="fa fa-search"></span></a>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="form-group">
+                                                    @Html.Label("Descrição")
+                                                    <input type="text" ng-model="item.NFI_PRO_NOME" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <div class="form-group" style="width: 60px;">
+                                                    @Html.Label("CFOP")
+                                                    <input type="text" ng-model="item.CFOP" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <div class="form-group" style="width: 60px;">
+                                                    @Html.Label("CST")
+                                                    <input type="text" ng-model="item.CST_ID" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <div class="form-group" style="width: 60px;">
+                                                    @Html.Label("UN")
+                                                    <input type="text" ng-model="item.NFI_UN" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <div class="form-group">
+                                                    @Html.Label("id", "Quant.")
+                                                    <input type="text" ng-model="item.NFI_QTDE" class="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <div class="form-group">
+                                                    @Html.Label("id", "V. Unitário")
+                                                    <input type="text" ng-model="item.NFI_VLR_UNIT" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <div class="form-group">
+                                                    @Html.Label("id", "V. Total")
+                                                    <input type="text" ng-model="item.NFI_VLR_TOTAL" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <div class="form-group">
+                                                    @Html.Label("id", "Base ICMS")
+                                                    <input type="text" ng-model="item.NFI_BASE_CALC_ICMS" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group" style="width: 110px; float: left;">
+                                                    @Html.Label("id", "ICMS")
+                                                    <input type="text" ng-model="item.NFI_VLR_ICMS" class="form-control" />
+                                                </div>
+                                                <div class="form-group" style="width: 90px; float: right; padding-left: 4px;">
+                                                    @Html.Label("id", "IPI")
+                                                    <input type="text" ng-model="item.NFI_VLR_IPI" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <div class="form-group" style="width: 60px;">
+                                                    @Html.Label("id", "% ICM")
+                                                    <input type="text" ng-model="item.NFI_ALIQ_ICMS" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <div class="form-group" style="width: 60px;">
+                                                    @Html.Label("id", "% IPI")
+                                                    <input type="text" ng-model="item.NFI_ALIQ_IPI" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <div class="form-group" style="width: 10px; float: left;">
+                                                    <a href="javascript:void(0)" class="btn btn-default" ng-click="additem()">(+)</a>
+                                                </div>
+                                                <div class="form-group" style="width: 10px; float: right;">
+                                                    <a href="javascript:void(0)" class="btn btn-default" ng-click="removeitem($index)">(-)</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    @Html.DescricaoProduto("")
+                </div>
+            </div>
+            <div class="form panel panel-primary">
+                <div class="panel-heading head-panel">
+                    <i class="fa fa-list-alt fa-fw"></i> Cálulo do ISSQN
+                    <div class="pull-right">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("Insc. Municipal")
+                            @Html.TextBoxFor(model => model.FORNECEDOR.FOR_INSCMUNIP, new { @class = "form-control", ng_model = "nf.FORNECEDOR.FOR_INSCMUNIP" })
+                            @Html.ValidationMessageFor(model => model.FORNECEDOR.FOR_INSCMUNIP)
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("Valor Total dos Serviços")
+                            @Html.TextBoxFor(model => model.NF_VLR_SERVICO, new { @class = "form-control", ng_model = "nf.NF_VLR_SERVICO" })
+                            @Html.ValidationMessageFor(model => model.NF_VLR_SERVICO)
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("Base de Calculo ISSQN")
+                            @Html.TextBoxFor(model => model.NF_BASE_CALC_ISSQN, new { @class = "form-control", ng_model = "nf.NF_BASE_CALC_ISSQN" })
+                            @Html.ValidationMessageFor(model => model.NF_BASE_CALC_ISSQN)
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("Valor do ISSQN")
+                            @Html.TextBoxFor(model => model.NF_VLR_ISSQN, new { @class = "form-control", ng_model = "nf.NF_VLR_ISSQN" })
+                            @Html.ValidationMessageFor(model => model.NF_VLR_ISSQN)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form panel panel-primary">
+                <div class="panel-heading head-panel">
+                    <i class="fa fa-list-alt fa-fw"></i> Dados Adicionais 
+                    <div class="pull-right">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            @Html.Label("Informações Complementares")
+                            @Html.TextAreaFor(model => model.NF_INF_COMPLEMENTAR, new { @class = "form-control", ng_model = "nf.NF_INF_COMPLEMENTAR", rows = "4" })
+                            @Html.ValidationMessageFor(model => model.NF_INF_COMPLEMENTAR)
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <a href="../NotaFiscal/Pesquisar" class="btn btn-default">Voltar</a>
+                    <input type="button" ng-click="Confirmar()" class="btn btn-default" value="Salvar" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/appScripts/NotaFiscal.js")
+    @Scripts.Render("~/Scripts/appScripts/datepicker.js")
+    @Scripts.Render("~/Content/themes/base/bootstrap-datepicker.css")
+
+}
+

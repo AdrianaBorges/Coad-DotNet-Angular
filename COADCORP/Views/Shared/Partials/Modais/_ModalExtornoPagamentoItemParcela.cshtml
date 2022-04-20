@@ -1,0 +1,67 @@
+﻿<a href="javascript:void(0)"
+   ng-click="abrirModalParcelasSelecionadas()"
+   class="text-muted">
+    <span class="badge">{{modalAssinatura.LstParcelasSelecionadas.length}}</span>
+    Parcelas Selecionado(s)
+</a>
+<br />
+<div class="table-responsive">
+    <table class="table table-hover table-striped table-bordered-primary">
+        <thead>
+            <tr class="bg-info">
+                <th>
+                    <input type="checkbox" id="selecao-geral"
+                           class="form-control big-checkbox"
+                           ng-model="modalAssinatura.selecionarTodos"
+                           ng-selected="modalAssinatura.selecionarTodos == true" />
+                </th>
+                <th>Código</th>
+                <th>Código no PJ</th>
+                <th class="center">Situação</th>
+                <th class="center">Data de Vencimento</th>
+                <th class="right">Valor das Parcelas</th>
+                <th class="right">
+                    Valor Pago
+                </th>
+                <th class="center">
+                    Data do Pagamento
+                </th>
+            </tr>
+        </thead>
+        <tr ng-repeat="item in modalAssinatura.lstParcelas" class="animate-repeat-all">
+            <td>
+                <span app-many-checkbox="modalAssinatura.LstParcelasSelecionadas"
+                      key-value="item.PAR_NUM_PARCELA"
+                      key-name="numParcela"
+                      control-obj="modalAssinatura.controle"
+                      select-watch="modalAssinatura.selecionarTodos"></span>
+            </td>
+            <td>
+                {{item.PAR_NUM_PARCELA}}
+            </td>
+            <td>{{item.PAR_COD_LEGADO}}</td>
+            <td>
+                <span ng-if="item.PAR_VLR_PAGO >= 0 && item.PAR_DATA_PAGTO" class="label label-success">Paga</span>
+                <span ng-if="item.PAR_VLR_PAGO <= 0 && !item.PAR_DATA_PAGTO" class="label label-warning">Aberta</span>
+            </td>
+            <td class="center" app-show-date="item.PAR_DATA_VENCTO"></td>
+            <td class="right">
+                <strong app-show-dinheiro="item.PAR_VLR_PARCELA"></strong>
+            </td>
+            <td class="right">
+                <strong app-show-dinheiro="item.PAR_VLR_PAGO"></strong>
+            </td>
+            <td class="center" app-show-date="item.PAR_DATA_PAGTO"></td>
+        </tr>
+        <tr>
+            <td colspan="8"
+                ng-show="!modalAssinatura.lstParcelas || modalAssinatura.lstParcelas.length == 0">
+                Selecione um contrato para visualizar a parcela.
+            </td>
+        </tr>
+    </table>
+</div>
+<div app-pagination="pageParcelas" request-page="paginaReq" load-function="carregarParcelasExtorno(paginaReq)"></div>
+<div>
+    <button type="button" class="btn btn-primary" ng-click="abrirModalExtornarParcela()">Extornar</button>
+</div>

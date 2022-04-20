@@ -1,0 +1,147 @@
+﻿@using COAD.SEGURANCA.Extensions
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+<form>
+    <div ng-app="appModule">
+       <div ng-controller="ItemMenuControler">
+         <div class="form panel panel-primary">
+            <div class="panel-heading">
+                <i class="fa fa-search fa-fw"></i> @ViewBag.Title
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            Opções
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li><a href="../ItemMenu/Novo">Novo</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        @Html.Label("Sistema")
+                        @Html.DropDownList("ListaSistema", new SelectList(@ViewBag.ListaSistema, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_model="m.SIS_ID", ng_change="BuscarMenu(m.SIS_ID,0)" })
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        @Html.Label("Menu")
+                        @Html.DropDownList("ListaMenu", new SelectList(@ViewBag.ListaMenu, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_options="item.ITM_ID as item.ITM_DESCRICAO for item in listaMenu", ng_model = "m.ITM_NODE_ID", ng_change="BuscarListaItemMenu(m.SIS_ID,m.ITM_NODE_ID)"  })
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                @*<button type="button" class="btn btn-default" ng-click="BuscarListaItemMenu(m.SIS_ID,m.ITM_NODE_ID)">Pesquisar</button>*@
+                <button type="button" class="btn btn-default" ng-click="listar()">Pesquisar</button>
+            </div>
+       </div>
+       <div class="form panel panel-primary" ng_show="listaitemmenu">
+            <div class="panel-heading">
+                <i class="fa fa-list-alt fa-fw"></i>@ViewBag.Title
+                <div class="pull-right">
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>@Html.Label("Id")</th>
+                                <th>@Html.Label("Menu")</th>
+                                <th>@Html.Label("Descrição")</th>
+                                <th>@Html.Label("Path")</th>
+                                <th>@Html.Label("Nível")</th>
+                                <th>@Html.Label("Id","Ord.")</th>
+                                <th>@Html.Label("Situação")</th>
+                                <th>@Html.Label("Editar")</th>
+                                <th>@Html.Label("SubMenu")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listaitemmenu">
+                                <td>{{item.ITM_ID}}</td>
+                                <td>{{item.ITM_NODE_ID}}</td>                            
+                                <td>{{item.ITM_DESCRICAO}}</td>
+                                <td>{{item.ITM_NOME_ARQUIVO}}</td>
+                                <td>{{item.ITM_MENU_NIVEL}}</td>
+                                <td>{{item.ITM_MENU_SEQ}}</td>
+                                <td>{{item.ITM_ATIVO}}</td>
+                                <td><a href="javascript:void(0)" app-post="@Url.Action("Editar")?_itm_id={{item.ITM_ID}}" title="Editar" class="blue" ><span class="glyphicon glyphicon-edit"></span></a></td>
+                                <td><a href="javascript:void(0)" ng-click="BuscarListaSubMenu(m.SIS_ID,item.ITM_ID)" data-toggle="modal" data-target="#myModal" ng_show="item.ITM_NOME_ARQUIVO=='#'"><span class="fa fa-search"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr />
+                <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+             </div>
+         </div>
+         <!-- Modal Itens-->
+         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Editar SubMenu</h4>
+                    </div>
+                    <div class="modal-body" style="overflow: auto; max-height: 500px;">
+                      <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>@Html.Label("Id")</th>
+                                    <th>@Html.Label("Menu")</th>
+                                    <th>@Html.Label("Descrição")</th>
+                                    <th>@Html.Label("Path")</th>
+                                    <th>@Html.Label("Nível")</th>
+                                    <th>@Html.Label("Id","Ord.")</th>
+                                    <th>@Html.Label("Situação")</th>
+                                    <th>@Html.Label("Editar")</th>
+                                    @* <th>@Html.Label("Excluir")</th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in listasubitemmenu">
+                                    <td>{{item.ITM_ID}}</td>
+                                    <td>{{item.ITM_NODE_ID}}</td>                            
+                                    <td>{{item.ITM_DESCRICAO}}</td>
+                                    <td>{{item.ITM_NOME_ARQUIVO}}</td>
+                                    <td>{{item.ITM_MENU_NIVEL}}</td>
+                                    <td>{{item.ITM_MENU_SEQ}}</td>
+                                    <td>{{item.ITM_ATIVO}}</td>
+                                    <td><a href="javascript:void(0)" app-post="@Url.Action("Editar")?_itm_id={{item.ITM_ID}}" title="Editar" class="blue"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- Janela Modal -->
+       </div>
+    </div>
+</form>
+
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/appScripts/itemmenu.js")
+    @Scripts.Render("~/Scripts/appScripts/datepicker.js")
+    @Scripts.Render("~/Content/themes/base/bootstrap-datepicker.css")
+    
+}

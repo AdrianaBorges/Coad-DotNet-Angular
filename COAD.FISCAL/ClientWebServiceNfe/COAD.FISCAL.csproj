@@ -1,0 +1,846 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props" Condition="Exists('..\..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C0B6DD72-FA9A-4F88-9A95-AD81CC1CB8AF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>COAD.FISCAL</RootNamespace>
+    <AssemblyName>COAD.FISCAL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>176D9FF2D8B153962FFC65AB1DFB88178A4A4785</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Homologacao|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Homologacao\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_Prod|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug_Prod\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Castle.Core.3.3.0\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=3.4.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Castle.Windsor.3.4.0\lib\net45\Castle.Windsor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Open-XML-SDK.2.7.2\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.CodeCoverage.Shim, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.CodeCoverage.1.0.3\lib\netstandard1.0\Microsoft.VisualStudio.CodeCoverage.Shim.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Quartz, Version=2.5.0.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Quartz.2.5.0\lib\net40\Quartz.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.4.0.40804.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\CoadFiscalConfig.cs" />
+    <Compile Include="Config\IOCContainer\ServiceInstaller.cs" />
+    <Compile Include="Exceptions\ExceptionFormatter.cs" />
+    <Compile Include="Exceptions\RetornoProcessamentoNfseException.cs" />
+    <Compile Include="Exceptions\RetornoProcessamentoException.cs" />
+    <Compile Include="Exceptions\GeracaoNotaException.cs" />
+    <Compile Include="Model\Batch\LoteBatchStatuDTO.cs" />
+    <Compile Include="Model\Cartao.cs" />
+    <Compile Include="Model\ConstantsNFe.cs" />
+    <Compile Include="Model\Danfe\Anotacao\CustomFieldPDF.cs" />
+    <Compile Include="Model\Danfe\DTO\BlocoCalculoImpostoDTO.cs" />
+    <Compile Include="Model\Danfe\DTO\BlocoCanhotoDTO.cs" />
+    <Compile Include="Model\Danfe\DTO\BlocoDadosAdicionaisDTO.cs" />
+    <Compile Include="Model\Danfe\DTO\BlocoDadosNFEDTO.cs" />
+    <Compile Include="Model\Danfe\DTO\BlocoDestinatarioRemetenteDTO.cs" />
+    <Compile Include="Model\Danfe\DTO\BlocoFaturasDTO.cs" />
+    <Compile Include="Model\Danfe\DTO\BlocoISSQNDTO.cs" />
+    <Compile Include="Model\Danfe\DTO\BlocoProdutoServicoDTO.cs" />
+    <Compile Include="Model\Danfe\DTO\BlocoTransportadorDTO.cs" />
+    <Compile Include="Model\Danfe\Enum\AlinhamentoHorizontal.cs" />
+    <Compile Include="Model\Danfe\Enum\AlinhamentoVertical.cs" />
+    <Compile Include="Model\Danfe\Enum\Orientacao.cs" />
+    <Compile Include="Model\Danfe\Enum\PosicaoBloco.cs" />
+    <Compile Include="Model\Danfe\Enum\TipoCampo.cs" />
+    <Compile Include="Model\Danfe\nfe_v4_00.cs" />
+    <Compile Include="Model\DTOCriptografia\AlgorithmBase.cs" />
+    <Compile Include="Model\DTOCriptografia\CanonicalizationMethod.cs" />
+    <Compile Include="Model\DTOCriptografia\DigestMethod.cs" />
+    <Compile Include="Model\DTOCriptografia\KeyInfo.cs" />
+    <Compile Include="Model\DTOCriptografia\Reference.cs" />
+    <Compile Include="Model\DTOCriptografia\SignatureDTO.cs" />
+    <Compile Include="Model\DTOCriptografia\SignatureMethod.cs" />
+    <Compile Include="Model\DTOCriptografia\SignedInfoDTO.cs" />
+    <Compile Include="Model\DTOCriptografia\Transform.cs" />
+    <Compile Include="Model\DTOCriptografia\X509Data.cs" />
+    <Compile Include="Model\DTO\ClienteDTO.cs" />
+    <Compile Include="Model\DTO\EmpresaDTO.cs" />
+    <Compile Include="Model\DTO\EnderecoDTO.cs" />
+    <Compile Include="Model\DTO\Enumerados\TipoOperacaoEnum.cs" />
+    <Compile Include="Model\DTO\ImpostosDTO.cs" />
+    <Compile Include="Model\DTO\ParcelaDTO.cs" />
+    <Compile Include="Model\DTO\PedidoDTO.cs" />
+    <Compile Include="Model\DTO\PedidoItemDTO.cs" />
+    <Compile Include="Model\DTO\ProdutoDTO.cs" />
+    <Compile Include="Model\DTO\Requests\CartaCorrecaoRequestDTO.cs" />
+    <Compile Include="Model\DTO\RetornoXMLDTO.cs" />
+    <Compile Include="Model\DTO\Servico.cs" />
+    <Compile Include="Model\DTO\UFDTO.cs" />
+    <Compile Include="Model\Enumerados\BandeiraCartaoEnum.cs" />
+    <Compile Include="Model\Enumerados\ImpostosEnum.cs" />
+    <Compile Include="Model\Enumerados\IndicacaoPresencaEnum.cs" />
+    <Compile Include="Model\Enumerados\TipoClienteEnum.cs" />
+    <Compile Include="Model\Enumerados\TipoIntegracaoPagamentoEnum.cs" />
+    <Compile Include="Model\Enumerados\TipoLocalDestinoOperacaoEnum.cs" />
+    <Compile Include="Model\Enumerados\TipoPagamentoEnum.cs" />
+    <Compile Include="Model\Enumerados\TipoQualificacaoNFeEnum.cs" />
+    <Compile Include="Model\Enumerados\TipoTributacaoIPIEnum.cs" />
+    <Compile Include="Model\InformacoesPagamento.cs" />
+    <Compile Include="Model\InfPagamentoDetalhamento.cs" />
+    <Compile Include="Model\Integracoes\Enumerados\StatusLoteEnum.cs" />
+    <Compile Include="Model\Integracoes\Enumerados\StatusNotaFiscalEnum.cs" />
+    <Compile Include="Model\Integracoes\Enumerados\TipoLoteItemEnum .cs" />
+    <Compile Include="Model\Integracoes\Enumerados\TipoLoteEnum.cs" />
+    <Compile Include="Model\Integracoes\Enumerados\TipoNFEnum.cs" />
+    <Compile Include="Model\Integracoes\Interfaces\IEmpresa.cs" />
+    <Compile Include="Model\Integracoes\Interfaces\INFeLoteItem.cs" />
+    <Compile Include="Model\Integracoes\Enumerados\StatusLoteItemEnum.cs" />
+    <Compile Include="Model\Integracoes\Interfaces\INFeLote.cs" />
+    <Compile Include="Model\Integracoes\Interfaces\INotaFiscal.cs" />
+    <Compile Include="Model\Integracoes\Interfaces\INotaFiscalEvento.cs" />
+    <Compile Include="Model\Integracoes\Interfaces\INotaFiscalItemMSG.cs" />
+    <Compile Include="Model\Integracoes\Interfaces\INotaFiscalReferenciada.cs" />
+    <Compile Include="Model\Integracoes\NFseAutorizadaContext.cs" />
+    <Compile Include="Model\Integracoes\NFeDevolucaoContext.cs" />
+    <Compile Include="Model\Integracoes\NFeRejeitadaContext.cs" />
+    <Compile Include="Model\Integracoes\NFeAutorizadaContext.cs" />
+    <Compile Include="Model\Integracoes\RequisicaoNovoLote.cs" />
+    <Compile Include="Model\Integracoes\RequisicaoNovoLoteItem.cs" />
+    <Compile Include="Model\NFeDistribuicaoDTO.cs" />
+    <Compile Include="Model\NfeCobrDTO .cs" />
+    <Compile Include="Model\NfeDupDTO .cs" />
+    <Compile Include="Model\NfeFatDTO .cs" />
+    <Compile Include="Model\NFeImpostoCOFINSGrupoNaoTributadoDTO.cs" />
+    <Compile Include="Model\NFeImpostoCOFINS.cs" />
+    <Compile Include="Model\Enumerados\TipoIEDestinatarioEnum.cs" />
+    <Compile Include="Model\Enumerados\TipoModalidadeTransporteEnum.cs" />
+    <Compile Include="Model\NFeImpostoICMSGrupo.cs" />
+    <Compile Include="Model\NFeImpostoICMSGrupo40.cs" />
+    <Compile Include="Model\NefInfoTransporteDTO.cs" />
+    <Compile Include="Model\NfeDetalhamentoItem.cs" />
+    <Compile Include="Model\NFeReferenciadaDTO.cs" />
+    <Compile Include="Model\NFSe\CabecMsgWebSrv.cs" />
+    <Compile Include="Model\NFSe\CancelamentoNfse.cs" />
+    <Compile Include="Model\NFSe\CancelarNfseEnvio.cs" />
+    <Compile Include="Model\NFSe\CancelarNfseResposta.cs" />
+    <Compile Include="Model\NFSe\CnpjCpfRps.cs" />
+    <Compile Include="Model\NFSe\CompNfse.cs" />
+    <Compile Include="Model\NFSe\ConfirmacaoCancelamentoNfse.cs" />
+    <Compile Include="Model\NFSe\ConsultarLoteRpsEnvio.cs" />
+    <Compile Include="Model\NFSe\ConsultarNfseRpsEnvio.cs" />
+    <Compile Include="Model\NFSe\ConsultarSituacaoLoteRpsEnvio.cs" />
+    <Compile Include="Model\NFSe\ContatoRps.cs" />
+    <Compile Include="Model\NFSe\DadosConstrucaoCivilRps.cs" />
+    <Compile Include="Model\NFSe\DadosPrestadorRps.cs" />
+    <Compile Include="Model\NFSe\DadosServicoRps.cs" />
+    <Compile Include="Model\NFSe\DadosTomadorRps.cs" />
+    <Compile Include="Model\NFSe\EnderecoRps.cs" />
+    <Compile Include="Model\NFSe\Enumerados\IdenSimNaoEnum.cs" />
+    <Compile Include="Model\NFSe\Enumerados\IndicacaoCpfCnpjEnum.cs" />
+    <Compile Include="Model\NFSe\Enumerados\RegimeEspecialTributacaoEnum.cs" />
+    <Compile Include="Model\NFSe\Enumerados\SituacaoLoteRpsEnum.cs" />
+    <Compile Include="Model\NFSe\Enumerados\StatusNfseEnum.cs" />
+    <Compile Include="Model\NFSe\Enumerados\StatusRpsEnum.cs" />
+    <Compile Include="Model\NFSe\Enumerados\TipoNaturezaOperacaoEnum.cs" />
+    <Compile Include="Model\NFSe\Enumerados\TipoRPSEnum.cs" />
+    <Compile Include="Model\NFSe\EnviarLoteRpsEnvio.cs" />
+    <Compile Include="Model\NFSe\IdentificacaoIntermediarioServiceRps.cs" />
+    <Compile Include="Model\NFSe\IdentificacaoNfse.cs" />
+    <Compile Include="Model\NFSe\IdentificacaoOrgaoGeradorRps.cs" />
+    <Compile Include="Model\NFSe\IdentificacaoPrestadorRps.cs" />
+    <Compile Include="Model\NFSe\IdentificacaoRps.cs" />
+    <Compile Include="Model\NFSe\IdentificacaoTomadorRps.cs" />
+    <Compile Include="Model\NFSe\InfConfirmacaoCancelamentoNfse.cs" />
+    <Compile Include="Model\NFSe\InfNfse.cs" />
+    <Compile Include="Model\NFSe\InfPedidoCancelamentoNfse.cs" />
+    <Compile Include="Model\NFSe\InfRps.cs" />
+    <Compile Include="Model\NFSe\InfSubstituicaoNfse.cs" />
+    <Compile Include="Model\NFSe\ListaMensagemRetornoNfse.cs" />
+    <Compile Include="Model\NFSe\LoteRps.cs" />
+    <Compile Include="Model\NFSe\MensagemRetornoLoteNfse.cs" />
+    <Compile Include="Model\NFSe\MensagemRetornoNfse.cs" />
+    <Compile Include="Model\NFSe\NFse.cs" />
+    <Compile Include="Model\NFSe\PedidoCancelamentoNfse.cs" />
+    <Compile Include="Model\NFSe\Retornos\ConsultarLoteRpsResposta.cs" />
+    <Compile Include="Model\NFSe\Retornos\ConsultarNfseRpsResposta.cs" />
+    <Compile Include="Model\NFSe\Retornos\ConsultarSituacaoLoteRpsResposta.cs" />
+    <Compile Include="Model\NFSe\Retornos\EnviarLoteRpsResposta.cs" />
+    <Compile Include="Model\NFSe\Rps.cs" />
+    <Compile Include="Model\NFSe\SubstituicaoNfse.cs" />
+    <Compile Include="Model\NFSe\ValoresRps.cs" />
+    <Compile Include="Model\NotaFiscal.cs" />
+    <Compile Include="Model\NfeEnderecoDestinatarioDTO.cs" />
+    <Compile Include="Model\NfeEnderecoEmitenteDTO.cs" />
+    <Compile Include="Model\NfeDestinoDTO.cs" />
+    <Compile Include="Model\DownloadRequest.cs" />
+    <Compile Include="Model\Enumerados\TipoProcessoEmissaoEnum.cs" />
+    <Compile Include="Model\Enumerados\FinalidadeNotaFiscalEnum.cs" />
+    <Compile Include="Model\Enumerados\TipoAmbienteEnum.cs" />
+    <Compile Include="Model\Enumerados\TipoEmissaoEnum.cs" />
+    <Compile Include="Model\Enumerados\FormatoImpressaoEnum.cs" />
+    <Compile Include="Model\Enumerados\TipoNotaFiscalEnum.cs" />
+    <Compile Include="Model\Enumerados\IndPagEnum.cs" />
+    <Compile Include="Model\Evento.cs" />
+    <Compile Include="Model\ManisfestacaoEvento.cs" />
+    <Compile Include="Model\InfoNfeDTO.cs" />
+    <Compile Include="Model\NfeEmitenteDTO.cs" />
+    <Compile Include="Model\NfeICMSTotalDTO.cs" />
+    <Compile Include="Model\NFeImposto.cs" />
+    <Compile Include="Model\NFeImpostoICMS.cs" />
+    <Compile Include="Model\NfeImpostoIPI.cs" />
+    <Compile Include="Model\NfeImpostoIPIGrupoNaoTributado.cs" />
+    <Compile Include="Model\NFeImpostoPIS.cs" />
+    <Compile Include="Model\NFeImpostoPISGrupoNaoTributadoDTO.cs" />
+    <Compile Include="Model\NFeInformacoesAdicionaisDTO.cs" />
+    <Compile Include="Model\NfeInformacoesPessoaisDTO.cs" />
+    <Compile Include="Model\NfeEnderecoDTO.cs" />
+    <Compile Include="Model\NfeIdentificacaoDTO.cs" />
+    <Compile Include="Model\NfeItemDTO.cs" />
+    <Compile Include="Model\NfeTotalDTO.cs" />
+    <Compile Include="Model\ProdutoRastroDTO.cs" />
+    <Compile Include="Model\ResultadoGeracaoNFeDTO.cs" />
+    <Compile Include="Model\Servicos\Abstratos\AbstractRespostaServico.cs" />
+    <Compile Include="Model\Servicos\ConsultaLote.cs" />
+    <Compile Include="Model\Servicos\DetalhamentoEventoCartaCorrecao.cs" />
+    <Compile Include="Model\Servicos\DetalhamentoEventoCancelamento.cs" />
+    <Compile Include="Model\Servicos\DetalhamentoEvento.cs" />
+    <Compile Include="Model\Servicos\Enumerados\IndicadorConstribuinteCTeEnum.cs" />
+    <Compile Include="Model\Servicos\Enumerados\IndicadorContribuinteNFeEnum.cs" />
+    <Compile Include="Model\Servicos\Enumerados\SituacaoContribuinteEnum.cs" />
+    <Compile Include="Model\Servicos\Enumerados\TipoEventoEnum.cs" />
+    <Compile Include="Model\Servicos\Evento.cs" />
+    <Compile Include="Model\Servicos\InformacaoConsulta.cs" />
+    <Compile Include="Model\Servicos\InformacaoEvento.cs" />
+    <Compile Include="Model\Servicos\InformacoesInutilizacao.cs" />
+    <Compile Include="Model\Servicos\NFeProcessada.cs" />
+    <Compile Include="Model\Servicos\ProcessamentoEvento.cs" />
+    <Compile Include="Model\Servicos\RequisicaoConsultaCadastro.cs" />
+    <Compile Include="Model\Servicos\RequisicaoRecepcaoEvento.cs" />
+    <Compile Include="Model\Servicos\RequisicaoInutilizacao.cs" />
+    <Compile Include="Model\Servicos\Retornos\EnderecoContribuinte.cs" />
+    <Compile Include="Model\Servicos\Retornos\InfCadastroRetornoDados.cs" />
+    <Compile Include="Model\Servicos\Retornos\InformacaoCadastroRetorno.cs" />
+    <Compile Include="Model\Servicos\Retornos\ConsultaCadastroRetorno.cs" />
+    <Compile Include="Model\Servicos\Retornos\ProcessamentoEventoItem.cs" />
+    <Compile Include="Model\Servicos\Retornos\ProcessamentoEventoRetorno.cs" />
+    <Compile Include="Model\Servicos\Retornos\ConsultaLoteRetorno.cs" />
+    <Compile Include="Model\Servicos\Enumerados\IndicacaoDeSincroniaEnum.cs" />
+    <Compile Include="Model\Servicos\LoteNFE.cs" />
+    <Compile Include="Model\Servicos\Retornos\EventoRetorno.cs" />
+    <Compile Include="Model\Servicos\Retornos\InformacaoEventoRetorno.cs" />
+    <Compile Include="Model\Servicos\Retornos\InformacoesInutilizacaoRetorno.cs" />
+    <Compile Include="Model\Servicos\Retornos\ProtocoloRecebimento.cs" />
+    <Compile Include="Model\Servicos\Retornos\ProtocoloResposta.cs" />
+    <Compile Include="Model\Servicos\Retornos\RecepcaoEventoRetorno.cs" />
+    <Compile Include="Model\Servicos\Retornos\ReciboLote.cs" />
+    <Compile Include="Model\Servicos\Retornos\LoteRetorno.cs" />
+    <Compile Include="Model\Servicos\Retornos\InutilizacaoRetorno.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\CadConsultaCadastro4SVRS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CadConsultaCadastro4\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DownloadNf\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\NFeAutorizacao4\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\NfeAutorizacao\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\NFeInutilizacao4\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\NfeInutilizacao\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\NFeRecepcaoEvento4\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\NFeRetAutorizacao4\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\NfeRetAutorizacao\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\Nfse\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\RecepcaoEvento\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service\CertificateUtil.cs" />
+    <Compile Include="Service\ClienteConsultaCadastroSRV.cs" />
+    <Compile Include="Service\ClienteNfseSRV.cs" />
+    <Compile Include="Service\ClienteNfeInutilizacaoSRV.cs" />
+    <Compile Include="Service\ClienteLoteNfeSRV.cs" />
+    <Compile Include="Service\ClienteRetornoLoteSRV.cs" />
+    <Compile Include="Service\ClientWsFactory.cs" />
+    <Compile Include="Service\ClientWsManifestacaoEvento.cs" />
+    <Compile Include="Service\Config\ClientWsConfig.cs" />
+    <Compile Include="Service\ClientWsDownloadNfeSRV.cs" />
+    <Compile Include="Service\ClientWsRecepcaoSRV.cs" />
+    <Compile Include="Service\DanfeSRV.cs" />
+    <Compile Include="Service\Integracoes\IntegrLoteItemNFeSRV.cs" />
+    <Compile Include="Service\Integracoes\IntegrLoteNFeSRV.cs" />
+    <Compile Include="Service\Integracoes\IntegrNfeSRV.cs" />
+    <Compile Include="Service\Integracoes\Interfaces\ILoteNFeSRV.cs" />
+    <Compile Include="Service\Integracoes\Interfaces\ILoteItemNFeSRV.cs" />
+    <Compile Include="XmlUtils\XmlUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NFeAutorizacao.wsdl" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\System.Xml.Linq.XElement.datasource" />
+    <None Include="Properties\DataSources\System.Xml.XmlNode.datasource" />
+    <None Include="schemas\consReciNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\consSitNFe_v3.10 junto.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\consSitNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\consStatServ_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\enviNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\inutNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\leiauteConsSitNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\leiauteConsStatServ_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\leiauteInutNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\leiauteNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\nfe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\procInutNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\procNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\retConsReciNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\retConsSitNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\retConsStatServ_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\retEnviNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\retInutNFe_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\tiposBasico_v3.10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="schemas\xmldsig-core-schema_v1.01.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CadConsultaCadastro4SVRS\cadconsultacadastro4.wsdl" />
+    <None Include="Service References\CadConsultaCadastro4SVRS\COAD.FISCAL.CadConsultaCadastro4SVRS.consultaCadastroResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CadConsultaCadastro4\cadconsultacadastro4.wsdl" />
+    <None Include="Service References\CadConsultaCadastro4\COAD.FISCAL.CadConsultaCadastro4.consultaCadastroResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DownloadNf\COAD.FISCAL.DownloadNf.nfeDownloadNFResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DownloadNf\NfeDownloadNF.wsdl" />
+    <None Include="Service References\NFeAutorizacao4\COAD.FISCAL.NFeAutorizacao4.nfeAutorizacaoLoteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\NFeAutorizacao4\COAD.FISCAL.NFeAutorizacao4.nfeAutorizacaoLoteZipResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\NFeAutorizacao4\NFeAutorizacao4.wsdl">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NfeAutorizacao\COAD.FISCAL.NfeAutorizacao.nfeAutorizacaoLoteResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\NfeAutorizacao\COAD.FISCAL.NfeAutorizacao.nfeAutorizacaoLoteZipResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\NfeAutorizacao\COAD.FISCAL.NfeAutorizacao.nfeCabecMsg1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\NfeAutorizacao\NFeAutorizacao.wsdl">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NFeInutilizacao4\COAD.FISCAL.NFeInutilizacao4.nfeInutilizacaoNFResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\NFeInutilizacao4\nfeinutilizacao4.wsdl" />
+    <None Include="Service References\NfeInutilizacao\COAD.FISCAL.NfeInutilizacao.nfeCabecMsg.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\NfeInutilizacao\COAD.FISCAL.NfeInutilizacao.nfeInutilizacaoNF2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\NfeInutilizacao\nfeinutilizacao2.wsdl" />
+    <None Include="Service References\NFeRecepcaoEvento4\COAD.FISCAL.NFeRecepcaoEvento4.nfeRecepcaoEventoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\NFeRecepcaoEvento4\recepcaoevento4.wsdl" />
+    <None Include="Service References\NFeRetAutorizacao4\COAD.FISCAL.NFeRetAutorizacao4.nfeRetAutorizacaoLoteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\NFeRetAutorizacao4\NFeRetAutorizacao4.wsdl" />
+    <None Include="Service References\NfeRetAutorizacao\COAD.FISCAL.NfeRetAutorizacao.nfeCabecMsg.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\NfeRetAutorizacao\COAD.FISCAL.NfeRetAutorizacao.nfeRetAutorizacaoLoteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\NfeRetAutorizacao\NFeRetAutorizacao.wsdl" />
+    <None Include="Service References\Nfse\COAD.FISCAL.Nfse.CancelarNfseResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Nfse\COAD.FISCAL.Nfse.ConsultarLoteRpsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Nfse\COAD.FISCAL.Nfse.ConsultarNfsePorRpsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Nfse\COAD.FISCAL.Nfse.ConsultarNfseResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Nfse\COAD.FISCAL.Nfse.ConsultarSituacaoLoteRpsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Nfse\COAD.FISCAL.Nfse.GerarNfseResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Nfse\COAD.FISCAL.Nfse.RecepcionarLoteRpsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Nfse\nfse.wsdl" />
+    <None Include="Service References\RecepcaoEvento\COAD.FISCAL.RecepcaoEvento.nfeCabecMsg.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\RecepcaoEvento\COAD.FISCAL.RecepcaoEvento.nfeRecepcaoEventoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\RecepcaoEvento\recepcaoevento.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\CadConsultaCadastro4SVRS\" />
+    <WCFMetadataStorage Include="Service References\CadConsultaCadastro4\" />
+    <WCFMetadataStorage Include="Service References\DownloadNf\" />
+    <WCFMetadataStorage Include="Service References\NFeAutorizacao4\" />
+    <WCFMetadataStorage Include="Service References\NfeAutorizacao\" />
+    <WCFMetadataStorage Include="Service References\NFeInutilizacao4\" />
+    <WCFMetadataStorage Include="Service References\NfeInutilizacao\" />
+    <WCFMetadataStorage Include="Service References\NFeRecepcaoEvento4\" />
+    <WCFMetadataStorage Include="Service References\NFeRetAutorizacao4\" />
+    <WCFMetadataStorage Include="Service References\NfeRetAutorizacao\" />
+    <WCFMetadataStorage Include="Service References\Nfse\" />
+    <WCFMetadataStorage Include="Service References\RecepcaoEvento\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DownloadNf\NfeDownloadNF.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DownloadNf\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DownloadNf\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DownloadNf\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\COAD.SEGURANCA\COAD.SEGURANCA.csproj">
+      <Project>{2584C60A-835B-44B7-9C49-10F489DE32BD}</Project>
+      <Name>COAD.SEGURANCA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\shared\genericcrud\GenericCrud\Coad.GenericCrud.csproj">
+      <Project>{a6a9ff49-fa0d-468e-9966-31b8d7ef5a97}</Project>
+      <Name>Coad.GenericCrud</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NfeRetAutorizacao\NFeRetAutorizacao.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NfeRetAutorizacao\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NfeRetAutorizacao\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NfeRetAutorizacao\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NfeInutilizacao\nfeinutilizacao2.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NfeInutilizacao\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NfeInutilizacao\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NfeInutilizacao\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NfeAutorizacao\NFeAutorizacao.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NfeAutorizacao\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NfeAutorizacao\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NfeAutorizacao\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\RecepcaoEvento\recepcaoevento.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\RecepcaoEvento\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\RecepcaoEvento\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\RecepcaoEvento\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NFeAutorizacao4\NFeAutorizacao4.disco">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NFeAutorizacao4\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NFeAutorizacao4\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NFeAutorizacao4\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NFeRetAutorizacao4\NFeRetAutorizacao4.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NFeRetAutorizacao4\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NFeRetAutorizacao4\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NFeRetAutorizacao4\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NFeInutilizacao4\nfeinutilizacao4.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NFeInutilizacao4\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NFeInutilizacao4\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NFeInutilizacao4\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NFeRecepcaoEvento4\recepcaoevento4.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NFeRecepcaoEvento4\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NFeRecepcaoEvento4\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\NFeRecepcaoEvento4\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CadConsultaCadastro4\cadconsultacadastro4.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CadConsultaCadastro4\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CadConsultaCadastro4\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CadConsultaCadastro4\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CadConsultaCadastro4SVRS\cadconsultacadastro4.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CadConsultaCadastro4SVRS\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CadConsultaCadastro4SVRS\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CadConsultaCadastro4SVRS\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Nfse\nfse.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Nfse\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Nfse\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Nfse\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este projeto faz referência a pacotes do NuGet que não estão presentes neste computador. Use a Restauração de Pacotes do NuGet para baixá-los.  Para obter mais informações, consulte http://go.microsoft.com/fwlink/?LinkID=322105. O arquivo ausente é {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets" Condition="Exists('..\..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

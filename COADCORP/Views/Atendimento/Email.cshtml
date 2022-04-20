@@ -1,0 +1,42 @@
+﻿@using Coad.GenericCrud.Extensions
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active"> Atendimento (Emails)</li>
+    </ol>
+}
+
+@Scripts.Render("~/Scripts/appScripts/Atendimento.js")
+
+<div ng-app="appModule">
+    <div class="panel panel-default" ng-controller="AtendimentoController" data-ng-init="carregaTela('@ViewBag.email');" ng-cloak>
+        <!-- Default panel contents -->
+        <div class="panel panel-default">
+            <div app-message></div>
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-edit icon-panel"></span> Atendimento (@ViewBag.email)
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Opções <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li><a href="javascript:void(0)" ng-click="buscarEmail()"> Atualizar </a>
+                            </li>
+                            <li><a href="javascript:void(0)" onclick="window.location = '@Url.Action("Index")'">Fechar</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            @Html.Partial("Partials/_AtendimentoEmail")
+        </div>
+        <div class="panel-footer">
+            <button type="button" class="btn btn-default" onclick="window.location = '@Url.Action("Index")'" ><span class="glyphicon glyphicon-chevron-left blue"></span>Fechar</button>
+        </div>
+    </div>
+</div>

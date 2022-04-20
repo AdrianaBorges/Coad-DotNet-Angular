@@ -1,0 +1,48 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+         
+<div class="panel panel-default">
+        <div class="panel-heading"><span class="glyphicon glyphicon-calendar blue"></span> Agendar Contato</div>
+     
+    <div class="panel-body limit-modal-height">   
+            <fieldset>
+                <legend>Informações básicas</legend>
+                <div class="row">
+                    <div class="form-group col-sm-5">
+                        @Html.Label("Nome")
+                        <div class="text">{{$parent.clienteModal.CLI_NOME}}</div>
+                    </div>  
+                </div>
+            </fieldset>
+           <fieldset>
+            <legend>Agendamento de contato</legend>
+               <div class="row">
+                   <div class="form-group col-sm-3">
+                        @Html.Label("Descrição")
+                        <input type="text" class="form-control" 
+                            ng-model="agendamento.AGE_DESCRICAO" placeholder="Descrição do Agendamento"/>
+                   </div>
+               </div>
+            <div class="row">
+                <div class="form-group col-sm-3">
+                        @Html.Label("Data")
+                        <input type="text" class="form-control" ng-model="agendamento.AGE_DATA_AGENDAMENTOMask" app-date="agendamento.AGE_DATA_AGENDAMENTO" placeholder="data de agendamento"/>
+                </div>
+                <div class="form-group col-sm-3">
+                        @Html.Label("Horario")
+                        <select id="tipoTel" name="tipoTel" class = "form-control"
+                              ng-model="agendamento.AGE_DATA_AGENDAMENTOTime" app-time="agendamento.AGE_DATA_AGENDAMENTO"
+                               ng-options="hor as hor for hor in horarios">
+                                       <option value="">Selecione</option>
+                             </select> 
+                </div>
+                </div>
+               <div class="row">
+                <div class="form-group col-sm-12" ng-repeat="hist in agendamento.HISTORICO_ATENDIMENTO">
+                        @Html.Label("Observações")
+                        <textarea class="form-control" placeholder="Observações" rows="6" ng-model="hist.HAT_DESCRICAO"></textarea>
+                </div>  
+            </div>
+        </fieldset>
+</div>   
+
+</div>

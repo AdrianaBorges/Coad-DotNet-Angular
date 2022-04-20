@@ -1,0 +1,57 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutNovo.cshtml";
+}@{
+    ViewBag.Title = "Gerenciar a Composição de Produtos";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li class="active">Gerenciar a Composição de Produtos</li>         
+        
+    </ol>
+}
+@Scripts.Render("~/Scripts/negocio/produtos_composicao.js")
+<div ng-app="appModule">
+    <div ng-controller="ProdutoComposicaoController" class="padding content">
+
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                        </li>                                                                           
+                                    </ul>
+                                </div>
+                            </div>
+      </div>
+          
+    <div class="panel-footer">
+              <button type="button" class="btn btn-default" ng-click="listar()">Pesquisar</button>
+          </div>
+    </div>
+        
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Cadastro de Composição de Produtos</div>
+          
+      <div class="panel-body">         
+                <div class="table-responsive">     
+                        <!-- <input type="text" ng-model="dataTest" app-date/>  --> 
+                    ff
+    
+                </div>
+
+      </div>
+    </div>
+    </div>
+    
+</div>

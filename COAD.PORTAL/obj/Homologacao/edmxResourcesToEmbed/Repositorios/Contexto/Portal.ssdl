@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="COADIARIOModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="COADIARIOModelStoreContainer">
+    <EntitySet Name="CO_AREAS" EntityType="COADIARIOModel.Store.CO_AREAS" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CO_CALENDARIO" EntityType="COADIARIOModel.Store.CO_CALENDARIO" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CO_ESTADOS" EntityType="COADIARIOModel.Store.CO_ESTADOS" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CO_MUNICIPIOS" EntityType="COADIARIOModel.Store.CO_MUNICIPIOS" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CO_NIVEL_USUARIO" EntityType="COADIARIOModel.Store.CO_NIVEL_USUARIO" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CO_OBRIGACOES" EntityType="COADIARIOModel.Store.CO_OBRIGACOES" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CO_TIPOS" EntityType="COADIARIOModel.Store.CO_TIPOS" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CO_USUARIOLOGS" EntityType="COADIARIOModel.Store.CO_USUARIOLOGS" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CO_USUARIOS" EntityType="COADIARIOModel.Store.CO_USUARIOS" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CO_USUARIOSBKP" EntityType="COADIARIOModel.Store.CO_USUARIOSBKP" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="COADIARIOModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK__CO_CALEND__NUM_O__164452B1" Association="COADIARIOModel.Store.FK__CO_CALEND__NUM_O__164452B1">
+      <End Role="CO_OBRIGACOES" EntitySet="CO_OBRIGACOES" />
+      <End Role="CO_CALENDARIO" EntitySet="CO_CALENDARIO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CO_MUNICI__NUM_U__32E0915F" Association="COADIARIOModel.Store.FK__CO_MUNICI__NUM_U__32E0915F">
+      <End Role="CO_ESTADOS" EntitySet="CO_ESTADOS" />
+      <End Role="CO_MUNICIPIOS" EntitySet="CO_MUNICIPIOS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CO_OBRIGA__COD_A__37A5467C" Association="COADIARIOModel.Store.FK__CO_OBRIGA__COD_A__37A5467C">
+      <End Role="CO_AREAS" EntitySet="CO_AREAS" />
+      <End Role="CO_OBRIGACOES" EntitySet="CO_OBRIGACOES" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CO_OBRIGA__COD_T__117F9D94" Association="COADIARIOModel.Store.FK__CO_OBRIGA__COD_T__117F9D94">
+      <End Role="CO_TIPOS" EntitySet="CO_TIPOS" />
+      <End Role="CO_OBRIGACOES" EntitySet="CO_OBRIGACOES" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CO_OBRIGA__NUM_U__34C8D9D1" Association="COADIARIOModel.Store.FK__CO_OBRIGA__NUM_U__34C8D9D1">
+      <End Role="CO_ESTADOS" EntitySet="CO_ESTADOS" />
+      <End Role="CO_OBRIGACOES" EntitySet="CO_OBRIGACOES" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CO_OBRIGA__NUMPK__35BCFE0A" Association="COADIARIOModel.Store.FK__CO_OBRIGA__NUMPK__35BCFE0A">
+      <End Role="CO_MUNICIPIOS" EntitySet="CO_MUNICIPIOS" />
+      <End Role="CO_OBRIGACOES" EntitySet="CO_OBRIGACOES" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="CO_AREAS">
+    <Key>
+      <PropertyRef Name="COD_AREA" />
+    </Key>
+    <Property Name="COD_AREA" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="NOME_AREA" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="ABRANGENCIA" Type="nchar" Nullable="false" MaxLength="1" />
+    <Property Name="HABILITADO" Type="smallint" />
+  </EntityType>
+  <EntityType Name="CO_CALENDARIO">
+    <Key>
+      <PropertyRef Name="NUM_CALENDARIO" />
+      <PropertyRef Name="NUM_OBRIGACAO" />
+    </Key>
+    <Property Name="NUM_CALENDARIO" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="NUM_OBRIGACAO" Type="bigint" Nullable="false" />
+    <Property Name="DTReferencia" Type="datetime2" Nullable="false" />
+    <Property Name="TXT_REFERENCIA" Type="nvarchar" MaxLength="50" />
+    <Property Name="HABILITADO" Type="smallint" />
+    <Property Name="CriadoEmDT" Type="datetime2" />
+    <Property Name="AtualizadoEmDT" Type="datetime2" />
+    <Property Name="CriadoPor" Type="nvarchar" MaxLength="50" />
+    <Property Name="AtualizadoPor" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="CO_ESTADOS">
+    <Key>
+      <PropertyRef Name="NUM_UF" />
+    </Key>
+    <Property Name="NUM_UF" Type="bigint" Nullable="false" />
+    <Property Name="COD_UF" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="NOME_UF" Type="varchar" MaxLength="255" />
+    <Property Name="HABILITADO" Type="smallint" />
+  </EntityType>
+  <EntityType Name="CO_MUNICIPIOS">
+    <Key>
+      <PropertyRef Name="PK_MUNIC" />
+    </Key>
+    <Property Name="PK_MUNIC" Type="bigint" Nullable="false" />
+    <Property Name="NUM_UF" Type="bigint" Nullable="false" />
+    <Property Name="NUM_MUNICIPIO" Type="bigint" Nullable="false" />
+    <Property Name="NOME_MUNICIPIO" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="HABILITADO" Type="smallint" />
+  </EntityType>
+  <EntityType Name="CO_NIVEL_USUARIO">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="nivel" Type="varchar" Nullable="false" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="CO_OBRIGACOES">
+    <Key>
+      <PropertyRef Name="NUM_OBRIGACAO" />
+    </Key>
+    <Property Name="TXT_TITULO" Type="nchar" Nullable="false" MaxLength="250" />
+    <Property Name="NUM_OBRIGACAO" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="HABILITADO" Type="smallint" />
+    <Property Name="TXT_PESSOAS_OBRIGADAS" Type="text" Nullable="false" />
+    <Property Name="TXT_FATO_GERADOR" Type="text" Nullable="false" />
+    <Property Name="TXT_PENALIDADE" Type="text" />
+    <Property Name="TXT_ABRANGENCIA" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="COD_TIPO" Type="nchar" Nullable="false" MaxLength="3" />
+    <Property Name="TXT_OBSERVACAO" Type="text" />
+    <Property Name="TXT_FORMA_ENTREGA" Type="text" />
+    <Property Name="LNK_ORIENTACAO" Type="nchar" MaxLength="255" />
+    <Property Name="TXT_FUNDLEGAL" Type="text" />
+    <Property Name="LNK_GUIARECOL" Type="nchar" MaxLength="255" />
+    <Property Name="TXT_RECOLHIMENTO" Type="nchar" MaxLength="255" />
+    <Property Name="LNK_IRSITE" Type="nchar" MaxLength="255" />
+    <Property Name="NUM_UF" Type="bigint" />
+    <Property Name="NUMPK_MUNICIPIO" Type="bigint" />
+    <Property Name="COD_AREA" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="CriadoEmDT" Type="datetime2" />
+    <Property Name="AtualizadoEmDT" Type="datetime2" />
+    <Property Name="CriadoPor" Type="nvarchar" MaxLength="50" />
+    <Property Name="AtualizadoPor" Type="nvarchar" MaxLength="50" />
+    <Property Name="Sigla" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="CO_TIPOS">
+    <Key>
+      <PropertyRef Name="COD_TIPO" />
+    </Key>
+    <Property Name="COD_TIPO" Type="nchar" Nullable="false" MaxLength="3" />
+    <Property Name="NOME_TIPO" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="HABILITADO" Type="smallint" />
+  </EntityType>
+  <EntityType Name="CO_USUARIOLOGS">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ip_usuario" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="nome_usuario" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="id_usuario" Type="int" Nullable="false" />
+    <Property Name="ultimo_acesso" Type="datetime" Nullable="false" />
+    <Property Name="id_calendario" Type="bigint" />
+    <Property Name="acao_realizada" Type="varchar" MaxLength="20" />
+    <Property Name="texto_obrigacao" Type="varchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="CO_USUARIOS">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="usuario" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="senha" Type="varchar" Nullable="false" MaxLength="250" />
+    <Property Name="nivel" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CO_USUARIOSBKP">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="usuario" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="senha" Type="varchar" Nullable="false" MaxLength="250" />
+    <Property Name="nivel" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK__CO_CALEND__NUM_O__164452B1">
+    <End Role="CO_OBRIGACOES" Type="COADIARIOModel.Store.CO_OBRIGACOES" Multiplicity="1" />
+    <End Role="CO_CALENDARIO" Type="COADIARIOModel.Store.CO_CALENDARIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CO_OBRIGACOES">
+        <PropertyRef Name="NUM_OBRIGACAO" />
+      </Principal>
+      <Dependent Role="CO_CALENDARIO">
+        <PropertyRef Name="NUM_OBRIGACAO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CO_MUNICI__NUM_U__32E0915F">
+    <End Role="CO_ESTADOS" Type="COADIARIOModel.Store.CO_ESTADOS" Multiplicity="1" />
+    <End Role="CO_MUNICIPIOS" Type="COADIARIOModel.Store.CO_MUNICIPIOS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CO_ESTADOS">
+        <PropertyRef Name="NUM_UF" />
+      </Principal>
+      <Dependent Role="CO_MUNICIPIOS">
+        <PropertyRef Name="NUM_UF" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CO_OBRIGA__COD_A__37A5467C">
+    <End Role="CO_AREAS" Type="COADIARIOModel.Store.CO_AREAS" Multiplicity="1" />
+    <End Role="CO_OBRIGACOES" Type="COADIARIOModel.Store.CO_OBRIGACOES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CO_AREAS">
+        <PropertyRef Name="COD_AREA" />
+      </Principal>
+      <Dependent Role="CO_OBRIGACOES">
+        <PropertyRef Name="COD_AREA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CO_OBRIGA__COD_T__117F9D94">
+    <End Role="CO_TIPOS" Type="COADIARIOModel.Store.CO_TIPOS" Multiplicity="1" />
+    <End Role="CO_OBRIGACOES" Type="COADIARIOModel.Store.CO_OBRIGACOES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CO_TIPOS">
+        <PropertyRef Name="COD_TIPO" />
+      </Principal>
+      <Dependent Role="CO_OBRIGACOES">
+        <PropertyRef Name="COD_TIPO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CO_OBRIGA__NUM_U__34C8D9D1">
+    <End Role="CO_ESTADOS" Type="COADIARIOModel.Store.CO_ESTADOS" Multiplicity="0..1" />
+    <End Role="CO_OBRIGACOES" Type="COADIARIOModel.Store.CO_OBRIGACOES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CO_ESTADOS">
+        <PropertyRef Name="NUM_UF" />
+      </Principal>
+      <Dependent Role="CO_OBRIGACOES">
+        <PropertyRef Name="NUM_UF" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CO_OBRIGA__NUMPK__35BCFE0A">
+    <End Role="CO_MUNICIPIOS" Type="COADIARIOModel.Store.CO_MUNICIPIOS" Multiplicity="0..1" />
+    <End Role="CO_OBRIGACOES" Type="COADIARIOModel.Store.CO_OBRIGACOES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CO_MUNICIPIOS">
+        <PropertyRef Name="PK_MUNIC" />
+      </Principal>
+      <Dependent Role="CO_OBRIGACOES">
+        <PropertyRef Name="NUMPK_MUNICIPIO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="BUSCAR_MATERIA_POR_ID_PORTAL_PROC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="BUSCAR_MATERIA_PORTAL_PROC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="label" Type="varchar" Mode="In" />
+    <Parameter Name="tipo" Type="varchar" Mode="In" />
+    <Parameter Name="num_ato" Type="varchar" Mode="In" />
+    <Parameter Name="ano" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="BUSCAR_VERBETES_PORTAL_PROC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="colec" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CLIENTES_PORTAL_PROC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="usuario" Type="varchar" Mode="In" />
+    <Parameter Name="senha" Type="varchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="cpf" Type="varchar" Mode="In" />
+    <Parameter Name="tipoBusca" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="INDICES_PORTAL_PROC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="NOTICIAS_PORTAL_PESQUISA_PROC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="titulo" Type="varchar" Mode="In" />
+    <Parameter Name="texto" Type="varchar" Mode="In" />
+    <Parameter Name="descricao" Type="varchar" Mode="In" />
+    <Parameter Name="Limitador" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="NOTICIAS_PORTAL_POR_ID_PROC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="identificador" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="NOTICIAS_PORTAL_PROC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Limitador" Type="varchar" Mode="In" />
+  </Function>
+</Schema>

@@ -1,0 +1,1125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="COADGEDModelStoreContainer" CdmEntityContainer="COADGEDEntities">
+    <EntitySetMapping Name="AREA_CONSULTORIA_CURSO">
+      <EntityTypeMapping TypeName="COADGEDModel.AREA_CONSULTORIA_CURSO">
+        <MappingFragment StoreEntitySet="AREA_CONSULTORIA_CURSO">
+          <ScalarProperty Name="CMP_ID" ColumnName="CMP_ID" />
+          <ScalarProperty Name="ARE_CONS_ID" ColumnName="ARE_CONS_ID" />
+          <ScalarProperty Name="TIT_ID" ColumnName="TIT_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AREAS_CONSULTORIA">
+      <EntityTypeMapping TypeName="COADGEDModel.AREAS_CONSULTORIA">
+        <MappingFragment StoreEntitySet="AREAS_CONSULTORIA">
+          <ScalarProperty Name="ARE_CONS_ID" ColumnName="ARE_CONS_ID" />
+          <ScalarProperty Name="ARE_CONS_DESCRICAO" ColumnName="ARE_CONS_DESCRICAO" />
+          <ScalarProperty Name="DATA_CADASTRO" ColumnName="DATA_CADASTRO" />
+          <ScalarProperty Name="DATA_ALTERACAO" ColumnName="DATA_ALTERACAO" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="ARE_CABECA_MATERIA" ColumnName="ARE_CABECA_MATERIA" />
+          <ScalarProperty Name="LIN_PRO_ID" ColumnName="LIN_PRO_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AREAS_CONSULTORIA_NEWS">
+      <EntityTypeMapping TypeName="COADGEDModel.AREAS_CONSULTORIA_NEWS">
+        <MappingFragment StoreEntitySet="AREAS_CONSULTORIA_NEWS">
+          <ScalarProperty Name="NEWS_ID" ColumnName="NEWS_ID" />
+          <ScalarProperty Name="ARE_CONS_ID" ColumnName="ARE_CONS_ID" />
+          <ScalarProperty Name="UF_ID" ColumnName="UF_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AREAS_CONSULTORIA1">
+      <EntityTypeMapping TypeName="COADGEDModel.AREAS_CONSULTORIA1">
+        <MappingFragment StoreEntitySet="AREAS_CONSULTORIA1">
+          <ScalarProperty Name="ARE_CONS_ID" ColumnName="ARE_CONS_ID" />
+          <ScalarProperty Name="ARE_CONS_DESCRICAO" ColumnName="ARE_CONS_DESCRICAO" />
+          <ScalarProperty Name="DATA_CADASTRO" ColumnName="DATA_CADASTRO" />
+          <ScalarProperty Name="DATA_ALTERACAO" ColumnName="DATA_ALTERACAO" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="ARE_CABECA_MATERIA" ColumnName="ARE_CABECA_MATERIA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CADERNO">
+      <EntityTypeMapping TypeName="COADGEDModel.CADERNO">
+        <MappingFragment StoreEntitySet="CADERNO">
+          <ScalarProperty Name="CAD_ID" ColumnName="CAD_ID" />
+          <ScalarProperty Name="CLI_ID" ColumnName="CLI_ID" />
+          <ScalarProperty Name="CAD_NOME" ColumnName="CAD_NOME" />
+          <ScalarProperty Name="CAD_ATIVO" ColumnName="CAD_ATIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CADERNO_COMPARTILHADO">
+      <EntityTypeMapping TypeName="COADGEDModel.CADERNO_COMPARTILHADO">
+        <MappingFragment StoreEntitySet="CADERNO_COMPARTILHADO">
+          <ScalarProperty Name="CAD_ID" ColumnName="CAD_ID" />
+          <ScalarProperty Name="CLI_ID" ColumnName="CLI_ID" />
+          <ScalarProperty Name="DATA_ASSOCIACAO" ColumnName="DATA_ASSOCIACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CADERNO_CONTEUDO">
+      <EntityTypeMapping TypeName="COADGEDModel.CADERNO_CONTEUDO">
+        <MappingFragment StoreEntitySet="CADERNO_CONTEUDO">
+          <ScalarProperty Name="CON_ID" ColumnName="CON_ID" />
+          <ScalarProperty Name="CAD_ID" ColumnName="CAD_ID" />
+          <ScalarProperty Name="CONT_OFFLINE" ColumnName="CONT_OFFLINE" />
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CADERNO_NOTA">
+      <EntityTypeMapping TypeName="COADGEDModel.CADERNO_NOTA">
+        <MappingFragment StoreEntitySet="CADERNO_NOTA">
+          <ScalarProperty Name="NTA_ID" ColumnName="NTA_ID" />
+          <ScalarProperty Name="CAD_ID" ColumnName="CAD_ID" />
+          <ScalarProperty Name="NTA_CONTEUDO" ColumnName="NTA_CONTEUDO" />
+          <ScalarProperty Name="NTA_OFFLINE" ColumnName="NTA_OFFLINE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAPITAL">
+      <EntityTypeMapping TypeName="COADGEDModel.CAPITAL">
+        <MappingFragment StoreEntitySet="CAPITAL">
+          <ScalarProperty Name="CAP_ID" ColumnName="CAP_ID" />
+          <ScalarProperty Name="CAP_NOME" ColumnName="CAP_NOME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CARGOS">
+      <EntityTypeMapping TypeName="COADGEDModel.CARGOS">
+        <MappingFragment StoreEntitySet="CARGOS">
+          <ScalarProperty Name="CRG_ID" ColumnName="CRG_ID" />
+          <ScalarProperty Name="CRG_DESCRICAO" ColumnName="CRG_DESCRICAO" />
+          <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+          <ScalarProperty Name="DATA_CADASTRO" ColumnName="DATA_CADASTRO" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="CRG_SIGLA" ColumnName="CRG_SIGLA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CLIENTES_REF">
+      <EntityTypeMapping TypeName="COADGEDModel.CLIENTES_REF">
+        <MappingFragment StoreEntitySet="CLIENTES_REF">
+          <ScalarProperty Name="CLI_ID" ColumnName="CLI_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COLABORADOR">
+      <EntityTypeMapping TypeName="COADGEDModel.COLABORADOR">
+        <MappingFragment StoreEntitySet="COLABORADOR">
+          <ScalarProperty Name="COL_ID" ColumnName="COL_ID" />
+          <ScalarProperty Name="COL_NOME" ColumnName="COL_NOME" />
+          <ScalarProperty Name="COL_ATIVO" ColumnName="COL_ATIVO" />
+          <ScalarProperty Name="DATA_CADASTRO" ColumnName="DATA_CADASTRO" />
+          <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="CRG_ID" ColumnName="CRG_ID" />
+          <ScalarProperty Name="ARE_CONS_ID" ColumnName="ARE_CONS_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONSULTA_EMAIL">
+      <EntityTypeMapping TypeName="COADGEDModel.CONSULTA_EMAIL">
+        <MappingFragment StoreEntitySet="CONSULTA_EMAIL">
+          <ScalarProperty Name="CEM_ID" ColumnName="CEM_ID" />
+          <ScalarProperty Name="CEM_NUM_ASSINATURA" ColumnName="CEM_NUM_ASSINATURA" />
+          <ScalarProperty Name="CEM_LOGIN_RESPONDENTE" ColumnName="CEM_LOGIN_RESPONDENTE" />
+          <ScalarProperty Name="CEM_EMAIL_CONSULENTE" ColumnName="CEM_EMAIL_CONSULENTE" />
+          <ScalarProperty Name="CEM_PERGUNTA" ColumnName="CEM_PERGUNTA" />
+          <ScalarProperty Name="CEM_RESPOSTA" ColumnName="CEM_RESPOSTA" />
+          <ScalarProperty Name="CEM_UF_CONSULTA" ColumnName="CEM_UF_CONSULTA" />
+          <ScalarProperty Name="CEM_DATA_CADASTRO" ColumnName="CEM_DATA_CADASTRO" />
+          <ScalarProperty Name="CEM_DATE_RESPOSTA" ColumnName="CEM_DATE_RESPOSTA" />
+          <ScalarProperty Name="CEM_DATA_ULTIMO_ACESSO" ColumnName="CEM_DATA_ULTIMO_ACESSO" />
+          <ScalarProperty Name="CEM_LOGIN_USUARIO_ULTIMO_ACESSO" ColumnName="CEM_LOGIN_USUARIO_ULTIMO_ACESSO" />
+          <ScalarProperty Name="CEM_LOGIN_USUARIO_QUE_ENCAMINHOU" ColumnName="CEM_LOGIN_USUARIO_QUE_ENCAMINHOU" />
+          <ScalarProperty Name="STS_ID" ColumnName="STS_ID" />
+          <ScalarProperty Name="COLEC_ID" ColumnName="COLEC_ID" />
+          <ScalarProperty Name="GRG_ID" ColumnName="GRG_ID" />
+          <ScalarProperty Name="VERB_ID" ColumnName="VERB_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONSULTA_EMAIL_COLECIONADOR">
+      <EntityTypeMapping TypeName="COADGEDModel.CONSULTA_EMAIL_COLECIONADOR">
+        <MappingFragment StoreEntitySet="CONSULTA_EMAIL_COLECIONADOR">
+          <ScalarProperty Name="COLEC_ID" ColumnName="COLEC_ID" />
+          <ScalarProperty Name="COLEC_DESCRICAO" ColumnName="COLEC_DESCRICAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONSULTA_EMAIL_GRANDE_GRUPO">
+      <EntityTypeMapping TypeName="COADGEDModel.CONSULTA_EMAIL_GRANDE_GRUPO">
+        <MappingFragment StoreEntitySet="CONSULTA_EMAIL_GRANDE_GRUPO">
+          <ScalarProperty Name="GRG_ID" ColumnName="GRG_ID" />
+          <ScalarProperty Name="GRG_DESCRICAO" ColumnName="GRG_DESCRICAO" />
+          <ScalarProperty Name="COLEC_ID" ColumnName="COLEC_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONSULTA_EMAIL_STATUS">
+      <EntityTypeMapping TypeName="COADGEDModel.CONSULTA_EMAIL_STATUS">
+        <MappingFragment StoreEntitySet="CONSULTA_EMAIL_STATUS">
+          <ScalarProperty Name="STS_ID" ColumnName="STS_ID" />
+          <ScalarProperty Name="STS_DESCRICAO" ColumnName="STS_DESCRICAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONSULTA_EMAIL_VERBETE">
+      <EntityTypeMapping TypeName="COADGEDModel.CONSULTA_EMAIL_VERBETE">
+        <MappingFragment StoreEntitySet="CONSULTA_EMAIL_VERBETE">
+          <ScalarProperty Name="VERB_ID" ColumnName="VERB_ID" />
+          <ScalarProperty Name="VERB_DESCRICAO" ColumnName="VERB_DESCRICAO" />
+          <ScalarProperty Name="COLEC_ID" ColumnName="COLEC_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FUNCIONALIDADE">
+      <EntityTypeMapping TypeName="COADGEDModel.FUNCIONALIDADE">
+        <MappingFragment StoreEntitySet="FUNCIONALIDADE">
+          <ScalarProperty Name="FCI_ID" ColumnName="FCI_ID" />
+          <ScalarProperty Name="FCI_DESCRICAO" ColumnName="FCI_DESCRICAO" />
+          <ScalarProperty Name="FCI_CONTEUDO" ColumnName="FCI_CONTEUDO" />
+          <ScalarProperty Name="FCI_URL" ColumnName="FCI_URL" />
+          <ScalarProperty Name="FCI_DATA_ALTERA" ColumnName="FCI_DATA_ALTERA" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="NIV_ID" ColumnName="NIV_ID" />
+          <ScalarProperty Name="PRO_ID" ColumnName="PRO_ID" />
+          <ScalarProperty Name="FCI_TIPO" ColumnName="FCI_TIPO" />
+          <ScalarProperty Name="FCI_IMG01" ColumnName="FCI_IMG01" />
+          <ScalarProperty Name="FCI_IMG02" ColumnName="FCI_IMG02" />
+          <ScalarProperty Name="FCI_IMG03" ColumnName="FCI_IMG03" />
+          <ScalarProperty Name="FCI_IMG04" ColumnName="FCI_IMG04" />
+          <ScalarProperty Name="TDC_ID" ColumnName="TDC_ID" />
+          <ScalarProperty Name="FCI_URL_LINK" ColumnName="FCI_URL_LINK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FUNCIONALIDADE_NIVEL_ACESSO">
+      <EntityTypeMapping TypeName="COADGEDModel.FUNCIONALIDADE_NIVEL_ACESSO">
+        <MappingFragment StoreEntitySet="FUNCIONALIDADE_NIVEL_ACESSO">
+          <ScalarProperty Name="NIV_ID" ColumnName="NIV_ID" />
+          <ScalarProperty Name="NIV_DESCRICAO" ColumnName="NIV_DESCRICAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FUNDAMENTACAO">
+      <EntityTypeMapping TypeName="COADGEDModel.FUNDAMENTACAO">
+        <MappingFragment StoreEntitySet="FUNDAMENTACAO">
+          <ScalarProperty Name="FUN_ID" ColumnName="FUN_ID" />
+          <ScalarProperty Name="MAI_ID" ColumnName="MAI_ID" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="DATA_INSERT" ColumnName="DATA_INSERT" />
+          <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+          <ScalarProperty Name="TIP_ATO_ID" ColumnName="TIP_ATO_ID" />
+          <ScalarProperty Name="MAI_NUMERO_ATO" ColumnName="MAI_NUMERO_ATO" />
+          <ScalarProperty Name="MAI_DATA_ATO" ColumnName="MAI_DATA_ATO" />
+          <ScalarProperty Name="ORG_ID" ColumnName="ORG_ID" />
+          <ScalarProperty Name="MAI_NUMERO_ARTIGO" ColumnName="MAI_NUMERO_ARTIGO" />
+          <ScalarProperty Name="FUN_NUM_PARAGRAFO" ColumnName="FUN_NUM_PARAGRAFO" />
+          <ScalarProperty Name="FUN_INCISO" ColumnName="FUN_INCISO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="INFORMATIVO">
+      <EntityTypeMapping TypeName="COADGEDModel.INFORMATIVO">
+        <MappingFragment StoreEntitySet="INFORMATIVO">
+          <ScalarProperty Name="INF_ANO" ColumnName="INF_ANO" />
+          <ScalarProperty Name="INF_NUMERO" ColumnName="INF_NUMERO" />
+          <ScalarProperty Name="INF_DATA_INICIO" ColumnName="INF_DATA_INICIO" />
+          <ScalarProperty Name="INF_DATA_FINAL" ColumnName="INF_DATA_FINAL" />
+          <ScalarProperty Name="INF_DATA_PREV_POSTAGEM" ColumnName="INF_DATA_PREV_POSTAGEM" />
+          <ScalarProperty Name="INF_DATA_POSTAGEM" ColumnName="INF_DATA_POSTAGEM" />
+          <ScalarProperty Name="INF_ATIVO" ColumnName="INF_ATIVO" />
+          <ScalarProperty Name="DATA_CADASTRO" ColumnName="DATA_CADASTRO" />
+          <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LABELS">
+      <EntityTypeMapping TypeName="COADGEDModel.LABELS">
+        <MappingFragment StoreEntitySet="LABELS">
+          <ScalarProperty Name="LBL_ID" ColumnName="LBL_ID" />
+          <ScalarProperty Name="LBL_NOME" ColumnName="LBL_NOME" />
+          <ScalarProperty Name="LBL_DESCRICAO" ColumnName="LBL_DESCRICAO" />
+          <ScalarProperty Name="LBL_ATIVO" ColumnName="LBL_ATIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LINHA_PRODUTO_REF">
+      <EntityTypeMapping TypeName="COADGEDModel.LINHA_PRODUTO_REF">
+        <MappingFragment StoreEntitySet="LINHA_PRODUTO_REF">
+          <ScalarProperty Name="LIN_PRO_ID" ColumnName="LIN_PRO_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOG_ACESSO_PORTAL">
+      <EntityTypeMapping TypeName="COADGEDModel.LOG_ACESSO_PORTAL">
+        <MappingFragment StoreEntitySet="LOG_ACESSO_PORTAL">
+          <ScalarProperty Name="LAP_SEQ" ColumnName="LAP_SEQ" />
+          <ScalarProperty Name="LAP_IP_ACESSO" ColumnName="LAP_IP_ACESSO" />
+          <ScalarProperty Name="LAP_DATA_ACESSO" ColumnName="LAP_DATA_ACESSO" />
+          <ScalarProperty Name="LAP_MSG_ERRO" ColumnName="LAP_MSG_ERRO" />
+          <ScalarProperty Name="LAP_URL_ACESSO" ColumnName="LAP_URL_ACESSO" />
+          <ScalarProperty Name="NOT_ID" ColumnName="NOT_ID" />
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="OAC_ID" ColumnName="OAC_ID" />
+          <ScalarProperty Name="ASN_NUM_ASSINATURA" ColumnName="ASN_NUM_ASSINATURA" />
+          <ScalarProperty Name="LSI_EMAIL_ACESSO" ColumnName="LSI_EMAIL_ACESSO" />
+          <ScalarProperty Name="NOT_ID_PORTAL" ColumnName="NOT_ID_PORTAL" />
+          <ScalarProperty Name="PUB_ID_PORTAL" ColumnName="PUB_ID_PORTAL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOG_SIMULADOR">
+      <EntityTypeMapping TypeName="COADGEDModel.LOG_SIMULADOR">
+        <MappingFragment StoreEntitySet="LOG_SIMULADOR">
+          <ScalarProperty Name="LSI_SEQ" ColumnName="LSI_SEQ" />
+          <ScalarProperty Name="ASN_NUM_ASSINATURA" ColumnName="ASN_NUM_ASSINATURA" />
+          <ScalarProperty Name="LSI_DATA_ACESSO" ColumnName="LSI_DATA_ACESSO" />
+          <ScalarProperty Name="LSI_URL_ACESSO" ColumnName="LSI_URL_ACESSO" />
+          <ScalarProperty Name="LSI_IP_ACESSO" ColumnName="LSI_IP_ACESSO" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="LSI_TIPO_ACESSO" ColumnName="LSI_TIPO_ACESSO" />
+          <ScalarProperty Name="TDC_ID" ColumnName="TDC_ID" />
+          <ScalarProperty Name="LSI_EMAIL_ACESSO" ColumnName="LSI_EMAIL_ACESSO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MANUAL_DP">
+      <EntityTypeMapping TypeName="COADGEDModel.MANUAL_DP">
+        <MappingFragment StoreEntitySet="MANUAL_DP">
+          <ScalarProperty Name="MAN_ID" ColumnName="MAN_ID" />
+          <ScalarProperty Name="MAN_ASSUNTO" ColumnName="MAN_ASSUNTO" />
+          <ScalarProperty Name="MAN_DATA_PUBLICACAO" ColumnName="MAN_DATA_PUBLICACAO" />
+          <ScalarProperty Name="MOD_ID" ColumnName="MOD_ID" />
+          <ScalarProperty Name="MAN_INDEX" ColumnName="MAN_INDEX" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MANUAL_DP_ITEM">
+      <EntityTypeMapping TypeName="COADGEDModel.MANUAL_DP_ITEM">
+        <MappingFragment StoreEntitySet="MANUAL_DP_ITEM">
+          <ScalarProperty Name="MAI_ID" ColumnName="MAI_ID" />
+          <ScalarProperty Name="MAI_DESCRICAO" ColumnName="MAI_DESCRICAO" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="USU_LOGIN_ALT" ColumnName="USU_LOGIN_ALT" />
+          <ScalarProperty Name="DATA_INSERT" ColumnName="DATA_INSERT" />
+          <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+          <ScalarProperty Name="MAI_ID_PAI" ColumnName="MAI_ID_PAI" />
+          <ScalarProperty Name="MAN_ID" ColumnName="MAN_ID" />
+          <ScalarProperty Name="MAI_TITULO" ColumnName="MAI_TITULO" />
+          <ScalarProperty Name="MAI_DATA_PUBLICACAO" ColumnName="MAI_DATA_PUBLICACAO" />
+          <ScalarProperty Name="MAI_INDEX" ColumnName="MAI_INDEX" />
+          <ScalarProperty Name="MAI_NIVEL" ColumnName="MAI_NIVEL" />
+          <ScalarProperty Name="TIP_ATO_ID" ColumnName="TIP_ATO_ID" />
+          <ScalarProperty Name="MAI_NUMERO_ATO" ColumnName="MAI_NUMERO_ATO" />
+          <ScalarProperty Name="MAI_DATA_ATO" ColumnName="MAI_DATA_ATO" />
+          <ScalarProperty Name="ORG_ID" ColumnName="ORG_ID" />
+          <ScalarProperty Name="MAI_NUMERO_ARTIGO" ColumnName="MAI_NUMERO_ARTIGO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MANUAL_DP_LINK">
+      <EntityTypeMapping TypeName="COADGEDModel.MANUAL_DP_LINK">
+        <MappingFragment StoreEntitySet="MANUAL_DP_LINK">
+          <ScalarProperty Name="LNK_TAG" ColumnName="LNK_TAG" />
+          <ScalarProperty Name="MAI_ID" ColumnName="MAI_ID" />
+          <ScalarProperty Name="LNK_DESCRICAO" ColumnName="LNK_DESCRICAO" />
+          <ScalarProperty Name="LNK_LINK" ColumnName="LNK_LINK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MANUAL_DP_MODULO">
+      <EntityTypeMapping TypeName="COADGEDModel.MANUAL_DP_MODULO">
+        <MappingFragment StoreEntitySet="MANUAL_DP_MODULO">
+          <ScalarProperty Name="MOD_ID" ColumnName="MOD_ID" />
+          <ScalarProperty Name="MOD_DESCRICAO" ColumnName="MOD_DESCRICAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MENU_DOC">
+      <EntityTypeMapping TypeName="COADGEDModel.MENU_DOC">
+        <MappingFragment StoreEntitySet="MENU_DOC">
+          <ScalarProperty Name="MND_ID" ColumnName="MND_ID" />
+          <ScalarProperty Name="MND_DESCRICAO" ColumnName="MND_DESCRICAO" />
+          <ScalarProperty Name="MAN_ID" ColumnName="MAN_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MENU_DOC_ITEM">
+      <EntityTypeMapping TypeName="COADGEDModel.MENU_DOC_ITEM">
+        <MappingFragment StoreEntitySet="MENU_DOC_ITEM">
+          <ScalarProperty Name="MNI_ID" ColumnName="MNI_ID" />
+          <ScalarProperty Name="MND_ID" ColumnName="MND_ID" />
+          <ScalarProperty Name="MND_DESCRICAO" ColumnName="MND_DESCRICAO" />
+          <ScalarProperty Name="MNI_ID_NODE" ColumnName="MNI_ID_NODE" />
+          <ScalarProperty Name="MNI_MENU_SEQ" ColumnName="MNI_MENU_SEQ" />
+          <ScalarProperty Name="MNI_MENU_NIVEL" ColumnName="MNI_MENU_NIVEL" />
+          <ScalarProperty Name="MNI_TIPO" ColumnName="MNI_TIPO" />
+          <ScalarProperty Name="ITM_ATIVO" ColumnName="ITM_ATIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NEWS">
+      <EntityTypeMapping TypeName="COADGEDModel.NEWS">
+        <MappingFragment StoreEntitySet="NEWS">
+          <ScalarProperty Name="NEWS_ID" ColumnName="NEWS_ID" />
+          <ScalarProperty Name="SEC_ID" ColumnName="SEC_ID" />
+          <ScalarProperty Name="LBL_ID" ColumnName="LBL_ID" />
+          <ScalarProperty Name="NEWS_DESCRICAO" ColumnName="NEWS_DESCRICAO" />
+          <ScalarProperty Name="NEWS_TEXTO" ColumnName="NEWS_TEXTO" />
+          <ScalarProperty Name="NEWS_DATA_PUB" ColumnName="NEWS_DATA_PUB" />
+          <ScalarProperty Name="NEWS_DATA_ENVIO" ColumnName="NEWS_DATA_ENVIO" />
+          <ScalarProperty Name="NEWS_ATIVO" ColumnName="NEWS_ATIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NOTICIA">
+      <EntityTypeMapping TypeName="COADGEDModel.NOTICIA">
+        <MappingFragment StoreEntitySet="NOTICIA">
+          <ScalarProperty Name="NOT_ID" ColumnName="NOT_ID" />
+          <ScalarProperty Name="NOT_MANCHETE" ColumnName="NOT_MANCHETE" />
+          <ScalarProperty Name="NOT_TEXTO" ColumnName="NOT_TEXTO" />
+          <ScalarProperty Name="NOT_DESTAQUE_HOME" ColumnName="NOT_DESTAQUE_HOME" />
+          <ScalarProperty Name="NOT_DESTAQUE_PERFIL" ColumnName="NOT_DESTAQUE_PERFIL" />
+          <ScalarProperty Name="NGR_ID" ColumnName="NGR_ID" />
+          <ScalarProperty Name="DATA_CADASTRO" ColumnName="DATA_CADASTRO" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+          <ScalarProperty Name="TIT_ID" ColumnName="TIT_ID" />
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="DATA_PUBLICACAO" ColumnName="DATA_PUBLICACAO" />
+          <ScalarProperty Name="USU_LOGIN_PUB" ColumnName="USU_LOGIN_PUB" />
+          <ScalarProperty Name="NEWSLETTER" ColumnName="NEWSLETTER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NOTICIA_GRUPO">
+      <EntityTypeMapping TypeName="COADGEDModel.NOTICIA_GRUPO">
+        <MappingFragment StoreEntitySet="NOTICIA_GRUPO">
+          <ScalarProperty Name="NGR_ID" ColumnName="NGR_ID" />
+          <ScalarProperty Name="NGR_DESCRICAO" ColumnName="NGR_DESCRICAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NOTICIA_GRUPO_LINHA_PROD">
+      <EntityTypeMapping TypeName="COADGEDModel.NOTICIA_GRUPO_LINHA_PROD">
+        <MappingFragment StoreEntitySet="NOTICIA_GRUPO_LINHA_PROD">
+          <ScalarProperty Name="NGR_ID" ColumnName="NGR_ID" />
+          <ScalarProperty Name="LIN_PRO_ID" ColumnName="LIN_PRO_ID" />
+          <ScalarProperty Name="DATA_ASSOCIACAO" ColumnName="DATA_ASSOCIACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NOTICIAS_GUARDADAS">
+      <EntityTypeMapping TypeName="COADGEDModel.NOTICIAS_GUARDADAS">
+        <MappingFragment StoreEntitySet="NOTICIAS_GUARDADAS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_NOTICIA" ColumnName="ID_NOTICIA" />
+          <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
+          <ScalarProperty Name="TEXTO" ColumnName="TEXTO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ORGAO">
+      <EntityTypeMapping TypeName="COADGEDModel.ORGAO">
+        <MappingFragment StoreEntitySet="ORGAO">
+          <ScalarProperty Name="ORG_ID" ColumnName="ORG_ID" />
+          <ScalarProperty Name="ORG_DESCRICAO" ColumnName="ORG_DESCRICAO" />
+          <ScalarProperty Name="ORG_ATIVO" ColumnName="ORG_ATIVO" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="DATA_CADASTRO" ColumnName="DATA_CADASTRO" />
+          <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ORIGEM_ACESSO_MENU">
+      <EntityTypeMapping TypeName="COADGEDModel.ORIGEM_ACESSO_MENU">
+        <MappingFragment StoreEntitySet="ORIGEM_ACESSO_MENU">
+          <ScalarProperty Name="OAC_ID" ColumnName="OAC_ID" />
+          <ScalarProperty Name="OAM_MENU" ColumnName="OAM_MENU" />
+          <ScalarProperty Name="OAM_ORDEM" ColumnName="OAM_ORDEM" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ORIGEM_ACESSO_REF">
+      <EntityTypeMapping TypeName="COADGEDModel.ORIGEM_ACESSO_REF">
+        <MappingFragment StoreEntitySet="ORIGEM_ACESSO_REF">
+          <ScalarProperty Name="OAC_ID" ColumnName="OAC_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ORIGEM_ACESSO_SUBMENU">
+      <EntityTypeMapping TypeName="COADGEDModel.ORIGEM_ACESSO_SUBMENU">
+        <MappingFragment StoreEntitySet="ORIGEM_ACESSO_SUBMENU">
+          <ScalarProperty Name="OAC_ID" ColumnName="OAC_ID" />
+          <ScalarProperty Name="OAM_MENU" ColumnName="OAM_MENU" />
+          <ScalarProperty Name="OAS_ID" ColumnName="OAS_ID" />
+          <ScalarProperty Name="OAS_DESCRICAO" ColumnName="OAS_DESCRICAO" />
+          <ScalarProperty Name="TDC_ID" ColumnName="TDC_ID" />
+          <ScalarProperty Name="OAS_PATH_ARQUIVO" ColumnName="OAS_PATH_ARQUIVO" />
+          <ScalarProperty Name="OAS_ORDEM" ColumnName="OAS_ORDEM" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ORIGEM_FUNCIONALIDADE">
+      <EntityTypeMapping TypeName="COADGEDModel.ORIGEM_FUNCIONALIDADE">
+        <MappingFragment StoreEntitySet="ORIGEM_FUNCIONALIDADE">
+          <ScalarProperty Name="OAC_ID" ColumnName="OAC_ID" />
+          <ScalarProperty Name="FCI_ID" ColumnName="FCI_ID" />
+          <ScalarProperty Name="OFU_DESCRICAO" ColumnName="OFU_DESCRICAO" />
+          <ScalarProperty Name="OFU_ATIVO" ColumnName="OFU_ATIVO" />
+          <ScalarProperty Name="OFU_ORDEM" ColumnName="OFU_ORDEM" />
+          <ScalarProperty Name="OFU_DATA_ALTERA" ColumnName="OFU_DATA_ALTERA" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="OFU_LOCAL_EXIBE" ColumnName="OFU_LOCAL_EXIBE" />
+          <ScalarProperty Name="OFU_DESCRICAO_EXIBE" ColumnName="OFU_DESCRICAO_EXIBE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PERIODICIDADE">
+      <EntityTypeMapping TypeName="COADGEDModel.PERIODICIDADE">
+        <MappingFragment StoreEntitySet="PERIODICIDADE">
+          <ScalarProperty Name="PRD_ID" ColumnName="PRD_ID" />
+          <ScalarProperty Name="PRD_DESCRICAO" ColumnName="PRD_DESCRICAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PLUBLICACAO_FLUXO">
+      <EntityTypeMapping TypeName="COADGEDModel.PLUBLICACAO_FLUXO">
+        <MappingFragment StoreEntitySet="PLUBLICACAO_FLUXO">
+          <ScalarProperty Name="FLU_ID" ColumnName="FLU_ID" />
+          <ScalarProperty Name="FLU_DESCRICAO" ColumnName="FLU_DESCRICAO" />
+          <ScalarProperty Name="FLU_ATIVO" ColumnName="FLU_ATIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PRODUTO_COMPOSICAO_REF">
+      <EntityTypeMapping TypeName="COADGEDModel.PRODUTO_COMPOSICAO_REF">
+        <MappingFragment StoreEntitySet="PRODUTO_COMPOSICAO_REF">
+          <ScalarProperty Name="CMP_ID" ColumnName="CMP_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PRODUTO_REF">
+      <EntityTypeMapping TypeName="COADGEDModel.PRODUTO_REF">
+        <MappingFragment StoreEntitySet="PRODUTO_REF">
+          <ScalarProperty Name="PRO_ID" ColumnName="PRO_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICACAO">
+      <EntityTypeMapping TypeName="COADGEDModel.PUBLICACAO">
+        <MappingFragment StoreEntitySet="PUBLICACAO">
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="TIP_MAT_ID" ColumnName="TIP_MAT_ID" />
+          <ScalarProperty Name="TIP_ATO_ID" ColumnName="TIP_ATO_ID" />
+          <ScalarProperty Name="PUB_NUMERO_ATO" ColumnName="PUB_NUMERO_ATO" />
+          <ScalarProperty Name="TVI_ID" ColumnName="TVI_ID" />
+          <ScalarProperty Name="ORG_ID" ColumnName="ORG_ID" />
+          <ScalarProperty Name="PUB_CONTEUDO_RESENHA" ColumnName="PUB_CONTEUDO_RESENHA" />
+          <ScalarProperty Name="PUB_CONTEUDO" ColumnName="PUB_CONTEUDO" />
+          <ScalarProperty Name="SEC_ID" ColumnName="SEC_ID" />
+          <ScalarProperty Name="LBL_ID" ColumnName="LBL_ID" />
+          <ScalarProperty Name="PUB_OBS" ColumnName="PUB_OBS" />
+          <ScalarProperty Name="PUB_DATA_ATO" ColumnName="PUB_DATA_ATO" />
+          <ScalarProperty Name="PUB_DATA_PUB_ATO" ColumnName="PUB_DATA_PUB_ATO" />
+          <ScalarProperty Name="PUB_DESCRICAO_NEWS" ColumnName="PUB_DESCRICAO_NEWS" />
+          <ScalarProperty Name="PUB_COMPL_VEICULO" ColumnName="PUB_COMPL_VEICULO" />
+          <ScalarProperty Name="PUB_ATIVO" ColumnName="PUB_ATIVO" />
+          <ScalarProperty Name="FLU_ID" ColumnName="FLU_ID" />
+          <ScalarProperty Name="DATA_CADASTRO" ColumnName="DATA_CADASTRO" />
+          <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="CABECALHO" ColumnName="CABECALHO" />
+          <ScalarProperty Name="PUB_CONTEUDO_RVT" ColumnName="PUB_CONTEUDO_RVT" />
+          <ScalarProperty Name="PUB_CONTEUDO_RESENHA_DGT" ColumnName="PUB_CONTEUDO_RESENHA_DGT" />
+          <ScalarProperty Name="PUB_CONTEUDO_RESENHA_RVO" ColumnName="PUB_CONTEUDO_RESENHA_RVO" />
+          <ScalarProperty Name="PUB_CONTEUDO_RESENHA_RVT" ColumnName="PUB_CONTEUDO_RESENHA_RVT" />
+          <ScalarProperty Name="PUB_CONTEUDO_RESENHA_RDC" ColumnName="PUB_CONTEUDO_RESENHA_RDC" />
+          <ScalarProperty Name="PUB_CONTEUDO_RDC" ColumnName="PUB_CONTEUDO_RDC" />
+          <ScalarProperty Name="PUB_CONTEUDO_RVO" ColumnName="PUB_CONTEUDO_RVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICACAO_ALTERACAO_REVOGACAO">
+      <EntityTypeMapping TypeName="COADGEDModel.PUBLICACAO_ALTERACAO_REVOGACAO">
+        <MappingFragment StoreEntitySet="PUBLICACAO_ALTERACAO_REVOGACAO">
+          <ScalarProperty Name="PAR_ID" ColumnName="PAR_ID" />
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="PAR_TIPO" ColumnName="PAR_TIPO" />
+          <ScalarProperty Name="TIP_ATO_ID" ColumnName="TIP_ATO_ID" />
+          <ScalarProperty Name="PUB_NUMERO_ATO" ColumnName="PUB_NUMERO_ATO" />
+          <ScalarProperty Name="ORG_ID" ColumnName="ORG_ID" />
+          <ScalarProperty Name="PUB_DATA_ATO" ColumnName="PUB_DATA_ATO" />
+          <ScalarProperty Name="PUB_ALTERACAO_ATO" ColumnName="PUB_ALTERACAO_ATO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICACAO_AREAS_CONSULTORIA">
+      <EntityTypeMapping TypeName="COADGEDModel.PUBLICACAO_AREAS_CONSULTORIA">
+        <MappingFragment StoreEntitySet="PUBLICACAO_AREAS_CONSULTORIA">
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="ARE_CONS_ID" ColumnName="ARE_CONS_ID" />
+          <ScalarProperty Name="PUB_PAGINA_SUMARIO" ColumnName="PUB_PAGINA_SUMARIO" />
+          <ScalarProperty Name="PUB_PAGINA_INDICE" ColumnName="PUB_PAGINA_INDICE" />
+          <ScalarProperty Name="CAP_ID" ColumnName="CAP_ID" />
+          <ScalarProperty Name="PUB_MANCHETE" ColumnName="PUB_MANCHETE" />
+          <ScalarProperty Name="PUB_EMENTA" ColumnName="PUB_EMENTA" />
+          <ScalarProperty Name="PUB_EXPRESSAO" ColumnName="PUB_EXPRESSAO" />
+          <ScalarProperty Name="PUB_MANCHETE_PORTAL" ColumnName="PUB_MANCHETE_PORTAL" />
+          <ScalarProperty Name="PUB_EMENTA_PORTAL" ColumnName="PUB_EMENTA_PORTAL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICACAO_BUSCA">
+      <EntityTypeMapping TypeName="COADGEDModel.PUBLICACAO_BUSCA">
+        <MappingFragment StoreEntitySet="PUBLICACAO_BUSCA">
+          <ScalarProperty Name="PBU_ID" ColumnName="PBU_ID" />
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="ARE_CONS_ID" ColumnName="ARE_CONS_ID" />
+          <ScalarProperty Name="PBU_PALAVRA" ColumnName="PBU_PALAVRA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICACAO_CICLO_APROVACAO">
+      <EntityTypeMapping TypeName="COADGEDModel.PUBLICACAO_CICLO_APROVACAO">
+        <MappingFragment StoreEntitySet="PUBLICACAO_CICLO_APROVACAO">
+          <ScalarProperty Name="FLU_ID" ColumnName="FLU_ID" />
+          <ScalarProperty Name="FLU_ETAPA_ID" ColumnName="FLU_ETAPA_ID" />
+          <ScalarProperty Name="CIC_ID" ColumnName="CIC_ID" />
+          <ScalarProperty Name="COL_ID" ColumnName="COL_ID" />
+          <ScalarProperty Name="CIC_DATA" ColumnName="CIC_DATA" />
+          <ScalarProperty Name="CIC_OBS" ColumnName="CIC_OBS" />
+          <ScalarProperty Name="CIC_STATUS" ColumnName="CIC_STATUS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICACAO_CONFIG">
+      <EntityTypeMapping TypeName="COADGEDModel.PUBLICACAO_CONFIG">
+        <MappingFragment StoreEntitySet="PUBLICACAO_CONFIG">
+          <ScalarProperty Name="PCF_ID" ColumnName="PCF_ID" />
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="ARE_CONS_ID" ColumnName="ARE_CONS_ID" />
+          <ScalarProperty Name="PCF_TIPO_ALTERACAO" ColumnName="PCF_TIPO_ALTERACAO" />
+          <ScalarProperty Name="PCF_INDICE_ALFA" ColumnName="PCF_INDICE_ALFA" />
+          <ScalarProperty Name="PCF_INDICE_NUM" ColumnName="PCF_INDICE_NUM" />
+          <ScalarProperty Name="PCF_INDICE_REVOGADO" ColumnName="PCF_INDICE_REVOGADO" />
+          <ScalarProperty Name="PCF_PUB_WEB" ColumnName="PCF_PUB_WEB" />
+          <ScalarProperty Name="PCF_PUB_IMPRESSO" ColumnName="PCF_PUB_IMPRESSO" />
+          <ScalarProperty Name="PCF_PUB_NEWS" ColumnName="PCF_PUB_NEWS" />
+          <ScalarProperty Name="PCF_PUB_MOBILE" ColumnName="PCF_PUB_MOBILE" />
+          <ScalarProperty Name="PCF_PUB_CONSULTORIA" ColumnName="PCF_PUB_CONSULTORIA" />
+          <ScalarProperty Name="PCF_PUB_WEBSERVICE" ColumnName="PCF_PUB_WEBSERVICE" />
+          <ScalarProperty Name="PCF_DATA_PUB_WEB" ColumnName="PCF_DATA_PUB_WEB" />
+          <ScalarProperty Name="PCF_DATA_PUB_IMPRESSO" ColumnName="PCF_DATA_PUB_IMPRESSO" />
+          <ScalarProperty Name="PCF_DATA_PUB_NEWS" ColumnName="PCF_DATA_PUB_NEWS" />
+          <ScalarProperty Name="PCF_DATA_PUB_MOBILE" ColumnName="PCF_DATA_PUB_MOBILE" />
+          <ScalarProperty Name="PCF_DATA_PUB_CONSULTORIA" ColumnName="PCF_DATA_PUB_CONSULTORIA" />
+          <ScalarProperty Name="PCF_DATA_PUB_WEBSERVICE" ColumnName="PCF_DATA_PUB_WEBSERVICE" />
+          <ScalarProperty Name="PCF_DATA_PUB_MANCHETE" ColumnName="PCF_DATA_PUB_MANCHETE" />
+          <ScalarProperty Name="PCF_DATA_PUB_EMENTA" ColumnName="PCF_DATA_PUB_EMENTA" />
+          <ScalarProperty Name="DATA_CADASTRO" ColumnName="DATA_CADASTRO" />
+          <ScalarProperty Name="DATA_ALTERACAO" ColumnName="DATA_ALTERACAO" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICACAO_EDITADA">
+      <EntityTypeMapping TypeName="COADGEDModel.PUBLICACAO_EDITADA">
+        <MappingFragment StoreEntitySet="PUBLICACAO_EDITADA">
+          <ScalarProperty Name="EDT_ID" ColumnName="EDT_ID" />
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="EDT_HORARIO" ColumnName="EDT_HORARIO" />
+          <ScalarProperty Name="EDT_LIBERADA" ColumnName="EDT_LIBERADA" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="EDT_EDITANDO" ColumnName="EDT_EDITANDO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICACAO_FLUXO_ETAPA">
+      <EntityTypeMapping TypeName="COADGEDModel.PUBLICACAO_FLUXO_ETAPA">
+        <MappingFragment StoreEntitySet="PUBLICACAO_FLUXO_ETAPA">
+          <ScalarProperty Name="FLU_ID" ColumnName="FLU_ID" />
+          <ScalarProperty Name="FLU_ETAPA_ID" ColumnName="FLU_ETAPA_ID" />
+          <ScalarProperty Name="FLU_PRE_REQUISITO" ColumnName="FLU_PRE_REQUISITO" />
+          <ScalarProperty Name="FLU_OBRIGATORIO" ColumnName="FLU_OBRIGATORIO" />
+          <ScalarProperty Name="CRG_ID" ColumnName="CRG_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICACAO_GRUPO_CONSULTORIA">
+      <EntityTypeMapping TypeName="COADGEDModel.PUBLICACAO_GRUPO_CONSULTORIA">
+        <MappingFragment StoreEntitySet="PUBLICACAO_GRUPO_CONSULTORIA">
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="GRD_CONS_ID" ColumnName="GRD_CONS_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICACAO_PALAVRA_CHAVE">
+      <EntityTypeMapping TypeName="COADGEDModel.PUBLICACAO_PALAVRA_CHAVE">
+        <MappingFragment StoreEntitySet="PUBLICACAO_PALAVRA_CHAVE">
+          <ScalarProperty Name="PPC_ID" ColumnName="PPC_ID" />
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="ARE_CONS_ID" ColumnName="ARE_CONS_ID" />
+          <ScalarProperty Name="PPC_TEXTO" ColumnName="PPC_TEXTO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICACAO_REMISSAO">
+      <EntityTypeMapping TypeName="COADGEDModel.PUBLICACAO_REMISSAO">
+        <MappingFragment StoreEntitySet="PUBLICACAO_REMISSAO">
+          <ScalarProperty Name="PRE_ID" ColumnName="PRE_ID" />
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="ARE_CONS_ID" ColumnName="ARE_CONS_ID" />
+          <ScalarProperty Name="PRE_NUMERO" ColumnName="PRE_NUMERO" />
+          <ScalarProperty Name="PRE_REMISSAO" ColumnName="PRE_REMISSAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICACAO_REMISSIVO">
+      <EntityTypeMapping TypeName="COADGEDModel.PUBLICACAO_REMISSIVO">
+        <MappingFragment StoreEntitySet="PUBLICACAO_REMISSIVO">
+          <ScalarProperty Name="PRE_ID" ColumnName="PRE_ID" />
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="ARE_CONS_ID" ColumnName="ARE_CONS_ID" />
+          <ScalarProperty Name="PRE_REMISSIVO" ColumnName="PRE_REMISSIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICACAO_REVISAO">
+      <EntityTypeMapping TypeName="COADGEDModel.PUBLICACAO_REVISAO">
+        <MappingFragment StoreEntitySet="PUBLICACAO_REVISAO">
+          <ScalarProperty Name="REV_ID" ColumnName="REV_ID" />
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="ARE_CONS_ID" ColumnName="ARE_CONS_ID" />
+          <ScalarProperty Name="REV_TC" ColumnName="REV_TC" />
+          <ScalarProperty Name="DIG_TC" ColumnName="DIG_TC" />
+          <ScalarProperty Name="REV_OR" ColumnName="REV_OR" />
+          <ScalarProperty Name="COL_ID" ColumnName="COL_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICACAO_REVISAO_COLABORADOR">
+      <EntityTypeMapping TypeName="COADGEDModel.PUBLICACAO_REVISAO_COLABORADOR">
+        <MappingFragment StoreEntitySet="PUBLICACAO_REVISAO_COLABORADOR">
+          <ScalarProperty Name="REV_ID" ColumnName="REV_ID" />
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="ARE_CONS_ID" ColumnName="ARE_CONS_ID" />
+          <ScalarProperty Name="COL_ID" ColumnName="COL_ID" />
+          <ScalarProperty Name="DATA" ColumnName="DATA" />
+          <ScalarProperty Name="REVISAO" ColumnName="REVISAO" />
+          <ScalarProperty Name="EDITOU" ColumnName="EDITOU" />
+          <ScalarProperty Name="MOTIVO" ColumnName="MOTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICACAO_TITULACAO">
+      <EntityTypeMapping TypeName="COADGEDModel.PUBLICACAO_TITULACAO">
+        <MappingFragment StoreEntitySet="PUBLICACAO_TITULACAO">
+          <ScalarProperty Name="PTI_ID" ColumnName="PTI_ID" />
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="ARE_CONS_ID" ColumnName="ARE_CONS_ID" />
+          <ScalarProperty Name="TIT_ID" ColumnName="TIT_ID" />
+          <ScalarProperty Name="TIT_ID_VERBETE" ColumnName="TIT_ID_VERBETE" />
+          <ScalarProperty Name="TIT_ID_SUBVERBETE" ColumnName="TIT_ID_SUBVERBETE" />
+          <ScalarProperty Name="PTI_PRINCIPAL" ColumnName="PTI_PRINCIPAL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICACAO_UF">
+      <EntityTypeMapping TypeName="COADGEDModel.PUBLICACAO_UF">
+        <MappingFragment StoreEntitySet="PUBLICACAO_UF">
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="ARE_CONS_ID" ColumnName="ARE_CONS_ID" />
+          <ScalarProperty Name="UF_ID" ColumnName="UF_ID" />
+          <ScalarProperty Name="INF_ANO" ColumnName="INF_ANO" />
+          <ScalarProperty Name="INF_NUMERO" ColumnName="INF_NUMERO" />
+          <ScalarProperty Name="PUB_ATIVO" ColumnName="PUB_ATIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RELATORIOS">
+      <EntityTypeMapping TypeName="COADGEDModel.RELATORIOS">
+        <MappingFragment StoreEntitySet="RELATORIOS">
+          <ScalarProperty Name="REL_ID" ColumnName="REL_ID" />
+          <ScalarProperty Name="REL_DESCRICAO" ColumnName="REL_DESCRICAO" />
+          <ScalarProperty Name="REL_PATH" ColumnName="REL_PATH" />
+          <ScalarProperty Name="REL_TIPO" ColumnName="REL_TIPO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SECOES">
+      <EntityTypeMapping TypeName="COADGEDModel.SECOES">
+        <MappingFragment StoreEntitySet="SECOES">
+          <ScalarProperty Name="SEC_ID" ColumnName="SEC_ID" />
+          <ScalarProperty Name="SEC_DESCRICAO" ColumnName="SEC_DESCRICAO" />
+          <ScalarProperty Name="SEC_ATIVO" ColumnName="SEC_ATIVO" />
+          <ScalarProperty Name="DATA_CADASTRO" ColumnName="DATA_CADASTRO" />
+          <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="DATA_EXCLUSAO" ColumnName="DATA_EXCLUSAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="COADGEDModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAB_DINAMICA">
+      <EntityTypeMapping TypeName="COADGEDModel.TAB_DINAMICA">
+        <MappingFragment StoreEntitySet="TAB_DINAMICA">
+          <ScalarProperty Name="TDC_ID" ColumnName="TDC_ID" />
+          <ScalarProperty Name="TAB_DESCRICAO" ColumnName="TAB_DESCRICAO" />
+          <ScalarProperty Name="TAB_INTRODUCAO" ColumnName="TAB_INTRODUCAO" />
+          <ScalarProperty Name="TAB_OBS_LAYOUT" ColumnName="TAB_OBS_LAYOUT" />
+          <ScalarProperty Name="TAB_LEGENDA_LAYOUT" ColumnName="TAB_LEGENDA_LAYOUT" />
+          <ScalarProperty Name="TAB_INF_PREENCHIMENTO" ColumnName="TAB_INF_PREENCHIMENTO" />
+          <ScalarProperty Name="TAB_INF_GERAIS" ColumnName="TAB_INF_GERAIS" />
+          <ScalarProperty Name="TAB_DATA_ALTERA" ColumnName="TAB_DATA_ALTERA" />
+          <ScalarProperty Name="TAB_DATA_INCLUSAO" ColumnName="TAB_DATA_INCLUSAO" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="TAB_ERRO_MSG" ColumnName="TAB_ERRO_MSG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAB_DINAMICA_CONFIG">
+      <EntityTypeMapping TypeName="COADGEDModel.TAB_DINAMICA_CONFIG">
+        <MappingFragment StoreEntitySet="TAB_DINAMICA_CONFIG">
+          <ScalarProperty Name="TDC_ID" ColumnName="TDC_ID" />
+          <ScalarProperty Name="TDC_INTRODUCAO" ColumnName="TDC_INTRODUCAO" />
+          <ScalarProperty Name="TDC_OBS_LAYOUT" ColumnName="TDC_OBS_LAYOUT" />
+          <ScalarProperty Name="TDC_LEGENDA_LAYOUT" ColumnName="TDC_LEGENDA_LAYOUT" />
+          <ScalarProperty Name="TDC_INF_PREENCHIMENTO" ColumnName="TDC_INF_PREENCHIMENTO" />
+          <ScalarProperty Name="TDC_INF_GERAIS" ColumnName="TDC_INF_GERAIS" />
+          <ScalarProperty Name="TDC_DATA_ALTERA" ColumnName="TDC_DATA_ALTERA" />
+          <ScalarProperty Name="TDC_DATA_INCLUSAO" ColumnName="TDC_DATA_INCLUSAO" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="TDC_NOME_TABELA" ColumnName="TDC_NOME_TABELA" />
+          <ScalarProperty Name="TDC_TIPO" ColumnName="TDC_TIPO" />
+          <ScalarProperty Name="TDC_ID_TAB_REF" ColumnName="TDC_ID_TAB_REF" />
+          <ScalarProperty Name="TDC_DATA_PUBLICACAO" ColumnName="TDC_DATA_PUBLICACAO" />
+          <ScalarProperty Name="TGR_ID" ColumnName="TGR_ID" />
+          <ScalarProperty Name="TTA_ID" ColumnName="TTA_ID" />
+          <ScalarProperty Name="TIT_ID" ColumnName="TIT_ID" />
+          <ScalarProperty Name="TDC_LAYOUT_TABELA" ColumnName="TDC_LAYOUT_TABELA" />
+          <ScalarProperty Name="TDC_PALAVRA_CHAVE" ColumnName="TDC_PALAVRA_CHAVE" />
+          <ScalarProperty Name="USU_LOGIN_PUB" ColumnName="USU_LOGIN_PUB" />
+          <ScalarProperty Name="TDC_NOME_CHAVEDB" ColumnName="TDC_NOME_CHAVEDB" />
+          <ScalarProperty Name="TDC_NOME_LISTADB" ColumnName="TDC_NOME_LISTADB" />
+          <ScalarProperty Name="TDC_NOME_OBS" ColumnName="TDC_NOME_OBS" />
+          <ScalarProperty Name="TDC_DECIMAIS" ColumnName="TDC_DECIMAIS" />
+          <ScalarProperty Name="TDC_NOME_IDENTIFICADOR" ColumnName="TDC_NOME_IDENTIFICADOR" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAB_DINAMICA_CONFIG_ITEM">
+      <EntityTypeMapping TypeName="COADGEDModel.TAB_DINAMICA_CONFIG_ITEM">
+        <MappingFragment StoreEntitySet="TAB_DINAMICA_CONFIG_ITEM">
+          <ScalarProperty Name="TDC_ID" ColumnName="TDC_ID" />
+          <ScalarProperty Name="TCI_ID" ColumnName="TCI_ID" />
+          <ScalarProperty Name="TCI_TIPO_CAMPO" ColumnName="TCI_TIPO_CAMPO" />
+          <ScalarProperty Name="TCI_TAMANHO_CAMPO" ColumnName="TCI_TAMANHO_CAMPO" />
+          <ScalarProperty Name="TCI_ALINHAMENTO_CAMPO" ColumnName="TCI_ALINHAMENTO_CAMPO" />
+          <ScalarProperty Name="TCI_ORDEM_APRESENTACAO" ColumnName="TCI_ORDEM_APRESENTACAO" />
+          <ScalarProperty Name="TCI_VALOR_PADRAO" ColumnName="TCI_VALOR_PADRAO" />
+          <ScalarProperty Name="TCI_VALOR_ESPERADO" ColumnName="TCI_VALOR_ESPERADO" />
+          <ScalarProperty Name="TCI_NOME_CAMPODB" ColumnName="TCI_NOME_CAMPODB" />
+          <ScalarProperty Name="TCI_NOME_CAMPO" ColumnName="TCI_NOME_CAMPO" />
+          <ScalarProperty Name="TCI_FORMULA" ColumnName="TCI_FORMULA" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="TCI_TEXTO_HELP" ColumnName="TCI_TEXTO_HELP" />
+          <ScalarProperty Name="TDC_ID_TAB_REF" ColumnName="TDC_ID_TAB_REF" />
+          <ScalarProperty Name="TCI_TEXTO_HELP_LINK" ColumnName="TCI_TEXTO_HELP_LINK" />
+          <ScalarProperty Name="TCI_PATH_HELP_LINK" ColumnName="TCI_PATH_HELP_LINK" />
+          <ScalarProperty Name="TCI_TARGET" ColumnName="TCI_TARGET" />
+          <ScalarProperty Name="TCI_CAMPO_PESQUISA" ColumnName="TCI_CAMPO_PESQUISA" />
+          <ScalarProperty Name="TCI_CAMPO_VISIVEL" ColumnName="TCI_CAMPO_VISIVEL" />
+          <ScalarProperty Name="TCI_CAMPO_CHAVE" ColumnName="TCI_CAMPO_CHAVE" />
+          <ScalarProperty Name="TCI_CAMPO_LISTA" ColumnName="TCI_CAMPO_LISTA" />
+          <ScalarProperty Name="TCI_NOME_CHAVEDB" ColumnName="TCI_NOME_CHAVEDB" />
+          <ScalarProperty Name="TCI_NOME_LISTADB" ColumnName="TCI_NOME_LISTADB" />
+          <ScalarProperty Name="TCI_DECIMAIS" ColumnName="TCI_DECIMAIS" />
+          <ScalarProperty Name="TCI_NOME_CAMPO_AUX" ColumnName="TCI_NOME_CAMPO_AUX" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAB_DINAMICA_GRUPO">
+      <EntityTypeMapping TypeName="COADGEDModel.TAB_DINAMICA_GRUPO">
+        <MappingFragment StoreEntitySet="TAB_DINAMICA_GRUPO">
+          <ScalarProperty Name="TGR_ID" ColumnName="TGR_ID" />
+          <ScalarProperty Name="TGR_DESCRICAO" ColumnName="TGR_DESCRICAO" />
+          <ScalarProperty Name="TGR_TIPO" ColumnName="TGR_TIPO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAB_DINAMICA_ITEM">
+      <EntityTypeMapping TypeName="COADGEDModel.TAB_DINAMICA_ITEM">
+        <MappingFragment StoreEntitySet="TAB_DINAMICA_ITEM">
+          <ScalarProperty Name="TDC_ID" ColumnName="TDC_ID" />
+          <ScalarProperty Name="TAB_ID" ColumnName="TAB_ID" />
+          <ScalarProperty Name="TAB_STRING01" ColumnName="TAB_STRING01" />
+          <ScalarProperty Name="TAB_STRING02" ColumnName="TAB_STRING02" />
+          <ScalarProperty Name="TAB_STRING03" ColumnName="TAB_STRING03" />
+          <ScalarProperty Name="TAB_STRING04" ColumnName="TAB_STRING04" />
+          <ScalarProperty Name="TAB_STRING05" ColumnName="TAB_STRING05" />
+          <ScalarProperty Name="TAB_STRING06" ColumnName="TAB_STRING06" />
+          <ScalarProperty Name="TAB_STRING07" ColumnName="TAB_STRING07" />
+          <ScalarProperty Name="TAB_STRING08" ColumnName="TAB_STRING08" />
+          <ScalarProperty Name="TAB_STRING09" ColumnName="TAB_STRING09" />
+          <ScalarProperty Name="TAB_STRING10" ColumnName="TAB_STRING10" />
+          <ScalarProperty Name="TAB_STRING11" ColumnName="TAB_STRING11" />
+          <ScalarProperty Name="TAB_STRING12" ColumnName="TAB_STRING12" />
+          <ScalarProperty Name="TAB_STRING13" ColumnName="TAB_STRING13" />
+          <ScalarProperty Name="TAB_STRING14" ColumnName="TAB_STRING14" />
+          <ScalarProperty Name="TAB_STRING15" ColumnName="TAB_STRING15" />
+          <ScalarProperty Name="TAB_INT01" ColumnName="TAB_INT01" />
+          <ScalarProperty Name="TAB_INT02" ColumnName="TAB_INT02" />
+          <ScalarProperty Name="TAB_INT03" ColumnName="TAB_INT03" />
+          <ScalarProperty Name="TAB_INT04" ColumnName="TAB_INT04" />
+          <ScalarProperty Name="TAB_INT05" ColumnName="TAB_INT05" />
+          <ScalarProperty Name="TAB_INT06" ColumnName="TAB_INT06" />
+          <ScalarProperty Name="TAB_INT07" ColumnName="TAB_INT07" />
+          <ScalarProperty Name="TAB_INT08" ColumnName="TAB_INT08" />
+          <ScalarProperty Name="TAB_INT09" ColumnName="TAB_INT09" />
+          <ScalarProperty Name="TAB_INT10" ColumnName="TAB_INT10" />
+          <ScalarProperty Name="TAB_DATA01" ColumnName="TAB_DATA01" />
+          <ScalarProperty Name="TAB_DATA02" ColumnName="TAB_DATA02" />
+          <ScalarProperty Name="TAB_DATA03" ColumnName="TAB_DATA03" />
+          <ScalarProperty Name="TAB_DATA04" ColumnName="TAB_DATA04" />
+          <ScalarProperty Name="TAB_DATA05" ColumnName="TAB_DATA05" />
+          <ScalarProperty Name="TAB_DATA06" ColumnName="TAB_DATA06" />
+          <ScalarProperty Name="TAB_DATA07" ColumnName="TAB_DATA07" />
+          <ScalarProperty Name="TAB_DATA08" ColumnName="TAB_DATA08" />
+          <ScalarProperty Name="TAB_DATA09" ColumnName="TAB_DATA09" />
+          <ScalarProperty Name="TAB_DATA10" ColumnName="TAB_DATA10" />
+          <ScalarProperty Name="TAB_DATA_ALTERA" ColumnName="TAB_DATA_ALTERA" />
+          <ScalarProperty Name="TAB_DATA_INCLUSAO" ColumnName="TAB_DATA_INCLUSAO" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="TAB_STRING16" ColumnName="TAB_STRING16" />
+          <ScalarProperty Name="TAB_STRING17" ColumnName="TAB_STRING17" />
+          <ScalarProperty Name="TAB_STRING18" ColumnName="TAB_STRING18" />
+          <ScalarProperty Name="TAB_STRING19" ColumnName="TAB_STRING19" />
+          <ScalarProperty Name="TAB_STRING20" ColumnName="TAB_STRING20" />
+          <ScalarProperty Name="TAB_STRING21" ColumnName="TAB_STRING21" />
+          <ScalarProperty Name="TAB_STRING22" ColumnName="TAB_STRING22" />
+          <ScalarProperty Name="TAB_STRING23" ColumnName="TAB_STRING23" />
+          <ScalarProperty Name="TAB_STRING24" ColumnName="TAB_STRING24" />
+          <ScalarProperty Name="TAB_STRING25" ColumnName="TAB_STRING25" />
+          <ScalarProperty Name="TAB_STRING26" ColumnName="TAB_STRING26" />
+          <ScalarProperty Name="TAB_STRING27" ColumnName="TAB_STRING27" />
+          <ScalarProperty Name="TAB_STRING28" ColumnName="TAB_STRING28" />
+          <ScalarProperty Name="TAB_STRING29" ColumnName="TAB_STRING29" />
+          <ScalarProperty Name="TAB_STRING30" ColumnName="TAB_STRING30" />
+          <ScalarProperty Name="RET_FERIADOS" ColumnName="RET_FERIADOS" />
+          <ScalarProperty Name="TAB_STRING31" ColumnName="TAB_STRING31" />
+          <ScalarProperty Name="TAB_STRING32" ColumnName="TAB_STRING32" />
+          <ScalarProperty Name="TAB_STRING33" ColumnName="TAB_STRING33" />
+          <ScalarProperty Name="TAB_STRING34" ColumnName="TAB_STRING34" />
+          <ScalarProperty Name="TAB_STRING35" ColumnName="TAB_STRING35" />
+          <ScalarProperty Name="TAB_STRING36" ColumnName="TAB_STRING36" />
+          <ScalarProperty Name="TAB_STRING37" ColumnName="TAB_STRING37" />
+          <ScalarProperty Name="TAB_STRING38" ColumnName="TAB_STRING38" />
+          <ScalarProperty Name="TAB_STRING39" ColumnName="TAB_STRING39" />
+          <ScalarProperty Name="TAB_STRING40" ColumnName="TAB_STRING40" />
+          <ScalarProperty Name="TAB_STRING41" ColumnName="TAB_STRING41" />
+          <ScalarProperty Name="TAB_STRING42" ColumnName="TAB_STRING42" />
+          <ScalarProperty Name="TAB_STRING43" ColumnName="TAB_STRING43" />
+          <ScalarProperty Name="TAB_STRING44" ColumnName="TAB_STRING44" />
+          <ScalarProperty Name="TAB_STRING45" ColumnName="TAB_STRING45" />
+          <ScalarProperty Name="TAB_STRING46" ColumnName="TAB_STRING46" />
+          <ScalarProperty Name="TAB_STRING47" ColumnName="TAB_STRING47" />
+          <ScalarProperty Name="TAB_STRING48" ColumnName="TAB_STRING48" />
+          <ScalarProperty Name="TAB_STRING49" ColumnName="TAB_STRING49" />
+          <ScalarProperty Name="TAB_STRING50" ColumnName="TAB_STRING50" />
+          <ScalarProperty Name="TAB_STRING51" ColumnName="TAB_STRING51" />
+          <ScalarProperty Name="TAB_STRING52" ColumnName="TAB_STRING52" />
+          <ScalarProperty Name="TAB_STRING53" ColumnName="TAB_STRING53" />
+          <ScalarProperty Name="TAB_STRING54" ColumnName="TAB_STRING54" />
+          <ScalarProperty Name="TAB_STRING55" ColumnName="TAB_STRING55" />
+          <ScalarProperty Name="TAB_STRING56" ColumnName="TAB_STRING56" />
+          <ScalarProperty Name="TAB_STRING57" ColumnName="TAB_STRING57" />
+          <ScalarProperty Name="TAB_STRING58" ColumnName="TAB_STRING58" />
+          <ScalarProperty Name="TAB_STRING59" ColumnName="TAB_STRING59" />
+          <ScalarProperty Name="TAB_STRING60" ColumnName="TAB_STRING60" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAB_DINAMICA_LINK">
+      <EntityTypeMapping TypeName="COADGEDModel.TAB_DINAMICA_LINK">
+        <MappingFragment StoreEntitySet="TAB_DINAMICA_LINK">
+          <ScalarProperty Name="LNK_TAG" ColumnName="LNK_TAG" />
+          <ScalarProperty Name="TDC_ID" ColumnName="TDC_ID" />
+          <ScalarProperty Name="LNK_DESCRICAO" ColumnName="LNK_DESCRICAO" />
+          <ScalarProperty Name="LNK_LINK" ColumnName="LNK_LINK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAB_DINAMICA_ORIGEM">
+      <EntityTypeMapping TypeName="COADGEDModel.TAB_DINAMICA_ORIGEM">
+        <MappingFragment StoreEntitySet="TAB_DINAMICA_ORIGEM">
+          <ScalarProperty Name="OAC_ID" ColumnName="OAC_ID" />
+          <ScalarProperty Name="TDC_ID" ColumnName="TDC_ID" />
+          <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAB_DINAMICA_PUBLICACAO">
+      <EntityTypeMapping TypeName="COADGEDModel.TAB_DINAMICA_PUBLICACAO">
+        <MappingFragment StoreEntitySet="TAB_DINAMICA_PUBLICACAO">
+          <ScalarProperty Name="TPU_ID" ColumnName="TPU_ID" />
+          <ScalarProperty Name="TDC_ID" ColumnName="TDC_ID" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="USU_LOGIN_APROV" ColumnName="USU_LOGIN_APROV" />
+          <ScalarProperty Name="TPU_DATA_LANC" ColumnName="TPU_DATA_LANC" />
+          <ScalarProperty Name="TPU_DATA_APROV" ColumnName="TPU_DATA_APROV" />
+          <ScalarProperty Name="TPU_OBS" ColumnName="TPU_OBS" />
+          <ScalarProperty Name="TPU_STATUS" ColumnName="TPU_STATUS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIPO_ATO">
+      <EntityTypeMapping TypeName="COADGEDModel.TIPO_ATO">
+        <MappingFragment StoreEntitySet="TIPO_ATO">
+          <ScalarProperty Name="TIP_ATO_ID" ColumnName="TIP_ATO_ID" />
+          <ScalarProperty Name="TIP_ATO_DESCRICAO" ColumnName="TIP_ATO_DESCRICAO" />
+          <ScalarProperty Name="TIP_ATIVO" ColumnName="TIP_ATIVO" />
+          <ScalarProperty Name="DATA_CADASTRO" ColumnName="DATA_CADASTRO" />
+          <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIPO_MATERIA">
+      <EntityTypeMapping TypeName="COADGEDModel.TIPO_MATERIA">
+        <MappingFragment StoreEntitySet="TIPO_MATERIA">
+          <ScalarProperty Name="TIP_MAT_ID" ColumnName="TIP_MAT_ID" />
+          <ScalarProperty Name="TIP_MAT_DESCRICAO" ColumnName="TIP_MAT_DESCRICAO" />
+          <ScalarProperty Name="DATA_CADASTRO" ColumnName="DATA_CADASTRO" />
+          <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="TIP_MAT_ATIVO" ColumnName="TIP_MAT_ATIVO" />
+          <ScalarProperty Name="ARE_CABECA_MATERIA" ColumnName="ARE_CABECA_MATERIA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TITULACAO">
+      <EntityTypeMapping TypeName="COADGEDModel.TITULACAO">
+        <MappingFragment StoreEntitySet="TITULACAO">
+          <ScalarProperty Name="TIT_ID" ColumnName="TIT_ID" />
+          <ScalarProperty Name="TIT_DESCRICAO" ColumnName="TIT_DESCRICAO" />
+          <ScalarProperty Name="TIT_ATIVO" ColumnName="TIT_ATIVO" />
+          <ScalarProperty Name="TIT_TIPO" ColumnName="TIT_TIPO" />
+          <ScalarProperty Name="TIT_ID_REFERENCIA" ColumnName="TIT_ID_REFERENCIA" />
+          <ScalarProperty Name="ARE_CONS_ID" ColumnName="ARE_CONS_ID" />
+          <ScalarProperty Name="UF_ID" ColumnName="UF_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UF_REF">
+      <EntityTypeMapping TypeName="COADGEDModel.UF_REF">
+        <MappingFragment StoreEntitySet="UF_REF">
+          <ScalarProperty Name="UF_ID" ColumnName="UF_ID" />
+          <ScalarProperty Name="UF_NOME" ColumnName="UF_NOME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VEICULO">
+      <EntityTypeMapping TypeName="COADGEDModel.VEICULO">
+        <MappingFragment StoreEntitySet="VEICULO">
+          <ScalarProperty Name="TVI_ID" ColumnName="TVI_ID" />
+          <ScalarProperty Name="TVI_DESCRICAO" ColumnName="TVI_DESCRICAO" />
+          <ScalarProperty Name="PRD_ID" ColumnName="PRD_ID" />
+          <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+          <ScalarProperty Name="TVI_ATIVO" ColumnName="TVI_ATIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONSULTA_EMAIL_PERFIL_COLEC">
+      <EntityTypeMapping TypeName="COADGEDModel.CONSULTA_EMAIL_PERFIL_COLEC">
+        <MappingFragment StoreEntitySet="CONSULTA_EMAIL_PERFIL_COLEC">
+          <ScalarProperty Name="PC_ID" ColumnName="PC_ID" />
+          <ScalarProperty Name="COLEC_ID" ColumnName="COLEC_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUBLICACAO_vw">
+      <EntityTypeMapping TypeName="COADGEDModel.PUBLICACAO_vw">
+        <MappingFragment StoreEntitySet="PUBLICACAO_vw">
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="TIP_MAT_ID" ColumnName="TIP_MAT_ID" />
+          <ScalarProperty Name="TIP_ATO_ID" ColumnName="TIP_ATO_ID" />
+          <ScalarProperty Name="PUB_NUMERO_ATO" ColumnName="PUB_NUMERO_ATO" />
+          <ScalarProperty Name="TVI_ID" ColumnName="TVI_ID" />
+          <ScalarProperty Name="ORG_ID" ColumnName="ORG_ID" />
+          <ScalarProperty Name="PUB_CONTEUDO_RESENHA" ColumnName="PUB_CONTEUDO_RESENHA" />
+          <ScalarProperty Name="PUB_CONTEUDO" ColumnName="PUB_CONTEUDO" />
+          <ScalarProperty Name="SEC_ID" ColumnName="SEC_ID" />
+          <ScalarProperty Name="LBL_ID" ColumnName="LBL_ID" />
+          <ScalarProperty Name="PUB_OBS" ColumnName="PUB_OBS" />
+          <ScalarProperty Name="PUB_DATA_ATO" ColumnName="PUB_DATA_ATO" />
+          <ScalarProperty Name="PUB_DATA_PUB_ATO" ColumnName="PUB_DATA_PUB_ATO" />
+          <ScalarProperty Name="PUB_DESCRICAO_NEWS" ColumnName="PUB_DESCRICAO_NEWS" />
+          <ScalarProperty Name="PUB_COMPL_VEICULO" ColumnName="PUB_COMPL_VEICULO" />
+          <ScalarProperty Name="PUB_ATIVO" ColumnName="PUB_ATIVO" />
+          <ScalarProperty Name="FLU_ID" ColumnName="FLU_ID" />
+          <ScalarProperty Name="DATA_CADASTRO" ColumnName="DATA_CADASTRO" />
+          <ScalarProperty Name="DATA_ALTERA" ColumnName="DATA_ALTERA" />
+          <ScalarProperty Name="USU_LOGIN" ColumnName="USU_LOGIN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TABELA_CEST_VW">
+      <EntityTypeMapping TypeName="COADGEDModel.TABELA_CEST_VW">
+        <MappingFragment StoreEntitySet="TABELA_CEST_VW">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="codigo_cest" ColumnName="codigo_cest" />
+          <ScalarProperty Name="descricao" ColumnName="descricao" />
+          <ScalarProperty Name="id_item_cest_pai" ColumnName="id_item_cest_pai" />
+          <ScalarProperty Name="ncm" ColumnName="ncm" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TABELA_TIPI_VW">
+      <EntityTypeMapping TypeName="COADGEDModel.TABELA_TIPI_VW">
+        <MappingFragment StoreEntitySet="TABELA_TIPI_VW">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="ncm" ColumnName="ncm" />
+          <ScalarProperty Name="descricao" ColumnName="descricao" />
+          <ScalarProperty Name="id_item_tabela_tipi_pai" ColumnName="id_item_tabela_tipi_pai" />
+          <ScalarProperty Name="codigo_cest" ColumnName="codigo_cest" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionName="COADGEDModel.Store.PUBLICACAO_fun" FunctionImportName="PUBLICACAO_fun">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="COADGEDModel.PUBLICACAO_fun_Result">
+          <ScalarProperty Name="PUB_ID" ColumnName="PUB_ID" />
+          <ScalarProperty Name="PUB_CONTEUDO" ColumnName="PUB_CONTEUDO" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="EXCLUIR_TAB_CONFIG" FunctionName="COADGEDModel.Store.EXCLUIR_TAB_CONFIG" />
+    <FunctionImportMapping FunctionImportName="EXCLUIR_TABELA_DINAMICA_FULL" FunctionName="COADGEDModel.Store.EXCLUIR_TABELA_DINAMICA_FULL" />
+    <FunctionImportMapping FunctionImportName="EXCLUIR_TABELA_DINAMICA_ITENS" FunctionName="COADGEDModel.Store.EXCLUIR_TABELA_DINAMICA_ITENS" />
+    <FunctionImportMapping FunctionImportName="IMPORTAR_TAB_DINAMICA" FunctionName="COADGEDModel.Store.IMPORTAR_TAB_DINAMICA" />
+    <FunctionImportMapping FunctionImportName="PUBLICACAO_proc" FunctionName="COADGEDModel.Store.PUBLICACAO_proc" />
+  </EntityContainerMapping>
+</Mapping>

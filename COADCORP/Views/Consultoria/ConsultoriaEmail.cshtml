@@ -1,0 +1,139 @@
+﻿@model COAD.PORTAL.Model.DTO.PortalConsultoria.ConsultoriaPortalDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";
+}
+@Scripts.Render("~/Scripts/negocio/consultoria.js")
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">Home</a></li>
+        <li class="active">Consultoria</li>
+    </ol>
+}
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="ConsultoriaController" class="padding content">
+        <div id="page-wrapper">
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-filter"></span>&nbspFiltros
+                    <!--<div class="pull-right">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Opções<span class="caret"></span></button>
+            <ul class="dropdown-menu pull-right" role="menu">
+                <li>
+                    <a href="javascript:void(0)" app-post="@Url.Action("Editar")?_cep_id=" title="Editar" class="blue">
+                        <span class="glyphicon glyphicon-edit"></span>&nbspNovo
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>-->
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("ID")
+                                <input id="_id" type="text" ng-model="param.id" class="form-control " placeholder="ID" autofocus autocomplete="off" maxlength="8">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Código Usuário")
+                                <input id="_codigo" type="text" ng-model="param.codigo" class="form-control " placeholder="Código Usuário" autofocus autocomplete="off" maxlength="8">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Informe o Status")
+                                <select name="statusBusca" id="_status" ng-model="param.status" class="form-control " autofocus autocomplete="off">
+                                    <option value="">Todos</option>
+                                    <option value="1">Pendente</option>
+                                    <option value="2">Em andamento - Consultor</option>
+                                    <option value="3">Respondido - Consultor</option>
+                                    <option value="4">Em andamento - Supervisor</option>
+                                    <option value="5">Respondido - Supervisor</option>
+                                </select>
+                                <!--<input id="_status" type="text" ng-model="param.status" class="form-control " placeholder="Status" autofocus autocomplete="off">-->
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Período Inicial")
+                                <input id="_perini" type="text" ng-model="param.perini" class="form-control " placeholder="DD-MM-AAAA" autofocus autocomplete="off" maxlength="10">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Período Final")
+                                <input id="_perfim" type="text" ng-model="param.perfim" class="form-control " placeholder="DD-MM-AAAA" autofocus autocomplete="off" maxlength="10">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Estado")
+                                @Html.DropDownList("_uf", new SelectList(ViewBag.UFs, "Value", "Text"), new { @class = "form-control", ng_model = "param.uf" })
+                                <!--<input id="_uf" type="text" ng-model="param.uf" class="form-control " placeholder="Estado" autofocus autocomplete="off">-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button ng-click="listar()" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                </div>
+            </div>
+            <div class="panel panel-corp" ng-show="listaconsulta">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-book"></span>&nbspCadastro de CEP
+                    <div class="pull-right">
+                        <div class="btn-group">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr class="info">
+                                <th>ID</th>
+                                <th>Assinatura</th>
+                                <th>Assunto</th>
+                                <!--<th>Consultor</th>
+                                <th>Resposta Consultor</th>
+                                <th>Supervisor</th>
+                                <th>Resposta Supervisor</th>-->
+                                <th>Pergunta</th>
+                                <th>Estado</th>
+                                <th style="text-align: center;">Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listaconsulta">
+                                <td>{{item.id}}</td>
+                                <td>{{item.usuario}}</td>
+                                <td>{{item.gg}} - {{item.verbete}}</td>
+                                <td>{{item.pergunta}}</td>
+                                <td>{{item.estado}}</td>
+                                <td style="text-align: center;">
+                                    <a href="javascript:void(0)" app-post="@Url.Action("Editar")?_id={{item.id}}" title="Editar" class="blue">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr />
+                    <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,27 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="COAD.EXTENSION" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="COAD.EXTENSION.TextTemplate" #>
+<#@ import namespace="COAD.EXTENSION.TextTemplate.Model" #>
+
+<#@parameter type="COAD.EXTENSION.TextTemplate.Model.T4TemplateObjectMetadataModel" name="metadata"#>
+
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace <#=metadata.DefaultNameSpace#>.Repositorios.Base
+{
+    public class <#=metadata.ProjectName#>Context : DbContext
+    {
+
+    }
+}
+

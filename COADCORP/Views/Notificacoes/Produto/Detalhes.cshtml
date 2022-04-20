@@ -1,0 +1,119 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutosDTO
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using Coad.GenericCrud.Extensions
+
+    @section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li>@Html.ActionLink("Gerenciar Produtos","index","Produto")</li>
+        <li class="active">Detalhes do Produto</li>         
+        
+    </ol>
+}
+    
+@Scripts.Render("~/Scripts/negocio/produtos.js")
+
+<div class="form-lg padding" ng-app="appModule">
+
+    <div class="panel panel-default" ng-controller="ProdutoController" data-ng-init="read(@ViewBag.produtoId)">            
+                  <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-search icon-panel"></span> Detalhes do Produto</div>
+            <div class="panel-body">  
+                 <div app-message></div>               
+                <div class="row">
+                    <div class="form-group col-lg-2">
+                        @Html.Label("Código")
+                        @Html.TextBoxFor(model => model.PRO_ID,  new {@class = "form-control", ng_model = "produto.PRO_ID", disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.PRO_SIGLA, null, new { app_validation_msg = "erros", @for = "PRO_ID" }) 
+                    </div>
+                    <div class="form-group col-lg-2">
+                        @Html.HiddenFor(model => model.PRO_ID)
+                        @Html.LabelFor(model => model.PRO_SIGLA)
+                        @Html.TextBoxFor(model => model.PRO_SIGLA,  new {@class = "form-control", ng_model = "produto.PRO_SIGLA", disabled = "disabled" })    
+                    </div>
+                    <div class="form-group col-lg-8">
+                        @Html.LabelFor(model => model.PRO_NOME)
+                        @Html.TextBoxFor(model => model.PRO_NOME, new {@class = "form-control", ng_model = "produto.PRO_NOME", disabled = "disabled"})                 
+                    </div>                    
+                </div>
+                <div class="row">
+                     <div class="form-group col-lg-2">
+                        @Html.LabelFor(model => model.NCM_ID)       
+                        @Html.TextBoxFor(model => model.NCM_ID, new {@class = "form-control", ng_model = "produto.NCM_ID", onkeyup = @"OnlyNumber(this);", disabled = "disabled"})
+                                     
+                    </div>
+                    <div class="form-group col-lg-4">    
+                        @Html.LabelFor(model => model.AREA_ID)
+                        @Html.DropDownListFor(model => model.AREA_ID, new SelectList(ViewBag.areas, "AREA_ID", "AREA_NOME"), "Selecione", new {@class = "form-control", ng_model = "produto.AREA_ID", disabled = "disabled" })
+
+                    </div>
+                    <div class="form-group col-lg-3">
+                        @Html.LabelFor(model => model.GRUPO_ID)        
+                        @Html.DropDownListFor(model => model.GRUPO_ID, new SelectList(ViewBag.grupos, "GRUPO_ID", "GRU_DESCRICAO"), "Selecione", new {@class = "form-control", ng_model = "produto.GRUPO_ID", disabled = "disabled" })
+
+                    </div>
+                    <div class="form-group col-lg-3">
+                            
+                        <label for="PRO_RECEBE_MALA">                             
+                            Receber Mala Direta
+                        </label>
+                        <br />
+                        <input type="checkbox" ng-model="produto.PRO_RECEBE_MALA" disabled="disabled"/>
+                        @Html.ValidationMessageFor(model => model.PRO_RECEBE_MALA, null, new { app_validation_msg = "erros", @for = "PRO_RECEBE_MALA", disabled = "disabled" })                   
+                   </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-3">
+                        @Html.LabelFor(model => model.PRO_PRECO_COMPRA)
+                        @Html.TextBoxFor(model => model.PRO_PRECO_COMPRA,new {@class = "form-control", ng_model = "produto.PRO_PRECO_COMPRAMask", app_mask_dinheiro = "produto.PRO_PRECO_COMPRA", disabled = "disabled" })
+
+                    </div>
+            
+                    <div class="form-group col-lg-3">
+                        @Html.LabelFor(model => model.PRO_PRECO_CUSTO)
+                        @Html.TextBoxFor(model => model.PRO_PRECO_CUSTO, new {@class = "form-control", ng_model= "produto.PRO_PRECO_CUSTO_MASK", app_mask_dinheiro = "produto.PRO_PRECO_CUSTO", disabled = "disabled" })
+
+                    </div>                    
+            
+                    <div class="form-group col-lg-3">
+                        @Html.LabelFor(model => model.PRO_PRECO_VENDA)
+                        @Html.TextBoxFor(model => model.PRO_PRECO_VENDA, new {@class = "form-control", ng_model = "produto.PRO_PRECO_VENDAMask", app_mask_dinheiro = "produto.PRO_PRECO_VENDA", disabled = "disabled" })
+                            
+                    </div>            
+                    <div class="form-group col-lg-3">
+                        @Html.LabelFor(model => model.TIPO_PRO)
+                        @Html.DropDownListFor(model => model.TIPO_PRO, new SelectList(ViewBag.tipoProd, "TIPO_PRO", "TIPO_DESCRICAO"), "Selecione" ,new {@class = "form-control", ng_model = "produto.TIPO_PRO", disabled = "disabled" })
+
+                    </div>
+                </div>
+                <div class="row">                    
+            
+                    <div class="form-group col-lg-4">
+                        @Html.LabelFor(model => model.TPC_ID)
+                        @Html.DropDownListFor(model => model.TPC_ID, new SelectList(ViewBag.tipoComportamento, "TPC_ID", "TPC_DESCRICAO"), "Selecione" ,new {@class = "form-control", ng_model = "produto.TPC_ID", disabled = "disabled" })
+
+                    </div>                    
+                    <div class="form-group col-lg-4">
+                        @Html.LabelFor(model => model.PRO_UN_COMPRA)
+                        @Html.DropDownListFor(model => model.PRO_UN_COMPRA, new SelectList(ViewBag.unidadeMedida, "UND_ID", "UND_DESCRICAO"), "Selecione", new {@class = "form-control", ng_model = "produto.PRO_UN_COMPRA", disabled = "disabled" })
+
+                    </div>
+                    <div class="form-group col-lg-4">
+                        @Html.LabelFor(model => model.PRO_UN_VEND)
+                        @Html.DropDownListFor(model => model.PRO_UN_VEND, new SelectList(ViewBag.unidadeMedida, "UND_ID", "UND_DESCRICAO"), "Selecione", new {@class = "form-control", ng_model = "produto.PRO_UN_VEND", disabled = "disabled" })
+
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default">Voltar</button>
+            </div>
+        
+    </div>
+    </div>

@@ -1,0 +1,44 @@
+﻿@model  COAD.COADGED.Model.DTO.TipoMateriaDTO
+@{
+    ViewBag.Title = "Edit";
+}
+@using Coad.GenericCrud.Extensions
+    @section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li>@Html.ActionLink("Gerenciar Tipos de Matérias","index","TipoMateria")</li>
+        <li class="active">Detalhes do Tipo de Matéria</li>         
+    </ol>
+}
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/tipoMateria.js")
+<div class="form-lg padding" ng-app="appModule">
+
+    <div class="panel panel-default" ng-controller="TipoMateriaController" data-ng-init="read(@ViewBag.tipoMateriaId)">
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-search icon-panel"></span> Detalhes do Tipo de Matéria</div>
+
+            <div class="panel-body">  
+                <div app-message></div>               
+                <div class="row">
+                    <div class="form-group col-lg-1">
+                        @Html.Label("ID")
+                        @Html.TextBoxFor(model => model.TIP_MAT_ID,  new {@class = "form-control", ng_model = "tipoMateria.TIP_MAT_ID", disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.TIP_MAT_DESCRICAO, null, new { app_validation_msg = "erros", @for = "TIP_MAT_ID" }) 
+                    </div>
+                    <div class="form-group col-lg-9">
+                        @Html.LabelFor(model => model.TIP_MAT_DESCRICAO)
+                        @Html.TextBoxFor(model => model.TIP_MAT_DESCRICAO, new {@class = "form-control", ng_model = "tipoMateria.TIP_MAT_DESCRICAO", disabled = "disabled"})                 
+                    </div>                    
+                    <div class="form-group col-lg-2">
+                        @Html.LabelFor(model => model.TIP_MAT_ATIVO)
+                        @Html.DropDownListFor(model => model.TIP_MAT_ATIVO, new SelectList(@ViewBag.ativo, "Value", "Text"), null ,new {@class = "form-control", ng_model = "tipoMateria.TIP_MAT_ATIVO", disabled = "disabled" })
+                    </div>                    
+                </div>
+            </div>
+            
+            <div class="panel-footer">
+                <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default">Voltar</button>
+            </div>
+    </div>
+
+</div>

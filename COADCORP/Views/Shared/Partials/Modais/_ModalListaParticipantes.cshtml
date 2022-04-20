@@ -1,0 +1,49 @@
+﻿<div app-modal="modal-participante" header="Participantes" submodal>
+
+    <div class="row">
+        <div class="form-group col-lg-12 limit-modal-height">
+
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Participante N°</th>
+                        <th>
+                            Nome
+                        </th>
+                        <th>
+                            CPF
+                        </th>
+                        <th>
+                            E-Mail
+                        </th>
+                        <th>DDD</th>
+                        <th>Telefone</th>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in lstPedidoParticipante" class="animate-repeat">
+                    <td>{{$index + 1}}</td>
+                    <td>
+                        {{item.PPR_NOME}}
+                    </td>
+                    <td>
+                        {{item.PPR_CPF_CNPJ}}
+                    </td>
+                    <td>
+                        {{item.PPR_EMAIL}}
+                    </td>
+                    <td>
+                        {{item.PPR_DDD}}
+                    </td>
+                    <td>
+                        {{item.PPR_TELEFONE}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" ng-if="lstPedidoParticipante.length <= 0" class="text">
+                        Não foi encontrado nenhum registro.
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,110 @@
+﻿
+<div app-modal="modal-comprovante" data-header="Comprovantes">
+    <div class="limit-div-6">
+
+        <div class="panel panel-default" ng-repeat="item in modalComprovante.PROPOSTA_ITEM_COMPROVANTE">    
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel pointer"
+                 data-toggle="collapse"
+                 data-target="#body_comprovante_{{$index}}"
+                 aria-controls="body_comprovante_{{$index}}"
+                 aria-expanded="false">
+                <span class="fa fa-book font-15" aria-hidden="true"></span>
+                Comprovante {{$index + 1}} <span class="label label-primary"> {{item.TIPO_PAGAMENTO.NomeTipoPagamento}}</span>
+                <button type="button" class="close font-15" ng-click="removerComprovante($index, $event)" style="opacity:1;" title="Remover Comprovante">
+                    <span aria-hidden="true" class="glyphicon glyphicon-remove-sign red"></span>
+                </button>
+            </div>
+
+            <div class="panel-body collapse" id="body_comprovante_{{$index}}">
+                <div class="row" ng-show="item.TPG_ID == 9">
+                    <div class="col-lg-3">
+                        <label for="tipo_pagamento">Bandeira do Cartão</label>
+                        <select name="tipo_pagamento" class="form-control" ng-model="item.BAC_ID" style="width:110px;"
+                                ng-options="item.BAC_ID as item.BAC_DESCRICAO for item in lstBandeiraCartao">
+                            <option value="">Selecione</option>
+                        </select>
+                        <div app-validation-msg="erros" for="PROPOSTA_ITEM_COMPROVANTE[{{$index}}].BAC_ID"></div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label>Número de Cartão</label>
+                        <input type="text" class="form-control" ng-model="item.PIC_NUMERO_CARTAO" maxlength="50" />
+                        <div app-validation-msg="erros" for="PROPOSTA_ITEM_COMPROVANTE[{{$index}}].PIC_NUMERO_CARTAO"></div>
+
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <label>Venc. Cartão</label>
+                        <input type="text" class="form-control" ng-model="item.PIC_VENC_CARTAOStr" app-month="item.PIC_VENC_CARTAO" />
+                        <div app-validation-msg="erros" for="PROPOSTA_ITEM_COMPROVANTE[{{$index}}].PIC_VENC_CARTAO"></div>
+                    </div>
+                </div>
+                <div class="row" ng-show="item.TPG_ID != 9">
+                    <div class="col-lg-4" ng-show="item.TPG_ID == 8 || item.TPG_ID == 10">
+                        <label for="banco">Banco</label>
+                        <select name="banco" class="form-control" ng-model="item.BAN_ID"
+                                ng-options="item.BAN_ID as (item.BAN_ID + ' - ' + item.BAN_NOME) for item in lstBancos">
+                            <option value="">Selecione</option>
+                        </select>
+                        <div app-validation-msg="erros" for="PROPOSTA_ITEM_COMPROVANTE[{{$index}}].BAC_ID"></div>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label>
+                            Número do
+                            <span ng-switch="item.TPG_ID">
+                                <span ng-switch-when="8">Cheque</span>
+                                <span ng-switch-when="10">Comprovante</span>
+                                <span ng-switch-default>Documento</span>
+                            </span>
+                        </label>
+                        <input type="text" class="form-control" ng-model="item.PIC_NUMERO_DOCUMENTO" maxlength="50" />
+                    </div>
+                    <div class="form-group col-sm-2" ng-show="item.TPG_ID == 8">
+                        <label for="campo_UF_SIGLA">UF</label>
+                        <select id="campo_UF_SIGLA" name="campo_UF_SIGLA" class="form-control" ng-model="item.UF_SIGLA"
+                                ng-options="tpc.UF_SIGLA as tpc.UF_SIGLA for tpc in lstUF">
+                            <option value="">Selecione</option>
+                        </select>
+                        <div app-validation-msg="erros" for="END_UF"></div>
+                        <div app-validation-msg="erros" for="CLIENTES_ENDERECO[{{$index}}].END_UF"></div>
+                    </div>
+                    <div class="col-md-3 form-group" ng-show="item.TPG_ID == 7 || item.TPG_ID == 10">
+                        <label>Código de Referência</label>
+                        <input type="text" class="form-control" ng-model="item.PIC_COD_REFERENCIA" maxlength="50" />
+                    </div>
+                </div>
+                <div class="row" ng-show="item.TPG_ID != 9">
+                    <div class="col-md-3 form-group">
+                        <label>Data de Pagamento</label>
+                        <input type="text" class="form-control" app-date="item.PIC_DATA_PAGAMENTO" ng-model="item.PIC_DATA_PAGAMENTOStr" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label>Informações Complementares</label><br />
+                        <textarea ng-model="item.PIC_TEXTO" rows="5" class="form-control">
+
+                                    </textarea>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div>
+            <a href="javascript:void(0);" ng-click="adicionarComprovante()"><span class="glyphicon glyphicon-plus"></span> Adicionar Comprovante</a>
+        </div>
+        <br />
+        <div>
+            <button app-switch-button="salvarComprovantes()"
+                    switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]"
+                    switch-var="$parent.buttonComprovante"
+                    class="btn btn-primary">
+                <span class="glyphicon glyphicon-floppy-save"></span>
+            </button>
+            <button type="button" class="btn btn-default btn-sm" ng-click="fecharModalComprovante();">
+                <span class="glyphicon glyphicon-remove"></span> Fechar
+            </button>
+
+        </div>
+    </div>
+</div> 

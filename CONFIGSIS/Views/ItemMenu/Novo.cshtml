@@ -1,0 +1,120 @@
+﻿@model COAD.SEGURANCA.Model.ItemMenuModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+<div ng-app="appModule">
+    <div ng-controller="ItemMenuControler">
+      <div class="form panel panel-primary">
+        <div class="panel-heading">
+            @ViewBag.Title
+        </div>
+        @Html.ValidationSummary(false)
+        <div class="panel-body">
+@*            <div class="col-lg-2">
+                <div class="form-group">
+                    @Html.Label("ID")
+                    @Html.HiddenFor(model => model.ITM_ID , new { @class = "form-control" , ng_model ="m.ITM_ID" })
+                    @Html.TextBoxFor(model => model.ITM_ID , new { @class = "form-control" , ng_model ="m.ITM_ID", disabled = true })
+                </div>
+            </div>*@
+            <div class="col-lg-12">
+                <div class="form-group">
+                    @Html.Label("Descrição")
+                    @Html.TextBoxFor(model => model.ITM_DESCRICAO, new { @class = "form-control" , ng_model ="m.ITM_DESCRICAO"  })
+                    @Html.ValidationMessageFor(model => model.ITM_DESCRICAO)
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group">
+                    @Html.Label("Caminho (PATH)")
+                    @Html.TextBoxFor(model => model.ITM_NOME_ARQUIVO, new { @class = "form-control" , ng_model ="m.ITM_NOME_ARQUIVO"  })
+                    @Html.ValidationMessageFor(model => model.ITM_NOME_ARQUIVO)
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group">
+                    @Html.Label("Sistema")
+                    @Html.DropDownListFor(model => model.SIS_ID, new SelectList(@ViewBag.ListaSistema, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_change = "BuscarMenu(m.SIS_ID)", ng_model = "m.SIS_ID"  })
+                    @Html.ValidationMessageFor(model => model.SIS_ID)
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="form-group">
+                    @Html.Label("Menu Antecessor(Pai)")
+                    @Html.DropDownListFor(model => model.ITM_NODE_ID, new SelectList(@ViewBag.listaItmMenu, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_options="item.ITM_ID as item.ITM_DESCRICAO for item in listaMenu", ng_model = "m.ITM_NODE_ID" })
+                    @Html.ValidationMessageFor(model => model.ITM_NODE_ID)
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="form-group">
+                    @Html.Label("Ordem")
+                    @Html.TextBoxFor(model => model.ITM_MENU_SEQ, new { @class = "form-control" , ng_model = "m.ITM_MENU_SEQ" })
+                    @Html.ValidationMessageFor(model => model.ITM_MENU_SEQ)
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="form-group">
+                    @Html.Label("Nível")
+                    @Html.DropDownListFor(model => model.ITM_MENU_NIVEL, (SelectList)@ViewBag.ListaNivel, "--- Selelcione ---", new { @class = "form-control" , ng_model = "m.ITM_MENU_NIVEL" })
+                    @Html.ValidationMessageFor(model => model.ITM_MENU_NIVEL)
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    @Html.Label("Tipo")
+                    <div class="radio">
+                        <label>@Html.RadioButtonFor(model => model.ITM_TIPO, "0", new { ng_model = "m.ITM_TIPO" }  )Menu/Link</label>
+                    </div>
+                    <div class="radio">
+                        <label>@Html.RadioButtonFor(model => model.ITM_TIPO, "1", new { ng_model = "m.ITM_TIPO" }  )Pagina</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    @Html.Label("Item Externo")
+                    <div class="radio">
+                        <label>@Html.RadioButtonFor(model => model.ITM_EXTERNO, "0", new { ng_model = "m.ITM_EXTERNO" } )Não</label>
+                    </div>
+                    <div class="radio">
+                        <label>@Html.RadioButtonFor(model => model.ITM_EXTERNO, "1", new { ng_model = "m.ITM_EXTERNO" } )Sim</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    @Html.Label("Situação")
+                    <div class="radio">
+                        <label>@Html.RadioButtonFor(model => model.ITM_ATIVO, "0", new { ng_model = "m.ITM_ATIVO" } )Inativo</label>
+                    </div>
+                    <div class="radio">
+                        <label>@Html.RadioButtonFor(model => model.ITM_ATIVO, "1", new { ng_model = "m.ITM_ATIVO" } )Ativo</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="button" ng-click="SalvarItemMenu()" class="btn btn-default" value="Salvar" />
+            <a href="javascript:history.back()" class="btn btn-default" }>Voltar</a>
+        </div>
+    </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/appScripts/itemmenu.js")
+    @Scripts.Render("~/Scripts/appScripts/datepicker.js")
+    @Scripts.Render("~/Content/themes/base/bootstrap-datepicker.css")
+    
+}

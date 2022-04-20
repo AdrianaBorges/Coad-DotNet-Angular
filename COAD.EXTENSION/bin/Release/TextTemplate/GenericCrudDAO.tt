@@ -1,0 +1,35 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="COAD.EXTENSION" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="COAD.EXTENSION.TextTemplate" #>
+<#@ import namespace="COAD.EXTENSION.TextTemplate.Model" #>
+
+<#@parameter type="COAD.EXTENSION.TextTemplate.Model.T4TemplateObjectMetadataModel" name="metadata"#>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Coad.GenericCrud.Dao.Base;
+using <#=metadata.DefaultNameSpace#>.Repository.Base;
+using <#=metadata.ModelNamespace#>;
+using <#=metadata.RefClassNamespace#>;
+
+namespace <#=metadata.DAONamespace#>
+{
+    public class <#=metadata.ClassName#>DAO : AbstractGenericDao<<#=metadata.RefClassName#>, <#=metadata.ClassName#>DTO, <#=metadata.PrimaryKeyType#>>
+    {
+        public <#=metadata.DbContextType#> db { get { return GetDb<<#=metadata.DbContextType#>>(); } set { } }
+
+        public <#=metadata.ClassName#>DAO()
+        {
+            db = GetDb<<#=metadata.DbContextType#>>(false);
+        }
+
+        
+    }
+}

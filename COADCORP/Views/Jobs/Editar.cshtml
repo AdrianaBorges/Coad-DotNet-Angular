@@ -1,0 +1,314 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using COAD.CORPORATIVO.SessionUtils
+
+@{
+    ViewBag.Title = "Editar";
+    bool podeEditar = SessionUtil.PossuiPermissaoParaEditarProspect();
+    ViewBag.defer = "defer='defer'";
+}
+@using Coad.GenericCrud.Extensions
+@using GenericCrud.ActionResultTools
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Templates (Editar)</li>
+    </ol>
+}
+<style type="text/css">
+    #editor {
+        left: -260px;
+    }
+</style>
+<script src="@UrlCorp.Content("~/Scripts/negocio/templates.js")" @ViewBag.defer></script>
+
+<div ng-app="appModule">
+    <div class="panel panel-default" ng-controller="TemplatesController" data-ng-init="init('@ViewBag.tplId')" ng-cloak>
+        <!-- Default panel contents -->
+ 
+            @Html.ValidationSummary(true)          
+                  <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Editar Cliente
+                    
+                        <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"
+                                            aria-expanded="false" ng-disabled="button == 'saved'">
+                                            Opções
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                             <li>
+                                                <a href="@Url.Action("Buscar")" title="Voltar" class="blue"> Voltar</a>
+                                            </li>
+                                          @*  <li>
+                                                <a href="javascript:void(0)" title="Salvar" ng-click="salvarClienteFranquia()" class="blue">Salvar</a>
+                                            </li>*@
+                                    @*        <li>
+                                                <a href="javascript:void(0)" title="Informações" ng-click="abreModalCliente(prospect.CLI_ID)" class="blue">Informações do prospect</a>
+                                            </li>*@
+                                            <li ng-show="prospect.ID">
+                                                <a href="javascript:void(0)" app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}" 
+                                                    app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?" class="btnConfirmaExclusao blue" title="Excluir"> Excluir</a>
+                                            </li>                                                                                                                    
+                                        </ul>
+                                    </div>
+                                </div>
+                     
+                     
+            </div>
+
+            <div class="panel-body">  
+                <div app-message></div>
+                
+<fieldset>
+    <legend class="text-info">
+        <span class="font-30">
+            <i class="fa fa-male" aria-hidden="true"></i>
+            <span class="font-16">Dados de Cadastro</span>
+        </span>
+    </legend>
+    <section id="layout" ng-show="!templateHTML.LAYOUT">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="font-16">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <label class="font-15">Layout</label>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label for="selectRegiao">Nome do Layout</label>
+                <span class="text font-15" ng-show="templateHTML.TEMPLATE_HTML2"><span class="label label-primary">{{templateHTML.TEMPLATE_HTML2.TPL_DESCRICAO }}</span> </span>
+                <span class="text" ng-show="!templateHTML.TEMPLATE_HTML2.TPL_DESCRICAO"><span class="label label-default">Não Adicionado</span></span>
+                <span ng-show="templateHTML.TEMPLATE_HTML2">
+                    <a href="javascript:void(0);" ng-click="abrirLayoutsPartial()" title="Alterar" class="clear-link">
+                        <span class="glyphicon glyphicon-refresh"></span>
+                    </a>
+                    <a href="javascript:void(0);" ng-click="removerLayout()" title="Remover" class="text-danger clear-link">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </span>
+                <span ng-show="templateHTML.TEMPLATE_HTML2 == null">
+                    <a href="javascript:void(0);" ng-click="abrirLayoutsPartial()" title="Adicionar" class="text-info">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
+                </span>
+            </div>
+        </div>        
+    </section>   
+    <section id="dados-cadastrais">
+
+        <div class="row">
+            <div class="col-md-12">
+                <span class="font-16">
+                    <span class="glyphicon glyphicon-user"></span>
+                    <label class="font-15">Cadastro</label>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label for="selectRegiao">Fonte de Dados</label>
+                <span class="text font-15" ng-show="templateHTML.FONTE_DADOS_TEMPLATE"><span class="label label-primary">{{templateHTML.FONTE_DADOS_TEMPLATE.FDA_DESCRICAO }}</span> </span>
+                <span class="text" ng-show="!templateHTML.FONTE_DADOS_TEMPLATE.FDA_DESCRICAO"><span class="label label-default">Não Adicionado</span></span>
+                <span ng-show="templateHTML.FONTE_DADOS_TEMPLATE">
+                    <a href="javascript:void(0);" ng-click="abrirFonteDadosModal()" title="Alterar" class="clear-link">
+                        <span class="glyphicon glyphicon-refresh"></span>
+                    </a>
+                    <a href="javascript:void(0);" ng-click="removerFonteDados()" title="Remover" class="text-danger clear-link">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </span>
+                <span ng-show="templateHTML.FONTE_DADOS_TEMPLATE == null">
+                    <a href="javascript:void(0);" ng-click="abrirFonteDadosModal()" title="Adicionar" class="text-info">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label>Descrição</label>
+                <input type="text" class="form-control" ng-model="templateHTML.TPL_DESCRICAO" />
+                <div app-validation-msg="erros" data-for="TPL_DESCRICAO"></div>
+            </div>
+            <div class="form-group col-sm-2">
+                <label>Grupo Template</label>
+                <select name="grupo" class="form-control" ng-model="templateHTML.TGR_ID" style="width:110px;"
+                        ng-options="item.TGR_ID as item.TGR_DESCRICAO for item in lstTemplateGrupo">
+                    <option value="">Selecione</option>
+                </select>
+            </div>   
+            <div class="form-group col-sm-1">
+                <label for="ped_gera_nota">Layout</label><br />
+                <label class="switch switch-success switch-round">
+                    <input type="checkbox" ng-model="templateHTML.LAYOUT" ng-checked="templateHTML.LAYOUT == true" ng-change="checarTipoLayout()">
+                    <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <div app-editor="templateHTML.TPL_HTML" app-editor-model="cancelamentoDTO.TPL_HTML" editor-model="editor" id="templateHTML" data-force-model="true" class="limit-div-4">
+                </div>
+            </div>
+         </div>
+            <div class="form-group col-sm-3">
+                <div id="tokens" ng-show="showDescricaoDados">
+                    <div class="row">
+                        <div class="form-group col-sm-8">
+                            <div class="panel panel-info div-tokens">
+                                <div class="panel-heading">Tokens</div>
+                                <div class="panel-body limit-div-5">
+                                    <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                                    <table class="table table-hover table-striped table-bordered-primary">
+                                        <thead>
+                                            <tr class="bg-info">
+                                                <th>Descrição</th>
+                                                <th>Token</th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-repeat="item in templateHTML.FONTE_DADOS_TEMPLATE.FONTE_DADOS_DESCRICAO">
+                                            <td>{{item.FDD_DESCRICAO}}</td>
+                                            <td><text>{{</text>{{ item.DFD_TOKEN }}<text>}}</text> </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="12" ng-show="!templateHTML.FONTE_DADOS_TEMPLATE.FONTE_DADOS_DESCRICAO || templateHTML.FONTE_DADOS_TEMPLATE.FONTE_DADOS_DESCRICAO.length == 0">Nenhum registro foi encontrado.</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </fieldset>
+            </div>
+
+         <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("index", "templates")'" class="btn btn-default" ng-disabled="button == 'saved'">
+                <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar</button>
+              <button 
+                  app-switch-button="salvarTemplates(true)" 
+                  switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]" 
+                  switch-var="button"
+                  class="btn btn-default">
+                  <span class="glyphicon glyphicon-floppy-save blue"></span>
+              </button>
+             <span ng-show="templateHTML.FDA_ID">
+                 <button app-switch-button="salvarTemplates()"
+                         switch-conf="[{label : 'Salvar e Ver Preview', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]"
+                         switch-var="button1"
+                         class="btn btn-default">
+                     <span class="glyphicon glyphicon-floppy-save blue"></span>
+                 </button>
+             </span>
+
+           <span ng-show="prospect.ID">
+                <button type="button" class="btn btn-danger" 
+                    app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}" app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?">
+                    <span class="glyphicon glyphicon-remove-sign"></span> Excluir</button>
+
+            </span>         
+
+        </div> 
+
+        <div data-app-modal="template-layout-modal" data-header="Layouts Disponíveis" data-submodal="" data-size="small" data-header-bg="false">              
+            <div class="row padding">
+                <div class="form-group col-lg-3">
+                    <label for="sigla">Descrição</label>
+                    <input type="text" ng-model="filtro.descricao" class="form-control" />
+                </div>
+                <div class="form-group col-lg-3">
+                    <label for="sigla">Grupo</label>
+                    <select name="grupo_filtro" class="form-control" ng-model="filtro.tgrId" style="width:110px;"
+                            ng-options="item.TGR_ID as item.TGR_DESCRICAO for item in lstTemplateGrupo">
+                        <option value="">Selecione</option>
+                    </select>
+                </div>
+                <div class="form-group col-lg-2" style="padding-top: 24px">
+                    <button type="button" class="btn btn-default" ng-click="pesquisarLayoutsHTML()"><span class="glyphicon glyphicon-search"></span></button>
+                </div>
+            </div>      
+            <div class="table-responsive">
+                <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                <table class="table table-hover table-striped table-bordered-primary">
+                    <thead>
+                        <tr class="bg-info">
+                            <th>Id</th>
+                            <th>Descrição</th>
+                            <th>Grupo</th>
+                            <th>É Layout</th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in lstTemplateHTML">
+                        <td>{{item.TPL_ID}}</td>
+                        <td>{{item.TPL_DESCRICAO}}</td>
+                        <td>{{item.TEMPLATE_GRUPO.TGR_DESCRICAO}}</td>
+                        <td>
+                            <span class="label label-success" ng-if="item.LAYOUT">SIM</span>
+                            <span class="label label-warning" ng-if="!item.LAYOUT">NÃO</span>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" ng-click="adicionarLayout(item)"
+                               title="Adicionar" class="text-primary">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="12" ng-show="!lstTemplateHTML || lstTemplateHTML.length == 0">Nenhum registro foi encontrado.</td>
+                    </tr>
+                </table>
+            </div> 
+            <app-pagination request-page="paginaReq" load-function="pesquisarLayoutsHTML(paginaReq)"></app-pagination>
+        </div>
+        <div app-init-editor="editor" data-is-open="showDescricaoDados"></div> 
+        
+        <div data-app-modal="fonte-dados-modal" data-header="Fonte de Dados Disponíveis" data-submodal="" data-size="small" data-header-bg="false">
+            <div class="row padding">
+                <div class="form-group col-lg-3">
+                    <label for="sigla">Descrição</label>
+                    <input type="text" ng-model="filtro.descricao" class="form-control" />
+                </div>
+                <div class="form-group col-lg-2" style="padding-top: 24px">
+                    <button type="button" class="btn btn-default" ng-click="pesquisarFonteDadosTemplate()"><span class="glyphicon glyphicon-search"></span></button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                <table class="table table-hover table-striped table-bordered-primary">
+                    <thead>
+                        <tr class="bg-info">
+                            <th>Id</th>
+                            <th>Descrição</th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in lstFonteDadosHTML">
+                        <td>{{item.FDA_ID}}</td>
+                        <td>{{item.FDA_DESCRICAO}}</td>
+                        <td>
+                            <a href="javascript:void(0)" ng-click="adicionarFonteDados(item)"
+                               title="Adicionar" class="text-primary">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="12" ng-show="!lstFonteDadosHTML || lstFonteDadosHTML.length == 0">Nenhum registro foi encontrado.</td>
+                    </tr>
+                </table>
+            </div>
+            <app-pagination request-page="paginaReq" load-function="pesquisarFonteDadosTemplate(paginaReq)"></app-pagination>
+        </div>
+
+
+    </div>
+</div>

@@ -1,0 +1,103 @@
+﻿@model  COAD.COADGED.Model.DTO.PublicacaoAreaConsultoriaDTO
+
+<div class="row">
+    <div class="form-group col-lg-2">
+        <div ng-if="!(operacao.substring(0,1)=='V' || _cargoSigla=='DGT' || _cargoSigla=='RVO' || _cargoSigla=='DIA')">
+            <a href="javascript:void(0);" ng-click="prepararBuscarMateria()" data-toggle="tooltip" title="Clique aqui para buscar uma matéria">Nº da Matéria</a>
+        </div>
+
+        <div ng-if="(operacao.substring(0,1)=='V' || _cargoSigla=='DGT' || _cargoSigla=='RVO' || _cargoSigla=='DIA')">
+            Nº da Matéria
+        </div>
+
+        @Html.TextBoxFor(model => model.PUB_ID, new { @class = "form-control", ng_model = "pub.PUB_ID", disabled = "disabled" })
+        @Html.ValidationMessageFor(model => model.PUB_ID, null, new { app_validation_msg = "erros", @for = "PUB_ID" })
+    </div>
+
+    <div class="form-group col-lg-3">
+        Colecionador
+        <select id="colecionadorNome" class="form-control" ng-model = "pub.ARE_CONS_ID" ng-change = "lerGg()" ng-disabled="pub.PUB_ID">
+            <option value="">--Selecione--</option>
+            <option data-ng-repeat="item in lst._areas" ng-value="{{item.Value}}" ng-selected="pub.ARE_CONS_ID==item.Value">{{item.Text}}</option>
+        </select>
+        @Html.ValidationMessageFor(model => model.ARE_CONS_ID, null, new { app_validation_msg = "erros", @for = "ARE_CONS_ID" }) 
+    </div>
+
+    <div class="form-group col-lg-2">
+        Tipo de Matéria
+        <select id="tpMateria" class="form-control" ng-model = "pub.PUBLICACAO.TIP_MAT_ID" ng-disabled="(operacao.substring(0,1)=='V')">
+            <option value="">--Selecione--</option>
+            <option data-ng-repeat="item in lst._tpMateria" ng-value="{{item.Value}}" ng-selected="pub.PUBLICACAO.TIP_MAT_ID==item.Value">{{item.Text}}</option>
+        </select>
+
+        @Html.ValidationMessageFor(model => model.PUBLICACAO.TIP_MAT_ID, null, new { app_validation_msg = "erros", @for = "PUBLICACAO.TIP_MAT_ID" }) 
+    </div>
+    
+    <div class="form-group col-lg-3">
+        <a href="#" data-toggle="tooltip" 
+            title="Informe [Sim] para usar esta matéria nos informativos indicados nesta tela; ou [Não] para arquivá-la para uso posterior.">
+            Usar neste informativo?
+        </a>
+
+        <select id="ativo" class="form-control" ng-model = "pub.PUBLICACAO.PUB_ATIVO" ng-disabled="(operacao.substring(0,1)=='V')">
+            <option value="">--Selecione--</option>
+            <option data-ng-repeat="item in lst._ativo" ng-value="{{item.Value}}" ng-selected="pub.PUBLICACAO.PUB_ATIVO==item.Value">{{item.Text}}</option>
+        </select>
+        @Html.ValidationMessageFor(model => model.PUBLICACAO.PUB_ATIVO, null, new { app_validation_msg = "erros", @for = "PUBLICACAO.PUB_ATIVO" }) 
+    </div>
+    
+    <div class="form-group col-lg-2" ng-show="pub.ARE_CONS_ID!=='2'">
+        Informativo
+        <select id="informativo" class="form-control" ng-model = "pub.PUB_UF[0].INF_ANO" ng-disabled="(operacao.substring(0,1)=='V')">
+            <option value="">--Selecione--</option>
+            <option data-ng-repeat="item in lst._informativo" ng-value="{{item.Value.ToString()}}" ng-selected="pub.PUB_UF[0].INF_ANO==item.Value">{{item.Text}}</option>
+        </select>
+        @Html.ValidationMessageFor(model => model.PUBLICACAO_UF, null, new { app_validation_msg = "erros", @for = "INF_ANO" })
+    </div>
+</div>
+                     
+<div class="panel panel-default" ng-show="pub.ARE_CONS_ID=='2'">
+    <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Estados</div>
+    <div class="panel-body">
+        <div class="row" ng-repeat="uf in pub.PUB_UF">
+            
+            <div class="form-group col-lg-5">
+                @Html.Label("{{$index+1}}º Estado")
+
+                <select id="uf" class="form-control" ng-model = "pub.PUB_UF[$index].UF_ID" ng-disabled="(operacao.substring(0,1)=='V')">
+                    <option value="">--Selecione--</option>
+                    <option data-ng-repeat="item in lst._uf" ng-value="{{item.Value}}" ng-selected="pub.PUB_UF[$index].UF_ID==item.Value">{{item.Text}}</option>
+                </select>
+
+                @Html.ValidationMessageFor(model => model.PUBLICACAO_UF, null, new { app_validation_msg = "erros", @for = "UF_ID" })
+            </div>
+            
+            <div class="form-group col-lg-5">
+                @Html.Label("Informativo")
+
+                <select id="informativo" class="form-control" ng-model = "pub.PUB_UF[$index].INF_ANO" ng-disabled="(operacao.substring(0,1)=='V')">
+                    <option value="">--Selecione--</option>
+                    <option data-ng-repeat="item in lst._informativo" ng-value="{{item.Value}}" ng-selected="pub.PUB_UF[$index].INF_ANO==item.Value">{{item.Text}}</option>
+                </select>
+
+                @Html.ValidationMessageFor(model => model.PUBLICACAO_UF, null, new { app_validation_msg = "erros", @for = "INF_ANO" })
+            </div>
+            
+            <div class="form-group col-lg-1" ng-show="uf.UF_ID && uf.INF_ANO && pub.PUB_UF.length == ($index+1) && (operacao.substring(0,1)=='V')">
+                @Html.Label("mais")
+                <a href="javascript:void(0)" ng-click="adicionarUf()" title="Incluir">
+                    <span class="glyphicon glyphicon-plus blue"></span>
+                </a>
+            </div>
+
+            <div class="form-group col-lg-1" ng-show="uf.UF_ID && uf.INF_ANO && (operacao.substring(0,1)=='V')">
+                @Html.Label("del")
+                <a href="javascript:void(0)" ng-click="removerUf(pub.PUB_UF, $index)" title="Excluir">
+                    <br><span class="glyphicon glyphicon-trash red"></span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+                     

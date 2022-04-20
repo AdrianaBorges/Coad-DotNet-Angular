@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutLogado.cshtml";
+}
+
+@Scripts.Render("~/Scripts/appScripts/Portal.js")
+
+<div ng-app="appModule">
+    <div ng-controller="PortalController" ng-init="init(8)">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9">
+                    <div> <label>Publicado em: </label>
+                        <span class="label label-success" app-show-date="item.DATA_PUBLICACAO"></span> 
+                    </div>
+                    <div ng-bind-html="trustAsHtml(noticia.NOT_MANCHETE)"></div>
+                    <div ng-bind-html="trustAsHtml(noticia.NOT_TEXTO)"></div>
+                    <div ng-repeat="widget in lstwidgetsc" ng-bind-html="trustAsHtml(widget.FUNCIONALIDADE.FCI_CONTEUDO)"></div>
+                </div>
+                <div class="col-sm-3">
+                    <div ng-repeat="widget in lstwidgetsd" ng-bind-html="trustAsHtml(widget.FUNCIONALIDADE.FCI_CONTEUDO)"></div>
+                </div>
+            </div>
+        </div>
+        <!-- / -->
+        <section class="alternate padding-xxs">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-lg-4 col-sm-8 col-lg-offset-4 col-md-offset-2 col-sm-offset-2">
+                        <h5 class="letter-spacing-1">INSCREVA-SE NA NOSSA NEWSLETTER</h5>
+                        <div class="input-group">
+                            <input id="newsletter_subscribe_email" type="text" class="form-control" placeholder="Informe seu email...">
+                            <span class="input-group-btn">
+                                <button id="newsletter_subscribe_btn" class="btn btn-primary" type="button">ENVIAR</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

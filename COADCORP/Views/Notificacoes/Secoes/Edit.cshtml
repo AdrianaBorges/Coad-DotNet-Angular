@@ -1,0 +1,46 @@
+﻿@model  COAD.COADGED.Model.DTO.SecoesDTO
+@{
+    ViewBag.Title = "Edit";
+}
+@using Coad.GenericCrud.Extensions
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li>@Html.ActionLink("Gerenciar Seções","index","Secao")</li>
+        <li class="active">Editar Seção</li>         
+    </ol>
+}
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/secoes.js")
+<div class="form-lg padding" ng-app="appModule">
+    <div class="panel panel-default" ng-controller="SecoesController" data-ng-init="read(@ViewBag.secaoId)">
+            @Html.ValidationSummary(true)          
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Editar Seção</div>
+            <div class="panel-body">  
+                 <div app-message></div>
+                 @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) 
+                 {
+                 <div class="row">
+                    <div class="form-group col-lg-1">
+                        @Html.Label("ID")
+                        @Html.TextBoxFor(model => model.SEC_ID,  new {@class = "form-control", ng_model = "secao.SEC_ID", disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.SEC_ID, null, new { app_validation_msg = "erros", @for = "SEC_ID" }) 
+                    </div>
+                    <div class="form-group col-lg-9">
+                        @Html.LabelFor(model => model.SEC_DESCRICAO)
+                        @Html.TextBoxFor(model => model.SEC_DESCRICAO,  new {@class = "form-control", ng_model = "secao.SEC_DESCRICAO" })
+                        @Html.ValidationMessageFor(model => model.SEC_DESCRICAO, null, new { app_validation_msg = "erros", @for = "SEC_DESCRICAO" }) 
+                    </div>
+                    <div class="form-group col-lg-2">
+                        @Html.LabelFor(model => model.SEC_ATIVO)
+                        @Html.DropDownListFor(model => model.SEC_ATIVO, new SelectList(@ViewBag.ativo, "Value", "Text"), null ,new {@class = "form-control", ng_model = "secao.SEC_ATIVO" })
+                    </div>
+                 </div>
+                 }
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-primary" ng-click="salvarSecao()">Salvar</button>
+                <span class="float-right"><button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default">Voltar</button></span>
+            </div> 
+    </div>
+</div>

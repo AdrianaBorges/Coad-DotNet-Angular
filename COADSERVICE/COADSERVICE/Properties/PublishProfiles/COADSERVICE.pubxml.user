@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <LastUsedBuildConfiguration>Release</LastUsedBuildConfiguration>
+    <LastUsedPlatform>Any CPU</LastUsedPlatform>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>\\10.228.5.2\share\webdeploy_coadservice</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/Antlr3.Runtime.dll">
+      <publishTime>02/22/2013 08:43:40</publishTime>
+    </File>
+    <File Include="bin/Antlr3.Runtime.pdb">
+      <publishTime>02/22/2013 08:43:40</publishTime>
+    </File>
+    <File Include="bin/AutoMapper.dll">
+      <publishTime>11/06/2017 10:56:49</publishTime>
+    </File>
+    <File Include="bin/AutoMapper.pdb">
+      <publishTime>11/06/2017 10:56:49</publishTime>
+    </File>
+    <File Include="bin/Boleto.Net.dll">
+      <publishTime>11/06/2017 11:03:35</publishTime>
+    </File>
+    <File Include="bin/Castle.Core.dll">
+      <publishTime>04/27/2014 08:50:00</publishTime>
+    </File>
+    <File Include="bin/Castle.Facilities.WcfIntegration.dll">
+      <publishTime>01/23/2017 15:56:30</publishTime>
+    </File>
+    <File Include="bin/Castle.Windsor.dll">
+      <publishTime>01/23/2017 15:56:34</publishTime>
+    </File>
+    <File Include="bin/ClientWebServiceNfe.exe">
+      <publishTime>12/13/2017 15:58:08</publishTime>
+    </File>
+    <File Include="bin/ClientWebServiceNfe.exe.config">
+      <publishTime>12/12/2017 17:06:50</publishTime>
+    </File>
+    <File Include="bin/ClientWebServiceNfe.pdb">
+      <publishTime>12/13/2017 15:58:08</publishTime>
+    </File>
+    <File Include="bin/COAD.COADGED.dll">
+      <publishTime>12/13/2017 15:58:40</publishTime>
+    </File>
+    <File Include="bin/COAD.COADGED.dll.config">
+      <publishTime>12/13/2017 15:58:34</publishTime>
+    </File>
+    <File Include="bin/COAD.COADGED.pdb">
+      <publishTime>12/13/2017 15:58:40</publishTime>
+    </File>
+    <File Include="bin/COAD.CORPORATIVO.dll">
+      <publishTime>12/13/2017 15:58:30</publishTime>
+    </File>
+    <File Include="bin/COAD.CORPORATIVO.dll.config">
+      <publishTime>12/12/2017 17:12:54</publishTime>
+    </File>
+    <File Include="bin/COAD.CORPORATIVO.LEGADO.dll">
+      <publishTime>12/13/2017 15:58:16</publishTime>
+    </File>
+    <File Include="bin/COAD.CORPORATIVO.LEGADO.dll.config">
+      <publishTime>12/12/2017 17:06:52</publishTime>
+    </File>
+    <File Include="bin/COAD.CORPORATIVO.LEGADO.pdb">
+      <publishTime>12/13/2017 15:58:16</publishTime>
+    </File>
+    <File Include="bin/COAD.CORPORATIVO.pdb">
+      <publishTime>12/13/2017 15:58:30</publishTime>
+    </File>
+    <File Include="bin/COAD.CRYPT.dll">
+      <publishTime>12/08/2017 11:06:44</publishTime>
+    </File>
+    <File Include="bin/COAD.CRYPT.exe">
+      <publishTime>06/13/2017 19:23:20</publishTime>
+    </File>
+    <File Include="bin/COAD.CRYPT.pdb">
+      <publishTime>12/08/2017 11:06:44</publishTime>
+    </File>
+    <File Include="bin/COAD.GATEWAY.MUNDIPAGG.dll">
+      <publishTime>12/13/2017 15:58:00</publishTime>
+    </File>
+    <File Include="bin/COAD.GATEWAY.MUNDIPAGG.dll.config">
+      <publishTime>11/06/2017 11:00:15</publishTime>
+    </File>
+    <File Include="bin/COAD.GATEWAY.MUNDIPAGG.pdb">
+      <publishTime>12/13/2017 15:58:00</publishTime>
+    </File>
+    <File Include="bin/COAD.PORTAL.dll">
+      <publishTime>12/13/2017 15:58:15</publishTime>
+    </File>
+    <File Include="bin/COAD.PORTAL.dll.config">
+      <publishTime>12/12/2017 17:06:53</publishTime>
+    </File>
+    <File Include="bin/COAD.PORTAL.pdb">
+      <publishTime>12/13/2017 15:58:15</publishTime>
+    </File>
+    <File Include="bin/COAD.PROSPECTADOS.dll">
+      <publishTime>12/13/2017 15:58:07</publishTime>
+    </File>
+    <File Include="bin/COAD.PROSPECTADOS.dll.config">
+      <publishTime>12/12/2017 17:06:53</publishTime>
+    </File>
+    <File Include="bin/COAD.PROSPECTADOS.pdb">
+      <publishTime>12/13/2017 15:58:07</publishTime>
+    </File>
+    <File Include="bin/COAD.PROXY.dll">
+      <publishTime>12/13/2017 15:58:44</publishTime>
+    </File>
+    <File Include="bin/COAD.PROXY.dll.config">
+      <publishTime>12/13/2017 15:58:43</publishTime>
+    </File>
+    <File Include="bin/COAD.PROXY.pdb">
+      <publishTime>12/13/2017 15:58:44</publishTime>
+    </File>
+    <File Include="bin/COAD.SEGURANCA.dll">
+      <publishTime>12/13/2017 15:58:05</publishTime>
+    </File>
+    <File Include="bin/COAD.SEGURANCA.dll.config">
+      <publishTime>12/12/2017 17:06:20</publishTime>
+    </File>
+    <File Include="bin/COAD.SEGURANCA.pdb">
+      <publishTime>12/13/2017 15:58:05</publishTime>
+    </File>
+    <File Include="bin/COAD.UTIL.dll">
+      <publishTime>12/13/2017 15:58:13</publishTime>
+    </File>
+    <File Include="bin/COAD.UTIL.dll.config">
+      <publishTime>12/12/2017 17:06:54</publishTime>
+    </File>
+    <File Include="bin/COAD.UTIL.pdb">
+      <publishTime>12/13/2017 15:58:13</publishTime>
+    </File>
+    <File Include="bin/COADSERVICE.dll">
+      <publishTime>12/13/2017 15:58:49</publishTime>
+    </File>
+    <File Include="bin/COADSERVICE.pdb">
+      <publishTime>12/13/2017 15:58:49</publishTime>
+    </File>
+    <File Include="bin/Common.Logging.Core.dll">
+      <publishTime>11/14/2015 13:35:30</publishTime>
+    </File>
+    <File Include="bin/Common.Logging.Core.pdb">
+      <publishTime>11/14/2015 13:35:30</publishTime>
+    </File>
+    <File Include="bin/Common.Logging.dll">
+      <publishTime>11/14/2015 13:35:30</publishTime>
+    </File>
+    <File Include="bin/Common.Logging.pdb">
+      <publishTime>11/14/2015 13:35:30</publishTime>
+    </File>
+    <File Include="bin/CrystalDecisions.CrystalReports.Engine.dll">
+      <publishTime>10/13/2015 14:03:52</publishTime>
+    </File>
+    <File Include="bin/CrystalDecisions.Shared.dll">
+      <publishTime>08/07/2014 10:51:44</publishTime>
+    </File>
+    <File Include="bin/DotNetZip.dll">
+      <publishTime>06/22/2016 21:31:52</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>11/06/2017 10:56:53</publishTime>
+    </File>
+    <File Include="bin/GatewayApiClient.dll">
+      <publishTime>11/06/2017 11:03:35</publishTime>
+    </File>
+    <File Include="bin/GenericCrud.dll">
+      <publishTime>12/13/2017 15:58:00</publishTime>
+    </File>
+    <File Include="bin/GenericCrud.dll.config">
+      <publishTime>12/12/2017 17:06:57</publishTime>
+    </File>
+    <File Include="bin/GenericCrud.pdb">
+      <publishTime>12/13/2017 15:58:00</publishTime>
+    </File>
+    <File Include="bin/itextsharp.dll">
+      <publishTime>11/06/2017 11:03:40</publishTime>
+    </File>
+    <File Include="bin/Microsoft.VisualStudio.CodeCoverage.Shim.dll">
+      <publishTime>04/26/2017 12:51:36</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>01/05/2011 16:45:38</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>06/18/2017 13:57:10</publishTime>
+    </File>
+    <File Include="bin/NReco.PdfGenerator.dll">
+      <publishTime>03/30/2017 12:40:04</publishTime>
+    </File>
+    <File Include="bin/OpenPop.dll">
+      <publishTime>11/06/2017 10:56:49</publishTime>
+    </File>
+    <File Include="bin/Quartz.dll">
+      <publishTime>02/18/2017 09:28:06</publishTime>
+    </File>
+    <File Include="bin/Quartz.pdb">
+      <publishTime>02/18/2017 09:28:06</publishTime>
+    </File>
+    <File Include="bin/RichTextEditor.dll">
+      <publishTime>11/06/2017 11:03:38</publishTime>
+    </File>
+    <File Include="bin/System.Configuration.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Data.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Drawing.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.EnterpriseServices.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Linq.Dynamic.dll">
+      <publishTime>11/06/2017 11:03:36</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.Serialization.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.ServiceModel.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.ServiceModel.Web.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Web.ApplicationServices.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Web.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Web.DynamicData.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Web.Entity.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Web.Extensions.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Web.Helpers.dll">
+      <publishTime>01/28/2015 04:04:30</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>09/25/2014 16:41:52</publishTime>
+    </File>
+    <File Include="bin/System.Web.Optimization.dll">
+      <publishTime>11/06/2017 10:56:54</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>11/06/2017 10:56:54</publishTime>
+    </File>
+    <File Include="bin/System.Web.Services.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>11/06/2017 10:56:55</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>11/06/2017 10:56:55</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>11/06/2017 10:56:55</publishTime>
+    </File>
+    <File Include="bin/System.Xml.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/System.Xml.Linq.dll">
+      <publishTime>09/26/2012 03:16:08</publishTime>
+    </File>
+    <File Include="bin/WebGrease.dll">
+      <publishTime>07/17/2013 17:03:52</publishTime>
+    </File>
+    <File Include="ClassDiagram1.cd">
+      <publishTime>01/11/2016 12:04:58</publishTime>
+    </File>
+    <File Include="CoadService.svc">
+      <publishTime>11/06/2017 11:01:34</publishTime>
+    </File>
+    <File Include="favicon.ico">
+      <publishTime>08/15/2016 12:01:04</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>11/06/2017 11:01:34</publishTime>
+    </File>
+    <File Include="NoticiasService.asmx">
+      <publishTime>11/06/2017 11:01:34</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>12/12/2017 17:06:57</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>12/13/2017 15:58:53</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

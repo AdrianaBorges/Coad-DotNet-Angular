@@ -1,0 +1,183 @@
+﻿
+@Scripts.Render("~/Scripts/negocio/CobrancaEscritural/gerenciaTitulos.js")
+
+<style type="text/css">
+    .body {
+        background-color: #fff !important;
+    }
+
+    .bd-callout {
+        padding: 1.25rem;
+        margin-top: 1.25rem;
+        margin-bottom: 1.25rem;
+        border: 1px solid #eee;
+        border-left-width: .25rem;
+        border-radius: .25rem
+    }
+
+        .bd-callout h4 {
+            margin-top: 0;
+            margin-bottom: .25rem
+        }
+
+        .bd-callout p:last-child {
+            margin-bottom: 0
+        }
+
+        .bd-callout code {
+            border-radius: .25rem
+        }
+
+        .bd-callout + .bd-callout {
+            margin-top: -.25rem
+        }
+
+    .bd-callout-info {
+        border-left-color: #5bc0de
+    }
+
+        .bd-callout-info h4 {
+            color: #5bc0de
+        }
+
+    .bd-callout-warning {
+        border-left-color: #f0ad4e
+    }
+
+        .bd-callout-warning h4 {
+            color: #f0ad4e
+        }
+
+    .bd-callout-danger {
+        border-left-color: #d9534f
+    }
+
+        .bd-callout-danger h4 {
+            color: #d9534f
+        }
+
+    .bd-examples .img-thumbnail {
+        margin-bottom: .75rem
+    }
+
+    .bd-examples h4 {
+        margin-bottom: .25rem
+    }
+
+    .bd-examples p {
+        margin-bottom: 1.25rem
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="GerenciaTitulosController" class="padding content" data-ng-init="obterTitulosDaAssinatura('@ViewBag.idAssinatura')">
+
+        <div app-message></div>
+
+        @*<div class="row" style="padding-bottom:20px;">
+            <div class="col-sm-12 titulo" style="padding-left: 10px;">
+                <img src="/Images/boleto_portal.png" />
+            </div>
+        </div>*@
+        <br />
+        
+        <div class="alert alert-info margin-bottom-30" style="padding-top:20px;">
+            <a href="javascript:history.go(-1)" class="close" data-dismiss="alert">
+            <span aria-hidden="true">×</span><span class="sr-only">Close</span></a>
+            <h4><strong><i class="fa fa-print" aria-hidden="true"></i>  SEGUNDA VIA DE BOLETOS</strong></h4>
+        </div>
+        <div class="row" style="padding-top:5px;padding-bottom:20px;">
+            <div class="col-sm-2" style="padding-top:40px;padding-right:20px;">
+                <img class="box-tip-img" src="~/Images/img-duvida.jpeg" />
+            </div>
+            <div class="col-sm-10" style="padding-top:30px;padding-left:0px;">
+                <div class="bd-callout bd-callout-warning">
+                    <h5 id="conveying-meaning-to-assistive-technologies"><i class="fa fa-exclamation-triangle"></i> A T E N Ç Ã O</h5>
+                    <p>Os titulos ficam disponíveis para impressão 15 dias antes da data de vencimento. Caso já esteja dentro deste prazo e o título não se encontre na relação abaixo, entre em contato com o SAC. </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12" style="padding-bottom:20px;">
+                <fieldset>
+                    <legend><strong><span class="glyphicon glyphicon-user blue"></span> <span class="blue"> DADOS DO CLIENTE </span> </strong></legend>
+                    <div class="row">
+                        <div class="col-sm-2" style="text-align:right;"><span><strong> Assinatura</strong></span> </div><div class="col-sm-8">{{filtro.idAssinatura}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2" style="text-align:right;"><span><strong>Nome do Cliente</strong></span></div><div class="col-sm-8">{{titulos[0].CLI_NOME}}</div>
+                    </div>
+               </fieldset>
+            </div>
+        </div>
+
+        <div class="alert alert-warning margin-bottom-30" style="padding-top:20px;" ng-if="!titulos||titulos.length==0">
+
+            <a href="javascript:history.go(-1)" class="close" data-dismiss="alert">
+                <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+            </a>
+
+            <h4><strong><i class="fa fa-warning" aria-hidden="true"></i> ATENÇÃO</strong></h4>
+
+            <p>
+                Não existem boletos disponíveis para a impressão. Em caso de dúvidas entre em contato com nosso SAC.
+            </p>
+
+        </div>
+
+
+        <div class="row" ng-if="titulos.length>0">
+            <div class="col-sm-12" style="padding-bottom:20px;">
+                <fieldset>
+                    <legend><strong><i class="fa fa-barcode blue" aria-hidden="true"></i> <span class="blue"> TÍTULOS </span> </strong></legend>
+                    <div class="table-responsive">
+                        <table class="table table-hover nomargin">
+                            <thead>
+                                <tr class="info">
+                                    <th style="min-width: 50px; font-size">Titulo</th>
+                                    <th style="min-width: 50px">Vencimento</th>
+                                    <th style="min-width: 50px;text-align:right;">Valor</th>
+                                    @*<th style="min-width: 50px;text-align:left;">Banco</th>*@
+                                    <th style="min-width: 50px">Situação</th>
+                                    <th style="min-width: 50px">Opções</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="item in titulos">
+                                    <td>{{item.PAR_NUM_PARCELA}}</td>
+                                    <td>{{item.PAR_DATA_VENCTO | date:"dd/MM/yyyy"}}</td>
+                                    <td style="text-align:right;">{{item.PAR_VLR_PARCELA | currency:"R$ "}}</td>
+                                    @*<td style="text-align:left;">
+                                        <span ng-if="item.BAN_ID=='001'"><strong>BB</strong></span>
+                                        <span ng-if="item.BAN_ID=='237'"><strong>BRADESCO</strong></span>
+                                        <span ng-if="item.BAN_ID=='104'"><strong>CEF</strong></span>
+                                        <span ng-if="item.BAN_ID=='999'"></span>
+                                        <span ng-if="item.BAN_ID=='604'"><strong>INDUSTRIAL</strong></span>
+                                        <span ng-if="item.BAN_ID=='041'"><strong>BANRISUL</strong></span>
+                                        <span ng-if="item.BAN_ID=='033'"><strong>SANTANDER</strong></span>
+                                    </td>*@
+                                    <td ng-if="item.PAR_DATA_PAGTO!=null"><span class="label label-success">Pago</span></td>
+                                    <td ng-if="item.PAR_DATA_PAGTO==null">
+                                        <span class="label label-primary" ng-if="item.PAR_DATA_VENCTO >= now">Aberto</span>
+                                        <span class="label label-danger"  ng-if="item.PAR_DATA_VENCTO < now">Vencido</span>
+                                    </td>
+                                    <td>
+
+                                        <span class="label label-default" ng-if="item.PAR_DATA_PAGTO==null&&!item.CTA_ENVIA_BOLETO">Titulo não alocado</span>
+                                        <button type="button" class="btn btn-default" ng-if="item.PAR_DATA_PAGTO==null&&item.CTA_ENVIA_BOLETO"
+                                                app-post="@Url.Action("Boleto2aViaDownload","CobrancaEscritural")?idTitulo={{item.PAR_NUM_PARCELA}}"
+                                                ng-disabled="!item.PAR_NUM_PARCELA"
+                                                title="Gerar 2ª via do boleto">
+                                            <i class="fa fa-barcode" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>

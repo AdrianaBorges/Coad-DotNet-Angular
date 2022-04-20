@@ -1,0 +1,68 @@
+﻿<div app-modal="modal-resultado-rodizio" header="Resumo" submodal header-bg="false">
+
+
+    <div>
+        <div class="row">
+            <div class="col-md-12">
+                <span class="font-20">
+                    <i class="fa fa-history text-info" aria-hidden="true"></i>
+                    <label class="font-18 text-info">Resultado de Rodizio/Prioridade</label>
+                </span>
+            </div>
+        </div>
+        <div class="table-responsive limit-div-5">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr class="bg-info">
+                        <th>
+                            Rep
+                        </th>
+                        <th>
+                            Região
+                        </th>
+                        <th>
+                            QTD Recebidos
+                        </th>
+                        <th>
+                            QTD Prioridade Recebidas
+                        </th>
+                        <th>
+                            Total
+                        </th>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in retorno.Items" class="animate-repeat">
+                    <td>
+                        {{item.REPRESENTANTE.REP_NOME}}
+                    </td>
+                    <td>
+                        {{item.REGIAO.RG_DESCRICAO}}
+                    </td>
+                    <td>
+                        {{item.IRR_QTD}}
+                    </td>
+                    <td>
+                        {{item.IRR_QTD_PRIORIDADES}}
+                    </td>
+                    <td>
+                        {{item.Total}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" ng-hide="retorno.Items" class="text">
+                        Não foi encontrado nenhum registro.
+                    </td>
+                </tr>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">Totais</td>
+                        <td>{{retorno.QtdRodizio}}</td>
+                        <td>{{retorno.QtdPrioridades}}</td>
+                        <td>{{retorno.Total}}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+    </div>

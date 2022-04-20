@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e81c5b45ba454230a3f5d97f80f5ce52" Name="Diagram1">
+        <EntityTypeShape EntityType="COADCORPModel.ACAO_ATENDIMENTO" Width="1.5" PointX="24.5" PointY="128.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.AGENDA_COBRANCA" Width="1.5" PointX="43.25" PointY="181.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.AGENDAMENTO" Width="1.5" PointX="22.5" PointY="183.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.APURACAO_PREMIACAO_MENSAL" Width="1.5" PointX="13.5" PointY="177.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.APURACAO_PREMIACAO_SEMANA" Width="1.5" PointX="13.5" PointY="181.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.AREA_CONSULTORIA" Width="1.5" PointX="23.25" PointY="142.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.AREA_CONSULTORIA_CURSO" Width="1.5" PointX="16.25" PointY="167.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.AREA_CONSULTORIA_REPRESENTANTE" Width="1.5" PointX="13.5" PointY="185.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.AREA_INFO_MARKETING" Width="1.5" PointX="33" PointY="164.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.AREAS" Width="1.5" PointX="14" PointY="164.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.ASSINATURA" Width="1.5" PointX="27.75" PointY="162" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.ASSINATURA_EMAIL" Width="1.5" PointX="33" PointY="167.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.ASSINATURA_SENHA" Width="1.5" PointX="30" PointY="161.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.ASSINATURA_TELEFONE" Width="1.5" PointX="36" PointY="166.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.ASSINATURA_TRANSFERENCIA" Width="1.5" PointX="32" PointY="179.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.AUDITORIA" Width="1.5" PointX="29" PointY="179.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.BANCOS" Width="1.5" PointX="0.75" PointY="177.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.BANDEIRA_CARTAO" Width="1.5" PointX="53.75" PointY="190.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CADASTRO_GRATUITO" Width="1.5" PointX="13.5" PointY="200.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CAMPANHA_VENDA" Width="1.5" PointX="46.25" PointY="165.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CAMPANHA_VENDA_TIPO_PROPOSTA" Width="1.5" PointX="51.5" PointY="168.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CAMPANHA_VENDAS_PRODUTO_COMPOSICAO" Width="1.5" PointX="48.5" PointY="159.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CARRINHO_COMPRAS" Width="1.5" PointX="23.75" PointY="167.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CARRINHO_COMPRAS_ITEM" Width="1.5" PointX="30" PointY="167.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CARTEIRA" Width="1.5" PointX="3" PointY="184.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CARTEIRA_ASSINATURA" Width="1.5" PointX="5.25" PointY="190.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CARTEIRA_CLIENTE" Width="1.5" PointX="8.25" PointY="190.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CARTEIRA_REPRESENTANTE" Width="1.5" PointX="18.5" PointY="173.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CARTEIRA_TRANSF" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CARTEIRA_TRANSF_ITEM" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CEP_BAIRRO" Width="1.5" PointX="16.5" PointY="193.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CEP_LOGRADOURO" Width="1.5" PointX="18.75" PointY="192.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CFOP_ICMS" Width="1.5" PointX="16.5" PointY="202.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CFOP_REFERENCIA" Width="1.5" PointX="16.5" PointY="228.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CFOP_TABLE" Width="1.5" PointX="14.25" PointY="228.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CHEQUE_DEVOLVIDO" Width="1.5" PointX="36" PointY="161.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CLASSICACAO_CONSUMO" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CLASSIFICACAO" Width="1.5" PointX="19.25" PointY="166.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CLASSIFICACAO_ATENDIMENTO" Width="1.5" PointX="22.25" PointY="125.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CLASSIFICACAO_CLIENTE" Width="1.5" PointX="19.25" PointY="168.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CLIENTE_PASSIVEL_COBRANCA" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CLIENTE_USUARIO" Width="1.5" PointX="33" PointY="171.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CLIENTES" Width="1.5" PointX="21.5" PointY="163.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CLIENTES_ENDERECO" Width="1.5" PointX="39" PointY="171.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CLIENTES_ENDERECO_HISTORICO" Width="1.5" PointX="41.25" PointY="169.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CLIENTES_HISTORICO" Width="1.5" PointX="23.75" PointY="162.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CLIENTES_TELEFONE" Width="1.5" PointX="23.75" PointY="204.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CNAB" Width="1.5" PointX="6" PointY="183.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CNAB_ARQUIVOS" Width="1.5" PointX="3" PointY="177.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CNAB_ARQUIVOS_ITEM" Width="1.5" PointX="46.25" PointY="187.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CNAB_ARQUIVOS_ITEM_ant" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CNAB_ARQUIVOS_ITEM_ERRO" Width="1.5" PointX="5.25" PointY="176.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CNAB_CONFIG" Width="1.5" PointX="3.75" PointY="172.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CNAB_CONFIG_ARQUIVO" Width="1.5" PointX="3.75" PointY="197.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CNAB_REGISTROS_TEMP" Width="1.5" PointX="9.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CNAB_TIPO_DADOS" Width="1.5" PointX="3.75" PointY="200.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CNAB_TIPO_REGISTRO" Width="1.5" PointX="3.75" PointY="209.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.COLECIONADOR_REF" Width="1.5" PointX="11.25" PointY="190.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CONDICAO_PAGAMENTO" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CONFERENCIA_FINANCEIRA_TMP" Width="1.5" PointX="2.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CONFIG_ALOCACAO" Width="1.5" PointX="3" PointY="190.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CONFIG_ALOCACAO_CONTA" Width="1.5" PointX="5.25" PointY="193.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CONFIG_IMPOSTO" Width="1.5" PointX="14" PointY="144.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CONFIG_IMPOSTO_IMPOSTO" Width="1.5" PointX="16.25" PointY="145.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CONFIG_IMPOSTO_REGIAO" Width="1.5" PointX="16.25" PointY="179.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CONFIG_SPED_FISCAL" Width="1.5" PointX="3" PointY="204.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CONSULTOR" Width="1.5" PointX="33.75" PointY="155.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CONTA_REF" Width="1.5" PointX="0.75" PointY="173.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CONTATOS" Width="1.5" PointX="23.75" PointY="207.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CONTRATOS" Width="1.5" PointX="27.75" PointY="187.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CST" Width="1.5" PointX="32.75" PointY="193.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CST_TIPO" Width="1.5" PointX="30.5" PointY="194" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.DOC_LIQUIDACAO" Width="1.5" PointX="20.25" PointY="225.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.DOCS_CPAGAR" Width="1.5" PointX="27" PointY="174.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.EMAIL_ATEND" Width="1.5" PointX="38.25" PointY="164.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.EMAIL_ATEND_ANEXO" Width="1.5" PointX="40.5" PointY="165.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.EMPRESA_REF" Width="1.5" PointX="0.75" PointY="184.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.ENDERECO_VENDA" Width="1.5" PointX="30.75" PointY="173.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.FATOR_CONVERSAO" Width="1.5" PointX="25.5" PointY="142.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.FERIADO" Width="1.5" PointX="4.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.FILA_CADASTRO" Width="1.5" PointX="16.5" PointY="186.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.FONTE_DADOS_DESCRICAO" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.FONTE_DADOS_TEMPLATE" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.FORNECEDOR" Width="1.5" PointX="24.75" PointY="187.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.FORNECEDOR_HISTORICO" Width="1.5" PointX="27" PointY="215" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.FORNECEDOR_MOV_FINAN" Width="1.5" PointX="27" PointY="202" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.FRANQUIA" Width="1.5" PointX="11.25" PointY="175.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.FUNCIONALIDADE_SISTEMA" Width="1.5" PointX="6.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.FUNCIONALIDADE_SISTEMA_REF" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.GRUPO" Width="1.5" PointX="23.25" PointY="144.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.HIST_ATEND_EMAIL" Width="1.5" PointX="36" PointY="172.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.HIST_ATEND_URA" Width="1.5" PointX="41" PointY="184" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.HISTORICO_ATENDIMENTO" Width="1.5" PointX="26.75" PointY="179" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.HISTORICO_PEDIDO" Width="1.5" PointX="41.25" PointY="175.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.IBGE_MUNICIPIO" Width="1.5" PointX="36.75" PointY="157.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.IMPORTACAO" Width="1.5" PointX="14" PointY="167" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.IMPORTACAO_HISTORICO" Width="1.5" PointX="18.5" PointY="177.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.IMPORTACAO_RESULTADO_RODIZIO" Width="1.5" PointX="19.5" PointY="183" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.IMPORTACAO_STATUS" Width="1.5" PointX="11.75" PointY="168.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.IMPORTACAO_SUSPECT" Width="1.5" PointX="16.25" PointY="170.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.IMPOSTO" Width="1.5" PointX="27.75" PointY="131.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.IMPOSTO_INFO_FATURA" Width="1.5" PointX="30" PointY="136.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.IMPOSTO_INFO_FATURA_ITEM" Width="1.5" PointX="35.25" PointY="136.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.INFO_FATURA" Width="1.5" PointX="27.75" PointY="135.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.INFO_FATURA_ITEM" Width="1.5" PointX="33" PointY="136" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.INFO_MARKETING" Width="1.5" PointX="30.75" PointY="164.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.INFORMATIVO_SEMANAL" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.INFORMATIVO_SEMANAL_ANALITICO" Width="1.5" PointX="11.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.INFORMATIVO_SEMANAL_ENVIO" Width="1.5" PointX="11.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.ITEM_PEDIDO" Width="1.5" PointX="50.75" PointY="173.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.ITEM_PEDIDO_PEDIDO_PAGAMENTO" Width="1.5" PointX="53" PointY="187.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.LINHA_PRODUTO" Width="1.5" PointX="11.75" PointY="151.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.LINHA_PRODUTO_INFORMATIVO" Width="1.5" PointX="14" PointY="141.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.LOCALIZACAO_CURSO" Width="1.5" PointX="46.25" PointY="171.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.LOG_ATUALIZACAO_URA" Width="1.5" PointX="11.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.MOTIVO_CANCELAMENTO" Width="1.5" PointX="33" PointY="175.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.MUNDIPAGG_ASSINATURA" Width="1.5" PointX="26" PointY="212.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.MUNDIPAGG_CLIENTE" Width="1.5" PointX="23.75" PointY="211.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.MUNICIPIO" Width="1.5" PointX="13.5" PointY="189.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.MUNICIPIO_TEMP" Width="1.5" PointX="13.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NFE_XML" Width="1.5" PointX="53" PointY="182" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NIVEL_REPRESENTANTE" Width="1.5" PointX="9" PointY="174.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NOTA_FISCAL" Width="1.5" PointX="35" PointY="180.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NOTA_FISCAL_CONFIG" Width="1.5" PointX="25.5" PointY="135.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NOTA_FISCAL_CONFIG_TIPO" Width="1.5" PointX="23.25" PointY="137.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NOTA_FISCAL_EVENTO" Width="1.5" PointX="40.25" PointY="192.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NOTA_FISCAL_ITEM" Width="1.5" PointX="43.25" PointY="189.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NOTA_FISCAL_ITEM_OBS" Width="1.5" PointX="45.5" PointY="199.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NOTA_FISCAL_LOTE" Width="1.5" PointX="35" PointY="149.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NOTA_FISCAL_LOTE_ITEM" Width="1.5" PointX="37.25" PointY="177.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NOTA_FISCAL_LOTE_ITEM_MSG" Width="1.5" PointX="39.5" PointY="180.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NOTA_FISCAL_LOTE_ITEM_TIPO" Width="1.5" PointX="35" PointY="202.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NOTA_FISCAL_LOTE_STATUS" Width="1.5" PointX="32.75" PointY="149.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NOTA_FISCAL_LOTE_TIPO" Width="1.5" PointX="32.75" PointY="152" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NOTA_FISCAL_REFERENCIADA" Width="1.5" PointX="43.5" PointY="186.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NOTA_FISCAL_SITUACAO" Width="1.5" PointX="32.75" PointY="187.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NOTA_FISCAL_STATUS" Width="1.5" PointX="32.75" PointY="190" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NOTA_FISCAL_TIPO" Width="1.5" PointX="32.75" PointY="197.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.NOTIFICACOES" Width="1.5" PointX="24.75" PointY="171.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.OCORRENCIA_ERRO" Width="1.5" PointX="44" PointY="203.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.OCORRENCIA_REMESSA" Width="1.5" PointX="44" PointY="206.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.OCORRENCIA_RETORNO" Width="1.5" PointX="41.75" PointY="203.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.OPCAO_ATENDIMENTO" Width="1.5" PointX="30.75" PointY="157.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.ORIGEM_ACESSO" Width="1.5" PointX="23.25" PointY="147.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.ORIGEM_CADASTRO" Width="1.5" PointX="14" PointY="160.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PAIS" Width="1.5" PointX="13.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PARCELA_ALOCADA" Width="1.5" PointX="46.25" PointY="193.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PARCELA_LIQUIDACAO" Width="1.5" PointX="40.25" PointY="197.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PARCELA_PENDENTE" Width="1.5" PointX="4.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PARCELAS" Width="1.5" PointX="38" PointY="187.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PARCELAS_REMESSA" Width="1.5" PointX="9" PointY="184.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PEDIDO_CRM" Width="1.5" PointX="22.5" PointY="189.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PEDIDO_PAGAMENTO" Width="1.5" PointX="24.75" PointY="197.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PEDIDO_PARTICIPANTE" Width="1.5" PointX="48.5" PointY="179.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PEDIDO_STATUS" Width="1.5" PointX="20.25" PointY="157.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PERIODO_FATURAMENTO" Width="1.5" PointX="13.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PRIORIDADE_ATENDIMENTO" Width="1.5" PointX="19.5" PointY="187.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PRODUTO_COMPOSICAO" Width="1.5" PointX="14" PointY="150.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PRODUTO_COMPOSICAO_INFO_MARKETING" Width="1.5" PointX="33" PointY="161.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PRODUTO_COMPOSICAO_ITEM" Width="1.5" PointX="46.25" PointY="160.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PRODUTO_COMPOSICAO_TIPO_PERIODO" Width="1.5" PointX="30.25" PointY="196.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PRODUTO_EAN" Width="1.5" PointX="27.75" PointY="145.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PRODUTO_FAMILIA" Width="1.5" PointX="23.25" PointY="151.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PRODUTO_FORNECEDOR" Width="1.5" PointX="30" PointY="190.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PRODUTO_HISTORICO" Width="1.5" PointX="27.75" PointY="150.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PRODUTO_PERFIL" Width="1.5" PointX="27.75" PointY="148" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PRODUTOS" Width="1.5" PointX="25.5" PointY="145.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PROPOSTA" Width="1.5" PointX="46.25" PointY="175.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PROPOSTA_ITEM" Width="1.5" PointX="48.5" PointY="165.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.PROPOSTA_ITEM_COMPROVANTE" Width="1.5" PointX="56" PointY="182.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.REGIAO" Width="1.5" PointX="9" PointY="177.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.REGIAO_TABELA_PRECO" Width="1.5" PointX="16.25" PointY="182.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.REGISTRO_FATURAMENTO" Width="1.5" PointX="53" PointY="177.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.REGISTRO_LIBERACAO" Width="1.5" PointX="21.5" PointY="177.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.REGISTRO_LIBERACAO_ITEM" Width="1.5" PointX="23.75" PointY="178.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.REGISTRO_LIBERACAO_TIPO" Width="1.5" PointX="19.25" PointY="160.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.RELATORIO_CONDICAO" Width="1.5" PointX="18" PointY="216.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.RELATORIO_CONDICAO_RELATORIO_OPERADOR_CONDICIONAL" Width="1.5" PointX="23.25" PointY="217.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.RELATORIO_JOIN" Width="1.5" PointX="21" PointY="216.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.RELATORIO_OPERADOR_CONDICIONAL" Width="1.5" PointX="21" PointY="213.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.RELATORIO_OPERADOR_LOGICO" Width="1.5" PointX="15.75" PointY="220.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.RELATORIO_PERSONALIZADO" Width="1.5" PointX="13.5" PointY="209.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.RELATORIO_TABELA_COLUNAS" Width="1.5" PointX="18" PointY="221.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.RELATORIO_TABELAS" Width="1.5" PointX="15.75" PointY="224.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.RELATORIO_TIPO_DADO" Width="1.5" PointX="15.75" PointY="231.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.REPRESENTANTE" Width="1.5" PointX="11.25" PointY="177.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.REPRESENTANTE_META" Width="1.5" PointX="13.5" PointY="174" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.RETORNO_TRANSACAO" Width="1.5" PointX="56" PointY="176.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.SEMANA_PREMIACAO" Width="1.5" PointX="14.25" PointY="194.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.SEMANA_PREMIACAO_REPR" Width="1.5" PointX="16.5" PointY="190.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.SEQUENCIAL_NOSSO_NUMERO" Width="1.5" PointX="6" PointY="180.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.SPED_ARQUIVO" Width="1.5" PointX="3" PointY="239.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.sysdiagrams" Width="1.5" PointX="6.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TAB_DINAMICA_LINK" Width="1.5" PointX="13.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TAB_SEQ" Width="1.5" PointX="13.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TABELA_PRECO" Width="1.5" PointX="14" PointY="215.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TABELA_PRECO_TIPO_PAGAMENTO" Width="1.5" PointX="24.75" PointY="221.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TEMP_ARQ_ALOCACAO" Width="1.5" PointX="15.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TEMPLATE_GRUPO" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TEMPLATE_HTML" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_ATENDIMENTO" Width="1.5" PointX="24.5" PointY="125.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_CANCELAMENTO" Width="1.5" PointX="30.75" PointY="184.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_CLIENTE" Width="1.5" PointX="19.25" PointY="163" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_COMISSAO" Width="1.5" PointX="11.25" PointY="172.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_CONFIG_CONTA" Width="1.5" PointX="3" PointY="193.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_DOC_FISCAL" Width="1.5" PointX="32.75" PointY="199.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_ENDERECO" Width="1.5" PointX="36.75" PointY="155.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_ENVIO" Width="1.5" PointX="15.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_FORNECEDOR" Width="1.5" PointX="22.5" PointY="221" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_JOIN" Width="1.5" PointX="18.75" PointY="213.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_LOGRADOURO" Width="1.5" PointX="15.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_NEGOCIACAO" Width="1.5" PointX="44" PointY="168.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_NOTIFICACAO" Width="1.5" PointX="22.5" PointY="134.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_PAGAMENTO" Width="1.5" PointX="22.5" PointY="224" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_PAGAMENTO_CAMPANHA_VENDA" Width="1.5" PointX="48.5" PointY="196.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_PAGAMENTO_COMPOSICAO" Width="1.5" PointX="24.75" PointY="228.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_PEDIDO" Width="1.5" PointX="15.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_PEDIDO_CRM" Width="1.5" PointX="20.25" PointY="205.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_PERIODO" Width="1.5" PointX="11.75" PointY="216.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_PERIODO_ASSINATURA" Width="1.5" PointX="25.5" PointY="159.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_PRIORIDADE_ATENDIMENTO" Width="1.5" PointX="17.25" PointY="157.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_PROD_COMPORTAMENTO" Width="1.5" PointX="23.25" PointY="153.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_PRODUTO" Width="1.5" PointX="23.25" PointY="155.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_PRODUTO_COMPOSICAO" Width="1.5" PointX="11.75" PointY="154.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_PROPOSTA" Width="1.5" PointX="44" PointY="171.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_REMESSA" Width="1.5" PointX="6.75" PointY="196.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_TELEFONE" Width="1.5" PointX="33.75" PointY="159.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TIPO_VENDA" Width="1.5" PointX="11.75" PointY="156.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TITULACAO_REF" Width="1.5" PointX="11.25" PointY="192.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TOTAL_VENDAS_CARTAO" Width="1.5" PointX="30" PointY="186.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TRANSPORTADOR" Width="1.5" PointX="15.75" PointY="207.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.UEN" Width="1.5" PointX="6.75" PointY="172.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.UF" Width="1.5" PointX="11.25" PointY="201.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.UNIDADE_MEDIDA" Width="1.5" PointX="23.25" PointY="158.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.UNIDADE_NEGOCIO" Width="1.5" PointX="11.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.URA" Width="1.5" PointX="16.5" PointY="197.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.URA_COAD" Width="1.5" PointX="18.75" PointY="197.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.URA_CONFIG" Width="1.5" PointX="21.75" PointY="201.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.URA_LOG" Width="1.5" PointX="41" PointY="188.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.URA_PRODUTO" Width="1.5" PointX="18.75" PointY="202.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.URA_PRODUTO_AREA" Width="1.5" PointX="26" PointY="205.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.URA_TIPO" Width="1.5" PointX="14.25" PointY="197.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.URA_TP_ATU" Width="1.5" PointX="38.75" PointY="203.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.URGENCIA_NOTIFICACAO" Width="1.5" PointX="22.5" PointY="131.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CARTEIRA_ASSINATURA_TST2" Width="1.5" PointX="15.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.HIST_ATEND_URA_TEMP" Width="1.5" PointX="13.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CLIENTES_VW" Width="1.5" PointX="15.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.CONFIG_URA_vw" Width="1.5" PointX="0.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.LISTA_ACESSOS_POR_CLIENTE_VW" Width="1.5" PointX="6.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.QTDE_ACESSOS_POR_CLIENTE_VW" Width="1.5" PointX="17.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.TABELAS_VW" Width="1.5" PointX="17.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.VW_AGENDAMENTO_COBRANCA" Width="1.5" PointX="17.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADCORPModel.VW_TITULOS_EM_ATRASO" Width="1.5" PointX="17.75" PointY="11.75" IsExpanded="true" />
+        <AssociationConnector Association="COADCORPModel.FK_HISTORICO_ATENDIMENTO_ACAO_ATENDIMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_AGENDA_COBRANCA_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_AGENDA_COBRANCA_PARCELAS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_AGENDAMENTO_CARTEIRA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_AGENDAMENTO_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_AGENDAMENTO_REGIAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_AGENDAMENTO_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HISTORICO_ATENDIMENTO_AGENDAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTIFICACOES_AGENDAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_APURACAO_PREMIACAO_MENSAL_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_APURACAO_PREMIACAO_SEMANA_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_URA_PRODUTO_AREA_AREA_CONSULTORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_AREA_CONSULTORIA_CURSO_COLECIONADOR_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_AREA_CONSULTORIA_CURSO_CURSO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_AREA_CONSULTORIA_CURSO_TITULACAO_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_AREA_CONSULTORIA_REPRESENTANTE_COLECIONADOR_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_AREA_CONSULTORIA_REPRESENTANTE_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_AREA_CONSULTORIA_REPRESENTANTE_TITULACAO_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_AREA_INFO_MARKETING_AREAS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_AREA_INFO_MARKETING_INFO_MARKETING" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONTRATOS_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPORTACAO_SUSPECT_AREAS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTOS_AREAS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_ASSINATURA_SENHA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_ASSINATURA_TRANSFERIDA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_CHEQUE_DEVOLVIDO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_EMAIL_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_PRODUTO_COMPOSICAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_PRODUTOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_TELEFONE_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_TIPO_PERIODO_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_TRANSFERENCIA_ASSINATURA1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_UEN" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CARTEIRA_ASSINATURA_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CARTEIRA_CLIENTE_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CHEQUE_DEVOLVIDO_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CLIENTE_LOGIN_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CLIENTES_ENDERECO_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONTRATOS_ASSINATURA1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HIST_ATEND_EMAIL_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HIST_ATEND_URA_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HISTORICO_ATENDIMENTO_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ITEM_PEDIDO_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ITEM_PEDIDO_ASSINATURA_CANC" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_MOTIVO_CANCELAMENTO_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PEDIDO_CRM_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_ITEM_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_ITEM_ASSINATURA_CANC" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REGISTRO_FATURAMENTO_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_URA_LOG_URA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_EMAIL_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_EMAIL_OPCAO_ATENDIMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_TELEFONE_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_TELEFONE_OPCAO_ATENDIMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_TELEFONE_TIPO_TELEFONE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_TRANSFERENCIA_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_TRANSFERENCIA_CONTRATO_GERADO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ASSINATURA_TRANSFERENCIA_CONTRATO_ORIGEM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HISTORICO_ATENDIMENTO_ASSINATURA_TRANSFERENCIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HISTORICO_PEDIDO_ASSINATURA_TRANSFERENCIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_AUDITORIA_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_AUDITORIA_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CHEQUE_DEVOLVIDO_BANCOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CNAB_ARQUIVOS_BANCOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CNAB_ARQUIVOS_ITEM_BANCOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CNAB_BANCOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CNAB_CONFIG_BANCOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_OCORRENCIA_ERRO_BANCOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_OCORRENCIA_REMESSA_BANCOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_OCORRENCIA_RETORNO_BANCOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELA_LIQUIDACAO_BANCOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELAS_BANCOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELAS_REMESSA_BANCOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_ITEM_COMPROVANTE_BANCOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_SEQUENCIAL_NOSSO_NUMERO_BANCOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_ITEM_COMPROVANTE_BANDEIRA_CARTAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CADASTRO_GRATUITO_UF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CAMPANHA_VENDA_TIPO_PROPOSTA_CAMPANHA_VENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CAMPANHA_VENDAS_PRODUTO_COMPOSICAO_CAMPANHA_VENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_ITEM_X_CAMPANHA_VENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TIPO_PAGAMENTO_CAMPANHA_VENDA_CAMPANHA_VENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CAMPANHA_VENDA_TIPO_PROPOSTA_TIPO_PROPOSTA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CAMPANHA_VENDAS_PRODUTO_COMPOSICAO_PRODUTO_COMPOSICAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CARRINHO_COMPRAS_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CARRINHO_COMPRAS_ITEM_CARRINHO_COMPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CARRINHO_COMPRAS_ITEM_PRODUTO_COMPOSICAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CARRINHO_COMPRAS_ITEM_X_INFO_FATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CARTEIRA_ASSINATURA_CARTEIRA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CARTEIRA_CLIENTE_CARTEIRA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CARTEIRA_EMPRESA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CARTEIRA_REGIAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CARTEIRA_REPRESENTANTE_CARTEIRA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CARTEIRA_UEN" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CARTEIRA_UF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PEDIDO_CRM_CARTEIRA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_CARTEIRA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CARTEIRA_CLIENTE_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CARTEIRA_REPRESENTANTE_EMPRESA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CARTEIRA_REPRESENTANTE_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CARTEIRA_TRANSF_ITEM_CARTEIRA_TRANSF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CEP_LOGRADOURO_CEP_BAIRRO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CEP_LOGRADOURO_MUNICIPIO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CFOP_ICMS_CFOP_TABLE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CFOP_ICMS_UF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CFOP_ICMS_UF1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CFOP_REFERENCIA_CFOP_TABLE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CFOP_REFERENCIA_CFOP_TABLE1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_CFOP_TABLE1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_ITEM_CFOP_TABLE1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CLIENTES_CLASSIFICACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TIPO_ATENDIMENTO_CLASSIFICACAO_ATENDIMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CLIENTE_CLASSIFICACAO_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CLIENTE_LOGIN_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CLIENTES_ENDERECO_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CLIENTES_HISTORICO_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CLIENTES_IMPORTACAO_SUSPECT" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CLIENTES_TELEFONE_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CLIENTES_TIPO_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONTATOS_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ENDERECO_VENDA_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HISTORICO_ATENDIMENTO_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_INFO_MARKETING_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_MUNDIPAGG_CLIENTE_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_CLIENTES1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_LOTE_ITEM_X_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTIFICACAOES_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARTICIPANTE_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PEDIDO_CRM_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRIORIDADE_ATENDIMENTO_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REGISTRO_LIBERACAO_X_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CLIENTES_ENDERECO_HISTORICO_CLIENTES_ENDERECO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CLIENTES_ENDERECO_IBGE_MUNICIPIO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CLIENTES_ENDERECO_MUNICIPIO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CLIENTES_ENDERECO_TIPO_ENDERECO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CNAB_EMPRESA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CNAB_X_CNAB_CONFIG" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CNAB_X_CNAB_CONFIG_ARQUIVO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CNAB_X_CNAB_TIPO_DADOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CNAB_X_CNAB_TIPO_REGISTRO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CNAB_ARQUIVOS_CONTA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CNAB_ARQUIVOS_EMPRESA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CNAB_ARQUIVOS_ITEM_CNAB_ARQUIVOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CNAB_ARQUIVOS_ITEM_ERRO_CNAB_ARQUIVOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELAS_CNAB_ARQUIVOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CNAB_ARQUIVOS_ITEM_PARCELAS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CNAB_CONFIG_ARQUIVO_CNAB_CONFIG" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONFIG_ALOCACAO_CONTA_CONFIG_ALOCACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONFIG_ALOCACAO_EMPRESA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONFIG_ALOCACAO_REGIAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONFIG_ALOCACAO_CONTA_CONTA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONFIG_ALOCACAO_CONTA_TIPO_CONFIG_CONTA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONFIG_IMOPOSTO_X_NOTA_FISCAL_CONFIG" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONFIG_IMPOSTO_IMPOSTO_CONFIG_IMPOSTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONFIG_IMPOSTO_REGIAO_CONFIG_IMPOSTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONFIG_IMPOSTO_TIPO_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONFIG_IMPOSTO_IMPOSTO_IMPOSTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONFIG_IMPOSTO_REGIAO_REGIAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONFIG_SPED_FISCAL_EMPRESA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONSULTOR_CONSULTOR" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HIST_ATEND_EMAIL_CONSULTOR" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HIST_ATEND_EMAIL_CONSULTOR1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELA_ALOCADA_CONTA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELAS_CONTA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELAS_REMESSA_CONTA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONTRATO_ITEM_PEDIDO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONTRATO_PEDIDO_CRM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONTRATO_PRODUTO_COMPOSICAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONTRATO_REGIAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONTRATO_TIPO_PERIODO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONTRATOS_EMPRESA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONTRATOS_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CONTRATOS_UF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_MOTIVO_CANCELAMENTO_CONTRATOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NFE_XML_CONTRATO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_LOTE_ITEM_X_CONTRATO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_X_CONTRATO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELAS_CONTRATOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REGISTRO_FATURAMENTO_CONTRATOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_CST_CST_TIPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_CST1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_ITEM_CST1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELA_LIQUIDACAO_DOC_LIQUIDACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TIPO_PAGAMENTO_X_DOC_LIQUIDACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_DOCS_CPAGAR_FORNECECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_EMAIL_ATEND_ANEXO_EMAIL_ATEND" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_EMAIL_ATEND_HIST_ATEND_EMAIL" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_EMPRESA_REF_PEDIDO_CRM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_EMPRESA_REF_PROPOSTA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_EMPRESA_REF_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_EMPRESA_REF1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELAS_EMPRESA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELAS_REMESSA_EMPRESA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REGIAO_EMPRESA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REGISTRO_FATURAMENTO_EMPRESA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_SEQUENCIAL_NOSSO_NUMERO_EMPRESA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_SPED_ARQUIVO_EMPRESA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TOTAL_VENDAS_CARTAO_EMPRESA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ENDERECO_VENDA_ENDERECO_VENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PEDIDO_CRM_X_ENDERECO_VENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_X_ENDERECO_VENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_FATOR_CONVERSAO_UNIDADE_MEDIDA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_FILA_CADASTRO_REGIAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_FILA_CADASTRO_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_FONTE_DADOS_DESCRICAO_FONTE_DADOS_TEMPLATE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_FONTE_DADOS_TEMPLATE_TEMPLATE_HTML" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TEMPLATE_HTML_X_FONTE_DADOS_TEMPLATE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_FORNECECEDOR_MUNICIPIO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_FORNECEDOR_HISTORICO_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_FORNECEDOR_MOV_FINAN_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_FORNECEDOR_TIPO_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_FORNECECEDOR1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_LOTE_ITEM_X_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTO_FORNECEDOR_FORNECECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TOTAL_VENDAS_CARTAO_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_FRANQUIA_REGIAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TEMPLATE_HTML_X_FUNCIONALIDADE_SISTEMA_REF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTOS_GRUPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HIST_ATEND_URA_URA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HISTORICO_ATENDIMENTO_PEDIDO_CRM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HISTORICO_ATENDIMENTO_PROPOSTA_ITEM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HISTORICO_ATENDIMENTO_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HISTORICO_ATENDIMENTO_TIPO_ATENDIMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HISTORICO_ATENDIMENTO_UEN" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HISTORICO_ATENDIMENTO_x_ITEM_PEDIDO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HISTORICO_PEDIDO_ITEM_PEDIDO1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HISTORICO_PEDIDO_PEDIDO_STATUS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HISTORICO_PEDIDO_PROPOSTA_ITEM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_HISTORICO_PEDIDO_REPRESENTANTE1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPORTACAO_HISTORICO_IMPORTACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPORTACAO_IMPORTACAO_STATUS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPORTACAO_RESULTADO_RODIZIO_IMPORTACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPORTACAO_SUSPECT_IMPORTACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPORTACAO_HISTORICO_IMPORTACAO_STATUS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPORTACAO_HISTORICO_IMPORTACAO_SUSPECT" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPORTACAO_HISTORICO_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPORTACAO_RESULTADO_RODIZIO_REGIAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPORTACAO_RESULTADO_RODIZIO_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPORTACAO_SUSPECT_IMPORTACAO_SUSPECT_STATUS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPORTACAO_SUSPECT_ORIGEM_CADASTRO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPORTACAO_SUSPECT_PRODUTO_COMPOSICAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPORTACAO_SUSPECT_REGIAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPOSTO_INFO_FATURA_IMPOSTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPOSTO_INFO_FATURA_ITEM_IMPOSTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPOSTO_INFO_FATURA_INFO_FATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_IMPOSTO_INFO_FATURA_ITEM_INFO_FATURA_ITEM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_INFO_FATURA_ITEM_INFO_FATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ITEM_PEDIDO_INFO_FATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ITEM_PEDIDO_INFO_FATURA_ENTRADA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_CONFIG_X_INFO_FATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELA_INFO_FATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_ITEM_INFO_FATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_ITEM_INFO_FATURA_ENTRADA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_INFO_FATURA_ITEM_X_NOTA_FISCAL_CONFIG" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_INFO_FATURA_ITEM_X_NOTA_FISCAL_CONFIG_TIPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_INFO_MARKETING_ORIGEM_CADASTRO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTO_COMPOSICAO_INFO_MARKETING_INFO_MARKETING" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ITEM_PEDIDO_PAGAMENTO_PEDIDO_ITEM_PEDIDO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ITEM_PEDIDO_PEDIDO_CRM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ITEM_PEDIDO_PEDIDO_STATUS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ITEM_PEDIDO_PRODUTO_COMPOSICAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ITEM_PEDIDO_PROPOSTA_ITEM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ITEM_PEDIDO_REGIAO_TABELA_PRECO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ITEM_PEDIDO_TIPO_PAGAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ITEM_PEDIDO_X_LOCALIZACAO_CURSO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ITEM_PROPOSTA_COMPROVANTE_x_ITEM_PEDIDO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NFE_XML_ITEM_PEDIDO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_LOTE_ITEM_ITEM_PEDIDO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_X_ITEM_PEDIDO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELA_X_ITEM_PEDIDO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARTICIPANTE_ITEM_PEDIDO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REGISTRO_FATURAMENTO_ITEM_PEDIDO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RETORNO_TRANSACAO_ITEM_PEDIDO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TIPO_PEDIDO_ITEM_PEDIDO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ITEM_PEDIDO_PAGAMENTO_PEDIDO_PEDIDO_PAGAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_LINHA_PRODUTO_INFORMATIVO_LINHA_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_ORIGEM_ACESSO_LINHA_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTO_COMPOSICAO_LINHA_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTOS_LINHA_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_ITEM_X_LOCALIZACAO_CURSO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_MOTIVO_CANCELAMENTO_TIPO_CANCELAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_MUNDIPAGG_ASSINATURA_MUNDIPAGG_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_MUNDIPAGG_ASSINATURA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_MUNICIPIO_REGIAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_MUNICIPIO_UF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TRANSPORTADOR_MUNICIPIO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REPRESENTANTE_NIVEL_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_EVENTO_NOTA_FISCAL" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_ITEM_NOTA_FISCAL1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_LOTE_ITEM_X_NOTA_FISCAL" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_NOTA_FISCAL_SITUACAO1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_REFERENCIADA_NOTA_FISCAL" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_TIPO_DOC_FISCAL1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_TRANSPORTADOR1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_UF1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_X_NOTA_FISCAL_STATUS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_X_NOTA_FISCAL_TIPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_x_PROPOSTA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_CONFIG_PRODUTO_COMPOSICAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_CONFIG_X_NOTA_FISCAL_CONFIG_TIPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_LOTE_ITEM_X_NOTA_FISCAL_CONFIG" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_EVENTO_NOTA_FISCAL_LOTE_ITEM_TIPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_ITEM_OBS_NOTA_FISCAL_ITEM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_ITEM_PRODUTOS1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_ITEM_UNIDADE_MEDIDA1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_ITEM_X_PRODUTO_COMPOSICAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_LOTE_ITEM_NOTA_FISCAL_LOTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_LOTE_NOTA_FISCAL_LOTE_STATUS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_LOTE_X_NOTA_FISCAL_LOTE_TIPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_LOTE_ITEM_MSG_NOTA_FISCAL_LOTE_ITEM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_LOTE_ITEM_NOTA_FISCAL_LOTE_STATUS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_LOTE_ITEM_X_NOTA_FISCAL_LOTE_ITEM_TIPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_LOTE_ITEM_x_PROPOSTA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTA_FISCAL_REFERENCIADA_NOTA_FISCAL_LOTE_ITEM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTIFICACOES_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTIFICACOES_TIPO_NOTIFICACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_NOTIFICACOES_URGENCIA_NOTIFICACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_OCORRENCIA_ERRO_OCORRENCIA_RETORNO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELA_ALOCADA_OCORRENCIA_ERRO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELA_ALOCADA_OCORRENCIA_REMESSA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELA_ALOCADA_OCORRENCIA_RETORNO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTO_ORIGEM_ACESSO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELA_ALOCADA_PARCELAS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELA_ALOCADA_PARCELAS_REMESSA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELA_LIQUIDACAO_PARCELAS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELAS_PARCELAS_REMESSA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELAS_PEDIDO_PAGAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELAS_PROPOSTA_ITEM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELAS_TIPO_PAGAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_PARCELAS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARCELAS_REMESSA_TIPO_REMESSA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PARTICIPANTE_PEDIDO_CRM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PEDIDO_CRM_PEDIDO_STATUS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PEDIDO_CRM_PRODUTO_COMPOSICAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PEDIDO_CRM_PROPOSTA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PEDIDO_CRM_REGIAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PEDIDO_CRM_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PEDIDO_CRM_REPRESENTANTE_EMITENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PEDIDO_CRM_TIPO_PEDIDO_CRM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PEDIDO_CRM_UEN" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PEDIDO_CRM_X_TIPO_NEGOCIACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PEDIDO_PAGAMENTO_PEDIDO_CRM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PEDIDO_PAGAMENTO_TIPO_PAGAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PEDIDO_PARTICIPANTE_PROPOSTA_ITEM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PEDIDO_PARTICIPANTE_X_PROPOSTA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_ITEM_PEDIDO_STATUS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_PEDIDO_STATUS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRIORIDADE_ATENDIMENTO_REGIAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRIORIDADE_ATENDIMENTO_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRIORIDADE_ATENDIMENTO_REPRESENTANTE1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRIORIDADE_ATENDIMENTO_TIPO_PRIORIDADE_ATENDIMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTO_COMPOSICAO_INFO_MARKETING_PRODUTO_COMPOSICAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTO_COMPOSICAO_ITEM_PRODUTO_COMPOSICAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTO_COMPOSICAO_PRODUTO_COMPOSICAO1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTO_COMPOSICAO_TIPO_PERIODO_PRODUTO_COMPOSICAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTO_COMPOSICAO_TIPO_PRODUTO_COMPOSICAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTO_COMPOSICAO_TIPO_VENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_ITEM_PRODUTO_COMPOSICAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_PRODUTO_COMPOSICAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TABELA_PRECO_PRODUTO_COMPOSICAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTO_COMPOSICAO_ITEM_PRODUTOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTO_COMPOSICAO_ITEM_TIPO_PERIODO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_ITEM_PRODUTO_COMPOSICAO_ITEM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTO_COMPOSICAO_TIPO_PERIODO_TIPO_PERIODO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTO_EAN_PRODUTOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTOS_PRODUTO_FAMILIA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTO_FORNECEDOR_PRODUTOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTO_HISTORICO_PRODUTOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTO_PERFIL_PRODUTOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTOS_TIPO_PROD_COMPORTAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTOS_TIPO_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTOS_UNIDADE_MEDIDA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PRODUTOS_UNIDADE_MEDIDA1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_URA_PRODUTO_PRODUTOS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_ITEM_PROPOSTA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_REGIAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_REPRESENTANTE_EMITENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_TIPO_PROPOSTA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_UEN" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_X_REGISTRO_LIBERACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_X_TIPO_NEGOCIACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_ITEM_COMPROVANTE_PROPOSTA_ITEM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_ITEM_X_REGISTRO_LIBERACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_ITEM_X_REGISTRO_LIBERACAO_ITEM" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_TIPO_PAGAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_PROPOSTA_ITEM_COMPROVANTE_TIPO_PAGAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_UF_TIPO_PAGAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REGIAO_TABELA_PRECO_REGIAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REGIAO_UEN" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REPRESENTANTE_REGIAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_UF_REGIAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REGIAO_TABELA_PRECO_TABELA_PRECO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REGISTRO_FATURAMENTO_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REGISTRO_LIBERACAO__REGISTRO_LIBERACAO_" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REGISTRO_LIBERACAO_ITEM_REGISTRO_LIBERACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REGISTRO_LIBERACAO_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RELATORIO_CONDICAO_RELATORIO_OPERADOR_CONDICIONAL_RELATORIO_CONDICAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RELATORIO_CONDICAO_RELATORIO_OPERADOR_LOGICO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RELATORIO_CONDICAO_RELATORIO_PERSONALIZADO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RELATORIO_CONDICAO_RELATORIO_TABELAS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RELATORIO_CONDICAO_RELATORIO_TIPO_DADO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RELATORIO_CONDICAO_RELATORIO_OPERADOR_CONDICIONAL_RELATORIO_OPERADOR_CONDICIONAL" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RELATORIO_JOIN_RELATORIO_PERSONALIZADO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RELATORIO_JOIN_RELATORIO_TABELAS1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RELATORIO_JOIN_RELATORIO_TABELAS2" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RELATORIO_JOIN_TIPO_JOIN" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RELATORIO_PERSONALIZADO_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RELATORIO_PERSONALIZADO_X_RELATORIO_PERSONALIZADO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RELATORIO_TABELA_COLUNAS_RELATORIO_PERSONALIZADO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RELATORIO_TABELA_COLUNAS_RELATORIO_PERSONALIZADO_GRUPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RELATORIO_TABELAS_RELATORIO_PERSONALIZADO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RELATORIO_TABELA_COLUNAS_RELATORIO_TABELAS" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REPRESENTANTE_META_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REPRESENTANTE_UEN" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REPRESENTANTE_UF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_SEMANA_PREMIACAO_REPR_REPRESENTANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_REPRESENTANTE_META_TIPO_COMISSAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_RETORNO_TRANSACAO_TIPO_PAGAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_SEMANA_PREMIACAO_REPR_SEMANA_PREMIACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TABELA_PRECO_TIPO_PAGAMENTO_TABELA_PRECO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TABELA_PRECO_TIPO_PERIODO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TABELA_PRECO_TIPO_PAGAMENTO_TIPO_PAGAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TEMPLATE_HTML_TEMPLATE_GRUPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TEMPLATE_HTML_TEMPLATE_TEMPLATE_HTML_LAYOUT" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TIPO_PAGAMENTO_CAMPANHA_VENDA_TIPO_PAGAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TIPO_PAGAMENTO_COMPOSICAO_TIPO_PAGAMENTO_PAI" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_TIPO_PAGAMENTO_COMPOSICAO_TIPO_PEDIDO_COMPOSICAO_FILHO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_URA_UF" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_URA_COAD_URA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_URA_CONFIG_URA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_URA_LOG_URA1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_URA_PRODUTO_URA" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_URA_URA_TIPO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_URA_CONFIG_URA_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_URA_PRODUTO_AREA_URA_CONFIG" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.FK_URA_LOG_URA_TP_ATU" ManuallyRouted="false" />
+        <AssociationConnector Association="COADCORPModel.PRODUTO_AREA_CONSULTORIA" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

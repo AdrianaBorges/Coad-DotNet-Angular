@@ -1,0 +1,162 @@
+﻿<div ng-if="tabconfig.TDC_ID!=null&&tabconfig.TDC_ID!=''">
+
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div id="Introducao" class="col-lg-12">
+                    <h3 style="font-style: oblique;color:blue;" ng-bind-html="tabela.TAB_DESCRICAO"></h3>
+                    <p ng-bind-html="tabela.TAB_INTRODUCAO" ng-show="tabconfig.TDC_INTRODUCAO==true"></p>
+                </div>
+                <br />
+                <div id="InfPreenchimento" ng-show="tabconfig.TDC_INF_PREENCHIMENTO==true" class="col-lg-12">
+                    <h3 style="font-style: oblique;">Sobre</h3>
+                    <p ng-bind-html="tabela.TAB_INF_PREENCHIMENTO"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*Pesquisa da tabela dinâmica Tabela Dinâmica*@
+    @Html.Partial("Partials/_PreviewTabDinamica")
+
+    @*Simulador (Apresentação do Simulador selecionado no menu)*@
+    <div class="panel panel-default" ng-show="tabconfig.TDC_TIPO==2" id="Calculo">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-flash"></span>Cálculo
+        </div>
+        <div class="panel-body">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div ng-repeat="item in tabela.TAB_DINAMICA_ITEM" class="col-xs-11">
+                            <div ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" class="row" ng-show="cabec.TCI_FORMULA==null||cabec.TCI_FORMULA==''">
+                                <div class="col-lg-7">
+                                    <div class="form-group">
+                                        <label>{{cabec.TCI_ORDEM_APRESENTACAO}} - {{cabec.TCI_NOME_CAMPO}} </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="form-group">
+                                        <div class="input-group" ng-show="cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO==''">
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'">.....</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='F'">R$</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='P'">&nbsp;%</div>
+                                            <script>
+                                                $('.money').maskMoney({ thousands: '', decimal: '.', allowZero: true });
+                                            </script>
+                                            <input type="text" style="width: 100px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="15" ng-class="{'form-control text-right money': cabec.TCI_TIPO_CAMPO=='F', 'form-control text-right': cabec.TCI_TIPO_CAMPO!='F'}" />
+                                            <span class="glyphicon glyphicon-question-sign red" style="padding-left: 5px" app-popover trigger="click" data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="(cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null)&&(cabec.TDC_ID_TAB_REF==''||cabec.TDC_ID_TAB_REF==null)"></span>
+                                            <a href="javascript:void(0)" ng_click="mostraInfAdicionais(cabec.TDC_ID_TAB_REF,cabec.TCI_NOME_CAMPO)" app-popover data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="(cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null)&&(cabec.TDC_ID_TAB_REF!=''&&cabec.TDC_ID_TAB_REF!=null)">
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px"></span>
+                                            </a>
+                                        </div>
+                                        <div class="input-group" ng-show="cabec.TCI_VALOR_ESPERADO!=null&&cabec.TCI_VALOR_ESPERADO!=''">
+                                            <div class="input-group-addon ">.....</div>
+                                            <select class="form-control float-left" style="width: 100px" size="1" ng-model="item[cabec.TCI_NOME_CAMPODB]">
+                                                <option ng-repeat="option in listas[cabec.TCI_NOME_CAMPODB]">
+                                                {{option}}
+                                            </select>
+                                            <span class="glyphicon glyphicon-question-sign red" style="padding-left: 5px" app-popover trigger="click" data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="(cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null)&&(cabec.TDC_ID_TAB_REF==''||cabec.TDC_ID_TAB_REF==null)"></span>
+                                            <a href="javascript:void(0)" ng_click="mostraInfAdicionais(cabec.TDC_ID_TAB_REF,cabec.TCI_NOME_CAMPO)" app-popover data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="(cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null)&&(cabec.TDC_ID_TAB_REF!=''&&cabec.TDC_ID_TAB_REF!=null)">
+                                                <span class="glyphicon glyphicon-question-sign blue" style="padding-left: 5px"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button ng-click="calcularOpe()" class="btn btn-default"><span class="glyphicon glyphicon-cog blue"></span>Calcular</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default" ng-show="calculado==true&&tabconfig.TDC_TIPO==2">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-flash"></span>Resultado
+        </div>
+        <div class="panel-body">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <div id="ObsLayout" ng-show="tabconfig.TDC_OBS_LAYOUT==true" class="col-lg-12">
+                                <p ng-bind-html="tabela.TAB_OBS_LAYOUT"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div ng-repeat="item in tabela.TAB_DINAMICA_ITEM" class="col-xs-11">
+                            <div ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM | orderBy:'TCI_ORDEM_APRESENTACAO'" ng-show="cabec.TCI_FORMULA!=null&&cabec.TCI_FORMULA!=''">
+                                <div class="col-lg-7">
+                                    <div class="form-group">
+                                        <label>{{cabec.TCI_ORDEM_APRESENTACAO}} - {{cabec.TCI_NOME_CAMPO}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO!='F'&&cabec.TCI_TIPO_CAMPO!='P'">.....</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='F'">R$</div>
+                                            <div class="input-group-addon" ng-show="cabec.TCI_TIPO_CAMPO=='P'">&nbsp;%</div>
+                                            <script>
+                                                $('.money').maskMoney({ thousands: '', decimal: '.', allowZero: true });
+                                            </script>
+                                            <input type="text" style="width: 100px" ng-model="item[cabec.TCI_NOME_CAMPODB]" maxlength="10" class="form-control text-right money" ng-show="cabec.TCI_VALOR_ESPERADO==null||cabec.TCI_VALOR_ESPERADO==''" disabled="disabled" />
+                                            <span class="glyphicon glyphicon-question-sign red" style="padding-left: 5px" app-popover data-content="{{cabec.TCI_TEXTO_HELP}}" ng-show="cabec.TCI_TEXTO_HELP!=''&&cabec.TCI_TEXTO_HELP!=null"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <p ng-bind-html="tabela.TAB_LEGENDA_LAYOUT"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button ng-click="limparCalculo()" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span>Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @*Simulador (Legenda, Informações Gerais)*@
+    <div class="panel-body">
+        <div id="Legenda" ng-show="tabconfig.TDC_LEGENDA_LAYOUT==true" class="col-lg-12">
+            <h3 style="font-style: oblique;">Legenda</h3>
+            <p ng-bind-html="tabela.TAB_LEGENDA_LAYOUT" ng-show="tabconfig.TDC_LEGENDA_LAYOUT==true"></p>
+        </div>
+
+        <div id="InfGerais" ng-show="tabconfig.TDC_INF_GERAIS==true" class="col-lg-12">
+            <h3 style="font-style: oblique;">Informações Gerais</h3>
+            <p ng-bind-html="tabela.TAB_INF_GERAIS"></p>
+        </div>
+    </div>
+
+    @*modal-consulta --- Popup modal*@
+    <div id="modal-consulta" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: aliceblue">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-flash"></span>Informações Adicionais -- {{nometelapesquisa}} </h4>
+                </div>
+                <div class="modal-body" style="width: 100%; height: 500px; border: none; overflow: auto;">
+                    @Html.Partial("Partials/_SimuladorHelp")
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,32 @@
+﻿@model COAD.PORTAL.Model.DTO.PortalCoad.VW_NoticiasDTO
+
+@{
+    ViewBag.Title = "Notícia";
+}
+
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Tributário", "Index", "Tributario")</li>
+        <li>@Html.ActionLink("Busca", "Busca", "Noticias")</li>
+        <li class="active">Notícia</li>
+    </ol>
+}
+
+@Styles.Render("~/Content/themes/css/noticiasEstilo.css")
+
+<div id="noticiasDetalhe">
+    <div class="display-field">
+        <span class="descricao">@Html.DisplayFor(model => model.ngdescricao)</span>
+    </div>
+    <br />
+
+    <div class="display-field">
+        <span class="verbete">@Html.DisplayFor(model => model.ncverbete)</span>
+    </div>
+    <br />
+
+    <div class="display-field">
+        <span class="texto">@Html.Raw(Model.nmtexto)</span>
+    </div>
+    <br />
+</div>

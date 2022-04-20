@@ -1,0 +1,133 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto                   
+           
+   <div app-modal="modal-cliente" header="Dados do Cliente">
+      <ul class="nav nav-tabs">
+                    <li role="presentation" ng-class="{active : tab == 1}"><a href="#" ng-click="selecionarTab(1)">Informações do Cliente</a></li>
+                    <li role="presentation" ng-class="{active : tab == 2}"><a href="#" ng-click="abreAbaAgendarContato();">Agendar Contato</a></li>
+                    <li role="presentation" ng-class="{active : tab == 2}"><a href="#" ng-click="selecionarTab(3);">Histórico do Cliente</a></li>
+                </ul>
+                       
+            <div class="panel panel-default" ng-show="tab == 1">
+                 <div class="panel-heading"><span class="glyphicon glyphicon-info-sign blue"></span> Informações do Clientes</div>
+     
+                <div class="panel-body limit-modal-height">   
+                      <fieldset>
+                                   <legend>Informações básicas</legend>
+                                   <div class="row">
+                                        <div class="form-group col-sm-5">
+                                               @Html.Label("Nome")
+                                                <div class="text">{{$parent.clienteModal.CLI_NOME}}</div>
+                                        </div>
+                                        <div class="form-group col-sm-3">
+                                              @Html.Label("CPF/CNPJ")
+                                              <div class="text">{{$parent.clienteModal.CLI_CPF_CNPJ}}</div>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                              @Html.Label("E-Mail")
+                                              <div class="text">{{$parent.clienteModal.CLI_EMAIL}}</div>
+                                        </div>  
+                                   </div>
+                                </fieldset>
+                               <fieldset>
+                                   <legend>Telefones</legend>
+                                   <div class="row">
+                                       <div class="col-sm-12 text" ng-hide="$parent.clienteModal.CLIENTES_TELEFONE"  style="padding-left: 15px; padding-bottom: 5px;">
+                                           Não há telefones cadastrados
+                                       </div>
+                                            <div class="table-responsive padding" ng-show="$parent.clienteModal.CLIENTES_TELEFONE">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Tipo de Telefone</th>
+                                                            <th>DDD</th>
+                                                            <th>Telefone</th>                                    
+                                                        </tr>                                   
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="tel in $parent.clienteModal.CLIENTES_TELEFONE">
+                                                            <td>
+                                                              {{tel.TIPO_TEL_ID}}
+                                                            </td>
+                                                            <td>                             
+                                                                {{tel.CLI_TEL_DDD}}                                    
+                                                            </td>  
+                                                            <td>  
+                                                                {{tel.CLI_TEL_TELEFONE}}                                      
+                                                            </td> 
+                                    
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                   </div>
+                              </fieldset>
+                               
+                               <fieldset>
+                                   <legend>Informações de Marketing</legend>
+                                   <div class="row text" ng-hide="$parent.clienteModal.INFO_MARKETING" style="padding-left: 15px">
+                                       Não há informações de marketing
+                                   </div>                                   
+                                   <div class="row" ng-show="$parent.clienteModal.INFO_MARKETING">
+                                        <div class="table-responsive col-sm-6">
+                                            @Html.Label("Areas de Interesse")
+                                           
+                                            <div class="limit-div">
+                                                <table class="table table-hover">                                                
+                                                <tbody>
+                                                    <tr ng-repeat="area in $parent.clienteModal.INFO_MARKETING.AREA_INFO_MARKETING">
+                                    
+                                                        <td>
+                                                            {{area.AREAS.AREA_NOME}}
+                                                        </td>                                    
+                                                    </tr>  
+                                                    <tr ng-hide="$parent.clienteModal.INFO_MARKETING.AREA_INFO_MARKETING.length > 0">
+                                                        <td class="padding text">Não há areas de interesse.</td>
+                                                    </tr>                                            
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                                                                   
+                                        <div class="table-responsive col-sm-6">
+                                            @Html.Label("Produto de Interesse")
+                                            <div class="limit-div">
+                                                <table class="table table-hover">                                 
+                                                      <tbody>
+                                                        <tr ng-repeat="prod in $parent.clienteModal.INFO_MARKETING.PRODUTO_COMPOSICAO_INFO_MARKETING">
+                                                            <td>
+                                                                {{prod.PRODUTO_COMPOSICAO.CMP_DESCRICAO}}
+                                                            </td>                                   
+                                                        </tr>
+                                                        <tr ng-hide=" $parent.clienteModal.INFO_MARKETING.PRODUTO_COMPOSICAO_INFO_MARKETING.length > 0">
+                                                            <td>Não há produtos de interesse.</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                    </div>
+                                   </div>
+                                   <div class="row" ng-show="$parent.clienteModal.INFO_MARKETING">
+                                       <div class="form-group col-sm-5">
+                                            @Html.Label("Origem de Cadastro")
+                                           <div class="text">{{$parent.clienteModal.INFO_MARKETING.ORIGEM_CADASTRO.O_CAD_DESCRICAO}}</div>
+                                       </div>
+                                   </div>
+                              </fieldset>
+                           </div>
+                    <div>
+                         
+                       </div>            
+                 
+                        
+
+                </div>
+            <div ng-show="tab == 2">
+                @Html.Partial("Partials/_AgendaContatoPartial")
+            </div>
+
+                 <div class="panel-footer">
+                     <button class="btn btn-primary" ng-click="agendarContato()" ng-show="tab == 2">Agendar Contato</button>
+                 </div> 
+
+        </div>
+   

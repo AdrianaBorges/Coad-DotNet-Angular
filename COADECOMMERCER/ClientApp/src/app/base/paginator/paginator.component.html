@@ -1,0 +1,8 @@
+<ul class="pagination {{class}}">
+  <li><a href="javascript:void(0);" (click)="voltarPagina();">&laquo;</a></li>
+  <li *ngFor="let pag of lstPaginas" [ngClass]="{active: pag == pagina.pagina || pag < 0}">
+    <a href="javascript:void(0);" *ngIf="pag > 0" (click)="goToPage(pag)">{{pag}}</a>
+    <a href="javascript:void(0);" *ngIf="pag < 0">...</a>
+  </li>
+  <li><a href="javascript:void(0);" (click)="avancarPagina();">&raquo;</a></li>
+</ul>

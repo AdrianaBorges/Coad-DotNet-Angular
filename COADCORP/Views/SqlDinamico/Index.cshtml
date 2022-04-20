@@ -1,0 +1,212 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.RepresentanteDTO
+@using Coad.GenericCrud.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li class="active">Relatórios personalizados</li>         
+        
+    </ol>
+}
+
+@*<style type="text/css">
+
+    .body {
+        background-color: #e8e8e8 !important;
+
+    }
+</style>*@
+
+
+@Scripts.Render("~/Scripts/negocio/sql_dinamico.js")
+<div ng-app="appModule">
+    <div ng-controller="SqlDinamicoController" class="padding content" ng-cloak data-ng-init="listarRelatorioPersonalizado()">
+        <div app-message></div>
+        <div class="row">
+            <div class="col-md-12">
+                
+        <div class="panel panel-default">
+                    <!-- Default panel contents -->
+      
+                    <div class="panel-heading bold pointer" data-toggle="collapse" data-target="#resultado-query">
+                        <span class="glyphicon glyphicon-user"></span> Relatório Personalizado 
+
+                      <div class="pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    Opções
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    <li>
+                                        <a href="@Url.Action("NovoPersonalizado")" class="blue">Novo</a>
+                                    </li>                                                                           
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+          
+                    <div class="panel-body collapse in" aria-expanded="true" id="resultado-query">   
+                    
+                                <div class="table-responsive">
+                                    
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Nome Relatório</th>
+                                                <th>Usuário</th>
+                                                <th colspan="2">Ações</th>                                        
+                                            </tr>
+                                        </thead>
+                                        <tr ng-repeat="item in lstRelatorios" class="animate-repeat">
+                                            <td>{{item.REL_DESCRICAO}}</td>
+                                            <td>{{item.USU_LOGIN}}</td>
+                                            <td>
+                                                <a href="javascript:void(0)" app-post="@Url.Action("Editar")?relId={{item.REL_ID}}" 
+                                                    title="Editar" class="blue">
+                                                    <span class="glyphicon glyphicon-edit"></span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0)" ng-click="utilizarRelatorio(item.REL_ID)" 
+                                                    title="Rodar Relatório" class="text-success">
+                                                    <span class="glyphicon glyphicon-play-circle"></span>
+                                                </a>
+                                            </td>
+                                            <tr>
+                                                <td colspan="10" ng-show="!lstRelatorios">Nenhum dado retornado.</td>
+                                            </tr>
+
+                                    </table>
+                                </div>          
+                            <div app-pagination request-page="paginaReq" load-function="listarRelatorioPersonalizado(paginaReq)"></div>     
+
+                        </div>         
+                    </div> 
+
+            </div>
+        </div> 
+        <div ng-show="metadado">
+            
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading bold head-panel">
+                    <span class="glyphicon glyphicon-filter"></span>Filtros
+                   @* <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Opções
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="@Url.Action("Emitir")" class="blue">Novo</a>
+                                </li>                                                                           
+                            </ul>
+                        </div>
+                    </div>*@
+                </div>
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="form-group col-lg-2" ng-repeat="filtro in metadado.Filtros">
+                            <label for="filtro_{{$index}}">{{filtro.Label}}</label>
+
+                            <span ng-switch="filtro.NomeTipo">
+                                <span ng-switch-when="int">
+                                    <input type="text" id="input_int_{{$index}}" ng-model="filtro.Valor" 
+                                        class="form-control" app-number/>
+                                </span>
+                                <span ng-switch-when="date">
+                                    <input type="text" id="input_date_{{$index}}" 
+                                        app-date="filtro.Valor" 
+                                        ng-model="filtro.ValorDate" 
+                                        class="form-control" 
+                                        data-date-name="input_date_{{$index}}"/>
+                                </span>
+                                <span ng-switch-when="bool">
+                                    <br />
+                                    <label class="switch switch-success switch-round">
+                                        <input type="checkbox" ng-model="filtro.Valor"  id="input_radio{{$index}}" 
+                                            ng-checked="filtro.Valor == true">
+	                                    <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                                    </label>
+                                </span>
+                                <span ng-switch-when="decimal">
+                                    <input type="text" id="input_decimal_{{$index}}" ng-model="filtro.ValorMask" app-mask-dinheiro="filtro.Valor" class="form-control"/>
+                                </span>
+                                <span ng-switch-default>
+                                    <input type="text" id="input_{{$index}}" ng-model="filtro.Valor" class="form-control"/>
+                                </span>
+                            </span>                           
+                            
+                        </div>    
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" ng-click="rodarResultadoRelatorio()"><i class="fa fa-search" aria-hidden="true"></i> Preview</button>
+                    <button type="button" class="btn btn-success" ng-click="rodarResultadoRelatorioPlanilha()"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Download Planilha</button>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                    <!-- Default panel contents -->
+      
+                    <div class="panel-heading bold pointer" data-toggle="collapse" data-target="#resultado-query">
+                        <span class="glyphicon glyphicon-user"></span> Relatório Personalizado <em>({{metadado.NomeRelatorio}}) Preview</em></div>
+                            <div class="panel-body">
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                    
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-bordered table-stripped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th ng-repeat="col in metadado.Colunas">{{limparColuna(col.Name)}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tr ng-repeat="item in resultado.Dados" class="animate-repeat">
+                                                        <td ng-repeat="col in metadado.Colunas">
+                                                            
+                                                            <span ng-switch="col.Tipo">
+                                                                <span ng-switch-when="int">
+                                                                    {{item[col.Name]}}
+                                                                </span>
+                                                                <span ng-switch-when="date">
+                                                                    <span app-show-date="item[col.Name]"></span>
+                                                                </span>
+                                                                <span ng-switch-when="bool">
+                                                                   <span ng-show="item[col.Name] == true">Sim</span>
+                                                                    <span ng-show="!item[col.Name]">Não</span>
+                                                                </span>
+                                                                <span ng-switch-when="decimal">
+                                                                   <span app-show-dinheiro="item[col.Name]" show-simbolo="false"></span>
+                                                                </span>
+                                                                <span ng-switch-default>
+                                                                    {{item[col.Name]}}
+                                                                </span>
+                                                            </span> 
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="10" ng-show="!resultado">Clique no botão para visualizar a preview.</td>
+                                                        <td colspan="10" ng-show="resultado.Dados.length == 0 && listado">Nenhum resultado retornado.</td>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+                                            <div class="text-muted" ng-show="resultado.Dados.length > 0">Exibindo os 5 Primeiros Resultados</div>
+                                        </div>
+                                    </div>
+                            </div>
+                </div>
+            
+        </div>
+    </div>   
+</div>

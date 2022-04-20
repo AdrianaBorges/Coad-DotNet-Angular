@@ -1,0 +1,431 @@
+﻿@using COAD.SEGURANCA.Extensions
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = " COADCORP - Sistema de Gestão Integrada.";
+}
+
+@*@section breadcrumbs {
+
+        <ol class="breadcrumb breadcrumb-dashboard">
+            <li><i class="fa fa-home"></i><a href="/Home/index">@Html.ActionLink("Home", "index", "Home") </a></li>
+            <li class="active">Gerenciar Clientes</li>
+        </ol>
+    }*@
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+
+    .quebrapagina {
+        page-break-before: always;
+    }
+</style>
+
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/appScripts/Home.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.js")
+    @Scripts.Render("~/Scripts/flot/excanvas.min.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.pie.js")  
+    @Scripts.Render("~/Scripts/flot/jquery.flot.time.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.resize.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.categories.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.tooltip.min.js")
+
+}
+
+<form>
+    <div ng-app="appModule">
+        <div ng-controller="HomeControler" ng-init="CarregarTela();CarregarGraficoVendas();canPrint=true;">
+            <div class="panel panel-corp hidden-print">
+                <div class="panel-heading ">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Empresa")
+                                @Html.DropDownList("_emp_id", new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Todos ----", new { @class = "form-control", ng_model = "param.emp_id", ng_change = "CarregarGraficoVendas()" })
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Grupo")
+                                @Html.DropDownList("_grupo_id", new SelectList(ViewBag.grupos, "GRUPO_ID", "GRU_DESCRICAO"), "---- Todos ----", new { @class = "form-control", ng_model = "param.grupo_id", ng_Change = "CarregarGraficoVendas()" })
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Mês")
+                                @Html.DropDownList("_mesatual", new SelectList(@ViewBag.ListaMes, "Value", "Text"), "Selecione o Mês", new { @class = "form-control", ng_model = "param.mes", ng_Change = "CarregarGraficoVendas()" })
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Ano")
+                                @Html.TextBox("_anoatual", "", new { @class = "form-control", ng_model = "param.ano", ng_Change = "CarregarGraficoVendas()" })
+                            </div>
+                        </div>
+                        <div class="col-lg-1" style="padding-top:25px;">
+                            <a href="javascript:void(0)" ng-click="CarregarGraficoVendas()" class="btn btn-default"><i class="glyphicon glyphicon-refresh"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="baseContent" ng-class="{'panel panel-corp': baseContent, 'panel panel-corp hidden-print': !baseContent}">
+                <div class="panel-heading">
+                    <i class="fa fa-list-alt fa-fw"></i>
+                    <label id="title">RESUMO DE REPRESENTANTES (VENDAS)</label>
+                    <div class="pull-right hidden-print">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Opções
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)" ng-click="CarregarGraficoVendas()">Atualizar</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint" ng-click="baseContent=true;baseContent1=false"><i class="fa fa-print"></i>&nbspImprimir</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <fusioncharts width="100%"
+                                      height="750"
+                                      type="bar3d"
+                                      datasource="{{dataSource03}}"></fusioncharts>
+                        <div fusioncharts
+                             width="100%"
+                             height="750"
+                             type="bar3d"
+                             datasource="{{dataSource03}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="baseContent" ng-class="{'panel panel-corp': baseContent, 'panel panel-corp hidden-print': !baseContent}">
+                <div class="panel-heading">
+                    <i class="fa fa-list-alt fa-fw"></i>
+                    <label id="title">RESUMO DE VENDAS</label>
+                    <div class="pull-right hidden-print">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Opções
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)" ng-click="CarregarGraficoVendas()">Atualizar</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint" ng-click="baseContent=true;baseContent1=false"><i class="fa fa-print"></i>&nbspImprimir</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <fusioncharts width="100%"
+                                      height="350"
+                                      type="area2d"
+                                      datasource="{{dataSource00}}"></fusioncharts>
+                        <div fusioncharts
+                             width="100%"
+                             height="350"
+                             type="area2d"
+                             datasource="{{dataSource00}}">
+                        </div>
+                    </div>
+                    <div class="row" style="border-top: solid 1px #DDDDDD !important; padding-top:10px;">
+                        <div class="col-lg-3" style="border-right: solid 2px #f5f5f5">
+                            <div class="col-lg-3" style="padding-top:5px;padding-right:5px;">
+                                <i class="fa fa-check-circle fa-3x" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-lg-9" style="text-align:right; font-weight:bolder; background-color:#f5f5f5">
+                                <label app-show-dinheiro="grafVendastotgeral"></label><br />
+                                <label> Total Emitido</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3" style="border-right: solid 2px #f5f5f5">
+                            <div class="col-lg-3" style="padding-top:5px;padding-right:5px;">
+                                <i class="fa fa-times-circle fa-3x red" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-lg-9" style="text-align:right;font-weight:900 ; background-color:#f5f5f5">
+                                <label app-show-dinheiro="grafVendastotcanc"></label><br />
+                                <label>Total Cancelado</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3" style="border-right: solid 2px #f5f5f5">
+                            <div class="col-lg-3" style="padding-top:5px;padding-right:5px;">
+                                <i class="fa fa-usd fa-3x" aria-hidden="true" style="color:forestgreen"></i>
+                            </div>
+                            <div class="col-lg-9" style="text-align:right;font-weight:900 ; background-color:#f5f5f5">
+                                <label app-show-dinheiro="grafVendastotpago"></label><br />
+                                <label>Total Confirmado</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3" style="border-right: solid 2px #f5f5f5">
+                            <div class="col-lg-3" style="padding-top:5px;padding-right:5px;">
+                                <i class="fa fa-question-circle fa-3x" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-lg-9" style="text-align:right;font-weight:900 ; background-color:#f5f5f5">
+                                <label app-show-dinheiro="grafVendastotpend"></label><br />
+                                <label>Total Pendente</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="baseContent" ng-class="{'panel panel-corp': baseContent1, 'panel panel-corp hidden-print': !baseContent1}">
+                <div class="panel-heading">
+                    <i class="fa fa-list-alt fa-fw"></i>
+                    <label id="title">RESUMO DE FATURAMENTO</label>
+                    <div class="pull-right hidden-print">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Opções
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)" ng-click="CarregarGraficoVendas()">Atualizar</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint" ng-click="baseContent=false;baseContent1=true"><i class="fa fa-print"></i>&nbspImprimir</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <fusioncharts width="100%"
+                                      height="350"
+                                      type="area2d"
+                                      datasource="{{dataSource01}}"></fusioncharts>
+                        <div fusioncharts
+                             width="100%"
+                             height="350"
+                             type="area2d"
+                             datasource="{{dataSource01}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="baseContent" ng-class="{'panel panel-corp': baseContent, 'panel panel-corp hidden-print': !baseContent}">
+                <div class="panel-heading">
+                    <i class="fa fa-list-alt fa-fw"></i>
+                    <label id="title">APURAÇÃO DE VENDAS (MENSAL)</label>
+                    <div class="pull-right hidden-print">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Opções
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)" ng-click="CarregarGraficoVendas()">Atualizar</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint" ng-click="baseContent=true;baseContent1=false"><i class="fa fa-print"></i>&nbspImprimir</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <fusioncharts width="50%"
+                                          height="450"
+                                          type="column3d"
+                                          datasource="{{dataSource05}}"></fusioncharts>
+                            <div fusioncharts
+                                 width="100%"
+                                 height="450"
+                                 type="column3d"
+                                 datasource="{{dataSource05}}">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="table-responsive" style="padding-left: 12px; padding-right: 12px;">
+                                <table class="table table-hover table-bordered" style="padding-left: 12px;">
+                                    <thead>
+                                        <tr class="info">
+                                            <th style="text-align: center;">Mês/Ano</th>
+                                            <th style="text-align: right;">Variação (%)</th>
+                                            <th style="text-align: right;">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="item in dataSource05.data">
+                                        <td style="font-size: small;">{{item.label}}</td>
+                                        <td style="font-size: small;text-align: right">{{item.perc}}
+                                            <i class="fa fa-sort-asc blue" ng-if="item.perc>0"></i>
+                                            <i class="fa fa-sort-desc red" ng-if="item.perc<0"></i>
+                                        </td>
+                                        <td app-show-dinheiro="item.value" style="text-align: right"></td>
+                                    </tr>
+                                </table>
+                                <table class="table table-hover table-bordered" style="padding-left: 12px;">
+                                    <thead>
+                                        <tr class="info">
+                                            <th style="text-align: center;">Total</th>
+                                            <td app-show-dinheiro="dataSource05.totaldataset" style="text-align: right"></td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="baseContent" ng-class="{'panel panel-corp': baseContent, 'panel panel-corp hidden-print': !baseContent}">
+                <div class="panel-heading">
+                    <i class="fa fa-list-alt fa-fw"></i>
+                    <label id="title">APURAÇÃO DE VENDAS (ANUAL)</label>
+                    <div class="pull-right hidden-print">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Opções
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)" ng-click="CarregarGraficoVendas()">Atualizar</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint" ng-click="baseContent=true;baseContent1=false"><i class="fa fa-print"></i>&nbspImprimir</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <fusioncharts width="50%"
+                                          height="450"
+                                          type="column3d"
+                                          datasource="{{dataSource06}}"></fusioncharts>
+                            <div fusioncharts
+                                 width="100%"
+                                 height="450"
+                                 type="column3d"
+                                 datasource="{{dataSource06}}">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="table-responsive" style="padding-left: 12px; padding-right: 12px;">
+                                <table class="table table-hover table-bordered" style="padding-left: 12px;">
+                                    <thead>
+                                        <tr class="info">
+                                            <th style="text-align: center;">Mês/Ano</th>
+                                            <th style="text-align: right;">Variação (%)</th>
+                                            <th style="text-align: right;">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="item in dataSource06.data">
+                                        <td style="font-size: small;">{{item.label}}</td>
+                                        <td style="font-size: small;text-align: right">
+                                            {{item.perc}}
+                                            <i class="fa fa-sort-asc blue" ng-if="item.perc>0"></i>
+                                            <i class="fa fa-sort-desc red" ng-if="item.perc<0"></i>
+                                        </td>
+                                        <td app-show-dinheiro="item.value" style="text-align: right"></td>
+                                    </tr>
+                                </table>
+                                <table class="table table-hover table-bordered" style="padding-left: 12px;">
+                                    <thead>
+                                        <tr class="info">
+                                            <th style="text-align: center;">Total</th>
+                                            <td app-show-dinheiro="dataSource06.totaldataset" style="text-align: right"></td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="baseContent" ng-class="{'panel panel-corp': baseContent, 'panel panel-corp hidden-print': !baseContent}">
+                <div class="panel-heading">
+                    <i class="fa fa-list-alt fa-fw"></i>
+                    <label id="title">RESUMO DE VENDAS (GRUPOS)</label>
+                    <div class="pull-right hidden-print">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Opções
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)" ng-click="CarregarGraficoVendas()">Atualizar</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint" ng-click="baseContent=true;baseContent1=false"><i class="fa fa-print"></i>&nbspImprimir</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <fusioncharts width="50%"
+                                          height="450"
+                                          type="pie3d"
+                                          datasource="{{dataSource04}}"></fusioncharts>
+                            <div fusioncharts
+                                 width="100%"
+                                 height="450"
+                                 type="pie3d"
+                                 datasource="{{dataSource04}}">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="table-responsive" style="padding-left: 12px; padding-right: 12px;">
+                                <table class="table table-hover table-bordered" style="padding-left: 12px;">
+                                    <thead>
+                                        <tr class="info">
+                                            <th style="text-align: left;">Grupos</th>
+                                            <th style="text-align: right;">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="item in dataSource04.data">
+                                        <td style="font-size: small;">{{item.label}}</td>
+                                        <td app-show-dinheiro="item.value" style="text-align: right"></td>
+                                    </tr>
+                                </table>
+                                <table class="table table-hover table-bordered" style="padding-left: 12px;">
+                                    <thead>
+                                        <tr class="info">
+                                            <th style="text-align: left;">Total</th>
+                                            <td app-show-dinheiro="dataSource04.totaldataset" style="text-align: right"></td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+        </div>
+    </div>
+</form>
+
+
+

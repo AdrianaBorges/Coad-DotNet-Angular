@@ -1,0 +1,272 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+@using COAD.CORPORATIVO.SessionUtils
+@{
+    ViewBag.Title = "Index";
+    bool gerente = (SessionContext.IsGerenteDepartamento("franquiado", true) || SessionContext.IsGerenteDepartamento("franquiador", true));
+    bool franquiador = SessionContext.IsGerenteDepartamento("franquiador", true);
+    
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li class="active">Gerenciar Clientes</li>         
+        
+    </ol>
+}
+<script src="~/Scripts/negocio/controllers_plugins/info_cliente.js"></script>
+@Scripts.Render("~/Scripts/negocio/cliente.js")
+@Scripts.Render("~/Scripts/negocio/controllers_plugins/carteiramento_plugin.js")
+<div ng-app="appModule">    
+    <div ng-controller="ClienteController" class="padding content" ng-cloak 
+        data-ng-init="initBuscaCliente(); initInfoCliente(); initReencarteirar('@franquiador.ToString().ToLower()'); initClienteFranquia()">
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" disabled="disabled">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                        </li>                                                                           
+                                    </ul>
+                                </div>
+                            </div>
+      </div>
+          
+      <div class="panel-body">            
+           
+        <div class="row">              
+            <div class="form-group col-xs-3">
+                <label for="sigla">CNPJ/CPF</label>
+                <input type="text" id="cnpf-cpf" ng-model="filtro.cpf_cnpj" class="form-control" maxlength="14"/>
+            </div>
+            <div class="form-group col-xs-2">
+                <label for="sigla">CNPJ/CPF exato.
+                    <span class="glyphicon glyphicon-question-sign text-danger"
+                    title="Selecione 'não' caso queira que a busca procure por parte do cnpj/cpf do cliente. (Pesquisa mais lenta)." 
+                        data-toggle="tooltip">
+                    </span>                     
+                </label>
+                <br />
+                <label class="switch switch-warning switch-round">
+                    <input type="checkbox" id="checkbox_buscacnpj" 
+                        ng-model="filtro.pesquisaCpfCnpjPorIqualdade" 
+                        ng-checked="filtro.pesquisaCpfCnpjPorIqualdade == true">
+	                <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                </label>
+               
+            </div>
+            <div class="form-group col-xs-2">
+                <label for="sigla">Código</label>
+                <input type="text" id="codigo" ng-model="filtro.CLI_ID" class="form-control"/>
+            </div>
+            <div class="form-group col-xs-3">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome1" ng-model="filtro.nome" class="form-control"/>
+            </div>
+            <div class="form-group col-xs-2">
+                <label for="email">Email</label>
+                <input type="text" id="email" ng-model="filtro.email" class="form-control"/>
+            </div>
+        </div>
+        <div class="row">              
+            
+            <div class="form-group col-xs-1">
+                <label for="sigla">DDD</label>
+                <input type="text" id="ddd" ng-model="filtro.dddTelefone" class="form-control" maxlength="3" app-number/>
+            </div>
+            <div class="form-group col-xs-2">
+                <label for="nome">Telefone</label>
+                <input type="text" id="nome" ng-model="filtro.telefone" class="form-control" app-number/>
+            </div>
+            @if(SessionUtil.FranquiadoOuGerenteOuTI()){
+                <div class="form-group col-xs-2">
+                    <label for="representante">Representante 
+                        <span class="glyphicon glyphicon-question-sign text-danger" 
+                        title="Informe parte do nome e selecione o representante desejado." 
+                            data-toggle="tooltip">
+                        </span>
+                    </label>
+                    <input type="text" id="representanteField" ng-model="filtro.representante" class="form-control" app-simple-autocomplete="filtro.REP_ID" 
+                        lista="lstRepAutocomplete" min-length="3" 
+                        ng-disabled="filtro.buscarForaDaAgenda == true || (!lstRepAutocomplete && lstRepAutocomplete.length == 0)" 
+                        ng-blur="validarAutoComplete()"/>
+                        <div ng-show="repInvalido" class="bold text-danger">O representante não foi encontrado</div>
+                </div>
+                <div class="form-group col-lg-2">
+                        <label for="CLA_CLI_ID">Tipo</label>
+                        @Html.DropDownListFor(model => model.CLA_CLI_ID, new SelectList(@ViewBag.lstClassificacaoCliente, "CLA_CLI_ID", "CLA_CLI_DESCRICAO"), "Selecione",
+                new { @class = "form-control", ng_model = "filtro.classificacaoClienteId" })
+                        @Html.ValidationMessageFor(model => model.CLA_CLI_ID)
+                </div>
+                <div class="form-group col-lg-2">
+                        <label for="O_CAD_ID">Origem de Cadastro</label>
+                        @Html.DropDownListFor(model => model.INFO_MARKETING.O_CAD_ID, new SelectList(@ViewBag.lstOrigemCadastro, "O_CAD_ID", "O_CAD_DESCRICAO"), "Selecione",
+                new { @class = "form-control", ng_model = "filtro.origemId" })
+                        @Html.ValidationMessageFor(model => model.CLA_CLI_ID)
+                    </div>
+                 <div class="form-group col-lg-4">                                    
+	                            <label for="pendente">Excluir Validação de Email/CPF/Telefone</label><br />
+                                <label class="switch switch-danger switch-round">
+                                    <input type="checkbox" ng-model="filtro.excluidosDaValidacao"  id="pendente" ng-checked="filtro.excluidosDaValidacao == true">
+	                                <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                                </label>
+                            </div>
+            }
+            
+     @*       @if(SessionUtil.FranquiadoOuGerente()){
+                <div class="form-group col-lg-3">
+                    <label for="checkbox_busca_fora_agenda">Buscar Fora da Agenda.
+                    <span class="glyphicon glyphicon-question-sign text-danger"
+                    title="Mude para 'sim' caso queira que a busca procure clientes não associados a agenda." 
+                        data-toggle="tooltip">
+                    </span>                     
+                </label>
+                <br />
+                <label class="switch switch-info switch-round">
+                    <input type="checkbox" id="checkbox_busca_fora_agenda" 
+                        ng-model="filtro.buscarForaDaAgenda" 
+                        ng-checked="filtro.buscarForaDaAgenda == true">
+	                <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                </label>
+                </div>
+            } *@  
+        </div>
+      </div>
+                  
+        <div class="panel-footer">
+            <button type="button" class="btn btn-default" ng-click="buscarClientes()">Pesquisar</button>
+        </div>
+</div>
+        <div app-message></div>
+      <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Cadastro de Clientes</div>
+          
+      <div class="panel-body">       
+                    <div class="table-responsive">     
+                            <!-- <input type="text" ng-model="dataTest" app-date/>  -->       
+                       
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>                               
+                                    
+                                        <th style="min-width: 75px">                                           
+                                            Id
+                                        </th>
+                                        <th style="min-width: 132px">                                           
+                                            Cnpj/Cpf
+                                        </th>
+                                        <th>                                           
+                                            Nome
+                                        </th>
+                                        <th>
+                                            Emails
+                                        </th>
+                                        <th>
+                                            Tipo
+                                        </th>      
+                                        <th>Ações</th>                                   
+                                    </tr>
+                                </thead>    
+                              <tr ng-repeat="item in clientes" class="animate-repeat">
+                                    <td>
+                                        {{item.CLI_ID}}
+                                    </td>                                    
+                                    <td>
+                                        {{item.CLI_CPF_CNPJ}}
+                                    </td>   
+                                    <td>
+                                        {{item.CLI_NOME}} {{item.CLI_EXCLUIR_VALIDACAO}}
+                                    </td>        
+                                  <td>
+                                       {{item.ASSINATURA_EMAIL[0].AEM_EMAIL}}
+                                <a href="javascript:void(0)" class="" ng-if="item.ASSINATURA_EMAIL.length > 1" 
+                                    app-list-popover="item.ASSINATURA_EMAIL" label="AEM_EMAIL" title="Emails">
+                                        <span class="badge" > + {{item.ASSINATURA_EMAIL.length - 1}}</span>
+                                </a>
+                                  </td>
+                                    <td>
+                                        <span class="label" ng-class="{
+                                                      
+                                                      'label-warning' : item.CLA_CLI_ID == 1,
+                                                      'label-success' : item.CLA_CLI_ID == 2,
+                                                      'label-primary' : item.CLA_CLI_ID == 3,
+                                                      }">{{item.CLASSIFICACAO_CLIENTE.CLA_CLI_DESCRICAO}}</span>
+                                    </td>                            
+                                    <td>
+                                        <a href="javascript:void(0)" ng-click="abreModalCliente(item.CLI_ID)" title="Detalhes" class="blue">
+                                                    <span class="glyphicon glyphicon-search"></span>
+                                        </a>   
+
+                                        @if(gerente)
+                                        {
+                                            <a href="javascript:void(0)" ng-click="abreModalCarteiramento(item.CLI_ID)" title="Reencarteirar" class="blue" 
+                                                ng-if="item.ClienteNaAgenda == true">
+                                                <span class="glyphicon glyphicon-refresh"></span>
+                                            </a>
+                                        }
+                                        <a href="javascript:void(0)" ng-click="abreModalAdicionarRegiao(item.CLI_ID)" title="Adicionar Região" class="blue"
+                                           ng-if="item.ClienteNaAgenda == true">
+                                            <span class="glyphicon glyphicon-plus-sign"></span>
+                                        </a>
+                                        
+                                        @if (SessionContext.IsGerenteDepartamento("franquiador", true))
+                                        {
+                                            <a href="javascript:void(0)" 
+                                                ng-click="abreModalRemoverRegiao(item.CLI_ID)" title="Remover Região" class="red" 
+                                                ng-if="item.ClienteNaAgenda == true">
+                                                <span class="glyphicon glyphicon-minus-sign"></span>
+                                            </a>
+                                        } 
+                                         
+                                        @if(gerente)
+                                        {
+                                            <a 
+                                                href="javascript:void(0)" 
+                                                ng-click="excluirClienteDaValicacao(item.CLI_ID)" 
+                                                title="Remover Cliente da Validação de Email/Telefone/CPF-CNPJ" 
+                                                class="red" ng-hide="item.CLI_EXCLUIDO_VALIDACAO == true">
+                                                    <span class="glyphicon glyphicon-ban-circle"></span>
+                                            </a>
+                                         }
+                                      </td>
+                                                                     
+                              </tr>
+                            <tr>
+                                @{
+                                    
+                                    int cols = (gerente) ? 7 : 6;
+                                   
+                                }
+                                <td colspan="7" ng-show="clientes.length == 0 && listado">Nenhum registro foi encontrado. Clique no (mais) para cadastrar um novo cliente. 
+                                        <a href="javascript:void(0)" ng-click="cadastrarClienteComBaseNosFiltros()" title="Cadastrar cliente" class="blue">
+                                            <span class="glyphicon glyphicon-plus-sign"></span>
+                                        </a> 
+                                </td>
+                                <td colspan="7" ng-show="!clientes">Clique em pesquisar para listar.</td>
+
+                            </tr>
+
+                            </table> 
+                    </div>
+              <app-pagination request-page="paginaReq" load-function="buscarClientes(paginaReq)"></app-pagination>
+
+          </div>
+        </div>  
+
+        @Html.Partial("Partials/_ModalClientePartial")
+        @Html.Partial("Partials/_ReencarteirarPartial")
+        @Html.Partial("Partials/_AdicionarRegiaoPartial")
+        @Html.Partial("Partials/_RemoverRegiaoPartial")
+
+    </div>   
+</div>

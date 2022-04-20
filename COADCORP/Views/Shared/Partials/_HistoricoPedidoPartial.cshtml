@@ -1,0 +1,142 @@
+﻿<div app-modal="modal-historico" header="Histórico do pedido" submodal>   
+    @if(ViewBag.mostraTudo != null || ViewBag.mostraTudo == true){
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+                    <div class="pull-right">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" disabled="disabled">
+                                                Opções
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu pull-right" role="menu">
+                                                <li>
+                                                    <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                                </li>                                                                           
+                                            </ul>
+                                        </div>
+                                    </div>
+                </div>
+          
+                <div class="panel-body">            
+                    <div class="row">              
+                        <div class="form-group col-lg-3">
+                            <label for="sigla">Data Inicial</label>
+                            <input type="text" ng-model="filtro.dataInicialMask" app-date="filtro.dataInicial" class="form-control"/>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label for="sigla">Data Final</label>
+                            <input type="text" ng-model="filtro.dataFinalMask" app-date="filtro.dataFinal" class="form-control"/>
+                        </div>          
+                    </div>
+            
+                </div>
+                  
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" ng-click="listarHistoricos()">Pesquisar</button>
+                </div>
+        </div>
+    }
+    else if (ViewBag.mostraTudo == null || ViewBag.mostraTudo == false)
+    {
+          <div class="row padding">              
+                <div class="form-group col-lg-3">
+                    <label for="sigla">Data Inicial</label>
+                    <input type="text" ng-model="filtro.dataInicialMask" app-date="filtro.dataInicial" class="form-control"/>
+                </div>
+                <div class="form-group col-lg-3">
+                    <label for="sigla">Data Final</label>
+                    <input type="text" ng-model="filtro.dataFinalMask" app-date="filtro.dataFinal" class="form-control"/>
+                </div>   
+              <div class="form-group col-lg-2" style="padding-top: 24px">
+                            <button type="button" class="btn btn-default" ng-click="$parent.listarHistoricos()"><span class="glyphicon glyphicon-search"></span></button>
+              </div>         
+            </div>             
+    }      
+
+          <div class="panel panel-default">
+          <!-- Default panel contents -->
+      
+          <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Historicos</div>
+          
+          <div class="panel-body limit-modal-height-1">   
+                    
+                        <div class="table-responsive">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>      
+                                            <th>                                           
+                                                Data
+                                            </th>
+                                            <th>
+                                                Tipo
+                                            </th> 
+                                            <th>                                           
+                                                Descrição
+                                            </th>
+                                            <th>Representante</th>     
+                                            <th>Usuário</th>                                   
+                                        </tr>
+                                    </thead>    
+                                  <tr ng-repeat="item in lstHistoricos" class="animate-repeat">
+                                        <td class="center" app-show-date="item.HIP_DATA" show-time>
+                                        
+                                        </td>                                    
+                                        <td>
+                                            <span>
+                                                <span ng-class="{   
+                                                    'label label-primary' : item.PST_ID == 3,
+                                                    'label label-success' : item.PST_ID == 7 || item.PST_ID == 4,
+                                                    'label label-warning' : item.PST_ID == 1,
+                                                    'label label-danger' : item.PST_ID == 5 || item.PST_ID == 10,
+                                                    'label label-default' : item.PST_ID == 10,
+                                                    'label label-purple' : item.PST_ID == 2 || item.PST_ID == 9,
+                                                    'label label-info': item.PST_ID == 8 || item.PST_ID == 12
+                                                    }">
+                                                    {{item.PEDIDO_STATUS.PST_STATUS}}
+                                                </span>
+                                            </span> 
+                                        </td>   
+                                        <td>
+                                            <a href="javascript:void(0);" 
+                                                ng-click="abrirModalDescricao(item.HIP_DESCRICAO);" 
+                                                app-popover
+                                                data-content="{{item.HIP_DESCRICAO}}"
+                                                data-trigger="hover" 
+                                                data-direction="left"
+                                                >{{item.HIP_DESCRICAO | limitTo:100}}
+                                                <span class="text-success" 
+                                                ng-if="item.HIP_DESCRICAO.length > 100">...</span>
+                                            </a>
+                                        </td>  
+                                        <td>
+                                            <span ng-if="item.REPRESENTANTE.REP_NOME">
+                                                {{item.REPRESENTANTE.REP_NOME}}
+                                            </span>
+                                        </td>
+                                      <td>
+                                          {{item.USU_LOGIN}}
+                                      </td>
+                                  </tr>
+                                    <tr>
+                                        <td colspan="5" ng-hide="lstHistoricos" class="text">
+                                            Não foi encontrado nenhum registro.
+                                        </td>
+                                    </tr>
+                                </table> 
+                        </div>
+              @if (ViewBag.mostraTudo == null || ViewBag.mostraTudo == false)
+              {
+                  <div app-pagination="paginaHistorico" request-page="paginaReq" load-function="listarHistoricos(paginaReq)"></div>
+              }
+
+              </div>
+         
+        </div>
+</div>
+
+<div app-modal="descricao-historico-pedido" header-bg="false">
+     <figure>
+        <pre style="white-space:initial;min-height: 60px;">{{descricaoHistorico}}</pre>
+    </figure>    
+</div>

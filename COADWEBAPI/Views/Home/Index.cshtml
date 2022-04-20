@@ -1,0 +1,51 @@
+﻿<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script>
+    
+    $(document).ready(function () {
+        $.ajax({
+            url: 'http://localhost:14480/api/usuario?login=jpereira&senha=1qaz2wsx',
+            type: 'GET',
+            success: function (data) {
+            },
+            error: function (x, y, z) {
+            }
+        });
+    });
+</script>
+<header>
+    <div class="content-wrapper">
+        <div class="float-left">
+            <p class="site-title">
+                <a href="~/">COAD Web API</a></p>
+        </div>
+    </div>
+</header>
+<div id="body">
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>COAD Web API</h1>
+            </hgroup>
+            <p>
+                <br />
+            </p>
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+        <ol class="round">
+            <li class="one">
+                <h5>Notícias</h5>
+                <br />
+            </li>
+
+            <li class="two">
+                <h5>Usuário</h5>
+                <br />
+            </li>
+            <li class="three">
+                <h5>Log</h5>
+                <br />
+            </li>
+        </ol>
+    </section>
+</div>

@@ -1,0 +1,63 @@
+﻿@Scripts.Render("~/Scripts/appScripts/relatorios.js")
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">@Html.ActionLink("Relatorios", "index", "Relatorios") </a></li>
+        <li class="active">Relatórios Financeiro</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="relatoriosControler" class="padding content" ng-cloak>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-corp">
+                    <div class="panel-heading bold"><span class="glyphicon glyphicon-th-list"></span>&nbspLista de Relatórios</div>
+                    <div class="panel-body">
+                        <dl>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/RelApuracaoRecebimento/Index">Apuração Recebimento</a>
+                            </dt>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/RelContratosCancelados/Index">Contratos Cancelados</a>
+                            </dt>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/RelClientesProduto/Index">Contratos Vigentes por Produto</a>
+                            </dt>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/Parcelas/Liquidacao">Liquidação de Titulos</a>
+                            </dt>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/NotaFiscal/RptNotasPeriodo">Nota Fiscal por período</a>
+                            </dt>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/RelPrevisaoReceita/Index">Previsão de Receita</a>
+                            </dt>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/RelAreceber/Index">Titulos a Receber</a>
+                            </dt>
+                            <dt>
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                <a href="/RelAlocados/Index">Titulos Alocados</a>
+                            </dt>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

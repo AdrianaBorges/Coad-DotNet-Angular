@@ -1,0 +1,99 @@
+﻿<div app-modal="modal-historico-importacao" header="Histórico de Importação" submodal header-bg="false">   
+   <div class="row padding">              
+                <div class="form-group col-lg-3">
+                    <label for="sigla">Data Inicial</label>
+                    <input type="text" ng-model="filtroHistorico.dataInicialMask" app-date="filtroHistorico.dataInicial" class="form-control"/>
+                </div>
+                <div class="form-group col-lg-3">
+                    <label for="sigla">Data Final</label>
+                    <input type="text" ng-model="filtroHistorico.dataFinalMask" app-date="filtroHistorico.dataFinal" class="form-control"/>
+                </div>   
+              <div class="form-group col-lg-2" style="padding-top: 24px">
+                            <button type="button" class="btn btn-info" ng-click="$parent.pesquisarHistorico()"><span class="glyphicon glyphicon-search"></span></button>
+              </div>         
+            </div>             
+       
+
+          <div>   
+              <div class="row">
+                  <div class="col-md-12">
+                      <span class="font-20">
+                          <i class="fa fa-history text-info" aria-hidden="true"></i>
+                          <label class="font-18 text-info">Históricos de Importação</label>
+                      </span>
+                  </div>
+              </div>  
+            <div class="table-responsive limit-div-5">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr class="bg-info">      
+                                <th>                                           
+                                    Data
+                                </th>
+                                <th>
+                                    Tipo
+                                </th> 
+                                <th style="min-width: 300px;">                                           
+                                    Descrição
+                                </th>
+                                <th ng-show="filtroHistorico.impID && !filtroHistorico.ipsID">Representante</th>     
+                                <th ng-show="filtroHistorico.impID && !filtroHistorico.ipsID">Usuário</th>
+                            </tr>
+                        </thead>    
+                        <tr ng-repeat="item in lstHistoricos" class="animate-repeat">
+                        <td class="center" app-show-date="item.IMH_DATA" show-time>
+                                        
+                        </td>                                    
+                        <td>
+                            <span>
+                                <span class="label" ng-class="{
+                                    'label-warning' : item.IMS_ID == 1,
+                                    'label-purple' : item.IMS_ID == 6 || item.IMS_ID == 0,
+                                    'label-info' : item.IMS_ID == 4,
+                                    'label-danger' : item.IMS_ID == 2 || item.IMS_ID == 5,
+                                    'label-success' : item.IMS_ID == 3
+                                }">{{item.IMPORTACAO_STATUS.IMS_DESCRICAO}}
+                                </span>
+                            </span> 
+                        </td>   
+                        <td>                            
+                            <a href="javascript:void(0);" 
+                                ng-click="abrirModalDescricao(item.IMH_DESCRICAO);"
+                               ng-class="{
+                                    'text-info' : !item.IMH_ERRO,
+                                    'text-danger' : item.IMH_ERRO
+                                }" 
+                                ><span>
+                                    {{limparBR(item.IMH_DESCRICAO) | limitTo:100}}
+                                    <span 
+                                    ng-if="limparBR(item.IMH_DESCRICAO).length > 100">...</span>
+                                </span>
+                            </a>
+                        </td>
+                        <td ng-show="item.IMH_HISTORICO_DA_IMPORTACAO == true">
+                            <span ng-if="item.REPRESENTANTE.REP_NOME">
+                                {{item.REPRESENTANTE.REP_NOME}}
+                            </span>
+                        </td>
+                        <td ng-show="item.IMH_HISTORICO_DA_IMPORTACAO == true">
+                            {{item.USU_LOGIN}}
+                        </td>                     
+                        </tr>
+                        <tr>
+                            <td colspan="5" ng-hide="lstHistoricos" class="text">
+                                Não foi encontrado nenhum registro.
+                            </td>
+                        </tr>
+                    </table> 
+            </div>
+            <div app-pagination="pageHistoricoImportacao" request-page="paginaReq" load-function="pesquisarHistorico(paginaReq)"></div>              
+
+              </div>
+    </div>
+<div app-modal="descricao-importacao-importacao" header-bg="false">
+     <div class="panel panel-default">
+         <div class="panel panel-body limit-div-3">
+            <div class="text-danger"><strong ng-bind-html="descricaoHistorico"></strong></div>
+         </div>
+    </div>    
+</div>

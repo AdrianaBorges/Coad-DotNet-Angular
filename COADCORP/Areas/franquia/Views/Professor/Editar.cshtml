@@ -1,0 +1,209 @@
+﻿@model COAD.CORPORATIVO.Model.Dto.RepresentanteDTO
+
+@{
+    ViewBag.Title = "Editar";
+}
+@using Coad.GenericCrud.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Professor (Editar)</li>
+    </ol>
+}
+
+
+@{
+    
+    bool adm = (SessionContext.IsAdmDepartamento("TI") || SessionContext.IsAdmDepartamento("Franquiador"));
+    var voltar = @Url.Action("index");
+              
+}
+
+@Scripts.Render("~/Scripts/negocio/professor.js")
+
+<div ng-app="appModule">
+    <div class="panel panel-default" ng-controller="ProfessorController" data-ng-init="initEdicao('@adm'); read('@ViewBag.REP_ID', '@ViewBag.USU_LOGIN');" ng-cloak>
+        <!-- Default panel contents -->
+                  <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel primary-blue"><span class="glyphicon glyphicon-edit icon-panel"></span> Editar Professor
+                    
+                        <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-warning btn-xs dropdown-toggle" data-toggle="dropdown"
+                                            aria-expanded="false" ng-disabled="button == 'saved'">
+                                            Opções
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                             <li>
+                                                <a href="@voltar" title="Voltar" class="blue"> Voltar</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" title="Salvar" ng-click="salvar()" class="blue">Salvar</a>
+                                            </li>
+                                            <li ng-show="prospect.ID">
+                                                <a href="javascript:void(0)" app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}" 
+                                                    app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?" class="btnConfirmaExclusao blue" title="Excluir"> Excluir</a>
+                                            </li>                                                                                                                    
+                                        </ul>
+                                    </div>
+                                </div>
+                     
+                     
+            </div>
+
+            <div class="panel-body">  
+                <div app-message></div>
+                 @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) {                         
+                     
+                    <fieldset>
+                        <legend>Dados básicos</legend>
+                    
+                        <div class="row"> 
+                            <div class="form-group col-sm-3">
+                                @Html.Label("Nome")
+                                @Html.TextBoxFor(model => model.REP_NOME,  new {@class = "form-control", 
+                                ng_model = "professor.REP_NOME", maxlength = "30" })
+                                    @Html.ValidationMessageFor(model => model.REP_NOME, null, new { app_validation_msg = "erros", @for = "REP_NOME" })                                                            </div>                          
+                            <div class="form-group col-sm-2">
+                                <label for="usuario">Login</label>
+                                 <br />
+                                <input type="text" id="usuario" ng-model="professor.USUARIO.USU_LOGIN" lista="listaUsuario" 
+                                    app-simple-autocomplete="professor.USU_LOGIN" class="form-control" 
+                                    on-select="recuperarDadosDoUsuario()" ng-disabled="professor.USUARIO.REP_ID"/>
+                                <div app-validation-msg="erros" for="USUARIO.USU_LOGIN"></div>
+
+                            </div>
+                            <div class="form-group col-sm-1" ng-if="professor.USUARIO.REP_ID" style="padding-top: 31px;">
+                                
+                                 <a href="javascript:void(0);" id="usuarioNome" title="Remover Usuário" ng-click="removerUsuario()">
+                                    <span class="glyphicon glyphicon-remove-circle red"></span>
+                                </a>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label for="usuario">Nome do usuário</label>
+                                    <br />
+                                <input type="text" id="nomeUsuario" ng-model="professor.USUARIO.USU_NOME" class="form-control"/>
+                                <div app-validation-msg="erros" for="USUARIO.USU_NOME"></div>
+                            </div>     
+                            <div class="form-group col-sm-3">
+                                <label for="email">Email</label>
+                                    <br />
+                                <input type="text" id="email" ng-model="professor.USUARIO.USU_EMAIL" class="form-control"/>
+                                <div app-validation-msg="erros" for="USUARIO.USU_EMAIL"></div>
+                            </div>                                                       
+                        </div>
+                        <div class="row">                            
+                               
+                                <div class="form-group col-sm-3">
+                                    <label for="cpf">Cpf</label>
+                                     <br />
+                                    <input type="text" id="cpf" ng-model="professor.USUARIO.USU_CPF" class="form-control" maxlength="14"/>
+                                    <div app-validation-msg="erros" for="USUARIO.USU_CPF"></div>
+                                </div>               
+                               
+                                @if (SessionContext.IsAdmDepartamento("FRANQUIADOR") || SessionContext.IsAdmDepartamento("TI"))
+                                {
+                                    <div class="form-group col-sm-3">
+                                        <label for="selectRegiao">UEN</label> 
+                                        <select ng-options="uen.UEN_ID as uen.UEN_DESCRICAO for uen in lstUEN"
+                                                ng-model="professor.UEN_ID" id="lstUen" class="form-control" ng-change="uenSelecionado()">
+                                                <option value="">Selecione</option>
+                                        </select>
+                                    </div>
+                                }  
+                                @if (SessionContext.IsGerenteDepartamento("FRANQUIADOR", true) || SessionContext.IsGerenteDepartamento("TI", true))
+                                {
+                                    <div class="form-group col-sm-3">
+                                        <label for="selectRegiao">Região</label> 
+                                        <select ng-options="reg.RG_ID as reg.RG_DESCRICAO for reg in regioes"
+                                                ng-model="professor.RG_ID" id="selectRegiao1" class="form-control">
+                                                <option value="">Selecione</option>
+                                        </select>
+                                    </div>
+                                }                                                            
+                            </div>
+                    </fieldset>  
+                    <fieldset>
+                        <legend>Especializações</legend>
+                            <div class="row padding">                        
+                            <div class="table-responsive">
+                                <div app-validation-msg="erros" for="AREA_CONSULTORIA_REPRESENTANTE_PROXY"></div>
+                            <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Colecionador</th>
+                                    <th>Grande Grupo</th>
+                                    <th>Ações</th>
+                                    
+                                </tr>                                   
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in professor.AREA_CONSULTORIA_REPRESENTANTE_PROXY">
+                                   <td>                            
+                                        <select ng-options="col.ARE_CONS_ID as col.ARE_CONS_DESCRICAO for col in lstColecionadores"
+                                                ng-model="item.ARE_CONS_ID" id="proRep" class="form-control"
+                                                app-change="colecionadorSelecionado(item.ARE_CONS_ID, $index)">
+                                                <option value="">Selecione</option>
+                                        </select>                            
+                                       <div app-validation-msg="erros" for="AREA_CONSULTORIA_REPRESENTANTE_PROXY[{{$index}}].ARE_CONS_ID"></div>
+        
+                                    </td>
+                                    <td>                            
+                                        <select ng-options="gg.TIT_ID as gg.TIT_DESCRICAO for gg in matrizGrandeGrupo[$index].lstGrandeGrupo"
+                                                ng-model="item.TIT_ID" id="gg" class="form-control">
+                                                <option value="">Selecione</option>
+                                        </select>                                       
+                                    </td>                             
+                                    <td>                                       
+                                        <a href="javascript:void(0)" ng-click="ExcluirAreas($index)" class="btnConfirmaExclusao red" id="btexcluir" title="Excluir">
+                                            <span class="glyphicon glyphicon-remove-sign"></span>
+                                        </a>
+                                        <span ng-show="professor.AREA_CONSULTORIA_REPRESENTANTE_PROXY.length == ($index + 1)">
+                                            <a href="javascript:void(0)" ng-click="IncluirAreas()" title="Incluir">
+                                                <span class="glyphicon glyphicon-plus blue"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                    
+                                </tr>
+                                <tr ng-hide="professor.AREA_CONSULTORIA_REPRESENTANTE_PROXY.length > 0">
+                                    <td colspan="6">Nenhuma area de consultoria adicionada. Clique para adicionar: 
+                                        <a href="javascript:void(0)" ng-click="IncluirAreas()" title="Incluir">
+                                                <span class="glyphicon glyphicon-plus blue"></span>
+                                            </a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                        </div>
+            </fieldset>     
+                 }
+            </div>
+
+         <div class="panel-footer">
+            <button type="button" onclick="window.location = '@voltar'" class="btn btn-default" ng-disabled="button == 'saved' || buttonDel == 'deleting'">
+                <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar</button>
+              <button  
+                  app-switch-button="salvar()" 
+                  switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]" 
+                  switch-var="button"
+                  class="btn btn-primary" ng-disabled="bloqueiaSalvamento && bloqueiaSalvamento === true || buttonDel == 'deleting'">
+                  <span class="glyphicon glyphicon-floppy-save"></span>
+              </button>
+
+           <span ng-show="professor.REP_ID">
+                <button type="button" class="btn btn-danger" ng-disabled="button == 'saved'"
+                     app-switch-button="deletarprofessor()" 
+                  switch-conf="[{label : 'Excluir', state : 'del'}, {label : 'Excluindo...', state : 'deleting', disabled : true}]" 
+                  switch-var="buttonDel"
+                  class="btn btn-default" ng-disabled="bloqueiaSalvamento && bloqueiaSalvamento === true">
+                    <span class="glyphicon glyphicon-remove-sign"></span></button>
+            </span>         
+        </div> 
+               
+      </div>
+</div>

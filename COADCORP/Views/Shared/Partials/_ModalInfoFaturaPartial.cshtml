@@ -1,0 +1,138 @@
+﻿
+<div class="row">
+        <div class="col-lg-7 col-xs-7" ng-if="infoFaturaModal">                 
+        <label for="impostos">Valores de Imposto</label> 
+        <ul class="list-unstyled">
+            <li>
+                <strong class="font-13 text-muted">Valor Bruto:</strong>
+                <strong class="font-12 text-primary" app-show-dinheiro="infoFaturaModal.IFF_VALOR_BRUTO"></strong>
+            </li>
+            <li ng-if="infoFaturaModal.IFF_VALOR_SERVICE > 0">
+                <strong class="font-13 text-muted">Valor do Serviço:</strong>
+                <strong class="font-12 text-primary" app-show-dinheiro="infoFaturaModal.IFF_VALOR_SERVICE"></strong>
+
+            </li>
+            <li ng-if="infoFaturaModal.IFF_VALOR_MATERIAL > 0">
+                <strong class="font-13 text-muted">Valor do Material:</strong>
+                <strong class="font-12 text-primary" app-show-dinheiro="infoFaturaModal.IFF_VALOR_MATERIAL"></strong>
+            </li>
+            <li>
+                <strong class="font-13 text-muted">Total Percentual de Impostos:</strong>
+                <strong class="font-12 text-primary">{{infoFaturaModal.IFF_PERCENTUAL_TOTAL_DESCONTADO}}%</strong>
+            </li>
+            <li>
+                <strong class="font-13 text-muted">Total de Impostos:</strong>
+                <strong class="font-12 text-primary" app-show-dinheiro="infoFaturaModal.IFF_TOTAL_DESCONTADO"></strong>
+
+            </li>
+            <li>
+                <strong class="font-13 text-muted">Total Líquido:</strong>
+                <strong class="font-12 text-primary" app-show-dinheiro="infoFaturaModal.IFF_TOTAL_LIQUIDO"></strong>
+            </li>
+        </ul>                
+    </div>
+    <div class="col-lg-5 col-xs-5" ng-if="infoFaturaModal">
+        <label for="impostos">Impostos Aplicados</label>                
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered table-striped">
+                <tbody>
+                    <tr ng-repeat="item in infoFaturaModal.IMPOSTO_INFO_FATURA" class="animate-repeat">
+                        <td class="text">
+                            {{item.IMPOSTO.IMP_NOME}} ({{item.IMPOSTO.IMP_ALIQUOTA}}%) - <span app-show-dinheiro="item.IIF_VALOR_DESCONTO"></span> 
+                        </td>                           
+                    </tr>
+                    <tr ng-hide="infoFaturaModal.IMPOSTO_INFO_FATURA.length > 0">
+                        <td>Nenhum imposto.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="text-muted col-lg-12 col-xs-2" ng-if="!infoFaturaModal">Sem Informações de fatura</div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <label for="impostos">Detalhes</label>
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Perc. do Valor</th>
+                        <th>Tipo</th>
+                        <th>
+                            Valor Bruto
+                        </th>
+                        <th>
+                            Desconto
+                        </th>
+                        <th>
+                            Perc. Desc
+                        </th>
+                        <th>Valor Líquido</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in infoFaturaModal.INFO_FATURA_ITEM" class="animate-repeat">
+                        <td class="text">
+                            {{item.IFI_PERCENTUAL_REFERENCIA}}%
+                        </td>
+                        <td class="text">{{item.NOTA_FISCAL_CONFIG_TIPO.NCT_DESCRICAO}}</td>
+                        <td class="text" app-show-dinheiro="item.IFI_VALOR_BRUTO"></td>
+                        <td class="text" app-show-dinheiro="item.IFI_TOTAL_DESCONTADO"></td>
+                        <td class="text">
+                            <span app-show-dinheiro="item.IFI_PERCENTUAL_TOTAL_DESCONTADO" data-show-simbolo="false"></span>%
+                        </td>
+                        <td class="text" app-show-dinheiro="item.IFI_TOTAL_LIQUIDO"></td>
+                        <td>
+                            <a href="javascript:void(0);" ng-click="abrirImpostosDaInfoFaturaItm(item, infoFaturaModal);" class="text-primary" app-tootip tooltip-title="Ver Impostos">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr ng-hide="infoFaturaModal.INFO_FATURA_ITEM.length > 0">
+                        <td>Não há detalhes para exibir.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div app-modal="modal-impostos-utilizados" header="Detalhamentos dos Impostos" submodal size="small">
+    <div class="row">
+        <div class="col-md-6 col-xs-6" ng-show="infoFaturaModalImp">
+            <label for="impostos">Impostos Aplicados do Item Selecionado</label>
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered table-striped">
+                    <tbody>
+                        <tr ng-repeat="item in infoFaturaItmModal.IMPOSTO_INFO_FATURA_ITEM" class="animate-repeat">
+                            <td class="text">
+                                {{item.IMPOSTO.IMP_NOME}} ({{item.IFI_PERCENTUAL_DESCONTO}}%) - <span app-show-dinheiro="item.IFI_VALOR_DESCONTADO"></span>
+                            </td>
+                        </tr>
+                        <tr ng-hide="infoFaturaItmModal.IMPOSTO_INFO_FATURA_ITEM.length > 0">
+                            <td>Nenhum imposto.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-6" ng-show="infoFaturaModalImp">
+            <label for="impostos">Total de Impostos</label>
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered table-striped">
+                    <tbody>
+                        <tr ng-repeat="item in infoFaturaModalImp.IMPOSTO_INFO_FATURA" class="animate-repeat">
+                            <td class="text">
+                                {{item.IMPOSTO.IMP_NOME}} ({{item.IMPOSTO.IMP_ALIQUOTA}}%) - <span app-show-dinheiro="item.IIF_VALOR_DESCONTO"></span>
+                            </td>
+                        </tr>
+                        <tr ng-hide="infoFaturaModalImp.IMPOSTO_INFO_FATURA.length > 0">
+                            <td>Nenhum imposto.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>  

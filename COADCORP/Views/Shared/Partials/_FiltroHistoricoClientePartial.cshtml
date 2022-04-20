@@ -1,0 +1,78 @@
+﻿
+      <div class="row padding">              
+            <div class="form-group col-lg-3">
+                <label for="sigla">Data Inicial</label>
+                <input type="text" id="dataInicial" ng-model="filtro.dataInicialMask" app-date="filtro.dataInicial" class="form-control"/>
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="sigla">Data Final</label>
+                <input type="text" id="dataFinal" ng-model="filtro.dataFinalMask" app-date="filtro.dataFinal" class="form-control"/>
+            </div>   
+          <div class="form-group col-lg-2" style="padding-top: 24px">
+                        <button type="button" class="btn btn-default" ng-click="$parent.abreAbaHistoricoCliente()"><span class="glyphicon glyphicon-search"></span></button>
+          </div>         
+        </div>             
+        
+
+      <div class="panel panel-default">
+      <!-- Default panel contents -->
+      
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book blue"></span> Historicos</div>
+          
+      <div class="panel-body">   
+                    
+                    <div class="table-responsive">     
+                            <!-- <input type="text" ng-model="dataTest" app-date/>  -->       
+                       
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>      
+                                        <th>                                           
+                                            Data
+                                        </th>
+                                        <th>
+                                            Tipo
+                                        </th> 
+                                        <th>                                           
+                                            Descrição
+                                        </th>
+                                        <th>Usuário</th>
+                                        <th>Representante</th>                                        
+                                    </tr>
+                                </thead>    
+                              <tr ng-repeat="item in lstHistoricos">
+                                    <td app-show-date="item.HAT_DATA_HIST">
+                                        
+                                    </td>                                    
+                                    <td>
+                                        {{item.ACAO_ATENDIMENTO.ACA_DESCRICAO}}
+                                    </td>   
+                                    <td>
+                                        {{item.HAT_DESCRICAO}}
+                                    </td>  
+                                    <td>
+                                        {{item.USU_LOGIN}}
+                                    </td>
+                                    <td>
+                                        <span ng-if="item.REPRESENTANTE.REP_NOME">
+                                            {{item.REPRESENTANTE.REP_NOME}}
+                                        </span>
+                                        <span ng-if="!item.REPRESENTANTE.REP_NOME && item.AGENDAMENTO.REPRESENTANTE.REP_NOME">
+                                            {{item.AGENDAMENTO.REPRESENTANTE.REP_NOME}}
+                                        </span>
+                                        <span ng-if="!item.REPRESENTANTE.REP_NOME && item.AGENDAMENTO.REPRESENTANTE.REP_NOME && 
+                                            !item.AGENDAMENTO.REPRESENTANTE.REP_NOME">----</span>
+                                    </td>
+                              </tr>
+                                <tr>
+                                    <td colspan="5" ng-hide="lstHistoricos" class="text">
+                                        Não foi encontrado nenhum registro.
+                                    </td>
+                                </tr>
+                            </table> 
+                    </div>
+              <div app-pagination="paginaHistorico" request-page="paginaReq" load-function="listarClientesRepresentante(paginaReq)"></div>
+
+          </div>
+         
+        </div>

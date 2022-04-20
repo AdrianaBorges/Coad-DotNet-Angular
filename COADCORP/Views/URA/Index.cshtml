@@ -1,0 +1,84 @@
+﻿@using COAD.SEGURANCA.Extensions
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+ 
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+<script src="~/Scripts/appScripts/ura.js"></script>
+
+<div ng-app="appModule">
+    <div ng-controller="URAControler" class="padding content">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel">
+                <i class="fa fa-search fa-fw"></i>@ViewBag.Title
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            Opções
+                                <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li><a href="../URA/Configurar">Configurar</a></li>
+                            <li><a href="../URA/Index">Limpar Campos</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div app-message></div>
+            <div class="panel-body">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.Label("Selecione a URA")
+                        @Html.DropDownList("URA", new SelectList(@ViewBag.ListaUras, "Value", "Text"), "--- Selelcione ---", new { @class = "form-control", ng_model = "filtro.URA_ID" })
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <input type="button" ng-click="ListarConfigURA()" value="Pesquisar" class="btn btn-default" />
+            </div>
+        </div>
+        <div class="panel panel-default" ng-show="ListaConfig">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span>Lista de Configuração</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr class="info">
+                                <th>@Html.Label("URA")</th>
+                                <th>@Html.Label("Produto")</th>
+                                <th>@Html.Label("Sigla")</th>
+                                <th>@Html.Label("Recebe Ligações")</th>
+                                <th>@Html.Label("Ativo")</th>
+                                <th>@Html.Label("VIP")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in ListaConfig">
+                                <td>{{item.URA_ID}}</td>
+                                <td>{{item.PRO_ID}}</td>
+                                <td>{{item.PRO_SIGLA}}</td>
+                                <td>{{item.UF}}</td>
+                                <td>{{item.ATIVO}}</td>
+                                <td>{{item.VIP}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr />
+                <app-pagination request-page="paginaReq" load-function="ListarConfigURA(paginaReq)"></app-pagination>
+            </div>
+        </div>
+        @Html.DescricaoCliente("")
+    </div>
+</div>
+

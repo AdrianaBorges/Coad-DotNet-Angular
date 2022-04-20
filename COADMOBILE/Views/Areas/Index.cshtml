@@ -1,0 +1,109 @@
+﻿
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li class="active">Gerenciar Clientes</li>         
+        
+    </ol>
+}
+@Scripts.Render("~/Scripts/negocio/coAreas.js")
+<div ng-app="appModule">
+    <div ng-controller="CoAreasController" class="padding content">
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" disabled="disabled">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                        </li>                                                                           
+                                    </ul>
+                                </div>
+                            </div>
+      </div>
+          
+      <div class="panel-body">            
+           
+        <div class="row">              
+            <div class="form-group col-lg-2">
+                <label for="sigla">Código Area</label>
+                <input type="text" id="cnpf-cpf" ng-model="filtro.codigoArea" class="form-control"/>
+            </div>
+            <div class="form-group col-lg-10">
+                <label for="sigla">Nome Area</label>
+                <input type="text" id="nome" ng-model="filtro.nomeArea" class="form-control"/>
+            </div>             
+        </div>
+      </div>
+                  
+        <div class="panel-footer">
+            <button type="button" class="btn btn-default" ng-click="listar()">Pesquisar</button>
+        </div>
+</div>
+        <div app-message></div>
+      <div class="panel panel-default"  ng-show="areas">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Cadastro de Clientes</div>
+          
+      <div class="panel-body">       
+                    <div class="table-responsive">     
+                            <!-- <input type="text" ng-model="dataTest" app-date/>  -->       
+                       
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>                               
+                                    
+                                        <th style="min-width: 75px">                                           
+                                            Código da Area
+                                        </th>
+                                        <th style="min-width: 132px">                                           
+                                            NOME_AREA
+                                        </th>
+                                        <th>                                           
+                                            ABRANGENCIA
+                                        </th>                                                                         
+                                        <th>Detalhes</th>
+                                        <th>Editar</th>
+                                    </tr>
+                                </thead>    
+                              <tr ng-repeat="item in areas">
+                                    <td>
+                                        {{item.COD_AREA}}
+                                    </td>                                    
+                                    <td>
+                                        {{ item.NOME_AREA}}
+                                    </td>   
+                                    <td>
+                                        {{ item.ABRANGENCIA}}
+                                    </td>                                    
+                                    <td>
+                                        <a href="javascript:void(0)" app-post="@Url.Action("Detalhes")?clienteId={{item.CLI_ID}}" title="Detalhes" class="blue">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0)" app-post="@Url.Action("Editar")?clienteId={{item.CLI_ID}}" title="Editar" class="blue">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                        </a>
+                                    </td>
+                                   
+                              </tr>
+                            </table> 
+                    </div>
+              <div app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></div>
+
+          </div>
+        </div>  
+    </div>   
+</div>

@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="COADIARIOModelStoreContainer" CdmEntityContainer="COADIARIOEntities">
+    <EntitySetMapping Name="CO_AREAS">
+      <EntityTypeMapping TypeName="COADIARIOModel.CO_AREAS">
+        <MappingFragment StoreEntitySet="CO_AREAS">
+          <ScalarProperty Name="COD_AREA" ColumnName="COD_AREA" />
+          <ScalarProperty Name="NOME_AREA" ColumnName="NOME_AREA" />
+          <ScalarProperty Name="ABRANGENCIA" ColumnName="ABRANGENCIA" />
+          <ScalarProperty Name="HABILITADO" ColumnName="HABILITADO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CO_CALENDARIO">
+      <EntityTypeMapping TypeName="COADIARIOModel.CO_CALENDARIO">
+        <MappingFragment StoreEntitySet="CO_CALENDARIO">
+          <ScalarProperty Name="NUM_CALENDARIO" ColumnName="NUM_CALENDARIO" />
+          <ScalarProperty Name="NUM_OBRIGACAO" ColumnName="NUM_OBRIGACAO" />
+          <ScalarProperty Name="DTReferencia" ColumnName="DTReferencia" />
+          <ScalarProperty Name="TXT_REFERENCIA" ColumnName="TXT_REFERENCIA" />
+          <ScalarProperty Name="HABILITADO" ColumnName="HABILITADO" />
+          <ScalarProperty Name="CriadoEmDT" ColumnName="CriadoEmDT" />
+          <ScalarProperty Name="AtualizadoEmDT" ColumnName="AtualizadoEmDT" />
+          <ScalarProperty Name="CriadoPor" ColumnName="CriadoPor" />
+          <ScalarProperty Name="AtualizadoPor" ColumnName="AtualizadoPor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CO_ESTADOS">
+      <EntityTypeMapping TypeName="COADIARIOModel.CO_ESTADOS">
+        <MappingFragment StoreEntitySet="CO_ESTADOS">
+          <ScalarProperty Name="NUM_UF" ColumnName="NUM_UF" />
+          <ScalarProperty Name="COD_UF" ColumnName="COD_UF" />
+          <ScalarProperty Name="NOME_UF" ColumnName="NOME_UF" />
+          <ScalarProperty Name="HABILITADO" ColumnName="HABILITADO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CO_MUNICIPIOS">
+      <EntityTypeMapping TypeName="COADIARIOModel.CO_MUNICIPIOS">
+        <MappingFragment StoreEntitySet="CO_MUNICIPIOS">
+          <ScalarProperty Name="PK_MUNIC" ColumnName="PK_MUNIC" />
+          <ScalarProperty Name="NUM_UF" ColumnName="NUM_UF" />
+          <ScalarProperty Name="NUM_MUNICIPIO" ColumnName="NUM_MUNICIPIO" />
+          <ScalarProperty Name="NOME_MUNICIPIO" ColumnName="NOME_MUNICIPIO" />
+          <ScalarProperty Name="HABILITADO" ColumnName="HABILITADO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CO_NIVEL_USUARIO">
+      <EntityTypeMapping TypeName="COADIARIOModel.CO_NIVEL_USUARIO">
+        <MappingFragment StoreEntitySet="CO_NIVEL_USUARIO">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nivel" ColumnName="nivel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CO_OBRIGACOES">
+      <EntityTypeMapping TypeName="COADIARIOModel.CO_OBRIGACOES">
+        <MappingFragment StoreEntitySet="CO_OBRIGACOES">
+          <ScalarProperty Name="TXT_TITULO" ColumnName="TXT_TITULO" />
+          <ScalarProperty Name="NUM_OBRIGACAO" ColumnName="NUM_OBRIGACAO" />
+          <ScalarProperty Name="HABILITADO" ColumnName="HABILITADO" />
+          <ScalarProperty Name="TXT_PESSOAS_OBRIGADAS" ColumnName="TXT_PESSOAS_OBRIGADAS" />
+          <ScalarProperty Name="TXT_FATO_GERADOR" ColumnName="TXT_FATO_GERADOR" />
+          <ScalarProperty Name="TXT_PENALIDADE" ColumnName="TXT_PENALIDADE" />
+          <ScalarProperty Name="TXT_ABRANGENCIA" ColumnName="TXT_ABRANGENCIA" />
+          <ScalarProperty Name="COD_TIPO" ColumnName="COD_TIPO" />
+          <ScalarProperty Name="TXT_OBSERVACAO" ColumnName="TXT_OBSERVACAO" />
+          <ScalarProperty Name="TXT_FORMA_ENTREGA" ColumnName="TXT_FORMA_ENTREGA" />
+          <ScalarProperty Name="LNK_ORIENTACAO" ColumnName="LNK_ORIENTACAO" />
+          <ScalarProperty Name="TXT_FUNDLEGAL" ColumnName="TXT_FUNDLEGAL" />
+          <ScalarProperty Name="LNK_GUIARECOL" ColumnName="LNK_GUIARECOL" />
+          <ScalarProperty Name="TXT_RECOLHIMENTO" ColumnName="TXT_RECOLHIMENTO" />
+          <ScalarProperty Name="LNK_IRSITE" ColumnName="LNK_IRSITE" />
+          <ScalarProperty Name="NUM_UF" ColumnName="NUM_UF" />
+          <ScalarProperty Name="NUMPK_MUNICIPIO" ColumnName="NUMPK_MUNICIPIO" />
+          <ScalarProperty Name="COD_AREA" ColumnName="COD_AREA" />
+          <ScalarProperty Name="CriadoEmDT" ColumnName="CriadoEmDT" />
+          <ScalarProperty Name="AtualizadoEmDT" ColumnName="AtualizadoEmDT" />
+          <ScalarProperty Name="CriadoPor" ColumnName="CriadoPor" />
+          <ScalarProperty Name="AtualizadoPor" ColumnName="AtualizadoPor" />
+          <ScalarProperty Name="Sigla" ColumnName="Sigla" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CO_TIPOS">
+      <EntityTypeMapping TypeName="COADIARIOModel.CO_TIPOS">
+        <MappingFragment StoreEntitySet="CO_TIPOS">
+          <ScalarProperty Name="COD_TIPO" ColumnName="COD_TIPO" />
+          <ScalarProperty Name="NOME_TIPO" ColumnName="NOME_TIPO" />
+          <ScalarProperty Name="HABILITADO" ColumnName="HABILITADO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CO_USUARIOLOGS">
+      <EntityTypeMapping TypeName="COADIARIOModel.CO_USUARIOLOGS">
+        <MappingFragment StoreEntitySet="CO_USUARIOLOGS">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="ip_usuario" ColumnName="ip_usuario" />
+          <ScalarProperty Name="nome_usuario" ColumnName="nome_usuario" />
+          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+          <ScalarProperty Name="ultimo_acesso" ColumnName="ultimo_acesso" />
+          <ScalarProperty Name="id_calendario" ColumnName="id_calendario" />
+          <ScalarProperty Name="acao_realizada" ColumnName="acao_realizada" />
+          <ScalarProperty Name="texto_obrigacao" ColumnName="texto_obrigacao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CO_USUARIOS">
+      <EntityTypeMapping TypeName="COADIARIOModel.CO_USUARIOS">
+        <MappingFragment StoreEntitySet="CO_USUARIOS">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="usuario" ColumnName="usuario" />
+          <ScalarProperty Name="senha" ColumnName="senha" />
+          <ScalarProperty Name="nivel" ColumnName="nivel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CO_USUARIOSBKP">
+      <EntityTypeMapping TypeName="COADIARIOModel.CO_USUARIOSBKP">
+        <MappingFragment StoreEntitySet="CO_USUARIOSBKP">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="usuario" ColumnName="usuario" />
+          <ScalarProperty Name="senha" ColumnName="senha" />
+          <ScalarProperty Name="nivel" ColumnName="nivel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="COADIARIOModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="BUSCAR_MATERIA_POR_ID_PORTAL_PROC" FunctionName="COADIARIOModel.Store.BUSCAR_MATERIA_POR_ID_PORTAL_PROC">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="COADIARIOModel.BUSCAR_MATERIA_POR_ID_PORTAL_PROC_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="titulo" ColumnName="titulo" />
+          <ScalarProperty Name="dataCadastro" ColumnName="dataCadastro" />
+          <ScalarProperty Name="modulo" ColumnName="modulo" />
+          <ScalarProperty Name="colec" ColumnName="colec" />
+          <ScalarProperty Name="ano" ColumnName="ano" />
+          <ScalarProperty Name="num" ColumnName="num" />
+          <ScalarProperty Name="informativo" ColumnName="informativo" />
+          <ScalarProperty Name="pagina" ColumnName="pagina" />
+          <ScalarProperty Name="gg" ColumnName="gg" />
+          <ScalarProperty Name="vb" ColumnName="vb" />
+          <ScalarProperty Name="svb" ColumnName="svb" />
+          <ScalarProperty Name="complemento" ColumnName="complemento" />
+          <ScalarProperty Name="tipo_materia" ColumnName="tipo_materia" />
+          <ScalarProperty Name="expressao_ato" ColumnName="expressao_ato" />
+          <ScalarProperty Name="org" ColumnName="org" />
+          <ScalarProperty Name="html" ColumnName="html" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="BUSCAR_MATERIA_PORTAL_PROC" FunctionName="COADIARIOModel.Store.BUSCAR_MATERIA_PORTAL_PROC">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="COADIARIOModel.BUSCAR_MATERIA_PORTAL_PROC_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="numero" ColumnName="numero" />
+          <ScalarProperty Name="ano" ColumnName="ano" />
+          <ScalarProperty Name="orgao" ColumnName="orgao" />
+          <ScalarProperty Name="area" ColumnName="area" />
+          <ScalarProperty Name="assunto" ColumnName="assunto" />
+          <ScalarProperty Name="subGrupo" ColumnName="subGrupo" />
+          <ScalarProperty Name="informativo" ColumnName="informativo" />
+          <ScalarProperty Name="pagina" ColumnName="pagina" />
+          <ScalarProperty Name="grande_grupo" ColumnName="grande_grupo" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="BUSCAR_VERBETES_PORTAL_PROC" FunctionName="COADIARIOModel.Store.BUSCAR_VERBETES_PORTAL_PROC" />
+    <FunctionImportMapping FunctionImportName="CLIENTES_PORTAL_PROC" FunctionName="COADIARIOModel.Store.CLIENTES_PORTAL_PROC">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="COADIARIOModel.CLIENTES_PORTAL_PROC_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="perfil" ColumnName="perfil" />
+          <ScalarProperty Name="usuario" ColumnName="usuario" />
+          <ScalarProperty Name="senha" ColumnName="senha" />
+          <ScalarProperty Name="permissao" ColumnName="permissao" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="cpf" ColumnName="cpf" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="sobrenome" ColumnName="sobrenome" />
+          <ScalarProperty Name="empresa" ColumnName="empresa" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="endereco" ColumnName="endereco" />
+          <ScalarProperty Name="numero" ColumnName="numero" />
+          <ScalarProperty Name="complemento" ColumnName="complemento" />
+          <ScalarProperty Name="bairro" ColumnName="bairro" />
+          <ScalarProperty Name="cep" ColumnName="cep" />
+          <ScalarProperty Name="cidade" ColumnName="cidade" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="telefone" ColumnName="telefone" />
+          <ScalarProperty Name="conhecimento" ColumnName="conhecimento" />
+          <ScalarProperty Name="publico" ColumnName="publico" />
+          <ScalarProperty Name="vigencia" ColumnName="vigencia" />
+          <ScalarProperty Name="trab" ColumnName="trab" />
+          <ScalarProperty Name="profissao" ColumnName="profissao" />
+          <ScalarProperty Name="sexo" ColumnName="sexo" />
+          <ScalarProperty Name="data_nascimento" ColumnName="data_nascimento" />
+          <ScalarProperty Name="area_atuacao" ColumnName="area_atuacao" />
+          <ScalarProperty Name="receber_novidades" ColumnName="receber_novidades" />
+          <ScalarProperty Name="cadastrado" ColumnName="cadastrado" />
+          <ScalarProperty Name="data1" ColumnName="data1" />
+          <ScalarProperty Name="expiracao" ColumnName="expiracao" />
+          <ScalarProperty Name="tipo_usuario" ColumnName="tipo_usuario" />
+          <ScalarProperty Name="contador" ColumnName="contador" />
+          <ScalarProperty Name="dataCadastro" ColumnName="dataCadastro" />
+          <ScalarProperty Name="data_atualizacao" ColumnName="data_atualizacao" />
+          <ScalarProperty Name="cnpj" ColumnName="cnpj" />
+          <ScalarProperty Name="id_estacio" ColumnName="id_estacio" />
+          <ScalarProperty Name="oab_flag" ColumnName="oab_flag" />
+          <ScalarProperty Name="oab_nr_inscricao" ColumnName="oab_nr_inscricao" />
+          <ScalarProperty Name="oab_status" ColumnName="oab_status" />
+          <ScalarProperty Name="dt_ultimo_login" ColumnName="dt_ultimo_login" />
+          <ScalarProperty Name="qtd_sessoes" ColumnName="qtd_sessoes" />
+          <ScalarProperty Name="oab_nr_ficha" ColumnName="oab_nr_ficha" />
+          <ScalarProperty Name="data_repositorio" ColumnName="data_repositorio" />
+          <ScalarProperty Name="pesquisa" ColumnName="pesquisa" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="INDICES_PORTAL_PROC" FunctionName="COADIARIOModel.Store.INDICES_PORTAL_PROC">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="COADIARIOModel.INDICES_PORTAL_PROC_Result">
+          <ScalarProperty Name="idc_agregado_id" ColumnName="idc_agregado_id" />
+          <ScalarProperty Name="idc_agregado_nome" ColumnName="idc_agregado_nome" />
+          <ScalarProperty Name="idc_agregado_valor" ColumnName="idc_agregado_valor" />
+          <ScalarProperty Name="idc_agregado_data" ColumnName="idc_agregado_data" />
+          <ScalarProperty Name="idc_agregado_orientacao" ColumnName="idc_agregado_orientacao" />
+          <ScalarProperty Name="idc_agregado_ordem" ColumnName="idc_agregado_ordem" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="NOTICIAS_PORTAL_PESQUISA_PROC" FunctionName="COADIARIOModel.Store.NOTICIAS_PORTAL_PESQUISA_PROC">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="COADIARIOModel.NOTICIAS_PORTAL_PESQUISA_PROC_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_prod" ColumnName="id_prod" />
+          <ScalarProperty Name="id_tipo" ColumnName="id_tipo" />
+          <ScalarProperty Name="texto" ColumnName="texto" />
+          <ScalarProperty Name="nota" ColumnName="nota" />
+          <ScalarProperty Name="destaque" ColumnName="destaque" />
+          <ScalarProperty Name="newsletter" ColumnName="newsletter" />
+          <ScalarProperty Name="link_file" ColumnName="link_file" />
+          <ScalarProperty Name="data_cadastro" ColumnName="data_cadastro" />
+          <ScalarProperty Name="destaque_home" ColumnName="destaque_home" />
+          <ScalarProperty Name="destaque_perfil" ColumnName="destaque_perfil" />
+          <ScalarProperty Name="destaque_fixo_home" ColumnName="destaque_fixo_home" />
+          <ScalarProperty Name="destaque_fixo_perfil" ColumnName="destaque_fixo_perfil" />
+          <ScalarProperty Name="id_grupo" ColumnName="id_grupo" />
+          <ScalarProperty Name="id_noticia" ColumnName="id_noticia" />
+          <ScalarProperty Name="verbete" ColumnName="verbete" />
+          <ScalarProperty Name="subverbete" ColumnName="subverbete" />
+          <ScalarProperty Name="id_noticias_grupo" ColumnName="id_noticias_grupo" />
+          <ScalarProperty Name="id_tipo_noticias_grupo" ColumnName="id_tipo_noticias_grupo" />
+          <ScalarProperty Name="descricao" ColumnName="descricao" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="NOTICIAS_PORTAL_POR_ID_PROC" FunctionName="COADIARIOModel.Store.NOTICIAS_PORTAL_POR_ID_PROC">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="COADIARIOModel.NOTICIAS_PORTAL_POR_ID_PROC_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_prod" ColumnName="id_prod" />
+          <ScalarProperty Name="id_tipo" ColumnName="id_tipo" />
+          <ScalarProperty Name="texto" ColumnName="texto" />
+          <ScalarProperty Name="nota" ColumnName="nota" />
+          <ScalarProperty Name="destaque" ColumnName="destaque" />
+          <ScalarProperty Name="newsletter" ColumnName="newsletter" />
+          <ScalarProperty Name="link_file" ColumnName="link_file" />
+          <ScalarProperty Name="data_cadastro" ColumnName="data_cadastro" />
+          <ScalarProperty Name="destaque_home" ColumnName="destaque_home" />
+          <ScalarProperty Name="destaque_perfil" ColumnName="destaque_perfil" />
+          <ScalarProperty Name="destaque_fixo_home" ColumnName="destaque_fixo_home" />
+          <ScalarProperty Name="destaque_fixo_perfil" ColumnName="destaque_fixo_perfil" />
+          <ScalarProperty Name="id_grupo" ColumnName="id_grupo" />
+          <ScalarProperty Name="id_noticia" ColumnName="id_noticia" />
+          <ScalarProperty Name="verbete" ColumnName="verbete" />
+          <ScalarProperty Name="subverbete" ColumnName="subverbete" />
+          <ScalarProperty Name="id_noticias_grupo" ColumnName="id_noticias_grupo" />
+          <ScalarProperty Name="id_tipo_noticias_grupo" ColumnName="id_tipo_noticias_grupo" />
+          <ScalarProperty Name="descricao" ColumnName="descricao" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="NOTICIAS_PORTAL_PROC" FunctionName="COADIARIOModel.Store.NOTICIAS_PORTAL_PROC">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="COADIARIOModel.NOTICIAS_PORTAL_PROC_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_prod" ColumnName="id_prod" />
+          <ScalarProperty Name="id_tipo" ColumnName="id_tipo" />
+          <ScalarProperty Name="texto" ColumnName="texto" />
+          <ScalarProperty Name="nota" ColumnName="nota" />
+          <ScalarProperty Name="destaque" ColumnName="destaque" />
+          <ScalarProperty Name="newsletter" ColumnName="newsletter" />
+          <ScalarProperty Name="link_file" ColumnName="link_file" />
+          <ScalarProperty Name="data_cadastro" ColumnName="data_cadastro" />
+          <ScalarProperty Name="destaque_home" ColumnName="destaque_home" />
+          <ScalarProperty Name="destaque_perfil" ColumnName="destaque_perfil" />
+          <ScalarProperty Name="destaque_fixo_home" ColumnName="destaque_fixo_home" />
+          <ScalarProperty Name="destaque_fixo_perfil" ColumnName="destaque_fixo_perfil" />
+          <ScalarProperty Name="id_grupo" ColumnName="id_grupo" />
+          <ScalarProperty Name="id_noticia" ColumnName="id_noticia" />
+          <ScalarProperty Name="verbete" ColumnName="verbete" />
+          <ScalarProperty Name="subverbete" ColumnName="subverbete" />
+          <ScalarProperty Name="id_noticias_grupo" ColumnName="id_noticias_grupo" />
+          <ScalarProperty Name="id_tipo_noticias_grupo" ColumnName="id_tipo_noticias_grupo" />
+          <ScalarProperty Name="descricao" ColumnName="descricao" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

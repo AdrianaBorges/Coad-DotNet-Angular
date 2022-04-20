@@ -1,0 +1,431 @@
+﻿<div>
+    @Html.ValidationSummary(true)
+    <!-- Default panel contents -->
+    <div class="panel panel-default">
+        <div class="panel-heading bold head-panel">
+            <span class="glyphicon glyphicon-edit icon-panel"></span>
+            Configurações de Nota Fiscal
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Opções
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li>
+                            <a href="javascript:void(0)" ng-click="abrirModalClonarConfig()" class="blue">Copiar Config de Outro Produto</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body padding-3">
+            <div app-message></div>
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { role = "form" }))
+            {
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="v-padding">
+
+                            <div><span app-validation-msg="erros" for="PRODUTO_COMPOSICAO_ITEM"></span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Percentual da Nota</th>
+                                        <th>Descrição da Nota</th>
+                                        <th>Tipo de Nota</th>
+                                        <th>Aplicar ao Faturar 100%</th>
+                                        <th>#</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in lstNotaFiscalConfig">
+                                        <td><strong>{{item.NFC_PORCENTAGEM_VALOR}}%</strong></td>
+                                        <td>{{item.NFC_DESCRICAO_PRODUTO}}</td>
+                                        <td>{{item.NOTA_FISCAL_CONFIG_TIPO.NCT_DESCRICAO}}</td>
+                                        <td>
+                                            <strong ng-show="item.NFC_APLICAR_100_POR_CENTO_FAT == true" class="label label-success">
+                                                Sim
+                                            </strong>
+                                            <strong ng-hide="item.NFC_APLICAR_100_POR_CENTO_FAT == true" class="label label-warning">
+                                                Não
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)" ng-click="abrirEdicaoNotaFiscalConfig($index, item)"
+                                               class="btnConfirmaExclusao blue" id="btnEdicaoItem" title="Editar"><span class="glyphicon glyphicon-edit"></span></a>
+                                            <a href="javascript:void(0)" ng-click="DeletarNotaFiscalConfig($index)"
+                                               class="btnConfirmaExclusao red" id="btexcluir" title="Excluir"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                                            <a href="javascript:void(0);" ng-click="abrirEdicaoNotaFiscalConfig()" ng-if="$last"
+                                               title="Adicionar Configuração">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr ng-hide="lstNotaFiscalConfig.length > 0">
+                                        <td colspan="7">
+                                            Nenhum configuração de nota foi adicionada. Clique aqui para adicionar
+                                            <a href="javascript:void(0);" ng-click="abrirEdicaoNotaFiscalConfig()"
+                                               title="Adicionar Configuração">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </a>.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default">
+                <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar
+            </button>
+            <button app-switch-button="salvarNotaFiscalConfig()"
+                    switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]"
+                    switch-var="buttonSave"
+                    class="btn btn-primary">
+                <span class="glyphicon glyphicon-floppy-save"></span>
+            </button>
+        </div>
+    </div>
+    <div app-modal="modal-nf-config" header="Editar Nota Fiscal Config" class="limit-modal-height">
+        <div>
+            <fieldset class="text-primary">
+                <legend>Configurações da Nota Fiscal</legend>
+                <div class="row">
+                    <div class="form-group col-lg-2">
+                        <label>Percentual da Nota</label>
+                        <div class="input-group" style="max-width: 82px">
+                            <input type="text" ng-model="itemNfeConfig.NFC_PORCENTAGEM_VALOR" class="form-control" maxlength="3" app-number />
+                            <div class="input-group-addon">%</div>
+                        </div>
+                        <div app-validation-msg="erros" for="NFC_PORCENTAGEM_VALOR"> </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="campo_NCT_ID">Tipo de Config</label>
+                        <select id="campo_NCT_ID" name="campo_NCT_ID" class="form-control" ng-model="itemNfeConfig.NOTA_FISCAL_CONFIG_TIPO"
+                                ng-options="nct as nct.NCT_DESCRICAO for nct in lstNotaFiscalConfigTp track by nct.NCT_ID" ng-change="configImpSelecionado(itemNfeConfig)">
+                            <option value="">Selecione</option>
+                        </select>
+                        <div app-validation-msg="erros" for="NCT_ID"></div>
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label>Descrição da Nota</label>
+                        <input type="text" ng-model="itemNfeConfig.NFC_DESCRICAO_PRODUTO" class="form-control" />
+                        <div app-validation-msg="erros" for="NFC_DESCRICAO_PRODUTO"> </div>
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label>Aplicar ao Faturar 100%</label><br />
+                        <label class="switch switch switch-round switch-success" style="padding-top: 5px;">
+                            <input type="checkbox" id="variasCarteiras" ng-model="itemNfeConfig.NFC_APLICAR_100_POR_CENTO_FAT"
+                                   ng-checked="itemNfeConfig.NFC_APLICAR_100_POR_CENTO_FAT == true"
+                                   class="form-control" value="false">
+                            <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row" ng-show="itemNfeConfig.NCT_ID == 2">
+                    <div class="form-group col-lg-2">
+                        <label>Código de Serviço</label>
+                        <input type="text" ng-model="itemNfeConfig.NFC_COD_LISTA_SERVICO" class="form-control" />
+                        <div app-validation-msg="erros" for="NFC_COD_LISTA_SERVICO"> </div>
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label>Cód de Trib Município</label>
+                        <input type="text" ng-model="itemNfeConfig.NFC_CODIGO_TRIBUTACAO_MUNICIPIO" class="form-control" />
+                        <div app-validation-msg="erros" for="NFC_CODIGO_TRIBUTACAO_MUNICIPIO"> </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        <div class="limit-div-3">
+                            <label>Configurações de Imposto</label>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Descrição da Regra</th>
+                                            <th>Tipo Cliente</th>
+                                            <th>Valor Mínimo</th>
+                                            <th>Empresa do Simples</th>
+                                            <th>Cliente Retém</th>
+                                            <th>#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="cfIm in $parent.itemNfeConfig.CONFIG_IMPOSTO">
+                                            <td>{{cfIm.CFI_DESC_REGRA}}</td>
+                                            <td>{{cfIm.TIPO_CLIENTE.TIPO_CLI_DESCRICAO}}</td>
+                                            <td>
+                                                <strong class="label label-primary" ng-show="cfIm.CFI_QUALQUER_VALOR == true">
+                                                    Qualquer Valor
+                                                </strong>
+                                                <strong app-show-dinheiro="cfIm.CFI_VLR_DESCONTO_MIM" ng-hide="cfIm.CFI_QUALQUER_VALOR == true">
+
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                <strong ng-show="cfIm.CFI_EMPRESA_DO_SIMPLES == true" class="label label-success">
+                                                    Sim
+                                                </strong>
+                                                <strong ng-hide="cfIm.CFI_EMPRESA_DO_SIMPLES == true" class="label label-warning">
+                                                    Não
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                <strong ng-show="cfIm.CFI_CLIENTE_RETEM == true" class="label label-success">
+                                                    Sim
+                                                </strong>
+                                                <strong ng-hide="cfIm.CFI_CLIENTE_RETEM == true" class="label label-warning">
+                                                    Não
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0)" ng-click="abrirEdicaoConfigImposto($index, cfIm)"
+                                                   class="btnConfirmaExclusao blue" id="btnEdicaoItem" title="Editar"><span class="glyphicon glyphicon-edit"></span></a>
+                                                <a href="javascript:void(0)" ng-click="DeletarConfigImposto($index)"
+                                                   class="btnConfirmaExclusao red" id="btexcluir" title="Excluir"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                                                <a href="javascript:void(0);" ng-click="abrirEdicaoConfigImposto()" ng-if="$last"
+                                                   title="Adicionar Configuração">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr ng-hide="$parent.itemNfeConfig.CONFIG_IMPOSTO.length > 0">
+                                            <td colspan="7">
+                                                Nenhum configuração de nota foi adicionada. Clique aqui para adicionar
+                                                <a href="javascript:void(0);" ng-click="abrirEdicaoConfigImposto()"
+                                                   title="Adicionar Configuração">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                </a>.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <hr />
+            <button type="button" class="btn btn-primary" ng-click="salvarEdicaoNfConfig()">
+                <span class="glyphicon glyphicon-ok-sign"></span> Confirmar
+            </button>
+            <button type="button" class="btn btn-default" ng-click="cancelarEdicaoNfConfig()">
+                <span class="glyphicon glyphicon-remove-sign"></span> Cancelar
+            </button>
+        </div>
+    </div>
+
+
+
+    <div app-modal="modal-config-imposto" header="Editar Config de Imposto" class="limit-modal-height">
+        <div>
+            <fieldset class="text-primary">
+                <legend>Configurações de Imposto</legend>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label>Descrição da Configuração</label>
+                        <input type="text" ng-model="$parent.configImposto.CFI_DESC_REGRA" class="form-control" />
+                        <div app-validation-msg="erros" for="CFI_DESC_REGRA"> </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Cód Trib Municipal</label>
+                        <input type="text" ng-model="$parent.configImposto.CFI_CODIGO_TRIBUTACAO_MUNICIPIO" class="form-control" />
+                        <div app-validation-msg="erros" for="CFI_CODIGO_TRIBUTACAO_MUNICIPIO"> </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="campo_TPP_ID">Tipo de Cliente</label>
+                        <select id="campo_TIPO_CLI_ID" name="campo_TIPO_CLI_ID" class="form-control" ng-model="configImposto.TIPO_CLIENTE"
+                                ng-options="tpc as tpc.TIPO_CLI_DESCRICAO for tpc in lstTipoCliente track by tpc.TIPO_CLI_ID" ng-change="tipoClienteSelecionado(configImposto)">
+                            <option value="">Selecione</option>
+                        </select>
+                        <div app-validation-msg="erros" for="TIPO_CLI_ID"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-2">
+                        <label>Qualquer Valor</label><br />
+                        <label class="switch switch switch-round switch-success" style="padding-top: 5px;">
+                            <input type="checkbox" id="variasCarteiras" ng-model="$parent.configImposto.CFI_QUALQUER_VALOR"
+                                   ng-checked="$parent.configImposto.CFI_QUALQUER_VALOR == true"
+                                   class="form-control" value="false">
+                            <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                        </label>
+                    </div>
+                    <div class="form-group col-lg-3" ng-hide="$parent.configImposto.CFI_QUALQUER_VALOR == true">
+                        <label>Valor Min. Para Reter</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">R$</div>
+                            <input type="text"
+                                   ng-model="obj.CFI_VLR_DESCONTO_MIMStr"
+                                   app-mask-dinheiro="$parent.configImposto.CFI_VLR_DESCONTO_MIM"
+                                   class="form-control" />
+                        </div>
+                        <div app-validation-msg="erros" for="CFI_VLR_DESCONTO_MIM"> </div>
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label>Empresa do Simples</label><br />
+                        <label class="switch switch switch-round switch-success" style="padding-top: 5px;">
+                            <input type="checkbox" id="variasCarteiras" ng-model="$parent.configImposto.CFI_EMPRESA_DO_SIMPLES"
+                                   ng-checked="$parent.configImposto.CFI_EMPRESA_DO_SIMPLES == true"
+                                   class="form-control" value="false">
+                            <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                        </label>
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label>Cliente Retém</label><br />
+                        <label class="switch switch switch-round switch-success" style="padding-top: 5px;">
+                            <input type="checkbox" id="variasCarteiras" ng-model="$parent.configImposto.CFI_CLIENTE_RETEM"
+                                   ng-checked="$parent.configImposto.CFI_CLIENTE_RETEM == true"
+                                   class="form-control" value="false">
+                            <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                        </label>
+                    </div>
+                </div>
+                <strong>Impostos</strong>
+                <div class="row padding">
+                    <div class="table-responsive col-sm-6">
+                        <label>Impostos</label>
+                        <div class="limit-div padding">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Impostos</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="imp in lstImpostos | filter: query">
+                                        <td>
+                                            {{imp.IMP_NOME}}
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)" ng-click="adicionarImposto(imp)" class="text-primary" id="btnEdicaoItem" title="Incluir">
+                                                <span class="glyphicon glyphicon-forward"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr ng-hide="(lstImpostos | filter: query).length != 0">
+                                        <td colspan="7">
+                                            <span ng-if="lstImpostos.length == 0">Não há Impostos cadastrados.</span>
+                                            <span ng-if="(lstImpostos | filter: query).length < 1">Não há Impostos para adicionar.</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="table-responsive col-sm-6">
+                        <label>Impostos Selecionados</label>
+                        <div class="limit-div padding">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Impostos</th>
+                                        <th>Aliquota</th>
+                                        <th>Ações</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="imp in configImposto.CONFIG_IMPOSTO_IMPOSTO">
+
+                                        <td>
+                                            {{imp.IMPOSTO.IMP_NOME}}
+                                        </td>
+                                        <td>
+                                            <input type="text" name="perfil_padrao" app-mask-dinheiro="imp.CII_ALIQUOTA"
+                                                   ng-model="imp.CII_ALIQUOTAStr" class="form-control" />
+
+                                            <div app-validation-msg="erros" for="CONFIG_IMPOSTO_IMPOSTO[{{$index}}].CII_ALIQUOTA"> </div>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)" ng-click="excluirImpostos($index)" class="btnConfirmaExclusao red"
+                                               id="btexcluir21" title="Excluir">
+                                                <span class="glyphicon glyphicon-remove-sign"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr ng-hide="configImposto.CONFIG_IMPOSTO_IMPOSTO.length >= 1">
+                                        <td colspan="7">Nenhuma Imposto foi adicionada
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <hr />
+            <button type="button" class="btn btn-primary" ng-click="salvarEdicaoConfigImposto()">
+                <span class="glyphicon glyphicon-ok-sign"></span> Confirmar
+            </button>
+            <button type="button" class="btn btn-default" ng-click="cancelarEdicaoConfigImposto()">
+                <span class="glyphicon glyphicon-remove-sign"></span> Cancelar
+            </button>
+
+        </div>
+    </div>
+
+
+    <div app-modal="modal-clonar-configs" header="Clonar Configuração" class="limit-modal-height">
+        <div>
+            <fieldset class="text-primary">
+                <legend>Copiar Config</legend>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label for="selectRegiao">Produto para Copiar Configuração</label>
+                        <span class="text font-15" ng-show="modalCloneConfig.ProdutoComposicaoOrigem"><span class="label label-primary">{{modalCloneConfig.ProdutoComposicaoOrigem.CMP_DESCRICAO}}</span> </span>
+                        <span class="text" ng-hide="modalCloneConfig.ProdutoComposicaoOrigem"><span class="label label-default">Não Adicionado</span></span>
+                        <span ng-show="modalCloneConfig.ProdutoComposicaoOrigem">
+                            <a href="javascript:void(0);" ng-click="abrirModalProduto()" title="Alterar" class="clear-link">
+                                <span class="glyphicon glyphicon-refresh"></span>
+                            </a>
+                            <a href="javascript:void(0);" ng-click="removerProdutoConfig()" title="Remover" class="text-danger clear-link">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                        </span>
+                        <span ng-show="modalCloneConfig.ProdutoComposicaoOrigem == null">
+                            <a href="javascript:void(0);" ng-click="abrirModalProduto()" title="Adicionar" class="text-info">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Produto para Copiar Configuração</label>
+                        <div>{{modalCloneConfig.ProdutoComposicaoDestino.CMP_DESCRICAO}}</div>
+                    </div>
+                </div>
+            </fieldset>
+            <hr />
+            <button app-switch-button="clonarConfiguracao()"
+                    switch-conf="[{label : 'Copiar', state : 'copy'}, {label : 'Copiando...', state : 'coping', disabled : true}]"
+                    switch-var="$parent.buttonCopy"
+                    class="btn btn-primary">
+                <span class="glyphicon glyphicon-screenshot"></span>
+            </button>
+            <button type="button" class="btn btn-default" ng-click="cancelarClonagem()">
+                <span class="glyphicon glyphicon-remove-sign"></span> Cancelar
+            </button>
+
+        </div>
+    </div>
+
+
+    <div app-modal="modal-produto" header="Selecione o Produto">
+
+        @Html.Partial("Partials/_ProdutoPartialProposta")
+    </div>
+    <div app-modal="modal-curso" header="Selecione o Curso">
+
+        @Html.Partial("Partials/_CursoPartial")
+    </div>
+</div>

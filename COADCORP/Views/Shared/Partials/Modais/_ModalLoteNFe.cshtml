@@ -1,0 +1,177 @@
+﻿<h4 class="padding">Lote de Notas de Produto</h4>
+<div class="form-group col-lg-12 limit-div-2 table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Código Lote</th>
+                <th>Status Do Lote</th>
+                <th>Código Item</th>
+                <th class="right">Número da RPS</th>
+                <th class="right">Número da Nota</th>
+                <th>Mensagem Lote</th>
+                <th>Código de Retorno</th>
+                <th>Mensagem de Retorno</th>
+                <th>Status Do Item</th>
+                <th>Erro Lote</th>
+                <th>Erro Item Lote</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tr ng-repeat="item in lstLoteItem" class="animate-repeat"
+            data-toggle="tooltip">
+            <td>
+                {{item.NFL_ID}}
+            </td>
+            <td>
+                <span class="label" ng-class="{
+                                        'label-warning' : item.NOTA_FISCAL_LOTE.NLS_ID == 1,
+                                        'label-info' : item.NOTA_FISCAL_LOTE.NLS_ID == 6 || item.NOTA_FISCAL_LOTE.NLS_ID == 3,
+                                        'label-danger' : item.NOTA_FISCAL_LOTE.NLS_ID == 5  || item.NOTA_FISCAL_LOTE.NLS_ID == 7 || item.NOTA_FISCAL_LOTE.NLS_ID == 2,
+                                        'label-success' : item.NOTA_FISCAL_LOTE.NLS_ID == 8,
+                                        'label-purple' : item.NOTA_FISCAL_LOTE.NLS_ID == 9 || item.NOTA_FISCAL_LOTE.NLS_ID == 4
+                                    }">{{item.NOTA_FISCAL_LOTE.NOTA_FISCAL_LOTE_STATUS.NLS_DESCRICAO}}</span>
+            </td>
+            <td>
+                {{item.NLI_ID}}
+            </td>
+            <td class="right">
+                {{item.NLI_NUMERO_RPS}}
+            </td>
+            <td class="right">
+                {{item.NLI_NUMERO_NOTA}}
+            </td>
+            <td>
+                <a href="javascript:void(0);" ng-click="abrirModalMsg(item.Lote.NLS_MENSAGEM_RETORNO)" title="{{item.Lote.NLS_MENSAGEM_RETORNO}}">
+                    {{item.Lote.NLS_MENSAGEM_RETORNO | limitTo:30}}<span ng-if="item.Lote.NLS_MENSAGEM_RETORNO.length > 30">...</span>
+                </a>
+            </td>
+            <td class="right">
+                {{item.NLI_COD_RETORNO}}
+            </td>
+            <td>
+                <a href="javascript:void(0);" ng-click="abrirModalMsg(item.NLI_MENSAGEM_RETORNO)" title="{{item.NLI_MENSAGEM_RETORNO}}">
+                    {{item.NLI_MENSAGEM_RETORNO | limitTo:30}}<span ng-if="item.NLI_MENSAGEM_RETORNO.length > 30">...</span>
+                </a>
+            </td>
+            <td>
+                <span class="label" ng-class="{
+                                        'label-warning' : item.NLS_ID == 1,
+                                        'label-purple' : item.NLS_ID == 2 || item.NLS_ID == 4,
+                                        'label-info' : item.NLS_ID == 6 || item.NLS_ID == 11,
+                                        'label-danger' : item.NLS_ID == 5  || item.NLS_ID == 7 || item.NLS_ID == 10
+                                    }">{{item.NOTA_FISCAL_LOTE_STATUS.NLS_DESCRICAO}}</span>
+            </td>
+            <td>
+                <a href="javascript:void(0);" ng-click="abrirModalMsg(item.Lote.NFL_MSG_ERRO_SISTEMA)" title="{{item.Lote.NFL_MSG_ERRO_SISTEMA}}">
+                    {{item.Lote.NFL_MSG_ERRO_SISTEMA | limitTo:30}}<span ng-if="item.Lote.NFL_MSG_ERRO_SISTEMA.length > 30">...</span>
+                </a>
+            </td>
+            <td>
+                <a href="javascript:void(0);" ng-click="abrirModalMsg(item.NLI_MSG_ERRO_SISTEMA)" title="{{item.NLI_MSG_ERRO_SISTEMA}}">
+                    {{item.NLI_MSG_ERRO_SISTEMA | limitTo:30}}<span ng-if="item.NLI_MSG_ERRO_SISTEMA.length > 30">...</span>
+                </a>
+            </td>
+            <td>
+                <a href="javascript:void(0);" ng-click="baixarNotaFiscalLoteItem(item.NLI_ID)" ng-show="item.PathArquivoNFeXml"
+                   title="Download da Nota Fiscal" class="text-danger">
+                    <span class="glyphicon glyphicon-download"></span>
+                </a>
+                <a href="javascript:void(0);" ng-click="executarcallbackLoteItem(item.NFL_ID)" ng-show="item.NLS_ID == 6"
+                   title="Reexecutar Callbacks" class="text-primary">
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" ng-if="lstLoteItem.length <= 0" class="text">
+                Não foi encontrado nenhum registro.
+            </td>
+        </tr>
+    </table>
+</div>
+<h4 class="padding">Lote de Notas de Serviço</h4>
+<div class="form-group col-lg-12 limit-div-2 table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Código Lote</th>
+                <th>Status Do Lote</th>
+                <th>Código Item</th>
+                <th class="right">Número da RPS</th>
+                <th class="right">Número da Nota</th>
+                <th>Mensagem Lote</th>
+                <th>Mensagem de Retorno</th>
+                <th>Status Do Item</th>
+                <th>Erro Lote</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tr ng-repeat="item in lstLoteItemServico" class="animate-repeat"
+            data-toggle="tooltip">
+            <td>
+                {{item.NFL_ID}}
+            </td>
+            <td>
+                <span class="label" ng-class="{
+                                        'label-warning' : item.NOTA_FISCAL_LOTE.NLS_ID == 1,
+                                        'label-info' : item.NOTA_FISCAL_LOTE.NLS_ID == 6 || item.NOTA_FISCAL_LOTE.NLS_ID == 3,
+                                        'label-danger' : item.NOTA_FISCAL_LOTE.NLS_ID == 5  || item.NOTA_FISCAL_LOTE.NLS_ID == 7 || item.NOTA_FISCAL_LOTE.NLS_ID == 2,
+                                        'label-success' : item.NOTA_FISCAL_LOTE.NLS_ID == 8,
+                                        'label-purple' : item.NOTA_FISCAL_LOTE.NLS_ID == 9 || item.NOTA_FISCAL_LOTE.NLS_ID == 4
+                                    }">{{item.NOTA_FISCAL_LOTE.NOTA_FISCAL_LOTE_STATUS.NLS_DESCRICAO}}</span>
+            </td>
+            <td>
+                {{item.NLI_ID}}
+            </td>
+            <td class="right">
+                {{item.NLI_NUMERO_RPS}}
+            </td>
+            <td class="right">
+                {{item.NLI_NUMERO_NOTA}}
+            </td>
+            <td>
+                <a href="javascript:void(0);" ng-click="abrirModalMsg(item.Lote.NLS_MENSAGEM_RETORNO)" title="{{item.Lote.NLS_MENSAGEM_RETORNO}}">
+                    {{item.Lote.NLS_MENSAGEM_RETORNO | limitTo:30}}<span ng-if="item.Lote.NLS_MENSAGEM_RETORNO.length > 30">...</span>
+                </a>
+            </td>
+            <td>
+                <a href="javascript:void(0);" ng-click="abrirModalMsg(item.NLI_MENSAGEM_RETORNO)" title="{{item.NLI_MENSAGEM_RETORNO}}">
+                    {{item.NLI_MENSAGEM_RETORNO | limitTo:30}}<span ng-if="item.NLI_MENSAGEM_RETORNO.length > 30">...</span>
+                </a>
+            </td>
+            <td>
+                <span class="label" ng-class="{
+                                        'label-warning' : item.NLS_ID == 1,
+                                        'label-purple' : item.NLS_ID == 2 || item.NLS_ID == 4,
+                                        'label-info' : item.NLS_ID == 6 || item.NLS_ID == 11,
+                                        'label-danger' : item.NLS_ID == 5  || item.NLS_ID == 7 || item.NLS_ID == 10
+                                    }">{{item.NOTA_FISCAL_LOTE_STATUS.NLS_DESCRICAO}}</span>
+            </td>
+            <td>
+                <a href="javascript:void(0);" ng-click="abrirModalMsg(item.Lote.NFL_MSG_ERRO_SISTEMA)" title="{{item.Lote.NFL_MSG_ERRO_SISTEMA}}">
+                    {{item.Lote.NFL_MSG_ERRO_SISTEMA | limitTo:30}}<span ng-if="item.Lote.NFL_MSG_ERRO_SISTEMA.length > 30">...</span>
+                </a>
+            </td>
+            <td>
+                <a href="javascript:void(0);" ng-click="baixarNotaFiscalLoteItem(item.NLI_ID)" ng-show="item.PathArquivoNFeXml"
+                   title="Download da Nota Fiscal" class="text-danger">
+                    <span class="glyphicon glyphicon-download"></span>
+                </a>
+                <a href="javascript:void(0);" ng-click="executarcallbackLoteItem(item.NFL_ID)" ng-show="item.NLS_ID == 6"
+                   title="Reexecutar Callbacks" class="text-primary">
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" ng-if="lstLoteItemServico.length <= 0" class="text">
+                Não foi encontrado nenhum registro.
+            </td>
+        </tr>
+    </table>
+</div>
+<div app-modal="erro-descricao" header-bg="false">
+    <figure>
+        <pre style="white-space:initial;min-height: 60px;">{{mensagemLote}}</pre>
+    </figure>
+</div>

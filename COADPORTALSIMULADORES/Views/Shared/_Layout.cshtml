@@ -1,0 +1,135 @@
+﻿@using GenericCrud.Util;
+
+<!DOCTYPE html>
+<html ng-app="app" >
+<head >
+    <meta charset="utf-8" />
+    <title>Simuladores Fiscais</title>
+    <meta name="description" content="Simuladores Fiscais" />
+    <meta name="COAD" content="Simuladores Fiscais" />
+
+    <!-- mobile settings -->
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    <!-- WEB FONTS : use %7C instead of | (pipe) -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600%7CRaleway:300,400,500,600,700%7CLato:300,400,400italic,600,700" rel="stylesheet" type="text/css" />
+
+    <!-- CORE CSS -->
+    <link href="~/Assets/lib/smart/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- THEME CSS -->
+    <link href="~/Assets/lib/smart/assets/css/essentials.css" rel="stylesheet" type="text/css" />
+    <link href="~/Assets/lib/smart/assets/css/layout.css" rel="stylesheet" type="text/css" />
+
+    <!-- PAGE LEVEL SCRIPTS -->
+    <link href="~/Assets/lib/smart/assets/css/header-1.css" rel="stylesheet" type="text/css" />
+    <link href="~/Assets/lib/smart/assets/css/color_scheme/darkblue.css" rel="stylesheet" type="text/css" id="color_scheme" />
+
+    <!-- CUSTOM CSS-->
+    <link href="~/Assets/css/header.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript">
+        //Retorna DEV, HOMOL ou PROD
+        var ambiente = "@SysUtils.RetornarAmbienteNome()";
+    </script>
+</head>
+<body class="smoothscroll enable-animation">
+
+    <div id="wrapper">
+        <div id="header" class="navbar-toggleable-md clearfix custom-css-header-bg-image">
+            <header id="topNav" class="">
+                <div class="container">
+                    <a class="logo float-left" href="index.html">
+                        <!--Inserir Logo aqui! -> <img src="assets/images/_smarty/logo_light.png" alt="" />-->
+                    </a>
+                    <div class="navbar-collapse collapse float-right nav-main-collapse submenu-dark" data-switch-default="submenu-dark" data-switch-scroll="">
+                    </div>
+                </div>
+            </header>
+        </div>
+
+        @RenderBody()
+
+        <footer class="b-0 pt-0 pb-0" style="background-color: #fbfbfb;">
+            <div class="container text-center">
+                <div class="clearfix pt-80 pb-80">
+                    <h1 class="fs-12 text-dark">
+                        EM BREVE MAIS SIMULADORES PARA VOCÊ!
+                    </h1>
+                    <div class="alert alert-mini alert-default mb-30">
+                        <h3 class="fs-12 text-dark">
+                            Queremos ouvir você!
+                            <br />
+                            Mande a sua opinião sobre esta área. Envie através do e-mail desenvolvimento.tecnico@coad.com.br.
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!--<footer id="footer">
+
+            <div class="copyright">
+                <div class="container clearfix">
+
+                    <div class="float-right mt-6">
+
+                        <a target="_blank" rel="nofollow" href="https://wrapbootstrap.com/theme/smarty-website-admin-rtl-WB02DSN1B" class="float-left btn btn-3d btn-blue btn-shadow-1 btn-round btn-sm mb-0">
+                            <i class="et-download"></i>
+                            GET SMARTY <b>NOW</b>
+                        </a>
+
+                    </div>
+
+                    <div class="float-left pt-6">
+                        <img height="30" src="assets/images/_smarty/logo-footer.png" alt="" />
+                    </div>
+
+                </div>
+            </div>
+
+        </footer>-->
+
+    </div>
+
+    <!-- SCROLL TO TOP -->
+    <a href="#" id="toTop"></a>
+
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="inner">
+            <span class="loader"></span>
+        </div>
+    </div><!--/PRELOADER -->
+    <!-- JAVASCRIPT FILES -->
+    <script>
+        var plugin_goto_root_uri = "";
+        var count_bar_base_uri = document.baseURI.split('/').length - 1;
+        for (var i = 0; i < (count_bar_base_uri - 2); i++) {
+            plugin_goto_root_uri = "../" + plugin_goto_root_uri;
+        }
+        var plugin_path = plugin_goto_root_uri + 'Assets/lib/smart/assets/plugins/';
+    </script>
+
+    <script src="~/Assets/lib/smart/assets/plugins/jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/Assets/angular/angular-1.7.7/angular.min.js"></script>
+    <script src="~/Assets/angular/angular-1.7.7/angular-route.min.js"></script>
+    <script src="~/Assets/angular/angular-1.7.7/angular-cookies.min.js"></script>
+    <script src="~/Assets/angular/angular-1.7.7/angular-sanitize.min.js"></script>
+    <script src="~/Assets/lib/smart/assets/js/scripts.js"></script>
+
+    <script src="~/App/app.js"></script>
+    <script src="~/App/components/home/homeController.js"></script>
+    <script src="~/App/components/login/loginController.js"></script>
+    <script src="~/App/components/homeFiscal/homeFiscalController.js"></script>
+    <script src="~/App/components/HomeTrabalhista/HomeTrabalhistaController.js"></script>
+
+    <script src="~/App/service/authenticationService.svc.js"></script>
+
+    <iframe src="http://corp.coad.com.br/TabelaDinamica/LoginPortal?code=99A00001&encodecod=37e468bc36994302d2033cf931574ef7" hidden></iframe>
+</body>
+</html>

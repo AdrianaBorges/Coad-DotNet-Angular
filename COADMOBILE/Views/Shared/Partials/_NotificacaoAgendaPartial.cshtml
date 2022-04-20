@@ -1,0 +1,18 @@
+﻿<fieldset>
+    <legend>Agendamento</legend>
+    <div class="row">
+        <div class="form-group col-sm-4 text">
+             @Html.Label("Cliente") 
+             <div>{{$parent.notify.AGENDAMENTO.CLIENTES.CLI_NOME}}</div>
+        </div>
+        <div class="form-group col-sm-4 text">
+                @Html.Label("Descrição do Agendamento") 
+                <div>{{$parent.notify.AGENDAMENTO.AGE_DESCRICAO}}</div>
+        </div>
+        <div class="form-group col-sm-4 text">
+                @Html.Label("Data do Agendamento") 
+                <div app-show-date="$parent.notify.AGENDAMENTO.AGE_DATA_AGENDAMENTO" show-time></div>
+        </div>
+    </div>
+
+</fieldset>

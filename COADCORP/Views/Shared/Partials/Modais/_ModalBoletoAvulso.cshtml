@@ -1,0 +1,133 @@
+﻿
+@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+
+<div class="modal" id="modal-BoletoAvulso" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: aliceblue">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Prorrogação de Titulos</h4>
+            </div>
+            <div class="container">
+                <div class="modal-body">
+                    <div class="col-lg-9">
+                        <a href="#" class="btn btn-info" style="width: 100%;">CONFIRA ABAIXO OS DADOS DO BOLETO</a>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    @Html.Label("Parcela")
+                                    <input type="text" class="form-control" ng_model="parcelaProrrog.PAR_NUM_PARCELA" disabled="disabled" />
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    @Html.Label("Data Vencimento")
+                                    <div app-show-date="parcelaProrrog.PAR_DATA_VENCTO" class="form-control" disabled="disabled"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    @Html.Label("Vencimento Boleto")
+                                    <div class="input-group date">
+                                        <input type="text" style="width: 150px" ng-model="parcelaProrrog.PAR_VENC_BOLETOStr" app-date="parcelaProrrog.PAR_VENC_BOLETO" date-name="dtprorrogacao" maxlength="10" class="form-control datepicker" />
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="cnab">Email</label>
+                                <select id="idConta" ng-options="item.AEM_EMAIL as item.AEM_EMAIL for item in listaemailBoleto" class="form-control" ng-model="parcelaProrrog.AEM_EMAIL">
+                                    <option value="">Escolha o email</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="cnab">Email Selecionado</label>
+                                <input type="text" id="email" ng-model="parcelaProrrog.AEM_EMAIL" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="shopping_cart">
+                            <form class="form-horizontal" role="form" action="" method="post" id="payment-form">
+                                <div class="panel-group" id="accordion">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                                    Dados Boleto
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseOne" class="panel-collapse collapse in">
+                                            <div class="panel-body">
+                                                <div class="items">
+                                                    <div class="col-md-9">
+                                                        <table class="table table-striped">
+                                                            <tr>
+                                                                <td>
+                                                                    <b>
+                                                                        ITENS
+                                                                    </b>
+                                                                </td>
+                                                                <td>
+                                                                    <b>
+                                                                        VALOR
+                                                                    </b>
+                                                                </td>
+                                                            </tr>
+                                                            <tr >
+                                                                <td>Valor Parcela </td>
+                                                                <td>
+                                                                   
+                                                                    <input type="text" style="width: 150px" app-mask-dinheiro="parcelaProrrog.PAR_VLR_PARCELA" ng-model="vrlparcela" maxlength="15" class="form-control text-right"  disabled/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Taxa</td>
+                                                                <td><input type="text" style="width: 150px" app-mask-dinheiro="parcelaProrrog.PAR_VLR_DESP_ADM" ng-model="vlrtaxa" maxlength="15" class="form-control text-right" disabled /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Juros/Mora</td>
+                                                                <td><input type="text" style="width: 150px" app-mask-dinheiro="parcelaProrrog.PAR_VLR_JUROS" ng-model="vlrjuros" maxlength="15" class="form-control text-right" disabled /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Valor Boleto</td>
+                                                                <td><input type="text" style="width: 150px" app-mask-dinheiro="parcelaProrrog.PAR_VLR_BOLETO" ng-model="vlrboleto" maxlength="15" class="form-control text-right" /></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div style="text-align: center;">
+                                                            <h3>Valor Boleto</h3>
+                                                            <h3>
+                                                                <span style="color:green;min-width: 100px;" app-show-dinheiro="parcelaProrrog.PAR_VLR_BOLETO" class="align-right"></span>
+                                                            </h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="enviarBoletoAvulso(parcelaProrrog)">
+                    <span class="fa fa-envelope"></span> Enviar Boleto
+                </button>
+                @if (SessionContext.AcessoGerente("SAC"))
+                {
+                   <button type="button" class="btn btn-default" ng-click="prorrogarDocVencimento(parcelaProrrog)"><span class="glyphicon glyphicon-floppy-save blue"></span>&nbspProrrogar Parcela</button>
+                }
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</button>
+            </div>
+        </div>
+    </div>
+</div>

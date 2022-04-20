@@ -1,0 +1,87 @@
+﻿@using Coad.GenericCrud.Extensions
+
+@{
+    ViewBag.print = true;
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;
+    if (ViewBag.print == true)
+    {
+        ViewBag.printableClass = "hidden-print";
+    }
+
+    ViewBag.Title = "Index";
+
+}
+
+<script>
+    $(document).ready(function () {
+        $(":input").inputmask();
+    });
+</script>
+
+@Scripts.Render("~/Scripts/negocio/representante.js")
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Relatorios/Index">Relatórios</a></li>
+        <li><a href="/Relatorios/Cadastro">Relatórios de Cadastro </a></li>
+        <li class="active">&nbspRepresentantes por Carteira</li>
+    </ol>
+}
+
+
+<div ng-app="appModule">
+    <div ng-controller="RepresentanteController" class="padding content" ng-init="listarRepresentantesCarteira();canPrint=true">
+        <div id="page-wrapper">
+            <div class="panel panel-corp" ng-show="listaRepresentantesCarteira" id="baseContent">
+                <div class="panel-heading bold head-panel hidden-print"><span class="glyphicon glyphicon-book"></span>&nbspRepresentantes por Carteira</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="table-responsive" style="padding-left: 12px; padding-right: 12px;" ng-repeat="ite in listaRepresentantesCarteira">
+                            <table class="table table-hover table-bordered" style="padding-left: 12px;">
+                                <thead>
+                                    <tr class="info">
+                                        <th colspan="5">
+                                            <span>COADCORP - Representantes por Carteira - {{filtro.dataatual}}</span> 
+                                        </th>
+                                    </tr>
+                                    <tr class="info">
+                                        <th colspan="5">
+                                            <span>Representante: {{ite.REP_ID_SUPERVISOR}} - {{ite.REP_NOME_SUPERVISOR}} </span>
+                                        </th>
+                                    </tr>
+                                    <tr class="info">
+                                        <th>Representante</th>
+                                        <th>Carteira</th>
+                                        <th>Email</th>
+                                        <th>Ramal</th>
+                                        <th>Telefone</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in ite.LISTA">
+                                    <td style="width:25%;">{{item.REP_ID}} - {{item.REP_NOME}} </td>
+                                    <td >{{item.CAR_ID}}</td>
+                                    <td style="width:25%;">{{item.REP_EMAIL}}</td>
+                                    <td >{{item.REP_RAMAL}}</td>
+                                    <td>({{item.REP_DDD_TELEFONE}}) - {{item.REP_TELEFONE}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="hidden-print panel-footer">
+                        <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+                        <a class="btn btn-default" href="/Relatorios/Controladoria">
+                            <span class="glyphicon glyphicon-chevron-left blue"></span>&nbspVoltar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

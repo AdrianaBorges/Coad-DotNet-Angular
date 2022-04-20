@@ -1,0 +1,679 @@
+﻿<!-- ALT: 23/06/2015 - disponibilizando os dados e métodos javascript -->
+@model  COAD.COADGED.Model.DTO.PublicacaoAreaConsultoriaDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Cadastro de Matérias";
+}
+@section Scripts {
+    @Scripts.Render("~/Scripts/appScripts/Home.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.js")
+    @Scripts.Render("~/Scripts/flot/excanvas.min.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.pie.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.time.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.resize.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.categories.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.tooltip.min.js")
+}
+@{
+    var fasesMateria = new SelectList(
+        new List<SelectListItem>
+       {
+            new SelectListItem {Text = "Redação", Value = "1"},
+            new SelectListItem {Text = "Revisão Técnica", Value = "2"},
+            new SelectListItem {Text = "Digitação", Value = "3"},
+            new SelectListItem {Text = "Revisão Ortográfica", Value = "4"},
+            new SelectListItem {Text = "Diagramação", Value = "5"}
+       }, "Value", "Text"
+    );
+
+    var coadgedOuPortal = new SelectList(
+        new List<SelectListItem>
+       {
+            new SelectListItem {Text = "COADGED", Value = "true"},
+            new SelectListItem {Text = "Portal", Value = "false"}
+       }, "Value", "Text"
+    );
+}
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/publicacaoAreaConsultoria.js")
+
+<!-- ALT: 23/06/2015 - abrindo Angular para a aplicação -->
+<div ng-app="appModule">
+    <div ng-controller="PublicacaoAreaConsultoriaController" class="padding content" data-ng-init="init(@ViewBag.colecionadorId)" ng-cloak>
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "index", "Home")</li>
+            <li class="active">Gerenciar Matérias</li>
+            <li class="active">Colaborador <span class="label label-default">{{_colaboradorNome}}</span></li>
+            <li class="active">Perfil <span class="label label-default">{{_cargo}} ({{_cargoSigla}})</span></li>
+            <li class="active">Área <span class="label label-default">{{_colecionadorNome}}</span></li>
+        </ol>
+
+        <div app-message></div>
+
+        <!-- MODAL Painel de Informações -->
+        <div app-modal="painelModal" header="Painel estatístico">
+            <div class="panel panel-default">
+                <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtro do painel </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group col-lg-2">
+                            <label for="coadgedBI">Colaborador</label>
+                            @Html.DropDownList("colaboradorId", new SelectList(@ViewBag.colaboradores, "Value", "Text"), "Todos", new { @class = "form-control", ng_model = "filtro.pnColaboradorId" })
+                        </div>
+                        <div class="form-group col-lg-2" ng-show="filtro.pnColecionadorId=filtro.colecionadorId">
+                            <label for="coadgedBI">Colecionador</label>
+                            @Html.DropDownList("colecionadorId", new SelectList(@ViewBag.areas, "Value", "Text"), "Todos", new { @class = "form-control", ng_model = "filtro.pnColecionadorId" })
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="coadgedBI">Nº do Informativo</label>
+                            <input type="text" ng-model="filtro.pnNrInformativo" class="form-control" />
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="coadgedBI">Ano Informativo</label>
+                            <input type="text" ng-model="filtro.pnAnoInformativo" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" ng-click="painelEstatistico()"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+                </div>
+            </div>
+        </div>
+        <div app-modal="mostrarPainel" header="Painel Estatístico">
+            <div class="panel panel-default" ng-if="painel">
+                <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Estatísticas da pesquisa </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <span class="glyphicon glyphicon-info-sign fa-2x"></span>
+                                                </div>
+                                                <div class="col-xs-9 text-right">
+                                                    <div>Redação</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-footer" ng-repeat="pn in painel" ng-show="pn.DIA || pn.RDC || pn.RVT || pn.RVO || pn.DGT">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <i class="fa fa-hand-o-right fa-2x"></i>
+                                                </div>
+                                                <div class="col-xs-9 text-right">
+                                                    <div class="text-right">Matérias: {{pn.RDC}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <i class="glyphicon glyphicon-flash fa-2x"></i>
+                                                </div>
+                                                <div class="col-xs-9 text-right">
+                                                    <div>Revisão Técnica</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-footer" ng-repeat="pn in painel" ng-show="pn.DIA || pn.RDC || pn.RVT || pn.RVO || pn.DGT">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <i class="fa fa-hand-o-right fa-2x"></i>
+                                                </div>
+                                                <div class="col-xs-9 text-right">
+                                                    <div class="text-right">Matérias: {{pn.RVT}}</div>
+                                                    <div class="text-right" ng-show="pn.ED_RVT">Editada: {{pn.ED_RVT}}</div>
+                                                    <div class="text-right" ng-show="pn.RP_RVT">Reprovada: {{pn.RP_RVT}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="panel panel-danger">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <i class="glyphicon glyphicon-screenshot fa-2x"></i>
+                                                </div>
+                                                <div class="col-xs-9 text-right">
+                                                    <div>Digitação</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-footer" ng-repeat="pn in painel" ng-show="pn.DIA || pn.RDC || pn.RVT || pn.RVO || pn.DGT">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <i class="fa fa-hand-o-right fa-2x"></i>
+                                                </div>
+                                                <div class="col-xs-9 text-right">
+                                                    <div class="text-right">Matérias: {{pn.DGT}}</div>
+                                                    <div class="text-right" ng-show="pn.ED_DGT">Editada: {{pn.ED_DGT}}</div>
+                                                    <div class="text-right" ng-show="pn.RP_DGT">Reprovada: {{pn.RP_DGT}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="panel panel-warning">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <i class="glyphicon glyphicon-user fa-2x"></i>
+                                                </div>
+                                                <div class="col-xs-9 text-right">
+                                                    <div>Revisão Ortográfica</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-footer" ng-repeat="pn in painel" ng-show="pn.DIA || pn.RDC || pn.RVT || pn.RVO || pn.DGT">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <i class="fa fa-hand-o-right fa-2x"></i>
+                                                </div>
+                                                <div class="col-xs-9 text-right">
+                                                    <div class="text-right">Matérias: {{pn.RVO}}</div>
+                                                    <div class="text-right" ng-show="pn.ED_RVO">Editada: {{pn.ED_RVO}}</div>
+                                                    <div class="text-right" ng-show="pn.RP_RVO">Reprovada: {{pn.RP_RVO}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <span class="glyphicon glyphicon-info-sign fa-2x"></span>
+                                                </div>
+                                                <div class="col-xs-9 text-right">
+                                                    <div>Diagramação</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-footer" ng-repeat="pn in painel" ng-show="pn.DIA || pn.RDC || pn.RVT || pn.RVO || pn.DGT">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <i class="fa fa-hand-o-right fa-2x"></i>
+                                                </div>
+                                                <div class="col-xs-9 text-right">
+                                                    <div class="text-right">Matérias: {{pn.DIA}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL Filtro completo -->
+        <div app-modal="filtroModal" header="Filtro completo">
+            <div class="panel panel-default">
+                <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span>Preencha o filtro </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label for="coadgedBI">Buscar palavras</label>
+                            <input type="text" id="coadgedBI" ng-model="filtro.coadgedBI" class="form-control" />
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="coadgedBI">Base</label>
+                            @Html.DropDownList("filtro.COADGED", coadgedOuPortal, "Selecione", new { @class = "form-control", ng_model = "filtro.COADGED" })
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="coadgedBI">Colecionador</label>
+                            @Html.DropDownList("filtro.colecionadorId", new SelectList(@ViewBag.areas, "Value", "Text"), "Todos", new { @class = "form-control", ng_model = "filtro.colecionadorId", ng_change = "lerGgIndex(filtro.colecionadorId)" })
+                        </div>
+                        <div class="form-group col-lg-2" data-toggle="tooltip" title="" data-original-title="Registrada no COADGED ou no Portal COAD.">
+                            <label for="coadgedBI">Nº Matéria</label>
+                            <input type="text" id="nrMateria" ng-model="filtro.nrMateria" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-2" data-ng-show="filtro.COADGED=='true'">
+                            <label for="coadgedBI">Colaborador</label>
+                            @Html.DropDownList("filtro.colaboradorId", new SelectList(@ViewBag.colaboradores, "Value", "Text"), "Todos", new { @class = "form-control", ng_model = "filtro.colaboradorId" })
+                        </div>
+                        <div class="form-group col-lg-2" data-ng-show="filtro.COADGED=='true'">
+                            <label for="coadgedBI">Fase da Matéria</label>
+                            @Html.DropDownList("filtro.faseMateria", fasesMateria, "Todas", new { @class = "form-control", ng_model = "filtro.faseMateria" })
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="coadgedBI">Data Matéria</label>
+                            @Html.TextBox("filtro.dtCadastro", DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), new { @class = "form-control datepicker", ng_model = "filtro.dtBuscar", app_date = "filtro.dtCadastro" })
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="coadgedBI">Tipo Matéria</label>
+                            @Html.DropDownList("filtro.tpMateria", new SelectList(@ViewBag.tpMateria, "Value", "Text"), "Todos", new { @class = "form-control", ng_model = "filtro.tpMateria" })
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="coadgedBI">Nº Inf.</label>
+                            <input type="text" id="nrInformativo" ng-model="filtro.nrInformativo" class="form-control" />
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="coadgedBI">Ano/Inf</label>
+                            <input type="text" id="anoInformativo" ng-model="filtro.anoInformativo" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-3">
+                            <label for="coadgedBI">UF</label>
+                            @Html.DropDownList("filtro.uf", new SelectList(@ViewBag.uf, "Value", "Text"), "", new { @class = "form-control", ng_model = "filtro.uf" })
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label for="coadgedBI">Tipo do Ato</label>
+                            @Html.DropDownList("filtro.tpAto", new SelectList(@ViewBag.tpAto, "Value", "Text"), "Todos", new { @class = "form-control", ng_model = "filtro.tpAto" })
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="coadgedBI">Nº Ato</label>
+                            <input type="text" id="nrAto" ng-model="filtro.nrAto" class="form-control" />
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="coadgedBI">Ano/Ato</label>
+                            <input type="text" id="anoAto" ng-model="filtro.anoAto" class="form-control" />
+                        </div>
+                        <div class="form-group col-lg-2" data-ng-show="filtro.COADGED=='true'" data-toggle="tooltip" title="" data-original-title="Informe [Sim] para buscar matérias ativas nos informativos; [Não] para matérias arquivadas para uso posterior; ou não [Selecione] para buscar todos.">
+                            <label for="coadgedBI">Ativas?</label>
+                            @Html.DropDownList("filtro.ativoId", new SelectList(@ViewBag.ativo, "Value", "Text"), "", new { @class = "form-control", ng_model = "filtro.ativoId" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-4">
+                            <label for="coadgedBI">Grande Grupo</label>
+                            <select ng-options=" item.TIT_ID as item.TIT_DESCRICAO for item in filtro.gg" class="form-control" ng-model="filtro.ggId" ng-change="lerVerbetesIndex(filtro.ggId)">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="coadgedBI">Verbete</label>
+                            <select ng-options=" item.TIT_ID as item.TIT_DESCRICAO for item in filtro.vb" class="form-control" ng-model="filtro.vbId" ng-change="lerSubverbetesIndex(filtro.vbId)">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="coadgedBI">Subverbete</label>
+                            <select ng-options=" item.TIT_ID as item.TIT_DESCRICAO for item in filtro.svb" class="form-control" ng-model="filtro.svbId" ng-change="lerSubverbetesIndex(filtro.vbId, filtro.svbId)">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" ng-click="coadgedBI()">
+                        <span class="glyphicon glyphicon-search"></span> Pesquisar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtro simples -->
+        <div class="panel panel-default" data-ng-init="entrarNoMenu()">
+            <!-- ALT: 23/06/2015 - pequeno menu à direita -->
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-filter"></span> Filtro rápido
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Opções
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-3">
+                        <label for="coadgedBI">Buscar palavras</label>
+                        <input type="text" id="coadgedBI" ng-model="filtro.coadgedBI" class="form-control" />
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="coadgedBI">Base</label>
+                        @Html.DropDownList("filtro.COADGED", coadgedOuPortal, "Selecione", new { @class = "form-control", ng_model = "filtro.COADGED" })
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="coadgedBI">Colecionador</label>
+                        @Html.DropDownList("filtro.colecionadorId", new SelectList(@ViewBag.areas, "Value", "Text"), "Todos", new { @class = "form-control", ng_model = "filtro.colecionadorId", ng_change = "lerGgIndex(filtro.colecionadorId)" })
+                    </div>
+                    <div class="form-group col-lg-1">
+                        <label for="coadgedBI">Nº Matéria</label>
+                        <input type="text" id="nrMateria" ng-model="filtro.nrMateria" class="form-control" />
+                    </div>
+                    <div class="form-group col-lg-1">
+                        <label for="coadgedBI">Nº Inform</label>
+                        <input type="text" id="nrInformativo" ng-model="filtro.nrInformativo" class="form-control" />
+                    </div>
+                    <div class="form-group col-lg-1">
+                        <label for="coadgedBI">Ano Inform</label>
+                        <input type="text" id="anoInformativo" ng-model="filtro.anoInformativo" class="form-control" />
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="coadgedBI">Data do cadastro</label>
+                        @Html.TextBox("filtro.dtCadastro", DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), new { @class = "form-control datepicker", ng_model = "filtro.dtBuscar", app_date = "filtro.dtCadastro" })
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="coadgedBI()"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+                <button type="button" class="btn btn-primary" ng-click="painelModal()" style="float:right;" data-ng-show="filtro.COADGED == 'true'"><span class="glyphicon glyphicon-th-list"></span> Painel estatístico</button>
+                <button type="button" class="btn btn-info" ng-click="filtroModal()" style="float:right;"><span class="glyphicon glyphicon-fullscreen"></span> Filtro completo</button>
+            </div>
+        </div>
+
+        <!-- ALT: 23/06/2015 - exibindo dados pesquisados -->
+        <div class="panel panel-default" ng-show="coadgedBIretorno">
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Cadastro de Matérias </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <!-- ALT: 23/06/2015 - Exibindo Matéria do Portal -->
+                    <table class="table table-hover table-bordered" ng-show="coadgedBIretorno[0].html">
+                        <!-- ALT: 23/06/2015 - exibindo campos do cabeçalho -->
+                        <thead>
+                            <tr class="warning">
+                                <th style="min-width: 030px">
+                                    @Html.DisplayNameFor(model => model.PUB_ID)
+                                </th>
+                                <th style="min-width: 100px">
+                                    @Html.DisplayName("M A T É R I A   *   P U B L I C A D A   *   N O   *   P O R T A L")
+                                </th>
+                                <th>Ver</th>
+                            </tr>
+                        </thead>
+                        <!-- ALT: 23/06/2015 - exibindo os dados e os botões de operações -->
+
+                        <tr ng-repeat="item in coadgedBIretorno">
+                            <td>
+                                {{item.id}}
+                            </td>
+                            <td>
+                                <div class="form-group col-lg-12">
+                                    <div style="overflow-y: hidden; height:050px;" ng-bind-html="item.html"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" ng-click="BotaoMateriaNoPortal(item.id, filtro.colecionadorId, item.html)">
+                                    <span id="botaoModal" class="glyphicon glyphicon-search"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- ALT: 20/04/2016 - MODAL - Exibindo Matéria do Portal -->
+                    <div app-modal="materiaNoPortal" header="M A T É R I A   *   P U B L I C A D A   *   N O   *   P O R T A L   *   [Nº {{id}}]">
+                        <div style="max-height:670px; overflow-y:auto;" ng-bind-html="html"></div>
+                    </div>
+
+                    <!-- ALT: 23/06/2015 - Exibindo Matéria do COADGED -->
+                    <table class="table table-hover table-bordered" ng-show="!coadgedBIretorno[0].html">
+                        <!-- ALT: 23/06/2015 - exibindo campos do cabeçalho -->
+                        <thead>
+                            <tr class="warning">
+                                <th style="min-width: 030px">
+                                    @Html.DisplayName("Nº")
+                                </th>
+                                <th style="min-width: 050px">
+                                    @Html.DisplayName("Area")
+                                </th>
+                                <th style="min-width: 030px">
+                                    @Html.DisplayName("Inf")
+                                </th>
+                                <th style="min-width: 030px">
+                                    @Html.DisplayName("Ano")
+                                </th>
+                                <th style="min-width: 030px">
+                                    @Html.DisplayName("UF")
+                                </th>
+                                <th style="min-width: 050px">
+                                    @Html.DisplayName("Matéria")
+                                </th>
+                                <th style="min-width: 050px">
+                                    @Html.DisplayName("Tipo do Ato")
+                                </th>
+                                <th style="min-width: 050px">
+                                    @Html.DisplayName("Ato")
+                                </th>
+                                <th style="min-width: 050px">
+                                    @Html.DisplayName("Cadastro")
+                                </th>
+                                <th style="min-width: 030px">
+                                    @Html.DisplayName("Ativa")
+                                </th>
+                                <th style="min-width: 030px">
+                                    @Html.DisplayName("Texto")
+                                </th>
+                                <th style="min-width: 020px">
+                                    @Html.DisplayName("Fase")
+                                </th>
+                                <th data-ng-if="!coadgedBIretorno[0].colec">Uso</th>
+                                <th>Ver</th>
+                                <th data-ng-if="!coadgedBIretorno[0].colec">Editar</th>
+                                <th style="min-width: 010px" data-ng-if="!coadgedBIretorno[0].colec">@Html.DisplayName("Liberar")</th>
+                            </tr>
+                        </thead>
+                        <!-- ALT: 23/06/2015 - exibindo os dados e os botões de operações -->
+                        <tr ng-repeat="item in coadgedBIretorno">
+                            <td>
+                                {{item.id}}
+                                {{item.PUB_ID}}
+                            </td>
+                            <td>
+                                {{item.colec}}
+                                {{item.AREAS_CONSULTORIA.ARE_CONS_DESCRICAO}}
+                            </td>
+                            <td>
+                                {{item.informativo}}
+                                <div ng-repeat="uf in item.PUBLICACAO_UF">
+                                    {{uf.INF_NUMERO}}
+                                </div>
+                            </td>
+                            <td>
+                                {{item.ano}}
+                                <div ng-repeat="uf in item.PUBLICACAO_UF">
+                                    {{uf.INF_ANO}}
+                                </div>
+                            </td>
+                            <td data-ng-if="item.PUBLICACAO_UF[0].UF_ID == 'TD'" title="Todas as UFs">
+                                <div ng-repeat="uf in item.PUBLICACAO_UF">
+                                    {{uf.UF_ID}}
+                                </div>
+                            </td>
+                            <td data-ng-if="item.PUBLICACAO_UF[0].UF_ID != 'TD'">
+                                <div ng-repeat="uf in item.PUBLICACAO_UF">
+                                    {{uf.UF_ID}}
+                                </div>
+                            </td>
+                            <td>
+                                {{item.tipo_materia}}
+                                {{item.PUBLICACAO.TIPO_MATERIA.TIP_MAT_DESCRICAO}}
+                            </td>
+                            <td>
+                                {{item.expressao_ato}}
+                                {{item.PUBLICACAO.TIPO_ATO.TIP_ATO_DESCRICAO}}
+                            </td>
+                            <td>
+                                {{item.num}}
+                                {{item.PUBLICACAO.PUB_NUMERO_ATO}}
+                            </td>
+                            <td>
+                                {{item.dataCadastro | date: "dd/MM/yyyy hh:mm:ss"}}
+                                {{item.PUBLICACAO.DATA_CADASTRO | date: "dd/MM/yyyy hh:mm:ss"}}
+                            </td>
+                            <td>
+                                <span class="label label-success" ng-if="item.colec || item.PUBLICACAO.PUB_ATIVO == 1">SIM</span>
+                                <span class="label label-danger" ng-if="item.PUBLICACAO && item.PUBLICACAO.PUB_ATIVO != 1">NÃO</span>
+                            </td>
+                            <td>
+                                <span class="label label-success" ng-if="(item.colec || item.PUBLICACAO.PUB_CONTEUDO_RESENHA=='true') || (item.PUBLICACAO.PUB_CONTEUDO=='true')">SIM</span>
+                                <span class="label label-danger" ng-if="(item.PUBLICACAO && item.PUBLICACAO.PUB_CONTEUDO_RESENHA!='true') && (item.PUBLICACAO.PUB_CONTEUDO!='true')">NÃO</span>
+                            </td>
+                            <td>
+                                <span class="label label-primary" data-ng-if="!item.PUBLICACAO_REVISAO">Publicada</span>
+                                <div ng-repeat="rep in item.PUBLICACAO_REVISAO">
+                                    <div ng-if="rep.REV_TC == 'R'">
+                                        <span>
+                                            <span class="label label-primary">REDAÇÃO</span>
+                                            <a href="javascript:void(0)" ng-click="historicoMateria(rep.REPROVADA)" title="" data-original-title="Clique para ver histórico" data-toggle="tooltip">Histórico</a>
+                                        </span>
+                                    </div>
+                                    <div ng-if="rep.REV_TC == 'L'">
+                                        <span>
+                                            <span class="label label-success">REVISÃO TÉCNICA</span>
+                                            <a href="javascript:void(0)" ng-click="historicoMateria(rep.REPROVADA)" title="" data-original-title="Clique para ver histórico" data-toggle="tooltip">Histórico</a>
+                                        </span>
+                                    </div>
+                                    <div ng-if="rep.DIG_TC == 'L'">
+                                        <span>
+                                            <span class="label label-info">DIGITAÇÃO</span>
+                                            <a href="javascript:void(0)" ng-click="historicoMateria(rep.REPROVADA)" title="" data-original-title="Clique para ver histórico" data-toggle="tooltip">Histórico</a>
+                                        </span>
+                                    </div>
+                                    <div ng-if="rep.REV_OR == 'L'">
+                                        <span>
+                                            <span class="label label-warning">REVISÃO ORTOGRÁFICA</span>
+                                            <a href="javascript:void(0)" ng-click="historicoMateria(rep.REPROVADA)" title="" data-original-title="Clique para ver histórico" data-toggle="tooltip">Histórico</a>
+                                        </span>
+                                    </div>
+                                    <div ng-if="rep.REV_OR == 'A'">
+                                        <span>
+                                            <span class="label label-danger">DIAGRAMAÇÃO</span>
+                                            <a href="javascript:void(0)" ng-click="historicoMateria(rep.REPROVADA)" title="" data-original-title="Clique para ver histórico" data-toggle="tooltip">Histórico</a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span class="label label-primary" ng-if="item.PUBLICACAO_REVISAO.length == 0">REDAÇÃO</span>
+                            </td>
+
+                            <td data-ng-if="!item.colec">
+                                <a href="javascript:void(0)" data-toggle="tooltip" ng-mouseover="quemEdita(item.PUB_ID)" title="" data-original-title="Quem a está editando? {{quemEstaEditando}}" ng-click="acessadaPor(item.PUB_ID)">
+                                    <span class="glyphicon glyphicon-user blue"></span>
+                                </a>
+                            </td>
+
+                            <td data-ng-if="item.colec"><a href="javascript:void(0)" ng-click="BotaoMateriaNoPortal(item.modulo, filtro.colecionadorId)" data-toggle="tooltip" title="" data-original-title="Visualizar" class="blue"><span class="glyphicon glyphicon-search"></span></a></td>
+
+                            <td data-ng-if="!item.colec"><a href="javascript:void(0)" ng-click="sairDoMenu()" app-post="@Url.Action("Detalhes")?publicacaoId={{item.PUB_ID}}&colecionadorId={{item.ARE_CONS_ID}}" data-toggle="tooltip" title="" data-original-title="Visualizar" class="blue"><span class="glyphicon glyphicon-search"></span></a></td>
+                            <td data-ng-if="!item.colec"><a href="javascript:void(0)" ng-click="sairDoMenu()" app-post="@Url.Action("Editar")?publicacaoId={{item.PUB_ID}}&colecionadorId={{item.ARE_CONS_ID}}" data-toggle="tooltip" title="" data-original-title="Editar" class="blue"><span class="glyphicon glyphicon-edit"></span></a></td>
+                            <td data-ng-if="!item.colec">
+                                <div>
+                                    <div ng-show="((item.PUBLICACAO_REVISAO.length == 0) && (item.PUBLICACAO.PUB_ATIVO == 1)
+                                            && ((item.PUBLICACAO.PUB_CONTEUDO_RESENHA == 'true')
+                                            || (item.PUBLICACAO.PUB_CONTEUDO == 'true')))">
+                                        <a href="javascript:void(0)" data-toggle="tooltip" title="" data-original-title="Liberar esta matéria para a Revisão Técnica" ng-click="liberarRevisaoTecnica(item.PUB_ID, item.ARE_CONS_ID)">
+                                            <span class="label label-success">SIM</span>
+                                        </a>
+                                    </div>
+                                    <div ng-show="((item.PUBLICACAO_REVISAO.length == 0)
+                                            && ((item.PUBLICACAO.PUB_CONTEUDO_RESENHA == 'false')
+                                            && (item.PUBLICACAO.PUB_CONTEUDO == 'false')))">
+                                        <span class="label label-danger">NÃO</span>
+                                    </div>
+                                    <div ng-repeat="rep in item.PUBLICACAO_REVISAO">
+                                        <div ng-show="((rep.REV_TC == 'R') && (item.PUBLICACAO.PUB_ATIVO == 1)
+                                            && ((item.PUBLICACAO.PUB_CONTEUDO_RESENHA == 'true')
+                                            || (item.PUBLICACAO.PUB_CONTEUDO == 'true')))">
+                                            <a href="javascript:void(0)" data-toggle="tooltip" title="" data-original-title="Liberar esta matéria para a Revisão Técnica" ng-click="liberarRevisaoTecnica(item.PUB_ID, item.ARE_CONS_ID)">
+                                                <span class="label label-success">SIM</span>
+                                            </a>
+                                        </div>
+                                        <div ng-show="((rep.REV_TC != 'R') && (item.PUBLICACAO.PUB_ATIVO == 1)
+                                            && ((item.PUBLICACAO.PUB_CONTEUDO_RESENHA == 'true')
+                                            || (item.PUBLICACAO.PUB_CONTEUDO == 'true')))">
+                                            <span class="label label-warning">LIBERADA</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- ALT: 25/10/2017 - MODAL - Exibindo quem acessou a matéria -->
+                    <div app-modal="acessadaPor" header="Matéria: {{acessada[0].PUB_ID}} - Usuários que a acessaram">
+                        <div id="idAcessadaPor" class="panel panel-default">
+                            <div class="panel-body">
+                                <table class="table table-hover table-bordered" style="max-height:670px; overflow-y:auto;">
+                                    <thead>
+                                        <tr class="warning">
+                                            <th style="min-width: 030px">Usuário</th>
+                                            <th style="min-width: 030px">Acesso</th>
+                                            <th style="min-width: 030px">Hora/Acesso</th>
+                                            <th style="min-width: 030px">Hora/Liberação</th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="item in acessada">
+                                        <td>{{item.USU_LOGIN}}</td>
+                                        <td data-ng-if="item.EDT_EDITANDO==0">Visualização (somente leitura)</td>
+                                        <td data-ng-if="item.EDT_EDITANDO==1">Edição</td>
+                                        <td>{{item.EDT_HORARIO | date: "dd/MM/yyyy hh:mm:ss"}}</td>
+                                        <td>{{item.EDT_LIBERADA | date: "dd/MM/yyyy hh:mm:ss"}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="panel-footer">
+                                <button type="button" class="btn btn-default" Onclick="angular.element('#acessadaPor').modal('hide')"><span class="glyphicon glyphicon-off red"></span> Sair</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ALT: 26/07/2016 - MODAL - Exibindo Mensagens -->
+                    <div app-modal="historicoMateria" header="{{tit}}">
+                        <div id="idMateria" class="panel panel-default">
+                            <div class="panel-body">
+                                <div style="max-height:500px; overflow-y:auto;" ng-bind-html="msg"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <style type="text/css">
+                    /** {
+                        margin: 0;
+                        padding: 0;
+                    }*/
+
+                    #tudo {
+                        overflow-y: hidden;
+                    }
+
+                    .pagination {
+                        display: inline;
+                        float: left;
+                        margin-right: 10px;
+                        padding-right: 10px;
+                    }
+                </style>
+                <div id="tudo">
+                    <app-pagination request-page="paginaReq" load-function="coadgedBI(paginaReq)"></app-pagination>
+                    <ul class="pagination" data-ng-if="coadgedBIretorno[0].html">
+                        <li data-ng-if="apartirDe == 0" class="disabled" data-toggle="tooltip" title="" data-original-title="Voltar 100 registros"><a href="javascript:void(0)" ng-click="coadgedBI(paginaReq, -1)">voltar</a></li>
+                        <li data-ng-if="apartirDe > 0" data-toggle="tooltip" title="" data-original-title="Voltar 100 registros"><a href="javascript:void(0)" ng-click="coadgedBI(paginaReq, -1)">voltar</a></li>
+
+                        <li class="disabled" data-ng-if="total"><a href="#">{{registros + apartirDe}} de {{total}}</a></li>
+                        <li class="disabled" data-ng-if="!total"><a href="#">{{registros + apartirDe}} de 1</a></li>
+
+                        <li data-ng-if="apartirDe + registros == total || !total" class="disabled" data-toggle="tooltip" title="" data-original-title="Avançar 100 registros"><a href="javascript:void(0)" ng-click="coadgedBI(paginaReq, 1)">avançar</a></li>
+                        <li data-ng-if="apartirDe + registros != total && total" data-toggle="tooltip" title="" data-original-title="Avançar 100 registros"><a href="javascript:void(0)" ng-click="coadgedBI(paginaReq, 1)">avançar</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+﻿@model  COAD.COADGED.Model.DTO.PublicacaoAreaConsultoriaDTO
+
+<div class="row">
+    <div class="form-group col-lg-4">
+        @Html.LabelFor(model => model.PUBLICACAO.TIP_ATO_ID)
+        <select id="tpAto" class="form-control" ng-model = "pub.PUBLICACAO.TIP_ATO_ID" ng-disabled="(operacao.substring(0,1)=='V')">
+            <option value="">--Selecione--</option>
+            <option data-ng-repeat="item in lst._tpAto" ng-value="{{item.Value}}" ng-selected="pub.PUBLICACAO.TIP_ATO_ID==item.Value">{{item.Text}}</option>
+        </select>
+        @Html.ValidationMessageFor(model => model.PUBLICACAO.TIP_ATO_ID, null, new { app_validation_msg = "erros", @for = "PUBLICACAO.TIP_ATO_ID" }) 
+    </div>
+    <div class="form-group col-lg-2">
+        @Html.LabelFor(model => model.PUBLICACAO.PUB_NUMERO_ATO)
+        @Html.TextBoxFor(model => model.PUBLICACAO.PUB_NUMERO_ATO, new { id = "nrAto", @class = "form-control", ng_model = "pub.PUBLICACAO.PUB_NUMERO_ATO", ng_disabled="(operacao.substring(0,1)=='V')" })
+        @Html.ValidationMessageFor(model => model.PUBLICACAO.PUB_NUMERO_ATO, null, new { app_validation_msg = "erros", @for = "PUBLICACAO.PUB_NUMERO_ATO" }) 
+    </div>
+    <div class="form-group col-lg-2">
+        @Html.LabelFor(model => model.PUBLICACAO.PUB_DATA_ATO)
+        @Html.TextBoxFor(model => model.PUBLICACAO.PUB_DATA_ATO, new { @class = "form-control datepicker", ng_model = "PUB_DATA_ATO", app_date = "pub.PUBLICACAO.PUB_DATA_ATO", ng_disabled="(operacao.substring(0,1)=='V')" })
+        @Html.ValidationMessageFor(model => model.PUBLICACAO.PUB_DATA_ATO, null, new { app_validation_msg = "erros", @for = "PUBLICACAO.PUB_DATA_ATO" }) 
+    </div>
+    <div class="form-group col-lg-4">
+        @Html.LabelFor(model => model.PUBLICACAO.ORG_ID)
+        <select id="orgao" class="form-control" ng-model = "pub.PUBLICACAO.ORG_ID" ng-disabled="(operacao.substring(0,1)=='V')">
+            <option value="">--Selecione--</option>
+            <option data-ng-repeat="item in lst._orgao" ng-value="{{item.Value}}" ng-selected="pub.PUBLICACAO.ORG_ID==item.Value">{{item.Text}}</option>
+        </select>
+        @Html.ValidationMessageFor(model => model.PUBLICACAO.ORG_ID, null, new { app_validation_msg = "erros", @for = "PUBLICACAO.ORG_ID" }) 
+    </div>
+</div>
+                     

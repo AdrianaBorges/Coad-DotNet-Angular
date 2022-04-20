@@ -1,0 +1,204 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/Scripts/appScripts/Portal.js")
+
+<div ng-app="appModule">
+   <div ng-controller="PortalController" ng-init="init(8)">
+
+        <section id="home" style="background: url('/images/demo/wall2.jpg');">
+            <div class="container text-center">
+                <h1 class="nomargin size-50 weight-300 wow fadeInUp" data-wow-delay="0.4s">Portal Calculador Trabalhista</h1>
+                <p class="lead font-lato size-30 wow fadeInUp" data-wow-delay="0.7s">Versatilidade, Praticidade e Produtividade.</p>
+                <div class="margin-top-30">
+                    <a href="/Cadastro/Avaliacao" class="btn btn-3d btn-lg btn-teal"><i class="glyphicon glyphicon-th-large"></i>EXPERIMENTE</a>
+                    <span class="size-17 hidden-xs">&nbsp; OU &nbsp;</span>
+                    <a href="/Cadastro/Planos" class="btn btn-3d btn-lg btn-red"><i class="glyphicon glyphicon-user"></i>CONTRATE JÁ</a>
+                </div>
+
+                <div class="row margin-top-100 text-left">
+                    <div class="col-sm-8">
+                        <div style="position: relative; top: 0px; left: 0px;">
+                            <img src="/images/demo/laptop.png" alt="product image" />
+                        </div>
+                        <div style="position: absolute; top: 17px; left: 100px;">
+                            <iframe width="530" height="303" style="border: medium none;" src="http://www.youtube.com/embed/zxwBk_r_Hi8?autoplay=0&amp;rel=0&amp;fs=0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <h3 class="weight-300">Visão <span>Geral</span></h3>
+
+                        <p>Utilizando o Portal Calculador Trabalhista, você contara com a praticidade de uma ferramenta que lhe trará um ganho de tempo valioso para a execução de sua tarefas.</p>
+                        <p>Esta é a única ferramenta do mercado que possui tabelas realmente dinâmicas e simuladores constantemente atualizados.</p>
+
+                        <hr />
+                        
+                        <h5 class="weight-300">Conheça Também:</h5>
+                        
+                        <ul class="list-unstyled list-icons">
+                            <li><i class="fa fa-check"></i><a href="http://www.advocaciadinamica.com/">Advocacia Dinâmica</a></li>
+                            <li><i class="fa fa-check"></i><a href="http://www.coadeducacao.com.br/">COAD Educação</a></li>
+                            <li><i class="fa fa-check"></i><a href="https://www.coadeducacaoead.com.br/">COAD Educação - EAD</a></li>
+                            <li><i class="fa fa-check"></i><a href="http://www.substituicaotributaria.com/">Substituição Tributária</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="funcionalidades" class="alternate">
+            <div class="container">
+                <header class="text-center margin-bottom-60">
+                    <h2>Funcionalidades</h2>
+                    <p class="lead font-lato">Conheça mais sobre esta ferramenta!</p>
+                    <hr />
+                </header>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="heading-title heading-border-bottom">
+                            <i class="fa fa-table ico-rounded ico-hover"></i>&nbsp
+                    <h3>Tabelas Dinâmicas</h3>
+                        </div>
+                        <div class="toggle toggle-transparent-body toggle-accordion">
+                            <div class="toggle active">
+                                <label>O que são tabelas dinâmicas?</label>
+                                <div class="toggle-content">
+                                    <p>
+                                        A COAD reuniu uma série de tabelas de grande relevância para os nossos clientes. Estas 
+                               tabelas possuem uma funcionalidade que permite que sejam realizadas pesquisas por palavras chaves, numerais, códigos dentre outros.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="toggle">
+                                <label>Como funcionam?</label>
+                                <div class="toggle-content">
+                                    <p>A única que possui tabelas realmente dinâmicas com possibilidade de busca por palavras chaves, numerais, códigos dentre outros.</p>
+                                </div>
+                            </div>
+                            <div class="toggle">
+                                <label>Público Alvo</label>
+                                <div class="toggle-content">
+                                    <p>Contadores, Advogados e Público em Geral</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="heading-title heading-border-bottom">
+                            <i class="ico-light ico-rounded ico-hover et-gears"></i>&nbsp
+                    <h3>Simuladores</h3>
+                        </div>
+                        <div class="toggle toggle-transparent-body toggle-accordion">
+                            <div class="toggle active">
+                                <label>O que são simuladores?</label>
+                                <div class="toggle-content">
+                                    <p>Neste modulo, voce encontra uma variedade de simuladores que irão auxiliar o usuário nas tarefas do dia-a-dia.</p>
+                                </div>
+                            </div>
+                            <div class="toggle">
+                                <label>Como funcionam?</label>
+                                <div class="toggle-content">
+                                    <p>Os simuladores são criados e atualizados constantemente pelo corpo técnico da COAD.</p>
+                                </div>
+                            </div>
+                            <div class="toggle">
+                                <label>Público Alvo</label>
+                                <div class="toggle-content">
+                                    <p>Contadores, Advogados e Público em Geral</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="heading-title heading-border-bottom">
+                            <i class="fa fa-newspaper-o ico-rounded ico-hover "></i>&nbsp
+                    <h3>Notícias</h3>
+                        </div>
+                        <p>
+                            A COAD que está sempre atenta à segurança das informações, agora tambem 
+                   disponibiliza neste portal nóticias relacionadas ao conteúdo das tabelas dinâmicas e simuladores.
+                        </p>
+                        <a href="/Noticias/Ultimas" class="btn btn-default btn-block btn-lg">Últimas Notícias</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre" style="background: url('/images/demo/wall2.jpg');">
+            <div class="container">
+
+                <header class="text-center margin-bottom-60">
+                    <h2>Sobre a COAD</h2>
+                    <p class="lead font-lato">A COAD possui uma linha completa de produtos e serviços. Confira!</p>
+                    <hr />
+                </header>
+
+                <div class="row">
+                    <div class="col-md-4 col-xs-6">
+                        <div class="text-center">
+                            <i class="ico-light ico-lg ico-rounded ico-hover et-circle-compass"></i>
+                            <h4>Central de Inteligência Tributária e Contábil</h4>
+                            <p>Acesso independente ao Portal COAD, para consultas ao maior acervo do país sobre o tema.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-6">
+                        <div class="text-center">
+                            <i class="ico-light ico-lg ico-rounded ico-hover et-piechart"></i>
+                            <h4>Atualização Continuada</h4>
+                            <p>Sistema completo de atualização online que garante pleno conhecimento das novidades da legislação, sempre em primeira mão.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-6">
+                        <div class="text-center">
+                            <i class="ico-light ico-lg ico-rounded ico-hover et-strategy"></i>
+                            <h4>Documentação e Formação de Biblioteca</h4>
+                            <p>Disponibilização de publicações impressas que oferecem maior comodidade para leituras e estudos.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-xs-6">
+                        <div class="text-center">
+                            <i class="ico-light ico-lg ico-rounded ico-hover et-streetsign"></i>
+                            <h4>Capacitação e Desenvolvimento Profissional</h4>
+                            <p>Cursos e seminários com conteúdos programáticos minuciosamente desenhados, para garantir o melhor aproveitamento possível dentro do ambiente profissional.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-6">
+                        <div class="text-center">
+                            <i class="ico-light ico-lg ico-rounded ico-hover et-tools"></i>
+                            <h4>EAD</h4>
+                            <p>A COAD Educação, por meio dos cursos online, possibilita ao aluno assistir a vídeo-aulas em locais e horários previamente agendados.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-6">
+                        <div class="text-center">
+                            <i class="ico-light ico-lg ico-rounded ico-hover et-layers"></i>
+                            <h4>Cálculo ICMS-ST</h4>
+                            <p>Calcule automaticamente o ICMS a recolher e simule a emissão da nota fiscal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="alternate">
+            <div class="text-center">
+                <h2 class="wow fadeInUp nomargin" data-wow-delay="0.3s">Portal Calculador Trabalhista</h2>
+
+                <p class="lead font-lato size-30 wow fadeInUp margin-bottom-60" data-wow-delay="0.5s">Mais rápido, mais prático e mais completo.</p>
+
+                <div class="margin-top-30">
+                    <a href="/Cadastro/Avaliacao" class="btn btn-3d btn-lg wow fadeInUp btn-teal" data-wow-delay="0.7"><i class="glyphicon glyphicon-th-large"></i>EXPERIMENTE</a>
+                    <span class="size-17 hidden-xs wow fadeInUp" data-wow-delay="1s">&nbsp; OU &nbsp;</span>
+                    <a href="/Cadastro/Planos" class="btn btn-3d btn-lg wow fadeInUp btn-red" data-wow-delay="0.59"><i class="glyphicon glyphicon-user"></i>CONTRATE JÁ</a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>

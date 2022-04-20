@@ -1,0 +1,150 @@
+﻿@model List<COAD.CORPORATIVO.Repositorios.Contexto.PRE_PEDIDO>
+@{
+    ViewBag.TitlePrePedidos = " PRÉ-PEDIDOS ";
+}
+@Scripts.Render("~/Scripts/FuncoesPrePedido.js")
+@Scripts.Render("~/Scripts/negocio/pedido.js")
+
+
+<div class="row" ng-app="appModule">
+    <div ng-controller="PedidoIndexController">
+                <div app-message>
+
+                </div>
+        <div class="col-lg-12">
+            <div class="form-group">
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+                <!--<div app-message>
+
+                </div>-->
+            </div>
+            @*@Html.TextBox("data", DateTime.Now.ToString("dd/MM/yy HH:mm "), new { @class = "form-control", placeholder="Data", disabled = true })*@
+            
+            @Html.ActionLink("Novo","Novo")
+            <div class="panel panel-primary">
+                <div class="panel-heading"class="col-lg-1">
+                    @ViewBag.TitlePrePedidos 
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-1">
+                            <div>
+                                @Html.Label("","ID")
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div>
+                                @Html.Label("","CPF/CNPJ do Cliente")
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div>
+                                @Html.Label("","Nome do representante")
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div>
+                                @Html.Label("","Data do pedido")
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div>
+                                @Html.Label("","Status")
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div>
+                                @Html.Label("","Pedidos")
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div>
+                                @Html.Label("","Editar")
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div>
+                                @Html.Label("","Excluir")
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-model="tabelaDePrepedidos">
+                    @foreach (COAD.CORPORATIVO.Repositorios.Contexto.PRE_PEDIDO prepedido in Model)
+                    {
+                        <div class="row">
+                            <div class="col-lg-1">
+                                <div>                          
+                                    @Html.Label(prepedido.PRE_PEDIDO_ID.ToString(), prepedido.PRE_PEDIDO_ID.ToString())
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div>
+                                    @if (prepedido.CLIENTES != null && !string.IsNullOrEmpty(prepedido.CLIENTES.CLI_CPF_CNPJ))
+                                    {
+                                        @Html.Label("", prepedido.CLIENTES.CLI_CPF_CNPJ);
+                                    }else{
+                                        @Html.Label("", "NÃO PREENCHIDO");
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div>
+                                    @if (prepedido.REPRESENTANTE != null && !string.IsNullOrEmpty(prepedido.REPRESENTANTE.REP_NOME))
+                                    {
+                                        @Html.Label("", prepedido.REPRESENTANTE.REP_NOME);
+                                    }else{
+                                        @Html.Label("", "NÃO PREENCHIDO")
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div>
+                                    @Html.Label("", prepedido.PRE_DATA.ToString())
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <div>
+                                    @if (prepedido.PRE_PEDIDO_STATUS != null && !string.IsNullOrEmpty(prepedido.PRE_PEDIDO_STATUS.PRE_STATUS))
+                                    {
+                                        @Html.Label("", prepedido.PRE_PEDIDO_STATUS.PRE_STATUS);
+                                    }else{
+                                        @Html.Label("", "NÃO PREENCHIDO")
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <div>                          
+                                    @Html.Label("", prepedido.PEDIDO.Count().ToString())
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <div>
+                                    @Html.ActionLink(" ", "Editar", new { idPedido = prepedido.PRE_PEDIDO_ID.ToString(), idEmp = prepedido.EMP_ID.ToString() }, new { @class = "glyphicon glyphicon-edit" })
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <div>
+                                    <a href="javascript:void(0)" ng-click="excluirRegistro(@prepedido.PRE_PEDIDO_ID, @prepedido.EMP_ID);" style = "text-align:center;">
+                                        <span class="glyphicon glyphicon-remove-circle"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>       
+                    }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div app-modal="empresaModal" header="Escolher formas de pagamento">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    @ViewBag.TitleDadosPagamento                    
+                    
+                </div>
+                <div class="panel-body" ng-controller="LightBoxController">       
+                    
+                </div>
+            </div>      
+        </div>-->
+    </div>
+</div>

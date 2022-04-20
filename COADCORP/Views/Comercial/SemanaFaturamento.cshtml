@@ -1,0 +1,133 @@
+﻿
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";
+}
+<script>
+    $(document).ready(function () {
+        $(":input").inputmask();
+    });
+</script>
+
+@Scripts.Render("~/Scripts/appScripts/comercial.js")
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">Home </a></li>
+        <li class="active">Semana Faturamento</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+
+<div ng-app="appModule">
+    <div ng-controller="ComercialController" class="padding content" data-ng-init="carregarSemanaFat();canPrint=true" ng-cloak>
+        <div id="page-wrapper">
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading bold head-panel">
+                    <span class="fa fa-edit"></span> Semana Faturamento
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Opções<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)" app-post="@Url.Action("Editar")?clienteId=" title="Editar" class="blue">Novo</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row hidden-print">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="sigla">Mês</label>
+                                <input type="text" class="form-control" ng_model="filtro.PEF_MES" ng-change="listarSemanas()" />
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="sigla">Ano</label>
+                                <input type="text" class="form-control" ng_model="filtro.PEF_ANO" ng-change="listarSemanas()"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" ng-click="listarSemanas()"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                </div>
+            </div>
+
+
+            <div class="panel panel-default" >
+                <!-- Default panel contents -->
+                <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span>&nbspSemana Faturamento</div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr class="info">
+                                    <th><span style="font-size:smaller;">Semana</span></th>
+                                    <th><span style="font-size:smaller;">Inicial</span></th>
+                                    <th><span style="font-size:smaller;">Final</span></th>
+                                    <th><span style="font-size:smaller;">Opções</span></th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td colspan="4" ng-if="!lstSemanas||lstSemanas.length==0"><span>Nenhum item selecionado. Clique aqui 
+                                        <a href="javascript:void(0)" ng-click="addItem()" app-popover data-content="Novo">
+                                            <span class="glyphicon glyphicon-plus red"></span>
+                                        </a>
+                                     para adiocionar um novo item</span> 
+                                </td>
+                            </tr>
+                            <tr ng-repeat="item in lstSemanas" ng-if="lstSemanas.length>0">
+                                <td><select ng-model="item.PEF_SEMANA" class="form-control">
+                                        <option value="0"></option>
+                                        <option value="1">1º Semana</option>
+                                        <option value="2">2º Semana</option>
+                                        <option value="3">3º Semana</option>
+                                        <option value="4">4º Semana</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control" ng_model="item.PEF_DATA_INI_FAT" maxlength="10" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control" ng_model="item.PEF_DATA_FIM_FAT" maxlength="10" />
+                                    </div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <a href="javascript:void(0)" ng-click="addItem()" app-popover data-content="Novo">
+                                        <span class="glyphicon glyphicon-plus red"></span>
+                                    </a>
+                                    <a href="javascript:void(0)" ng-click="removeItem()" app-popover data-content="Excluir">
+                                        <span class="glyphicon glyphicon-remove-circle blue"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel-footer" ng-if="lstSemanas.length>0">
+                    <button type="button" class="btn btn-success" ng-click="salvarSemanas()"><span class="glyphicon glyphicon-floppy-disk"></span>&nbspSALVAR</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

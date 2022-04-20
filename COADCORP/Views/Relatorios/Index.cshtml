@@ -1,0 +1,155 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutosDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li><i class="fa fa-home"></i><a href="/Home/Index">Home</a></li>
+        <li class="active">Relatórios</li>
+    </ol>
+}
+
+@{
+    ViewBag.print = true;
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;
+    if (ViewBag.print == true)
+    {
+        ViewBag.printableClass = "hidden-print";
+    }
+
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+@Scripts.Render("~/Scripts/negocio/etiqueta.js")
+
+<div ng-app="appModule">
+    <div ng-controller="EtiquetaController" data-ng-init="preparaTela()" class="padding content">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-corp">
+                    <div class="panel-heading bold"><span class="glyphicon glyphicon-th-list"></span>&nbspRelatórios Fianceiro</div>
+                    <div class="panel-body">
+                        <div class="row padding" style="min-height:300px;">
+                            <dl>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/RelApuracaoRecebimento/Index">Apuração Recebimento</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/RelConferenciaFinanceira/Index">Conferência Financeira</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/RelContratosCancelados/Index">Contratos Cancelados</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/RelClientesProduto/Index">Contratos Vigentes por Produto</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/Parcelas/Liquidacao">Liquidação de Titulos</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/NotaFiscal/RptNotasPeriodo">Nota Fiscal por período</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/RelPrevisaoReceita/Index">Previsão de Receita</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/RelAReceber/Index">Titulos a Receber</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/RelAlocados/Index">Titulos Alocados</a>
+                                </dt>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-corp">
+                    <div class="panel-heading bold"><span class="glyphicon glyphicon-th-list"></span>&nbspRelatórios Cadastrais</div>
+                    <div class="panel-body">
+                        <div class="row padding" style="min-height:300px;">
+                            <dl>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/AcessoTabelas/Index">Relatório Acesso a Tabelas</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/AcessoTabelas/Acesso">Relatório Acesso a Tabelas (Analítico)</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/RelRepresentanteCarteira/Index">Representantes por Carteira</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/RelTransferenciaAssinatura/Index">Relatório de Transferência de Assinaturas</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/HistoricoAtendimento/index">Qualificação dos atendimentos (SAC)</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/Etiquetas/Avulsa">Etiqueta Avulsa</a>
+                                </dt>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-corp">
+                    <div class="panel-heading bold"><span class="glyphicon glyphicon-th-list"></span>&nbspRelatórios Faturamento</div>
+                    <div class="panel-body">
+                        <div class="row padding" style="min-height:300px;">
+                            <dl>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/RelFaturamentoContrato/Index">Contratos por data de Faturamento</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/RelFaturamentoProduto/Index">Faturamento por Produto</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/RelFaturamentoUF/Produto">Faturamento por Produto/UF</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/RelFaturamentoRepresentante/Index">Faturamento por Representante</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/RelFaturamentoTipoPgto/Index">Faturamento por Tipo de Pagamento</a>
+                                </dt>
+                                <dt>
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    <a href="/RelFaturamentoUF/Index">Faturamento por UF</a>
+                                </dt>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

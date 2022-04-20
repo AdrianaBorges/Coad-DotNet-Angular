@@ -1,0 +1,2 @@
+C:\COAD\workspace\svn\acobranca\COAD.COADGED\obj\Homologacao\COAD.COADGED.csprojAssemblyReference.cache
+C:\COAD\workspace\svn\acobranca\COAD.COADGED\obj\Homologacao\COAD.COADGED.csproj.CoreCompileInputs.cache

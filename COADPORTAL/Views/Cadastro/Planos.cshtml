@@ -1,0 +1,130 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutCadastro.cshtml";
+}
+
+@Scripts.Render("~/Scripts/appScripts/Portal.js")
+
+<div ng-app="appModule">
+    <div ng-controller="PortalController" ng-init="initPlanos()">
+        <div app-modal-erro="Modal-Erro" header="Atenção">
+            <div class="panel-body">
+                <strong>
+                    <p ng-bind-html="trustAsHtml(erro)"></p>
+                </strong>
+            </div>
+        </div>
+
+        <div class="container" ng-if="tabela01!=null">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="m-t-0 text-center font-cinza-7 font-tr-none" style="margin: 0px;"><strong class="font-roxo">Encontre aqui o plano que possui os recursos que voce precisa</strong></h2>
+                    <p class="lead text-center font-cinza-5">Todos os planos com acesso a notícias e novidades sobre a COAD</p>
+                    <br />
+                </div>
+                <div class="col-md-12" style="text-align: center">
+                    <div class="btn-group">
+                        <select ng-model="tipoperiodo" ng-change="initPlanos(tipoperiodo)" class="btn btn-default btn-periodicity btn-block dropdown-toggle"  >
+                            <option value="1">PLANO MENSAL</option>
+                            <option value="6">PLANO ANUAL</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-4 col-sm-4" ng-if="tabela01.length>0"">
+                    <div class="price-clean" style="height: 600px;">
+                        <h4>
+                            <sup>R$</sup><span app-show-dinheiro="tabelaPreco.RTP_PRECO_VENDA" show-simbolo="false"></span>@*="" {{mask(tabelaPreco.CMP_VLR_VENDA)}}*@<em>/mês</em>
+                        </h4>
+                        <h5>Consultoria e Pesquisa</h5>
+                        <hr />
+                        @*                <p>For individuals looking for something simple to get started.</p>*@
+                        <div class="btn-group">
+                            <select ng-model="tabelaPreco" ng-options="item as item.CMP_DESCRICAO for item in tabela01 track by item.CMP_ID" class="btn btn-default btn-periodicity btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            </select>
+                        </div>
+                        <hr />
+                        <div class="row" style="text-align: left; padding-left: 30px; height: 210px;">
+                            <ul class="list-unstyled list-icons">
+                                <li><i class="fa fa-check"></i>Alertas de alterações</li>
+                                <li><i class="fa fa-check"></i>Matérias e Atos</li>
+                                <li><i class="fa fa-check"></i>Calendário de Obrigações</li>
+                                <li><i class="fa fa-check"></i>Orientações Técnicas(FAQ)</li>
+                                <li><i class="fa fa-check"></i>Suporte técnico ao produto</li>
+                            </ul>
+                        </div>
+                        <hr />
+                        <a app-post="/Cadastro/Identificacao?_CMP_ID={{tabelaPreco.CMP_ID}}&_CMP_ORIGEM={{tabelaPreco.CMP_ID_ORIGEM}}&_TTP_ID={{tipoperiodo}}" href="javascript:void(0);" class="btn btn-3d btn-teal">Contratar</a>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-4" ng-if="tabela02.length>0"">
+                    <div class="price-clean price-clean-popular" style="height: 600px;">
+                        <div class="ribbon">
+                            <div class="ribbon-inner">POPULAR</div>
+                        </div>
+                        <h4>
+                            <sup>R$</sup><span app-show-dinheiro="tabelaPreco1.RTP_PRECO_VENDA" show-simbolo="false"></span><em>/mês</em>
+                        </h4>
+                        <h5>Ferramentas Práticas</h5>
+                        <hr />
+                        @*    <p>For individuals looking for something simple to get started.</p>*@
+
+                        <div class="btn-group">
+                            <select ng-model="tabelaPreco1" ng-options="item as item.CMP_DESCRICAO for item in tabela02 track by item.CMP_ID" class="btn btn-default btn-periodicity btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            </select>
+                        </div>
+                        <hr />
+                        <div class="row" style="text-align: left; padding-left: 30px; height: 210px;">
+                            <ul class="list-unstyled list-icons">
+                                <li><i class="fa fa-check"></i>Alertas de alterações</li>
+                                <li><i class="fa fa-check"></i>Manual de DP</li>
+                                <li><i class="fa fa-check"></i>Notícias</li>
+                                <li><i class="fa fa-check"></i>Simuladores</li>
+                                <li><i class="fa fa-check"></i>Tabelas Dinâmicas</li>
+                                <li><i class="fa fa-check"></i>Orientações Técnicas(FAQ)</li>
+                                <li><i class="fa fa-check"></i>Suporte técnico ao produto</li>
+                            </ul>
+                        </div>
+                        <hr />
+                        <a app-post="/Cadastro/Identificacao?_CMP_ID={{tabelaPreco1.CMP_ID}}&_CMP_ORIGEM={{tabelaPreco1.CMP_ID_ORIGEM}}" href="javascript:void(0);" class="btn btn-3d btn-teal">Contratar</a>
+                    </div>
+
+                </div>
+
+                <div class="col-md-4 col-sm-4" ng-if="tabela03.length>0">
+                    <div class="price-clean" style="height: 600px;">
+                        <h4>
+                            <sup>R$</sup><span app-show-dinheiro="tabelaPreco2.RTP_PRECO_VENDA" show-simbolo="false"></span><em>/mês</em>
+                        </h4>
+                        <h5>Empresarial</h5>
+                        <hr />
+                        @*   <p>For individuals looking for something simple to get started.</p>*@
+                        <div class="btn-group">
+                            <select ng-model="tabelaPreco2" ng-options="item as item.CMP_DESCRICAO for item in tabela03 track by item.CMP_ID" class="btn btn-default btn-periodicity btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            </select>
+                        </div>
+                        <hr />
+                        <div class="row" style="text-align: left; padding-left: 30px; height: 210px;">
+                            <ul class="list-unstyled list-icons">
+                                <li><i class="fa fa-check"></i>Alertas de alterações</li>
+                                <li><i class="fa fa-check"></i>Calendário de Obrigações</li>
+                                <li><i class="fa fa-check"></i>Manual de DP</li>
+                                <li><i class="fa fa-check"></i>Matérias e Atos</li>
+                                <li><i class="fa fa-check"></i>Notícias</li>
+                                <li><i class="fa fa-check"></i>Orientações Técnicas(FAQ)</li>
+                                <li><i class="fa fa-check"></i>Simuladores</li>
+                                <li><i class="fa fa-check"></i>Suporte técnico ao produto</li>
+                                <li><i class="fa fa-check"></i>Tabelas Dinâmicas</li>
+                            </ul>
+                        </div>
+                        <hr />
+                        <a app-post="/Cadastro/Identificacao?_CMP_ID={{tabelaPreco2.CMP_ID}}&_CMP_ORIGEM={{tabelaPreco2.CMP_ID_ORIGEM}}" href="javascript:void(0);" class="btn btn-3d btn-teal">Contratar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

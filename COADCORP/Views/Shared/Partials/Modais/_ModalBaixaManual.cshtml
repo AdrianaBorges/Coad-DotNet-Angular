@@ -1,0 +1,143 @@
+﻿
+@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+
+<div class="modal" id="modal-baixa-manual" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: aliceblue">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Baixa de Titulos (Manual)</h4>
+            </div>
+            <div class="container">
+                <div class="modal-body">
+                    <div class="col-lg-9">
+                        <a href="#" class="btn btn-info" style="width: 100%;">CONFIRA ABAIXO OS DADOS DA PARCELA</a>
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    @Html.Label("Parcela")
+                                    <input type="text" class="form-control" ng_model="parcelaProrrog.PAR_NUM_PARCELA" ng_change="buscarParcelaBaixa(parcelaProrrog.PAR_NUM_PARCELA,true)" />
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    @Html.Label("Nosso Numero")
+                                    <input type="text" class="form-control" ng_model="parcelaProrrog.PAR_NOSSO_NUMERO" ng_change="buscarParcelaNossoNum(parcelaProrrog.PAR_NOSSO_NUMERO,true)" />
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2">
+                                <label for="cnab">Contrato</label>
+                                <input type="text" id="email" ng-model="parcelaProrrog.CTR_NUM_CONTRATO" class="form-control" disabled="disabled" />
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="cnab">Cliente</label>
+                                <input type="text" id="email" ng-model="parcelaProrrog.CLI_NOME" class="form-control" disabled="disabled" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-2">
+                                <label for="cnab">Assinatura</label>
+                                <input type="text" id="email" ng-model="parcelaProrrog.ASN_NUM_ASSINATURA" class="form-control" disabled="disabled" />
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    @Html.Label("Data Baixa")
+                                    <div class="input-group date">
+                                        <input type="text" style="width: 150px" ng-model="parcelaProrrog.PAR_DATA_BAIXAr" app-date="parcelaProrrog.PAR_DATA_BAIXA" date-name="dtbaixa" maxlength="10" class="form-control datepicker" disabled="disabled" />
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    @Html.Label("Data Pagamento")
+                                    <div class="input-group date">
+                                        <input type="text" style="width: 150px" ng-model="parcelaProrrog.PAR_DATA_PAGTOr" app-date="parcelaProrrog.PAR_DATA_PAGTO" date-name="dtpagamento" maxlength="10" class="form-control datepicker" />
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label for="cnab">Doc.Liquidação</label>
+                                @Html.DropDownList("baixar.doc", new SelectList(@ViewBag.docLiq, "Value", "Text"), "Todos", new { @class = "form-control", ng_model = "parcelaProrrog.PAR_TIPO_DOC"})
+                            </div>
+                                <div class="form-group col-lg-4">
+                                    <label for="cnab">Banco</label>
+                                    @Html.DropDownList("filtro.banco", new SelectList(@ViewBag.banco, "Value", "Text"), "Todos", new { @class = "form-control", ng_model = "parcelaProrrog.BAN_ID" })
+                                </div>
+                            </div>
+                        <div class="shopping_cart">
+                            <form class="form-horizontal" role="form" action="" method="post" id="payment-form">
+                                <div class="panel-group" id="accordion">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                                    Dados da Parcela
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseOne" class="panel-collapse collapse in">
+                                            <div class="panel-body">
+                                                <div class="items">
+                                                    <div class="col-md-9">
+                                                        <table class="table table-striped">
+                                                            <tr>
+                                                                <td>
+                                                                    <b>
+                                                                        ITENS
+                                                                    </b>
+                                                                </td>
+                                                                <td>
+                                                                    <b>
+                                                                        VALOR
+                                                                    </b>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Valor Parcela </td>
+                                                                <td>
+                                                                    <input type="text" style="width: 150px" app-mask-dinheiro="parcelaProrrog.PAR_VLR_PARCELA" ng-model="vrlparcela" maxlength="15" class="form-control text-right" disabled />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Taxa</td>
+                                                                <td><input type="text" style="width: 150px" app-mask-dinheiro="parcelaProrrog.PAR_VLR_DESP_ADM" ng-model="vlrtaxa" maxlength="15" class="form-control text-right" disabled /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Juros/Mora</td>
+                                                                <td><input type="text" style="width: 150px" app-mask-dinheiro="parcelaProrrog.PAR_VLR_JUROS" ng-model="vlrjuros" maxlength="15" class="form-control text-right" disabled /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Valor Pago</td>
+                                                                <td><input type="text" style="width: 150px" app-mask-dinheiro="parcelaProrrog.PAR_VLR_PAGO" ng-model="vlrboleto" maxlength="15" class="form-control text-right" /></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div style="text-align: center;">
+                                                            <h3>Valor Pago</h3>
+                                                            <h3>
+                                                                <span style="color:green;min-width: 100px;" app-show-dinheiro="parcelaProrrog.PAR_VLR_PAGO" class="align-right"></span>
+                                                            </h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="baixaManual(parcelaProrrog)"><span class="glyphicon glyphicon-floppy-save blue"  ng-if="parcelaProrrog"></span>&nbspConfirmar</button>
+            </div>
+        </div>
+    </div>
+</div>

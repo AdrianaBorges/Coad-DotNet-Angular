@@ -1,0 +1,165 @@
+﻿@{
+    ViewBag.Title = "Busca";
+}
+
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Tributário", "index", "Home")</li>
+        <li class="active">COAD BUSCA AVANÇADA</li>
+    </ol>
+}
+@{
+    ViewBag.Title = "Obrigações";
+}
+
+
+@Scripts.Render("~/Scripts/negocio/materias.js")
+
+<h3>Busca matérias</h3>
+
+<div ng-app="appModule">
+    <div ng-controller="MateriasController" class="padding content" data-ng-init="init();">
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    <label for="sigla">Tipo de matéria</label>
+                    @Html.DropDownList("tipoMateria", new SelectList(ViewBag.BuscarPor, "Value", "Text"), "Selecione", new { @class = "form-control", ng_model = "combo.tipoMateria" })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default" ng-show="combo.tipoMateria=='Orientacao'">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-filter"></span>Orientação
+               <div class="pull-right">
+                   <div class="btn-group">
+                   </div>
+               </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-4">
+                        <label for="sigla">Área</label>
+                        @Html.DropDownList("orientacoes", new SelectList(ViewBag.Orientacoes, "Value", "Text"), "Selecione", new { @class = "form-control", ng_model = "filtroOrientacao.num_ato", ng_change = "prencherArea(filtroOrientacao.num_ato)" })
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="sigla">Área</label>
+                        <select name="area" class="form-control" ng-model="filtroOrientacao.tipo"
+                            ng-options="item.valor as item.texto for item in itensArea">
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="listarOrientacoes()">Pesquisar</button>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-show="combo.tipoMateria=='Atos_Legais'">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-filter"></span>Atos Legais
+               <div class="pull-right">
+                   <div class="btn-group">
+                   </div>
+               </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        <label for="sigla">Medida provisória</label>
+                        @Html.DropDownList("atosLegais", new SelectList(ViewBag.AtosLegais, "Value", "Text"), "Selecione", new { @class = "form-control", ng_model = "filtroAtosLegais.tipo" })
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="sigla">Número</label>
+                        <input type="text" id="numero" ng-model="filtroAtosLegais.num_ato" class="form-control" />
+                    </div>
+                    <div class="form-group col-lg-8">
+                        <label for="sigla">Ano</label>
+                        @Html.DropDownList("ano", new SelectList(ViewBag.Anos, "Value", "Text"), "Selecione", new { @class = "form-control", ng_model = "filtroAtosLegais.ano" })
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="listarAtoslegais()">Pesquisar</button>
+            </div>
+        </div>
+        <div app-message></div>
+        <div class="panel panel-default" ng-show="materiasAto">
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-book"></span>
+                Resultado de pesquisa
+            </div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 10%;">Área
+                                </th>
+                                <th style="min-width: 30%;">Assunto
+                                </th>
+                                <th style="min-width: 30%;">Complemento
+                                </th>
+                                <th style="min-width: 30%;">Tipo
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in materiasAto">
+                            <td>
+                                <a href="/Materias/Detalhes/{{item.id}}" class="prox">{{item.area}}</a>
+                            </td>
+                            <td>{{ item.assunto }}
+                            </td>
+                            <td>{{ item.subGrupo }}
+                            </td>
+                            <td>{{ item.tipo }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div app-pagination request-page="paginaReq" load-function="listarAtoslegais(paginaReq)"></div>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-show="materiasOri">
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-book"></span>
+                Resultado de pesquisa
+            </div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 10%;">Área
+                                </th>
+                                <th style="min-width: 30%;">Assunto
+                                </th>
+                                <th style="min-width: 30%;">Complemento
+                                </th>
+                                <th style="min-width: 30%;">Tipo
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-href="/Materias/Detalhes/{{item.id}}" ng-repeat="item in materiasOri">
+                            <td>
+                                <a href="/Materias/Detalhes/{{item.id}}" class="prox">{{item.area}}</a>
+                            </td>
+                            <td>{{ item.assunto }}
+                            </td>
+                            <td>{{ item.subGrupo }}
+                            </td>
+                            <td>{{ item.tipo }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div app-pagination request-page="paginaReq" load-function="listarAtoslegais(paginaReq)"></div>
+            </div>
+        </div>
+    </div>
+</div>

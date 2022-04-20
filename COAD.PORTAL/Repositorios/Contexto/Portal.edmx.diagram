@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a7cd85c4ce334fada01e915dcff531d0" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="COADIARIOModel.CO_AREAS" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADIARIOModel.CO_CALENDARIO" Width="1.5" PointX="7.5" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADIARIOModel.CO_ESTADOS" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADIARIOModel.CO_MUNICIPIOS" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADIARIOModel.CO_NIVEL_USUARIO" Width="1.5" PointX="7.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADIARIOModel.CO_OBRIGACOES" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADIARIOModel.CO_TIPOS" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADIARIOModel.CO_USUARIOLOGS" Width="1.5" PointX="9.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADIARIOModel.CO_USUARIOS" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADIARIOModel.CO_USUARIOSBKP" Width="1.5" PointX="2.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COADIARIOModel.sysdiagrams" Width="1.5" PointX="9.75" PointY="5.375" IsExpanded="true" />
+        <AssociationConnector Association="COADIARIOModel.FK__CO_OBRIGA__COD_A__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="COADIARIOModel.FK__CO_CALEND__NUM_O__164452B1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADIARIOModel.FK__CO_MUNICI__NUM_U__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="COADIARIOModel.FK__CO_OBRIGA__NUM_U__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="COADIARIOModel.FK__CO_OBRIGA__NUMPK__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="COADIARIOModel.FK__CO_OBRIGA__COD_T__117F9D94" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

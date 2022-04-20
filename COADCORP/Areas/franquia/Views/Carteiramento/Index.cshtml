@@ -1,0 +1,130 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.CarteiraDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li class="active">Gerenciar Carteiras</li>         
+        
+    </ol>
+}
+@Scripts.Render("~/Scripts/negocio/carteiramento.js")
+<div ng-app="appModule">
+    <div ng-controller="CarteiramentoController" class="padding content">
+            
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="javascript:void(0)" ng-click="abreModalGerarCarteira()" class="blue" >Gerar</a>
+                                        </li>                                                                           
+                                    </ul>
+                                </div>
+                            </div>
+      </div>
+          
+      <div class="panel-body"> 
+          <div class="row">              
+              <div class="form-group col-lg-6">
+                  <label for="GRUPO_ID">Região</label>
+                  @Html.DropDownListFor(model => model.RG_ID , new SelectList(ViewBag.Ufs, "RG_ID", "RG_DESCRICAO"), "Selecione" ,new {@class = "form-control", ng_model = "filtro.RG_ID" })
+              </div>  
+          </div>          
+      </div>
+        <div class="panel-footer">
+            <button type="button" class="btn btn-default" ng-click="listarCarteirasFranquia()">Pesquisar</button>
+        </div>
+    </div>
+        
+    <div class="panel panel-default"  ng-show="carteiramentos">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Carteiramentos</div>
+          
+      <div class="panel-body">         
+                <div class="table-responsive">     
+                        <!-- <input type="text" ng-model="dataTest" app-date/>  -->       
+                        <div>
+                            @Html.Messages()
+                            <div app-message></div>
+                        </div>
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>                               
+                                    
+                                    <th>
+                                        Código
+                                    </th>
+                                    <th style="min-width: 54px">
+                                        Área
+                                    </th>
+                                    <th style="min-width: 44px">
+                                        Região
+                                    </th>
+                                    <th>Excluir</th>
+                                </tr>
+
+                            </thead>
+    
+                          <tr ng-repeat="item in carteiramentos">
+                                <td>
+                                    {{item.CAR_ID}}
+                                </td>
+                                <td>
+                                    {{item.AREA_ID}}
+                                </td>
+                                <td>
+                                    {{item.REGIAO.RG_DESCRICAO}}
+                                </td>                      
+                                <td>
+                                    <a href="javascript:void(0)" ng-click="excluirCarteira(item)" title="Excluir" class="red">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                </td>                               
+
+                          </tr>
+        
+
+                        </table>
+    
+                </div>
+          <app-pagination request-page="paginaReq" load-function="listarCarteirasFranquia(paginaReq)"></app-pagination>
+
+      </div>
+    </div>
+        <div app-modal="modal-gerar-regiao" header="Gerar Região">
+            <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Carteiramentos</div>
+          
+          <div class="panel-body">         
+    <div app-message></div>
+                <form>
+                    <div class="row">              
+                  <div class="form-group col-lg-6">
+                      <label for="GRUPO_ID">Região</label>
+                      @Html.DropDownList("rg1" , 
+                      new SelectList(ViewBag.Ufs, "RG_ID", "RG_DESCRICAO"), "Selecione" ,new {@class = "form-control", ng_model = "gerarCarteiraDTO.RG_ID" })
+                  </div>  
+              </div>
+                </form>
+              </div>
+              <div class="panel-footer">
+                  <button id="button-gerar-carteira" app-switch-button="$parent.gerarCarteira()" switch-conf="[{label : 'Gerar', state : 'gerar'}, {label : 'Gerando...', state : 'gerando', disabled : true}]" switch-var="$parent.buttonGerar" class="btn btn-primary"></button>
+                
+              </div>
+          </div>
+        </div>
+    </div>
+    
+</div>

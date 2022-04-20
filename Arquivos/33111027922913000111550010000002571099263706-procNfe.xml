@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><nfeProc versao="2.00" xmlns="http://www.portalfiscal.inf.br/nfe"><NFe xmlns="http://www.portalfiscal.inf.br/nfe"><infNFe Id="NFe33111027922913000111550010000002571099263706" versao="2.00"><ide><cUF>33</cUF><cNF>09926370</cNF><natOp>VENDA DE PRODUÇÃO DO ESTABELECIMENTO</natOp><indPag>1</indPag><mod>55</mod><serie>1</serie><nNF>257</nNF><dEmi>2011-10-21</dEmi><dSaiEnt>2011-10-21</dSaiEnt><hSaiEnt>09:00:00</hSaiEnt><tpNF>1</tpNF><cMunFG>3304557</cMunFG><tpImp>1</tpImp><tpEmis>1</tpEmis><cDV>6</cDV><tpAmb>1</tpAmb><finNFe>1</finNFe><procEmi>3</procEmi><verProc>2.1.4</verProc></ide><emit><CNPJ>27922913000111</CNPJ><xNome>ATUALIZAÇÃO PROFISSIONAL COAD LTDA</xNome><enderEmit><xLgr>AVENIDA ARMANDO LOMBARDI</xLgr><nro>155</nro><xCpl>SALAS 201 A 205</xCpl><xBairro>RIO DE JANEIRO</xBairro><cMun>3304557</cMun><xMun>Rio de Janeiro</xMun><UF>RJ</UF><CEP>22640020</CEP><cPais>1058</cPais><xPais>BRASIL</xPais><fone>21565900</fone></enderEmit><IE>86122774</IE><CRT>3</CRT></emit><dest><CNPJ>91986430000180</CNPJ><xNome>FOCKINK PATICIPAÇÕES LTDA</xNome><enderDest><xLgr>RUA DA HOLANDA</xLgr><nro>123</nro><xBairro>CENTRO</xBairro><cMun>4313904</cMun><xMun>Panambi</xMun><UF>RS</UF><CEP>98280000</CEP><cPais>1058</cPais><xPais>BRASIL</xPais><fone>5133759500</fone></enderDest><IE>0900002018</IE><email>marcia@fockink.ind.br</email></dest><det nItem="1"><prod><cProd>42373</cProd><cEAN/><xProd>LIVRO TÉCNICO ESCRITURAÇÃO CONTÁBIL 3ª ED.</xProd><NCM>49019900</NCM><CFOP>6101</CFOP><uCom>UN</uCom><qCom>1.0000</qCom><vUnCom>56.0000000000</vUnCom><vProd>56.00</vProd><cEANTrib/><uTrib>UN</uTrib><qTrib>1.0000</qTrib><vUnTrib>56.0000000000</vUnTrib><vFrete>15.70</vFrete><indTot>1</indTot></prod><imposto><ICMS><ICMS40><orig>0</orig><CST>41</CST><vICMS>0.00</vICMS><motDesICMS>9</motDesICMS></ICMS40></ICMS><IPI><cEnq>999</cEnq><IPINT><CST>53</CST></IPINT></IPI><PIS><PISNT><CST>06</CST></PISNT></PIS><COFINS><COFINSNT><CST>06</CST></COFINSNT></COFINS></imposto></det><total><ICMSTot><vBC>0.00</vBC><vICMS>0.00</vICMS><vBCST>0.00</vBCST><vST>0.00</vST><vProd>56.00</vProd><vFrete>15.70</vFrete><vSeg>0.00</vSeg><vDesc>0.00</vDesc><vII>0.00</vII><vIPI>0.00</vIPI><vPIS>0.00</vPIS><vCOFINS>0.00</vCOFINS><vOutro>0.00</vOutro><vNF>71.70</vNF></ICMSTot></total><transp><modFrete>0</modFrete></transp></infNFe><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#NFe33111027922913000111550010000002571099263706"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>3U/lBl/NtIb1nbi/XPxDX+O+8IM=</DigestValue></Reference></SignedInfo><SignatureValue>MO0dt/62nQQlOGna0AadfNWSQVxyYrip6dpKJ+J5XdZjJbeI5YuAa26M5AMbUkygGXNDUBDRnTk8
+yWeMxLT8Br0xjiSbdKIIZo4TuKkcLNw3KfI8StBvXrknriI/sycc1J7zm6V/YSKGOVo+f5qdOSkW
+5zSHYS3KKOYehEzVL4s=</SignatureValue><KeyInfo><X509Data><X509Certificate>MIIGDTCCBPWgAwIBAgIQMjAxMTA5MTkxOTE3MzA3ODANBgkqhkiG9w0BAQUFADCBijELMAkGA1UE
+BhMCQlIxEzARBgNVBAoTCklDUC1CcmFzaWwxNjA0BgNVBAsTLVNlY3JldGFyaWEgZGEgUmVjZWl0
+YSBGZWRlcmFsIGRvIEJyYXNpbCAtIFJGQjEuMCwGA1UEAxMlQXV0b3JpZGFkZSBDZXJ0aWZpY2Fk
+b3JhIGRvIFNFUlBST1JGQjAeFw0xMTA5MjAxNTQxMzdaFw0xMjA5MTkxNTM1NTBaMIH8MQswCQYD
+VQQGEwJCUjETMBEGA1UEChMKSUNQLUJyYXNpbDE2MDQGA1UECxMtU2VjcmV0YXJpYSBkYSBSZWNl
+aXRhIEZlZGVyYWwgZG8gQnJhc2lsIC0gUkZCMREwDwYDVQQLEwhDT1JSRUlPUzETMBEGA1UECxMK
+QVJDT1JSRUlPUzEWMBQGA1UECxMNUkZCIGUtQ05QSiBBMTEXMBUGA1UEBxMOUklPIERFIEpBTkVJ
+Uk8xCzAJBgNVBAgTAlJKMTowOAYDVQQDEzFBVFVBTElaQUNBTyBQUk9GSVNTSU9OQUwgQ09BRCBM
+VERBOjI3OTIyOTEzMDAwMTExMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC74T71z0ZpwPPI
+o8wDEQo8Q4ZIniVn1xWoZs72w12jSGerT6F/gZsu8GgvBsUg5MJc9CH+p9HS1o+NasXHp37OaJY6
+LNSKUa3jd9W7nD87/NYFBXILLZ8PM0t8eFPb2NmFdActF7MIywQicRbSnVkxUTiGTmdA0ATDZCZW
+A459lwIDAQABo4ICfTCCAnkwDwYDVR0TAQH/BAUwAwEBADAfBgNVHSMEGDAWgBS5IouGJEbnoq3n
+KTuMaDtNrXSRFDAOBgNVHQ8BAf8EBAMCBeAwYAYDVR0gBFkwVzBVBgZgTAECAQowSzBJBggrBgEF
+BQcCARY9aHR0cHM6Ly9jY2Quc2VycHJvLmdvdi5ici9hY3NlcnByb3JmYi9kb2NzL2RwY2Fjc2Vy
+cHJvcmZiLnBkZjCBtwYDVR0RBIGvMIGsoDgGBWBMAQMEoC8ELTE4MTAxOTY3ODM1MDk0NjE3MjAw
+MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMKAoBgVgTAEDAqAfBB1NQVJDSU8gV0lMTElBTSBGQVJJ
+QSBERSBTT1VaQaAZBgVgTAEDA6AQBA4yNzkyMjkxMzAwMDExMaAXBgVgTAEDB6AOBAwwMDAwMDAw
+MDAwMDCBEm1hcmNpb0Bjb2FkLmNvbS5icjAgBgNVHSUBAf8EFjAUBggrBgEFBQcDAgYIKwYBBQUH
+AwQwgagGA1UdHwSBoDCBnTAyoDCgLoYsaHR0cDovL2NjZC5zZXJwcm8uZ292LmJyL2xjci9hY3Nl
+cnByb3JmYi5jcmwwM6AxoC+GLWh0dHA6Ly9jY2QyLnNlcnByby5nb3YuYnIvbGNyL2Fjc2VycHJv
+cmZiLmNybDAyoDCgLoYsaHR0cDovL3d3dy5pdGkuZ292LmJyL3NlcnByby9hY3NlcnByb3JmYi5j
+cmwwTAYIKwYBBQUHAQEEQDA+MDwGCCsGAQUFBzAChjBodHRwOi8vY2NkLnNlcnByby5nb3YuYnIv
+Y2FkZWlhcy9hY3NlcnByb3JmYi5wN2IwDQYJKoZIhvcNAQEFBQADggEBAHI83IV884haxZyRHEip
+718vj5uP6n5PqI2rneaw2jCovUn2gtyCGaQg//VLajKjWud8MJPQh7I30k67fjyJlScHBZ0JS0Zj
+fPeBrdOy4l0aXiM221cTdPDADzUX1JiLYt5lWaDhKUCxoxKL2wIpYj2Acvn+2iU5peh8pOUVEVkL
+xOGcf1eNVud+1A1Sn9yf7jC0Mzo5UwBMj978+u3cU9NErCVdUhjfB1jjl99swIIcGop0vl2Tbwx0
+lrQSS+q1xVJ2yZINpHRRMNdKeHD60YOHU9LRiIXzLI4/iNLMk0PtHj328oVCbZp29cmeHtbFEvbv
+RRRoofzJsoi48+EKTgo=</X509Certificate></X509Data></KeyInfo></Signature></NFe><protNFe versao="2.00"><infProt Id="ID333110120901701"><tpAmb>1</tpAmb><verAplic>SVRS20110801092042</verAplic><chNFe>33111027922913000111550010000002571099263706</chNFe><dhRecbto>2011-10-21T16:06:01</dhRecbto><nProt>333110120901701</nProt><digVal>3U/lBl/NtIb1nbi/XPxDX+O+8IM=</digVal><cStat>100</cStat><xMotivo>Autorizado o uso da NF-e</xMotivo></infProt></protNFe></nfeProc>

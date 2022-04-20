@@ -1,0 +1,38 @@
+﻿@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+
+<fieldset >
+    <legend class="btn btn-info" style="text-align: left;">Representante</legend>
+    <div class="row padding" ng-if="listaRepresentante">
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr class="info">
+                        <th>Assinatura</th>
+                        <th>Carteira</th>
+                        <th style="text-align: left;">Código</th>
+                        <th style="text-align: left;">Representante</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="rep in listaRepresentante">
+                        <td style="width: 10%">{{assinturaSelect}}</td>
+                        <td style="width: 10%">{{rep.CAR_ID}}</td>
+                        <td style="width: 10%; text-align: left;">{{rep.REP_ID}}</td>
+                        <td style="width: 50%; text-align: left;">{{rep.REPRESENTANTE.REP_NOME}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div ng-if="!listaRepresentante||listaRepresentante.length==0">
+        <hr>
+
+        <div class="alert alert-success">
+            <strong>Atenção!</strong> Não existem representantes cadastrados para este cliente.
+        </div>
+
+    </div>
+
+</fieldset>

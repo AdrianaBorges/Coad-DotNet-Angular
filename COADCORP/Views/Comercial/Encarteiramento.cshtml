@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@Scripts.Render("~/Scripts/appScripts/comercial.js")
+
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="ComercialController" class="padding content">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li>
+                            @Html.ActionLink("Home", "index", "Home")
+                        </li>
+                        <li class="active">
+                             Encarteiramento
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-corp">
+            <div app-message></div>
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-edit"></span>&nbspEncarteiramento
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Opções<span class="caret"></span></button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li><a href="javascript:void(0);" ng-click="abriModalBaixaManual()">Nova Carteira</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-2">
+                        <label for="cnab">Origem</label>
+                        <div class="input-group">
+                            <input type="text" id="email" ng-model="filtro.caridori" class="form-control" disabled="disabled" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-primary" ng-click="abrirModalCarteira(1)" ng-change="listarClientesCarteira()">&nbsp<span class="glyphicon glyphicon-search"></span>&nbsp</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="cnab">Destino</label>
+                        <div class="input-group">
+                            <input type="text" id="email" ng-model="filtro.cariddest" class="form-control" disabled="disabled" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-primary" ng-click="abrirModalCarteira(2)">&nbsp<span class="glyphicon glyphicon-search"></span>&nbsp</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="cnab">Assinatura</label>
+                        <input type="text" class="form-control" ng-model="filtro.asn_num_assinatura" ng-change="listarClientesCarteira()"/>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button ng-click="listarClientesCarteira()" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                <button ng-click="limparCampos()" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>&nbspLimpar Campos</button>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-if="lstClientesCarteira.length>0">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span>&nbspApuração Vendas</div>
+            <div class="panel-body">
+                <td class="table-responsive">
+                    <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr class="info">
+                                <th><span>Carteira</span></th>
+                                <th><span>Assinatura</span></th>
+                                <th style="text-align:left;"><span>Cliente</span></th>
+                                <th style="text-align:center;"><span>Opções</span></th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in lstClientesCarteira">
+                            <td><span>{{item.CAR_ID}}</span></td>
+                            <td><span>{{item.ASN_NUM_ASSINATURA}}</span></td>
+                            <td><span>{{item.CLI_ID}} - </span>
+                                <span>{{item.CLI_NOME}} </span>
+                            </td>
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" title="Enviar" ng-click="transfCarteira(item)">
+                                    <span class="glyphicon glyphicon-arrow-right blue"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+            </div>
+        </div>
+        <div app-modal="modal-carteira" header="Lista de Carteiras">
+            @Html.Partial("Partials/Modais/_ModalBuscarCarteiraPartial")
+        </div>
+    </div>
+</div>
+
+
+
+

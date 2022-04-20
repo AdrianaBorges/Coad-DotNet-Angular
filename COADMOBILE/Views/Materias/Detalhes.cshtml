@@ -1,0 +1,16 @@
+﻿@model COAD.PORTAL.Model.DTO.CalendarioObrigacoes.MateriaDTO
+
+@{
+    ViewBag.Title = Model.colec + " - " + Model.vb + " - " + Model.svb;
+}
+<fieldset>
+    <div class="display-label">
+         @Html.DisplayName("Informativo") @Html.DisplayFor(model => model.informativo) - 
+         @Html.DisplayName("Ano") @Html.DisplayFor(model => model.ano) - 
+         @Html.DisplayNameFor(model => model.pagina) @Html.DisplayFor(model => model.pagina)
+    </div>
+    <br />
+    <div class="display-field">
+        @Html.Raw(Model.html)
+    </div>
+</fieldset>

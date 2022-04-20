@@ -1,0 +1,52 @@
+﻿
+@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+@using COAD.CORPORATIVO.SessionUtils
+@{
+    ViewBag.Title = "Processo de Configuração de Login";
+}
+
+@{
+    Layout = "~/Views/Shared/_LayoutVazio.cshtml";
+}
+<style type="text/css">
+
+    .body {
+        background-color: #e8e8e8 !important;
+
+    }
+</style>
+@Scripts.Render("~/Scripts/negocio/login_unico.js")
+<script src="~/Scripts/negocio/controllers_plugins/telefone.js"></script>
+<script src="~/Scripts/negocio/controllers_plugins/info_cliente.js"></script>
+<script src="~/Scripts/negocio/controllers_plugins/endereco.js"></script>
+<div ng-app="appModule">    
+    <div ng-controller="LoginUnicoController" class="padding content" ng-cloak 
+        data-ng-init="init('@ViewBag.assinatura');">
+        
+        <div>
+        <div app-message></div>
+            <div class="panel panel-corp">
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-user"></span> Processo de Configuração de Login</div>
+
+            <div class="panel-body">
+                <div>        
+                   <div ng-show="passoWizard == 0" class="animated-show">
+                    <span class="glyphicon glyphicon-warning-sign fa-4x text-warning"></span> <h3>Não é possível continuar.</h3>
+                    
+                    <p>
+                        
+                        O cliente dessa assinatura <strong>(@ViewBag.assinatura)</strong> já possui um login configurado.
+                    </p>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+  </div>
+        
+      </div>
+      
+</div>

@@ -1,0 +1,136 @@
+﻿@using Coad.GenericCrud.Extensions
+@using COAD.SEGURANCA.Extensions
+
+@{
+    ViewBag.print = true;
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;
+    if (ViewBag.print == true)
+    {
+        ViewBag.printableClass = "hidden-print";
+    }
+
+    ViewBag.Title = "Index";
+    
+}
+
+<script>
+    $(document).ready(function () {
+        $(":input").inputmask();
+    });
+</script>
+
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+@Scripts.Render("~/Scripts/appScripts/TabelaDinamica.js")
+
+<form name="ImportarXLS" id="ImportarXLS" action="/TabelaDinamica/ImportarXLS" method="post" enctype="multipart/form-data">
+    <div ng-app="appModule">
+        <div ng-controller="TabelaDinamicaController" class="padding content" ng-init="carregaTelaImp()">
+            @if (@ViewBag.message != null)
+            {
+                string erro = ViewBag.message;
+                @Html.Alert(erro);
+            }
+            <div id="page-wrapper">
+                <ol class="breadcrumb">
+                    <li>
+                        @Html.ActionLink("Home", "index", "Importar Planilha")
+                    </li>
+                    <li class="active">
+                        <i class="fa fa-desktop"></i>Tabela Dinâmica
+                    </li>
+                </ol>
+                <div class="panel panel-corp">
+                    <div app-message></div>
+                    <div class="panel-heading bold head-panel">
+                        <label id="title"><span class="glyphicon glyphicon-calendar"></span>&nbspImportar tabela dinâmica</label>
+                        <div class="hidden-print pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                    Opções
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    <li>
+                                        <a href="/TabelaDinamica/Editar?id=" title="Editar o item selecionado">Processar</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-warning">
+                                        <div class="panel-heading">
+                                            <span class="glyphicon glyphicon-info-sign blue" aria-hidden="true"></span>
+                                            <span class="sr-only">Observação:</span>
+                                            <label>Para importar os dados de uma planilha do Excel voce deve proceder da seguinte forma: </label>
+                                            <ul>
+                                                <li>Selecionar um arquivo com extensão XLS ou XLSX</li>
+                                                <li>Caso seja uma nova planilha informe o tipo e o nome da tabela</li>
+                                                <li>Caso seja uma atualização selecione o nome da tabela a 
+                                                ser substituída. (Atenção, neste caso todos os dados da tabela 
+                                                selecionada serão substituídos pelos dados da planilha selecionada)</li>
+                                            </ul>
+                                            <label>Após a conclusão da importação, o sistema será redirecionado para outra tela onde a configuração da tabela deve ser finalizada. </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-8">
+                                    <div class="col-lg-12">
+                                        <label>
+                                            <input id="_cadastrada" name="_cadastrada" type="checkbox" ng-model="_cadastrada">
+                                            Atualizar tabela já cadastrada
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            @Html.Label("Selecione o arquivo desejado")
+                                            <input type="file" name="uploadFile" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            @Html.Label("Selecione a Tabela")
+                                            <select id="_tdc" name="_tdc" class="form-control" ng-model="param.tdc" ng-disabled="_cadastrada!=true" ng-options="item.TDC_NOME_TABELA for item in listatabelas" ng-change="param.tdc_id=param.tdc.TDC_ID">
+                                            </select>
+                                            <input id="_tdc_id" name="_tdc_id" type="text" ng-model="param.tdc_id" class="form-control " placeholder="Nome da tabela" autofocus autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            @Html.Label("Informe o nome da tabela")
+                                            <input id="_nometabela" name="_nometabela" type="text" ng-model="param.tdc.TDC_NOME_TABELA" class="form-control " placeholder="Nome da tabela" autofocus autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <legend class="btn btn-info" style="text-align: left;" ng-if="TOTAL_LINHAS>0"><i class="fa fa-list-alt fa-fw"></i>&nbsp;Processando... {{TOTAL_LINHAS}}</legend>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="/TabelaDinamica/Index" class="btn btn-default" ng-disabled="button=='saved'"><span class="glyphicon glyphicon-chevron-left blue"></span>Fechar</a>
+                        <button
+                            app-switch-button="importarArquivo()"
+                            switch-conf="[{label : 'Processar', state : 'save'}, {label : 'Processando...', state : 'saved', disabled : true}]"
+                            switch-var="button"
+                            class="btn btn-default" ng-disabled="TOTAL_LINHAS>0">
+                            <span class="glyphicon glyphicon glyphicon-cog blue"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

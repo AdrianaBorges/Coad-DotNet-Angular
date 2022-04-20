@@ -1,0 +1,62 @@
+﻿
+<div class="row hidden-print">
+    <div class="form-group col-lg-2">
+        <label for="sigla">Assinatura</label>
+        <input type="text" id="Assinatura" ng-model="filtro.assinatura" class="form-control" />
+    </div>
+    <div class="form-group col-lg-2">
+        <label for="sigla">Nº Contrato</label>
+        <input type="text" id="contrato" ng-model="filtro.contrato" class="form-control" />
+    </div>
+    <div class="form-group col-lg-2">
+        <label for="sigla">Nº Pedido</label>
+        <input type="text" id="pedido" ng-model="filtro.pedido" class="form-control" />
+    </div>
+    <div class="form-group col-lg-2">
+        <label for="sigla">CNPJ/CPF</label>
+        <input type="text" id="cnpj" ng-model="filtro.cnpj" class="form-control" />
+    </div>
+    <div class="form-group col-lg-2">
+        <label for="sigla">ID</label>
+        <input type="text" id="cliente" ng-model="filtro.cliente" class="form-control" />
+    </div>
+    <div class="form-group col-lg-2">
+        <label>Somente Vigentes</label>
+        <label class="switch switch switch-round" style="padding-top: 5px;">
+            <input type="checkbox" id="somenteativos" ng_model="filtro.somenteativos" class="form-control" value="false">
+            <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+        </label>
+    </div>
+
+    <div class="form-group col-lg-4">
+        <label for="sigla">Nome</label>
+        <input type="text" id="nome" ng-model="filtro.nome" class="form-control" />
+    </div>
+    <div class="form-group col-lg-3" ng_if="modalcli==false">
+        <label for="Logradouro">Logradouro</label>
+        <div class="input-group">
+            <input type="text" id="logradouro" ng-model="filtro.logradouro" class="form-control" disabled="disabled" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-primary" ng-click="abrirPopUpLogradouro()">&nbsp<span class="glyphicon glyphicon-search"></span>&nbsp</button>
+            </span>
+        </div>
+    </div>
+    <div class="form-group col-lg-3" ng_if="modalcli==false">
+        <label for="Logradouro">Email</label>
+        <div class="input-group">
+            <input type="text" id="email" ng-model="filtro.Email" class="form-control" disabled="disabled" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-primary" ng-click="abrirPopUpEmail()">&nbsp<span class="glyphicon glyphicon-search"></span>&nbsp</button>
+            </span>
+        </div>
+    </div>
+    <div class="form-group col-lg-2" ng_if="modalcli==false">
+        <label for="Logradouro">Telefone</label>
+        <div class="input-group">
+            <input type="text" id="Telefone" ng-model="filtro.Telefone" class="form-control" disabled="disabled" @*data-inputmask="'mask' : '(99) 9999-9999'"*@ />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-primary" ng-click="abrirPopUpTelefone()">&nbsp<span class="glyphicon glyphicon-search"></span>&nbsp</button>
+            </span>
+        </div>
+    </div>
+</div>

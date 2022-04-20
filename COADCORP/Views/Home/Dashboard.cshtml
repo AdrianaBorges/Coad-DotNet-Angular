@@ -1,0 +1,369 @@
+﻿@using COAD.SEGURANCA.Extensions
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = " COADCORP - Sistema de Gestão Integrada.";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">@Html.ActionLink("Home", "index", "Home") </a></li>
+        <li class="active">Gerenciar Clientes</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<form>
+    <div ng-app="appModule">
+        <div ng-controller="HomeControler" ng-init="CarregarTela();CarregarGrafico()">
+
+            <div class="panel panel-corp">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <i class="fa fa-list-alt fa-fw"></i>
+                            <label id="title">Data Atual</label>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="pull-Left">
+                                <div class="input-group date" style="">
+                                    @Html.TextBox("dtatual", "", new { @class = "form-control datepicker", ng_model = "dtatual", app_date = "param.dataatual" })
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.DropDownList("_tdc_id", new SelectList(@ViewBag.ListaTabRef, "Value", "Text"), null, new { placeholder = "Selecione o Simulador", @class = "form-control", ng_model = "param.TDC_ID" })
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <a href="javascript:void(0)" ng-click="CarregarGrafico()" class="btn btn-default"><i class="glyphicon glyphicon-refresh"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-corp">
+                        <div class="panel-heading">
+                            <i class="fa fa-list-alt fa-fw"></i>
+                            <label id="title">Acesso ao Simulador P/ Dia</label>
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="javascript:void(0)" ng-click="CarregarGrafico()">Atualizar</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <fusioncharts width="450"
+                                              height="300"
+                                              type="column3d"
+                                              datasource="{{dataSource01}}"></fusioncharts>
+                                <div fusioncharts
+                                     width="450"
+                                     height="300"
+                                     type="column3d"
+                                     datasource="{{dataSource01}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-corp">
+                        <div class="panel-heading">
+                            <i class="fa fa-list-alt fa-fw"></i>
+                            <label id="title">Acesso ao Simulador P/ Hora</label>
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="javascript:void(0)" ng-click="CarregarGrafico()">Atualizar</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <fusioncharts width="450"
+                                          height="300"
+                                          type="column3d"
+                                          datasource="{{dataSource}}"></fusioncharts>
+                            <div fusioncharts
+                                 width="450"
+                                 height="300"
+                                 type="column3d"
+                                 datasource="{{dataSource}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="panel panel-corp">
+                        <div class="panel-heading">
+                            <i class="fa fa-list-alt fa-fw"></i>
+                            <label id="title">Atendimento URA por RAMAL - RJ</label>
+                        </div>
+                        <div class="panel-body">
+                            <fusioncharts width="250"
+                                          height="350"
+                                          type="column3d"
+                                          datasource="{{dataurarj}}"></fusioncharts>
+                            <div fusioncharts
+                                 width="250"
+                                 height="350"
+                                 type="column3d"
+                                 datasource="{{dataurarj}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-corp">
+                        <div class="panel-heading">
+                            <i class="fa fa-list-alt fa-fw"></i>
+                            <label id="title">Atendimento URA por RAMAL - MG</label>
+                        </div>
+                        <div class="panel-body">
+                            <fusioncharts width="250"
+                                          height="350"
+                                          type="column3d"
+                                          datasource="{{datauramg}}"></fusioncharts>
+                            <div fusioncharts
+                                 width="250"
+                                 height="350"
+                                 type="column3d"
+                                 datasource="{{datauramg}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-corp">
+                        <div class="panel-heading">
+                            <i class="fa fa-list-alt fa-fw"></i>
+                            <label id="title">Atendimento URA por RAMAL - PR</label>
+                        </div>
+                        <div class="panel-body">
+                            <fusioncharts width="250"
+                                          height="350"
+                                          type="column3d"
+                                          datasource="{{dataurapr}}"></fusioncharts>
+                            <div fusioncharts
+                                 width="250"
+                                 height="350"
+                                 type="column3d"
+                                 datasource="{{dataurapr}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-corp">
+                        <div class="panel-heading">
+                            <i class="fa fa-list-alt fa-fw"></i>
+                            <label id="title">Consultas Realizadas (URA - Por UF)</label>
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="javascript:void(0)" ng-click="CarregarGrafico()">Atualizar</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <fusioncharts width="1000"
+                                          height="250"
+                                          type="pie3d"
+                                          datasource="{{dataSource02}}"></fusioncharts>
+                            <div fusioncharts
+                                 width="1000"
+                                 height="250"
+                                 type="pie3d"
+                                 datasource="{{dataSource02}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="panel panel-corp">
+                        <div class="panel-heading">
+                            <i class="fa fa-list-alt fa-fw"></i>
+                            <label id="title">Tabelas Acessadas por Período</label>
+                            <div class="pull-right">
+                                <div class="form-group">
+                                    @Html.DropDownList("_tgr_id", new SelectList(@ViewBag.ListaTabGrupo, "Value", "Text"), null, new { placeholder = "Selecione o Grupo", @class = "form-control", ng_model = "param.TGR_ID", ng_click = "CarregarGrafico()" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <fusioncharts width="1000"
+                                          height="350"
+                                          type="column3d"
+                                          datasource="{{dataSource06}}"></fusioncharts>
+                            <div fusioncharts
+                                 width="1000"
+                                 height="350"
+                                 type="column3d"
+                                 datasource="{{dataSource06}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="panel panel-corp">
+                        <div class="panel-heading">
+                            <i class="fa fa-list-alt fa-fw"></i>
+                            <label id="title">Tabelas Acessadas P/ Grupo ( Mensal )</label>
+                        </div>
+                        <div class="panel-body">
+                            <fusioncharts width="1000"
+                                          height="350"
+                                          type="column3d"
+                                          datasource="{{dataSource08}}"></fusioncharts>
+                            <div fusioncharts
+                                 width="1000"
+                                 height="350"
+                                 type="column3d"
+                                 datasource="{{dataSource08}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="panel panel-corp">
+                        <div class="panel-heading">
+                            <i class="fa fa-list-alt fa-fw"></i>
+                            <label id="title">Tabelas Acessadas P/ Grupo ( Anual )</label>
+                        </div>
+                        <div class="panel-body">
+                            <fusioncharts width="1000"
+                                          height="300"
+                                          type="Pie3d"
+                                          datasource="{{dataSource07}}"></fusioncharts>
+                            <div fusioncharts
+                                 width="1000"
+                                 height="300"
+                                 type="Pie3d"
+                                 datasource="{{dataSource07}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-corp">
+                        <div class="panel-heading">
+                            <i class="fa fa-list-alt fa-fw"></i>
+                            <label id="title">Acesso ao Simulador P/ UF ( Mensal )</label>
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="javascript:void(0)" ng-click="CarregarGrafico()">Atualizar</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <fusioncharts width="450"
+                                          height="600"
+                                          type="bar3d"
+                                          datasource="{{dataSource05}}"></fusioncharts>
+                            <div fusioncharts
+                                 width="450"
+                                 height="600"
+                                 type="bar3d"
+                                 datasource="{{dataSource05}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="panel panel-corp">
+                        <div class="panel-heading">
+                            <i class="fa fa-list-alt fa-fw"></i>
+                            <label id="title">Consultas por produto</label>
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="javascript:void(0)" ng-click="CarregarGrafico()">Atualizar</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <fusioncharts width="450"
+                                          height="600"
+                                          type="bar3d"
+                                          datasource="{{dataSource03}}"></fusioncharts>
+                            <div fusioncharts
+                                 width="450"
+                                 height="600"
+                                 type="bar3d"
+                                 datasource="{{dataSource03}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/appScripts/Home.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.js")
+    @Scripts.Render("~/Scripts/flot/excanvas.min.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.pie.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.time.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.resize.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.categories.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.tooltip.min.js")
+
+}
+
+

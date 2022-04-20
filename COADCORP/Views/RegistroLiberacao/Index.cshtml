@@ -1,0 +1,207 @@
+﻿
+@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+@using COAD.CORPORATIVO.SessionUtils
+@using GenericCrud.ActionResultTools
+@{
+    ViewBag.Title = "Listagem de Proposta";
+    bool gerente = (SessionContext.IsGerenteDepartamento("franquiado", true) || SessionContext.IsGerenteDepartamento("franquiador", true));
+    bool franquiador = SessionContext.IsGerenteDepartamento("franquiador", true);
+
+    bool podeFaturar = SessionUtil.PossuiPermissaoParaFaturar();
+    string podePagar = (podeFaturar) ? "1 == 1" : "1 == 2";
+    ViewBag.defer = @"defer='defer'";  
+
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li class="active">Liberações Pendentes</li>         
+        
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/controllers_plugins/cliente_inadimplente.js")" defer="defer"></script>
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/registro_liberacao.js")" defer="defer"></script>
+<div ng-app="appModule">    
+    <div ng-controller="RegistroLiberacaoController" class="padding content" ng-cloak 
+        data-ng-init="initList('@gerente');" ng-click="fecharPopover($event)">
+    <div class="panel panel-corp">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Opções
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li>
+                            <a href="@Url.Action("Emitir")" class="blue">Emitir</a>
+                        </li>                                                                           
+                    </ul>
+                </div>
+            </div>
+      </div>
+          
+            <div class="panel-body">            
+                <div class="row">
+                    <div class="form-group col-lg-2">
+                        <label for="usu_login">Código</label>
+                        <input type="text" id="usu_login" ng-model="filtro.rliId" class="form-control" />
+                    </div>
+                    @*<div class="form-group col-lg-3"> <!-- Por hora as descrições são exatamente as mesmas.-->
+                        <label for="usu_login">Descrição</label>
+                        <input type="text" id="usu_login" ng-model="filtro.descricao" class="form-control" />
+                    </div>*@
+                    <div class="form-group col-lg-3">
+                        <label for="usu_login">Produto</label>
+                        <input type="text" id="usu_login" ng-model="filtro.produto" class="form-control" />
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="usu_login">Proposta</label>
+                        <input type="text" id="usu_login" ng-model="filtro.prtId" class="form-control" />
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="usu_login">Item de Proposta</label>
+                        <input type="text" id="usu_login" ng-model="filtro.ppiId" class="form-control" />
+                    </div>
+                </div>
+            </div> 
+        <div class="panel-footer">
+            <button type="button" class="btn btn-default" ng-click="pesquisarRegistrosLiberacao()">Pesquisar</button>
+        </div>
+    </div>
+    <div>
+        
+        <div app-message></div>
+                <div class="panel panel-corp">
+                <!-- Default panel contents -->
+                <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-shopping-cart"></span>Listagem de Pendências</div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                        <table class="table table-hover">
+                            <thead>
+                                <tr class="bg-info">
+                                    <th>Id</th>
+                                    <th>Descrição</th>
+                                    <th>Cliente</th>
+                                    <th>Proposta</th>
+                                    <th>Item de Proposta</th>
+                                    <th>Produto</th>
+                                    <th>Tipo</th>
+                                    <th colspan="4">#</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in lstRegistroLiberacao">
+                                <td>{{item.RLI_ID}}</td>
+                                <td>{{item.RLI_DESCRICAO}}</td>
+                                <td>{{item.CLIENTES.CLI_NOME}}</td>
+                                <td>{{item.PropostaItem.PRT_ID}}</td>
+                                <td>{{item.PropostaItem.PPI_ID}}</td>
+                                <td>{{item.PropostaItem.PRODUTO_COMPOSICAO.CMP_DESCRICAO}}</td>
+                                <td>{{item.REGISTRO_LIBERACAO_TIPO.RLT_DESCRICAO}}</td>
+                                <td>
+                                    <div app-html-var="opcoes">
+                                        <div ng-click="fecharPopover($event);">
+                                            <ul class="list-unstyled">
+                                                <li><a href="javascript:void(0);" ng-click="abrirClienteEmProspect(item.CLI_ID);">Abrir em prospects</a></li>
+                                                <li><a href="javascript:void(0);" ng-click="abrirClienteNaPosicaoDeCliente(item.CLI_ID);">Abrir na posição de clientes</a></li>
+                                                <li><a href="javascript:void(0);" ng-click="abrirModalChecarInadimplecia(item.CLI_ID);">Checar Inadimplência</a></li>
+                                                <li><a href="javascript:void(0);" ng-click="abrirDetalhesProposta(item.PropostaItem.PRT_ID);">Ver Detalhes Proposta</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <a href="javascript:void(0);"
+                                       ng-click="abrirModalRegistroLiberacaoItem(item.RLI_ID);"
+                                       title="Ver detalhes">
+                                        <i class="glyphicon glyphicon-tasks" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);"
+                                       ng-click="abrirModalAprovarPendencia(item.RLI_ID);"
+                                       title="Aprovar Pendência" class="text-success">
+                                        <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);"
+                                       ng-click="abrirModalRejeitarPendencia(item.RLI_ID);"
+                                       class="text-danger"
+                                       title="Rejeitar Pendência">
+                                        <i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);" id="pop_over_{{$index}}"
+                                       app-popover
+                                       html-var="opcoes"
+                                       data-trigger="manual"
+                                       data-direction="left"
+                                       popover-title=" Opções"
+                                       ng-mouseover="abrirPopover('pop_over_' + $index)">
+                                        <i class="glyphicon glyphicon-cog" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="12" ng-show="!lstRegistroLiberacao || lstRegistroLiberacao.length == 0">Nenhum registro foi encontrado.</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <app-pagination request-page="paginaReq" load-function="pesquisarRegistrosLiberacao(paginaReq)"></app-pagination>
+
+                </div>
+            </div>
+ 
+        </div>
+        <div app-modal="modal-detalhes-proposta" header="Detalhes">
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>
+                                        Descrição
+                                    </th>
+                                    <th>Data</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in lstRegistroLiberacaoItems" class="animate-repeat">
+                                <td>
+                                    {{item.RIT_ID}}
+                                </td>                              
+                                <td><span ng-bind-html="item.RIT_DESCRICAO"></span></td>
+                                <td app-show-date="item.RIT_DATA_CRIACAO"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="8" ng-if="lstRegistroLiberacaoItems.length <= 0" class="text">
+                                    Não foi encontrado nenhum registro.
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>       
+
+        <div id="modal-alterar-status" app-status-modal="alteracaoModal"></div> 
+
+         @Html.Partial("Partials/Modais/_ClienteInadimplenteModalPartial")
+        
+           
+</div>  
+</div>

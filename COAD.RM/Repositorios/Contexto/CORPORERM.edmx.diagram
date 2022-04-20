@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="22e5bfec2d434630a289e17d7d44dc69" Name="Diagram1" ZoomLevel="21">
+        <EntityTypeShape EntityType="CorporeRMModel.PFPERFF" Width="1.5" PointX="5.25" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporeRMModel.PFPERFFCOMPL" Width="1.5" PointX="5.25" PointY="32.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporeRMModel.PFUNC" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporeRMModel.PFUNCAO" Width="1.5" PointX="0.75" PointY="28.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporeRMModel.PPESSOA" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="CorporeRMModel.FKPFPERFF_PFUNC" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporeRMModel.FKPFPERFFCOMPL_PFUNC" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporeRMModel.FKPFUNC_PFUNCAO" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporeRMModel.FKPFUNC_PFUNCAOCONF" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporeRMModel.FKPFUNC_PPESSOA" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

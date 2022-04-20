@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "Identificacao";
+    Layout = "~/Views/Shared/_LayoutCadastro.cshtml";
+}
+
+@Scripts.Render("~/Scripts/appScripts/Portal.js")
+
+<div ng-app="appModule">
+    <div ng-controller="PortalController">
+        <div class="container">
+            <div class="row process-wizard process-wizard-primary">
+                <div class="col-xs-3 process-wizard-step complete">
+                    <div class="text-center process-wizard-stepnum">Passo 1</div>
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <a href="/Cadastro/Planos" class="process-wizard-dot"></a>
+                    <div class="process-wizard-info text-center">Selecione o produto desejado</div>
+                </div>
+
+                <div class="col-xs-3 process-wizard-step active">
+                    <!-- complete -->
+                    <div class="text-center process-wizard-stepnum">Passo 2</div>
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <a href="javascript:void(0);" class="process-wizard-dot"></a>
+                    <div class="process-wizard-info text-center">Identificação do cliente</div>
+                </div>
+
+                <div class="col-xs-3 process-wizard-step disabled">
+                    <!-- complete -->
+                    <div class="text-center process-wizard-stepnum">Passo 3</div>
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <a href="javascript:void(0);" class="process-wizard-dot"></a>
+                    <div class="process-wizard-info text-center">Selecione a condição de pagamento e complete seus dados.</div>
+                </div>
+
+                <div class="col-xs-3 process-wizard-step disabled">
+                    <!-- active -->
+                    <div class="text-center process-wizard-stepnum">Passo 4</div>
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <a href="javascript:void(0);" class="process-wizard-dot"></a>
+                    <div class="process-wizard-info text-center">Confirme o pagamento.</div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="m-t-0 text-center font-cinza-7 font-tr-none" style="margin: 0px;"><strong>INFORME SEUS DADOS ABAIXO</strong></h2>
+                    <p class="lead text-center font-cinza-5">COM APENAS ALGUNS CLIQUES, VOCÊ ADQUIRE O SEU PRODUTO DE MANEIRA FÁCIL E RÁPIDA</p>
+                    <br />
+                </div>
+                <div class="col-md-4 col-sm-5">
+                    <div app-message="bolinha"></div>
+                    <div class="box-static box-border-top padding-30">
+                        <div class="box-title margin-bottom-30">
+                            <h2 class="size-20">Ja sou cliente</h2>
+                        </div>
+                        <form class="sky-form" method="post" action="#" autocomplete="off">
+                            <div class="clearfix">
+                                <div class="form-group">
+                                    <label>Login/Email</label>
+                                    <label class="input margin-bottom-10">
+                                        <i class="ico-append fa fa-envelope"></i>
+                                        <input required="" type="text" ng-model="usuario.login" app-popover data-content="Informe o login ou email">
+                                    </label>
+                                </div>
+                                <!-- Password -->
+                                <div class="form-group">
+                                    <label>Senha</label>
+                                    <label class="input margin-bottom-10">
+                                        <i class="ico-append fa fa-lock"></i>
+                                        <input required="" type="password" ng-model="usuario.senha" app-popover data-content="Informe a senha">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <!-- Inform Tip -->
+                                    <div class="form-tip pt-20">
+                                        <a class="no-text-decoration size-13 margin-top-10 block" href="#">Esqueci a senha ?</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+                              @*      <a href="javascript:void(0)" app-popover data-content="Realizar Login" ng-click="realizarLogin()" class="btn btn-primary"><i class="fa fa-check"></i>LOGIN</a>
+                             *@       <button
+                                        app-switch-button="realizarLogin()"
+                                        switch-conf="[{label : 'LOGIN', state : 'save'}, {label : 'Processando...', state : 'saved', disabled : true}]"
+                                        switch-var="button"
+                                        class="btn btn-primary btn-lg btn-block size-15">
+                                        <span class="fa fa-check"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <hr />
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-7">
+                    <div class="box-static box-transparent box-bordered padding-30">
+                        <div class="box-title margin-bottom-30">
+                            <h2 class="size-20">Ainda não sou cliente</h2>
+                        </div>
+                        <form class="nomargin sky-form" action="#" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <label>Email </label>
+                                    <label class="input margin-bottom-12">
+                                        <i class="ico-append fa fa-envelope"></i>
+                                        <input required="" type="text" ng-model="usuario.email" app-popover data-content="Informe seu email">
+                                    </label>
+                                </div>
+                                <div class="col-md-3" style="padding-top: 25px;">
+                                    <button
+                                        app-switch-button="validarEmail()"
+                                        switch-conf="[{label : 'Registrar', state : 'save'}, {label : 'Processando...', state : 'saved', disabled : true}]"
+                                        switch-var="button"
+                                        class="btn btn-primary btn-lg btn-block size-15">
+                                        <span class="fa fa-check"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div app-message="bolinha2"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

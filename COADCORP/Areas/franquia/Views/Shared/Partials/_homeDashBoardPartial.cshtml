@@ -1,0 +1,317 @@
+﻿@using COAD.SEGURANCA.Repositorios.Base
+
+@*@if(SessionContext.IsGerenteDepartamento("franquiador"))
+{
+    
+ <div class="row">
+    <div class="col-sm-7">
+        <div class="panel panel-corp">
+            <!-- Default panel contents -->
+
+            <div class="panel-heading"><span class="glyphicon glyphicon-flash"></span>Vendas</div>
+            <div class="panel-body">
+                <div fusioncharts
+                   width="500"
+                   height="400"
+                   type="mscombidy2d"
+                   dataSource="{{relatorioAtendimentoXVendasPorRegiao}}">
+                </div>
+            </div>
+
+        </div>
+        </div>
+     <div class="col-sm-5">
+        <div class="panel panel-corp">
+            <!-- Default panel contents -->
+
+            <div class="panel-heading"><span class="glyphicon glyphicon-flash"></span>Faturamento</div>
+            <div class="panel-body">
+                <div fusioncharts
+                   width="370"
+                   height="400"
+                   type="area2d"
+                   dataSource="{{relatorioFaturamentoFranquia}}">
+                </div>
+            </div>
+
+        </div>
+        </div>
+     </div>*@
+@*
+
+   <div class="row" id="graficos0">
+    <div class="col-sm-12">
+        <div class="panel panel-corp">
+            <!-- Default panel contents -->
+            <div class="panel-heading"><span class="glyphicon glyphicon-flash"></span>Faturamento</div>
+            <div class="panel-body">
+                <div fusioncharts
+                   width="1000"
+                   height="500"
+                   type="column3d"
+                   dataSource="{{relatorioFaturamentoFranquia}}">
+                </div>
+            </div>
+
+        </div>
+        </div>
+     </div>     
+*@
+
+@if(SessionContext.IsGerenteDepartamento("franquiador", true))
+{
+    <div class="row" id="graficos1">
+    <div class="col-sm-6">
+        <div class="panel panel-corp">
+            <!-- Default panel contents -->
+            <div class="panel-heading"><span class="glyphicon glyphicon-flash"></span>Atendimentos</div>
+            <div class="panel-body">
+                <div fusioncharts
+                   width="450"
+                   height="450"
+                   type="column3d"
+                   dataSource="{{datasourceAtendimentos}}">
+                </div>
+            </div>
+
+        </div>
+        </div>
+    <div class="col-sm-6">
+        <div class="panel panel-corp">
+            <!-- Default panel contents -->
+            <div class="panel-heading"><span class="glyphicon glyphicon-flash"></span>Atendimentos</div>
+            <div class="panel-body">
+                <div fusioncharts
+                   width="450"
+                   height="450"
+                   type="doughnut2d"
+                   dataSource="{{datasourceAtendimentosPie}}">
+                </div>
+            </div>
+
+        </div>
+        </div>
+    </div>
+    
+    <div class="row" id="graficos2">
+    <div class="col-sm-6">
+        <div class="panel panel-corp">
+            <!-- Default panel contents -->
+            <div class="panel-heading"><span class="glyphicon glyphicon-flash"></span>Atendimentos Por Regiao</div>
+            <div class="panel-body">
+                <div fusioncharts
+                   width="450"
+                   height="450"
+                   type="column3d"
+                   dataSource="{{datasourceAtendimentosPorRegiao}}">
+                </div>
+            </div>
+
+        </div>
+        </div>
+    <div class="col-sm-6">
+        <div class="panel panel-corp">
+            <!-- Default panel contents -->
+            <div class="panel-heading"><span class="glyphicon glyphicon-flash"></span>Atendimentos Por Regiao</div>
+            <div class="panel-body">
+                <div fusioncharts
+                   width="450"
+                   height="450"
+                   type="doughnut2d"
+                   dataSource="{{datasourceAtendimentosPiePorRegiao}}">
+                </div>
+            </div>
+
+        </div>
+        </div>
+    </div>
+}
+    
+
+<div class="row" id="prioridades">
+    <div class="col-sm-6">
+        <div class="panel panel-corp">
+            <!-- Default panel contents -->
+            <div class="panel-heading"><span class="glyphicon glyphicon-flash"></span>PRIORIDADES</div>
+            <div class="panel-body">
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Data
+                                </th>
+                                <th>Representante
+                                </th>
+                                <th>Cliente
+                                </th>
+                                <th>Origem</th>
+                                <th>Nota</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in lstPrioridades">
+                            <td app-show-date="item.PRI_DATA" show-time></td>
+                            <td>{{item.REPRESENTANTE.REP_NOME}}
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" ng-click="abreModalCliente(item.CLIENTES.CLI_ID)" title="Detalhes" class="blue">{{item.CLIENTES.CLI_NOME}} <span class="glyphicon glyphicon-search"></span>
+                                </a>
+                            </td>
+                            <td>{{item.TIPO_PRIORIDADE_ATENDIMENTO.TP_PRI_DESCRICAO}}                                    
+                                        
+                            </td>
+                            <td>{{item.PRI_NOTA}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" ng-hide="lstPrioridades" class="text">Não foi encontrado nenhum registro.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div app-pagination="paginaPrioridades" request-page="paginaReq" load-function="listarDadosHome(paginaReq)"></div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-sm-6">
+
+        <div class="panel panel-corp">
+            <!-- Default panel contents -->
+            <div class="panel-heading"><span class="glyphicon glyphicon-calendar"></span>AGENDAMENTO DO DIA</div>
+
+            <div class="panel-body">
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Data
+                                </th>
+                                <th>Descrição
+                                </th>
+                                <th>Representante
+                                </th>
+                                <th>Cliente
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in lstAgendamentoDoDia">
+                            <td app-show-date="item.AGE_DATA_AGENDAMENTO" show-time></td>
+                            <td>{{item.AGE_DESCRICAO}}
+                            </td>
+                            <td>{{item.REPRESENTANTE.REP_NOME}}
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" ng-click="abreModalCliente(item.CLIENTES.CLI_ID)" title="Detalhes" class="blue">{{item.CLIENTES.CLI_NOME}} <span class="glyphicon glyphicon-search"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" ng-hide="lstAgendamentoDoDia" class="text">Não foi encontrado nenhum registro.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div app-pagination="pageAgendamentoDoDia" request-page="paginaReq" load-function="listarAgendamentoDoDia(paginaReq)"></div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<div class="row" id="agendamentos-2">
+    <div class="col-sm-6">
+        <div class="panel panel-corp">
+            <!-- Default panel contents -->
+
+
+            <div class="panel-heading "><span class="glyphicon glyphicon-dashboard"></span>AGENDAMENTOS VINDOUROS</div>
+
+            <div class="panel-body">
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Data
+                                </th>
+                                <th>Descrição
+                                </th>
+                                <th>Representante
+                                </th>
+                                <th>Cliente
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in lstAgendamentoVindouro">
+                            <td app-show-date="item.AGE_DATA_AGENDAMENTO" show-time></td>
+                            <td>{{item.AGE_DESCRICAO}}
+                            </td>
+                            <td>{{item.REPRESENTANTE.REP_NOME}}
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" ng-click="abreModalCliente(item.CLIENTES.CLI_ID)" title="Detalhes" class="blue">{{item.CLIENTES.CLI_NOME}} <span class="glyphicon glyphicon-search"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" ng-hide="lstAgendamentoVindouro" class="text">Não foi encontrado nenhum registro.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div app-pagination="pageAgendamentoVindouro" request-page="paginaReq" load-function="listarAgendamentoVindouro(paginaReq)"></div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-corp">
+            <!-- Default panel contents -->
+
+
+            <div class="panel-heading"><span class="glyphicon glyphicon-warning-sign"></span>AGENDAMENTOS ATRASADOS</div>
+
+            <div class="panel-body">
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Data
+                                </th>
+                                <th>Descrição
+                                </th>
+                                <th>Representante
+                                </th>
+                                <th>Cliente
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in lstAgendamentoAtrasado">
+                            <td app-show-date="item.AGE_DATA_AGENDAMENTO" show-time></td>
+                            <td>{{item.AGE_DESCRICAO}}
+                            </td>
+                            <td>{{item.REPRESENTANTE.REP_NOME}}
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" ng-click="abreModalCliente(item.CLIENTES.CLI_ID)" title="Detalhes" class="blue">{{item.CLIENTES.CLI_NOME}} <span class="glyphicon glyphicon-search"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" ng-hide="lstAgendamentoAtrasado" class="text">Não foi encontrado nenhum registro.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div app-pagination="pageAgendamentoAtrasado" request-page="paginaReq" load-function="listarAgendamentoAtrasado(paginaReq)"></div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

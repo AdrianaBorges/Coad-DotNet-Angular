@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "Index";     
+}
+
+@Scripts.Render("~/Scripts/appScripts/ClassAtendimento.js")
+
+<form>
+    <div ng-app="appModule">
+        <div ng-controller="ClassAtendimentoController" class="padding content" data-ng-init="carregarTela()">
+            <div id="page-wrapper">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-home"></i><a href="/Home/index">Home</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-desktop"></i>&nbspClassificação Atendimento
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div app-message></div>
+                    <div class="panel-heading bold head-panel">
+                        <span class="glyphicon glyphicon-filter"></span>&nbspClassificação Atendimento
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    Opções<span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    <li>
+                                        <a href="javascript:void(0)" ng-click="listar()" title="Editar" class="blue">Atualizar</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="pull-Left">
+                                    <label for="sigla">Classificação</label>
+                                    <div class="form-group">
+                                        <select  ng-model="filtro.CLA_ATEND_ID" ng-change="listar()"  class="form-control">
+                                            <option ng-repeat="item in listaClassificacao" value="{{item.CLA_ATEND_ID}}">{{item.CLA_ATEND_DESCRICAO}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-book"></span>&nbspTipo de Atendimento
+                        <div class="pull-right">
+                            <div class="btn-group">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr class="info">
+                                    <th style="text-align:right;">ID</th>
+                                    <th style="text-align:left ;">Descrição</th>
+                                    <th style="text-align:left;">Grupo</th>
+                @*                    <th style="text-align:left;">Nome</th>*@
+                                    <th style="text-align:center;">Etiqueta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in listaTipoAtendimento | orderBy : 'TIP_ATEND_DESCRICAO' ">
+                                    <td style="text-align: right;">{{item.TIP_ATEND_ID}}</td>
+                                    <td style="text-align: left;">{{item.TIP_ATEND_DESCRICAO}}</td>
+                                    <td style="text-align: left;">
+                                        <select ng-model="item.TIP_ATEND_GRUPO"  class="form-control" ng-change="salvar(item)">
+                                            <option value="ATE">ATENDIMENTO</option>
+                                            <option value="REC">RECLAMAÇÃO</option>
+                                            <option value="SOL">SOLICITAÇÃO</option>
+                                        </select>
+                                    </td>
+   @*                                 <td style="text-align: center;">
+                                        {{item.CLA_ATEND_ID}}
+                                    </td>*@
+                                    <td style="text-align: center;">
+                                @*        <select ng-model="item.TIP_EMITE_ETIQUETA"  class="form-control">
+                                            <option value="true">SIM</option>
+                                            <option value="false">NÃO</option>
+                                        </select>*@
+                                        <input type="checkbox" ng-model="item.TIP_EMITE_ETIQUETA" ng-change="salvar(item)" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

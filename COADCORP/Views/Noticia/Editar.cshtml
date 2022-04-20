@@ -1,0 +1,174 @@
+﻿@using Coad.GenericCrud.Extensions
+
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">&nbspNotícias</li>
+    </ol>
+}
+
+@Scripts.Render("~/Scripts/appScripts/Noticia.js")
+
+<style type="text/css">
+    #Texto01 {
+        height: 400px !important;
+    }
+
+    #manchete01 {
+        height: 160px !important;
+    }
+
+    .div1 {
+        width: 450px;
+        height: 200px;
+        padding: 10px;
+        border: 1px solid #aaaaaa;
+    }
+</style>
+
+<script type="text/javascript">
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+    }
+</script>
+
+
+<form>
+    <div ng-app="appModule">
+        <div class="panel panel-default" ng-controller="NoticiaController" data-ng-init="init(@ViewBag.id)">
+            <div app-message></div>
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-edit icon-panel"></span>&nbspNotícias
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Opções <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li><a href="javascript:void(0)" onclick="window.location = '@Url.Action("Index")'">Fechar</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                @*              <div id="div1" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <br>
+                <div id="div2" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+                     <div id="drag1" style="background-color: #6633FF; width:75px; height:75px;" draggable="true" ondragstart="drag(event)" width="336" height="69" >
+
+                     </div>
+                </div>
+                <br>*@
+
+                <div class="col-lg-5">
+                    <div class="form-group">
+                        @Html.Label("Classificação")
+                        @Html.DropDownList("NGR_ID", new SelectList(@ViewBag.Listagrupo, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "noticia.NGR_ID" })
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        @Html.Label("Data Alteração")
+                        <div class="input-group date">
+                            @Html.TextBox("_alteracao", "", new { @class = "form-control datepicker", ng_model = "dtaltera", app_date="noticia.DATA_ALTERA", disabled="disabled" })
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        @Html.Label("Data Publicação")
+                        <div class="input-group date">
+                            @Html.TextBox("_publicacao", "", new { @class = "form-control datepicker", ng_model = "dtpublicacao", app_date="noticia.DATA_PUBLICACAO", disabled="disabled" })
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-xs-2 col-md-2 form-group">
+                    <label>Destaque Home</label><br />
+                    <label class="switch switch-success switch-round">
+                        <input type="checkbox" ng-model="noticia.NOT_DESTAQUE_HOME"
+                            ng-change="" ng-checked="noticia.NOT_DESTAQUE_HOME==true">
+                        <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                    </label>
+                </div>
+                <div class="col-lg-5">
+                    <div class="form-group">
+                        @Html.Label("Grande Grupo")
+                        @Html.DropDownList("TIT_ID", new SelectList(@ViewBag.ListaTitulacao, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "noticia.TIT_ID" })
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        @Html.Label("Usuário")
+                        <input id="_usuario" type="text" ng-model="noticia.USU_LOGIN" class="form-control " placeholder="" autofocus autocomplete="off" disabled="disabled">
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        @Html.Label("Usuário Publicação")
+                        <input id="_usuario" type="text" ng-model="noticia.USU_LOGIN_PUB" class="form-control " placeholder="" autofocus autocomplete="off" disabled="disabled">
+                    </div>
+                </div>
+
+                <div class="col col-xs-2 col-md-2 form-group">
+                    <label>Destaque Perfil</label><br />
+                    <label class="switch switch-success switch-round">
+                        <input type="checkbox" ng-model="noticia.NOT_DESTAQUE_PERFIL"
+                            ng-change="" ng-checked="noticia.NOT_DESTAQUE_PERFIL==true">
+                        <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                    </label>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        @Html.Label("Informe a manchete")
+                        <div app-editor="noticia.NOT_MANCHETE" editor-model="editor" editor-id="manchete01" id="Texto">
+                        </div>
+                        <div app-validation-msg="erros" for="noticia.NOT_MANCHETE"></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        @Html.Label("Texto")
+                        <div app-editor="noticia.NOT_TEXTO" editor-model="editor" id="Texto" editor-id="Texto01">
+                        </div>
+                        <div app-validation-msg="erros" for="noticia.NOT_TEXTO"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" onclick="window.location='@Url.Action("Index")'" class="btn btn-default">
+                    <span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar
+                </button>
+                <button type="button" class="btn btn-default" ng-click="salvar()">
+                    <span class="glyphicon glyphicon-floppy-save blue"></span>&nbspSalvar
+                </button>
+                <a href="javascript:void(0);" ng-click="excluir()" class="btn btn-default" ng_show="(noticia.NOT_ID > 0)">
+                    <span class="glyphicon glyphicon-remove-sign"></span>&nbspExcluir
+                </a>
+                <a href="javascript:void(0)" ng-click="publicar()" title="Publica notícia selecionada no site" class="btn btn-default blue" ng-if="noticia.DATA_PUBLICACAO==null">
+                    <span class="glyphicon glyphicon-cloud-upload"></span>&nbspPublicar
+                </a>
+                <a href="javascript:void(0)" ng-click="removerPublicacao()" title="Remove a notícia selecionada do site" class="btn btn-default blue" ng-if="noticia.DATA_PUBLICACAO!=null">
+                    <span class="glyphicon glyphicon-cloud-download"></span>&nbspRemover Publicação
+                </a>
+            </div>
+            @*modal-preview - editor --- Popup modal*@
+            <div app-init-editor="editor"></div>
+
+        </div>
+    </div>
+</form>

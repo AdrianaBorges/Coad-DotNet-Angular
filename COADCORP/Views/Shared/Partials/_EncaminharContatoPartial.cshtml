@@ -1,0 +1,93 @@
+﻿
+ <div class="row padding">              
+            <div class="form-group col-lg-3">
+                 <label for="selectRegiao">Região</label> 
+                    <select ng-options="reg.RG_ID as reg.RG_DESCRICAO for reg in regioes"
+                            ng-model="$parent.filtroEncaminhar.RG_ID" id="selectRegiao1" ng-show="regioes.length > 0" class="form-control" 
+                        ng-change="regiaoOrigemSelecionado()">
+                            <option value="">Selecione</option>
+                    </select>
+            </div>
+          <div class="form-group col-lg-2" style="padding-top: 24px">
+                        <button type="button" class="btn btn-default" ng-click="$parent.listarRepresentantesDoCliente()"><span class="glyphicon glyphicon-search"></span></button>
+          </div>         
+        </div>       
+<div class="row">
+    <div class="col-lg-12">
+            <div class="panel panel-default" style="min-height: 340px;">
+      
+                        <div class="panel-heading bold"><span class="glyphicon glyphicon-user"></span> Representantes</div>          
+                        <div class="panel-body">                       
+                                    <div class="table-responsive">     
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>     
+                                                        <th>
+                                                            Representante
+                                                        </th>
+                                                        <th>Selecionar</th>                            
+                                                    </tr>
+                                                </thead>    
+                                                <tr ng-repeat="item in lstRepresentanteDoCliente" ng-class="{info: item.REP_ID == representante.REP_ID}" class="animate-repeat">                                    
+                                                    <td>
+                                                         {{item.REP_NOME}}   
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0)" ng-click="$parent.abreFormEncaminhar(item)" title="Selecionar" class="blue">
+                                                            <span class="glyphicon glyphicon-circle-arrow-down"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" ng-hide="lstRepresentanteDoCliente" class="text">
+                                                        Não foi encontrado nenhum registro.
+                                                    </td>
+                                                </tr>
+                                            </table> 
+                                    </div>          
+                                  
+                              
+                                <div app-pagination="paginaRepresentanteDoCliente" request-page="paginaReq" load-function="listarRepresentantesDoCliente(paginaReq)"></div>
+                            </div>
+                        </div>
+    </div>
+</div>
+      
+        <div app-modal="modalFormEncaminhar" header="Encaminhar" submodal>            
+            <div class="panel panel-default">
+                 <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-calendar"></span> Encaminhar</div>
+                  
+                    <div class="panel-body">
+                        <fieldset>
+                                <legend>Observações</legend>
+                                <div class="row">
+                                        <div class="form-group col-sm-3">
+                                               @Html.Label("Cliente")
+                                                <div class="text">{{$parent.$parent.encaminhamentoDTO.CLIENTE.CLI_NOME}}</div>
+                                                <div app_validation_msg="erros" for="CLI_ID"></div>
+                                        </div>
+                                        <div class="form-group col-sm-3">
+                                              @Html.Label("Representante")
+                                              <div class="text">{{$parent.$parent.encaminhamentoDTO.REPRESENTANTE.REP_NOME}}</div>
+                                              <div app_validation_msg="erros" for="REP_ID"></div>
+                                        </div> 
+                                   </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-12">                        
+                                            <div app_validation_msg="erros" for="observacao"></div>
+                                            @Html.Label("Observações")
+                                            <textarea class="form-control" placeholder="Observações" rows="6" ng-model="$parent.$parent.encaminhamentoDTO.observacao"></textarea>
+                                    </div> 
+                                </div>
+                            </fieldset>
+                    </div>
+                <div class="panel-footer">
+                    
+                     <button class="btn btn-primary" 
+                         app-switch-button="$parent.$parent.encaminharCliente()"
+                         switch-conf="[{label : 'Encaminhar', state : 'enca'}, {label : 'Encaminhando...', state : 'encaminhando', disabled : true}]"
+                         switch-var="$parent.$parent.buttonEncaminhar"
+                         ng-show="tab == 5"></button>
+                </div>
+            </div>
+        </div>

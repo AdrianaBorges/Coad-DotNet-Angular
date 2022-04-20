@@ -1,0 +1,81 @@
+﻿<!-- ALT: 23/06/2015 - disponibilizando os dados e métodos javascript -->
+@model  COAD.COADGED.Model.DTO.PublicacaoAreaConsultoriaDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Índice Numérico dos Atos";     
+}
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Índice Numérico dos Atos</li>
+    </ol>
+}
+@section Scripts {
+    @Scripts.Render("~/Scripts/appScripts/Home.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.js")
+    @Scripts.Render("~/Scripts/flot/excanvas.min.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.pie.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.time.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.resize.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.categories.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.tooltip.min.js")
+}
+@{
+     var baseDados = new SelectList(
+         new List<SelectListItem>
+        {
+            new SelectListItem {Text = "COADGED", Value = "COADGED", Selected = true},
+            new SelectListItem {Text = "Portal", Value = "Portal"},
+        }, "Value", "Text"
+     );
+}
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/publicacaoAreaConsultoria.js")
+
+<!-- ALT: 23/06/2015 - abrindo Angular para a aplicação -->
+<div ng-app="appModule">
+    <div ng-controller="PublicacaoAreaConsultoriaController" class="padding content" ng-cloak>
+        
+        <!-- ALT: 23/03/2016 - Filtro Padrão -->
+        <div class="panel panel-default">
+            <!-- ALT: 23/06/2015 - buscar/pesquisar -->
+            <div class="panel-body"> 
+                <div class="row">              
+                    <div class="form-group col-lg-3">
+                        <label for="coadgedBI">Colecionador</label>
+                        @Html.DropDownList("filtro.colecionadorId", new SelectList(@ViewBag.areas, "Value", "Text"), "Todos", new { @class = "form-control", ng_model = "filtro.colecionadorId", ng_change = "lerGgIndex(filtro.colecionadorId)" })
+                    </div>
+                    <div class="form-group col-lg-3" ng-show="filtro.colecionadorId==2">
+                        <label for="coadgedBI">UF</label>
+                        @Html.DropDownList("filtro.uf", new SelectList(@ViewBag.uf, "Value", "Text"), "Todos", new { @class = "form-control", ng_model = "filtro.uf" })
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="coadgedBI">Ano do Informativo</label>
+                        <input type="text" id="anoInformativo" ng-model="filtro.anoInformativo" class="form-control"/>
+                    </div> 
+                    <div class="form-group col-lg-3">
+                        <label for="coadgedBI">Base de Dados</label>
+                        @Html.DropDownList("filtro.baseDados", baseDados, "", new { @class = "form-control", ng_model = "filtro.baseDados" })
+                    </div> 
+                </div>
+            </div>
+
+            <!-- ALT: 23/06/2015 - botão pesquisar -->
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-disabled="!(filtro.anoInformativo && filtro.colecionadorId && filtro.baseDados)" <a href="javascript:void(0)" app-post="@Url.Action("IndiceAtos")?ano={{filtro.anoInformativo}}&uf={{filtro.uf}}&colecionadorId={{filtro.colecionadorId}}&baseDados={{filtro.baseDados}}&imprimir=FALSE" title="Pesquisar" class="blue"><span class="glyphicon glyphicon-search"></span></a> Pesquisar</button>
+                <button type="button" class="btn btn-default" ng-disabled="!(filtro.anoInformativo && filtro.colecionadorId && filtro.baseDados)" <a href="javascript:void(0)" app-post="@Url.Action("IndiceAtos")?ano={{filtro.anoInformativo}}&uf={{filtro.uf}}&colecionadorId={{filtro.colecionadorId}}&baseDados={{filtro.baseDados}}&imprimir=TRUE" title="Imprimir" class="blue"><span class="glyphicon glyphicon-search"></span></a> Imprimir</button>
+            </div>
+
+            <div ng-show="'@ViewBag.Publicar' != ''">
+                <div class="form-group col-lg-12">
+                    <label for="coadgedBI">Í N D I C E   N U M É R I C O   D O S   A T O S</label>
+                    @Html.HiddenFor(model => model.PUBLICACAO.PUB_CONTEUDO_RESENHA, new { @class = "form-control", app_rich_editor = "Publicar" })
+                    <div>
+                        @Html.Raw(@ViewBag.Publicar)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,83 @@
+﻿@using COAD.CORPORATIVO.SessionUtils
+<div>
+      <div>    
+          <div class="row">
+              <div class="form-group col-xs-3">
+                  <label for="nome">Carteira</label>
+                  <input type="text" id="nome1" ng-model="$parent.filtroCart.CAR_ID" class="form-control" />
+              </div>
+              <div class="form-group col-lg-3">
+                  <label>UEN</label>
+                  <select id="filtroUEN" name="filtroUEN"
+                          class="form-control"
+                          ng-model="filtroCart.uenId"
+                          ng-options="obj.UEN_ID as obj.UEN_DESCRICAO for obj in lstUEN"
+                          ng-change="carregaComboRegioes(filtroCart.uenId)">
+                      <option value="">Selecione</option>
+                  </select>
+              </div>
+              <div class="form-group col-lg-3">
+                  <label>Região</label>
+                  <select id="filtroRG" name="filtroRG"
+                          class="form-control"
+                          ng-model="filtroCart.rgId"
+                          ng-options="obj.RG_ID as obj.RG_DESCRICAO for obj in regioesCombo">
+                      <option value="">Selecione</option>
+                  </select>
+              </div>
+          </div>
+          <button type="button" class="btn btn-default" ng-click="listarCarteiras()">Pesquisar</button>
+      </div>
+</div>      
+<br />
+<div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Lista de Carteiras</div>
+          
+      <div class="panel-body">       
+                    <div class="table table-hover table-striped table-bordered-primary">     
+                            <!-- <input type="text" ng-model="dataTest" app-date/>  -->                              
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr class="bg-info">
+                                        <th>                                           
+                                            Carteira
+                                        </th>
+                                        <th>
+                                            UEN
+                                        </th>
+                                        <th style="min-width: 132px">                                           
+                                            Região
+                                        </th>  
+                                        <th>Ações</th>                                   
+                                    </tr>
+                                </thead>    
+                              <tr ng-repeat="item in lstCarteiras" class="animate-repeat">
+                                <td>
+                                    {{item.CAR_ID}}
+                                </td>
+                                <td>
+                                    {{item.UEN.UEN_DESCRICAO}}
+                                </td>
+                                <td>
+                                    {{item.REGIAO.RG_DESCRICAO}}
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);" ng-click="adicionarCarteira(item, $index);" title="Adicionar" class="text-info">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </a>
+                                </td>
+                              </tr>
+                            <tr>
+                                <td colspan="7" ng-show="lstCarteiras.length == 0 && carteiraListada">Nenhum registro foi encontrado. 
+                                </td>
+                                <td colspan="7" ng-show="!lstCarteiras">Clique em pesquisar para listar.</td>
+
+                            </tr>
+
+                            </table> 
+                    </div>
+              <div app-pagination="paginaCarteira" request-page="paginaReq" load-function="listarCarteiras(paginaReq)"></div>
+
+          </div>
+        </div>  

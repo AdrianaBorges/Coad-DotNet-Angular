@@ -1,0 +1,167 @@
+﻿<div app-modal="modal-extorno-parcela" data-header="Extorno" submodal>
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active" ng-class="{active : tab == 1}" ng-show="objControle.item"><a href="javascript:void(0)" ng-click="selecionarTab(1)">Parcelas do Assinatura/Contrato</a></li>
+        <li role="presentation" ng-class="{active : tab == 2}" ng-show="objControle.item"><a href="javascript:void(0)" ng-click="selecionarTab(2)">Do Pedido/Proposta</a></li>
+    </ul>
+    <div class="row animate-show" ng-show="tab == 1">
+        <div class="col-lg-12 limit-modal-height-32em">
+            <div class="font-30 pull-right"><strong>Assinatura </strong><span class="label label-danger">{{modalAssinatura.assinatura.ASN_NUM_ASSINATURA }}</span></div>
+            <div style="clear:both;"></div>
+            <br />
+            <div class="row" ng-show="modalAssinatura.assinatura.ASN_TRANSFERIDA == true">
+                <div class="col-md-2">
+                    <span class="label label-default">Assinatura Transferida</span>
+                </div>
+                <div class="col-md-10">
+                    <strong>Transferida Para</strong>
+                    <span class="label label-danger">{{modalAssinatura.assinatura.ASN_NUM_ASS_TRANSFERIDA }}</span>
+                </div>
+            </div>            
+            <fieldset class="padding-bottom" id="contratos">
+                <legend class="text-primary">Todos os Contratos</legend>
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped table-bordered-primary">
+                        <thead>
+                            <tr class="bg-info">
+                                <th>
+                                    Código
+                                </th>
+                                <th class="right">Número do Pedido</th>
+                                <th class="center">Data de Faturamento</th>
+                                <th class="center">Inicio de Vigência</th>
+                                <th class="center">Fim de Vigência</th>
+                                <th class="right">
+                                    Valor do Contrato
+                                </th>
+                                <th class="right">
+                                    Valor de Entrada
+                                </th>
+                                <th class="center">Número de Parcelas</th>
+                                <th class="right">Valor das Parcelas</th>
+                                @*<th>Ano de Vigência</th>*@
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in modalAssinatura.lstContratos" class="animate-repeat-all">
+                            <td>
+                                {{item.CTR_NUM_CONTRATO}}
+                            </td>
+                            <td class="right">
+                                {{item.IPE_ID}}
+                            </td>
+                            <td class="center" app-show-date="item.CTR_DATA_FAT" show-time></td>
+                            <td class="center" app-show-date="item.CTR_DATA_INI_VIGENCIA"></td>
+                            <td class="center" app-show-date="item.CTR_DATA_FIM_VIGENCIA"></td>
+                            <td class="right">
+                                <strong app-show-dinheiro="item.CTR_VLR_CONTRATO"></strong>
+                                <span ng-if="item.CTR_CORTESIA == 1" class="label label-success">Cortesia</span>
+                            </td>
+                            <td class="right">
+                                <strong app-show-dinheiro="item.CTR_VLR_ENTRADA"></strong>
+                            </td>
+                            <td class="center"> <span class="label label-success">{{item.CTR_QTE_PARCELAS}}</span></td>
+                            <td class="right">
+                                <strong app-show-dinheiro="item.CTR_VLR_PARCELAS" class="right"></strong>
+                            </td>
+                            @*<td>{{item.CTR_ANO_VIGENCIA}}</td>*@
+                            <td>
+                                <a href="#parcelas" ng-click="carregarParcelasExtorno(item.CTR_NUM_CONTRATO, null, true)"
+                                    title="Visualizar Parcelas" class="text-success">
+                                    <span class="glyphicon glyphicon-usd"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="10" ng-show="!modalAssinatura.lstContratos || modalAssinatura.lstContratos.length == 0">Nenhum Contrato Encontrado</td>
+                        </tr>
+                    </table>
+                </div>
+                <div app-pagination="pageContratos" request-page="paginaReq" load-function="listarContratos(paginaReq)"></div>
+            </fieldset>
+        </div>
+    </div>
+    <div ng-show="tab == 2" class="animate-show">
+        <div class="row">
+            <div class="col-md-12 padding">
+                
+                @Html.Partial("Partials/Modais/_ModalExtornoPagamentoItemParcela")
+            </div>
+        </div>
+    </div>
+</div>
+<div app-modal="modal-extorno-parcela-parcelas" data-header="Parcelas" submodal>
+   @Html.Partial("Partials/Modais/_ModalExtornoPagamentoItemParcela")
+</div>
+<div data-app-modal="modal-parcelas-selecionadas" data-header="Parcelas Selecionadas" size="small">
+    <form>
+        <div class="panel panel-corp" style="margin: 0px;">
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-filter"></span>Parcelas Selecionadas
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped table-bordered-primary">
+                        <thead>
+                            <tr class="bg-info">
+                                <th style="min-width: 75px">
+                                    Código Parcela
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in modalAssinatura.LstParcelasSelecionadas" class="animate-repeat">
+                            <td>{{item.key}}</td>
+                        </tr>
+                        <tr>
+                            <td ng-show="modalAssinatura.LstParcelasSelecionadas.length == 0">Nenhum registro foi encontrado.</td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div app-modal="modal-executar-extorno">
+    <div class="row">
+        <div class="form-group col-lg-12 limit-modal-height">
+            <fieldset>
+                <legend class="text-primary">
+                    Extornar Parcela(s)
+                </legend>
+                <div class="row">                   
+                    <div class="col-md-4">
+                        <div class="limit-div-1_5">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="min-width: 75px">
+                                                Parcela
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="item in modalAssinatura.LstParcelasSelecionadas" class="animate-repeat">
+                                        <td>{{item.key}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td ng-show="modalAssinatura.LstParcelasSelecionadas.length == 0">Nenhum registro foi encontrado.</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <button app-switch-button="$parent.extornarParcela()"
+                                switch-conf="[{label : 'Extornar Parcela', state : 'save'}, {label : 'Processando...', state : 'saved', disabled : true}]"
+                                switch-var="$parent.buttonSave"
+                                class="btn btn-primary">
+                            <span class="fa fa-undo font-15" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>

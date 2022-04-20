@@ -1,0 +1,54 @@
+﻿@using COAD.SEGURANCA.Repositorios.Base
+@using COAD.CORPORATIVO.SessionUtils
+
+@{
+
+    int? uenId = null;
+    var uen = SessionUtil.GetUen();
+
+    if(uen != null)
+    {
+        uenId = uen.UEN_ID;
+    }
+}
+<div ng-controller="UenController" ng-cloak data-ng-init="init(@uenId);" id="div-uen" ng-class="{'uen-expandida' : open === true}">
+    <div class="bg-primary">
+        <a href="javascript:void(0);" title="Trocar Uen" ng-click="abrirPainelUen()"><span class="glyphicon glyphicon-chevron-down"></span></a>                                     
+    </div>
+    <div> 
+            <div app-message></div> 
+            <div class="panel panel-corp animate-show-slow" ng-show="open === true">
+                          
+                <div class="panel-heading"><span class="glyphicon glyphicon-user"></span> Uens</div>
+          
+                <div class="panel-body">      
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <label>Uen Atual</label>
+                            <div class="text">{{uenAtual.UEN_DESCRICAO}}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                        <select ng-options="uen.UEN_ID as uen.UEN_DESCRICAO for uen in lstUEN"
+                                ng-model="uen.UEN_ID" id="lstUen" class="form-control">
+                                <option value="">Selecione</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                        <button  
+                                app-switch-button="trocarUen()" 
+                                switch-conf="[{label : 'Trocar', state : 'change'}, {label : 'Trocando...', state : 'changed', disabled : true}]" 
+                                switch-var="button"
+                                class="btn btn-primary">
+                                <span class="glyphicon glyphicon-refresh"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+         
+            </div>
+        </div>
+</div>

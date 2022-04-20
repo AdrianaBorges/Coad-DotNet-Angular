@@ -1,0 +1,52 @@
+﻿<local:DialogWindow
+    xmlns:local="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.15.0" 
+    x:Class="COAD.EXTENSION.UserControls.CodeGeneratorUserControll"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Width="534" Height="665.991">
+    <local:DialogWindow.Resources>
+        <Style x:Key="LabelStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+            <Setter Property="TextTrimming" Value="None"/>
+            <Setter Property="IsHyphenationEnabled" Value="False"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+    </local:DialogWindow.Resources>
+    <Grid Margin="0,0,0,5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="145*"/>
+            <ColumnDefinition Width="381*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Chaves Primárias:&#xA;" HorizontalAlignment="Left" Height="29" Margin="20,124,0,0" VerticalAlignment="Top" Width="135" Grid.ColumnSpan="2"/>
+        <DataGrid x:Name="TbChavePrimaria" HorizontalAlignment="Left" Height="125" Margin="10,124,0,0" VerticalAlignment="Top" Width="179" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding Keys, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Key Nº" x:Name="ColumnKeyNumber" Binding="{Binding Path = Index, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                <DataGridTemplateColumn x:Name="ColumnCombox" Header="Chave Primária">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox IsEditable="False" SelectedIndex="0" SelectedItem="{Binding Path= Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="OnComboChange" ItemsSource="{Binding Keys}"></ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Criar" HorizontalAlignment="Left" Margin="239,581,0,0" VerticalAlignment="Top" Width="132" Height="40" Click="button1_Click" Grid.Column="1" IsEnabled="{Binding Metadata.PodeGerar}"/>
+        <TextBlock x:Name="TbClasseSelecionada" TextWrapping="Wrap" Text="{}{{ClasseSelecionada}}" Style="{DynamicResource LabelStyle}" Margin="10,10,247,707" FontSize="11" RenderTransformOrigin="0.476,0.5" Grid.Column="1"/>
+        <TextBlock HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" Text="Classe Selecionada:" VerticalAlignment="Top" Width="130" Style="{DynamicResource LabelStyle}" FontSize="12" Margin="20,10,0,0" Grid.ColumnSpan="2"/>
+        <Label Content="Model NameSpace:" HorizontalAlignment="Left" Height="25" Margin="10,278,0,0" VerticalAlignment="Top" Width="130" IsEnabled="{Binding Metadata.GerarModel}"/>
+        <TextBox x:Name="TxbModelNaspace" Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="10,280,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Text="{Binding Metadata.ModelNamespace}"/>
+        <Label Content="Service NameSpace:" HorizontalAlignment="Left" Height="25" Margin="10,338,0,0" VerticalAlignment="Top" Width="130" IsEnabled="{Binding Metadata.GerarService}"/>
+        <TextBox x:Name="TxbDAONamespace" Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="10,310,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Text="{Binding Metadata.DAONamespace}" IsEnabled="{Binding Metadata.GerarDAO}"/>
+        <Label Content="DAO NameSpace:" HorizontalAlignment="Left" Height="25" Margin="10,308,0,0" VerticalAlignment="Top" Width="130" RenderTransformOrigin="0.154,1.2" IsEnabled="{Binding Metadata.GerarDAO}"/>
+        <TextBox x:Name="TxbServiceNameSpace" Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="10,340,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Text="{Binding Metadata.ServiceNamespace}" IsEnabled="{Binding Metadata.GerarService}"/>
+        <CheckBox Content="Gerar Model" HorizontalAlignment="Left" Margin="20,49,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.545,0.312" IsChecked="{Binding Path= Metadata.GerarModel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <CheckBox Content="Gerar DAO&#xD;&#xA; " HorizontalAlignment="Left" Margin="20,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.545,0.312" Height="20" IsChecked="{Binding Path= Metadata.GerarDAO, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <CheckBox Content="Gerar Serviço" HorizontalAlignment="Left" Margin="20,90,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.545,0.312" Height="20" IsChecked="{Binding Path= Metadata.GerarService, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="19" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="115" Text="{Binding Metadata.RefClassName}"/>
+        <Button Content="Concluir" HorizontalAlignment="Left" Margin="239,581,0,0" VerticalAlignment="Top" Width="132" Height="40" Click="button1_Click" Grid.Column="1" IsEnabled="{Binding Metadata.PodeGerar}"/>
+        <Button Content="Próximo" HorizontalAlignment="Left" Margin="75,581,0,0" VerticalAlignment="Top" Width="132" Height="40" Click="proximoClick" Grid.Column="1" IsEnabled="{Binding Metadata.PodeGerar}"/>
+    </Grid>
+</local:DialogWindow>

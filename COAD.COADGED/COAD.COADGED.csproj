@@ -1,0 +1,745 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props" Condition="Exists('..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8F016345-04A9-4ED4-9757-F9CDD47B1253}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>COAD.COADGED</RootNamespace>
+    <AssemblyName>COAD.COADGED</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Homologacao|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Homologacao\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_Prod|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug_Prod\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="Boleto.Net, Version=2.0.0.0, Culture=neutral, PublicKeyToken=53630c3583b7ed5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Boleto.Net.2.1.0.374\lib\Boleto.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.3.3.0\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=3.4.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Windsor.3.4.0\lib\net45\Castle.Windsor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\Open-XML-SDK.2.7.2\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\blibliotecas\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.CodeCoverage.Shim, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeCoverage.1.0.3\lib\netstandard1.0\Microsoft.VisualStudio.CodeCoverage.Shim.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetSpell.SpellChecker">
+      <HintPath>..\blibliotecas\rte\NetSpell.SpellChecker.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NReco.PdfGenerator, Version=1.1.15.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.PdfGenerator.1.1.15\lib\net20\NReco.PdfGenerator.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenPop">
+      <HintPath>..\packages\OpenPop.NET.2.0.6.1120\lib\net40\OpenPop.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz, Version=2.5.0.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.2.5.0\lib\net40\Quartz.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RichTextEditor">
+      <HintPath>..\blibliotecas\rte\RichTextEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.5840.25917, Culture=neutral, PublicKeyToken=ee154a05c16af196, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\blibliotecas\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.40804.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\AutoMapperDefaultProfile.cs" />
+    <Compile Include="Config\COADGEDConfig.cs" />
+    <Compile Include="Config\IOCContainer\DAOInstaller.cs" />
+    <Compile Include="Config\IOCContainer\DbContextInstaller.cs" />
+    <Compile Include="Config\IOCContainer\ServiceInstaller.cs" />
+    <Compile Include="DAO\CadernoCompartilhadoDAO.cs" />
+    <Compile Include="DAO\CadernoConteudoDAO.cs" />
+    <Compile Include="DAO\CadernoDAO.cs" />
+    <Compile Include="DAO\CadernoNotaDAO.cs" />
+    <Compile Include="DAO\CapitalDAO.cs" />
+    <Compile Include="DAO\CargosDAO.cs" />
+    <Compile Include="DAO\ClientesRefDAO.cs" />
+    <Compile Include="DAO\ColaboradorDAO.cs" />
+    <Compile Include="DAO\AreasDAO.cs" />
+    <Compile Include="DAO\ConsultaEmailColecionadorDAO.cs" />
+    <Compile Include="DAO\ConsultaEmailDAO.cs" />
+    <Compile Include="DAO\ConsultaEmailGrandeGrupoDAO.cs" />
+    <Compile Include="DAO\ConsultaEmailPerfilColecDAO.cs" />
+    <Compile Include="DAO\ConsultaEmailStatusDAO.cs" />
+    <Compile Include="DAO\ConsultaEmailVerbeteDAO.cs" />
+    <Compile Include="DAO\FuncionalidadeDAO.cs" />
+    <Compile Include="DAO\FundamentacaoDAO.cs" />
+    <Compile Include="DAO\LogAcessoPortalDAO.cs" />
+    <Compile Include="DAO\LogSimuladorDAO.cs" />
+    <Compile Include="DAO\ManualDPDAO.cs" />
+    <Compile Include="DAO\ManualDPItemDAO.cs" />
+    <Compile Include="DAO\ManualDPLinkDAO.cs" />
+    <Compile Include="DAO\ManualDPModuloDAO.cs" />
+    <Compile Include="DAO\MenuDocDAO.cs" />
+    <Compile Include="DAO\MenuDocItemDAO.cs" />
+    <Compile Include="DAO\NoticiaDAO.cs" />
+    <Compile Include="DAO\NoticiaGrupoDAO.cs" />
+    <Compile Include="DAO\NoticiasGuardadasDAO.cs" />
+    <Compile Include="DAO\OrigemAcessoMenuDAO.cs" />
+    <Compile Include="DAO\OrigemAcessoRefDAO.cs" />
+    <Compile Include="DAO\OrigemAcessoSubMenuDAO.cs" />
+    <Compile Include="DAO\OrigemDAO.cs" />
+    <Compile Include="DAO\OrigemFuncionalidadeDAO.cs" />
+    <Compile Include="DAO\PublicacaoEditadaDAO.cs" />
+    <Compile Include="DAO\PublicacaoRevisaoColaboradorDAO.cs" />
+    <Compile Include="DAO\PublicacaoRevisaoDAO.cs" />
+    <Compile Include="DAO\PublicacaoAlteracaoRevogacaoDAO.cs" />
+    <Compile Include="DAO\PublicacaoBuscaDAO.cs" />
+    <Compile Include="DAO\PublicacaoRemissivoDAO.cs" />
+    <Compile Include="DAO\PublicacaoRemissaoDAO.cs" />
+    <Compile Include="DAO\PublicacaoConfigDAO.cs" />
+    <Compile Include="DAO\PublicacaoPalavraChaveDAO.cs" />
+    <Compile Include="DAO\PublicacaoUfDAO.cs" />
+    <Compile Include="DAO\PublicacaoTitulacaoDAO.cs" />
+    <Compile Include="DAO\PublicacaoAreaConsultoriaDAO.cs" />
+    <Compile Include="DAO\Publicacao_vwDAO.cs" />
+    <Compile Include="DAO\TabDinamicaConfigDAO.cs" />
+    <Compile Include="DAO\TabDinamicaConfigItemDAO.cs" />
+    <Compile Include="DAO\TabDinamicaDAO.cs" />
+    <Compile Include="DAO\TabDinamicaGrupoDAO.cs" />
+    <Compile Include="DAO\TabDinamicaItemDAO.cs" />
+    <Compile Include="DAO\TabDinamicaLinkDAO.cs" />
+    <Compile Include="DAO\TabDinamicaPublicacaoDAO.cs" />
+    <Compile Include="DAO\UfDAO.cs" />
+    <Compile Include="DAO\PublicacaoDAO.cs" />
+    <Compile Include="DAO\InformativoDAO.cs" />
+    <Compile Include="DAO\OrgaoDAO.cs" />
+    <Compile Include="DAO\TitulacaoDAO.cs" />
+    <Compile Include="DAO\GrupoConsultoriaDAO.cs" />
+    <Compile Include="DAO\SecoesDAO.cs" />
+    <Compile Include="DAO\TipoAtoDAO.cs" />
+    <Compile Include="DAO\TipoMateriaDAO.cs" />
+    <Compile Include="DAO\VeiculoDAO.cs" />
+    <Compile Include="DAO\PeriodicidadeDAO.cs" />
+    <Compile Include="DAO\LabelsDAO.cs" />
+    <Compile Include="Model\DTO\Areas2DTO.cs" />
+    <Compile Include="Model\DTO\CadernoCompartilhadoDTO.cs" />
+    <Compile Include="Model\DTO\CadernoConteudoDTO.cs" />
+    <Compile Include="Model\DTO\CadernoDTO.cs" />
+    <Compile Include="Model\DTO\CadernoNotaDTO.cs" />
+    <Compile Include="Model\DTO\CapitalDTO.cs" />
+    <Compile Include="Model\DTO\CargosDTO.cs" />
+    <Compile Include="Model\DTO\ClientesRefDTO.cs" />
+    <Compile Include="Model\DTO\ColaboradorDTO.cs" />
+    <Compile Include="Model\DTO\AreasDTO.cs" />
+    <Compile Include="Model\DTO\ConsultaEmailColecionadorDTO.cs" />
+    <Compile Include="Model\DTO\ConsultaEmailDTO.cs" />
+    <Compile Include="Model\DTO\ConsultaEmailGrandeGrupoDTO.cs" />
+    <Compile Include="Model\DTO\ConsultaEmailPerfilColecDTO.cs" />
+    <Compile Include="Model\DTO\ConsultaEmailStatusDTO.cs" />
+    <Compile Include="Model\DTO\ConsultaEmailVerbeteDTO.cs" />
+    <Compile Include="Model\DTO\Custons\ManualDpItemNovidadeDTO.cs" />
+    <Compile Include="Model\DTO\Custons\ParamConsultaDTO.cs" />
+    <Compile Include="Model\DTO\Custons\ParamConsultaManualDTO.cs" />
+    <Compile Include="Model\DTO\Custons\TabelaArvoreDTO.cs" />
+    <Compile Include="Model\DTO\Custons\TabelaDinamicaConfigNovidadeDTO.cs" />
+    <Compile Include="Model\DTO\Custons\TabelasGrupoAcesso.cs" />
+    <Compile Include="Model\DTO\FuncionalidadeDTO.cs" />
+    <Compile Include="Model\DTO\FuncionalidadeNivelAcessoDTO.cs" />
+    <Compile Include="Model\DTO\FundamentacaoDTO.cs" />
+    <Compile Include="Model\DTO\LinhaProdutoRefDTO.cs" />
+    <Compile Include="Model\DTO\ListaManualDPDTO.cs" />
+    <Compile Include="Model\DTO\LogAcessoPortalDTO.cs" />
+    <Compile Include="Model\DTO\LogSimuladorDTO.cs" />
+    <Compile Include="Model\DTO\ManualDPDTO.cs" />
+    <Compile Include="Model\DTO\ManualDPItemDTO.cs" />
+    <Compile Include="Model\DTO\ManualDPLinkDTO.cs" />
+    <Compile Include="Model\DTO\ManualDPModeloDTO.cs" />
+    <Compile Include="Model\DTO\MenuDocDTO.cs" />
+    <Compile Include="Model\DTO\MenuDocItemDTO.cs" />
+    <Compile Include="Model\DTO\NoticiaDTO.cs" />
+    <Compile Include="Model\DTO\NoticiaGrupoDTO.cs" />
+    <Compile Include="Model\DTO\NoticiasGuardadasDTO.cs" />
+    <Compile Include="Model\DTO\OrigemAcessoMenuDTO.cs" />
+    <Compile Include="Model\DTO\OrigemAcessoRefDTO.cs" />
+    <Compile Include="Model\DTO\OrigemAcessoSubMenuDTO.cs" />
+    <Compile Include="Model\DTO\OrigemFuncionalidadeDTO.cs" />
+    <Compile Include="Model\DTO\ProdutoComposicaoRefDTO.cs" />
+    <Compile Include="Model\DTO\ProdutoRefDTO.cs" />
+    <Compile Include="Model\DTO\PublicacaoConfigDTO.cs" />
+    <Compile Include="Model\DTO\PublicacaoEditadaDTO.cs" />
+    <Compile Include="Model\DTO\PublicacaoRevisaoColaboradorDTO.cs" />
+    <Compile Include="Model\DTO\PublicacaoRevisaoDTO.cs" />
+    <Compile Include="Model\DTO\PublicacaoAlteracaoRevogacaoDTO.cs" />
+    <Compile Include="Model\DTO\PublicacaoBuscaDTO.cs" />
+    <Compile Include="Model\DTO\PublicacaoRemissaoDTO.cs" />
+    <Compile Include="Model\DTO\PublicacaoUfDTO.cs" />
+    <Compile Include="Model\DTO\PublicacaoCicloAprovacaoDTO.cs" />
+    <Compile Include="Model\DTO\PublicacaoFluxoEtapaDTO.cs" />
+    <Compile Include="Model\DTO\PublicacaoFluxoDTO.cs" />
+    <Compile Include="Model\DTO\PublicacaoTitulacaoDTO.cs" />
+    <Compile Include="Model\DTO\PublicacaoRemissivoDTO.cs" />
+    <Compile Include="Model\DTO\PublicacaoAreaConsultoriaDTO.cs" />
+    <Compile Include="Model\DTO\Publicacao_vwDTO.cs" />
+    <Compile Include="Model\DTO\TabDinamicaConfigDTO.cs" />
+    <Compile Include="Model\DTO\TabDinamicaConfigItemDTO.cs" />
+    <Compile Include="Model\DTO\TabDinamicaDTO.cs" />
+    <Compile Include="Model\DTO\TabDinamicaGrupoDTO.cs" />
+    <Compile Include="Model\DTO\TabDinamicaItemDTO.cs" />
+    <Compile Include="Model\DTO\TabDinamicaLinkDTO.cs" />
+    <Compile Include="Model\DTO\TabDinamicaOrigemDTO.cs" />
+    <Compile Include="Model\DTO\TabDinamicaPublicacaoDTO.cs" />
+    <Compile Include="Model\DTO\UfDTO.cs" />
+    <Compile Include="Model\DTO\PublicacaoPalavraChaveDTO.cs" />
+    <Compile Include="Model\DTO\InformativoDTO.cs" />
+    <Compile Include="Model\DTO\PublicacaoDTO.cs" />
+    <Compile Include="Model\DTO\OrgaoDTO.cs" />
+    <Compile Include="Model\DTO\TitulacaoDTO.cs" />
+    <Compile Include="Model\DTO\GrupoConsultoriaDTO.cs" />
+    <Compile Include="Model\DTO\SecoesDTO.cs" />
+    <Compile Include="Model\DTO\TipoAtoDTO.cs" />
+    <Compile Include="Model\DTO\TipoMateriaDTO.cs" />
+    <Compile Include="Model\DTO\VeiculoDTO.cs" />
+    <Compile Include="Model\DTO\PeriodicidadeDTO.cs" />
+    <Compile Include="Model\DTO\LabelsDTO.cs" />
+    <Compile Include="Model\DTO\ProdutosDTO.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\Contexto\AREAS_CONSULTORIA.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\AREAS_CONSULTORIA1.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\AREAS_CONSULTORIA_NEWS.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\AREA_CONSULTORIA_CURSO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CADERNO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CADERNO_COMPARTILHADO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CADERNO_CONTEUDO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CADERNO_NOTA.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CAPITAL.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CARGOS.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLIENTES_REF.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\COADGED.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>COADGED.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\COADGED.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\COADGED.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>COADGED.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\COLABORADOR.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONSULTA_EMAIL.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONSULTA_EMAIL_COLECIONADOR.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONSULTA_EMAIL_GRANDE_GRUPO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONSULTA_EMAIL_PERFIL_COLEC.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONSULTA_EMAIL_STATUS.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONSULTA_EMAIL_VERBETE.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\FUNCIONALIDADE.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\FUNCIONALIDADE_NIVEL_ACESSO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\FUNDAMENTACAO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\INFORMATIVO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\LABELS.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\LINHA_PRODUTO_REF.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\LOG_ACESSO_PORTAL.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\LOG_SIMULADOR.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\MANUAL_DP.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\MANUAL_DP_ITEM.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\MANUAL_DP_LINK.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\MANUAL_DP_MODULO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\MENU_DOC.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\MENU_DOC_ITEM.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NEWS.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTICIA.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTICIAS_GUARDADAS.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTICIA_GRUPO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\NOTICIA_GRUPO_LINHA_PROD.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ORGAO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ORIGEM_ACESSO_MENU.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ORIGEM_ACESSO_REF.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ORIGEM_ACESSO_SUBMENU.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ORIGEM_FUNCIONALIDADE.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PERIODICIDADE.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PLUBLICACAO_FLUXO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRODUTO_COMPOSICAO_REF.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PRODUTO_REF.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO_ALTERACAO_REVOGACAO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO_AREAS_CONSULTORIA.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO_BUSCA.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO_CICLO_APROVACAO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO_CONFIG.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO_EDITADA.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO_FLUXO_ETAPA.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO_fun_Result.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO_GRUPO_CONSULTORIA.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO_PALAVRA_CHAVE.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO_REMISSAO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO_REMISSIVO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO_REVISAO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO_REVISAO_COLABORADOR.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO_TITULACAO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO_UF.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PUBLICACAO_vw.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\RELATORIOS.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\SECOES.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\sysdiagrams.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TABELA_CEST_VW.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TABELA_TIPI_VW.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TAB_DINAMICA.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TAB_DINAMICA_CONFIG.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TAB_DINAMICA_CONFIG_ITEM.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TAB_DINAMICA_GRUPO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TAB_DINAMICA_ITEM.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TAB_DINAMICA_LINK.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TAB_DINAMICA_ORIGEM.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TAB_DINAMICA_PUBLICACAO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_ATO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TIPO_MATERIA.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TITULACAO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\UF_REF.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\VEICULO.cs">
+      <DependentUpon>COADGED.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\CadernoCompartilhadoSRV.cs" />
+    <Compile Include="Service\CadernoConteudoSRV.cs" />
+    <Compile Include="Service\CadernoNotaSRV.cs" />
+    <Compile Include="Service\CadernoSRV.cs" />
+    <Compile Include="Service\CapitalSRV.cs" />
+    <Compile Include="Service\CargosSRV.cs" />
+    <Compile Include="Service\ClientesRefSRV.cs" />
+    <Compile Include="Service\ColaboradorSRV.cs" />
+    <Compile Include="Service\AreasSRV.cs" />
+    <Compile Include="Service\ConsultaEmailColecionadorSRV.cs" />
+    <Compile Include="Service\ConsultaEmailGrandeGrupoSRV.cs" />
+    <Compile Include="Service\ConsultaEmailPerfilColecSRV.cs" />
+    <Compile Include="Service\ConsultaEmailSRV.cs" />
+    <Compile Include="Service\ConsultaEmailStatusSRV.cs" />
+    <Compile Include="Service\ConsultaEmailVerbeteSRV.cs" />
+    <Compile Include="Service\EditorRTE.cs" />
+    <Compile Include="Service\FuncionalidadeSRV.cs" />
+    <Compile Include="Service\FundamentacaoSRV.cs" />
+    <Compile Include="Service\LogAcessoPortalSRV.cs" />
+    <Compile Include="Service\LogSimuladorSRV.cs" />
+    <Compile Include="Service\ManualDPItemSRV.cs" />
+    <Compile Include="Service\ManualDPLinkSRV.cs" />
+    <Compile Include="Service\ManualDPModuloSRV.cs" />
+    <Compile Include="Service\ManualDPSRV.cs" />
+    <Compile Include="Service\MenuDocItemSRV.cs" />
+    <Compile Include="Service\MenuDocSRV.cs" />
+    <Compile Include="Service\NoticiaGrupoSRV.cs" />
+    <Compile Include="Service\NoticiasGuardadasSRV.cs" />
+    <Compile Include="Service\NoticiaSRV.cs" />
+    <Compile Include="Service\OrigemAcessoRefSRV.cs" />
+    <Compile Include="Service\OrigemFuncionalidadeSRV.cs" />
+    <Compile Include="Service\OrigemSRV.cs" />
+    <Compile Include="Service\PublicacaoEditadaSRV.cs" />
+    <Compile Include="Service\PublicacaoRevisaoColaboradorSRV.cs" />
+    <Compile Include="Service\PublicacaoRevisaoSRV.cs" />
+    <Compile Include="Service\PublicacaoAlteracaoRevogacaoSRV.cs" />
+    <Compile Include="Service\PublicacaoBuscaSRV.cs" />
+    <Compile Include="Service\PublicacaoRemissaoSRV.cs" />
+    <Compile Include="Service\PublicacaoRemissivoSRV.cs" />
+    <Compile Include="Service\PublicacaoConfigSRV.cs" />
+    <Compile Include="Service\PublicacaoPalavraChaveSRV.cs" />
+    <Compile Include="Service\PublicacaoUfSRV.cs" />
+    <Compile Include="Service\PublicacaoTitulacaoSRV.cs" />
+    <Compile Include="Service\PublicacaoAreaConsultoriaSRV.cs" />
+    <Compile Include="Service\Publicacao_vwSRV.cs" />
+    <Compile Include="Service\TabDinamicaConfigItemSRV.cs" />
+    <Compile Include="Service\TabDinamicaConfigSRV.cs" />
+    <Compile Include="Service\TabDinamicaGrupoSRV.cs" />
+    <Compile Include="Service\TabDinamicaItemSRV.cs" />
+    <Compile Include="Service\TabDinamicaPublicacaoSRV.cs" />
+    <Compile Include="Service\TabDinamicaSRV.cs" />
+    <Compile Include="Service\UfSRV.cs" />
+    <Compile Include="Service\PublicacaoSRV.cs" />
+    <Compile Include="Service\InformativoSRV.cs" />
+    <Compile Include="Service\OrgaoSRV.cs" />
+    <Compile Include="Service\TitulacaoSRV.cs" />
+    <Compile Include="Service\GrupoConsultoriaSRV.cs" />
+    <Compile Include="Service\SecoesSRV.cs" />
+    <Compile Include="Service\TipoAtoSRV.cs" />
+    <Compile Include="Service\TipoMateriaSRV.cs" />
+    <Compile Include="Service\VeiculoSRV.cs" />
+    <Compile Include="Service\PeriodicidadeSRV.cs" />
+    <Compile Include="Service\LabelsSRV.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <EntityDeploy Include="Repositorios\Contexto\COADGED.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>COADGED.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Repositorios\Contexto\COADGED.edmx.diagram">
+      <DependentUpon>COADGED.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CrystalReports\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\COAD.CORPORATIVO\COAD.CORPORATIVO.csproj">
+      <Project>{720aa970-d9ae-459f-aa86-306224611411}</Project>
+      <Name>COAD.CORPORATIVO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\COAD.PORTAL\COAD.PORTAL.csproj">
+      <Project>{3e6f1f9b-35a3-4ca9-9785-0737298614ef}</Project>
+      <Name>COAD.PORTAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\COAD.SEGURANCA\COAD.SEGURANCA.csproj">
+      <Project>{2584c60a-835b-44b7-9c49-10f489de32bd}</Project>
+      <Name>COAD.SEGURANCA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\COAD.UTIL\COAD.UTIL.csproj">
+      <Project>{d5fd3775-bcf4-485f-89c7-254e6632c175}</Project>
+      <Name>COAD.UTIL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\shared\genericcrud\GenericCrud\Coad.GenericCrud.csproj">
+      <Project>{a6a9ff49-fa0d-468e-9966-31b8d7ef5a97}</Project>
+      <Name>Coad.GenericCrud</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Repositorios\Contexto\COADGED.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>COADGED.edmx</DependentUpon>
+      <LastGenOutput>COADGED.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Repositorios\Contexto\COADGED.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>COADGED.edmx</DependentUpon>
+      <LastGenOutput>COADGED.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este projeto faz referência a pacotes do NuGet que não estão presentes neste computador. Use a Restauração de Pacotes do NuGet para baixá-los.  Para obter mais informações, consulte http://go.microsoft.com/fwlink/?LinkID=322105. O arquivo ausente é {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets" Condition="Exists('..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets')" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <!-- Habilitar T4 Template no Build-->
+  <!--<ItemGroup>
+    <T4ReferencePath Include="$(VsIdePath)PublicAssemblies\" />
+    -->
+  <!-- Add more T4ReferencePath items here -->
+  <!--
+  </ItemGroup>
+  <PropertyGroup>
+    <IncludeFolders>
+      $(IncludeFolders);$(MSBuildProjectDirectory)\Include;$(VsIdePath)EntityIncludes
+    </IncludeFolders>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <TransformOnBuild>true</TransformOnBuild>
+    <OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
+  </PropertyGroup>-->
+  <!-- This is the important line: -->
+  <!--
+  <Import Project="$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets" />-->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

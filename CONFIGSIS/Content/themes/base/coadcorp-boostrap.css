@@ -1,0 +1,697 @@
+﻿
+/**
+    Painels -------------------  
+ */
+
+.font-simulador {
+
+    font-family:Arial;
+    color: #666666;
+    font-size: 12px;
+    line-height: 16px;
+    margin-bottom: 10px;
+}
+
+
+.center {
+    text-align:center;
+}
+
+.bg-white {
+
+
+}
+.panel-corp {
+    border-color: #ddd;
+    border-bottom-width: 2px;
+    border-radius: 0px; 
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+
+.animate-repeat {
+  list-style:none;
+  box-sizing:border-box;
+}
+
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter {
+  transition:all linear 0.5s;
+}
+
+
+
+
+.animate-repeat.ng-leave.ng-leave-active,
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter {
+  opacity:0;
+  max-height:0;
+}
+
+.animate-repeat.ng-leave,
+.animate-repeat.ng-move.ng-move-active,
+.animate-repeat.ng-enter.ng-enter-active {
+  opacity:1;
+  max-height:40px;
+}
+
+
+.animate-show.ng-hide-add, .animate-show.ng-hide-remove {
+  transition: all ease 0.2s;
+}
+
+.animate-show.ng-hide {
+  line-height: 0;
+  opacity: 0;
+  padding: 0 10px;
+}
+
+.animate-show-fast {
+  line-height: 20px;
+  opacity: 1;
+  padding: 10px;
+  border: 1px solid black;
+  background: white;
+}
+
+.animate-show-fast.ng-hide-remove {
+  transition: all linear 0.1s;
+}
+
+.animate-show-fast.ng-hide {
+  line-height: 0;
+  opacity: 0;
+  padding: 0 10px;
+}
+
+
+.collapsing.ng-move,
+.collapsing.ng-enter {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition-timing-function: ease;
+       -o-transition-timing-function: ease;
+          transition-timing-function: ease;
+  -webkit-transition-duration: .35s;
+       -o-transition-duration: .35s;
+          transition-duration: .35s;
+  -webkit-transition-property: height, visibility;
+       -o-transition-property: height, visibility;
+          transition-property: height, visibility;
+}
+    
+.panel-corp > .panel-heading {
+    color: #999999;
+    background-color: #fff;
+    border-color: #ddd;
+    font-size: 15px;
+}
+
+/*-----------------------*/
+
+.body-bg {
+
+     background-color: #e8e8e8 !important;
+}
+#data-field, #representante {
+    max-width: 7em;
+    margin: auto;
+}
+
+#regiao-filter {
+    max-width: 7em;
+    margin: auto;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+
+    color: #fff;
+}
+.breadcrumb-dashboard, .white-bg {
+
+     background-color: #fff !important;
+}
+
+label {
+  color: grey;
+}
+
+
+.input-group-addon {
+
+    font-size: 12px;
+}
+
+td, th, .text {
+
+    color: grey;
+    font-size: 12px;
+}
+
+td > a {
+
+   
+}
+
+    td > a:hover {
+
+        text-decoration: none;
+    }
+
+.limit-content, .content, div.body {
+
+    padding: 0px;
+}
+
+div#breadcrumbs {
+
+    padding-top: 13px;
+}
+
+ul.format-ul {
+
+    list-style:none;
+    padding: 0;
+}
+
+nav#pagination {
+
+    max-height: 55px;
+}
+
+.table {
+
+    margin-bottom: 5px;
+}
+
+
+.primary-blue {
+    color:  #2E6DA4 !important;
+}
+
+.table-head > thead {
+
+    background-color: #eee;
+}
+
+.padding-button {
+
+    padding-top: 24px;
+}
+
+.selectedLine {
+
+    font-size: 12px;
+    background-color:greenyellow;
+    font-style:oblique;
+
+}
+
+.dropdown-menu-table {
+    top: 70% !important;
+    left: -154px !important;
+}
+
+tr.text td {
+
+    font-size: 15px;
+}
+
+.selectedLineLIB {
+
+    font-size: 12px;
+    background-color:cyan;
+    font-style:oblique;
+
+}
+
+legend {
+
+    color: grey;
+    font-size: 15px;
+}
+
+
+legend.text-primary {
+
+    font-size: 15px;    
+    border: 0;
+    border-bottom: 1px solid #337ab7;
+}
+.button-sm {
+
+    padding-top: 25px;    
+}
+.button-sm .btn-sm, .button-sm-grid {
+
+    padding: 4px 10px;    
+}
+
+.button-sm-seach {
+
+    padding: 4px 10px;
+}
+
+.message-error {
+
+    font-size: 13px;
+}
+
+.alert {
+      
+  position: fixed;
+  top: 54px;
+  z-index: 1500;
+  width: 60%;
+  left: 20%;
+}
+
+.submodal {
+    z-index: 1050;
+  
+}
+
+.grid-combobox {
+
+   
+   margin-right: 3px;
+}
+
+.grid-input, .grid-combobox {
+
+    max-width: 120px;
+}
+
+.icone {
+    font-size: 13px;
+}
+
+.padding-left-right {
+
+    padding: 0px 10px 0px 10px;
+}
+
+.left-padding {
+
+    padding-left: 15px;
+}
+
+.padding-3 {
+
+    padding: 3px 3px 0px 3px;
+}
+
+.limit-uf, .limit-div {
+
+    max-height: 215px;
+    overflow-y: auto;
+}
+
+.limit-modal-height {
+
+    max-height: 340px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.limit-modal-height-1 {
+
+    max-height: 16em;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+.overflow {
+
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+.half-size-table {
+
+    max-width : 50%;
+}
+
+.padding-top {
+
+    padding-top: 15px;
+}
+
+.form-padding-top {
+
+    padding-top: 25px;
+}
+
+ td, th, .text {
+    color: grey;
+  }
+
+
+
+
+#button-menu {
+
+    color: white;
+}
+
+
+    /* Customização de stilos para popover (tooltip) */
+    .custom-title{
+        margin: 0;
+    }
+    .custom-title .glyphicon{
+        vertical-align: top;
+    }
+
+    /* Customização de stilos para collapse */
+    .coll
+    {
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: normal;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    .coll-xs,
+    .coll-group-xs > .coll
+    {
+        padding: 1px 5px;
+        font-size: 12px;
+        line-height: 1.5;
+        border-radius: 3px;
+    }
+
+    .coll:after
+    {
+        font-family: "Glyphicons Halflings";
+        content: "\e113";
+    }
+
+
+    .coll.collapsed:after
+    {
+        font-family: "Glyphicons Halflings";
+        content: "\e114";
+        float: right;
+    }
+
+.select2-box {
+
+    position: absolute;
+    top: 100%;
+    /* left: 0; */
+    width: 95%;
+    z-index: 1000;
+    float: left;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+}
+.select2-ul {
+    /*position: absolute;
+    top: 95%;
+    /* left: 0; 
+    width: 100%;
+    z-index: 1000;
+    display: none;
+    float: left; */
+    max-height: 200px;
+    overflow-y: auto;
+    min-width: 160px;
+    padding: 0;
+    margin: -1px 0 0;
+    font-size: 11px;
+    text-align: left;
+    list-style: none;
+    
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 0px 0px 4px 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+
+.select2-ul > li > a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+}
+.select2-ul > li > a:hover,
+.select2-ul > li > a:focus {
+  color: #fff;
+  text-decoration: none;
+  background-color: #337ab7;
+}
+.select2-ul > .active > a,
+.select2-ul > .active > a:hover,
+.select2-ul > .active > a:focus {
+  color: #fff;
+  text-decoration: none;
+  background-color: #337ab7;
+  outline: 0;
+}
+.select2-ul > .disabled > a,
+.select2-ul > .disabled > a:hover,
+.select2-ul > .disabled > a:focus {
+  color: #777;
+}
+.select2-ul > .disabled > a:hover,
+.select2-ul > .disabled > a:focus {
+  text-decoration: none;
+  cursor: not-allowed;
+  background-color: transparent;
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+.display {
+    display: block;
+}
+
+
+
+
+    /*-----------------------------------------*/
+
+
+@media only Screen and (max-width: 767px) {
+
+    a, body {
+        font-size: 10px;
+    }
+
+    td, th, .text {
+        font-size: 10px;
+    }
+    
+    #wrapper {
+        padding-left: 0px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0%;
+    }
+    
+    #page-content-wrapper {
+      width: 100%;
+      padding: 2px;
+    }
+
+
+    .panel-heading {
+        padding: 2px 2px; 
+    }
+
+    .panel-body {
+       padding: 2px;
+    }
+
+    
+    .btn {        
+        font-size: 16px;
+    }
+
+   #button-menu {
+        display:none;
+    }
+
+    .sidebar-nav > .sidebar-brand {
+
+        height: 150px;
+        font-size: 19px;
+    }
+
+    .no-mobile {
+
+        display: none;
+    }
+
+    .collapse a {
+
+        color:#9d9d9d;
+        text-decoration: none;
+        background-color: transparent;
+    }
+
+    .collapse a:hover {
+
+        text-decoration: none;
+        color:#fff;
+        background-color: transparent;
+    }
+
+    .dropdown-menu {
+
+        background-color: #fff !important;
+    }
+
+    .dropdown-menu a {
+
+        font-size: 14px;
+        color: #565252 !important;
+    }
+
+    .divider {
+
+        background-color: #969393 !important;
+    }
+
+    button.navbar-toggle[aria-expanded="true"]{
+
+        background-color: #5A5858 !important;
+    }
+
+    .logo-mobile, .logo-mobile:hover {
+
+        position: relative;
+        top: 15px;
+        left: 30px;
+        color: #fff;
+        font-size: 19px;
+    }
+
+    div.navbar-collapse {
+
+        padding-bottom: 15px;
+    }
+
+    .ajax-loader {
+        position: fixed;
+        top: 50%;
+        left: 43%;
+    }
+
+    .img-principal {
+
+        width: 100%;
+    }
+   
+}
+
+@media Screen and (min-width: 768px) {
+     
+    .img-principal {
+
+        width: 600px;
+        height: 470px;
+    }
+    
+    td, th, .text {
+        font-size: 12px;
+    }
+
+    .form-control {
+        height: 28px;
+        font-size: 12px;
+    }
+
+    label {
+      font-size: 13px;
+      color: grey;
+    }
+
+    .panel-heading {    
+         padding: 5px 15px; 
+    }
+
+    
+    .panel-corp > .panel-heading {
+   
+        padding: 10px 15px; 
+    }
+          
+    .btn {
+        padding: 3px 12px;
+    }
+
+   #button-menu {
+
+        padding: 5px 15px;
+        font-size: 27px !important;
+    }
+    
+   .mobile {
+
+        display: none;    
+    }
+
+   .no-mobile {
+
+        display: block;    
+    }
+
+    .dropdown-menu {
+
+        z-index: 100000;
+    }
+
+    /** Copiado do site do boostrap -------------------------------*/
+    .zero-clipboard {
+        display: block;
+    }
+
+    .btn-clipboard {
+   
+    display: block;
+    padding: 5px 8px;
+    font-size: 12px;
+    color: #767676;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #e1e1e8;
+    border-radius: 0 4px 0 4px;
+}
+
+    .edit-modal {
+
+        width: 49px;
+        position: absolute;
+        right: 15px; 
+        z-index: 10;
+    }
+    /** --------------------------------------------------------*/
+
+
+}

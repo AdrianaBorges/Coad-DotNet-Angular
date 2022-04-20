@@ -1,0 +1,222 @@
+﻿@model IEnumerable<COAD.CORPORATIVO.Model.NotaFiscal>
+
+@{
+    ViewBag.Title = "RelatorioNotasPeriodo";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
+
+}
+
+<div id="Relatorio01">
+
+    <table>
+        <tr>
+            <th style="vertical-align: bottom; text-align: left;">
+                Relatorio de notas fiscais por período
+            </th>
+        </tr>
+        <tr>
+            <th style="vertical-align: bottom; text-align: left;">
+                <span>Empresa: @ViewBag.EmpRazaoSocial</span>
+            </th>
+            <th style="text-align: right; float:right;">
+                <span>Período: @ViewBag.MesAtual / @ViewBag.AnoAtual</span>
+            </th>
+        </tr>
+    </table>
+
+    <table class="relatorio">
+        <thead>
+            <tr style="background-color: #D9E4E6; border: 1px solid #D9E4E6; color: #000000; font-size: 10px; ">
+                <th style="vertical-align: bottom; text-align: left;">
+                    @Html.Label("Tipo")
+                </th>
+                <th style="text-align: right;">
+                    @Html.Label("Numero")
+                </th>
+                <th style="text-align: right;">
+                    @Html.Label("Serie")
+                </th>
+                <th style="text-align: center;">
+                    @Html.Label("Ent/Sai")
+                </th>
+                <th style="text-align: left">
+                    @Html.Label("Cli/Forn")
+                </th>
+                <th style="text-align: left;">
+                    @Html.Label("Situação")
+                </th>
+                <th style="text-align: right;">
+                    @Html.Label("Valor")
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null)
+                {
+                    var nftipo = 0;
+                    var qtdenf = 0;
+                    decimal totalnf = 0;
+
+                    foreach (var item in Model)
+                    {
+
+                        if (item.NF_TIPO != nftipo)
+                        {
+                            nftipo = item.NF_TIPO;
+
+                            //---Totais
+                <tr style="background-color: #D9E4E6; border: 1px solid #D9E4E6; color: #000000; font-size: 10px; ">
+                    <th colspan="3"></th>
+                    <th style="text-align: right">
+                        @Html.Label("Quantidade:")
+                    </th>
+                    <th style="text-align: right">
+                        <label>@qtdenf</label>
+                    </th>
+                    <th style="text-align: right">
+                        @Html.Label("Total:")
+                    </th>
+                    <th class="align-right" style="min-width: 100px;">
+                        <label>@totalnf.ToString("R$ ###,##0.00")</label>
+                    </th>
+                </tr>
+                            
+                            qtdenf = 0;
+                            totalnf = 0;
+
+                            //------
+                <tr style="background-color: #D9E4E6; border: 1px solid #D9E4E6; color: #000000; font-size: 10px; ">
+                    <th style="vertical-align: bottom; text-align: left">
+                        @Html.Label("Tipo")
+                    </th>
+                    <th style="text-align: right">
+                        @Html.Label("Numero")
+                    </th>
+                    <th style="text-align: right">
+                        @Html.Label("Serie")
+                    </th>
+                    <th style="text-align: center">
+                        @Html.Label("Ent/Sai")
+                    </th>
+                    <th style="text-align: left">
+                        @Html.Label("Cli/Forn")
+                    </th>
+                    <th style="text-align: left">
+                        @Html.Label("Situação")
+                    </th>
+                    <th style="text-align: right">
+                        @Html.Label("Valor")
+                    </th>
+                </tr>
+                        }
+
+                        qtdenf = qtdenf + 1;
+                        totalnf = totalnf + (decimal)@item.NF_VLR_NOTA;
+                        
+                <tr>
+                    <td style="text-align: left">
+                        @if (@item.NF_TIPO == 0)
+                        {
+                            <label>Entrada</label>
+                        }
+                        else if (item.NF_TIPO == 1)
+                        {
+                            <label>Saida</label>
+                                        
+                        }
+                        else if (item.NF_TIPO == 2)
+                        {
+                            <label>Entrada Serviço</label>
+                        }
+                        else
+                        {
+                            <label>Saida Serviço</label>
+                        }
+
+                    </td>
+                    <td style="text-align: right;">
+                        <label>@item.NF_NUMERO</label>
+                    </td>
+                    <td style="text-align: left;">
+                        <label>@item.NF_SERIE</label>
+                    </td>
+                    <td style="text-align: center">
+                        @{
+                        DateTime d = new DateTime();
+
+                        if (item.NF_TIPO == 0 || item.NF_TIPO == 2)
+                        {
+                            d = (DateTime)item.NF_DATA_ENTRADA;
+                        }
+                        else
+                        {
+                            d = (DateTime)item.NF_DATA_SAIDA;
+                        }
+                        
+                            <label>@d.ToString("dd/MM/yyyy")</label>
+                        }
+                    </td>
+                    <td style="text-align: left">
+                        @if (item.NF_TIPO == 0 || item.NF_TIPO == 2)
+                        {   
+                            @Html.DisplayFor(modelItem => item.Fornecedor.FOR_RAZAO_SOCIAL)
+                        }
+                        else
+                        { 
+                            @Html.DisplayFor(modelItem => item.CLIENTES.CLI_NOME)
+                        }
+                    </td>
+                    <td style="text-align: left">
+                        @if (item.NF_STATUS == "ATI")
+                        {  
+                            <label>Ativa</label>
+                        }
+                        else
+                        {
+                            <label>Pendente</label>
+                        }
+                    </td>
+                    <td style="text-align: right">
+                        <label>@item.NF_VLR_NOTA </label>
+                    </td>
+                </tr>
+                
+                    }
+
+
+                    //---Totais
+                <tr style="background-color: #D9E4E6; border: 1px solid #D9E4E6; color: #000000; font-size: 10px; ">
+                    <th colspan="3"></th>
+                    <th style="text-align: right">
+                        @Html.Label("Quantidade:")
+                    </th>
+                    <th style="text-align: right">
+                        <label>@qtdenf</label>
+                    </th>
+                    <th style="text-align: right">
+                        @Html.Label("Total:")
+                    </th>
+                    <th class="align-right" style="min-width: 100px;">
+                        <label>@totalnf.ToString("R$ ###,##0.00")</label>
+                    </th>
+                </tr>
+                    //------
+
+                }
+            }
+        </tbody>
+
+    </table>
+
+</div>
+
+
+
+@section Scripts {
+
+    @Styles.Render("~/Content/themes/base/relatorio.css")
+
+}
+

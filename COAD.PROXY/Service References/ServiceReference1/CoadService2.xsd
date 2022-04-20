@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="DadosPedidoIntegracao">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CEP" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UF" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="bairro" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="chavepedido" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="cidade" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="cli_id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="cmp_id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="complemento" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="dddCelular" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="dddComercial" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="endereco" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="foneCelular" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="foneComercial" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="formapgto" type="xs:int" />
+      <xs:element minOccurs="0" name="idpedido" type="xs:int" />
+      <xs:element minOccurs="0" name="nome" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="numero" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="numeroDocumento" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="numeroparcelas" type="xs:int" />
+      <xs:element minOccurs="0" name="senha" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="tipoDocumento" type="xs:int" />
+      <xs:element minOccurs="0" name="tipoEndereco" type="xs:int" />
+      <xs:element minOccurs="0" name="tipoPessoa" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DadosPedidoIntegracao" nillable="true" type="tns:DadosPedidoIntegracao" />
+</xs:schema>

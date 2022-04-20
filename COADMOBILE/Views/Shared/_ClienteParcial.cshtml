@@ -1,0 +1,173 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+                     
+                <fieldset>
+                    <legend>Dados básicos</legend>
+                    
+                    <div class="row">                        
+                        @*<div class="form-group col-sm-1">
+                            @Html.Label("Código")
+                            @Html.TextBoxFor(model => model.ID,  new {@class = "form-control", ng_model = "cliente.CLI_ID", disabled = "disabled" })
+                            @Html.ValidationMessageFor(model => model.ID, null, new { app_validation_msg = "erros", @for = "CLI_ID" }) 
+                        </div>*@
+                        <div class="form-group col-sm-4">
+                            @Html.LabelFor(model => model.CLI_NOME)
+                            @Html.TextBoxFor(model => model.CLI_NOME,  new {@class = "form-control", ng_model = "cliente.CLI_NOME" })
+                            @Html.ValidationMessageFor(model => model.CLI_NOME, null, new { app_validation_msg = "erros", @for = "CLI_NOME" }) 
+                        </div>
+                        <div class="form-group col-sm-2">
+                            @Html.LabelFor(model => model.CLI_CPF_CNPJ)
+                            @Html.TextBoxFor(model => model.CLI_CPF_CNPJ,  new {@class = "form-control", ng_model = "cliente.CLI_CPF_CNPJ", maxlength = 14 })
+                            @Html.ValidationMessageFor(model => model.CLI_CPF_CNPJ, null, new { app_validation_msg = "erros", @for = "CLI_CPF_CNPJ"}) 
+                        </div>
+                        <div class="form-group col-sm-2">
+                            @Html.LabelFor(model => model.CLI_A_C)
+                            @Html.TextBoxFor(model => model.CLI_A_C, new {@class = "form-control", ng_model = "cliente.CLI_A_C"})
+                            @Html.ValidationMessageFor(model => model.CLI_A_C, null, new { app_validation_msg = "erros", @for = "CLI_A_C" })                   
+                        </div>
+                         <div class="form-group col-sm-3">
+                            @Html.Label("", "Tipo de Cliente")
+                              @Html.DropDownList("tipodeCLIENTES", new SelectList(ViewBag.tiposDeCliente, "Value", "Text" ), "Selecione",  new { @class = "form-control", ng_model = "cliente.TIPO_CLI_ID" })
+                            @*<select id="tipodeCLIENTES" name="tipodeCLIENTES" class = "form-control" 
+                                ng-model="prepedido.CLIENTES.TIPO_CLI_ID" ng-options="tipoCli.Value as tipoCli.Text for tipoCli in lstTiposDeCliente">
+                                <option value="">Selecione</option>
+                            </select> *@          
+                        </div>
+                    </div>
+                    <div class="row">
+                       <div class="form-group col-sm-3">
+                            @Html.LabelFor(model => model.CLI_INSCRICAO)
+                            @Html.TextBoxFor(model => model.CLI_INSCRICAO, new {@class = "form-control", ng_model = "cliente.CLI_INSCRICAO"})
+                            @Html.ValidationMessageFor(model => model.CLI_INSCRICAO, null, new { app_validation_msg = "erros", @for = "CLI_INSCRICAO" })                 
+                       </div>
+                       <div class="form-group col-sm-2">
+                            @Html.LabelFor(model => model.CLI_COD_PAIS)
+                            @Html.TextBoxFor(model => model.CLI_COD_PAIS, new {@class = "form-control", ng_model = "cliente.CLI_COD_PAIS"})
+                            @Html.ValidationMessageFor(model => model.CLI_COD_PAIS, null, new { app_validation_msg = "erros", @for = "CLI_COD_PAIS" })                 
+                       </div>
+                    </div>
+                    </fieldset>
+                <fieldset>
+                    <legend>Endereços</legend>
+                    <div class="row padding">                
+                        <div class="table-responsive">
+                            <div app-validation-msg="erros" for="PROSPECTS_TELEFONE"></div>
+                            <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Cep</th>
+                                    <th>UF</th>
+                                    <th>Município</th>
+                                    <th>Bairro</th>
+                                    <th>Logradouro</th>
+                                    <th>Ações</th>
+                                    
+                                </tr>                                   
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="end in cliente.CLIENTES_ENDERECO" ng-show="cliente.CLIENTES_ENDERECO">
+                                    
+                                    <td>
+                                        {{end.TIPO_ENDERECO.TP_END_DESCRICAO}}
+                                    </td>
+                                    <td>                                        
+                                        {{end.END_CEP}}
+                                    </td>
+                                    <td>                                                         
+                                        {{end.END_UF}}
+                                    </td>          
+                                    <td>
+                                        {{end.MUNICIPIO.MUN_DESCRICAO}}
+                                    </td>        
+                                    <td>
+                                        {{end.END_BAIRRO}}
+                                    </td>                  
+                                    <td>  
+                                        {{end.END_LOGRADOURO}}
+                                    </td>
+                                    <td>                                        
+                                        <a href="javascript:void(0)" ng-click="AbrirModalEndereco(end, $index)" class="btnConfirmaExclusao blue" id="btnEdicaoItem" title="Editar">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                        </a>
+                                        <span ng-show="cliente.CLIENTES_ENDERECO.length == ($index + 1) && podeAdicionar()">
+                                            <a href="javascript:void(0)" ng-click="AbrirModalEndereco()" title="Incluir">
+                                                <span class="glyphicon glyphicon-plus blue"></span>
+                                            </a>
+                                        </span>
+                                    </td>                                    
+                                </tr>
+                                <tr ng-hide="cliente.CLIENTES_ENDERECO.length > 0">
+                                    <td colspan="7">Nenhuma endereço adicionado. Clique para adicionar: 
+                                        <a href="javascript:void(0)" ng-click="AbrirModalEndereco()" title="Incluir">
+                                                <span class="glyphicon glyphicon-plus blue"></span>
+                                         </a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                    </fieldset>               
+      
+        <div app-modal="modal-endereco" header="Dados do Endereço">
+            <div class="panel panel-default">
+                <div class="panel-body">   
+                
+                        <div class="row">  
+                            <div class="form-group col-sm-2">
+                                @Html.Label("Tipo")
+                                    <select id="tipodeendereco" name="tipodeendereco" class = "form-control" ng-model="$parent.end.TIPO_ENDERECO" ng-disabled="acaoEnd.acao === 1"
+                                    ng-options="tEnd as tEnd.TP_END_DESCRICAO for tEnd in tipoEnderecos track by tEnd.TP_END_ID" ng-change="tipoEnderecoSelecionado()">
+                                    <option value="">Selecione</option>
+                               </select>
+                                @Html.ValidationMessageFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().TIPO_LOG_ID, null, new { app_validation_msg = "erros", @for = "END_TIPO" }) 
+                            </div>              
+                             <div class="form-group col-sm-2">
+                                @Html.Label("CEP")
+                                @Html.TextBoxFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_CEP,  new {@class = "form-control", ng_model = "$parent.end.END_CEP", maxlength = "9", app_cep="$parent.endereco" })
+                                @Html.ValidationMessageFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_CEP, null, new { app_validation_msg = "erros", @for = "END_CEP" }) 
+                            </div>
+                            <div class="form-group col-sm-2">
+                                @Html.Label("UF")
+                                 @Html.DropDownList("UF", new SelectList(ViewBag.ufs, "UF_SIGLA", "UF_SIGLA" ), "Selecione",  new { @class = "form-control", ng_model = "$parent.end.END_UF", ng_change = "getBairrosPorUf(end)", app_cep_campo="$parent.endereco", campo = "uf" })                              
+                                @Html.ValidationMessageFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_UF, null, new { app_validation_msg = "erros", @for = "END_UF"}) 
+                            </div>
+                            <div class="form-group col-sm-3">
+                                @Html.Label("Município")
+                               <select id="tipodeCLIENTES" name="tipodeCLIENTES" class = "form-control" ng-model="$parent.end.MUNICIPIO"
+                                    ng-options="mun as mun.MUN_DESCRICAO for mun in municipios track by mun.MUN_ID" ng-change="municipioSelecionado()">
+                                    <option value="">Selecione</option>
+                               </select>
+                                @Html.ValidationMessageFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_MUNICIPIO, null, new { app_validation_msg = "erros", @for = "MUN_ID" }) 
+                            </div>
+                            <div class="form-group col-sm-3">
+                                @Html.Label("Bairro")
+                                @Html.TextBoxFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_BAIRRO,  new {@class = "form-control", ng_model = "$parent.end.END_BAIRRO",  app_cep_campo = "$parent.endereco", campo = "bairro"  })
+                                @Html.ValidationMessageFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_BAIRRO, null, new { app_validation_msg = "erros", @for = "END_BAIRRO" }) 
+                            </div>
+                </div>
+                        <div class="row">     
+                            <div class="form-group col-sm-3">
+                                @Html.Label("Logradouro")
+                                @Html.TextBoxFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_LOGRADOURO,  new {@class = "form-control", ng_model = "$parent.end.END_LOGRADOURO",  app_cep_campo = "$parent.endereco", campo = "logradouro"  })
+                                @Html.ValidationMessageFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_LOGRADOURO, null, new { app_validation_msg = "erros", @for = "END_LOGRADOURO" }) 
+                            </div>                  
+                            <div class="form-group col-sm-2">
+                                @Html.Label("Número")
+                                @Html.TextBoxFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_NUMERO,  new {@class = "form-control", ng_model = "$parent.end.END_NUMERO" })
+                                @Html.ValidationMessageFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_NUMERO, null, new { app_validation_msg = "erros", @for = "END_NUMERO" }) 
+                            </div>       
+                            <div class="form-group col-sm-3">
+                                @Html.Label("Complemento")
+                                @Html.TextBoxFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_COMPLEMENTO,  new {@class = "form-control", ng_model = "$parent.end.END_COMPLEMENTO" })
+                                @Html.ValidationMessageFor(model => model.CLIENTES_ENDERECO.FirstOrDefault().END_COMPLEMENTO, null, new { app_validation_msg = "erros", @for = "END_COMPLEMENTO" }) 
+                            </div>
+                        </div>
+
+                </div>
+                 <div class="panel-footer">
+            <button type="button" class="btn btn-default" ng-click="salvarEndereco()"><span class="glyphicon glyphicon-floppy-save blue"></span> {{acaoEnd.label}}</button>      
+                
+        </div> 
+
+        </div>
+    </div>

@@ -1,0 +1,212 @@
+﻿
+
+@if(ViewBag.mostraTudo != null || ViewBag.mostraTudo == true){
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" disabled="disabled">
+                                            Opções
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                            <li>
+                                                <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                            </li>                                                                           
+                                        </ul>
+                                    </div>
+                                </div>
+            </div>
+          
+            <div class="panel-body">            
+                <div class="row">              
+                    <div class="form-group col-lg-3">
+                        <label for="sigla">Data Inicial</label>
+                        <input type="text" id="dataInicialAge" ng-model="filtro.dataInicialMask" app-date="filtro.dataInicial" class="form-control"/>
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="sigla">Data Final</label>
+                        <input type="text" id="dataFinalAge" ng-model="filtro.dataFinalMask" app-date="filtro.dataFinal" class="form-control"/>
+                    </div>          
+                </div>
+            
+            </div>
+                  
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="abreAbaListaDePedidos()">Pesquisar</button>
+            </div>
+    </div>
+}
+else if (ViewBag.mostraTudo == null || ViewBag.mostraTudo == false)
+{
+      <div class="row padding">              
+            <div class="form-group col-lg-3">
+                <label for="sigla">Data Inicial</label>
+                <input type="text" id="dataInicialAge1" ng-model="filtro.dataInicialMask" app-date="filtro.dataInicial" class="form-control"/>
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="sigla">Data Final</label>
+                <input type="text" id="dataFinalAge1" ng-model="filtro.dataFinalMask" app-date="filtro.dataFinal" class="form-control"/>
+            </div>   
+          <div class="form-group col-lg-2" style="padding-top: 24px">
+                        <button type="button" class="btn btn-default" ng-click="$parent.listarAgendamentos()"><span class="glyphicon glyphicon-search"></span></button>
+          </div>         
+        </div>             
+}      
+
+<div class="row">
+    <div class="col-lg-9">
+        <div class="panel panel-default">
+      <!-- Default panel contents -->
+      
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-calendar"></span> Agendamentos</div>
+          
+            <div class="panel-body limit-modal-height-1">
+                    
+                        <div class="table-responsive">     
+                                <div class="text padding"><strong>Cliente: </strong>{{clienteModal.CLI_NOME}}</div>
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>      
+                                            <th>                                           
+                                                Data
+                                            </th>
+                                            <th>
+                                                Descrição
+                                            </th> 
+                                            <th>
+                                                Representante
+                                            </th>
+                                            <th>                                           
+                                                Cliente
+                                            </th>
+                                            <th>
+                                                Status
+                                            </th>
+                                            <th>
+                                                Ações
+                                            </th>                                        
+                                        </tr>
+                                    </thead>    
+                                  <tr ng-repeat="item in lstAgendamento" class="animate-repeat">
+                                        <td app-show-date="item.AGE_DATA_AGENDAMENTO" show-time>
+                                        
+                                        </td>  
+                                        <td>
+                                            {{item.AGE_DESCRICAO}}
+                                        </td>                                  
+                                        <td>
+                                             {{item.REPRESENTANTE.REP_NOME}}
+                                        </td>  
+                                        <td>                                       
+                                             {{item.CLIENTES.CLI_NOME}}
+                                        </td>
+                                      <td>
+                                          <span class="label label-success" ng-if="item.AGE_DATA_CONFIRMACAO">
+                                                  Confirmado
+                                              </span>                                          
+                                              <span class="label label-warning" ng-if="!item.AGE_DATA_CONFIRMACAO && item.AGE_DATA_REAGENDAMENTO">
+                                                 Reagendado
+                                              </span>
+                                              <span ng-if="!item.AGE_DATA_CONFIRMACAO && !item.AGE_DATA_REAGENDAMENTO">
+                                                  
+                                                  <span ng-if="item.AGE_DATA_AGENDAMENTO < dataAtual.getTime() && !item.AGE_DATA_CONFIRMACAO" class="label label-danger">
+                                                      Atrasado
+                                                  </span>
+                                                  <span ng-if="item.AGE_DATA_AGENDAMENTO >= dataAtual.getTime()" class="label label-primary">
+                                                      Em aberto
+                                                  </span>        
+                                              </span>                                          
+                                      </td>
+                                      <td>
+                                             <a href="javascript:void(0)" title="Reagendar" class="btnConfirmaExclusao blue" 
+                                                 ng-if="!item.AGE_DATA_CONFIRMACAO" ng-click="abreFormReagendar(item);">
+                                                            <span class="glyphicon glyphicon-repeat"></span>
+                                            </a>
+                                            <a href="javascript:void(0)"  title="Confirmar" ng-click="abreFormConfirmacaoAgendamento(item);" ng-if="!item.AGE_DATA_CONFIRMACAO">
+                                                <span class="glyphicon glyphicon-ok green"></span>
+                                            </a>
+                                            <span ng-if="item.AGE_DATA_CONFIRMACAO" class="label label-default">Nenhuma</span>
+                                      </td>
+                                  </tr>
+                                    <tr>
+                                        <td colspan="6" ng-hide="lstAgendamento" class="text">
+                                            Não foi encontrado nenhum registro.
+                                        </td>
+                                    </tr>
+                                </table> 
+                            
+                        </div>
+          
+                  <div app-pagination="page" request-page="paginaReq" load-function="listarAgendamentos(paginaReq)" ng-if="listarAgendamento"></div>          
+              
+              </div>
+         
+        </div>
+
+    </div>
+    <div class="col-lg-3">
+        <div class="panel panel-default">
+                 <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-question-sign"></span> Legenda</div>
+                  
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <span class="glyphicon glyphicon-repeat blue"></span> Reagendar
+                            </div>
+                        </div>    
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <span class="glyphicon glyphicon-ok green"></span> Confirmar
+                            </div>
+                        </div>    
+                    </div>
+            </div>
+    </div>
+</div>
+      
+        <div app-modal="modalformAgendamento" header="Agendamento" submodal>            
+            <div class="panel panel-default">
+                 <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-calendar"></span> Agendamentos</div>
+                  
+                    <div class="panel-body">
+                        <fieldset>
+                                <legend>Confirmar Agendamento</legend>
+                                <div class="row" ng-if="$parent.acaoAgendar == 'reagendar'">
+                                    <div class="form-group col-sm-3">
+                                            @Html.Label("Data")
+                                            <input type="text" class="form-control" ng-model="$parent.agendamentoForm.AGE_DATA_AGENDAMENTOMask"
+                                                    app-date="$parent.agendamentoForm.AGE_DATA_AGENDAMENTO" placeholder="data de agendamento"/>
+                                        <div app_validation_msg="erros" for="AGE_DATA_AGENDAMENTO"></div>
+
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                            @Html.Label("Horario")
+                                            <select id="tipoTel" name="tipoTel" class="form-control"
+                                                    ng-model="$parent.agendamentoForm.AGE_DATA_AGENDAMENTOTime" app-time="$parent.agendamentoForm.AGE_DATA_AGENDAMENTO"
+                                                    ng-options="hor as hor for hor in horarios">
+                                                            <option value="">Selecione</option>
+                                                    </select> 
+                                        <div app_validation_msg="erros" for="AGE_DATA_AGENDAMENTO"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-12" ng-repeat="hist in $parent.agendamentoForm.HISTORICO_ATENDIMENTO">                        
+                                            <div app_validation_msg="erros" for="HISTORICO_ATENDIMENTO[{{$index}}].HAT_DESCRICAO"></div>
+                                            @Html.Label("Observações")
+                                            <textarea class="form-control" placeholder="Observações" rows="6" ng-model="hist.HAT_DESCRICAO"></textarea>
+                                    </div> 
+                                </div>
+                            </fieldset>
+                    </div>
+                <div class="panel-footer">
+                    
+                     <button class="btn btn-primary" 
+                         app-switch-button="$parent.$parent.atualizarAgendamento()"
+                         switch-conf="[{label : 'Confirmar Agendamento', state : 'cofAgen'}, {label : 'Confirmando...', state : 'confir', disabled : true}]"
+                         switch-var="$parent.$parent.buttonConfirmAgen"
+                         ng-show="tab == 4"></button>
+                </div>
+            </div>
+        </div>

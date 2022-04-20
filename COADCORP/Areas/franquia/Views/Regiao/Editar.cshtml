@@ -1,0 +1,255 @@
+﻿
+@{
+    ViewBag.Title = "Editar";
+}
+@using Coad.GenericCrud.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Representantes (Editar)</li>
+    </ol>
+}
+
+
+@Scripts.Render("~/Scripts/negocio/regiao.js")
+
+<div ng-app="appModule">
+    <div class="panel panel-default" ng-controller="RegiaoController" data-ng-init="read('@ViewBag.RG_ID'); initEdit();" ng-cloak>
+        <!-- Default panel contents -->
+                  <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Editar Representante
+                    
+                        <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"
+                                            aria-expanded="false" ng-disabled="button == 'saved'">
+                                            Opções
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                             <li>
+                                                <a href="@Url.Action("listar")" title="Voltar" class="blue"> Voltar</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" title="Salvar" ng-click="salvar()" class="blue">Salvar</a>
+                                            </li>
+                                            <li ng-show="prospect.ID">
+                                                <a href="javascript:void(0)" app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}" 
+                                                    app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?" class="btnConfirmaExclusao blue" title="Excluir"> Excluir</a>
+                                            </li>                                                                                                                    
+                                        </ul>
+                                    </div>
+                                </div>
+                     
+                     
+            </div>
+
+            <div class="panel-body">  
+                <div app-message></div>
+                 @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) {                         
+                     
+                     
+                    <fieldset>
+                        <legend>Dados básicos</legend>
+                    
+                        <div class="row"> 
+                            <div class="form-group col-sm-3">
+                                <label for="rg_nome">Nome</label>
+                                <input type="text" id="rg_nome" ng-model="regiao.RG_DESCRICAO" class="form-control"/>
+                                    <div app_validation_msg="erros" for="REP_NOME"></div> 
+                            </div>
+                            <div class="form-group col-sm-1">                           
+	                            <label>Franquia</label><br />
+                                <label class="switch switch-success switch-round">
+                                    <input type="checkbox" ng-model="regiao.RG_FRANQUIA" ng-checked="regiao.RG_FRANQUIA == true">
+	                                <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                                </label>
+                            </div>                                 
+                            <div class="form-group col-sm-3">
+                                <label for="selectRegiao">UEN</label> 
+                                <select ng-options="uen.UEN_ID as uen.UEN_DESCRICAO for uen in lstUEN"
+                                        ng-model="regiao.UEN_ID" id="lstUen" class="form-control">
+                                        <option value="">Selecione</option>
+                                </select>
+                            </div>                           
+                            <div class="form-group col-sm-4">
+                                <label for="selectRegiao">Empresa</label> 
+                                <span ng-show="regiao.EMPRESA">
+                                    <a href="javascript:void(0);" ng-click="abrirModalEmpresa()" title="Alterar" class="clear-link">
+                                        <span class="glyphicon glyphicon-refresh"></span></a>
+                                    <a href="javascript:void(0);" ng-click="removerEmpresa()" title="Remover" class="text-danger clear-link">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                </span>
+                                <span ng-hide="regiao.EMPRESA">
+                                    <a href="javascript:void(0);" ng-click="abrirModalEmpresa()" title="Adicionar" class="text-info">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </a>
+                                </span>
+                                <div class="text">{{regiao.EMPRESA.EMP_RAZAO_SOCIAL}}</div>
+                            </div>                                                                        
+                        </div>
+                    </fieldset>  
+                    <fieldset>
+                        <legend>Cidades </legend>
+                        <div class="row">
+                            <div class="col-sm-6" app-droppable="adicionarUfOuMunicipio(idDrag, idDrop)" transfer-model="objUfMunicipio" id-drop="drop_uf">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><span class="glyphicon glyphicon-globe"></span> Ufs</div>
+                                     <div class="panel-body limit-div-4">
+                                         <div>
+                                            <a href="javascript:void(0)" ng-repeat="item in regiao.UF" class="clear-link" ng-init="obj = {$index : $index, item : item}"
+                                                 app-draggable model="obj" id-drag="drag_remove_uf">
+                                                <span class="label label-info">{{item.UF_SIGLA}}</span>
+                                            </a>
+                                         </div>
+                                         <div>
+                                            <a href="javascript:void(0)" ng-repeat="item in regiao.MUNICIPIO" class="clear-link" 
+                                                app-draggable model="obj" id-drag="drag_remove_municipio" ng-init="obj = {$index : $index, item : item}">
+                                                <span class="label label-warning">{{item.MUN_DESCRICAO}}</span>
+                                            </a>
+                                         </div>
+                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">          
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><span class="glyphicon glyphicon-globe"></span> Seleção</div>
+                                         <div class="panel-body limit-div-3">
+                                     
+                                                <div class="panel-body overflow" app-droppable="removeUfOuMunicipio(idDrag, idDrop)" 
+                                                    transfer-model="objRemoveUf" id-drop="drop_remove">   
+                                                    <ul class="nav">
+                                                        <li ng-repeat="item in listUfs | filter:query | orderBy: 'UF_SIGLA'" role="presentation" class="animate-repeat">
+                                                            <a href="javascript:void(0)"
+                                                                    ng-click="dispararAcaoMenuClicadoEBuscarMunicipios($event, item, '#selecao_pai_' + item.UF_SIGLA)" 
+                                                                app-draggable model="item" id-drag="drag_uf">
+                                                                            <span ng-class="
+                                                                                            {
+                                                                                                ' glyphicon-folder-close': item.aberto == false || !item.aberto,
+                                                                                                ' glyphicon-folder-open': item.aberto == true
+                                                                                            }"
+                                                                                    class="glyphicon text-muted">
+
+                                                                            </span>
+                                                                <span class="label label-info">
+                                                                    {{item.UF_SIGLA}}
+                                                                </span>
+                                                                </a>
+                                                            <ul id="selecao_pai_{{item.UF_SIGLA}}" class="collapse" aria-expanded="true">
+                                                                <li app-recursive childs="item.MUNICIPIO"  class="animate-repeat" 
+                                                                    ng-repeat="item in item.MUNICIPIO | filter:query"
+                                                                        ng-click="dispararAcaoMenuClicado($event, item.MUN_DESCRICAO, item, '#selecao_filho_' + item.MUN_ID)">
+                                                                        <a href="javascript:void(0)" app-draggable id-drag="drag_municipio" model="item">
+                                                       
+                                                                                <span class="label label-warning">
+                                                                                    {{item.MUN_DESCRICAO}}
+                                                                    
+                                                                                </span>
+                                                                            <ul app-clone-point  class="collapse" aria-expanded="true" id="selecao_{{item.MUN_ID}}"></ul>
+                                                                        </a>         
+                        
+                                                                </li>     
+                                                            </ul>
+                                                        </li>    
+                                                    </ul>   
+                                                </div>
+                                         </div>
+                                    </div>
+
+                            </div>
+                        </div>                        
+                    </fieldset>
+                 }
+            </div>
+
+         <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default" ng-disabled="button == 'saved' || buttonDel == 'deleting'">
+                <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar</button>
+              <button  
+                  app-switch-button="salvar()" 
+                  switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]" 
+                  switch-var="button"
+                  class="btn btn-primary" ng-disabled="bloqueiaSalvamento && bloqueiaSalvamento === true || buttonDel == 'deleting'">
+                  <span class="glyphicon glyphicon-floppy-save"></span>
+              </button>
+
+           <span ng-show="representante.REP_ID">
+                <button type="button" class="btn btn-danger" ng-disabled="button == 'saved'"
+                     app-switch-button="deletarRepresentante()" 
+                  switch-conf="[{label : 'Excluir', state : 'del'}, {label : 'Excluindo...', state : 'deleting', disabled : true}]" 
+                  switch-var="buttonDel"
+                  class="btn btn-default" ng-disabled="bloqueiaSalvamento && bloqueiaSalvamento === true">
+                    <span class="glyphicon glyphicon-remove-sign"></span></button>
+            </span>         
+        </div> 
+
+        <div app-modal="modal-empresa" header="Empresa" size="small">           
+
+            <div class="row padding">
+      
+                    <div app-message></div>
+            
+                    <div class="form-group col-lg-4">
+                        <label for="sigla">Razão Social</label>
+                        <input type="text" id="nome" ng-model="$parent.filtro.descricao" class="form-control"/>
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="proInteresse">Nome Fantasia</label>
+                        <input type="checkbox" id="proInteresse" ng-model="$parent.filtro.produtoInteresse" class="form-control"/>
+                    </div>
+                    <div class="form-group col-lg-2" style="padding-top: 24px">
+                        <button type="button" class="btn btn-default" ng-click="$parent.listarEmpresa()"><span class="glyphicon glyphicon-search"></span></button>
+                    </div>  
+            </div>  
+            <div class="panel panel-default">
+                <!-- Default panel contents -->      
+                <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Cursos</div>
+          
+                <div class="panel-body @ViewBag.classeModal">                       
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>        
+                                        <th style="min-width: 260px">
+                                            Razão Social
+                                        </th>
+                                        <th>
+                                            Nome Fantasia
+                                        </th>
+                                        <th>#</th>
+                                    </tr>
+                                </thead>    
+                                <tr ng-repeat="item in lstEmpresa" class="animate-repeat">
+                                    <td>
+                                        {{item.EMP_RAZAO_SOCIAL}}
+                                    </td>
+                                    <td>
+                                        {{item.EMP_NOME_FANTASIA}}
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0)" title="Selecione" class="text-info" ng-click="adicionarEmpresa(item)">
+                                                <span class="glyphicon glyphicon-ok-sign"></span>
+                                        </a>
+                                    </td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="3" ng-show="lstEmpresa.length == 0 && listado">Nenhum registro foi encontrado.</td>
+                                <td colspan="3" ng-show="!lstEmpresa">Clique em pesquisar para listar.</td>
+                            </tr>
+
+                        </table> 
+                    </div>
+                    <div app-pagination request-page="paginaReq" load-function="listarEmpresa(paginaReq)"></div>             
+
+                </div>
+         
+            </div>     
+        </div>
+               
+      </div>
+</div>

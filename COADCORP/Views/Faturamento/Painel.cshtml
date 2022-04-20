@@ -1,0 +1,521 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using Coad.GenericCrud.Extensions
+@using COAD.CORPORATIVO.SessionUtils
+@using COAD.SEGURANCA.Repositorios.Base
+@using GenericCrud.ActionResultTools
+@{
+    ViewBag.Title = "Index";
+    bool podeFaturar = SessionUtil.PossuiPermissaoParaFaturar();
+    string podePagar = (podeFaturar) ? "1 == 1" : "1 == 2";
+    ViewBag.defer = @"defer='defer'";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Painel de Faturamento</li>
+
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+<script type="text/javascript" src="@UrlCorp.Content("~/Scripts{path}negocio/painel_faturamento.js")" defer="defer"></script> 
+<style type="text/css">
+
+    .body {
+        background-color: #e8e8e8 !important;
+
+    }
+</style>
+<div ng-app="appModule">
+    <div ng-controller="PainelFaturamentoController" class="padding content" ng-cloak data-ng-init="initPanel()" ng-click="fecharPopover($event)">
+        <div app-message></div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-corp">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading bold head-panel">
+                        <i class="fa fa-exclamation-circle text-16" aria-hidden="true"></i> Propostas Pagas com Pendência
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-xs btn-default" app-tooltip tooltip-title="Filtros" ng-click="toogleFiltros()">
+                                <i class="fa fa-filter font-14" aria-hidden="true"></i>
+                            </button>
+                            @*<input type="text" class="form-control" placeholder="Pesquisa"/>*@
+
+                        </div>
+                    </div>
+                    <div class="panel-body panel-widget">
+                        <div class="pull-left">
+                            <a href="javascript:void(0)"
+                               ng-if="propostaBatchModal.ativo == true"
+                               ng-click="abrirModalCodigoPropostasSelecionadas()"
+                               class="text-muted">
+                                <span class="badge">{{propostaBatchModal.ListCodProposta.length}}</span>
+                                Propostas Selecionada(s)
+                            </a>
+                        </div>
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-primary" ng-click="abrirModalConfirmarPagamento()" ng-disabled="!propostaBatchModal.ListCodProposta || propostaBatchModal.ListCodProposta.length <= 0">Marcar como pago</button>
+                        </div>
+                        <div class="clear"></div>
+                        <br />
+                        <div class="table-responsive limit-div-3">
+                            <div app-filtro-popover="filtrosProPendAut"
+                                 model="filtroProPend"
+                                 list="lstFiltrosUtilizados"
+                                 flag-abrir="abrirFiltro"
+                                 acao-pesquisar="pesquisarPropostasPendConf()"
+                                 watch-pesquisa="dispararPesquisa"
+                                 ng-show="exibirFiltroProPendCon">
+                            </div>
+                            <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" id="selecao-geral"
+                                                   class="form-control big-checkbox"
+                                                   ng-model="propostaBatchModal.selecionarTodos"
+                                                   ng-selected="propostaBatchModal.selecionarTodos == true" />
+                                        </th>
+                                        <th app-ordering-th="filtroProPend.requisicao.ordenacao" load-function="pesquisarPropostasPendConf()" order-property="PropostaID">
+                                            Id
+                                        </th>
+                                        <th>UEN</th>
+                                        <th app-ordering-th="filtroProPend.requisicao.ordenacao" load-function="pesquisarPropostasPendConf()" order-property="DataCadastro">
+                                            Data
+                                        </th>
+                                        <th app-ordering-th="filtroProPend.requisicao.ordenacao" load-function="pesquisarPropostasPendConf()" order-property="NomeCliente">
+                                            Cliente
+                                        </th>
+                                        <th app-ordering-th="filtroProPend.requisicao.ordenacao" load-function="pesquisarPropostasPendConf()" order-property="CpfCnpjCliente">
+                                            CPF/CNPJ
+                                        </th>
+                                        <th colspan="7" class="center">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in propostPend" class="animate-repeat">
+                                    <td>
+                                        <span app-many-checkbox="propostaBatchModal.ListCodProposta"
+                                              key-value="item.PropostaID"
+                                              key-name="CodProposta"
+                                              control-obj="propostaBatchModal.controle"
+                                              select-watch="propostaBatchModal.selecionarTodos"></span>
+                                    </td>
+                                    <td>
+                                        {{item.PropostaID}}
+                                    </td>
+                                    <td>
+                                        <strong ng-switch="item.UenID">
+                                            <span ng-switch-when="1" class="label label-info" app-tooltip title="Curso">C</span>
+                                            <span ng-switch-when="2" class="label label-success" app-tooltip title="Assinatura">A</span>
+                                            <span ng-switch-default class="label label-default" app-tooltip title="Não Especificado">*</span>
+                                        </strong>
+                                    </td>
+                                    <td app-show-date="item.DataCadastro"></td>
+                                    <td>
+                                        {{item.NomeCliente}}
+                                    </td>
+                                    <td>
+                                        {{item.CpfCnpjCliente}}
+                                    </td>
+                                    <td>
+                                        <div app-html-var="opcoes">
+                                            <div ng-click="fecharPopover($event);">
+                                                <ul class="list-unstyled">
+                                                    <li>
+                                                        <a href="javascript:void(0);" ng-click="abrirDetalhes(item.PropostaID);" class="text-primary">
+                                                            <i class="fa fa-search" aria-hidden="true"></i> Abrir Detalhes
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);" ng-click="abrirProposta(item.PropostaID);" class="text-primary">
+                                                            <span class="glyphicon glyphicon-open"></span> Abrir em Proposta
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <a href="javascript:void(0);" id="pop_over_proPend{{$index}}"
+                                           app-popover
+                                           html-var="opcoes"
+                                           data-trigger="manual"
+                                           data-direction="left"
+                                           popover-title=" Opções"
+                                           class="popover-a"
+                                           ng-click="abrirPopover('pop_over_proPend' + $index, $event); fecharPopover($event, $index, 'proPend');">
+                                            <i class="glyphicon glyphicon-cog" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="13" ng-show="!propostPend || propostPend.length == 0">Nenhum registro foi encontrado.</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div app-pagination="pagePropostaPend" request-page="paginaReq" page-request="filtroProPend.requisicao" load-function="pesquisarPropostasPendConf(paginaReq)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-corp">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading bold head-panel">
+                        <i class="fa fa-linode text-16" aria-hidden="true"></i> Lotes de NF Pendentes ou com Erros
+                         <div class="pull-right" ng-hide="!loteBatchModal || loteBatchModal.ListCod.length == 0">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="abrirMenuLote()">
+                                    Opções
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    <li>
+                                        <a href="javascript:void(0)" ng-click="abrirModalRegerarNota()" class="text-primary" app-tooltip data-tooltip-title="Tenta enviar um novo lote para o pedido ou proposta." data-direction="left">
+                                            <span class="text-primary"><i class="fa fa-sticky-note" aria-hidden="true"></i> Regerar Notas Fiscais</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" ng-click="cancelarProcessamentoItem()" app-tooltip data-tooltip-title="Cancela o lote. O mesmo não será mais processada" data-direction="left">
+                                            <span class="text-danger"><i class="fa fa-times" aria-hidden="true"></i> Cancelar Lote </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body panel-widget">
+                        <div class="pull-left">
+                            <a href="javascript:void(0)"
+                               ng-if="loteBatchModal.ativo == true"
+                               ng-click="abrirModalCodigoLoteItemSelecionadas()"
+                               class="text-muted">
+                                <span class="badge">{{loteBatchModal.ListCod.length}}</span>
+                                Itens de Lote Selecionados
+                            </a>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="table-responsive limit-div-3">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" id="selecao-geral"
+                                                   class="form-control big-checkbox"
+                                                   ng-model="loteBatchModal.selecionarTodos"
+                                                   ng-selected="loteBatchModal.selecionarTodos == true" />
+                                        </th>
+                                        <th app-ordering-th="filtroLotePend.requisicao.ordenacao" load-function="listarNfeLoteItmComErroOuPendente()" order-property="NLI_ID">
+                                            Id
+                                        </th>
+                                        <th app-ordering-th="filtroLotePend.requisicao.ordenacao" load-function="listarNfeLoteItmComErroOuPendente()" order-property="NOTA_FISCAL_LOTE.NOTA_FISCAL_LOTE_STATUS.NLS_DESCRICAO">Status Lote</th>
+                                        <th app-ordering-th="filtroLotePend.requisicao.ordenacao" load-function="listarNfeLoteItmComErroOuPendente()" order-property="NOTA_FISCAL_LOTE_STATUS.NLS_DESCRICAO">Status Item Lote</th>
+                                        <th app-ordering-th="filtroLotePend.requisicao.ordenacao" load-function="listarNfeLoteItmComErroOuPendente()" order-property="NOTA_FISCAL_LOTE.NFL_DATA">
+                                            Data
+                                        </th>
+                                        <th colspan="7" class="center">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in lotePend" class="animate-repeat">
+                                    <td>
+                                        <span app-many-checkbox="loteBatchModal.ListCod"
+                                              key-value="item.NLI_ID"
+                                              key-name="Cod"
+                                              control-obj="loteBatchModal.controle"
+                                              select-watch="loteBatchModal.selecionarTodos"></span>
+                                    </td>
+                                    <td>
+                                        {{item.NLI_ID}}
+                                    </td>
+                                    <td>
+                                        <span class="label" ng-class="{
+                                        'label-warning' : item.NOTA_FISCAL_LOTE.NLS_ID == 1,
+                                        'label-info' : item.NOTA_FISCAL_LOTE.NLS_ID == 6 || item.NOTA_FISCAL_LOTE.NLS_ID == 3,
+                                        'label-danger' : item.NOTA_FISCAL_LOTE.NLS_ID == 5  || 
+                                              item.NOTA_FISCAL_LOTE.NLS_ID == 7 || 
+                                              item.NOTA_FISCAL_LOTE.NLS_ID == 2 ||
+                                              item.NOTA_FISCAL_LOTE.NLS_ID == 12,
+                                        'label-success' : item.NOTA_FISCAL_LOTE.NLS_ID == 8,
+                                        'label-purple' : item.NOTA_FISCAL_LOTE.NLS_ID == 9 || item.NOTA_FISCAL_LOTE.NLS_ID == 4
+                                    }">{{item.NOTA_FISCAL_LOTE.NOTA_FISCAL_LOTE_STATUS.NLS_DESCRICAO}}</span>
+
+                                    </td>
+                                    <td>
+                                        <span class="label" ng-class="{
+                                        'label-warning' : item.NLS_ID == 1,
+                                        'label-purple' : item.NLS_ID == 2 || item.NLS_ID == 4,
+                                        'label-info' : item.NLS_ID == 6 || item.NLS_ID == 11,
+                                        'label-danger' : item.NLS_ID == 5  || item.NLS_ID == 7 || item.NLS_ID == 10 || item.NLS_ID == 12
+                                    }">{{item.NOTA_FISCAL_LOTE_STATUS.NLS_DESCRICAO}}</span>
+                                    </td>
+                                    <td app-show-date="item.Lote.DataCadastro"></td>
+                                    <td>
+                                        <div app-html-var="opcoes">
+                                            <div ng-click="fecharPopover($event);">
+                                                <ul class="list-unstyled">
+                                                    <li>
+                                                        <a href="javascript:void(0);" ng-click="abrirDetalhesLoteItem(item);" class="text-primary">
+                                                            <i class="fa fa-search" aria-hidden="true"></i> Visualizar Detalhes
+                                                        </a>
+                                                    </li>
+                                                    <li ng-show="item.PPI_ID">
+                                                        <a href="javascript:void(0);" ng-click="abrirPropostaPorItem(item.PPI_ID);" class="text-primary">
+                                                            <span class="glyphicon glyphicon-open"></span> Abrir em Proposta
+                                                        </a>
+                                                    </li>
+                                                    <li ng-show="item.IPE_ID">
+                                                        <a href="javascript:void(0);" ng-click="abrirPedidoPorItem(item.IPE_ID);" class="text-primary">
+                                                            <span class="glyphicon glyphicon-open"></span> Abrir em Pedido
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <a href="javascript:void(0);" id="pop_over_lote_nfe{{$index}}"
+                                           app-popover
+                                           html-var="opcoes"
+                                           data-trigger="manual"
+                                           data-direction="left"
+                                           popover-title=" Opções"
+                                           class="popover-a"
+                                           ng-click="abrirPopover('pop_over_lote_nfe' + $index, $event); fecharPopover($event, $index, 'lote_nfe');">
+                                            <i class="glyphicon glyphicon-cog" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="13" ng-show="!lotePend || lotePend.length == 0">Nenhum registro foi encontrado.</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div app-pagination="pageLotePend" request-page="paginaReq" page-request="filtroLotePend.requisicao" load-function="listarNfeLoteItmComErroOuPendente(paginaReq)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-corp">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading bold head-panel">
+                        <i class="fa fa-exclamation-circle text-16" aria-hidden="true"></i> Últimas notas processadas
+
+                        <div class="pull-right" ng-if="notaBatchModal.ativo == true">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary btn-xs dropdown-toggle" ng-click="voltar()">
+                                    Voltar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                            Outro Painel irá entrar aqui.
+                        </div>
+                        <app-pagination request-page="paginaReq" load-function="listarPedidos(paginaReq)"></app-pagination>
+                    </div>
+                </div>
+            </div>
+
+        </div>*@
+        <div>
+            @Html.Partial("Partials/Modais/_ModalCodigosSelecionados")
+            <div data-app-modal="modal-batch-pag-proposta" data-header="Confirmar" size="small">
+                <form>
+                    @Html.Partial("Partials/Modais/_ModalConfirmarPagamentoPropostaPartial")
+                </form>
+            </div>
+            <div data-app-modal="modal-msg-lote" data-header="Confirmar">
+                <div class="limit-div-5">
+                    <div ng-show="loteItem" class="padding">
+                        <div>
+                            <section>
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <h3 class="text-muted">Informações Do Item do Lote</h3>
+                                        <div class="row">
+                                            <div class="form-group col-sm-2">
+                                                <label>Id</label>
+                                                <div class="text-muted">{{loteItem.NLI_ID}}</div>
+                                            </div>
+                                            <div class="form-group col-sm-2">
+                                                <label>Status</label>
+                                                <div class="text-muted">
+                                                    <span class="label" ng-class="{
+                                        'label-warning' : loteItem.NLS_ID == 1,
+                                        'label-purple' : loteItem.NLS_ID == 2 || loteItem.NLS_ID == 4,
+                                        'label-info' : loteItem.NLS_ID == 6 || loteItem.NLS_ID == 11,
+                                        'label-danger' : loteItem.NLS_ID == 5  ||
+                                                          loteItem.NLS_ID == 7 ||
+                                                          loteItem.NLS_ID == 10 ||
+                                                          loteItem.NLS_ID == 12
+                                    }">{{loteItem.NOTA_FISCAL_LOTE_STATUS.NLS_DESCRICAO}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-2">
+                                                <label>Código NF</label>
+                                                <div class="text-muted">{{loteItem.NF_ID}}</div>
+                                            </div>
+                                            <div class="form-group col-sm-2">
+                                                <label>Item Pedido</label>
+                                                <div class="text-muted">{{loteItem.IPE_ID}}</div>
+                                            </div>
+                                            <div class="form-group col-sm-2">
+                                                <label>Item Proposta</label>
+                                                <div class="text-muted">{{loteItem.PPI_ID}}</div>
+                                            </div>
+                                            <div class="form-group col-sm-2">
+                                                <label>Contrato</label>
+                                                <div class="text-muted">{{loteItem.CTR_NUM_CONTRATO}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-2">
+                                                <label>Número da Nota</label>
+                                                <div class="text-muted">{{loteItem.NLI_NUMERO_NOTA}}</div>
+                                            </div>
+                                            <div class="form-group col-sm-10" ng-show="loteItem.NOTA_FISCAL_LOTE.NLT_ID == 1 || loteItem.NOTA_FISCAL_LOTE.NLT_ID == 1">
+                                                <label>Chave da Nota</label>
+                                                <div class="text-muted">{{loteItem.NLI_CHAVE_NOTA}}</div>
+                                            </div>
+                                            <div class="form-group col-sm-8" ng-show="loteItem.NOTA_FISCAL_LOTE.NLT_ID == 3">
+                                                <label>Número de RPS</label>
+                                                <div class="text-muted">{{loteItem.NLI_NUMERO_RPS}}</div>
+                                            </div>
+                                            <div class="form-group col-sm-2" ng-show="loteItem.NOTA_FISCAL_LOTE.NLT_ID == 3">
+                                                <label>Série</label>
+                                                <div class="text-muted">{{loteItem.NLI_SERIE}}</div>
+                                            </div>
+                                        </div>
+                                        <h4 class="text-warning">Retornos e Mensagens</h4>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Código de Retorno</label>
+                                            </div>
+                                            <div class="col-md-8 text-muted">
+                                                {{loteItem.NLI_COD_RETORNO}}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Mensagem de Retorno</label>
+                                            </div>
+                                            <div class="col-md-8 text-muted">
+                                                {{loteItem.NLI_MENSAGEM_RETORNO}}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Mensagem de Erro do Sistema</label>
+                                            </div>
+                                            <div class="col-md-8 text-muted">
+                                                {{loteItem.NLI_MSG_ERRO_SISTEMA}}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </section>
+                            <section>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <h3 class="text-muted">Informações Lote</h3>
+                                        <div class="row">
+                                            <div class="form-group col-sm-2">
+                                                <label>Id</label>
+                                                <div class="text-muted">{{loteItem.NFL_ID}}</div>
+                                            </div>
+                                            <div class="form-group col-sm-2">
+                                                <label>Status</label>
+                                                <div class="text-muted">
+                                                    <span class="label" ng-class="{
+                                        'label-warning' : loteItem.NOTA_FISCAL_LOTE.NLS_ID == 1,
+                                        'label-info' : loteItem.NOTA_FISCAL_LOTE.NLS_ID == 6 || loteItem.NOTA_FISCAL_LOTE.NLS_ID == 3,
+                                        'label-danger' : loteItem.NOTA_FISCAL_LOTE.NLS_ID == 5  ||
+                                                          loteItem.NOTA_FISCAL_LOTE.NLS_ID == 7 ||
+                                                          loteItem.NOTA_FISCAL_LOTE.NLS_ID == 2 ||
+                                                          loteItem.NLS_ID == 12,
+                                        'label-success' : loteItem.NOTA_FISCAL_LOTE.NLS_ID == 8,
+                                        'label-purple' : loteItem.NOTA_FISCAL_LOTE.NLS_ID == 9 || loteItem.NOTA_FISCAL_LOTE.NLS_ID == 4
+                                    }">{{loteItem.NOTA_FISCAL_LOTE.NOTA_FISCAL_LOTE_STATUS.NLS_DESCRICAO}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-3">
+                                                <label>Data</label>
+                                                <div class="text-muted" app-show-date="loteItem.NOTA_FISCAL_LOTE.NFL_DATA"></div>
+                                            </div>
+                                            <div class="form-group col-sm-3">
+                                                <label>Id Empresa</label>
+                                                <div class="text-muted">{{loteItem.NOTA_FISCAL_LOTE.EMP_ID}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-12">
+                                                <label>Código de Recibo</label>
+                                                <div class="text-muted">{{loteItem.NOTA_FISCAL_LOTE.NLS_COD_RECIBO}}</div>
+                                            </div>
+
+                                        </div>
+                                        <h4 class="text-warning">Retornos e Mensagens</h4>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Código de Retorno do Envio</label>
+                                            </div>
+                                            <div class="col-md-8 text-muted">
+                                                {{loteItem.NOTA_FISCAL_LOTE.NLS_COD_RETORNO}}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Mensagem de Retorno do Envio</label>
+                                            </div>
+                                            <div class="col-md-8 text-muted">
+                                                {{loteItem.NOTA_FISCAL_LOTE.NLS_MENSAGEM_RETORNO}}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Código de Retorno do Processamento</label>
+                                            </div>
+                                            <div class="col-md-8 text-muted">
+                                                {{loteItem.NOTA_FISCAL_LOTE.NFL_COD_RETORNO_PROCESSAMENTO}}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Mensagem de Retorno do Processamento</label>
+                                            </div>
+                                            <div class="col-md-8 text-muted">
+                                                {{loteItem.NOTA_FISCAL_LOTE.NFL_MENSAGEM_RETORNO_PROCESSAMENTO}}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Mensagem de Erro do Sistema</label>
+                                            </div>
+                                            <div class="col-md-8 text-muted">
+                                                {{loteItem.NOTA_FISCAL_LOTE.NFL_MSG_ERRO_SISTEMA}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-app-modal="modal-batch-notaFiscal" data-header="Lotes Selecionados" size="small">
+                <form>
+                    @Html.Partial("Partials/Modais/_ModalRegerarNotaFiscalPorLotePartial")
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="prospectadosModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="prospectadosModelStoreContainer">
+          <EntitySet Name="cart_coad" EntityType="prospectadosModel.Store.cart_coad" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EMAILS_PROSP" EntityType="prospectadosModel.Store.EMAILS_PROSP" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="prospects" EntityType="prospectadosModel.Store.prospects" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TELEFONES_PROSP" EntityType="prospectadosModel.Store.TELEFONES_PROSP" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ULTIMO_CODIGO" EntityType="prospectadosModel.Store.ULTIMO_CODIGO" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="cart_coad">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+          </Key>
+          <Property Name="CODIGO" Type="varchar" Nullable="false" MaxLength="8" />
+          <Property Name="NOME" Type="varchar" MaxLength="35" />
+          <Property Name="A_C" Type="varchar" MaxLength="35" />
+          <Property Name="TIPO" Type="varchar" MaxLength="10" />
+          <Property Name="LOGRAD" Type="varchar" MaxLength="50" />
+          <Property Name="NUMERO" Type="varchar" MaxLength="6" />
+          <Property Name="TIPO_COMPL" Type="varchar" MaxLength="10" />
+          <Property Name="COMPL" Type="varchar" MaxLength="15" />
+          <Property Name="TIPO_COMPL2" Type="varchar" MaxLength="10" />
+          <Property Name="COMPL2" Type="varchar" MaxLength="15" />
+          <Property Name="TIPO_COMPL3" Type="varchar" MaxLength="10" />
+          <Property Name="COMPL3" Type="varchar" MaxLength="15" />
+          <Property Name="BAIRRO" Type="varchar" MaxLength="20" />
+          <Property Name="MUNIC" Type="varchar" MaxLength="30" />
+          <Property Name="UF" Type="varchar" MaxLength="2" />
+          <Property Name="CEP" Type="varchar" MaxLength="9" />
+          <Property Name="DDD_TEL" Type="varchar" MaxLength="4" />
+          <Property Name="TELEFONE" Type="varchar" MaxLength="8" />
+          <Property Name="DDD_FAX" Type="varchar" MaxLength="4" />
+          <Property Name="FAX" Type="varchar" MaxLength="8" />
+          <Property Name="E_MAIL" Type="varchar" MaxLength="50" />
+          <Property Name="CARGO" Type="varchar" MaxLength="30" />
+          <Property Name="PROF" Type="varchar" MaxLength="30" />
+          <Property Name="IDENTIFICACAO" Type="varchar" MaxLength="1" />
+          <Property Name="DATA_CADASTRO" Type="varchar" MaxLength="10" />
+          <Property Name="cep_status" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="EMAILS_PROSP">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+            <PropertyRef Name="E_MAIL" />
+          </Key>
+          <Property Name="CODIGO" Type="varchar" Nullable="false" MaxLength="8" />
+          <Property Name="E_MAIL" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="prospects">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+          </Key>
+          <Property Name="CODIGO" Type="varchar" Nullable="false" MaxLength="8" />
+          <Property Name="FUNC_IND" Type="varchar" MaxLength="8" />
+          <Property Name="CART" Type="varchar" MaxLength="4" />
+          <Property Name="DRIVE_CDROM" Type="varchar" MaxLength="1" />
+          <Property Name="DATA_EMI_FICHA" Type="varchar" MaxLength="10" />
+          <Property Name="AREA" Type="varchar" MaxLength="1" />
+          <Property Name="DATA_ATRIBUICAO" Type="varchar" MaxLength="10" />
+          <Property Name="MANTER" Type="varchar" MaxLength="1" />
+          <Property Name="NUM_ENVIOS_ADNRJ" Type="int" />
+          <Property Name="INTERNET" Type="varchar" MaxLength="1" />
+          <Property Name="PFIS_PJUR" Type="varchar" MaxLength="1" />
+          <Property Name="CPF_CNPJ" Type="varchar" MaxLength="18" />
+          <Property Name="REGIAO" Type="varchar" MaxLength="2" />
+          <Property Name="MALA_ADV_SN" Type="varchar" MaxLength="1" />
+          <Property Name="INSCRICAO" Type="varchar" MaxLength="16" />
+        </EntityType>
+        <EntityType Name="TELEFONES_PROSP">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+            <PropertyRef Name="DDD_TEL" />
+            <PropertyRef Name="TELEFONE" />
+            <PropertyRef Name="TIPO" />
+          </Key>
+          <Property Name="CODIGO" Type="varchar" Nullable="false" MaxLength="8" />
+          <Property Name="DDD_TEL" Type="varchar" Nullable="false" MaxLength="4" />
+          <Property Name="TELEFONE" Type="varchar" Nullable="false" MaxLength="8" />
+          <Property Name="TIPO" Type="varchar" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="ULTIMO_CODIGO">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="dv" Type="varchar" MaxLength="1" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="prospectadosModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="prospectadosEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="cart_coad" EntityType="prospectadosModel.cart_coad" />
+          <EntitySet Name="EMAILS_PROSP" EntityType="prospectadosModel.EMAILS_PROSP" />
+          <EntitySet Name="prospects" EntityType="prospectadosModel.prospects" />
+          <EntitySet Name="ULTIMO_CODIGO" EntityType="prospectadosModel.ULTIMO_CODIGO" />
+          <AssociationSet Name="cart_coadEMAILS_PROSP" Association="prospectadosModel.cart_coadEMAILS_PROSP">
+            <End Role="cart_coad" EntitySet="cart_coad" />
+            <End Role="EMAILS_PROSP" EntitySet="EMAILS_PROSP" />
+          </AssociationSet>
+          <AssociationSet Name="cart_coadprospects" Association="prospectadosModel.cart_coadprospects">
+            <End Role="cart_coad" EntitySet="cart_coad" />
+            <End Role="prospects" EntitySet="prospects" />
+          </AssociationSet>
+          <EntitySet Name="TELEFONES_PROSP" EntityType="prospectadosModel.TELEFONES_PROSP" />
+          <AssociationSet Name="cart_coadTELEFONES_PROSP" Association="prospectadosModel.cart_coadTELEFONES_PROSP">
+            <End Role="cart_coad" EntitySet="cart_coad" />
+            <End Role="TELEFONES_PROSP" EntitySet="TELEFONES_PROSP" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="cart_coad">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+          </Key>
+          <Property Name="CODIGO" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="false" />
+          <Property Name="NOME" Type="String" MaxLength="35" Unicode="false" FixedLength="false" />
+          <Property Name="A_C" Type="String" MaxLength="35" Unicode="false" FixedLength="false" />
+          <Property Name="TIPO" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="LOGRAD" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="NUMERO" Type="String" MaxLength="6" Unicode="false" FixedLength="false" />
+          <Property Name="TIPO_COMPL" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="COMPL" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="TIPO_COMPL2" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="COMPL2" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="TIPO_COMPL3" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="COMPL3" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="BAIRRO" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="MUNIC" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="UF" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
+          <Property Name="CEP" Type="String" MaxLength="9" Unicode="false" FixedLength="false" />
+          <Property Name="DDD_TEL" Type="String" MaxLength="4" Unicode="false" FixedLength="false" />
+          <Property Name="TELEFONE" Type="String" MaxLength="8" Unicode="false" FixedLength="false" />
+          <Property Name="DDD_FAX" Type="String" MaxLength="4" Unicode="false" FixedLength="false" />
+          <Property Name="FAX" Type="String" MaxLength="8" Unicode="false" FixedLength="false" />
+          <Property Name="E_MAIL" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="CARGO" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="PROF" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="IDENTIFICACAO" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+          <Property Name="DATA_CADASTRO" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="cep_status" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="EMAILS_PROSP" Relationship="prospectadosModel.cart_coadEMAILS_PROSP" FromRole="cart_coad" ToRole="EMAILS_PROSP" />
+          <NavigationProperty Name="prospects" Relationship="prospectadosModel.cart_coadprospects" FromRole="cart_coad" ToRole="prospects" />
+          <NavigationProperty Name="TELEFONES_PROSP" Relationship="prospectadosModel.cart_coadTELEFONES_PROSP" FromRole="cart_coad" ToRole="TELEFONES_PROSP" />
+        </EntityType>
+        <EntityType Name="EMAILS_PROSP">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+            <PropertyRef Name="E_MAIL" />
+          </Key>
+          <Property Name="CODIGO" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="false" />
+          <Property Name="E_MAIL" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="cart_coad" Relationship="prospectadosModel.cart_coadEMAILS_PROSP" FromRole="EMAILS_PROSP" ToRole="cart_coad" />
+        </EntityType>
+        <EntityType Name="prospects">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+          </Key>
+          <Property Name="CODIGO" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="false" />
+          <Property Name="FUNC_IND" Type="String" MaxLength="8" Unicode="false" FixedLength="false" />
+          <Property Name="CART" Type="String" MaxLength="4" Unicode="false" FixedLength="false" />
+          <Property Name="DRIVE_CDROM" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+          <Property Name="DATA_EMI_FICHA" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="AREA" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+          <Property Name="DATA_ATRIBUICAO" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="MANTER" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+          <Property Name="NUM_ENVIOS_ADNRJ" Type="Int32" />
+          <Property Name="INTERNET" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+          <Property Name="PFIS_PJUR" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+          <Property Name="CPF_CNPJ" Type="String" MaxLength="18" Unicode="false" FixedLength="false" />
+          <Property Name="REGIAO" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
+          <Property Name="MALA_ADV_SN" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+          <Property Name="INSCRICAO" Type="String" MaxLength="16" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="cart_coad" Relationship="prospectadosModel.cart_coadprospects" FromRole="prospects" ToRole="cart_coad" />
+        </EntityType>
+        <EntityType Name="ULTIMO_CODIGO">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="dv" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <Association Name="cart_coadEMAILS_PROSP">
+          <End Type="prospectadosModel.cart_coad" Role="cart_coad" Multiplicity="1" />
+          <End Type="prospectadosModel.EMAILS_PROSP" Role="EMAILS_PROSP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cart_coad">
+              <PropertyRef Name="CODIGO" />
+            </Principal>
+            <Dependent Role="EMAILS_PROSP">
+              <PropertyRef Name="CODIGO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="cart_coadprospects">
+          <End Type="prospectadosModel.cart_coad" Role="cart_coad" Multiplicity="1" />
+          <End Type="prospectadosModel.prospects" Role="prospects" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="cart_coad">
+              <PropertyRef Name="CODIGO" />
+            </Principal>
+            <Dependent Role="prospects">
+              <PropertyRef Name="CODIGO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TELEFONES_PROSP">
+          <Key>
+            <PropertyRef Name="CODIGO" />
+            <PropertyRef Name="DDD_TEL" />
+            <PropertyRef Name="TELEFONE" />
+            <PropertyRef Name="TIPO" />
+          </Key>
+          <Property Type="String" Name="CODIGO" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DDD_TEL" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TELEFONE" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TIPO" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cart_coad" Relationship="prospectadosModel.cart_coadTELEFONES_PROSP" FromRole="TELEFONES_PROSP" ToRole="cart_coad" />
+        </EntityType>
+        <Association Name="cart_coadTELEFONES_PROSP">
+          <End Type="prospectadosModel.cart_coad" Role="cart_coad" Multiplicity="1" />
+          <End Type="prospectadosModel.TELEFONES_PROSP" Role="TELEFONES_PROSP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cart_coad">
+              <PropertyRef Name="CODIGO" />
+            </Principal>
+            <Dependent Role="TELEFONES_PROSP">
+              <PropertyRef Name="CODIGO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="prospectadosModelStoreContainer" CdmEntityContainer="prospectadosEntities">
+          <EntitySetMapping Name="cart_coad">
+            <EntityTypeMapping TypeName="prospectadosModel.cart_coad">
+              <MappingFragment StoreEntitySet="cart_coad">
+                <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+                <ScalarProperty Name="NOME" ColumnName="NOME" />
+                <ScalarProperty Name="A_C" ColumnName="A_C" />
+                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+                <ScalarProperty Name="LOGRAD" ColumnName="LOGRAD" />
+                <ScalarProperty Name="NUMERO" ColumnName="NUMERO" />
+                <ScalarProperty Name="TIPO_COMPL" ColumnName="TIPO_COMPL" />
+                <ScalarProperty Name="COMPL" ColumnName="COMPL" />
+                <ScalarProperty Name="TIPO_COMPL2" ColumnName="TIPO_COMPL2" />
+                <ScalarProperty Name="COMPL2" ColumnName="COMPL2" />
+                <ScalarProperty Name="TIPO_COMPL3" ColumnName="TIPO_COMPL3" />
+                <ScalarProperty Name="COMPL3" ColumnName="COMPL3" />
+                <ScalarProperty Name="BAIRRO" ColumnName="BAIRRO" />
+                <ScalarProperty Name="MUNIC" ColumnName="MUNIC" />
+                <ScalarProperty Name="UF" ColumnName="UF" />
+                <ScalarProperty Name="CEP" ColumnName="CEP" />
+                <ScalarProperty Name="DDD_TEL" ColumnName="DDD_TEL" />
+                <ScalarProperty Name="TELEFONE" ColumnName="TELEFONE" />
+                <ScalarProperty Name="DDD_FAX" ColumnName="DDD_FAX" />
+                <ScalarProperty Name="FAX" ColumnName="FAX" />
+                <ScalarProperty Name="E_MAIL" ColumnName="E_MAIL" />
+                <ScalarProperty Name="CARGO" ColumnName="CARGO" />
+                <ScalarProperty Name="PROF" ColumnName="PROF" />
+                <ScalarProperty Name="IDENTIFICACAO" ColumnName="IDENTIFICACAO" />
+                <ScalarProperty Name="DATA_CADASTRO" ColumnName="DATA_CADASTRO" />
+                <ScalarProperty Name="cep_status" ColumnName="cep_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMAILS_PROSP">
+            <EntityTypeMapping TypeName="prospectadosModel.EMAILS_PROSP">
+              <MappingFragment StoreEntitySet="EMAILS_PROSP">
+                <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+                <ScalarProperty Name="E_MAIL" ColumnName="E_MAIL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="prospects">
+            <EntityTypeMapping TypeName="prospectadosModel.prospects">
+              <MappingFragment StoreEntitySet="prospects">
+                <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+                <ScalarProperty Name="FUNC_IND" ColumnName="FUNC_IND" />
+                <ScalarProperty Name="CART" ColumnName="CART" />
+                <ScalarProperty Name="DRIVE_CDROM" ColumnName="DRIVE_CDROM" />
+                <ScalarProperty Name="DATA_EMI_FICHA" ColumnName="DATA_EMI_FICHA" />
+                <ScalarProperty Name="AREA" ColumnName="AREA" />
+                <ScalarProperty Name="DATA_ATRIBUICAO" ColumnName="DATA_ATRIBUICAO" />
+                <ScalarProperty Name="MANTER" ColumnName="MANTER" />
+                <ScalarProperty Name="NUM_ENVIOS_ADNRJ" ColumnName="NUM_ENVIOS_ADNRJ" />
+                <ScalarProperty Name="INTERNET" ColumnName="INTERNET" />
+                <ScalarProperty Name="PFIS_PJUR" ColumnName="PFIS_PJUR" />
+                <ScalarProperty Name="CPF_CNPJ" ColumnName="CPF_CNPJ" />
+                <ScalarProperty Name="REGIAO" ColumnName="REGIAO" />
+                <ScalarProperty Name="MALA_ADV_SN" ColumnName="MALA_ADV_SN" />
+                <ScalarProperty Name="INSCRICAO" ColumnName="INSCRICAO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ULTIMO_CODIGO">
+            <EntityTypeMapping TypeName="prospectadosModel.ULTIMO_CODIGO">
+              <MappingFragment StoreEntitySet="ULTIMO_CODIGO">
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="dv" ColumnName="dv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TELEFONES_PROSP">
+            <EntityTypeMapping TypeName="prospectadosModel.TELEFONES_PROSP">
+              <MappingFragment StoreEntitySet="TELEFONES_PROSP">
+                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+                <ScalarProperty Name="TELEFONE" ColumnName="TELEFONE" />
+                <ScalarProperty Name="DDD_TEL" ColumnName="DDD_TEL" />
+                <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

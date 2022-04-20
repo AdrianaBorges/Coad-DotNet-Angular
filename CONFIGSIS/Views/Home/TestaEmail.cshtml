@@ -1,0 +1,151 @@
+﻿@model COAD.SEGURANCA.Model.EmailRequestDTO
+
+@{
+    ViewBag.Title = "Editar";
+}
+@using Coad.GenericCrud.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Email</li>
+    </ol>
+}
+@Scripts.Render("~/Scripts/negocio/email.js")
+
+<div ng-app="appModule">
+    <div class="panel panel-default" ng-controller="EmailController" ng-cloak data-ng-init="init()">
+        <!-- Default panel contents -->
+                  <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel blue"></span> Enviar Email
+                    
+                        <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"
+                                            aria-expanded="false" ng-disabled="button == 'saved'">
+                                            Opções
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                             <li>
+                                                <a href="@Url.Action("Index")" title="Voltar" class="blue"> Voltar</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" title="Salvar" ng-click="salvarClienteFranquia()" class="blue">Salvar</a>
+                                            </li>
+                                            <li ng-show="prospect.ID">
+                                                <a href="javascript:void(0)" app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}" 
+                                                    app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?" class="btnConfirmaExclusao blue" title="Excluir"> Excluir</a>
+                                            </li>                                                                                                                    
+                                        </ul>
+                                    </div>
+                                </div>
+                     
+                     
+            </div>
+
+            <div class="panel-body">  
+                <div app-message></div>
+                 @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) {  
+                  <fieldset ng-show="mostraErro">
+                    <div class="form-group col-sm-12">
+                        <textarea ng-model="erro" class="form-control" disabled="disabled" rows="10"></textarea>
+                    </div>          
+                 </fieldset>                    
+                 <fieldset>
+                    <legend>Configurações</legend>
+                    
+                     <div class="row"> 
+                        <div class="form-group col-sm-2">
+                            @Html.Label("Mostra Erro")
+                           <input type="checkbox" ng-model="mostraErro" name="mostraerro" />
+                            @Html.ValidationMessageFor(model => model.Host, null, new { app_validation_msg = "erros", @for = "Host" })
+                        </div>
+                    </div>
+                    <div class="row"> 
+                        <div class="form-group col-sm-2">
+                            @Html.Label("Host")
+                            @Html.TextBoxFor(model => model.Host,  new {@class = "form-control", ng_model = "email.Host"})
+                            @Html.ValidationMessageFor(model => model.Host, null, new { app_validation_msg = "erros", @for = "Host" })
+                        </div>
+                        <div class="form-group col-sm-2">
+                            @Html.Label("Port")
+                            @Html.TextBoxFor(model => model.Port, new {@class = "form-control", ng_model = "email.Port", app_number = "", maxlength = "6"})
+                            @Html.ValidationMessageFor(model => model.Port, null, new { app_validation_msg = "erros", @for = "Port" })                   
+                        </div> 
+                        <div class="form-group col-sm-2">
+                            @Html.Label("Enable Ssl")
+                            @Html.CheckBoxFor(model => model.EnableSsl, new {@class = "form-control", ng_model = "email.EnableSsl"})
+                            @Html.ValidationMessageFor(model => model.EnableSsl, null, new { app_validation_msg = "erros", @for = "EnableSsl" })                   
+                        </div> 
+                       <div class="form-group col-sm-2">
+                            @Html.Label("User")
+                            @Html.TextBoxFor(model => model.User, new {@class = "form-control", ng_model = "email.User"})
+                            @Html.ValidationMessageFor(model => model.User, null, new { app_validation_msg = "erros", @for = "User" })                 
+                       </div>
+                       <div class="form-group col-sm-2">
+                            @Html.Label("Senha")
+                            @Html.PasswordFor(model => model.Senha, new {@class = "form-control", ng_model = "email.Senha"})
+                            @Html.ValidationMessageFor(model => model.Senha, null, new { app_validation_msg = "erros", @for = "Senha" })                 
+                       </div>
+                  </div>              
+              
+                    </fieldset> 
+                  <fieldset>
+                    <legend>Informações de Envio</legend>
+                    
+                    <div class="row"> 
+                        <div class="form-group col-sm-2">
+                            @Html.Label("Email de Destino")
+                            @Html.TextBoxFor(model => model.EmailDestino,  new {@class = "form-control", ng_model = "email.EmailDestino"})
+                            @Html.ValidationMessageFor(model => model.EmailDestino, null, new { app_validation_msg = "erros", @for = "EmailDestino" })
+                        </div>
+                        <div class="form-group col-sm-3">
+                            @Html.Label("Assunto")
+                            @Html.TextBoxFor(model => model.Assunto, new {@class = "form-control", ng_model = "email.Assunto"})
+                            @Html.ValidationMessageFor(model => model.Assunto, null, new { app_validation_msg = "erros", @for = "Assunto" })                   
+                        </div>
+                       <div class="form-group col-sm-4">
+                            @Html.Label("From")
+                            @Html.TextBoxFor(model => model.From, new {@class = "form-control", ng_model = "email.From"})
+                            @Html.ValidationMessageFor(model => model.From, null, new { app_validation_msg = "erros", @for = "From" })                 
+                       </div>
+                  </div>    
+                  <div class="row">
+                         
+                        <div class="form-group col-sm-12">
+                            @Html.Label("Corpo do Email")
+                            @Html.TextAreaFor(model => model.CorpoEmail, new {@class = "form-control", ng_model = "email.CorpoEmail", rows = "10"})
+                            @Html.ValidationMessageFor(model => model.CorpoEmail, null, new { app_validation_msg = "erros", @for = "CorpoEmail" })                   
+                        </div> 
+                 </div>          
+              
+                    </fieldset>  
+
+
+                 }
+            </div>
+            
+         <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default" ng-disabled="button == 'saved' || (bloqueiaSalvamento && bloqueiaSalvamento === true)">
+                <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar</button>
+              <button  
+                  app-switch-button="enviarEmail()" 
+                  switch-conf="[{label : 'Enviar Email', state : 'send'}, {label : 'Enviando...', state : 'sended', disabled : true}]" 
+                  switch-var="button"
+                  class="btn btn-default" ng-disabled="bloqueiaSalvamento && bloqueiaSalvamento === true">
+                  <span class="glyphicon glyphicon-envelope blue"></span>
+              </button>
+
+           <span ng-show="usuario.USU_LOGIN && usuario.editanto">
+                <button type="button" class="btn btn-danger" ng-disabled="(bloqueiaSalvamento && bloqueiaSalvamento === true) || button == 'saved'"
+                    app-confirm="@Url.Action("Remover")?prospectId={{usuario.USU_LOGIN}}" app-msg="Deseja realmente excluir o usuário [{{usuario.USU_LOGIN}}] ?">
+                    <span class="glyphicon glyphicon-remove-sign"></span> Excluir</button>
+
+            </span>         
+        </div> 
+               
+      </div>
+</div>

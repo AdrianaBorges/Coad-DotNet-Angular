@@ -1,0 +1,117 @@
+﻿    <div class="row padding">  
+          <div class="form-group col-lg-2" style="padding-top: 24px">
+               <button type="button" class="btn btn-default" ng-click="$parent.listarPedidosEmitidos()"><span class="glyphicon glyphicon-search"></span></button>
+          </div>         
+        </div>             
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+      <!-- Default panel contents -->
+      
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-calendar"></span> Pedidos Emitidos</div>
+          
+            <div class="panel-body limit-modal-height-1">
+                    
+                        <div class="table-responsive">     
+                                <div class="text padding"><strong>Cliente: </strong>{{clienteModal.CLI_NOME}}</div>
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>      
+                                            <th>                                          
+                                                Data
+                                            </th>                                            
+                                            <th>                                           
+                                                Código do Prospect
+                                            </th>  
+                                            <th>
+                                                Descrição
+                                            </th> 
+                                            <th>
+                                                Representante
+                                            </th>
+                                            <th>                                           
+                                                Produto
+                                            </th>                                     
+                                        </tr>
+                                    </thead>    
+                                  <tr ng-repeat="item in lstPedidos" class="animate-repeat">
+                                        <td app-show-date="item.PED_CRM_DATA" show-time>
+                                        
+                                        </td>  
+                                      
+                                        <td>                                       
+                                             {{item.PROSP_ID}}
+                                        </td>
+                                        <td>
+                                            {{item.PED_CRM_DESCRICAO}}
+                                        </td>                                  
+                                        <td>
+                                             <span class="label label-success">{{item.REPRESENTANTE.REP_NOME}}</span>
+                                        </td>  
+                                        <td>
+                                            {{item.PRODUTO_COMPOSICAO.CMP_DESCRICAO}}
+                                        </td>
+                                  </tr>
+                                    <tr>
+                                        <td colspan="6" ng-hide="lstPedidos" class="text">
+                                            Não foi encontrado nenhum registro.
+                                        </td>
+                                    </tr>
+                                </table> 
+                            
+                        </div>
+          
+                  <div app-pagination="page" request-page="paginaReq" load-function="listarPedidosEmitidos(paginaReq)" ng-if="listarAgendamento"></div>          
+              
+              </div>
+         
+        </div>
+
+    </div>
+</div>
+    @*  
+        <div app-modal="modalformAgendamento" header="Agendamento" submodal>            
+            <div class="panel panel-default">
+                 <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-calendar"></span> Agendamentos</div>
+                  
+                    <div class="panel-body">
+                        <fieldset>
+                                <legend>Confirmar Agendamento</legend>
+                                <div class="row" ng-if="$parent.acaoAgendar == 'reagendar'">
+                                    <div class="form-group col-sm-3">
+                                            @Html.Label("Data")
+                                            <input type="text" class="form-control" ng-model="$parent.agendamentoForm.AGE_DATA_AGENDAMENTOMask"
+                                                    app-date="$parent.agendamentoForm.AGE_DATA_AGENDAMENTO" placeholder="data de agendamento"/>
+                                        <div app_validation_msg="erros" for="AGE_DATA_AGENDAMENTO"></div>
+
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                            @Html.Label("Horario")
+                                            <select id="tipoTel" name="tipoTel" class="form-control"
+                                                    ng-model="$parent.agendamentoForm.AGE_DATA_AGENDAMENTOTime" app-time="$parent.agendamentoForm.AGE_DATA_AGENDAMENTO"
+                                                    ng-options="hor as hor for hor in horarios">
+                                                            <option value="">Selecione</option>
+                                                    </select> 
+                                        <div app_validation_msg="erros" for="AGE_DATA_AGENDAMENTO"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-12" ng-repeat="hist in $parent.agendamentoForm.HISTORICO_ATENDIMENTO">                        
+                                            <div app_validation_msg="erros" for="HISTORICO_ATENDIMENTO[{{$index}}].HAT_DESCRICAO"></div>
+                                            @Html.Label("Observações")
+                                            <textarea class="form-control" placeholder="Observações" rows="6" ng-model="hist.HAT_DESCRICAO"></textarea>
+                                    </div> 
+                                </div>
+                            </fieldset>
+                    </div>
+                <div class="panel-footer">
+                    
+                     <button class="btn btn-primary" 
+                         app-switch-button="$parent.$parent.atualizarAgendamento()"
+                         switch-conf="[{label : 'Confirmar Agendamento', state : 'cofAgen'}, {label : 'Confirmando...', state : 'confir', disabled : true}]"
+                         switch-var="$parent.$parent.buttonConfirmAgen"
+                         ng-show="tab == 4"></button>
+                </div>
+            </div>
+        </div>*@

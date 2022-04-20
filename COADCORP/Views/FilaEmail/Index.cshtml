@@ -1,0 +1,193 @@
+﻿
+@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+@using COAD.CORPORATIVO.SessionUtils
+@using GenericCrud.ActionResultTools
+@{
+    ViewBag.Title = "Listagem de Fila de E-Mail";
+
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li class="active">Listagem de Fila de E-Mail</li>        
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/fila_email.js")" defer="defer"></script>
+<div ng-app="appModule">    
+    <div ng-controller="FilaEmailController" class="padding content" ng-cloak data-ng-init="initList()" ng-click="fecharPopOvers()">
+        <div class="panel panel-corp">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-filter"></span> Filtros
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" disabled="disabled">
+                            Opções
+                            <span class="caret"></span>
+                        </button>
+                        @*<ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="@Url.Action("Emitir")" class="blue">Emitir</a>
+                            </li>
+                        </ul>*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <div app-filtro-topo="filtros" model="filtro" list="lstFiltrosUtilizados" flag-abrir="abrirFiltro" acao-pesquisar="pesquisarFilaEmail()" watch-pesquisa="dispararPesquisa">
+                </div>
+            </div>
+        </div>
+        <div>
+            <div app-message></div>
+            <div class="panel panel-corp">
+                <!-- Default panel contents -->
+                <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-shopping-cart"></span>Listagem de Fila de E-Mail</div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr class="bg-info">
+                                    <th style="min-width: 75px" app-ordering-th="filtro.requisicao.ordenacao" load-function="pesquisarFilaEmail()" order-property="Id">
+                                        Id
+                                    </th>
+                                    <th app-ordering-th="filtro.requisicao.ordenacao" load-function="pesquisarFilaEmail()" order-property="Email">E-Mail Destino</th>
+                                    <th app-ordering-th="filtro.requisicao.ordenacao" load-function="pesquisarFilaEmail()" order-property="Assunto">
+                                        Assunto
+                                    </th>
+                                    <th class="center" app-ordering-th="filtro.requisicao.ordenacao" load-function="pesquisarFilaEmail()" order-property="Data">
+                                        Data
+                                    </th>
+                                    <th class="center" app-ordering-th="filtro.requisicao.ordenacao" load-function="pesquisarFilaEmail()" order-property="DataEnvio">
+                                        Data Envio
+                                    </th>
+                                    <th app-ordering-th="filtro.requisicao.ordenacao" load-function="pesquisarFilaEmail()" order-property="Usuario">
+                                        Usuário
+                                    </th>
+                                    <th colspan="5" class="center" style="min-width: 80px;">Ações</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in lstFilaEmail" class="animate-repeat">
+                                <td>
+                                    {{item.Id}}
+                                </td>
+                                <td>
+                                    <span class="label label-success text-15">
+                                        {{item.Email}}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="label label-danger" ng-show="item.DataCancelamento">Cancelado</span>
+                                    {{item.Assunto}}
+                                </td>
+                                <td app-show-date="item.Data" data-show-time class="center"></td>
+                                <td app-show-date="item.DataEnvio" data-show-time class="center"></td>
+                                <td>
+                                    {{item.Usuario}}
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" ng-click="abrirModalCorpoEmail(item.Id)" app-tooltip
+                                       title="Visualizar Corpo do Email" class="text-danger">
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                    </a>
+                                    <a href="javascript:void(0)" ng-click="abrirModalNotificacao(item.Id)" app-tooltip ng-hide="item.DataEnvio"
+                                       title="Visualizar Erros de Envio" class="text-warning">
+                                        <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                    </a>
+                                    <a href="javascript:void(0)" ng-click="cancelarFilaEmail(item.Id)" app-tooltip ng-hide="item.DataCancelamento || item.DataEnvio"
+                                       title="Cancelar Envio" class="text-danger">
+                                        <span class="glyphicon glyphicon-remove-circle"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="11" ng-show="lstFilaEmail.length == 0 && listado">Nenhum registro foi encontrado.</td>
+                                <td colspan="11" ng-show="!lstFilaEmail">Clique em pesquisar para listar.</td>
+                            </tr>
+
+                        </table>
+                    </div>
+                    <div app-pagination="page" request-page="paginaReq" page-request="filtro.requisicao" load-function="pesquisarFilaEmail(paginaReq)" ng-show="lstFilaEmail && lstFilaEmail.length > 1"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div app-filtro-lateral="filtros" model="filtro" list="lstFiltrosUtilizados" acao-pesquisar="pesquisarFilaEmail()" flag-abrir="abrirFiltro">
+        </div>
+
+        <div data-app-modal="corpo-email" data-header="Corpo do E-Mail">
+            <div>
+                <figure class="highlight">
+                    <div>
+                        <pre ng-bind-html="trustHTML(filaEmail.FLE_CORPO)" style="min-height: 70px; max-height: 500px; max-width: 885px;  padding-top: 26px" class="app-editor"></pre>
+                    </div>
+                </figure>
+            </div>
+        </div>
+        <div data-app-modal="notificacao-erro" data-header="Notificação de Sistema">
+            <div class="row">                
+                <div class="col-md-12">
+                    <div class="panel panel-default" style="min-height: 300px;">
+                    <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-warning-sign text-warning"></span> Notificação do Sistema</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Descrição</label>
+                                <div class="text-muted">{{notifySistema.NTS_DESCRICAO}}</div>
+                            </div>
+                            <div class="col-md-5">
+                                <label>{{notifySistema.NTS_DESCRICAO_COD_REF}}</label>
+                                <div class="text-muted">{{notifySistema.NTS_COD_REF_INT}} {{notifySistema.NTS_COD_REF_STR}}</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Data</label>
+                                <div class="text-muted"> <span app-show-date="notifySistema.NTS_DATA" data-show-time></span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label>Nome da Exceção</label>
+                                <div class="text-muted">{{notifySistema.NTS_ERRO_NOME}}</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Qtd. Ocorrência</label>
+                                <div class="text-muted">{{notifySistema.NTS_NUMERO_CORRENCIA}}</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Descrição da Exceção</label>
+                                <div class="text-muted">{{notifySistema.NTS_ERRO_DESCRICAO}}</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Pilha de Erro</label>
+                                <figure class="highlight">
+                                    <div>
+                                        <pre class="text-danger limit-div-7">{{notifySistema.NTS_STACK_TRACE}}</pre>
+                                    </div>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

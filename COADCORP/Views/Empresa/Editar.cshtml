@@ -1,0 +1,49 @@
+﻿
+@using Coad.GenericCrud.Extensions
+@using GenericCrud.ActionResultTools
+
+
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Empresa</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<script src="@UrlCorp.Content("~/Scripts/negocio/empresa.js")" defer="defer"></script>
+
+<div ng-app="appModule">
+    <div class="panel panel-corp" ng-controller="EmpresaController" ng-init="carregarEmpresa(@ViewBag.empid)">
+        <div app-message></div>
+        <!-- Default panel contents -->
+        <div class="panel-heading bold">
+            <span class="glyphicon glyphicon-user"></span> Empresa
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Opções
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li>
+                            <a href="@Url.Action("Editar")" class="blue">Novo</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+        </div>
+        <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span>Fechar</button>
+            <button type="button" class="btn btn-default" ng-click="salvarEmpresa()"><span class="glyphicon glyphicon-floppy-save blue"></span>Salvar</button>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,534 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="corporativo2Model" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="corporativo2Entities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="AGENDA" EntityType="corporativo2Model.AGENDA" />
+    <EntitySet Name="CLIENTES" EntityType="corporativo2Model.CLIENTES" />
+    <EntitySet Name="CONTRATOS" EntityType="corporativo2Model.CONTRATOS" />
+    <EntitySet Name="EMAILS" EntityType="corporativo2Model.EMAILS" />
+    <EntitySet Name="ender_fat" EntityType="corporativo2Model.ender_fat" />
+    <EntitySet Name="HIST_ATEND" EntityType="corporativo2Model.HIST_ATEND" />
+    <EntitySet Name="PARAM" EntityType="corporativo2Model.PARAM" />
+    <EntitySet Name="Parcelas" EntityType="corporativo2Model.Parcelas" />
+    <EntitySet Name="representante" EntityType="corporativo2Model.representante" />
+    <EntitySet Name="TELEFONES2" EntityType="corporativo2Model.TELEFONES2" />
+    <EntitySet Name="ULTIMO_CODIGO" EntityType="corporativo2Model.ULTIMO_CODIGO" />
+    <EntitySet Name="bloqueia_consulta_individual" EntityType="corporativo2Model.bloqueia_consulta_individual" />
+    <EntitySet Name="liquidacao" EntityType="corporativo2Model.liquidacao" />
+    <EntitySet Name="datas_fat" EntityType="corporativo2Model.datas_fat" />
+    <EntitySet Name="empresas" EntityType="corporativo2Model.empresas" />
+    <EntitySet Name="SEQ_PROD" EntityType="corporativo2Model.SEQ_PROD" />
+    <EntitySet Name="ASSINATURA" EntityType="corporativo2Model.ASSINATURA" />
+    <EntitySet Name="cart_coad" EntityType="corporativo2Model.cart_coad" />
+    <FunctionImport Name="TRANSF_ASSIN">
+      <Parameter Name="vASSIN_ANT" Mode="In" Type="String" />
+      <Parameter Name="vASSIN_ATU" Mode="In" Type="String" />
+      <Parameter Name="vSOLIC" Mode="In" Type="String" />
+      <Parameter Name="vDATA_TRANSF" Mode="In" Type="String" />
+      <Parameter Name="vVIGENCIA" Mode="In" Type="String" />
+      <Parameter Name="vCONTRATO" Mode="In" Type="String" />
+      <Parameter Name="vMES_REFERENCIA" Mode="In" Type="Int32" />
+      <Parameter Name="vDATA_INI_VIGENCIA" Mode="In" Type="DateTime" />
+      <Parameter Name="vDATA_FIM_VIGENCIA" Mode="In" Type="DateTime" />
+      <Parameter Name="USU_LOGIN" Mode="In" Type="String" />
+      <Parameter Name="ASN_TRANSF_MOTIVO" Mode="In" Type="String" />
+      <Parameter Name="vRETORNO" Mode="InOut" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="AGENDA">
+    <Key>
+      <PropertyRef Name="CODIGO" />
+      <PropertyRef Name="DATA_HIST" />
+      <PropertyRef Name="HORA_HIST" />
+    </Key>
+    <Property Type="String" Name="CODIGO" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_HIST" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="HORA_HIST" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="HISTORICO_BASICO" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="HISTORICO_LIVRE" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Int16" Name="CONTATO" />
+    <Property Type="Int16" Name="RESULTADO" />
+    <Property Type="String" Name="DATA_AGENDA" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="HORA_AGENDA" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_REAL_CANC" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="CARTEIRA" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="NOME" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="A_C" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Type="Int16" Name="TIPO_ATEND" />
+    <Property Type="Int16" Name="TAREFA" />
+    <Property Type="String" Name="CARTEIRA_ATEND" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="ID" />
+    <Property Type="Int32" Name="IDINC" />
+    <Property Type="Int32" Name="cancelamentoMotivo_id" />
+  </EntityType>
+  <EntityType Name="CLIENTES">
+    <Key>
+      <PropertyRef Name="CODIGO" />
+    </Key>
+    <Property Type="String" Name="CODIGO" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="CGC" MaxLength="18" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="INSCRICAO" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="AUTOID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="DH_SUBIR" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DH_SUBIU" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="DATA_ALTERA" Precision="3" />
+    <Property Type="DateTime" Name="DATA_INSERT" Precision="3" />
+  </EntityType>
+  <EntityType Name="CONTRATOS">
+    <Key>
+      <PropertyRef Name="CONTRATO" />
+    </Key>
+    <Property Type="String" Name="CONTRATO" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ASSINATURA" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ANO_VIGENCIA" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PEDIDO" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ANO_FAT" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PERIODO_FAT" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SEMANA_FAT" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_FAT" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ANO_PROD" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PERIODO_PROD" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_PRODUCAO" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="AREA" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="REGIAO" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="REPRESENTANTE" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="VLR_ENTRADA" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="VLR_PARC_REST" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="QTE_PARC_REST" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_CANC" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PART_BTC" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="EMISS_CONTRA" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="QTE_MES_VIG" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_REAT" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_FIM_VIGENCIA" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_AUTORIZACAO" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="LIXO" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_OFERTA_1" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_OFERTA_2" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_OFERTA_3" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_OFERTA_ZERO" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_DIARIO_FAT" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_OFERTA_4" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ULT_MOD_RP" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_RP" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="INDICACAO" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PROSPECTADO" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_ATRIBUICAO" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="COD_CONSULTA" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="CONTRATO_NEGOCIADO" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SEM_ENTRADA" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_CANCELAR" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DH_SUBIR" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DH_SUBIU" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="EMPRESA_ID" />
+    <Property Type="DateTime" Name="DATA_INSERT" Precision="3" />
+    <Property Type="DateTime" Name="DATA_ALTERA" Precision="3" />
+    <Property Type="String" Name="INCLUIR_TAXA_ADM" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="CMP_ID" Type="Int32" />
+    <Property Name="DIA_VENCIMENTO" Type="Int16" />
+    <Property Name="VENDA_RECORRENTE" Type="Boolean" />
+    <Property Name="DIA_VENC_RECORRENTE" Type="Int16" />
+  </EntityType>
+  <EntityType Name="EMAILS">
+    <Key>
+      <PropertyRef Name="AUTOID" />
+    </Key>
+    <Property Type="String" Name="ASSINATURA" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="E_MAIL" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PRINCIPAL_SN" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_LISTAGEM_CONF" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="AUTOID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="DH_SUBIR" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DH_SUBIU" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SETOR" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DECISOR" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="DATA_INSERT" Precision="3" />
+    <Property Type="DateTime" Name="DATA_ALTERA" Precision="3" />
+  </EntityType>
+  <EntityType Name="ender_fat">
+    <Key>
+      <PropertyRef Name="CODIGO" />
+    </Key>
+    <Property Type="String" Name="CODIGO" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="TIPO_FAT" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="END_FAT" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="NUM_FAT" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="TP_COMPL_FAT" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="COMPL_FAT" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="BAIRRO_FAT" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="MUNIC_FAT" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="UF_FAT" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="CEP_FAT" MaxLength="9" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="id_ceps" />
+    <Property Type="String" Name="DH_SUBIR" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DH_SUBIU" MaxLength="19" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="HIST_ATEND">
+    <Key>
+      <PropertyRef Name="DATA_SOLIC" />
+      <PropertyRef Name="ASSINATURA" />
+    </Key>
+    <Property Type="DateTime" Name="DATA_SOLIC" Nullable="false" Precision="3" />
+    <Property Type="String" Name="ASSINATURA" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="HISTORICO" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SOLICITANTE" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ACAO" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="DATA_RESOLUCAO" Precision="3" />
+    <Property Type="Int32" Name="GRUPO" />
+    <Property Type="DateTime" Name="DATA_EMISSAO_FICHA" Precision="3" />
+    <Property Type="String" Name="DH_SUBIR" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DH_SUBIU" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="SAC_TIPO_ID" />
+  </EntityType>
+  <EntityType Name="PARAM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="String" Name="PERIODO_BASE" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ANO_BASE" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PERIODO_MAXIMO" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ANO_MAXIMO" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ULT_SEQ_DIGITACAO" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="MORA_MES" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="NUM_CONTRATO" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SEQ_PARCELA" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ULT_PROC_BAIX_CART" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="QUEBRA_SENHA" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SEQ_SENHA" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_ULT_SENHA" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="EM_USO_SN" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SEQ_DIARIO" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="IDENT_DOC" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SEQ_BX_CART" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_ULT_BORDERO" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_CNT_ACORD" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ULT_NUM_SOL_AC" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ULT_EXP_ACORDAO" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ULT_REM_SEM" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ULT_ANO_SEM" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ULT_REM_QUIZ" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ULT_ANO_QUIZ" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="REGIST_INI" MaxLength="9" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ATCI_LIBERADO_SN" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ATCI_DATA_INSTRUC" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ADVI_LIBERADO_SN" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ADVI_DATA_INSTRUC" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ULT_NUM_CR" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DESP_ADM" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PERC_MALA" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SEQ_DIARIO_DEMAR_IV" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_FECH_C_REC" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_CONTROLE_CH_COAD" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SEQ_CONTROLE_CH_COAD" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_CONTROLE_CH_ATL" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SEQ_CONTROLE_CH_ATL" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="SEQ_IDENT" />
+    <Property Type="Int32" Name="SEQ_PROXIMO_RECIBO" />
+    <Property Type="Int32" Name="SEQ_MV" />
+    <Property Type="Int32" Name="SEQ_REGISTRO" />
+    <Property Type="Int32" Name="NUM_BORDERO_MV" />
+    <Property Type="Int32" Name="ID_LIQ_MV" />
+    <Property Type="Int32" Name="SEQ_VALE" />
+    <Property Type="String" Name="RODOU_PROG_LIMITE_SEMANAL" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="SEQ_SUSPECT" />
+    <Property Type="String" Name="COD_FILIAL" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ULT_SEQ_CART_CURSO" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SEQ_ARQ_EMPRESTIMO" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SEQ_PARCELA2" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="LOTE_REMESSA" />
+    <Property Type="String" Name="SENHA_SAC" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SENHA_SAC_GERENCIA" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="SEQ_ARQ_CAIXA" />
+    <Property Type="String" Name="LOG_DIARIO" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="Parcelas">
+    <Key>
+      <PropertyRef Name="CONTRATO" />
+      <PropertyRef Name="LETRA" />
+      <PropertyRef Name="CD" />
+    </Key>
+    <Property Type="String" Name="CONTRATO" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="LETRA" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="CD" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_VENCTO" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SITUACAO" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="VLR_PARCELA" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="MORA_MES" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PG_PART_BTC" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="BCO_ALOC" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="CART_ALOC" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_ALOC" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_EMISSAO_BLQ" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="VLR_PAGO" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_PAGTO" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_DIARIO" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_RECIBO" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_IMP_AUT_CRA" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ALOC_BANCO" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_DIARIO_CANC" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_SITUACAO_9" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="VENCTO_PRORROG" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="CART_ALOC_2" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="nosso_numero" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DH_SUBIR" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DH_SUBIU" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="cedente" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="DATA_INSERT" Precision="3" />
+    <Property Type="DateTime" Name="DATA_ALTERA" Precision="3" />
+    <Property Type="String" Name="TAXA_ADM" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="PAR_NUM_PARCELA" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="PAR_BAIXA_MANUAL" Type="Boolean" />
+    <Property Name="PAR_VENC_BOLETO" Type="DateTime" Precision="3" />
+    <Property Name="CNQ_ID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="representante">
+    <Key>
+      <PropertyRef Name="COD_REPR" />
+      <PropertyRef Name="AUTOID" />
+    </Key>
+    <Property Type="String" Name="COD_REPR" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="OPER" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="NOME" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="REGIAO" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PROX_ENCART" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="AREA" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PERIODO" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ANO" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="Double" Name="PERC_OBJ" />
+    <Property Type="Double" Name="PERC_PERF" />
+    <Property Type="Double" Name="LIQUIDEZ" />
+    <Property Type="Double" Name="VLR_OBJETIVO" />
+    <Property Type="Double" Name="VLR_COTA" />
+    <Property Type="String" Name="FUNCAO" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="MATRICULA" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="MATGERSUP" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="MATGERNAC" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="MATEX" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="MATASSVDA" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Type="Double" Name="CRED_CAMPANHA" />
+    <Property Type="Double" Name="DEB_CAMPANHA" />
+    <Property Type="Double" Name="OUTROS_CREDITOS" />
+    <Property Type="Double" Name="OUTROS_DEBITOS" />
+    <Property Type="Double" Name="PERC_REA" />
+    <Property Type="Double" Name="INCOB" />
+    <Property Type="Double" Name="INCOB_FAT" />
+    <Property Type="Double" Name="INCOB_DEB" />
+    <Property Type="Int32" Name="COTA_RECIBO" />
+    <Property Type="Double" Name="VLR_REALIZADO" />
+    <Property Type="Double" Name="VLR_PERF_ANT" />
+    <Property Type="Double" Name="VLR_PERF_ATU" />
+    <Property Type="String" Name="AREAN" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="SETOR" />
+    <Property Type="Int32" Name="SORTEIO" />
+    <Property Type="Int32" Name="AUTOID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="TEL_1" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="TEL_2" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="TEL_3" MaxLength="10" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TELEFONES2">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="String" Name="ASSINATURA" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DDD_TEL" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="TIPO" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DH_SUBIR" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DH_SUBIU" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="SETOR" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="TELEFONE" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="DATA_INSERT" Precision="3" />
+    <Property Type="DateTime" Name="DATA_ALTERA" Precision="3" />
+  </EntityType>
+  <EntityType Name="ULTIMO_CODIGO">
+    <Key>
+      <PropertyRef Name="CODIGO2" />
+    </Key>
+    <Property Type="Decimal" Name="CODIGO2" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="DV" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="Decimal" Name="codigo" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="bloqueia_consulta_individual">
+    <Key>
+      <PropertyRef Name="AUTOID" />
+    </Key>
+    <Property Type="String" Name="data" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="hora" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="usuario" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="assinatura" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="qtd_consulta_sem" />
+    <Property Type="String" Name="ativo_sn" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="qtd_consulta_total" />
+    <Property Type="Int32" Name="qtd_consulta_usou" />
+    <Property Type="Int32" Name="qtd_disponibilizar" />
+    <Property Type="Int32" Name="qtd_consulta_acum" />
+    <Property Type="String" Name="per_disponibilizar" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="atualizou" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="DATA_INSERT" Precision="3" />
+    <Property Type="String" Name="USU_LOGIN" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="AUTOID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="liquidacao">
+    <Key>
+      <PropertyRef Name="CONTRATO" />
+      <PropertyRef Name="LETRA" />
+      <PropertyRef Name="CD" />
+      <PropertyRef Name="TIPO_DOC" />
+      <PropertyRef Name="NUMERO" />
+    </Key>
+    <Property Type="String" Name="CONTRATO" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="LETRA" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="CD" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="TIPO_DOC" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="NUMERO" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="BANCO" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="NAUT" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_VALIDAD" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PRACA" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="VALOR" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_DA_BAIXA" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="NUM_ARQ" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ORIGEM_PGTO" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="IDENT_DOCTO" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SEQ_BX_CART" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_BORDERO" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="CHEQUE_EMITIDO_SN" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DT_EMISSAO_CHEQUE" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="NUM_RECIBO" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="NUM_LEITORA_CHEQUE" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_LAYOUT_CHEQUE" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DH_SUBIR" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DH_SUBIU" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Name="PAR_NUM_PARCELA" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="atualizarCodigo" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="datas_fat">
+    <Key>
+      <PropertyRef Name="PERIODO" />
+      <PropertyRef Name="SEMANA" />
+      <PropertyRef Name="DATA_FAT" />
+    </Key>
+    <Property Name="PERIODO" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="SEMANA" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="DATA_FAT" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="empresas">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="razao" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="fantasia" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="cnpj" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
+    <Property Name="ie" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="im" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="suframa" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="logradouro" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="numero" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="complemento" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="bairro" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="cidade" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="uf" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="pais" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="cep" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="telefones" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="site" Type="String" MaxLength="99" FixedLength="false" Unicode="false" />
+    <Property Name="area" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ultima_nfe" Type="Int32" />
+    <Property Name="cnr_agcedente" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="SEQ_DIARIO" Type="Int32" Nullable="false" />
+    <Property Name="perfil" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="atividade" Type="Int32" />
+    <Property Name="inf_complementar_nfe" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="inf_complementar_cod" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="primeira_nfe" Type="Int32" />
+  </EntityType>
+  <EntityType Name="SEQ_PROD">
+    <Key>
+      <PropertyRef Name="COD_PROD" />
+      <PropertyRef Name="LETRA" />
+    </Key>
+    <Property Name="COD_PROD" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="LETRA" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="SEQUENCIA" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ASSINATURA">
+    <Key>
+      <PropertyRef Name="CODIGO_UNIX" />
+    </Key>
+    <Property Name="CODIGO_UNIX" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="CODIGO" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="ANO_COAD" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="ATV_REM" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="CORTESIA" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="A_C" Type="String" MaxLength="90" FixedLength="false" Unicode="false" />
+    <Property Name="E_MAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EX_BTC" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="PART_BTC" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="MAT_ADIC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="REMESSA" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="ANO_REMESSA" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="DT_SUSP_REM_DIASC" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="MALA_OFERTA" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="ULT_PASTA" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="REENVIO_PASTA_SN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="NUM_TP_ENVIO" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+    <Property Name="DT_GRAV_PASTA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="DATA_ASSINATURA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="MAT_ADIC2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DT_DEVOL_PASTA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="ENTREGADOR" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="RETIRAR_DE_MAOS" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="COD_CURSO" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="COD_LIVRO" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="MES_REFERENCIA" Type="Int32" />
+    <Property Name="PROSPECTADO" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="AUTOID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CNPJ_CPF" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DH_SUBIR" Type="String" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Name="DH_SUBIU" Type="String" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Name="DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="DATA_INSERT" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="cart_coad">
+    <Key>
+      <PropertyRef Name="CODIGO" />
+    </Key>
+    <Property Name="CODIGO" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="NOME" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+    <Property Name="A_C" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+    <Property Name="TIPO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="LOGRAD" Type="String" MaxLength="125" FixedLength="false" Unicode="false" />
+    <Property Name="NUMERO" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="TIPO_COMPL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="COMPL" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="TIPO_COMPL2" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="COMPL2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="TIPO_COMPL3" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="COMPL3" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="BAIRRO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MUNIC" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="UF" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="CEP" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+    <Property Name="DDD_TEL" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="TELEFONE" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="DDD_FAX" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="FAX" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="E_MAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CARGO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="PROF" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="IDENTIFICACAO" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="DATA_CADASTRO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="MXM_CODIGO" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="cep_status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="TP_PESSOA" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="id_ceps" Type="Int32" />
+    <Property Name="DH_SUBIR" Type="String" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Name="DH_SUBIU" Type="String" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Name="DATA_ALTERA" Type="DateTime" Precision="3" />
+    <Property Name="DATA_INSERT" Type="DateTime" Precision="3" />
+    <Property Name="CLI_ID" Type="Int32" />
+  </EntityType>
+</Schema>

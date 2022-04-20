@@ -1,0 +1,52 @@
+﻿@model  COAD.COADGED.Model.DTO.ColaboradorDTO
+@{
+    ViewBag.Title = "Edit";
+}
+@using Coad.GenericCrud.Extensions
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li>@Html.ActionLink("Gerenciar Colaboradores","index","Colaborador")</li>
+        <li class="active">Editar Colaboradores</li>         
+    </ol>
+}
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/colaborador.js")
+<div class="form-lg padding" ng-app="appModule">
+    <div class="panel panel-default" ng-controller="ColaboradorController" data-ng-init="read(@ViewBag.colaboradorId)">
+            @Html.ValidationSummary(true)          
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Editar Colaborador</div>
+            <div class="panel-body">  
+                 <div app-message></div>
+                 @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) 
+                 {
+                 <div class="row">
+                    <div class="form-group col-lg-1">
+                        @Html.Label("ID")
+                        @Html.TextBoxFor(model => model.COL_ID,  new {@class = "form-control", ng_model = "colaborador.COL_ID", disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.COL_ID, null, new { app_validation_msg = "erros", @for = "COL_ID" }) 
+                    </div>
+                    <div class="form-group col-lg-9">
+                        @Html.LabelFor(model => model.COL_NOME)
+                        @Html.TextBoxFor(model => model.COL_NOME,  new {@class = "form-control", ng_model = "colaborador.COL_NOME" })
+                        @Html.ValidationMessageFor(model => model.COL_NOME, null, new { app_validation_msg = "erros", @for = "COL_NOME" }) 
+                    </div>
+                    
+                    <div class="form-group col-lg-2">
+                        @Html.LabelFor(model => model.COL_ATIVO)
+                        @Html.DropDownListFor(model => model.COL_ATIVO, new SelectList(@ViewBag.ativo, "Value", "Text"), null ,new {@class = "form-control", ng_model = "colaborador.COL_ATIVO" })
+                    </div>
+
+                    <div class="form-group col-lg-2">
+                        @Html.LabelFor(model => model.CRG_ID)
+                        @Html.DropDownListFor(model => model.CRG_ID, new SelectList(@ViewBag.cargos, "Value", "Text"), null ,new {@class = "form-control", ng_model = "colaborador.CRG_ID" })
+                    </div>
+                 </div>
+                 }
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-primary" ng-click="salvarColaborador()">Salvar</button>
+                <span class="float-right"><button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default">Voltar</button></span>
+            </div> 
+    </div>
+</div>

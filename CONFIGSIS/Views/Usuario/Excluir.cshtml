@@ -1,0 +1,71 @@
+﻿@model COAD.SEGURANCA.Repositorios.Contexto.USUARIO
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+@using (Html.BeginForm())
+{
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <i class="fa fa-search fa-fw"></i> @ViewBag.Title
+            <div class="pull-right">
+            </div>
+        </div>
+        <div class="panel-body">
+            @Html.ValidationSummary(false)
+            <div class="form-group">
+                @Html.Label("Usuário")
+                @Html.TextBoxFor(model => model.USU_LOGIN, new { @class = "form-control", Disabled = true })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Nome")
+                @Html.TextBoxFor(model => model.USU_NOME, new { @class = "form-control", Disabled = true })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Data Cadastro")
+                @Html.TextBoxFor(model => model.USU_DATA_CAD, new { @class = "form-control", Disabled = true })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Ativo")
+                @Html.TextBoxFor(model => model.USU_ATIVO, new { @class = "form-control", Disabled = true })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Expira Em")
+                @Html.TextBoxFor(model => model.USU_DATA_EXPIRA, new { @class = "form-control", Disabled = true })
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Confirma" class="btn btn-default" />
+            <a href="javascript:history.back()" class="btn btn-default" }>Voltar</a>
+        </div>
+    </div>
+
+    @Html.HiddenFor(model => model.USU_LOGIN)
+    @Html.HiddenFor(model => model.USU_NOME)
+    @Html.HiddenFor(model => model.USU_DATA_CAD)
+    @Html.HiddenFor(model => model.USU_ATIVO)
+    @Html.HiddenFor(model => model.USU_DATA_EXPIRA)
+    @Html.HiddenFor(model => Model.USU_SENHA)
+    @Html.HiddenFor(model => Model.USU_NOVA_SENHA)
+    @Html.HiddenFor(model => Model.USU_DATA_ULTIMOACESSO)
+    @Html.HiddenFor(model => Model.USU_DATA_LOGIN)
+    @Html.HiddenFor(model => Model.USU_LOGIN)
+    @Html.HiddenFor(model => Model.USU_ADMIN) 
+    @Html.HiddenFor(model => Model.USU_EMAIL)
+        
+    
+    
+}

@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "Index";     
+}
+
+@Scripts.Render("~/Scripts/appScripts/AcessoTabelas.js")
+
+@{
+    ViewBag.print = true;
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;
+    if (ViewBag.print == true)
+    {
+        ViewBag.printableClass = "hidden-print";
+    }
+
+    ViewBag.Title = "Index";
+    
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Relatorios/Index">Relatórios</a></li>
+        <li><a href="/Relatorios/Cadastro">Relatórios de Cadastro </a></li>
+        <li class="active">Relatorio Acesso a Tabelas (Analítico)</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="AcessoTabelasController" class="padding content" ng-init="carregarTela();canPrint=true" ng-cloak>
+        <div class="panel panel-corp">
+            <div app-message></div>
+            <div class="panel-heading bold head-panel">
+                <label id="title"><span class="glyphicon glyphicon-calendar"></span>&nbspRelatorio Acesso a Tabelas (Analítico)</label>
+            </div>
+            <div class="panel-body">
+                <div class="row hidden-print">
+                    <div class="col-lg-2">
+                        <div class="pull-Left">
+                            <label for="sigla">Data Inicial</label>
+                            <div class="input-group date">
+                                <input type="text" id="dataini" ng_model="dtini" app_date="filtro.dataini" class="form-control datepicker" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="pull-Left">
+                            <label for="sigla">Data Final</label>
+                            <div class="input-group date" style="">
+                                <input type="text" id="datafim" ng_model="dtfim" app_date="filtro.datafim" class="form-control datepicker" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("Produtos")
+                            <select class="form-control" id="Produtos" name="Produtos" ng-model="filtro.PRO_ID" ng-options="item.PRO_ID as item.PRO_SIGLA for item in lstprodutos">
+                                <option value="">--- Selelcione ---</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <label for="sigla">Assinatura</label>
+                        <input type="text" id="ASN_NUM_ASSINATURA" ng_model="filtro.assinatura" class="form-control" />
+                    </div>
+                    <div class="col-lg-3" style="padding-top: 25px;">
+                        <label class="switch switch switch-round">
+                            <input type="checkbox" ng_model="filtro.analitico">
+                            <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                            <span>Relatório Analítico</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden-print panel-footer">
+                <button type="button" class="btn btn-default" ng-click="listarAcessos()"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+            </div>
+        </div>
+        <div class="panel panel-corp" id="baseContent" ng-if="lstAcessoTabelas.length>0">
+            <div app-message></div>
+            <div class="panel-heading bold head-panel">
+                <table class="table table-hover" style="padding-left: 12px;">
+                    <thead>
+                        <tr>
+                            <th style="width: 30%"><strong>
+                                <label id="title"><span class="glyphicon glyphicon-calendar"></span>&nbspRelatorio Acesso a Tabelas </label>
+                            </strong></th>
+                            <th style="width: 40%; text-align: center;">
+                                <strong>
+                                    <label id="title" style="padding-left: 40px;">Período:&nbsp<span app-show-date="filtro.dataini"></span>&nbsp e &nbsp<span app-show-date="filtro.datafim"></span></label>
+                                </strong>
+                            </th>
+                            <th style="width: 30%; text-align: right;"><strong>
+                                <label id="title" ng-if="filtro.analitico==true">(Analítico)</label>
+                                <label id="title" ng-if="filtro.analitico!=true">(Sintético)</label>
+                            </strong></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table table-hover table-bordered" style="padding-left: 12px;" ng-repeat="acesso in lstAcessoTabelas">
+                            <thead>
+                                <tr class="info">
+                                    {{acesso.CLA_ATEND_DESCRICAO}}
+                                    <th style="width: 60%"><strong>Cliente: {{acesso.ASN_NUM_ASSINATURA}}</strong> - {{acesso.CLI_NOME}}</th>
+                                    <th style="width: 20%"><strong>Simuladores/Tabelas:</strong>&nbsp{{acesso.ACESSOS.length}}</th>
+                                    <th style="width: 20%"><strong>Total de Acesso:</strong>&nbsp{{acesso.QTDE_TOTAL}}</th>
+                                </tr>
+                                <tr class="info" ng-if="filtro.analitico==true">
+                                    <th>Tabela</th>
+                                    <th colspan="2" style="width: 20%; text-align: center">Nº Acessos</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in acesso.ACESSOS" ng-if="filtro.analitico==true">
+                                <td style="width: 60%">
+                                    <label style="font-size: 1.2em !important; font-family: Verdana;" ng-bind-html="trustAsHtml(item.TAB_DESCRICAO)"></label>
+                                </td>
+                                <td colspan="2" style="width: 40%; text-align: center">{{item.QTDE}}</td>
+                            </tr>
+
+                        </table>
+                        <table class="table table-hover table-bordered" style="padding-left: 12px;">
+                            <tr>
+                                <td colspan="3" style="text-align: right;"><strong>Total de Clientes:&nbsp{{lstAcessoTabelas.length}}</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

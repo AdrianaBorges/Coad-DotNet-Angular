@@ -1,0 +1,188 @@
+﻿@using Coad.GenericCrud.Extensions
+
+@{
+    ViewBag.print = true;
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;
+    if (ViewBag.print == true)
+    {
+        ViewBag.printableClass = "hidden-print";
+    }
+
+    ViewBag.Title = "Index";
+
+}
+
+<script>
+    $(document).ready(function () {
+        $(":input").inputmask();
+    });
+</script>
+
+@Scripts.Render("~/Scripts/negocio/contratos.js")
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+<div ng-app="appModule">
+    <div ng-controller="ContratosController" class="padding content" ng-init="iniRelFaturamentoUF();canPrint=true">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i><a href="/Relatorios/Controladoria">Relatórios</a>
+                        </li>
+                        <li>
+                            <a href="/Relatorios/Controladoria">Relatórios Controladoria</a>
+                        </li>
+                        <li class="active">
+                            <span> Faturamento por Produto/UF </span>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading bold head-panel">
+                    <span class="glyphicon glyphicon-filter"></span>Filtros
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Opções<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)" app-post="@Url.Action("Editar")?clienteId=" title="Editar" class="blue">Pesquisar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-1">
+                            @Html.Label("Semana(Fat)")
+                            <div class="form-group">
+                                <label class="switch switch switch-round">
+                                    <input type="checkbox" ng_model="filtro.tipodata">
+                                    <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Inicial")
+                                <div class="input-group date">
+                                    @Html.TextBox("dtinicial", "", new { @class = "form-control datepicker", ng_model = "dtini", app_date = "filtro.dtini" })
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Final")
+                                <div class="input-group date">
+                                    @Html.TextBox("dtfinal", "", new { @class = "form-control datepicker", ng_model = "dtfim", app_date = "filtro.dtfim" })
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Empresa")
+                                @Html.DropDownList("_emp_id", new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "filtro.emp_id", ng_Change = "listarBuscarFaturamentoProdutoUF()" })
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="GRUPO_ID">Grupo</label>
+                                @Html.DropDownList("GRUPO_ID", new SelectList(ViewBag.grupos, "GRUPO_ID", "GRU_DESCRICAO"), "Selecione", new { @class = "form-control", ng_model = "filtro.grupo_id", ng_Change = "listarBuscarFaturamentoProdutoUF()" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" ng-click="listarBuscarFaturamentoProdutoUF()"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                </div>
+            </div>
+            <div class="panel panel-default" ng-show="lstFaturamentoProdUF" id="baseContent">
+                <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span>
+                      <label>COADCORP - Faturamento por Produto/UF - {{filtro.dataatual}}</label> - 
+                      <label>Período:</label> &nbsp;{{dtini}} a {{dtfim}} -
+                      <label style="text-align: left;">
+                          <span ng-if="filtro.emp_id==1">COAD</span>
+                          <span ng-if="filtro.emp_id==2">ATUALIZACAO</span>
+                          <span ng-if="filtro.emp_id==3">CONTABIL E JURIDICA</span>
+                          <span ng-if="filtro.emp_id==4">COAD - GRAFICA</span>
+                          <span ng-if="filtro.emp_id==5">CORTESIA</span>
+                          <span ng-if="filtro.emp_id==6">Franquia RJ</span>
+                          <span ng-if="filtro.emp_id==7">PORTO MARAVILHA</span>
+                          <span ng-if="filtro.grupo_id==1">/ ASSINATURA</span>
+                          <span ng-if="filtro.grupo_id==2">/ CURSO</span>
+                          <span ng-if="filtro.grupo_id==3">/ LIVRO</span>
+                          <span ng-if="filtro.grupo_id==4">/ LIVROS PROPRIOS</span>
+                          <span ng-if="filtro.grupo_id==5">/ LIVROS TERCEIRO</span>
+                          <span ng-if="filtro.grupo_id==6">/ CONSUMO</span>
+                      </label>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="table-responsive" style="padding-left: 12px; padding-right: 12px;" ng-repeat="item in lstFaturamentoProdUF">
+                            <table class="table table-hover table-bordered" style="padding-left: 12px;" ng-repeat="sub in  item.LISTAPROD">
+                                <tr class="info">
+                                    <th colspan="5">Area: {{item.AREA_NOME}} / Produto: {{sub.PRO_NOME}}</th>
+                                </tr>
+                                <tr class="info">
+                                    <td>UF</td>
+                                    <td style="text-align: center;">Qtde</td>
+                                    <td style="text-align: right;">Faturado</td>
+                                </tr>
+                                <tr ng-repeat="det in sub.LISTAUF">
+                                    <td>{{det.REGIAO_UF}}</td>
+                                    <td style="text-align: center;">{{det.QTDE}}</td>
+                                    <td app-show-dinheiro="det.VALOR" style="text-align: right;width:15%;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-style:oblique; text-align:right;"><span><strong>TOTAIS:</strong></span></td>
+                                    <td style="text-align:center;"> {{sub.QTDE}} </td>
+                                    <td app-show-dinheiro="sub.VALOR" style="text-align: right;width:15%;"></td>
+                                </tr>
+                           </table>
+
+                        </div>
+                        <div class="table-responsive" style="padding-left: 12px; padding-right: 12px;">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr class="info">
+                                        <th style="text-align: center;" colspan="7">
+                                            <label>Período:</label> &nbsp;{{dtini}} a {{dtfim}}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in lstFaturamentoProdUF">
+                                    <td>{{item.AREA_ID}} - {{item.AREA_NOME}}</td>
+                                    <td app-show-dinheiro="item.VALOR" style="text-align: right;width:15%;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-style:oblique; text-align:right;"><span><strong>TOTAIS:</strong></span></td>
+                                    <td app-show-dinheiro="total" style="text-align: right; width:15%;"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="hidden-print panel-footer">
+                        <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+                        <a class="btn btn-default" href="/Relatorios/Controladoria">
+                            <span class="glyphicon glyphicon-chevron-left blue"></span>&nbspVoltar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

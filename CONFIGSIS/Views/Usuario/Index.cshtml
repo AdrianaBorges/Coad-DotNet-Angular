@@ -1,0 +1,176 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutosDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li class="active">Gerenciar Usuarios</li>         
+        
+    </ol>
+}
+
+@Scripts.Render("~/Scripts/negocio/usuario.js")
+<div ng-app="appModule">
+    <div ng-controller="UsuarioController" class="padding content" ng-cloak>
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                        </li>                                                                           
+                                    </ul>
+                                </div>
+                            </div>
+      </div>
+          
+      <div class="panel-body">            
+           
+        <div class="row">              
+            <div class="form-group col-lg-2">
+                <label for="usu_login">Login</label>
+                <input type="text" id="usu_login" ng-model="filtro.usu_login" class="form-control"/>
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="usu_login">Nome</label>
+                <input type="text" id="usu_nome" ng-model="filtro.nome" class="form-control"/>
+            </div>
+            <div class="form-group col-lg-2">
+                <label for="usu_login">CPF</label>
+                <input type="text" id="usu_cpf" ng-model="filtro.cpf" class="form-control"/>
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="_per_id">Perfil</label>
+                @Html.DropDownList("_per_id", new SelectList(@ViewBag.listaPerfil, "Value", "Text"), "Selecione", 
+new { @class = "form-control", ng_model = "filtro.per_id" })
+                
+            </div>   
+            <div class="col-lg-3 form-group">
+                    <label for="_emp_id">Empresa</label>
+                    @Html.DropDownList("_emp_id", new SelectList(@ViewBag.listaemp, "Value", "Text"),
+ "Selecione", new { @class = "form-control", ng_model = "filtro.emp_id" })
+                
+            </div>          
+        </div>
+         
+            
+      </div>
+                  
+        <div class="panel-footer">
+            <button type="button" class="btn btn-default" ng-click="listar()">Pesquisar</button>
+        </div>
+</div>
+        <div app-message></div>
+      <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Cadastro de Usuarios</div>
+          
+      <div class="panel-body">       
+                    <div class="table-responsive">     
+                            <!-- <input type="text" ng-model="dataTest" app-date/>  -->       
+                       
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>                               
+                                    
+                                        <th style="min-width: 75px">                                           
+                                            Login
+                                        </th>
+                                        <th>                                           
+                                            Nome
+                                        </th>
+                                        <th>                                           
+                                            CPF
+                                        </th>   
+                                        <th>                                           
+                                            Perfis
+                                        </th>    
+                                        <th class="center">
+                                            Admin
+                                        </th>
+                                        <th>
+                                           Ultimo Login 
+                                        </th>  
+                                        <th>
+                                           Data de Expiração 
+                                        </th>         
+                                        <th>Editar</th>
+                                    </tr>
+                                </thead>    
+                              <tr ng-repeat="item in usuarios">
+                                    <td>
+                                        {{item.USU_LOGIN}}
+                                    </td>                                    
+                                    <td>
+                                        {{item.USU_NOME}}
+                                    </td>  
+                                    <td>
+                                        {{item.USU_CPF}}
+                                    </td>  
+                                    <td>{{item.PERFIL_USUARIO[0].PERFIL.PER_ID}} 
+                                        <a href="javascript:void(0)" style="font-size: 18px" ng-if="item.PERFIL_USUARIO.length > 1" 
+                                            ng-click="abreModalUsuario(item)" title="Ver todos"><strong>...</strong></a>
+                                    </td> 
+                                    <td>
+                                        <span ng-if="item.USU_ADMIN" class="glyphicon glyphicon-ok green"></span>
+                                        <span ng-if="!item.USU_ADMIN" class="glyphicon glyphicon-remove red"></span>
+                                    </td> 
+                                    <td app-show-date="item.USU_DATA_ULTIMOACESSO">
+                                    </td>
+                                    <td app-show-date="item.USU_DATA_EXPIRA">
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0)" app-post="@Url.Action("Editar")?USU_LOGIN={{item.USU_LOGIN}}" title="Editar" class="blue">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                        </a>
+                                    </td>
+                                   
+                              </tr>
+                            <tr>
+                                <td colspan="8" ng-show="!usuarios && listado">Nenhum registro foi encontrado.</td>
+                                <td colspan="8" ng-show="!usuarios">Clique em pesquisar para listar.</td>
+
+                            </tr>
+
+                            </table> 
+                    </div>
+              <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+
+          </div>
+        </div>  
+
+        <div app-modal="perfis-modal" header="Perfis">              
+                    <div class="table-responsive">     
+                            <!-- <input type="text" ng-model="dataTest" app-date/>  -->       
+                       
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>                             
+                                    
+                                        <th style="min-width: 75px">                                           
+                                            Perfils
+                                        </th>                                        
+                                    </tr>
+                                </thead>   
+                               <tbody>
+                                    <tr ng-repeat="per in $parent.perfis">
+                                        <td>
+                                            {{per.PER_ID}}
+                                        </td>  
+                                    </tr>
+                               </tbody>  
+                            </table> 
+                    </div>
+        </div>
+    </div>   
+</div>

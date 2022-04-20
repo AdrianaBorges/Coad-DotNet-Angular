@@ -1,0 +1,300 @@
+﻿
+
+label {
+  color: grey;
+}
+
+
+.input-group-addon {
+
+    font-size: 12px;
+}
+
+td, th, .text {
+
+    color: grey;
+    font-size: 12px;
+}
+
+.limit-content, .content, div.body {
+
+    padding: 0px;
+}
+
+div#breadcrumbs {
+
+    padding-top: 0px;
+}
+
+nav#pagination {
+
+    max-height: 55px;
+}
+
+.table {
+
+    margin-bottom: 5px;
+}
+
+
+.selectedLine {
+
+    font-size: 12px;
+    background-color:greenyellow;
+    font-style:oblique;
+
+}
+
+.selectedLineLIB {
+
+    font-size: 12px;
+    background-color:cyan;
+    font-style:oblique;
+
+}
+
+legend {
+
+    color: grey;
+    font-size: 15px;
+}
+
+.button-sm {
+
+    padding-top: 25px;    
+}
+.button-sm .btn-sm, .button-sm-grid {
+
+    padding: 4px 10px;    
+}
+
+.button-sm-seach {
+
+    padding: 4px 10px;
+}
+
+.message-error {
+
+    font-size: 13px;
+}
+
+.alert {
+      
+  position: fixed;
+  top: 54px;
+  z-index: 1500;
+  width: 60%;
+  left: 20%;
+}
+
+.grid-combobox {
+
+   
+   margin-right: 3px;
+}
+
+.grid-input, .grid-combobox {
+
+    max-width: 120px;
+}
+
+.icone {
+    font-size: 13px;
+}
+
+.padding-left-right {
+
+    padding: 0px 10px 0px 10px;
+}
+
+.left-padding {
+
+    padding-left: 15px;
+}
+
+.padding-3 {
+
+    padding: 3px 3px 0px 3px;
+}
+
+.limit-uf, .limit-div {
+
+    max-height: 215px;
+    overflow-y: auto;
+}
+
+.limit-modal-height {
+
+    max-height: 340px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.half-size-table {
+
+    max-width : 50%;
+}
+
+.padding-top {
+
+    padding-top: 15px;
+}
+
+ td, th, .text {
+    color: grey;
+  }
+
+#button-menu {
+
+    color: white;
+}
+
+.footer {
+
+    background-color:#3a7198;    
+}
+
+    .footer a, .footer p {
+
+        color: #fff;
+    }
+
+@media only Screen and (max-width: 750px) {
+
+    a, body {
+        font-size: 16px;
+    }
+
+    td, th, .text {
+        font-size: 16px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0%;
+    }
+       
+    .panel-heading {
+        padding: 10px 15px; 
+    }
+
+    .btn {        
+        font-size: 16px;
+    }
+
+   #button-menu {
+        display:none;
+    }
+
+    .sidebar-nav > .sidebar-brand {
+
+        height: 150px;
+        font-size: 19px;
+    }
+
+    .no-mobile {
+
+        display: none;
+    }
+
+    .collapse a {
+
+        color:#9d9d9d !important;
+        text-decoration: none;
+        background-color: transparent !important;
+    }
+
+    .collapse a:hover {
+
+        text-decoration: none;
+        color:#fff;
+        background-color: transparent;
+    }
+
+    .dropdown-menu {
+
+        background-color: #fff !important;
+    }
+
+    .dropdown-menu a {
+
+        font-size: 14px;
+        color: #565252 !important;
+    }
+
+    .divider {
+
+        background-color: #969393 !important;
+    }
+
+    button.navbar-toggle[aria-expanded="true"]{
+
+        background-color: #5A5858 !important;
+    }
+
+    .logo-mobile, .logo-mobile:hover {
+
+        position: relative;
+        top: 15px;
+        left: 30px;
+        color: #fff;
+        font-size: 19px;
+    }
+
+    div.navbar-collapse {
+
+        padding-bottom: 15px;
+    }
+
+    .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+
+        background-color: #000 !important;
+    }
+
+   
+}
+
+@media Screen and (min-width: 751px) {
+
+    td, th, .text {
+        font-size: 12px;
+    }
+
+    .form-control {
+        height: 28px;
+        font-size: 12px;
+    }
+
+    label {
+      font-size: 13px;
+      color: grey;
+    }
+
+    .panel-heading {    
+         padding: 5px 15px; 
+    }
+          
+    .btn {
+        padding: 3px 12px;
+    }
+
+   #button-menu {
+
+       padding: 5px 15px;
+        font-size: 27px !important;
+    }
+    
+   .mobile {
+
+        display: none;    
+    }
+
+   .no-mobile {
+
+        display: block;    
+    }
+
+    .dropdown-menu {
+
+        z-index: 100000;
+    }
+}

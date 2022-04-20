@@ -1,0 +1,113 @@
+﻿@using COAD.SEGURANCA.Extensions
+@model IEnumerable<COAD.SEGURANCA.Model.EmpresaModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+@using (Html.BeginForm())
+{
+    if (TempData["Resultado"] != null)
+    {
+        string t = TempData["Resultado"].ToString();
+
+        @Html.Alert(t);
+    }
+    
+
+    <div class="form panel panel-primary">
+        <div class="panel-heading">
+            <i class="fa fa-search fa-fw"></i> @ViewBag.Title
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                        Opções
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li><a href="../Empresa/Novo">Novo</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    @Html.Label("Empresa")
+                    @Html.TextBox("_razao_social", "", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Pesquisar" class="btn btn-default" />
+        </div>
+    </div>
+    <div class="form panel panel-primary">
+        <div class="panel-heading">
+            <i class="fa fa-search fa-fw"></i> @ViewBag.Title
+        </div>
+        <div class="panel-body" >
+
+            @{
+                var grid = new WebGrid(source: Model, canPage: true, defaultSort: "EMP_ID", rowsPerPage: 30, canSort: true, ajaxUpdateCallback: "GridUpdate", ajaxUpdateContainerId: "grid");
+
+                if (@Model != null)
+                {
+                    var gridHtml = grid.Table(htmlAttributes: new { id = "grid" },
+                        /* headerStyle: "tabheader" ,*/ footerStyle: "paginacao",
+                        tableStyle: "tabconteudo table table-hover", alternatingRowStyle: "odd", columns: grid.Columns(
+                            grid.Column("EMP_ID", header: "ID"),
+                            grid.Column("EMP_RAZAO_SOCIAL", header: "Nome"),
+                            grid.Column("EMP_NOME_FANTASIA", header: "Nome Fantasia"),
+                            grid.Column("EMP_CNPJ", header: "CNPJ"),
+                        /*  grid.Column(header: "Print?", format: @<text><input name="Prints"  type="checkbox" value="@item.EMP_ID" /></text>), */
+                            grid.Column(header: "Tipo", format: @<text> @if (item.EMP_TIPO == 0)
+                                                                        { 
+    <span>Filial</span> 
+                                                                        }
+                                                                        else
+                                                                        {  
+    <span>Matriz</span> 
+                                                                        } </text>, style: "colunagridacoes table-icons"),
+
+                            grid.Column(header: "", format: @<text>
+                <a href="@Url.Action("Editar", new { _emp_id = item.EMP_ID })" title="">
+                    <span class="glyphicon glyphicon-edit"></span></a>
+                </text>, style: "colunagridacoes table-icons"),
+                            grid.Column(header: "", format: @<text>
+                <a href="@Url.Action("Excluir", new { _emp_id = item.EMP_ID })" title="">
+                    <span class="glyphicon glyphicon-remove-sign"></span></a>
+                </text>, style: "colunagridacoes table-icons")
+                        )
+                    ).ToString();
+
+
+
+                    // var pager = grid.Pager().ToString();
+                    var pager = grid.PagerList(WebGridPagerModes.All, "Primeiro", "Anterior", "Próximo", "Último", 5, "pagination");
+                
+       
+                @(new HtmlString(gridHtml))                
+                @pager
+                       
+                }
+            }
+        </div>
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-default">Excel</button>
+            <button type="submit" class="btn btn-default">PDF</button>
+        </div>
+    </div>
+
+}
+
+

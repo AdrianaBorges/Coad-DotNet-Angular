@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "Busca";
+}
+
+<h3>Busca</h3>
+
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Tributário","index","Home")</li>
+        <li class="active">COAD BUSCA NOTÍCIAS</li>
+    </ol>
+}
+
+@Scripts.Render("~/Scripts/negocio/noticias.js")
+@if (Request.Browser.IsMobileDevice) {
+  @:Mobile
+} else {
+  @:PC
+}
+
+@*@if (Request.UserAgent.ToLower().Contains("iphone") || Request.UserAgent.ToLower().Contains("ipad") || Request.UserAgent.ToLower().Contains("mac os"))
+{
+@:MAC
+}else{
+@:Android
+}*@
+<div ng-app="appModule">
+    <div ng-controller="NoticiasController" class="padding content">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-filter"></span>Filtros
+           <div class="pull-right">
+               <div class="btn-group">
+                   @*<ul class="dropdown-menu pull-right" role="menu">
+                       <li>
+                           <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                       </li>
+                   </ul>*@
+               </div>
+           </div>
+            </div>
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-3">
+                        <label for="sigla">Título</label>
+                        <input type="text" id="titulo" ng-model="filtro.titulo" class="form-control"/>
+                    </div>
+                    <div class="form-group col-lg-7">
+                        <label for="sigla">Texto</label>
+                        <input type="text" id="texto" ng-model="filtro.texto" class="form-control"/>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="sigla">Descrição</label>
+                        <input type="text" id="descricao" ng-model="filtro.descricao" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="listar()">Pesquisar</button>
+            </div>
+        </div>
+        <div app-message></div>
+        <div class="panel panel-default" ng-show="noticias">
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-book"></span>
+                Notícias relacionadas a pesquisa
+            </div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 70%;">
+                                    TÍTULO
+                                </th>
+                                <th style="min-width: 30%;">
+                                    DESCRIÇÃO
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in noticias">
+                            <td>
+                                <a href="/Noticias/Detalhes/{{item.nmid}}"  class="prox">
+                                    {{item.ncverbete}}
+                                </a>
+                            </td>
+                            <td>
+                                {{ item.ngdescricao}}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+                <div app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></div>
+        </div>
+        <div class="panel panel-default" ng-show="noticias.length < 1">            
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-book"></span>
+                Obrigações do dia
+            </div>
+            <div>
+                <h2 style="color:red">Não foram encontradas noticías para sua pesquisa.</h2>
+            </div>
+        </div>
+    </div>
+</div>
+

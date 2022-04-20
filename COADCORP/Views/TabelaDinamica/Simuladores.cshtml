@@ -1,0 +1,160 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html>
+<!--<![endif]-->
+<head>
+
+    <script type="text/javascript">
+        // para obter o contexto da aplicação
+        var contextPath = "@System.Web.HttpContext.Current.Request.ApplicationPath";
+    </script>
+
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+
+    @Styles.Render("~/Content/themes/PortalCoad/css/portal.css")
+    @Styles.Render("~/Content/themes/base/jquery-ui.css")
+    @Styles.Render("~/Content/themes/base/simple-sidebar.css")
+    @Styles.Render("~/Content/themes/base/bootstrap-theme.css")
+    @Styles.Render("~/Content/themes/base/default.css")
+    @Styles.Render("~/Content/themes/base/bootstrap.css")
+    @Styles.Render("~/Content/themes/fonts/font-awesome.min.css")
+    @Styles.Render("~/Content/themes/base/coadcorp-boostrap.css")
+    @Styles.Render("~/Content/themes/assets/css/layout.css")
+
+
+    <script src="@Url.Content("~/Scripts/jquery-1.11.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/modernizr-2.5.3.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.maskMoney.js")" type="text/javascript"></script>
+
+
+    @Scripts.Render("~/Scripts/bootstrap.min.js")
+    @Scripts.Render("~/Scripts/util.js")
+    @Scripts.Render("~/Scripts/Angular/angular.min.js")
+    @Scripts.Render("~/Scripts/Angular/angular_modules/service_module.js")
+    @Scripts.Render("~/Scripts/Angular/angular_modules/directives_module.js")
+    @Scripts.Render("~/Scripts/Angular/ng-file-upload/ng-file-upload-shim.min.js")
+    @Scripts.Render("~/Scripts/Angular/ng-file-upload/ng-file-upload.min.js")
+    @Scripts.Render("~/Scripts/default.js")
+    @Scripts.Render("~/Scripts/negocio/notificacao.js")
+    @Scripts.Render("~/Scripts/negocio/controllers_plugins/info_cliente.js")
+    @Scripts.Render("~/Scripts/Angular/FusionCharts/fusioncharts.js")
+    @Scripts.Render("~/Scripts/Angular/FusionCharts/angular-fusioncharts.min.js")
+    @Scripts.Render("~/Scripts/js/plugins/tinymce/tinymce.min.js")
+    @Scripts.Render("~/Scripts/Angular/angular-sanitize.js")
+    @Scripts.Render("~/Scripts/Angular/angular-animate.js")
+    @Scripts.Render("~/Scripts/js/plugins/tinymce/tinymce_custom_app.js")
+    @Scripts.Render("~/Scripts/js/plugins/tinymce/Tinymce.js")
+    @Scripts.Render("~/Scripts/appScripts/TabelaDinamica.js?12345")
+
+    <!-- CORE CSS -->
+    <link href="/Content/themes/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- THEME CSS -->
+    <link href="/Content/themes/assets/css/essentials.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/themes/assets/css/layout.css" rel="stylesheet" type="text/css" />
+
+    <!-- PAGE LEVEL SCRIPTS -->
+    <link href="/Content/themes/assets/css/header-1.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/themes/assets/css/color_scheme/green.css" rel="stylesheet" type="text/css" id="color_scheme" />
+
+    <style type="text/css">
+        a[href]:after {
+            content: none !important;
+        }
+    </style>
+</head>
+
+
+<body ng-app="appModule" onselect="return false" style="background-color: #fff !important;">
+    <div ng-controller="TabelaDinamicaController" ng-init="carregaTelaTabelaTipi(2,@ViewBag.tipoGrupo)" style="padding-left: 20px; background-color: #fff !important;" ng-cloak>
+        <div class="hidden-print" app-modal-erro="Modal-Erro" header="Atenção" submodal>
+            <div class="panel-body">
+                <strong>
+                    <p ng-bind-html="trustAsHtml(erro)"></p>
+                </strong>
+            </div>
+        </div>
+        <div class="row hidden-print">
+            <div class="col-sm-12 titulo" style="padding-left: 10px;" ng-if="TGR_TIPO==1">
+                <img src="/Images/Simulador/BANNER-1.png" />
+            </div>
+            <div class="col-sm-12 titulo" style="padding-left: 10px;" ng-if="TGR_TIPO==2">
+                <img src="/Images/Simulador/BANNER-2.png" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="hidden-print col-md-3 margin-top-30">
+                <div ng-repeat="item03 in lstTabelas | orderBy:'TGR_DESCRICAO'">
+                    <div class="row" ng-repeat="item04 in item03.TAB_DINAMICA_CONFIG | orderBy:'TDC_NOME_TABELA'" ng-if="(item04.TDC_DATA_PUBLICACAO!=null)&&(item04.TDC_TIPO==2||item04.TDC_TIPO==3)">
+                        <div class="col-md-12" style="padding-top: 5px; padding-left: 0px !important; border-bottom: solid 1px #E6E6E7 !important;">
+                            <div class="col-md-2" style="padding-left: 0px !important;">
+                                <a href="javascript:void(0);" ng-click="carregaTela(item04.TDC_ID)">
+                                    <img src="~/Images/Simulador/FISC%20(1).png" style="height: 48px; width: 48px;" alt="" />
+                                </a>
+                            </div>
+                            <div class="col-md-10" style="padding: 0px !important;">
+                                <div class="col-md-12" style="padding: 0px !important;">
+                                    <strong>
+                                        <a href="/TabelaDinamica/SimuladorICMS/1228f7e8-b4a0-45e3-bf67-099c7fda840b" target="_blank" style="font-size: 1.0em; color: #5687A5;" ng-if="item04.TDC_ID=='1228f7e8-b4a0-45e3-bf67-099c7fda840b'">{{item04.TDC_NOME_TABELA}}</a>
+                                        <a href="/TabelaDinamica/Simulador/{{item04.TDC_ID}}" target="_blank" style="font-size: 1.0em; color: #5687A5;" ng-if="item04.TDC_ID!='1228f7e8-b4a0-45e3-bf67-099c7fda840b'">{{item04.TDC_NOME_TABELA}}</a>
+                                        @*<a href="javascript:void(0);" ng-click="carregaTela(item04.TDC_ID);" style="font-size: 1.0em; color: #5687A5;" ng-if="item04.TDC_ID!='1228f7e8-b4a0-45e3-bf67-099c7fda840b'">{{item04.TDC_NOME_TABELA}}</a>*@
+                                    </strong>
+                                </div>
+                                <div class="col-md-12" style="padding: 0px !important;">
+                                    <span style="font-size: 0.8em; font-style: italic;" ng-bind-html="item04.TDC_NOME_OBS"></span>
+                                    <span class="glyphicon glyphicon-triangle-top pull-right" style="font-size: 0.6em; color: #5687A5;"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8" ng-if="!carregado" style="padding-top: 14px;">
+                <div id="page-wrapper">
+                    <div class="panel panel-default">
+                        <div class="panel-body" style="padding-top: 14px; background-color: #ebe6e6">
+                            <h4><i class="fa fa-warning" aria-hidden="true"></i>&nbspAtenção!</h4>
+                            Caro cliente, caso algumas das novas funcionalidades desta area não estejam sendo apresentadas, 
+                            exclua o cache do seu navegador ou pressione <kbd><kbd>CTRL</kbd> + <kbd>F5</kbd>.
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    A <strong>COAD</strong>  criou esta área de <strong>Simuladores</strong>  pensando em facilitar o seu dia a dia.
+                        <br />
+                    Escolha, no menu ao lado, o assunto no qual deseja fazer uma simulação.
+                </p>
+
+                <p style="color: #5687A5;">Novos simuladores serão adicionados aqui constantemente.</p>
+
+                <p>
+                    Gostaríamos de ouvir a sua opinião sobre esta área.
+                        <br />
+                    Envie-nos um e-mail para, <a href="javscript:void(0);" ng-click="buscarEmail()">desenvolvimento.tecnico@coad.com.br</a>
+                </p>
+            </div>
+            <div class="col-md-8" ng-if="carregado==true" style="padding-top: 14px;">
+                @Html.Partial("Partials/_SimuladorNovo")
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT FILES -->
+    <script type="text/javascript">var plugin_path = 'Content/themes/assets/plugins/';</script>
+    <script type="text/javascript" src="Content/themes/assets/plugins/jquery/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="Content/themes/assets/js/scripts.js"></script>
+
+</body>
+</html>

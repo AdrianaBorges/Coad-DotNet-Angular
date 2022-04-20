@@ -1,0 +1,268 @@
+﻿@using Coad.GenericCrud.Extensions
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Consultas Realizadas Por Período</li>
+    </ol>
+}
+
+
+<script src="~/Scripts/appScripts/ura.js"></script>
+
+<div ng-app="appModule">
+    <div ng-controller="URAControler" data-ng-init="preparaTela()" class="padding content">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div app-message></div>
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-filter"></span>Filtros
+                <div class="pull-right">
+                    <div class="btn-group">
+                    </div>
+                </div>
+            </div>
+            <div app-message></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Data Inicial")
+                            <div class="input-group">
+                                <input type="text" id="dtinicial" class="form-control" ng-model="dtini" app-date="filtro.dtinicial" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Data Final")
+                            <div class="input-group">
+                                <input type="text" id="dtfinal" class="form-control" ng-model="dtfim" app-date="filtro.dtfinal" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-2">
+                        <label for="sigla">Assinatura</label>
+                        <input type="text" id="Assinatura" ng-model="filtro.assinatura" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="listar()">Pesquisar</button>
+            </div>
+        </div>
+
+        <div class="panel panel-default" ng-show="listaQtdeConsultas">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-book"></span>Lista Consultas
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr class="info">
+                                <th>Assinatura</th>
+                                <th>Nome</th>
+                                <th style="text-align: center">Consultas Contratadas</th>
+                                <th style="text-align: center">Realizadas (TOTAL)</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in listaQtdeConsultas">
+                            <td style="width: 10%;">{{item.codigo}}</td>
+                            <td style="width: 60%;">{{item.nome}}</td>
+                            <td style="width: 10%; text-align: center">{{item.contratadas}}</td>
+                            <td style="width: 10%; text-align: center">
+                                <a href="javascript:void(0)" ng-click="mostrarDetConsultas(item)" class="label alert-danger" ng_if="item.qtdtotal>(item.contratadas*3)" data-toggle="tooltip" data-placement="top" app-popover data-content="O cliente ultrapassou o limite de consultas contratadas.">{{item.qtdtotal}}</a>
+                                <span ng-if="item.qtdtotal==0">{{item.qtdtotal}}</span>
+                                <a href="javascript:void(0)" ng-click="mostrarDetConsultas(item)" data-toggle="tooltip" data-placement="top" app-popover data-content="Detalhamento de consultas." ng-if="item.qtdtotal>0&&item.qtdtotal<=(item.contratadas*3)">{{item.qtdtotal}}</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+            </div>
+        </div>
+        <!-- Modal Detalhe Consultas (ura) -->
+        <div app-modal="modal-det-consultas" header="Detalhamento de Consultas">
+            <div class="panel-body">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr class="info">
+                            <th>Assinatura</th>
+                            <th>Período</th>
+                            <th style="text-align: center">Consultas (Total)</th>
+                            <th style="text-align: center">Realizadas (URA-RJ)</th>
+                            <th style="text-align: center">Realizadas (URA-MG)</th>
+                            <th style="text-align: center">Realizadas (URA-PR)</th>
+                            <th style="text-align: center">Realizadas (EMAIL)</th>
+                            <th style="text-align: center">Realizadas (TOTAL)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="ConsEmail in listaQtdeConsEmail">
+                            <td style="width: 20%">{{ConsEmail.codigo}}</td>
+                            <td style="width: 40%">{{ConsEmail.periodo}}</td>
+                            <td style="width: 10%; text-align: center">&nbsp{{ConsEmail.contratadas}}
+                            </td>
+                            <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdurarj>0">{{ConsEmail.qtdurarj}}
+                            </td>
+                            <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdurarj<=0">{{ConsEmail.qtdurarj}}</td>
+                            <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtduramg>0">{{ConsEmail.qtduramg}}</td>
+                            <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtduramg<=0">{{ConsEmail.qtduramg}}
+                            </td>
+                            <td style="width: 10%; text-align: center">{{ConsEmail.qtdurapr}}</td>
+                            <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdemail>0">{{ConsEmail.qtdemail}}</td>
+                            <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdemail<=0">{{ConsEmail.qtdemail}}
+                            </td>
+                            <td style="width: 10%; text-align: center">
+                                <span class="label alert-danger" ng_if="ConsEmail.qtdtotal>(ConsEmail.contratadas*3)" data-toggle="tooltip" data-placement="top" app-popover data-content="O cliente ultrapassou o limite de consultas contratadas.">{{ConsEmail.qtdtotal}}</span>
+                                <span ng-if="ConsEmail.qtdtotal==0">{{ConsEmail.qtdtotal}}</span>
+                                <span data-toggle="tooltip" data-placement="top" app-popover data-content="Total de consultas." ng-if="ConsEmail.qtdtotal>0&&ConsEmail.qtdtotal<=(ConsEmail.contratadas*3)">{{ConsEmail.qtdtotal}}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                @*                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr class="info">
+                            <th>Assinatura</th>
+                            <th>Período</th>
+                            <th style="text-align: center">Consultas (Total)</th>
+                            <th style="text-align: center">Realizadas (URA-RJ)</th>
+                            <th style="text-align: center">Realizadas (URA-MG)</th>
+                            <th style="text-align: center">Realizadas (URA-PR)</th>
+                            <th style="text-align: center">Realizadas (EMAIL)</th>
+                            <th style="text-align: center">Realizadas (TOTAL)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="ConsEmail in listaQtdeConsEmail">
+                            <td style="width: 20%">{{ConsEmail.codigo}}</td>
+                            <td style="width: 40%">{{ConsEmail.periodo}}</td>
+                            <td style="width: 10%; text-align: center">
+                                <a href="javascript:void(0)" ng-click="abrirModalAtualizarURA(ConsEmail)" app-popover data-content="Clique aqui para atualizar dados do cliente na URA">
+                                    <i class="fa fa-unlock-alt red" aria-hidden="true"></i>&nbsp{{ConsEmail.contratadas}}
+                                </a>
+                            </td>
+                            <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdurarj>0">
+                                <a href="javascript:void(0)" ng-click="mostrarListaConsultas(ConsEmail,'URARJ')" app-popover data-content="Detalhamento das consultas">{{ConsEmail.qtdurarj}}</a>
+                            </td>
+                            <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdurarj<=0">{{ConsEmail.qtdurarj}}</td>
+                            <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtduramg>0">
+                                <a href="javascript:void(0)" ng-click="mostrarListaConsultas(ConsEmail,'URAMG')" app-popover data-content="Detalhamento das consultas">{{ConsEmail.qtduramg}}</a>
+                            </td>
+                            <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtduramg<=0">{{ConsEmail.qtduramg}}</td>
+                            <td style="width: 10%; text-align: center">{{ConsEmail.qtdurapr}}</td>
+                            <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdemail>0">
+                                <a href="javascript:void(0)" ng-click="mostrarDetConsultaEmail(ConsEmail)" app-popover data-content="Detalhamento das consultas por email">{{ConsEmail.qtdemail}}</a>
+                            </td>
+                            <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdemail<=0">{{ConsEmail.qtdemail}}
+                            </td>
+                            <td style="width: 10%; text-align: center">{{ConsEmail.qtdtotal}}</td>
+                        </tr>
+                    </tbody>
+                </table>*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+        <!-- Modal Detalhe Analitico Consultas (ura) -->
+        <div app-modal="modal-det-cons-analitico" header="Consultas">
+            <div class="panel-body">
+                <div class="table-responsive" style="overflow: auto; max-height: 300px;">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="info">
+                                <th>@Html.Label("URA")</th>
+                                <th>@Html.Label("Assinatura")</th>
+                                <th>@Html.Label("Data")</th>
+                                <th>@Html.Label("Ramal")</th>
+                                <th>@Html.Label("Telefone")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in detconsultas">
+                                <td>{{item.URA_ID}}</td>
+                                <td>{{item.ASN_NUM_ASSINATURA}}</td>
+                                <td @*app-show-date="item.HAU_DATA_CADASTRO"*@>{{item.HAU_DATA_CADASTRO}}</td>
+                                <td>{{item.HAU_RAMAL}}</td>
+                                <td>{{item.HAU_TELEFONE}}</td>
+                                <td>{{item.TEL_ID_LEGADO}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</button>
+            </div>
+        </div>
+        <!-- Modal Detalhe Consultas (Email) -->
+        <div app-modal="modal-det-consultas-email" header="Consultas">
+            <div class="panel-body">
+                <div class="table-responsive" style="overflow: auto; max-height: 300px;">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="info">
+                                <th>@Html.Label("id", "Seq.")</th>
+                                <th>@Html.Label("Assinatura")</th>
+                                <th>@Html.Label("Data")</th>
+                                <th>@Html.Label("Email")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in detconsultas">
+                                <td>{{item.HAE_ID}}</td>
+                                <td>{{item.ASN_NUM_ASSINATURA}}</td>
+                                <td>{{item.HAE_DTCADASTRO}}</td>
+                                <td>{{item.HAE_EMAIL}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</button>
+            </div>
+        </div>
+
+        <!-- Modal Atualizar URA -->
+        <div app-modal="Modal-Atualizar-URA" header="Atualizar URAS">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Assinatura")
+                        @Html.TextBox("Assinatura", "", new { @class = "form-control", ng_model = "updateura.assinatura" })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Quantidade")
+                        @Html.TextBox("Quantidade", "", new { @class = "form-control", ng_model = "updateura.qtde", ng_change = "multiplicaqtdeURA()" })
+                    </div>
+                    <div class="form-group col-sm-2">
+                        @Html.Label("Quantidade 3x")
+                        @Html.TextBox("Quantidade3x", "", new { @class = "form-control", ng_model = "updateura.qtde3x", disabled = "disabled" })
+                    </div>
+                    <div class="form-group col-sm-4">
+                        @Html.Label("Situação")
+                        <select id="uraativo" ng-model="updateura.ativo" class="form-control">
+                            <option value="true">Ativar cliente na ura</option>
+                            <option value="false">Inativar cliente na ura</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="atualizarURA()"><span class="glyphicon glyphicon-floppy-save blue">Atualizar</span></button>
+            </div>
+        </div>
+
+    </div>
+</div>

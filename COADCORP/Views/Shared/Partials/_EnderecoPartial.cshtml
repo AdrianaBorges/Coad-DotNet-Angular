@@ -1,0 +1,137 @@
+﻿<div class="row padding">
+        <span class="font-16">                        
+            <span class="glyphicon glyphicon-home"></span>
+            <label class="font-15">Endereços</label>
+        </span>
+        <div class="table-responsive">
+            <div app-validation-msg="erros" for="PROSPECTS_TELEFONE"></div>
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Cep</th>
+                        <th>UF</th>
+                        <th>Município</th>
+                        <th>Bairro</th>
+                        <th>Logradouro</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="end in cliente.CLIENTES_ENDERECO" ng-show="cliente.CLIENTES_ENDERECO">
+
+                        <td>{{end.TIPO_ENDERECO.TP_END_DESCRICAO}}
+                        </td>
+                        <td>{{end.END_CEP}}
+                        </td>
+                        <td>
+                            {{end.END_UF}}                            
+                            <div app-validation-msg="erros" for="CLIENTES_ENDERECO[{{$index}}].END_UF"></div>
+                        </td>
+                        <td>{{end.END_MUNICIPIO}}
+                        </td>
+                        <td>{{end.END_BAIRRO}}
+                        </td>
+                        <td>{{end.END_LOGRADOURO}}
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" ng-click="AbrirModalEndereco(end, $index)" class="btnConfirmaExclusao blue" id="btnEdicaoItem" title="Editar">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <span ng-show="cliente.CLIENTES_ENDERECO.length == ($index + 1) && podeAdicionar()">
+                                <a href="javascript:void(0)" ng-click="AbrirModalEndereco()" title="Incluir">
+                                    <span class="glyphicon glyphicon-plus blue"></span>
+                                </a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr ng-hide="cliente.CLIENTES_ENDERECO.length > 0">
+                        <td colspan="7">Nenhuma endereço adicionado. Clique para adicionar: 
+                                        <a href="javascript:void(0)" ng-click="AbrirModalEndereco()" title="Incluir">
+                                            <span class="glyphicon glyphicon-plus blue"></span>
+                                        </a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+<!-- Modal -->
+<div app-modal="modal-endereco" header="Dados do Endereço">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group col-sm-2">
+                            @Html.Label("Tipo")
+                                    <select id="tipodeendereco" name="tipodeendereco" class = "form-control" ng-model="$parent.end.TIPO_ENDERECO" ng-disabled="acaoEnd.acao === 1"
+                                    ng-options="tEnd as tEnd.TP_END_DESCRICAO for tEnd in tipoEnderecos track by tEnd.TP_END_ID" ng-change="tipoEnderecoSelecionado()">
+                                    <option value="">Selecione</option>
+                               </select>
+                                @Html.ValidationMessage("tipo", null, new { app_validation_msg = "erros", @for = "END_TIPO" })
+                </div>
+                <div class="form-group col-sm-2">
+                    @Html.Label("CEP")
+                    <a data-toggle="modal" href="#Modal-Correios" data-toggle="tooltip" data-placement="top" app-popover data-content="Pesquisa na base dos correios" style="padding-top: -5px; text-decoration: none;">
+                        <img src="~/Images/logo_correios.png" style="width: 70px; height: 20px;"></a>
+                    <input type="text" class="form-control" ng-model="$parent.end.END_CEP" maxlength="8" ng-change="buscarCep(end.END_CEP)" />
+                     @Html.ValidationMessage("END_CEP", null, new { app_validation_msg = "erros", @for = "END_CEP" }) 
+                           
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="Logradouro">Município</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="$parent.end.END_MUNICIPIO"  disabled="disabled" />
+                          @Html.ValidationMessage("END_MUNICIPIO", null, new { app_validation_msg = "erros", @for = "MUN_ID" }) 
+                          
+                        <span class="input-group-btn">
+                            <a data-toggle="modal" href="#Modal-Municipio" data-toggle="tooltip" data-placement="top" app-popover data-content="Pesquisar municipios" style="text-decoration: none;" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-search"></span>&nbsp
+                            </a>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-sm-2">
+                        <label for="campo_UF_SIGLA">UF</label>
+                        <select id="campo_UF_SIGLA" name="campo_UF_SIGLA" class="form-control" ng-model="$parent.end.END_UF"
+                                ng-options="tpc.UF_SIGLA as tpc.UF_SIGLA for tpc in listUfs">
+                                <option value="">Selecione</option>
+                        </select>
+                        <div app-validation-msg="erros" for="END_UF"></div>
+                        <div app-validation-msg="erros" for="CLIENTES_ENDERECO[{{$index}}].END_UF"></div>                    
+                   </div>
+                <div class="form-group col-sm-3">
+                    @Html.Label("Bairro")
+                    <input type="text" class="form-control" ng-model="$parent.end.END_BAIRRO" maxlength="20"/>
+                    @Html.ValidationMessage("END_BAIRRO", null, new { app_validation_msg = "erros", @for = "END_BAIRRO" }) 
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    @Html.Label("Logradouro")
+                    <input type="text" class="form-control" ng-model="$parent.end.END_LOGRADOURO" maxlength="50"/>
+                    @Html.ValidationMessage("END_LOGRADOURO", null, new { app_validation_msg = "erros", @for = "END_LOGRADOURO" }) 
+                </div>
+                <div class="form-group col-sm-2">
+                    @Html.Label("Número")
+                    <input type="text" class="form-control" ng-model="$parent.end.END_NUMERO"  maxlength="6"/>
+                     @Html.ValidationMessage("END_NUMERO", null, new { app_validation_msg = "erros", @for = "END_NUMERO" }) 
+                </div>
+                <div class="form-group col-sm-4">
+                    @Html.Label("Complemento")
+                    <input type="text" class="form-control" ng-model="$parent.end.END_COMPLEMENTO" maxlength="15"/>
+                    @Html.ValidationMessage("END_COMPLEMENTO", null, new { app_validation_msg = "erros", @for = "END_COMPLEMENTO" }) 
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="button" class="btn btn-default" ng-click="salvarEndereco()"><span class="glyphicon glyphicon-floppy-save blue"></span>{{acaoEnd.label}}</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Correios -->
+<div app-modal="Modal-Correios" header="Correios">
+    <div class="panel-body">
+        <center><iframe src="http://m.correios.com.br/movel/index.do" width="100%" height="400" scrolling="YES"></iframe></center>
+    </div>
+</div>

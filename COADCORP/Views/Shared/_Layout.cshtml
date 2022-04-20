@@ -1,0 +1,149 @@
+﻿@using COAD.SEGURANCA.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+@using COAD.CORPORATIVO.SessionUtils
+@using GenericCrud.Util
+@using GenericCrud.ActionResultTools
+
+@{
+
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;
+    if (ViewBag.print == true)
+    {
+
+        ViewBag.printableClass = "hidden-print";
+
+    }
+
+    //ViewBag.defer = @"defer='defer'";
+}
+
+<!DOCTYPE html>
+<html lang="pt_br">
+
+
+
+<head>
+
+    <script type="text/javascript">
+        // para obter o contexto da aplicação
+        var contextPath = "@System.Web.HttpContext.Current.Request.ApplicationPath";
+        var inHomologation = @SysUtils.InHomologation().ToString().ToLower();
+    </script>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - @SysUtils.RetornarAmbienteName()</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+
+     @Html.Partial("Partials/_recursosStaticosPartial")
+
+</head>
+
+<body class="body" ng-app="appModule"  onselect="return false" ng-controller="MainController" data-ng-init="initList()">
+    <div>
+        <header>
+            <div>
+                <nav class="navbar navbar-inverse navbar-fixed-top menu-overrides" role="navigation">
+                    <div class="nav navbar-left top-nav">
+                        @*<button class="btn btn-info" id="button-menu"><span id="icon-menu2" class="glyphicon glyphicon-th-list"></span></button>*@
+                    </div>
+                    @*<div class="navbar-header">                 
+                    <a>CoadCorp</a>
+                </div>  *@
+                    <div class="navbar-header">
+                        <a href="/home/index" class="active  logo-mobile mobile"><span class="sr-only"></span><span class="glyphicon glyphicon-globe"></span>CoadCorp</a>
+                        <button class="navbar-toggle collapsed" id="mobile-button-menu" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-controls="bs-navbar" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <button class="btn btn-info" id="button-menu" data-toggle="tooltip" data-placement="bottom"
+                            title="Menu">
+                            <span id="icon-menu" class="glyphicon glyphicon-th-list"></span>
+                        </button>
+
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav no-mobile">
+                            <li><a href="#" class="active"><span class="sr-only"></span><span class="glyphicon glyphicon-globe"></span>CoadCorp</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right top-nav">
+                            <!-- Area de notificações (Por hora, apenas para representante. -->
+                            @Html.Partial("Partials/_schedulerPanelPartial")
+                            @Html.Partial("Partials/_NotificacaoPartial")
+                            
+                            @{
+                                if (SessionContext.PossuiRepresentante())
+                                {
+
+                                    var nomeRepresentante = SessionUtil.GetNomeRepresentante();
+                                    @Html.MostraLoginResponsivo(nomeRepresentante);
+                                }
+                                else
+                                {
+                                     @Html.MostraLoginResponsivo()                        
+                                }                                
+                            }
+                            
+                            @if (SessionContext.IsAdmDepartamento("TI") || SessionContext.IsAdmDepartamento("Franquiador"))
+                            { 
+                                @Html.Partial("Partials/_UenPartial")
+                            }
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right  mobile">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="collapse" data-target="#teste">Menu 
+                                   <span class="caret"></span>
+                                </a>
+                                <ul class="collapse" id="teste">
+                                    @Html.MostraMenu("-menu-superior")
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <ul class="nav navbar-right top-nav no-mobile">
+                    </ul>
+                    <!--- Menu dados do usuário -->
+                    @*   @Html.MostraSistemas()*@
+                    <!--- Informa se é Homologação -->
+                    @*@Html.MostraImgHomolog("COADCORP")*@
+                    <!--- Menu dados do usuário -->
+                    @*@Html.MostraLogin()*@
+                    <!--- Menu dados do usuário -->
+                </nav>
+                <!-- Fim do menu navbar do boostrap -->
+            </div>
+        </header>
+        <div id="printDiv" class="visible-print-block"></div><!-- Essa div é utilizada para impressão de conteúdo. O html para impressão é encaixado em runtime.-->
+        <div id="wrapper" class="@ViewBag.Toggled  @ViewBag.printableClass">
+            <div id="sidebar-wrapper" class="no-mobile @ViewBag.printableClass">
+                <ul class="sidebar-nav">
+                    <li id="menu-lateral" class="sidebar-brand"></li>
+                    @Html.MostraMenu("-menu-lateral")
+                </ul>
+            </div>
+            <div id="page-content-wrapper">
+                <div class="container-fluid limit-content">
+                    <div class="row body">
+                        <br />
+                        <div id="breadcrumbs">
+                            @RenderSection("breadcrumbs", false)
+                        </div>
+                    </div>
+                    <div class="row body @ViewBag.printableClass">   <!-- se a página por imprimível o layout não é exibido-->                   
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <p class="">&copy; @ano Coad, Inc. / <a href="/Home/Sobre">Sobre o COADCORP </a></p>
+            </div>
+        </div>
+        @RenderSection("scripts", required: false)        
+    </div>
+</body>
+
+
+</html>

@@ -1,0 +1,162 @@
+
+			<!-- CART -->
+			<section>
+				<div class="container">
+
+				
+					<!-- EMPTY CART -->
+					<div class="panel panel-default" *ngIf="!carrinho || (carrinho && (!carrinho.carrinhO_COMPRAS_ITEM || carrinho.carrinhO_COMPRAS_ITEM.length <= 0))">
+						<div class="panel-body">
+							<strong>Shopping cart is empty!</strong><br />
+							You have no items in your shopping cart.<br />
+							Click <a [routerLink]="['']">Aqui</a> Para continuar comprando. <br />
+							<span class="label label-warning">Aproveite nossas ofertas exclusivas.</span>
+						</div>
+					</div>
+					<!-- /EMPTY CART -->
+
+
+
+					<!-- CART -->
+					<div class="row" *ngIf="carrinho && carrinho.carrinhO_COMPRAS_ITEM && carrinho.carrinhO_COMPRAS_ITEM.length > 0">
+
+						<!-- LEFT -->
+						<div class="col-lg-9 col-sm-8">
+
+							<!-- CART -->
+							<form class="cartContent clearfix" method="post" action="#">
+
+								<!-- cart content -->
+								<div id="cartContent">
+									<!-- cart header -->
+									<div class="item head clearfix">
+										<span class="cart_img"></span>
+										<span class="product_name size-13 bold">PRODUCT NAME</span>
+										<span class="remove_item size-13 bold"></span>
+										<span class="total_price size-13 bold">TOTAL</span>
+										<span class="qty size-13 bold">QUANTITY</span>
+									</div>
+									<!-- /cart header -->
+
+									<!-- cart item -->
+									<div class="item" *ngFor="let itm of carrinho.carrinhO_COMPRAS_ITEM; let index = index;">
+										<div class="cart_img pull-left width-100 padding-10 text-left"><img src="assets/demo_files/images/shop/products/100x100/p1.jpg" alt="" width="80" /></div>
+										<a href="shop-single-left.html" class="product_name">
+                      <span>{{itm.produtO_COMPOSICAO?.cmP_DESCRICAO}}</span>
+											<small>Color: Brown, Size: XL</small>
+										</a>
+										<a class="remove_item" (click)="removerItem(index);"><i class="fa fa-times"></i></a>
+                    <div class="total_price"><span>{{itm.ccI_VALOR_TOTAL | currency:'BRL':'true'}}</span></div>
+                    <div class="qty">
+                    <input type="number" name="qty_{{index}}" maxlength="3" [(ngModel)]="itm.ccI_QTD" (ngModelChange)="calcularCarrinho()"/> &times;
+                      {{itm.ccI_VALOR_UNITARIO | currency:'BRL':'true'}}
+                    </div>
+										<div class="clearfix"></div>
+									</div>
+									<!-- /cart item -->
+									<!-- update cart -->
+									<a class="btn btn-success margin-top-20 margin-right-10 pull-right" [routerLink]="['']"><i class="glyphicon glyphicon-ok"></i> UPDATE CART</a>
+									<button class="btn btn-danger margin-top-20 margin-right-10 pull-right" (click)="apagarCarrinho()"><i class="glyphicon glyphicon-remove"></i> CLEAR CART</button>
+									<!-- /update cart -->
+
+									<div class="clearfix"></div>
+								</div>
+								<!-- /cart content -->
+
+							</form>
+							<!-- /CART -->
+
+						</div>
+
+
+						<!-- RIGHT -->
+						<div class="col-lg-3 col-sm-4">
+
+							<!-- TOGGLE -->
+							<div class="toggle-transparent toggle-bordered-full clearfix">
+
+								<div class="toggle nomargin-top">
+									<label appToogle>Voucher</label>
+
+									<div class="toggle-content">
+										<p>Enter your discount coupon code.</p>
+
+										<form action="#" method="post" class="nomargin">
+											<input type="text" id="cart-code" name="cart-code" class="form-control text-center margin-bottom-10" placeholder="Voucher Code" required="required">
+											<button class="btn btn-primary btn-block" type="submit">SUBMIT</button>
+										</form>
+									</div>
+								</div>
+
+								<div class="toggle">
+									<label appToogle>Shipping tax calculator</label>
+
+									<div class="toggle-content">
+										<p>To get a shipping estimate, please enter your destination.</p>
+
+										<form action="#" method="post" class="nomargin">
+											<label>Country*</label>
+											<select id="cart-tax-country" name="cart-tax-country" class="form-control pointer margin-bottom-20">
+												<option value="1">United States</option>
+												<option value="2">United Kingdom</option>
+												<option value="2">...........</option>
+												<!-- add all here -->
+											</select>
+
+											<label>State/Province</label>
+											<select id="cart-tax-state" name="cart-tax-state" class="form-control pointer margin-bottom-20">
+												<option value="1">Alabama</option>
+												<option value="2">Alaska</option>
+												<option value="2">...........</option>
+												<!-- add all here -->
+											</select>
+
+											<label>Zip/Postal Code</label>
+											<input type="text" id="cart-tax-postal" name="cart-tax-postal" class="form-control margin-bottom-20">
+
+											<button class="btn btn-primary btn-block" type="submit">SUBMIT</button>
+										</form>
+									</div>
+								</div>
+
+							</div>
+							<!-- /TOGGLE -->
+							<div class="toggle-transparent toggle-bordered-full clearfix">
+								<div class="toggle active">
+									<div class="toggle-content" [@slideInOut]="resumoCarrinhoIsOpen ? 'in' : 'out'">
+										
+										<span class="clearfix">
+                      <span class="pull-right">{{carrinho.crC_VALOR_BRUTO | currency:'BRL':'true'}}</span>
+											<strong class="pull-left">Subtotal:</strong>
+										</span>
+										<span class="clearfix">
+                      <span class="pull-right">{{carrinho.crC_VALOR_DESCONTO | currency:'BRL':'true'}}</span>
+											<span class="pull-left">Desconto:</span>
+										</span>
+										<span class="clearfix">
+                      <span class="pull-right">{{carrinho.crC_VALOR_FRETE | currency:'BRL':'true'}}</span>
+											<span class="pull-left">Frete:</span>
+										</span>
+
+										<hr />
+
+										<span class="clearfix">
+                      <span class="pull-right size-20">{{carrinho.crC_VALOR_LIQUIDO | currency:'BRL':'true'}}</span>
+											<strong class="pull-left">TOTAL:</strong>
+										</span>
+
+										<hr />
+
+										<a href="shop-checkout.html" class="btn btn-primary btn-lg btn-block size-15"><i class="fa fa-mail-forward"></i> Proceed to Checkout</a>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+					<!-- /CART -->
+					
+				</div>
+			</section>
+			<!-- /CART -->

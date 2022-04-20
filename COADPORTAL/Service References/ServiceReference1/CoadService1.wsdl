@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:i0="http://schemas.microsoft.com/ws/2005/02/mex/bindings" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="CoadService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:import namespace="http://schemas.microsoft.com/ws/2005/02/mex/bindings" location="http://localhost:48701/CoadService.svc?wsdl=wsdl0" />
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:48701/CoadService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:48701/CoadService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:48701/CoadService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons" />
+      <xsd:import schemaLocation="http://localhost:48701/CoadService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GatewayApiClient.DataContracts.EnumTypes" />
+      <xsd:import schemaLocation="http://localhost:48701/CoadService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons.WebService" />
+      <xsd:import schemaLocation="http://localhost:48701/CoadService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Coad.GenericCrud.ActionResultToolsUtils" />
+      <xsd:import schemaLocation="http://localhost:48701/CoadService.svc?xsd=xsd6" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:48701/CoadService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/COAD.CORPORATIVO.Model.Dto.Custons.WebService.ClienteIntegracao" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ICoadService_ValidarCliente_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidarCliente" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_ValidarCliente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidarClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_GerarPedido_InputMessage">
+    <wsdl:part name="parameters" element="tns:GerarPedido" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_GerarPedido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GerarPedidoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_LembrarSenha_InputMessage">
+    <wsdl:part name="parameters" element="tns:LembrarSenha" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_LembrarSenha_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LembrarSenhaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_CheckoutPagamento_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckoutPagamento" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_CheckoutPagamento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckoutPagamentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_EmitirPedidoRenovacaoDaMala_InputMessage">
+    <wsdl:part name="parameters" element="tns:EmitirPedidoRenovacaoDaMala" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_EmitirPedidoRenovacaoDaMala_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EmitirPedidoRenovacaoDaMalaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_RealizarLogin_InputMessage">
+    <wsdl:part name="parameters" element="tns:RealizarLogin" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_RealizarLogin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RealizarLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_RetornarDadosDoCliente_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetornarDadosDoCliente" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_RetornarDadosDoCliente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetornarDadosDoClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_SalvarDadosDoCliente_InputMessage">
+    <wsdl:part name="parameters" element="tns:SalvarDadosDoCliente" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_SalvarDadosDoCliente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SalvarDadosDoClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_BuscarCep_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarCep" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_BuscarCep_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarCepResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_BuscarMunicipios_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarMunicipios" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_BuscarMunicipios_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarMunicipiosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_BuscarMunicipiosPorCodIBGE_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarMunicipiosPorCodIBGE" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_BuscarMunicipiosPorCodIBGE_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarMunicipiosPorCodIBGEResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_ListarTiposDeCliente_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListarTiposDeCliente" />
+  </wsdl:message>
+  <wsdl:message name="ICoadService_ListarTiposDeCliente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListarTiposDeClienteResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ICoadService">
+    <wsdl:operation name="ValidarCliente">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICoadService/ValidarCliente" message="tns:ICoadService_ValidarCliente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICoadService/ValidarClienteResponse" message="tns:ICoadService_ValidarCliente_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GerarPedido">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICoadService/GerarPedido" message="tns:ICoadService_GerarPedido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICoadService/GerarPedidoResponse" message="tns:ICoadService_GerarPedido_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LembrarSenha">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICoadService/LembrarSenha" message="tns:ICoadService_LembrarSenha_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICoadService/LembrarSenhaResponse" message="tns:ICoadService_LembrarSenha_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckoutPagamento">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICoadService/CheckoutPagamento" message="tns:ICoadService_CheckoutPagamento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICoadService/CheckoutPagamentoResponse" message="tns:ICoadService_CheckoutPagamento_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EmitirPedidoRenovacaoDaMala">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICoadService/EmitirPedidoRenovacaoDaMala" message="tns:ICoadService_EmitirPedidoRenovacaoDaMala_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICoadService/EmitirPedidoRenovacaoDaMalaResponse" message="tns:ICoadService_EmitirPedidoRenovacaoDaMala_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RealizarLogin">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICoadService/RealizarLogin" message="tns:ICoadService_RealizarLogin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICoadService/RealizarLoginResponse" message="tns:ICoadService_RealizarLogin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetornarDadosDoCliente">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICoadService/RetornarDadosDoCliente" message="tns:ICoadService_RetornarDadosDoCliente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICoadService/RetornarDadosDoClienteResponse" message="tns:ICoadService_RetornarDadosDoCliente_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SalvarDadosDoCliente">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICoadService/SalvarDadosDoCliente" message="tns:ICoadService_SalvarDadosDoCliente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICoadService/SalvarDadosDoClienteResponse" message="tns:ICoadService_SalvarDadosDoCliente_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarCep">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICoadService/BuscarCep" message="tns:ICoadService_BuscarCep_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICoadService/BuscarCepResponse" message="tns:ICoadService_BuscarCep_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarMunicipios">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICoadService/BuscarMunicipios" message="tns:ICoadService_BuscarMunicipios_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICoadService/BuscarMunicipiosResponse" message="tns:ICoadService_BuscarMunicipios_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarMunicipiosPorCodIBGE">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICoadService/BuscarMunicipiosPorCodIBGE" message="tns:ICoadService_BuscarMunicipiosPorCodIBGE_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICoadService/BuscarMunicipiosPorCodIBGEResponse" message="tns:ICoadService_BuscarMunicipiosPorCodIBGE_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarTiposDeCliente">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICoadService/ListarTiposDeCliente" message="tns:ICoadService_ListarTiposDeCliente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICoadService/ListarTiposDeClienteResponse" message="tns:ICoadService_ListarTiposDeCliente_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ICoadService" type="tns:ICoadService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ValidarCliente">
+      <soap:operation soapAction="http://tempuri.org/ICoadService/ValidarCliente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GerarPedido">
+      <soap:operation soapAction="http://tempuri.org/ICoadService/GerarPedido" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LembrarSenha">
+      <soap:operation soapAction="http://tempuri.org/ICoadService/LembrarSenha" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckoutPagamento">
+      <soap:operation soapAction="http://tempuri.org/ICoadService/CheckoutPagamento" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmitirPedidoRenovacaoDaMala">
+      <soap:operation soapAction="http://tempuri.org/ICoadService/EmitirPedidoRenovacaoDaMala" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RealizarLogin">
+      <soap:operation soapAction="http://tempuri.org/ICoadService/RealizarLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetornarDadosDoCliente">
+      <soap:operation soapAction="http://tempuri.org/ICoadService/RetornarDadosDoCliente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SalvarDadosDoCliente">
+      <soap:operation soapAction="http://tempuri.org/ICoadService/SalvarDadosDoCliente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarCep">
+      <soap:operation soapAction="http://tempuri.org/ICoadService/BuscarCep" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarMunicipios">
+      <soap:operation soapAction="http://tempuri.org/ICoadService/BuscarMunicipios" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarMunicipiosPorCodIBGE">
+      <soap:operation soapAction="http://tempuri.org/ICoadService/BuscarMunicipiosPorCodIBGE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarTiposDeCliente">
+      <soap:operation soapAction="http://tempuri.org/ICoadService/ListarTiposDeCliente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CoadService">
+    <wsdl:port name="BasicHttpBinding_ICoadService" binding="tns:BasicHttpBinding_ICoadService">
+      <soap:address location="http://localhost:48701/CoadService.svc" />
+    </wsdl:port>
+    <wsdl:port name="MetadataExchangeHttpBinding_ICoadService" binding="i0:MetadataExchangeHttpBinding_ICoadService">
+      <soap12:address location="http://localhost:48701/CoadService.svc/mex" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://localhost:48701/CoadService.svc/mex</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

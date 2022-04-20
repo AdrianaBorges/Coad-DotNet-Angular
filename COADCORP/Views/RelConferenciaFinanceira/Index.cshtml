@@ -1,0 +1,321 @@
+﻿@using Coad.GenericCrud.Extensions
+
+@{
+    ViewBag.print = true;
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;
+    if (ViewBag.print == true)
+    {
+        ViewBag.printableClass = "hidden-print";
+    }
+
+    ViewBag.Title = "Index";
+
+}
+
+<script>
+    $(document).ready(function () {
+        $(":input").inputmask();
+    });
+</script>
+
+@Scripts.Render("~/Scripts/negocio/contratos.js")
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+<div ng-app="appModule">
+    <div ng-controller="ContratosController" class="padding content" ng-init="iniRelFaturamentoContrato();canPrint=true">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i><a href="/Relatorios/Controladoria">Relatorios</a>
+                        </li>
+                        <li>
+                            <a href="/Relatorios/Controladoria">Relatórios Controladoria</a>
+                        </li>
+                        <li class="active">
+                            <span> Conferência Financeira</span>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading bold head-panel">
+                    <span class="glyphicon glyphicon-filter"></span>Filtros
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Opções<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)" ng-click="listarFaturamentoContrato()" title="Editar" class="blue">Pesquisar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label for="sigla">Período de</label>
+                            <div class="form-group">
+                                <label >
+                                    <input name="radioGroup" id="radio1" value="0" type="radio" ng-model="filtro.tipo"> Pagamento
+                                </label>
+                                <label>
+                                    <input name="radioGroup" id="radio3" value="1" checked="" type="radio" ng-model="filtro.tipo"> Semana Faturamento
+                                </label>
+                                <label>
+                                    <input name="radioGroup" id="radio3" value="2" checked="" type="radio" ng-model="filtro.tipo"> Faturamento 
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Inicial")
+                                <div class="input-group date">
+                                    @Html.TextBox("dtinicial", "", new { @class = "form-control datepicker", ng_model = "dtini", app_date = "filtro.dtini" })
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Final")
+                                <div class="input-group date">
+                                    @Html.TextBox("dtfinal", "", new { @class = "form-control datepicker", ng_model = "dtfim", app_date = "filtro.dtfim" })
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Empresa")
+                                @Html.DropDownList("_emp_id", new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "filtro.emp_id" })
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="GRUPO_ID">Grupo</label>
+                                @Html.DropDownList("GRUPO_ID", new SelectList(ViewBag.grupos, "GRUPO_ID", "GRU_DESCRICAO"), "Selecione", new { @class = "form-control", ng_model = "filtro.grupo_id"})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" ng-click="listarConferenciaFinanceira()"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                    <a class="btn btn-default" href="javascript:void(0)" ng-click="expPlanilha(lstConferenciaFinanceira,'/RelConferenciaFinanceira/ExportarXLS')" title="Exportar a tabela para o excel" ng-if="lstConferenciaFinanceira.length>0">
+                        <i class="fa fa-file-excel-o blue"></i>&nbspExportar
+                    </a>
+                </div>
+            </div>
+
+            <div class="panel panel-default" ng-if="lstConferenciaFinanceira.length>0" id="baseContent">
+                <div class="hidden-print panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span>&nbspConferência Financeira</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="table-responsive col-lg-12">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr class="info">
+                                        <th colspan="7">
+                                            <span>COADCORP - Conferencia Financeira - {{filtro.dataatual}}</span>
+                                        </th>
+                                        <th style="text-align: right;" colspan="8">
+                                            <span ng-if="filtro.tipo==0"> Período de Pagamento: {{dtini}} a {{dtfim}}</span>
+                                            <span ng-if="filtro.tipo==1"> Período de Faturamento: {{dtini}} a {{dtfim}}</span>
+                                        </th>
+                                    </tr>
+                                    <tr class="info">
+                                        <th style="text-align: right;" colspan="15">
+                                            <span ng-if="filtro.emp_id==1">COAD</span>
+                                            <span ng-if="filtro.emp_id==2">ATUALIZACAO</span>
+                                            <span ng-if="filtro.emp_id==3">CONTABIL E JURIDICA</span>
+                                            <span ng-if="filtro.emp_id==4">COAD - GRAFICA</span>
+                                            <span ng-if="filtro.emp_id==5">CORTESIA</span>
+                                            <span ng-if="filtro.emp_id==6">FRANQUIA RJ</span>
+                                            <span ng-if="filtro.emp_id==7">PORTO MARAVILHA</span>
+                                            <span ng-if="filtro.grupo_id==1">/ ASSINATURA</span>
+                                            <span ng-if="filtro.grupo_id==2">/ CURSO</span>
+                                            <span ng-if="filtro.grupo_id==3">/ LIVRO</span>
+                                            <span ng-if="filtro.grupo_id==4">/ LIVROS PROPRIOS</span>
+                                            <span ng-if="filtro.grupo_id==5">/ LIVROS TERCEIRO</span>
+                                            <span ng-if="filtro.grupo_id==6">/ CONSUMO</span>
+                                        </th>
+                                    </tr>
+                                    <tr class="info">
+                                        <th colspan="4" style="text-align:center;">
+                                            <span> </span>
+                                        </th>
+                                        <th colspan="5" style="text-align:center;">
+                                            <span>E N T R A D A </span>
+                                        </th>
+                                        <th colspan="2" style="text-align:center;">
+                                            <span>P A R C E L A S</span>
+                                        </th>
+                                        <th colspan="5" style="text-align:center;">
+                                            <span> T O T A I S</span>
+                                        </th>
+                                    </tr>
+                                    <tr class="info">
+                                        <th style="text-align: center;font-size:10px;">Tipo</th>
+                                        <th style="text-align: center;font-size:10px;">Assinatura</th>
+                                        <th style="font-size:10px;">Faturamento</th>
+
+                                        <th style="font-size:10px;text-align: center;">Pagamento</th>
+                                        <th style="font-size:10px;text-align: center;">Baixa</th>
+                                        <th style="text-align: right;font-size:10px;">Valor</th>
+                                        <th style="text-align: right;font-size:10px;">Juros</th>
+                                        <th style="text-align: right;font-size:10px;">Pago</th>
+
+                                        <th style="text-align: right;font-size:10px;">Parcelas</th>
+                                        <th style="text-align: right;font-size:10px;">Qtd Parcelas</th>
+                                        
+                                        <th style="text-align: right;font-size:10px;">Total</th>
+                                        <th style="text-align: right;font-size:10px;">Ajuste</th>
+                                        <th style="text-align: right;font-size:10px;">Faturado</th>
+                                        <th style="text-align: right;font-size:10px;">Pago</th>
+                                        <th style="text-align: right;font-size:10px;">Baixado</th>
+                                    </tr>
+                                </thead>
+
+                                <tr ng-repeat="item in lstConferenciaFinanceira">
+                                    <td style="font-size:10px;text-align: center;"> {{item.TIPO_VENDA}} </br>
+                                        <span ng-if="item.FORMA_PAGAMENTOA!=item.FORMA_PAGAMENTOB" class="label alert-info">{{item.FORMA_PAGAMENTOA}}/{{item.FORMA_PAGAMENTOB}}</span>
+                                        <span ng-if="item.FORMA_PAGAMENTOA==item.FORMA_PAGAMENTOB" class="label alert-info">{{item.FORMA_PAGAMENTOA}}</span>
+                                    </td>
+                                    <td style="font-size:10px;"> {{item.ASN_NUM_ASSINATURA}}</td>
+                                    
+                                    <td style="font-size:10px; text-align: center" app-show-date="item.CTR_DATA_FAT"></td>
+
+
+                                    <td style="font-size:10px;text-align: center;" app-show-date="item.PLI_DATA_PAGAMENTO"></td>
+                                    <td style="font-size:10px;text-align: center;" app-show-date="item.PLI_DATA_BAIXA"></td>
+                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.CTR_VLR_ENTRADA"></td>
+                                    <td style="font-size:10px;text-align: right;" >0</td>
+                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.VLR_ENTRADA_PAGO"></td>
+
+                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.CTR_VLR_PARCELAS"></td>
+                                    <td style="font-size:10px;text-align: right;">{{item.CTR_QTE_PARCELAS}}</td>
+
+
+                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.CTR_SUBTOT_CONTRATO"></td>
+                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.CTR_AJUST_CONTRATO"></td>
+                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.CTR_VLR_BRUTO"></td>
+                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.CTR_TOTAL_PAGO"></td>
+                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.CTR_VALOR_BAIXADO"></td>
+
+
+                                </tr>
+                            </table>
+                            <table class="table table-hover table-bordered">
+                                <tr>
+                                    <td style="font-size:10px;">
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr class="info">
+                                                    <th colspan="5" style="text-align:center;">
+                                                        <span>ENTRADAS</span>
+                                                    </th>
+                                                </tr>
+                                                <tr class="info">
+                                                    <th style="text-align: left;font-size:10px;width:20%;">TIPO</th>
+                                                    <th style="text-align: right;font-size:10px;width:20%;">VALOR</th>
+                                                    <th style="text-align: right;font-size:10px;width:20%;">JUROS</th>
+                                                    <th style="text-align: right;font-size:10px;width:20%;">DESCONTO</th>
+                                                    <th style="text-align: right;font-size:10px;width:20%;">PAGO</th>
+                                                </tr>
+                                                <tr ng-repeat="item in lstTotalEntrada">
+                                                    <td style="font-size:10px;" ng-if="item.TIPO_PAGAMENTO!=''&& item.TIPO_PAGAMENTO!=null"> {{item.TIPO_PAGAMENTO}}</td>
+                                                    <td style="font-size:10px;" ng-if="item.TIPO_PAGAMENTO==''|| item.TIPO_PAGAMENTO==null"> NÃO INFORMADO</td>
+                                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.VALOR_PARCELAS"></td>
+                                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.VALOR_JUROS"></td>
+                                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.VALOR_DESCONTO"></td>
+                                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.VALOR_PAGO"></td>
+                                                </tr>
+                                        </table>
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr class="info">
+                                                    <th colspan="5" style="text-align:center;">
+                                                        <span>TOTAL BAIXADO</span>
+                                                    </th>
+                                                </tr>
+                                                <tr class="info">
+                                                    <th style="text-align: left;font-size:10px; width:20%;">TIPO</th>
+                                                    <th style="text-align: right;font-size:10px;width:20%;">VALOR</th>
+                                                    <th style="text-align: right;font-size:10px;width:20%;">JUROS</th>
+                                                    <th style="text-align: right;font-size:10px;width:20%;">DESCONTO</th>
+                                                    <th style="text-align: right;font-size:10px;width:20%;">PAGO</th>
+                                                </tr>
+                                                <tr ng-repeat="item in lstTotalBaixado" ng-if="item.TIPO_PAGAMENTO!='Boleto'">
+                                                    <td style="font-size:10px;" ng-if="item.TIPO_PAGAMENTO!=''&& item.TIPO_PAGAMENTO!=null"> {{item.TIPO_PAGAMENTO}}</td>
+                                                    <td style="font-size:10px;" ng-if="item.TIPO_PAGAMENTO==''|| item.TIPO_PAGAMENTO==null"> NÃO INFORMADO</td>
+                                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.VALOR_PARCELAS"></td>
+                                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.VALOR_JUROS"></td>
+                                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.VALOR_DESCONTO"></td>
+                                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.VALOR_PAGO"></td>
+                                                </tr>
+                                        </table>
+                                    </td>
+                                    <td style="font-size:10px;">
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr class="info">
+                                                    <th colspan="2" style="text-align:center;">
+                                                        <span>T O T A I S (FATURAMENTO)</span>
+                                                    </th>
+                                                </tr>
+                                                <tr ng-repeat="item in lstTotalfaturamento">
+                                                    <td style="font-size:10px;"> {{item.TIPO_PAGAMENTO}}</td>
+                                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.VALOR_PARCELAS"></td>
+                                                </tr>
+                                        </table>
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr class="info">
+                                                    <th colspan="2" style="text-align:center;">
+                                                        <span>TOTAIS (FATURAMENTO)</span>
+                                                    </th>
+                                                </tr>
+                                                <tr ng-repeat="item in lstTotais">
+                                                    <td style="font-size:10px;"> {{item.TIPO_PAGAMENTO}}</td>
+                                                    <td style="font-size:10px;text-align: right;" app-show-dinheiro="item.VALOR_PARCELAS"></td>
+                                                </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+   
+                    </div>
+                    <div class="col-lg-12" ng-if="export.lnkPath!=null&&export.lnkPath!=''">
+                        <div class="form-group">
+                            <a href="{{export.lnkPath}}" ng-click="export.lnkPath=null"><i class="glyphicon glyphicon-cloud-download"></i> Donwload do arquivo ( {{export.lnkPath}} ) </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden-print panel-footer">
+                    <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+                    <a class="btn btn-default" href="javascript:void(0)" ng-click="expPlanilha(lstConferenciaFinanceira,'/RelConferenciaFinanceira/ExportarXLS')" title="Exportar a tabela para o excel">
+                        <i class="fa fa-file-excel-o blue"></i>&nbspExportar
+                    </a>
+                    @*<a class="btn btn-default" href="/Relatorios/Controladoria">
+                            <span class="glyphicon glyphicon-chevron-left blue"></span>&nbspVoltar
+                        </a>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

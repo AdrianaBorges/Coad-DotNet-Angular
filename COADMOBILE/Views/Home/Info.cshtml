@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Notificação";
+}
+
+<h2>Notificação</h2>
+
+<div>
+    <div class="panel panel-warning">
+                  <!-- Default panel contents -->
+        <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-remove-sign icon-panel"></span> 
+           Notificação 
+        </div>
+        <div class="panel-body">
+            Houve um erro no acesso a aplicação. Por favor Logue novamente.<br />
+            <a href="~/Login/Logout">Voltar</a>
+            <div>@TempData["message"]</div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,374 @@
+﻿@model COAD.CORPORATIVO.Model.Dto.RepresentanteDTO
+
+@{
+    ViewBag.Title = "Editar";
+}
+@using Coad.GenericCrud.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+@using GenericCrud.ActionResultTools
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Representantes (Editar)</li>
+    </ol>
+}
+
+
+@{
+
+    bool adm = (SessionContext.IsAdmDepartamento("TI") || SessionContext.IsAdmDepartamento("Franquiador"));
+
+}
+
+<script src="@UrlCorp.Content("~/Scripts/negocio/representante.js")" defer="defer"></script>
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+<div ng-app="appModule">
+    <div class="panel panel-corp" ng-controller="RepresentanteController" data-ng-init="initEdicao('@adm'); read('@ViewBag.REP_ID', '@ViewBag.USU_LOGIN');" ng-cloak>
+        <div class="panel-heading bold head-panel">
+            <span class="glyphicon glyphicon-edit icon-panel"></span> Editar Representante
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="false" ng-disabled="button == 'saved'">
+                        Opções
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li>
+                            <a href="@Url.Action("listar")" title="Voltar" class="blue"> Voltar</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" title="Salvar" ng-click="salvar()" class="blue">Salvar</a>
+                        </li>
+                        <li ng-show="prospect.ID">
+                            <a href="javascript:void(0)" app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}"
+                               app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?" class="btnConfirmaExclusao blue" title="Excluir">Excluir</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div app-message></div>
+            <div>
+                <div>
+                    <div>
+                        <div class="pull-right">
+                            <strong>Código: </strong><span class="label label-danger">{{representante.REP_ID}}</span>
+                        </div>
+                    </div>
+                    <fieldset>
+                    <legend class="text-info">
+                        <span class="font-30">
+                            <i class="fa fa-male" aria-hidden="true"></i>
+                            <span class="font-16">Dados de Cadastro</span>
+                        </span>
+                    </legend>
+                    <section id="cadastro">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="font-16">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    <label class="font-15">Cadastro</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-3">
+                                <label for="campo_nome">Nome</label>
+                                <input type="text" id="campo_nome" class="form-control" ng-model="representante.REP_NOME" maxlength="30" />
+                                @Html.ValidationMessageFor(model => model.REP_NOME, null, new { app_validation_msg = "erros", @for = "REP_NOME" })
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label for="niv_ace">Nível de Acesso</label>
+                                <select ng-options="niv as niv.NRP_DESCRICAO for niv in lstNivelRepresentante track by niv.NRP_ID"
+                                        ng-model="representante.NIVEL_REPRESENTANTE" id="niv_ace" class="form-control" ng-change="nivelRepresentanteSelecionado()">
+                                    <option value="">Selecione</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="selectRegiao">UEN</label>
+                                <select ng-options="uen.UEN_ID as uen.UEN_DESCRICAO for uen in lstUEN"
+                                        ng-model="representante.UEN_ID" id="lstUen" class="form-control" ng-change="uenSelecionado()">
+                                    <option value="">Selecione</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-2">
+                                <label>Várias carteiras</label><br />
+                                <label class="switch switch switch-round" style="padding-top: 5px;">
+                                    <input type="checkbox" id="variasCarteiras" ng_model="representante.REP_VARIAS_CARTEIRA" class="form-control" value="false">
+                                    <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                                </label>
+                            </div>
+                            <div class="form-group col-lg-2">
+                                <label>Supervisor</label><br />
+                                <label class="switch switch switch-round" style="padding-top: 5px;">
+                                    <input type="checkbox" id="supervisor" ng_model="representante.REP_SUPERVISOR" class="form-control" value="false">
+                                    <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-3">
+                                <label for="selectRegiao">Região</label>
+                                <select ng-options="reg.RG_ID as reg.RG_DESCRICAO for reg in regioes"
+                                        ng-model="representante.RG_ID" id="selectRegiao1" class="form-control">
+                                    <option value="">Selecione</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label for="campo_EMP_ID">Empresa</label>
+                                <select id="campo_EMP_ID" name="campo_EMP_ID" class="form-control" ng-model="representante.EMP_ID"
+                                        ng-options="emp.EMP_ID as emp.EMP_NOME_FANTASIA for emp in lstEmpresas">
+                                    <option value="">Selecione</option>
+                                </select>
+                                <div app-validation-msg="erros" for="TPP_ID"></div>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Bloquear Rodizio Importação</label><br />
+                                <label class="switch switch switch-round switch-success" style="padding-top: 5px;">
+                                    <input type="checkbox" id="variasCarteiras" ng-model="representante.REP_INATIVO_RODIZIO_IMP"
+                                           ng-checked="representante.REP_INATIVO_RODIZIO_IMP == true"
+                                           class="form-control" value="false">
+                                    <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                                </label>
+                            </div>
+                            <div class="form-group col-lg-2">
+                                <label>Gerente</label><br />
+                                <label class="switch switch switch-round switch-success" style="padding-top: 5px;">
+                                    <input type="checkbox" ng-model="representante.REP_GERENTE" class="form-control" ng-checked="representante.REP_GERENTE == true">
+                                    <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </section>
+                    <section id="contato">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="font-16">
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                    <label class="font-15">Contato</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-4">
+                                <label for="usuario">Email</label>
+                                <input type="text" id="nomeUsuario" ng-model="representante.REP_EMAIL" class="form-control" />
+                                <div app-validation-msg="erros" for="representante.REP_EMAIL"></div>
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <label for="usuario">Ramal</label>
+                                <input type="text" id="nomeUsuario" ng-model="representante.REP_RAMAL" class="form-control" />
+                                <div app-validation-msg="erros" for="representante.REP_RAMAL"></div>
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <label for="usuario">DDD</label>
+                                <input type="text" id="nomeUsuario" ng-model="representante.REP_DDD_TELEFONE" class="form-control" />
+                                <div app-validation-msg="erros" for="representante.REP_RAMAL"></div>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="usuario">Telefone</label>
+                                <input type="text" id="nomeUsuario" ng-model="representante.REP_TELEFONE" class="form-control" />
+                                <div app-validation-msg="erros" for="representante.REP_RAMAL"></div>
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <label for="usuario">DDD</label>
+                                <input type="text" id="nomeUsuario" ng-model="representante.REP_DDD_TELEFONE2" class="form-control" />
+                                <div app-validation-msg="erros" for="representante.REP_RAMAL"></div>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="usuario">Telefone</label>
+                                <input type="text" id="nomeUsuario" ng-model="representante.REP_TELEFONE2" class="form-control" />
+                                <div app-validation-msg="erros" for="representante.REP_RAMAL"></div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section id="dados-usuario">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="font-16">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                    <label class="font-15">Dados do Usuário</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-4">
+                                <label for="selectRegiao">Login</label>
+                                <span class="text font-15" ng-show="representante.USUARIO"><span class="label label-primary">{{representante.USUARIO.USU_LOGIN }}</span> </span>
+                                <span class="text" ng-show="!representante.USUARIO.USU_LOGIN"><span class="label label-default">Não Adicionado</span></span>
+                                <span ng-show="representante.USUARIO">
+                                    <a href="javascript:void(0);" ng-click="abrirModalUsuario()" title="Alterar" class="clear-link">
+                                        <span class="glyphicon glyphicon-refresh"></span>
+                                    </a>
+                                    <a href="javascript:void(0);" ng-click="removerUsuario()" title="Remover" class="text-danger clear-link">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                </span>
+                                <span ng-show="representante.USUARIO == null">
+                                    <a href="javascript:void(0);" ng-click="abrirModalUsuario()" title="Adicionar" class="text-info">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </a>
+                                </span>
+                                <div app-validation-msg="erros" for="REP_ID"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            @*<div class="form-group col-sm-3">
+                                    <label for="usuario">Login</label>
+                                    <div class="input-group">
+                                        <input type="text" id="usuario" ng-model="representante.USUARIO.USU_LOGIN" lista="listaUsuario"
+                                               app-simple-autocomplete="representante.USU_LOGIN" class="form-control"
+                                               on-select="recuperarDadosDoUsuario()" ng-disabled="representante.USUARIO.REP_ID" />
+                                        <span class="input-group-btn">
+                                            <a href="javascript:void(0);" class="btn btn-default" id="usuarioNome" title="Remover Usuário" ng-click="removerUsuario()">
+                                                <span class="glyphicon glyphicon-remove-circle red"></span>
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>*@
+
+                            <div class="form-group col-sm-3">
+                                <label for="usuario">Nome do usuário</label>
+                                <br />
+                                <div class="text-muted">{{representante.USUARIO.USU_NOME}}</div>
+                                @*<input type="text" id="nomeUsuario" ng-model="representante.USUARIO.USU_NOME" class="form-control" disabled="disabled" />*@
+                                <div app-validation-msg="erros" for="USUARIO.USU_NOME"></div>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label for="email">Email</label>
+                                <br />
+                                <div class="text-muted">{{representante.USUARIO.USU_EMAIL}}</div>
+                                @*<input type="text" id="email" ng-model="representante.USUARIO.USU_EMAIL" class="form-control" disabled="disabled" />*@
+                                <div app-validation-msg="erros" for="USUARIO.USU_EMAIL"></div>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="cpf">Cpf</label>
+                                <br />
+                                <div class="text-muted">{{representante.USUARIO.USU_CPF}}</div>
+                                @*<input type="text" id="cpf" ng-model="representante.USUARIO.USU_CPF" class="form-control" maxlength="14" disabled="disabled" />*@
+                                <div app-validation-msg="erros" for="USUARIO.USU_CPF"></div>
+                            </div>
+                        </div>
+                    </section>                   
+                    <section id="carteiras">
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span class="font-16">
+                                            <i class="fa fa-address-card" aria-hidden="true"></i>
+                                            <label class="font-15">Carteiras</label>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="table-responsive col-sm-7 limit-div-7">
+                                        <div app-validation-msg="erros" for="ASSINATURA_EMAIL"></div>
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Carteira</th>
+                                                    <td>Código</td>
+                                                    <td>Empresa</td>
+                                                    <th>Ações</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="pro in representante.CARTEIRA_REPRESENTANTE | filter:queryCarteira | as:'listaDataFiltrada'">
+                                                    <td>
+                                                        <div class="form-group" ng-class="{'has-error' : pro.valida == false, 'has-success' : pro.valida == true}">
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control"
+                                                                       ng-model="pro.CAR_ID" id="prod_{{$index}}"
+                                                                       disabled="disabled"/>
+                                                                <a href="javascript:void(0);" ng-click="abrirModalCarteira($index);" class="input-group-addon">
+                                                                   <i class="glyphicon glyphicon-search"></i>
+                                                                </a>
+                                                            </div>
+                                                            <strong class="text-danger" ng-if="pro.valida == false">
+                                                                Não é possível encontrar a carteira informada.                                                                
+                                                            </strong>
+                                                            <div app-validation-msg="erros" for="CARTEIRA_REPRESENTANTE[{{$index}}].CAR_ID"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control"
+                                                               ng-model="pro.REP_OPER_ID" id="prod_{{$index}}" />                                                               
+                                                    </td>
+                                                    <td>
+                                                        <select id="campo_EMP_ID_{{$Index}}" name="campo_EMP_ID" class="form-control" ng-model="pro.EMP_ID"
+                                                                ng-options="emp.EMP_ID as emp.EMP_NOME_FANTASIA for emp in lstEmpresas">
+                                                            <option value="">Selecione</option>
+                                                        </select>
+                                                        <div app-validation-msg="erros" for="CARTEIRA_REPRESENTANTE[{{$index}}].EMP_ID"></div>                                                        
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0)" ng-click="removerCarteira($index)" class="btnConfirmaExclusao red" id="btexcluir" title="Excluir">
+                                                            <span class="glyphicon glyphicon-remove-sign"></span>
+                                                        </a>
+                                                        <span ng-show="listaDataFiltrada.length == ($index + 1)">
+                                                            <a href="javascript:void(0)" ng-click="adicionarLinhaCarteira()" title="Incluir">
+                                                                <span class="glyphicon glyphicon-plus blue"></span>
+                                                            </a>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-hide="listaDataFiltrada.length > 0">
+                                                    <td colspan="7">
+                                                        Nenhuma carteira adicionada. Clique para adicionar:
+                                                        <a href="javascript:void(0)" ng-click="adicionarLinhaCarteira()" title="Incluir">
+                                                            <span class="glyphicon glyphicon-plus blue"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                    </section>
+                 
+                </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("Listar")'" class="btn btn-default" ng-disabled="button == 'saved' || buttonDel == 'deleting'">
+                <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar
+            </button>
+            <button app-switch-button="salvar()"
+                    switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]"
+                    switch-var="button"
+                    class="btn btn-primary" ng-disabled="bloqueiaSalvamento && bloqueiaSalvamento === true || buttonDel == 'deleting'">
+                <span class="glyphicon glyphicon-floppy-save"></span>
+            </button>
+            <span ng-show="representante.REP_ID">
+                <button type="button" class="btn btn-danger" ng-disabled="button == 'saved' && bloqueiaSalvamento && bloqueiaSalvamento === true"
+                        app-switch-button="deletarRepresentante()"
+                        switch-conf="[{label : 'Excluir', state : 'del'}, {label : 'Excluindo...', state : 'deleting', disabled : true}]"
+                        switch-var="buttonDel">
+                    <span class="glyphicon glyphicon-remove-sign"></span>
+                </button>
+            </span>
+        </div>
+        <div app-modal="modal-usuario" header="Lista de Usuários">
+            @Html.Partial("Partials/Modais/_ModalBuscarUsuarioPartial")
+        </div>
+        <div app-modal="modal-carteira" header="Lista de Carteiras">
+            @Html.Partial("Partials/Modais/_ModalBuscarCarteiraPartial")
+        </div>
+    </div>
+</div>

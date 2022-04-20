@@ -1,0 +1,152 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutosDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li class="active">Gerenciar Clientes</li>         
+        
+    </ol>
+}
+
+<script src="~/Scripts/negocio/controllers_plugins/info_cliente.js"></script>
+<script src="~/Scripts/negocio/notificacao.js"></script>
+<div>
+    <div ng-controller="NotificacaoController" class="padding content" ng-cloak data-ng-init="listarNotificacoes();">
+ 
+        <div class="panel panel-default">
+                        <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" disabled="disabled">
+                                            Opções
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                            <li>
+                                                <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                            </li>                                                                           
+                                        </ul>
+                                    </div>
+                                </div>
+            </div>
+          
+            <div class="panel-body">                     
+                <div class="row">              
+                    <div class="form-group col-lg-3">
+                        <label for="sigla">Tipo Notificação</label>
+                         @Html.DropDownList("Tipo Notificacao",
+                         new SelectList(ViewBag.lstTipoNotificacao, "TP_NTF_ID", "TP_NTF_DESCRICAO"),
+                         "Selecione",
+                         new { @class = "form-control", ng_model = "filtro.tipoNotificacaoId" })                        </div>
+                    <div class="form-group col-lg-3">
+                        <label for="sigla">Urgência Notificação</label>
+                         @Html.DropDownList("Urgência Notificacao", 
+                         new SelectList(ViewBag.lstUrgenciaNotificacao, "URG_NTF_ID", "URG_NTF_ID"), "Selecione", new { @class = "form-control", ng_model = "filtro.urgenciaNotificacaoId" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-2">
+                        <label for="rd_lida">Não lidas</label> <input type="radio" id="rd_nao_lida" name="lidas" ng-model="filtro.lidas" ng-value="0"/>                       
+                    </div>
+                    <div class="form-group col-lg-2">                        
+                        <label for="rd_lida">Lidas</label> <input type="radio" id="rd_lida" name="lidas" ng-model="filtro.lidas" ng-value="1"/>
+                    </div>
+                    <div class="form-group col-lg-2">                                             
+                        <label for="rd_lida">Todos</label> <input type="radio" id="rd_todos" name="lidas" ng-model="filtro.lidas" ng-value=""/>
+                    </div>
+                               
+                </div>
+            
+            </div>
+                  
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="listarNotificacoes()">Pesquisar</button>
+            </div>
+    </div>
+
+      <div class="panel panel-default">
+      <!-- Default panel contents -->
+      
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-info-sign"></span> Notificações</div>
+          
+      <div class="panel-body">   
+                    
+                    <div class="table-responsive">     
+                            <div class="text padding"><strong>Cliente: </strong>{{clienteModal.CLI_NOME}}</div>
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>      
+                                        <th>                                           
+                                            Urgência
+                                        </th>
+                                        <th>
+                                            Descrição
+                                        </th> 
+                                        <th>
+                                            Tipo de Notificação
+                                        </th>
+                                        <th>                                           
+                                            Data da Notificações
+                                        </th> 
+                                        <th>Visualizar</th>                                   
+                                    </tr>
+                                </thead>    
+                              <tr ng-repeat="notify in lstNotificacoes" ng-class="{
+                                            
+                                            'bg-nofity-view' : !notify.NTF_VISUALIZADO                                       
+                                        }">
+                                    <td>
+                                         <span class="label label-default"
+                                        ng-class="{
+                                            'label-info': notify.URG_NTF_ID == 'INFO',
+                                            'label-warning': notify.URG_NTF_ID == 'WARN',
+                                            'label-danger': notify.URG_NTF_ID == 'ERROR',
+                                            'label-primary': notify.URG_NTF_ID == 'PRIORITY',
+                                            'label-success': notify.URG_NTF_ID == 'SUCCESS',
+                                            'label-default': !notify.URG_NTF_ID
+                                        }">{{notify.URG_NTF_ID}}</span>
+                                    </td>                                    
+                                    <td>
+                                        {{notify.NTF_DESCRICAO}}
+                                    </td>   
+                                    <td>
+                                        {{notify.TIPO_NOTIFICACAO.TP_NTF_DESCRICAO}}
+                                    </td>
+                                    <td app-show-date="notify.NTF_DATA">
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0)" ng-click="abreModalNotificacao(notify, 2)" title="Detalhes" class="blue">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </a> 
+                                    </td> 
+                              </tr>
+                                <tr>
+                                    <td colspan="5" ng-hide="listarNotificacoes" class="text">
+                                        Não foi encontrado nenhum registro.
+                                    </td>
+                                </tr>
+                            </table> 
+                    </div>
+                  
+              <div app-pagination request-page="paginaReq" load-function="listarNotificacoes(paginaReq)"></div>
+          
+
+          </div>
+         
+        </div>
+
+        <div app-modal="modal-notify2" header="Notificações">
+                       
+              @Html.Partial("partials/_ModalVisualizarNotificacaoPartial")
+        </div>
+          @Html.Partial("Partials/_ModalClientePartial")
+       
+    </div>   
+    
+</div>      

@@ -1,0 +1,591 @@
+﻿@Scripts.Render("~/Scripts/appScripts/TabelaDinamica.js")
+
+@using Coad.GenericCrud.Extensions
+
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">Home </a></li>
+        <li class="active">Tabelas e Simuladores</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="TabelaDinamicaController" ng-init="carregaTela('@ViewBag.id','@ViewBag.tipo')">
+        <div id="page-wrapper">
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading bold head-panel">
+                    <label id="title"><span class="glyphicon glyphicon-calendar"></span>&nbspTabelas e Simuladores</label>
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Opções<span class="caret"></span></button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="/TabelaDinamica/Importar?id=">Importar Planilha (Excel)</a>
+                                </li>
+                                <li><a href="/TabelaDinamica/Index">Fechar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row hidden-print">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Tipo")
+                                @Html.DropDownList("TDC_TIPO", new SelectList(@ViewBag.ListaTipo, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "tabconfig.TDC_TIPO" })
+                                <div app-validation-msg="erros" for="_config.TDC_TIPO"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.Label("Informe o nome da tabela")
+                                <input id="_nometabela" type="text" ng-model="tabconfig.TDC_NOME_TABELA" class="form-control " placeholder="Nome da tabela" autofocus autocomplete="off">
+                                <div app-validation-msg="erros" for="_config.TDC_NOME_TABELA"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Resp Tabela")
+                                <input id="_nometabela" type="text" ng-model="tabconfig.USU_LOGIN" class="form-control " placeholder="Nome da tabela" autofocus autocomplete="off" disabled="disabled">
+                                <div app-validation-msg="erros" for="_config.USU_LOGIN"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Resp Publicação")
+                                @Html.DropDownList("USU_LOGIN_PUB", new SelectList(@ViewBag.ListaUsuario, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "tabconfig.USU_LOGIN_PUB" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Observação (Menu)")
+                                <textarea id="_nomeObs" type="text" ng-model="tabconfig.TDC_NOME_OBS" class="form-control " placeholder="Descrição da tabela" autofocus autocomplete="off" rows="5"></textarea>
+                                <div app-validation-msg="erros" for="_config.TDC_NOME_OBS"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Grupo")
+                                @Html.DropDownList("TGR_ID", new SelectList(@ViewBag.Listagrupo, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "tabconfig.TGR_ID" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Layout Tabela")
+                                <select ng-model="tabconfig.TDC_LAYOUT_TABELA" class="form-control">
+                                    <option value="LIS">LISTA</option>
+                                    <option value="LSA">LISTA AGRUPADA</option>
+                                    <option value="REG">RESULTADO GRID</option>
+                                    <option value="LRE">GRID 3 COLUNAS</option>
+                                </select>
+                                <div app-validation-msg="erros" for="tabconfig.TDC_LAYOUT_TABELA"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Grande Grupo")
+                                @Html.DropDownList("TIT_ID", new SelectList(@ViewBag.ListaTitulacao, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "tabconfig.TIT_ID" })
+                            </div>
+                        </div>
+                    </div>
+                    <fieldset>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active" data-toggle="tab" aria-controls="tab1" aria-expanded="true">
+                                <a href="#tab1" id="Configuracao" data-toggle="tab">Configuração</a>
+                            </li>
+                            <li><a href="#tab2" id="Observacao" data-toggle="tab">Observações</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane" id="tab1">
+                                <fieldset>
+                                    <div class="row padding">
+                                        <legend class="btn btn-info" style="text-align: left;">Selecione as Opções</legend>
+                                        <br />
+                                        <div class="col-lg-6">
+                                            <input type="checkbox" ng-model="tabconfig.TDC_PALAVRA_CHAVE" />
+                                            <span><strong>Pesquisar Palavra Chave</strong> (Permite pesquisa por paralavra chave)</span>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="checkbox" ng-model="tabconfig.TDC_INTRODUCAO" />
+                                            <span><strong>Introdução</strong> (Breve descrição sobre o funcionameto ou conteudo da tabela/simulador)</span>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="checkbox" ng-model="tabconfig.TDC_OBS_LAYOUT" />
+                                            <span><strong>Observação </strong>(Informações referentes o layout tabela)</span>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="checkbox" ng-model="tabconfig.TDC_LEGENDA_LAYOUT" />
+                                            <span><strong>Legenda </strong>(Apresenta informações sobre o conteudo de cada campo da tabela/simulador)</span>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="checkbox" ng-model="tabconfig.TDC_INF_PREENCHIMENTO" />
+                                            <span><strong>Preenchimento </strong>(Possui informações quanto ao preenchimento dos campos do simulador)</span>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="checkbox" ng-model="tabconfig.TDC_INF_GERAIS" />
+                                            <span><strong>Informações Adicionais </strong>(Possui informações adicionais referentes a tabela/simulador)</span>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="row padding">
+                                        <legend class="btn btn-info" style="text-align: left;">Informe os campos</legend>
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr class="info">
+                                                    <th style="text-align: center;">Ordem</th>
+                                                    <th style="width: 250px;">Campo</th>
+                                                    <th style="width: 100px;">Coluna (Descrição)</th>
+                                                    <th>Tipo</th>
+                                                    <th>Tam</th>
+                                                    <th>Dec</th>
+                                                    <th style="text-align: center;">Alinhamento</th>
+                                                    <th style="text-align: center;">Referência</th>
+                                                    <th style="text-align: center;" ng-if="tabconfig.TDC_TIPO==1">Pesquisa</th>
+                                                    <th style="text-align: center;">Visível</th>
+                                                    <th style="text-align: center; background-color: #808080; color: #fff" ng-if="tabconfig.TDC_TIPO==1" colspan="2">Chave/Lista</th>
+                                                    <th style="text-align: center;" colspan="4">Opções</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-hide="tabconfig.TAB_DINAMICA_CONFIG_ITEM.length > 0">
+                                                    <td colspan="10"><a href="#" ng_click="abrejanelaAddItem()" title="Adicionar o novo item">Click no botão ao lado para adicionar um item <i class="fa fa-plus"></i></a></td>
+                                                </tr>
+                                                <tr ng-repeat="itemtabcfg in tabconfig.TAB_DINAMICA_CONFIG_ITEM">
+                                                    <td style="text-align: center;">{{itemtabcfg.TCI_ORDEM_APRESENTACAO}}</td>
+                                                    <td>{{itemtabcfg.TCI_NOME_CAMPO}}
+                                                        &nbsp
+                                                        <span class="fa fa-key red" ng-if="itemtabcfg.TCI_CAMPO_CHAVE==true"></span>
+                                                        <span class="fa fa-superscript blue" ng-if="itemtabcfg.TCI_FORMULA!=null&&tabconfig.TCI_FORMULA!=''" title="Campo possui formula."></span>
+                                                        <span class="fa fa-list blue" ng-if="itemtabcfg.TCI_VALOR_ESPERADO!=null&&itemtabcfg.TCI_VALOR_ESPERADO!=''" title="Campo possui lista de opções."></span>
+                                                        <span class="glyphicon glyphicon-search blue" ng-if="itemtabcfg.TCI_CAMPO_PESQUISA==true" title="Este campo é um campo de pesquisa."></span>
+                                                    </td>
+                                                    <td style="text-align: center;">{{itemtabcfg.TCI_NOME_CAMPO_AUX}}</td>
+                                                    <td ng-if="itemtabcfg.TCI_TIPO_CAMPO=='D'">Data</td>
+                                                    <td ng-if="itemtabcfg.TCI_TIPO_CAMPO=='N'">Numero</td>
+                                                    <td ng-if="itemtabcfg.TCI_TIPO_CAMPO=='S'">String</td>
+                                                    <td ng-if="itemtabcfg.TCI_TIPO_CAMPO=='T'">Texto</td>
+                                                    <td ng-if="itemtabcfg.TCI_TIPO_CAMPO=='F'">Moeda</td>
+                                                    <td ng-if="itemtabcfg.TCI_TIPO_CAMPO=='P'">Percentual</td>
+                                                    <td style="text-align: center;">{{itemtabcfg.TCI_TAMANHO_CAMPO}}</td>
+                                                    <td style="text-align: center;">{{itemtabcfg.TCI_DECIMAIS}}</td>
+                                                    <td style="text-align: center;" ng-if="itemtabcfg.TCI_ALINHAMENTO_CAMPO=='D'">Direita</td>
+                                                    <td style="text-align: center;" ng-if="itemtabcfg.TCI_ALINHAMENTO_CAMPO=='E'">Esquerda</td>
+                                                    <td style="text-align: center;" ng-if="itemtabcfg.TCI_ALINHAMENTO_CAMPO=='C'">Centro</td>
+                                                    <td style="text-align: center;">{{itemtabcfg.TCI_NOME_CAMPODB}}</td>
+                                                    <td style="text-align: center;" ng-if="tabconfig.TDC_TIPO==1">
+                                                        <input type="checkbox" ng-model="itemtabcfg.TCI_CAMPO_PESQUISA" />
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <input type="checkbox" ng-model="itemtabcfg.TCI_CAMPO_VISIVEL" />
+                                                    </td>
+                                                    <td style="text-align: center; background-color: #808080; color: #fff" ng-if="tabconfig.TDC_TIPO==1">
+                                                        <input type="checkbox" ng-model="itemtabcfg.TCI_CAMPO_CHAVE" ng-click="selCampoChave(itemtabcfg)" />
+                                                    </td>
+                                                    <td style="text-align: center; background-color: #808080; color: #fff" ng-if="tabconfig.TDC_TIPO==1">
+                                                        <input type="checkbox" ng-model="itemtabcfg.TCI_CAMPO_LISTA" ng-click="selCampoLista(itemtabcfg)" />
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <a href="javascript:void(0)" ng_click="ordenarDown(itemtabcfg,$index)" title="Ordenar o item selecionado">
+                                                            <span class="glyphicon glyphicon-arrow-down blue" ng_show="tabconfig.TAB_DINAMICA_CONFIG_ITEM.length>1"></span>
+                                                        </a>
+                                                        <a href="javascript:void(0)" ng_click="ordenarUp(itemtabcfg,$index)" title="Ordenar o item selecionado">
+                                                            <span class="glyphicon glyphicon-arrow-up blue" ng_show="tabconfig.TAB_DINAMICA_CONFIG_ITEM.length>1"></span>
+                                                        </a>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <a href="javascript:void(0)" ng_click="abrejanelaAddItem(itemtabcfg)" title="Editar o item selecionado"><i class="fa fa-edit"></i></a></td>
+                                                    <td style="text-align: center;">
+                                                        <a href="javascript:void(0)" ng_click="removeItem($index)" class="btnConfirmaExclusao red" title="Excluir o registro selecionado">
+                                                            <span class="glyphicon glyphicon-remove-sign"></span>
+                                                        </a></td>
+                                                    <td style="text-align: center;">
+                                                        <span ng-show="tabconfig.TAB_DINAMICA_CONFIG_ITEM.length == ($index + 1)">
+                                                            <a href="javascript:void(0)" ng_click="abrejanelaAddItem()" title="Adicionar o novo item">
+                                                                <span class="glyphicon glyphicon-plus blue"></span>
+                                                            </a>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="tab-pane" id="tab2">
+                                <div class="row ">
+                                    <br />
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label><span><strong>Descrição</strong> (Campo obrigatório. max. 200 caracteres)</span></label>
+                                            <div app-editor="tabela.TAB_DESCRICAO" editor-model="editor" id="descricao">
+                                            </div>
+                                            <div app-validation-msg="erros" for="tabela.TAB_DESCRICAO"></div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label><span><strong>Mensagem de Erro</strong> (personalizada)</span></label>
+                                            <div app-editor="tabela.TAB_ERRO_MSG" editor-model="editor" id="erro">
+                                            </div>
+                                            <div app-validation-msg="erros" for="tabela.TAB_ERRO_MSG"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12" ng-show="tabconfig.TDC_INTRODUCAO==true">
+                                        <div class="form-group">
+                                            @Html.Label("Introdução")
+                                            <div app-editor="tabela.TAB_INTRODUCAO" editor-model="editor" id="Introducao">
+                                            </div>
+                                            <div app-validation-msg="erros" for="tabela.TDC_INTRODUCAO"></div>
+                                        </div>
+                                    </div>
+                                    <div class=" col-lg-12" ng-show="tabconfig.TDC_OBS_LAYOUT==true">
+                                        <div class="form-group">
+                                            @Html.Label("Observação")
+                                            <div id="Obs" app-editor="tabela.TAB_OBS_LAYOUT" editor-model="editor">
+                                            </div>
+                                            <div app-validation-msg="erros" for="tabela.TAB_OBS_LAYOUT"></div>
+                                        </div>
+                                    </div>
+                                    <div class=" col-lg-12" ng-show="tabconfig.TDC_LEGENDA_LAYOUT==true">
+                                        <div class="form-group">
+                                            @Html.Label("Legenda")
+                                            <div id="Legenda" app-editor="tabela.TAB_LEGENDA_LAYOUT" editor-model="editor">
+                                            </div>
+                                            <div app-validation-msg="erros" for="tabela.TAB_LEGENDA_LAYOUT"></div>
+                                        </div>
+                                    </div>
+                                    <div class=" col-lg-12" ng-show="tabconfig.TDC_INF_PREENCHIMENTO==true">
+                                        <div class="form-group">
+                                            @Html.Label("Informações de Preenchimento")
+                                            <div id="Inf" app-editor="tabela.TAB_INF_PREENCHIMENTO" editor-model="editor">
+                                            </div>
+                                            <div app-validation-msg="erros" for="tabela.TAB_INF_PREENCHIMENTO"></div>
+                                        </div>
+                                    </div>
+                                    <div class=" col-lg-12" ng-show="tabconfig.TDC_INF_GERAIS==true">
+                                        <div class="form-group">
+                                            @Html.Label("Informações Gerais")
+                                            <div id="InfGeral" app-editor="tabela.TAB_INF_GERAIS" editor-model="editor">
+                                            </div>
+                                            <div app-validation-msg="erros" for="tabela.TAB_INF_GERAIS"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="panel-footer">
+                    <a href="/TabelaDinamica/Index" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</a>
+                    <button ng-click="Salvar()" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save blue"></span>&nbspSalvar</button>
+                    <button ng-click="Excluir()" class="btn btn-default" ng-show="tabela.TDC_ID!=null&&tabela.TDC_ID!=''"><span class="glyphicon  glyphicon-remove-sign red"></span>&nbspExcluir</button>
+                    <a href="javascript:void(0)" ng-click="publicar()" title="Publica tabela selecionada no site" class="btn btn-default blue" ng-if="tabconfig.TDC_DATA_PUBLICACAO==null">
+                        <span class="glyphicon glyphicon-cloud-upload"></span>&nbspPublicar
+                    </a>
+                    <a href="javascript:void(0)" ng-click="removerPublicacao()" title="Remove a tabela selecionada do site" class="btn btn-default blue" ng-if="tabconfig.TDC_DATA_PUBLICACAO!=null">
+                        <span class="glyphicon glyphicon-cloud-download"></span>&nbspRemover Publicação
+                    </a>
+                    <a class="btn btn-default blue" href="/TabelaDinamica/Tabela/{{tabconfig.TDC_ID}}/true" target="_blank" ng-if="tabconfig.TDC_TIPO==1&&tabconfig.TDC_ID!='1228f7e8-b4a0-45e3-bf67-099c7fda840b'">
+                        <span class="glyphicon glyphicon-search"></span>&nbspPreview 
+                    </a>
+                    <a class="btn btn-default blue" href="/TabelaDinamica/Simulador/{{tabconfig.TDC_ID}}/true" target="_blank" ng-if="tabconfig.TDC_TIPO==2&&tabconfig.TDC_ID!='1228f7e8-b4a0-45e3-bf67-099c7fda840b'">
+                        <span class="glyphicon glyphicon-search"></span>&nbspPreview
+                    </a>
+                    <a  class="btn btn-default blue" href="javascript:void(0)" app-post="@Url.Action("EditarTabela")?_tipo={{tabconfig.TDC_TIPO}}&_id={{tabconfig.TDC_ID}}" title="Editar" class="blue">
+                        <span class="glyphicon glyphicon-edit"></span>&nbspEditar Itens
+                    </a>
+                </div>
+            </div>
+        </div>
+        @Html.Messages()
+        @*modal-add-item --- Popup modal*@
+
+        <div id="modal-add-item" class="modal fade">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: aliceblue">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><span class="glyphicon glyphicon-plus blue"></span>Adicionar Itens na tabela</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    @Html.Label("Nome do Campo")
+                                    <input id="_nomecampo" type="text" ng-model="item1.TCI_NOME_CAMPO" class="form-control " app-popover data-content="Nome do campo que sera apresentado para o usuário que estiver utilizando o simulador." placeholder="Nome da tabela" autofocus autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    @Html.Label("Coluna (Descrição)")
+                                    <input id="_nomecampo" type="text" ng-model="item1.TCI_NOME_CAMPO_AUX" class="form-control " app-popover data-content="Nome do campo que sera apresentado para o usuário que estiver utilizando o simulador." placeholder="Nome da tabela" autofocus autocomplete="off">
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    @Html.Label("Tipo")
+                                    <select class="form-control" ng-model="item1.TCI_TIPO_CAMPO" app-popover data-content="Informe aqui o tipo do campo">
+                                        <option value="D">Data</option>
+                                        <option value="N">Numero</option>
+                                        <option value="S">String</option>
+                                        <option value="T">Texto</option>
+                                        <option value="F">Moeda</option>
+                                        <option value="P">Percentual</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <div class="form-group">
+                                    @Html.Label("Decimais")
+                                    <input id="_tamanho" type="text" ng-model="item1.TCI_DECIMAIS" class="form-control" app-popover data-content="Quantidade de casas decimais."  autofocus autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <div class="form-group">
+                                    @Html.Label("Tamanho")
+                                    <input id="_tamanho" type="text" ng-model="item1.TCI_TAMANHO_CAMPO" class="form-control" app-popover data-content="Quantidade de caracteres que o campo deve aceitar na tela." placeholder="Nome da tabela" autofocus autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    @Html.Label("Alinhamento")
+                                    <select class="form-control" ng-model="item1.TCI_ALINHAMENTO_CAMPO" app-popover data-content="Alinhamento do campo">
+                                        <option value="D">Direita</option>
+                                        <option value="E">Esquerda</option>
+                                        <option value="C">Centro</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group" app-popover data-content="Campo de referência que o sistema utiliza para realizar os calculos. Campo obrigatório.">
+                                    @Html.Label("Referência")
+                                    <select name="_Referencia" class="form-control" ng-model="item1.TCI_NOME_CAMPODB">
+                                        <option ng-repeat="items in campostring  track by $index" value="{{items.Text}}">{{items.Text}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12" style="padding-top: 10px;">
+                                <legend class="btn btn-info  btn-xs" style="text-align: left" data-toggle="collapse" data-target="#TabRef">Tabela de Referência</legend>
+                                <div id="TabRef" class="collapse">
+                                    <div class="form-group col-lg-12" style="padding-top: 10px;" app-popover data-content="Caso exista alguma tabela que possa ser utilizada como base de pesquisa para o preenchimento deste campo, informe aqui.">
+                                        <div class="row padding" style="padding-top: 10px;">
+                                            @Html.Label("Tabela de Referência")
+                                            <select id="TDC_ID_TAB_REF" class="form-control float-left" size="1" ng-change="buscarConfigTabItem(item1.TDC_ID_TAB_REF)" ng-model="item1.TDC_ID_TAB_REF"
+                                                ng-options="item.TDC_ID as item.TDC_NOME_TABELA for item in lstTabelasRef">
+                                            </select>
+                                            {{item1.TDC_ID_TAB_REF}}
+                                        </div>
+                                        <div class="row padding" style="padding-top: 10px;">
+                                            <table class="table table-hover table-bordered">
+                                                <thead>
+                                                    <tr class="info">
+                                                        <th style="text-align: center;">Ordem</th>
+                                                        <th style="width: 250px;">Campo</th>
+                                                        <th style="text-align: center;">Referência</th>
+                                                        <th style="text-align: center; background-color: #808080; color: #fff" colspan="2">Chave/Lista</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="itm in lstTabelasCfgItem">
+                                                        <td style="text-align: center;">{{itm.TCI_ORDEM_APRESENTACAO}}</td>
+                                                        <td>{{itm.TCI_NOME_CAMPO}}&nbsp
+                                                        <span class="fa fa-key red" ng-if="itm.TCI_CAMPO_CHAVE==true"></span>
+                                                            <span class="fa fa-superscript blue" ng-if="itm.TCI_FORMULA!=null&&itm.TCI_FORMULA!=''" title="Campo possui formula."></span>
+                                                            <span class="fa fa-list blue" ng-if="itm.TCI_VALOR_ESPERADO!=null&&itm.TCI_VALOR_ESPERADO!=''" title="Campo possui lista de opções."></span>
+                                                            <span class="glyphicon glyphicon-search blue" ng-if="itm.TCI_CAMPO_PESQUISA==true" title="Este campo é um campo de pesquisa."></span>
+                                                        </td>
+                                                        <td style="text-align: center;">{{itm.TCI_NOME_CAMPODB}}</td>
+                                                        <td style="text-align: center; background-color: #808080; color: #fff">
+                                                            <div ng-show="false">{{itm.TCI_CAMPO_CHAVE = (item1.TCI_NOME_CHAVEDB == itm.TCI_NOME_CAMPODB)}}</div>
+                                                            <input type="checkbox" name="item[TCI_CAMPO_CHAVE]" ng-model="itm.TCI_CAMPO_CHAVE" ng-click="selCampoChave(itm)" />
+                                                        </td>
+                                                        <td style="text-align: center; background-color: #808080; color: #fff">
+                                                            <div ng-show="false">{{itm.TCI_CAMPO_LISTA = (item1.TCI_NOME_LISTADB == itm.TCI_NOME_CAMPODB)}}</div>
+                                                            <input type="checkbox" name="item[TCI_CAMPO_LISTA]" ng-model="itm.TCI_CAMPO_LISTA" ng-click="selCampoLista(itm)" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12" ng-if="tabconfig.TDC_TIPO==2" style="padding-top: 10px;">
+                                <legend class="btn btn-info  btn-xs" style="text-align: left" data-toggle="collapse" data-target="#formula">Fórmula</legend>
+                                <div id="formula" class="collapse">
+                                    <div class="col-lg-12" ng-if="tabconfig.TDC_TIPO==2" style="padding-top: 10px;">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-info  btn-xs" data-toggle="collapse" data-target="#formula01">
+                                                Campos (Clique aqui para campos de ajuda)&nbsp<span class="caret"></span>
+                                            </button>
+                                            <button type="button" class="btn btn-info  btn-xs" data-toggle="collapse" data-target="#funcoes01">
+                                                Funções&nbsp<span class="caret"></span>
+                                            </button>
+                                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                                Opções&nbsp<span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu pull-right" role="menu">
+                                                <li><a href="javascript:void(0)" ng-click="montaFormula(item1,'>')">> maior que</a></li>
+                                                <li><a href="javascript:void(0)" ng-click="montaFormula(item1,'<')">< menor que</a></li>
+                                                <li><a href="javascript:void(0)" ng-click="montaFormula(item1,'&&')">&& e </a></li>
+                                                <li><a href="javascript:void(0)" ng-click="montaFormula(item1,'||')">|| ou </a></li>
+                                                <li><a href="javascript:void(0)" ng-click="montaFormula(item1,'-')">- menos</a></li>
+                                                <li><a href="javascript:void(0)" ng-click="montaFormula(item1,'+')">+ mais</a></li>
+                                                <li><a href="javascript:void(0)" ng-click="montaFormula(item1,'*')">* multiplicar por </a></li>
+                                                <li><a href="javascript:void(0)" ng-click="montaFormula(item1,'/')">/ dividir por </a></li>
+                                                <li><a href="javascript:void(0)" ng-click="montaFormula(item1,'?')">? Então </a></li>
+                                                <li><a href="javascript:void(0)" ng-click="montaFormula(item1,':')">: Senão </a></li>
+                                                <li><a href="javascript:void(0)" ng-click="montaFormula(item1,'==')">== Igual </a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12" ng-if="tabconfig.TDC_TIPO==2">
+                                        <div id="funcoes01" class="collapse">
+                                            <div style="padding-left: 5px; border: solid 1px; width: 400px; height: 200px; overflow: auto">
+                                                <ul>
+                                                    <li><a href="javascript:void(0)" ng-click="addFormula(item1,'dataDiff(,)')">Diferença entre datas (Dias)</a></li>
+                                                    <li><a href="javascript:void(0)" ng-click="addFormula(item1,'buscarDataDias(,)')">Adiciona dias a uma data</a></li>
+                                                    <li><a href="javascript:void(0)" ng-click="addFormula(item1,'buscarDataMeses(,)')">Adiciona meses a uma data</a></li>
+                                                    <li><a href="javascript:void(0)" ng-click="addFormula(item1,'dataDiffMes(,)')">Difrença entre datas (Meses)</a></li>
+                                                    <li><a href="javascript:void(0)" ng-click="addFormula(item1,'dataDiffAno(,)')">Difrença entre datas (Anos)</a></li>
+                                                    <li><a href="javascript:void(0)" ng-click="addFormula(item1,'dataDiffAnoMesDia(,)')">Difrença entre datas (Dias, Meses e Anos)</a></li>
+                                                    @*<li><a href="javascript:void(0)" ng-click="addFormula(item1,'dataDiffDiasUteis(,)')">Difrença entre datas (Dias Úteis)</a></li>*@
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div id="formula01" class="collapse">
+                                            <div style="padding-left: 5px; border: solid 1px; width: 400px; height: 200px; overflow: auto">
+                                                <ul>
+                                                    <li ng-repeat="itemtabcfg in tabconfig.TAB_DINAMICA_CONFIG_ITEM">
+                                                        <a href="javascript:void(0)" ng-click="montaFormula(item1,itemtabcfg.TCI_NOME_CAMPODB)" title="{{itemtabcfg.TCI_NOME_CAMPODB}}">{{itemtabcfg.TCI_NOME_CAMPO}}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12" ng_if="tabconfig.TDC_TIPO==2">
+                                        <div class="form-group" app-popover data-content="Informe aqui as formulas de calculo utilizando os campos de referência (Ex: ( (TAB_STRING01 + TAB_STRING02) / 2 ) * 3  ">
+                                            <textarea class="form-control ng-valid ng-dirty" style="font-size: x-large; font-weight: bold;" cols="20" id="_Formula" name="_Formula" ng-model="item1.TCI_FORMULA" rows="4">
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12" style="padding-top: 10px;">
+                                <legend class="btn btn-info  btn-xs" style="text-align: left" data-toggle="collapse" data-target="#InfAuxiliar">Informação Auxiliar</legend>
+                                <div id="InfAuxiliar" class="collapse">
+                                    <div class="form-group col-lg-12" style="padding-top: 10px;">
+                                        @Html.Label("Informação Auxiliar")
+                                        <textarea class="form-control ng-pristine ng-valid" style="font-size: x-large; font-weight: bold;" cols="20" id="Texto_help" name="Texto_help" ng-model="item1.TCI_TEXTO_HELP" rows="4">
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12" style="padding-top: 10px;">
+                                <legend class="btn btn-info  btn-xs" style="text-align: left" data-toggle="collapse" data-target="#Lista">Lista de Opções</legend>
+                                <div id="Lista" class="collapse">
+                                    <div class="form-group col-lg-12" app-popover data-content="Informe aqui a lista de opções (Ex: Lista de UFs)" style="padding-top: 10px;">
+                                        @Html.Label("Informe aqui a lista de opções")
+                                        <textarea class="form-control ng-valid ng-dirty" style="font-size: medium; font-weight: bold;" cols="20" id="_Lista" name="_Lista" ng-model="item1.TCI_VALOR_ESPERADO" rows="4">
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-if="confirmaEdit">Confirmar</button>
+                        <button type="button" class="btn btn-default" ng-click="addItem(item1)" ng-if="confirmaNovo">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*modal-preview - simulador --- Popup modal*@
+        <div id="modal-Simulador" class="modal fade">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: aliceblue">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" ng-if="tabconfig.TDC_TIPO==1"><span class="glyphicon glyphicon-flash"></span>Tabela Dinâmica (Preview)</h4>
+                        <h4 class="modal-title" ng-if="tabconfig.TDC_TIPO==2"><span class="glyphicon glyphicon-flash"></span>Simulador (Preview)</h4>
+                    </div>
+                    <div class="modal-body" style="width: 100%; height: 500px; border: none; overflow: auto;">
+                        @Html.Partial("Partials/_PreviewCoadcorpTabDinamica")
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*modal-preview - editor --- Popup modal*@
+        <div app-init-editor="editor"></div>
+
+        @*modal-preview - ExcluirItem --- Popup modal*@
+        <div id="modal-NovoItem" class="modal fade">
+            <div class="modal-dialog modal-lg ">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: aliceblue">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><span class="glyphicon glyphicon-plus blue"></span>Novo Item</h4>
+                    </div>
+                    <div class="modal-body" style="width: 100%; height: 500px; border: none; overflow: auto;">
+                        <div class="row">
+                            <div ng-repeat="cabec in tabconfig.TAB_DINAMICA_CONFIG_ITEM" class="col-xs-12">
+                                <div class="col-lg-5">
+                                    <div class="form-group">
+                                        <label>{{cabec.TCI_ORDEM_APRESENTACAO}} - {{cabec.TCI_NOME_CAMPO}} (Tamanho Max - {{cabec.TCI_TAMANHO_CAMPO}})</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="form-group col-lg-10">
+                                        <div class="input-group date" style="" ng-if="cabec.TCI_TIPO_CAMPO=='D'">
+                                            <input app-date="tabela.TAB_DINAMICA_ITEM[0][cabec.TCI_NOME_CAMPODB]" class="form-control" id="datacalc" name="datacalc" ng-model="tabela.TAB_DINAMICA_ITEM[0][cabec.TCI_NOME_CAMPODB]" type="text" value="" />
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                        </div>
+                                        <input type="text" ng-model="tabela.TAB_DINAMICA_ITEM[0][cabec.TCI_NOME_CAMPODB]" class="form-control" ng-if="cabec.TCI_TIPO_CAMPO!='T'&&cabec.TCI_TIPO_CAMPO!='D'" maxlength="{{cabec.TCI_TAMANHO_CAMPO}}" />
+                                        <textarea id="Texto_help" rows="4" cols="100" ng-model="tabela.TAB_DINAMICA_ITEM[0][cabec.TCI_NOME_CAMPODB]" maxlength="{{cabec.TCI_TAMANHO_CAMPO}}" class="form-control" ng-if="cabec.TCI_TIPO_CAMPO=='T'">
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="javascript:void(0)" class="btn btn-default" ng_click="salvarItemTabela(tabela.TAB_DINAMICA_ITEM[0])" title="Salvar o novo item">
+                            <span class="glyphicon glyphicon-floppy-save blue"></span>Confirmar
+                        </a><a href="javascript:void(0)" class="btn btn-default" ng_click="addItemTabela()" class="btnConfirmaExclusao red" title="Limpar Campos">
+                            <span class="glyphicon glyphicon-remove-sign red"></span>Limpar Campos
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

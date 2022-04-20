@@ -1,0 +1,88 @@
+﻿<!-- ALT: 29/06/2016 - disponibilizando os dados e métodos javascript -->
+@model  COAD.CORPORATIVO.Model.Dto.CnabDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Cobrança Escritural";     
+}
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li class="active">Cobrança Escritural</li>         
+    </ol>
+}
+
+@Scripts.Render("~/Scripts/negocio/CobrancaEscritural/cobrancaEscritural.js")
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="CobrancaEscrituralController" class="padding content" ng-init="init()">
+        <div app-message></div>
+        <div class="panel panel-corp">
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Opções
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                            </li>                                                                           
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body"> 
+                <div class="row">         
+                    <div class="form-group col-lg-5">
+                        <label for="cnab">Arquivos Cadastrados</label>
+                        <select class="btn btn-default" name="cnab" id="cnab" ng-model="filtro.cnab" ng-change="buscarDetalheCNAB()">
+                            <option ng-repeat="item in lstcnab" >{{item.CNB_REFERENCIA}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="buscarDetalheCNAB()"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+            </div>
+        </div>
+        
+        <div class="panel panel-default" ng-if="lstdetalhecnab">
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Cobrança Escritural </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr class="info">
+                                <th>Campo</th>
+                                <th>Tipo</th>
+                                <th>Inicio</th>
+                                <th>Fim</th>
+                                <th>Tamanho</th>
+                                <th>Decimais</th>
+                                <th>Referência</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in lstdetalhecnab">
+                            <td>{{item.CNB_CAMPO}}</td>
+                            <td>{{item.CNB_TIPO}}</td>
+                            <td>{{item.CNB_INICIO}}</td>
+                            <td>{{item.CNB_FINAL}}</td>
+                            <td>{{item.CNB_TAMANHO}}</td>
+                            <td>{{item.CNB_DECIMAL}}</td>
+                            <td><input type="text" id="CNB_CONTEUDO" ng-model="item.CNB_CONTEUDO" class="form-control"  ng-blur="salvarCnab(item)" />
+                                
+                            </td>
+                        </tr>
+                    </table>                       
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,188 @@
+﻿<br />
+<section id="enderecos-faturamento">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="font-16">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <label class="font-15">
+                    Endereços Faturamento
+                </label>
+                <span class="pull-right" ng-show="prospect.EnderecoFaturamento && prospect.EnderecoFaturamento.Excluir != true">
+                    <a href="javascript:void(0)" ng-click="removerEnderecoProspectFaturamento()" class="btnConfirmaExclusao red" title="Remover Endereço">
+                        <span class="glyphicon glyphicon-remove-sign"></span>
+                    </a>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <section title="Endereço de faturamento" ng-show="prospect.EnderecoFaturamento && prospect.EnderecoFaturamento.Excluir != true">
+        
+        <div class="row">
+            <div class="form-group col-sm-2">
+                <label>CEP</label>
+                <a data-toggle="modal" href="#Modal-Correios" data-toggle="tooltip" data-placement="top" app-popover data-content="Pesquisa na base dos correios" style="padding-top: -5px; text-decoration: none;">
+                    <img src="/Images/logo_correios.png" style="width: 70px; height: 20px;">
+                </a>
+                <input type="text" class="form-control" ng-model="prospect.EnderecoFaturamento.CEP" maxlength="8"
+                       ng-change="buscarCepProspect(prospect.EnderecoFaturamento)"
+                       ng-disabled="podeEditar != true" />
+                <div app-validation-msg="erros" data-for="EnderecoFaturamento.CEP"></div>
+            </div>
+            <div class="form-group col-sm-2">
+                <label>UF</label>
+                <select id="campo_UF_SIGLA" name="campo_UF_SIGLA" class="form-control" ng-model="prospect.EnderecoFaturamento.UF"
+                        ng-options="tpc.UF_SIGLA as tpc.UF_SIGLA for tpc in listUfs" ng-disabled="podeEditar != true">
+                    <option value="">Selecione</option>
+                </select>
+                <div app-validation-msg="erros" data-for="EnderecoFaturamento.UF"></div>
+            </div>
+            <div class="form-group col-sm-3">
+                <label>Município</label>
+                <div class="input-group">
+                    <div class="text-muted"></div>
+                    <input type="text" class="form-control" ng-model="prospect.EnderecoFaturamento.Municipio" disabled="disabled" />
+                    <span class="input-group-btn">
+                        <a href="javascript:void(0)" app-popover data-content="Pesquisar municipios" style="text-decoration: none;" class="btn btn-default" ng-click="abrirModalMunicipio(prospect.EnderecoFaturamento);">
+                            <span class="glyphicon glyphicon-search"></span>&nbsp
+                        </a>
+                    </span>
+                </div>
+                <div app-validation-msg="erros" for="MUN_ID"></div>
+
+                <div app-validation-msg="erros" data-for="EnderecoFaturamento.Municipio"></div>
+                <div app-validation-msg="erros" data-for="EnderecoFaturamento.MunId"></div>
+            </div>
+            <div class="form-group col-sm-3">
+                <label>Bairro</label>
+                <input type="text" class="form-control" ng-model="prospect.EnderecoFaturamento.Bairro" maxlength="20" ng-disabled="podeEditar != true" />
+                <div app-validation-msg="erros" data-for="EnderecoFaturamento.Bairro"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label>Logradouro</label>
+                <input type="text" class="form-control" ng-model="prospect.EnderecoFaturamento.Logradouro" maxlength="60" ng-disabled="podeEditar != true" />
+                <div app-validation-msg="erros" data-for="EnderecoFaturamento.Logradouro"></div>
+            </div>
+            <div class="form-group col-sm-1">
+                <label>Número</label>
+                <input type="text" class="form-control" ng-model="prospect.EnderecoFaturamento.Numero" maxlength="6" ng-disabled="podeEditar != true" />
+                <div app-validation-msg="erros" data-for="EnderecoFaturamento.Numero"></div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label>Complemento</label>
+                <input type="text" class="form-control" ng-model="prospect.EnderecoFaturamento.Complemento" maxlength="60" ng-disabled="podeEditar != true" />
+                <div app-validation-msg="erros" data-for="EnderecoFaturamento.Complemento"></div>
+            </div>
+        </div>
+    </section>
+    <section title="Endereço de faturamento ausente." ng-show="!prospect.EnderecoFaturamento || prospect.EnderecoFaturamento.Excluir == true">
+        <div>
+            <strong>
+                Nenhum Endereço de Faturamento Cadastrado Clique no 'mais' para adicionar.
+                <a href="javascript:void(0)" ng-click="adicionarEnderecoFaturamento()" title="Incluir">
+                    <span class="glyphicon glyphicon-plus blue"></span>
+                </a>
+            </strong>
+        </div>
+    </section>
+</section>
+<br />
+<section id="endereco-entrega">
+    <div class="row">
+        <div class="col-md-12">
+            <span class="font-16">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <label class="font-15">
+                    Endereços Entrega
+                </label>
+                <span class="pull-right" ng-show="prospect.EnderecoEntrega && prospect.EnderecoEntrega.Excluir != true">
+                    <a href="javascript:void(0)" ng-click="removerEnderecoProspectEntrega()" class="btnConfirmaExclusao red" title="Remover Endereço">
+                        <span class="glyphicon glyphicon-remove-sign"></span>
+                    </a>
+                </span>
+            </span>
+        </div>
+    </div>
+    <section title="Endereço de Entrega" ng-show="prospect.EnderecoEntrega && prospect.EnderecoEntrega.Excluir != true">
+
+        <div class="row">
+            <div class="form-group col-sm-2">
+                <label>CEP</label>
+                <a data-toggle="modal" href="#Modal-Correios" data-toggle="tooltip" data-placement="top" app-popover data-content="Pesquisa na base dos correios" style="padding-top: -5px; text-decoration: none;" disabled>
+                    <img src="/Images/logo_correios.png" style="width: 70px; height: 20px;"></a>
+                <input type="text" class="form-control" ng-model="prospect.EnderecoEntrega.CEP" maxlength="8"
+                    ng-change="buscarCepProspect(prospect.EnderecoEntrega)"
+                    ng-disabled="podeEditar != true"/>
+                    <div app-validation-msg="erros" data-for="EnderecoEntrega.CEP"></div>
+
+            </div>
+            <div class="form-group col-sm-2">
+                <label>UF</label>
+                <select id="campo_UF_SIGLA" name="campo_UF_SIGLA" class="form-control" ng-model="prospect.EnderecoEntrega.UF"
+                        ng-options="tpc.UF_SIGLA as tpc.UF_SIGLA for tpc in listUfs" ng-disabled="podeEditar != true">
+                    <option value="">Selecione</option>
+                </select>
+                <div app-validation-msg="erros" data-for="EnderecoEntrega.UF"></div>
+            </div>
+            <div class="form-group col-sm-3">
+                <label>Município</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="prospect.EnderecoEntrega.Municipio" disabled="disabled" />
+
+                    <span class="input-group-btn">
+                        <a href="javascript:void(0)" app-popover data-content="Pesquisar municipios" style="text-decoration: none;" class="btn btn-default" ng-click="abrirModalMunicipio(prospect.EnderecoEntrega);">
+                            <span class="glyphicon glyphicon-search"></span>&nbsp
+                        </a>
+                    </span>
+                </div>
+
+                <div app-validation-msg="erros" for="MUN_ID"></div>
+
+                <div app-validation-msg="erros" data-for="EnderecoEntrega.Municipio"></div>
+                <div app-validation-msg="erros" data-for="EnderecoEntrega.MunId"></div>
+            </div>
+            <div class="form-group col-sm-3">
+                <label>Bairro</label>
+                <input type="text" class="form-control" ng-model="prospect.EnderecoEntrega.Bairro" maxlength="20" ng-disabled="podeEditar != true"/>
+                <div app-validation-msg="erros" data-for="EnderecoEntrega.Bairro"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label>Logradouro</label>
+                <input type="text" class="form-control" ng-model="prospect.EnderecoEntrega.Logradouro" maxlength="50" ng-disabled="podeEditar != true"/>
+                <div app-validation-msg="erros" data-for="EnderecoEntrega.Logradouro"></div>
+            </div>
+            <div class="form-group col-sm-1">
+                <label>Número</label>
+                <input type="text" class="form-control" ng-model="prospect.EnderecoEntrega.Numero"  maxlength="6" ng-disabled="podeEditar != true"/>
+                <div app-validation-msg="erros" data-for="EnderecoEntrega.Numero"></div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label>Complemento</label>
+                <input type="text" class="form-control" ng-model="prospect.EnderecoEntrega.Complemento" maxlength="15" ng-disabled="podeEditar != true"/>
+                <div app-validation-msg="erros" data-for="EnderecoEntrega.Complemento"></div>
+            </div>
+        </div>
+    </section>
+    <section title="Endereço de faturamento ausente." ng-show="!prospect.EnderecoEntrega || prospect.EnderecoEntrega.Excluir == true">
+        <div>
+            <strong>
+                Nenhum Endereço de Entrega  Cadastrado. Clique no 'mais' para adicionar.
+                <a href="javascript:void(0)" ng-click="adicionarEnderecoEntrega()" title="Incluir">
+                    <span class="glyphicon glyphicon-plus blue"></span>
+                </a>
+            </strong>
+        </div>
+    </section>
+        <br />
+</section>
+
+   <!-- Modal Correios -->
+        <div app-modal="Modal-Correios" header="Correios">
+            <div class="panel-body">
+                <center><iframe src="http://m.correios.com.br/movel/index.do" width="100%" height="400" scrolling="YES"></iframe></center>
+            </div>
+        </div>

@@ -1,0 +1,153 @@
+﻿<div class="row">
+    <div class="form-group col-lg-12 limit-modal-height">
+        <fieldset>
+            <legend class="text-primary">
+                <span>
+                    Regerar Notas do Lote
+                </span>
+            </legend>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="limit-div-1_5">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="min-width: 75px">
+                                            Código do Lote
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in loteBatchModal.ListCod" class="animate-repeat">
+                                    <td>{{item.key}}</td>
+                                </tr>
+                                <tr>
+                                    <td ng-show="notaBatchModal.ListCod.length == 0">Nenhum registro foi encontrado.</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8" ng-show="lstLoteBatch">
+                    <div class="limit-div-1_5">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Código da Empresa
+                                        </th>
+                                        <th>
+                                            Código de Retorno
+                                        </th>
+                                        <th>
+                                            Mensagem
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in lstLoteBatch">
+                                    <td>
+                                        {{item.CodEmpresa}}
+                                    </td>
+                                    <td>
+                                        {{item.CodStatus}}
+                                    </td>
+                                    <td>
+                                        {{item.BatchStatus}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-show="notaBatchModal.ListCod.length == 0">Nenhum registro foi encontrado.</td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-show="batchResp">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <strong>Total de Êxito</strong> <span class="badge">{{batchResp.TotalExito}}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Total de Falha</strong>: <span class="badge">{{batchResp.TotalFalha}}</span>
+                        </div>
+                    </div>
+                    <div ng-show="batchResp.ListErros.length > 0" class="bg-warning">
+                        <div class="alert alert-not-fixed alert-danger" role="alert">
+                            <span class="glyphicon glyphicon-warning-sign"></span>
+                            Houve {{batchResp.ListErros.length}} erro(s) ao processar.
+                            <a href="#erroBatch" ng-click="mostrarErrosBatch();">Visualizar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-show="batchResp.exibirErro == true">
+                <div class="col-md-12 limit-div-4">
+                    <div class="table-responsive table-war">
+                        <table class="table table-hover table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 75px" id="erroBatch">
+                                        Referência
+                                    </th>
+                                    <th>Mensagem</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in batchResp.ListErros" class="animate-repeat">
+                                <td class="text-danger"><strong>{{item.Contexto}}</strong></td>
+                                <td class="text-danger">
+                                    <strong>{{item.Mensagem}}</strong>
+                                    <ul class="lista-sem-estilo padding-left" ng-show="item.ValidationErrors">
+                                        <li ng-repeat-start="(key, value) in item.ValidationErrors" ng-show="$index == 0">
+                                            <em class="text-danger">Mensagens de Validação</em>
+                                        </li>
+                                        <li ng-repeat-end>
+                                            <ul class="lista-sem-estilo">
+                                                <li ng-repeat="(key, subValue) in value">
+                                                    <span class="text-danger">{{$parent.$parent.$index + 1}}.{{$parent.$index + 1}} {{subValue}}</span>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <button app-switch-button="adicionarVariasNotasAoLoteNFe()"
+                            switch-conf="[{label : 'Gerar Nota Fiscal', state : 'save'}, {label : 'Gerando Nota...', state : 'saved', disabled : true}]"
+                            switch-var="$parent.buttonGerarNota"
+                            class="btn btn-primary">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                    </button>
+                </div>
+            </div>
+            @*<div class="row" ng-show="notaBatchModal.tipo == 'gerar'">
+            <div class="form-group col-sm-4">
+                <button app-switch-button="gerarOuAtualizarVariasNotasFiscais()"
+                        switch-conf="[{label : 'Gerar Xml da Nota Fiscal', state : 'save'}, {label : 'Gerando Nota...', state : 'saved', disabled : true}]"
+                        switch-var="$parent.buttonGerarNota"
+                        class="btn btn-primary">
+                    <span class="glyphicon glyphicon-asterisk"></span>
+                </button>
+            </div>
+        </div>
+        <div class="row" ng-show="notaBatchModal.tipo == 'download'">
+            <div class="form-group col-sm-4">
+                <button app-switch-button="downloadVariasNotasFiscais()"
+                        switch-conf="[{label : 'Download Nota Fiscal', state : 'save'}, {label : 'Processando...', state : 'saved', disabled : true}]"
+                        switch-var="$parent.buttonGerarNota"
+                        class="btn btn-primary">
+                    <span class="glyphicon glyphicon-download"></span>
+                </button>
+            </div>
+        </div>*@
+        </fieldset>
+    </div>
+</div>

@@ -1,0 +1,141 @@
+﻿@model COAD.SEGURANCA.Model.PerfilModel
+
+@{
+    ViewBag.Title = "Editar";
+}
+@using Coad.GenericCrud.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Representantes (Editar)</li>
+    </ol>
+}
+@Scripts.Render("~/Scripts/negocio/perfil.js")
+
+<div ng-app="appModule">
+    <div class="panel panel-default" ng-controller="PerfilController" data-ng-init="read('@ViewBag.PER_ID', '@ViewBag.editar');" ng-cloak>
+        <!-- Default panel contents -->
+                  <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel primary-blue"><span class="glyphicon glyphicon-edit icon-panel"></span> Editar Perfil
+                    
+                        <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-warning btn-xs dropdown-toggle" data-toggle="dropdown"
+                                            aria-expanded="false" ng-disabled="button == 'saved'">
+                                            Opções
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                             <li>
+                                                <a href="@Url.Action("Index")" title="Voltar" class="blue"> Voltar</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" title="Salvar" ng-click="salvar()" class="blue">Salvar</a>
+                                            </li>
+                                            <li ng-show="prospect.ID">
+                                                <a href="javascript:void(0)" app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}" 
+                                                    app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?" class="btnConfirmaExclusao blue" title="Excluir"> Excluir</a>
+                                            </li>                                                                                                                    
+                                        </ul>
+                                    </div>
+                                </div>
+                     
+                     
+            </div>
+
+            <div class="panel-body">  
+                <div app-message></div>
+                 @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) {                         
+                     
+                    <fieldset>
+                        <legend>Dados básicos</legend>
+                    
+                        <div class="row"> 
+                            <div class="form-group col-sm-3">
+                                    <label for="usuario">Nome</label>
+                                    <br />
+                                    <input type="text" id="nomeUsuario" ng-model="perfil.PER_ID" class="form-control" ng-disabled="editar"/>
+                                    <div app-validation-msg="erros" for="PER_ID"></div>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                @Html.Label("Sistema")
+                                @Html.DropDownListFor(model => model.SIS_ID, new SelectList(@ViewBag.lstSistemas, "SIS_ID", "SIS_ID"), 
+                                    "--- Selecione ---", new { @class = "form-control", ng_model = "perfil.SIS_ID" })
+                                @Html.ValidationMessageFor(model => model.DP_ID, null, new { app_validation_msg = "erros", @for = "SIS_ID" })
+                            </div>
+                            <div class="form-group col-sm-3">
+                                @Html.Label("Departamento")
+                                @Html.DropDownListFor(model => model.DP_ID, 
+                                    new SelectList(@ViewBag.lstDepartamentos, "DP_ID", "DP_NOME"), "Selecione", new { @class = "form-control", ng_model = "perfil.DP_ID" })
+                                @Html.ValidationMessageFor(model => model.DP_ID, null, new { app_validation_msg = "erros", @for = "DP_ID" })
+                            </div>
+                            <div class="form-group col-sm-3">
+                                @Html.Label("Nível de Acesso")
+                                @Html.DropDownListFor(model => model.NIV_ACE_ID, 
+                                    new SelectList(@ViewBag.lstNivelAcesso, "NIV_ACE_ID", "NIV_ACE_DESCRICAO"), 
+                                    "Selecione", new { @class = "form-control", ng_model = "perfil.NIV_ACE_ID" })
+                                @Html.ValidationMessageFor(model => model.NIV_ACE_ID, null, new { app_validation_msg = "erros", @for = "NIV_ACE_ID" })
+                            </div>
+                            </div>
+                            <div class="row">
+                            <div class="form-group col-sm-1">
+                                <label for="gerente">Ativo</label>
+                                 <br />
+                                <input type="checkbox" id="rep_gerente" ng-model="perfil.PER_ATIVO" ng-checked="perfil.PER_ATIVO == true"/>
+                            </div>     
+                            <div class="col-lg-2">
+                                <div class="form-group padding-top">
+                                    @Html.DropDownListFor(model => model.PER_HORA_INI, (List<SelectListItem>)@ViewBag.horas, "-- Select Status --", new { @class = "form-control", 
+                                    ng_model = "perfil.PER_HORA_INI" })
+                                    @Html.ValidationMessageFor(model => model.PER_HORA_FIM)
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <div class="form-group padding-top">
+                                    @Html.Label(" a ")
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group padding-top">
+                                    @Html.DropDownListFor(model => model.PER_HORA_FIM, (List<SelectListItem>)@ViewBag.horas, "-- Select Status --", 
+                                    new { @class = "form-control", ng_model = "perfil.PER_HORA_FIM" })
+                                    @Html.ValidationMessageFor(model => model.PER_HORA_FIM)
+                                </div>
+                            </div>  
+                            <div class="form-group col-sm-3">
+                                    <label for="usuario">Caminho da Página Inicial</label>
+                                    <br />
+                                    <input type="text" id="nomeUsuario" ng-model="perfil.PER_PATH_HOME" class="form-control"/>
+                                    <div app-validation-msg="erros" for="PER_PATH_HOME"></div>
+                            </div> 
+                         </div>
+                    </fieldset>  
+                 }
+            </div>
+
+         <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default" ng-disabled="button == 'saved' || buttonDel == 'deleting'">
+                <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar</button>
+              <button  
+                  app-switch-button="salvar()" 
+                  switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]" 
+                  switch-var="button"
+                  class="btn btn-primary" ng-disabled="bloqueiaSalvamento && bloqueiaSalvamento === true || buttonDel == 'deleting'">
+                  <span class="glyphicon glyphicon-floppy-save"></span>
+              </button>
+
+           <span ng-show="representante.REP_ID">
+                <button type="button" class="btn btn-danger" ng-disabled="button == 'saved'"
+                     app-switch-button="deletarRepresentante()" 
+                  switch-conf="[{label : 'Excluir', state : 'del'}, {label : 'Excluindo...', state : 'deleting', disabled : true}]" 
+                  switch-var="buttonDel"
+                  class="btn btn-default" ng-disabled="bloqueiaSalvamento && bloqueiaSalvamento === true">
+                    <span class="glyphicon glyphicon-remove-sign"></span></button>
+            </span>         
+        </div> 
+               
+      </div>
+</div>

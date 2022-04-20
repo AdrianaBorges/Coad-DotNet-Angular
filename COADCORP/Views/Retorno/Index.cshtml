@@ -1,0 +1,312 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@Scripts.Render("~/Scripts/negocio/controllers_plugins/baixa_manual.js")
+@Scripts.Render("~/Scripts/appScripts/retorno.js")
+
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="RetornoController" class="padding content" ng-init="initRetorno()">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li>
+                            @Html.ActionLink("Home", "index", "Home")
+                        </li>
+                        <li class="active">
+                            <i class="fa fa-desktop"></i>&nbspPesquisar Retorno
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-filter"></span>&nbspArquivos de Retorno
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Opções<span class="caret"></span></button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="/Retorno/Auditoria">Auditoria</a></li>
+                                <li><a href="javascript:void(0);" ng-click="abriModalBaixaManual()">Baixa Manual</a></li>
+                                <li><a href="javascript:void(0);" ng-click="abriModaluploadRetorno()">Upload Arquivos</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group col-lg-2">
+                            @Html.Label("Período Inicial")
+                            <div class="input-group date">
+                                <input type="text" class="form-control" ng-model="dtinicial" app-date="filtro.inicial" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="cnab">Final</label>
+                            <div class="input-group date">
+                                <input type="text" class="form-control" ng-model="dtfinal" app-date="filtro.final" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label for="cnab">Banco</label>
+                            @Html.DropDownList("filtro.banco", new SelectList(@ViewBag.banco, "Value", "Text"), "Todos", new { @class = "form-control", ng_model = "filtro.banco" })
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="cnab">Arquivo</label>
+                            <input type="text" class="form-control" ng-model="filtro.nome" />
+                        </div>
+                    </div>
+                    <div class="row" ng-repeat="reg in lnkPath">
+                        <div class="col-lg-12">
+                            <a target="_blank" app-post="@Url.Action("BaixarArquivoRemessa")?_arquivo={{reg.Value}}" style="cursor:pointer"><i class="glyphicon glyphicon-cloud-download"></i>&nbsp{{reg.Text}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button ng-click="listarRetorno()" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-show="lstretorno">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-book"></span>&nbspLista Arquivos de Retorno
+                <div class="pull-right">
+                    <div class="btn-group">
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                        <tr class="info">
+                            <th style="text-align: right;">Nº Arquivo</th>
+                            <th style="text-align: center;">Arquivo</th>
+                            <th style="text-align: center;">Upload</th>
+                            <th style="text-align: center;">Data Arquivo</th>
+                            <th style="text-align: center;">Status</th>
+                            <th style="text-align: center;">Processado</th>
+                            <th style="text-align: center;">Banco</th>
+                            <th style="text-align: center;">Conta</th>
+                            <th style="text-align: center;">Usuário</th>
+                            <th style="text-align: right;">Linhas</th>
+                            <th style="text-align: center;" colspan="4">Opções</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in lstretorno">
+                            <td style="text-align: right;">{{item.CNQ_ID}}</td>
+                            <td style="text-align: left;">{{item.CNQ_NOME}}</td>
+                            <td style="text-align: center;">{{item.CNQ_DATA_LIDO | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</td>
+                            <td style="text-align: center;">{{item.CNQ_DATA_ARQUIVO | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</td>
+                            <td style="text-align: center;">
+                                <span class="label label-danger" ng-if="item.CNQ_DATA_LIDO!=null&&item.CNQ_DATA_PROCESSADO==null">Pendente</span>
+                                <span class="label label-info" ng-if="item.CNQ_DATA_PROCESSADO!=null">Processado</span>
+                            </td>
+                            <td style="text-align: center;">{{item.CNQ_DATA_PROCESSADO | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</td>
+                            <td style="text-align: right;">{{item.BAN_ID}}</td>
+                            <td style="text-align: right;">{{item.CTA_ID}}</td>
+                            <td style="text-align: right;">{{item.USU_LOGIN}}</td>
+                            <td style="text-align: right;">{{item.CNQ_QTD_LINHAS}}</td>
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" ng-click="processarRetorno(item.CNQ_ID)" title="Processar o arquivo de retorno" ng-if="item.CNQ_DATA_PROCESSADO==null">
+                                    <span class="fa fa-cog red"></span>
+                                </a>
+                                <a href="javascript:void(0)" ng-click="" title="Arquivo Já Processado" ng-if="item.CNQ_DATA_PROCESSADO!=null">
+                                    <span class="fa fa-cog"></span>
+                                </a>
+                            </td>
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" ng-click="abriModalDetalharRetorno(item)" title="Detalhar arquivo retorno"><span class="glyphicon glyphicon-search"></span></a>
+                            </td>
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" ng-click="abriModalDetalharErro(item)" title="Detalhar erros retorno"><span class="fa fa-warning red"></span></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <app-pagination request-page="paginaReq" load-function="listarRetorno(paginaReq)"></app-pagination>
+
+            </div>
+        </div>
+
+        <!-- Baixa Manual Modal -->
+        @Html.Partial("Partials/Modais/_ModalBaixaManual")
+
+
+        <!-- Selecionar Titulos P/ Retorno -->
+        <div app-modal="modal-detalhar-retorno" header="Titulos Retorno">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-2" style="text-align: right">
+                        <label for="cnab">Nº Retorno</label><br>
+                        <label for="cnab">{{retselect.CNQ_ID}}</label>
+                    </div>
+                    <div class="form-group col-lg-2" style="text-align: right">
+                        <label for="cnab">Upload</label><br>
+                        <label for="cnab">{{retselect.CNQ_DATA_LIDO | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</label>
+                    </div>
+                    <div class="form-group col-lg-2" style="text-align: right">
+                        <label for="cnab">Processado</label><br>
+                        <label for="cnab">{{retselect.CNQ_DATA_PROCESSADO | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</label>
+                    </div>
+                    <div class="form-group col-lg-2" style="text-align: right">
+                        <label for="cnab">Qtd.Linhas</label><br>
+                        <label for="cnab">{{retselect.CNQ_QTD_LINHAS}}</label>
+                    </div>
+                    @*<div class="form-group col-lg-2" style="text-align: right">
+                        <label for="cnab">Erros</label><br>
+                        <label for="cnab">{{lstItemErro.length}}</label>
+                    </div>*@
+                </div>
+                <div class="row" ng-show="lstItemRetorno.length>0" >
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr class="info">
+                                <th colspan="1" style="text-align:right"><label for="cnab">ARQUIVO</label></th>
+                                <th colspan="9" style="text-align:left"><label for="cnab">{{retselect.CNQ_NOME}}</label></th>
+                            </tr>
+                            <tr class="info">
+                                <th colspan="5" style="text-align:center">P A R C E L A S</th>
+                                <th colspan="4" style="text-align:center">A R Q.  R E T O R N O</th>
+                            </tr>
+                            <tr class="info">
+                                <th>Nº Parcela</th>
+                                <th>Nosso Numero</th>
+                                <th style="text-align: center;">Alocação</th>
+                                <th style="text-align: center;">Baixa</th>
+                                <th style="text-align: center;">Situação</th>
+                                <th class="align-right">Valor</th>
+                                <th class="align-right">Vlr.Pago</th>
+                                <th style="text-align: center;">Pagamento</th>
+                                <th style="text-align: center;">Operação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ite in lstItemRetorno">
+                                <td>{{ite.PAR_NUM_PARCELA}}</td>
+                                <td>{{ite.PAR_NOSSO_NUMERO}}</td>
+                                <td style="text-align: center;">{{ite.BAN_ID}}</td>
+                                <td style="text-align: center;" app-show-date="ite.PAR_DATA_PAGTO"></td>
+                                <td style="text-align: center;">
+                                    <span ng-show="ite.DATA_EXCLUSAO==null&&ite.PAR_DATA_PAGTO!=null" class="label label-success">Pago</span>
+                                    <span ng-show="ite.DATA_EXCLUSAO==null&&ite.PAR_DATA_PAGTO==null" class="label label-warning">Aberto</span>
+                                    <span ng-show="ite.DATA_EXCLUSAO!=null" class="label label-danger">Excluida</span>
+                                </td>
+                                <td app-show-dinheiro="ite.PAR_VLR_PARCELA" class="align-right" style="min-width: 100px;"></td>
+                                <td app-show-dinheiro="ite.CNI_VLR_PAGO" class="align-right" style="min-width: 100px;"></td>
+                                <td style="text-align: center;" app-show-date="ite.CNI_DATA_PAGTO"></td>
+                                <td style="text-align: center;">
+                                    {{ite.OCT_CODIGO}}
+                                    <span class="label label-success" ng-show="ite.CNI_ACAO==1">Baixar</span>
+                                    <span class="label label-warning" ng-show="ite.CNI_ACAO==2">Desalocar</span>
+                                    <span class="label label-info" ng-show="ite.CNI_ACAO==3">Entrada Confirmada</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div app-pagination="pagReq01" request-page="paginaReq01" load-function="listarParcelas(paginaReq01)" style="text-align:center" ng-show="lstItemRetorno.length>0"></div>
+            </div>
+        </div>
+
+
+        <!-- Selecionar Titulos P/ Retorno -->
+        <div app-modal="modal-detalhar-erro" header="Erro Retorno">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-2" style="text-align: right">
+                        <label for="cnab">Nº Retorno</label><br>
+                        <label for="cnab">{{retselect.CNQ_ID}}</label>
+                    </div>
+                    <div class="form-group col-lg-2" style="text-align: right">
+                        <label for="cnab">Upload</label><br>
+                        <label for="cnab">{{retselect.CNQ_DATA_LIDO | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</label>
+                    </div>
+                    <div class="form-group col-lg-2" style="text-align: right">
+                        <label for="cnab">Processado</label><br>
+                        <label for="cnab">{{retselect.CNQ_DATA_PROCESSADO | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</label>
+                    </div>
+                    <div class="form-group col-lg-2" style="text-align: right">
+                        <label for="cnab">Qtd.Linhas</label><br>
+                        <label for="cnab">{{retselect.CNQ_QTD_LINHAS}}</label>
+                    </div>
+                    <div class="form-group col-lg-2" style="text-align: right">
+                        <label for="cnab">Erros</label><br>
+                        <label for="cnab">{{pagReq02.numeroRegistros}}</label>
+                    </div>
+            
+                </div>
+                <div class="row" ng-show="lstItemErro.length>0">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr class="info">
+                                    <th colspan="1" style="text-align:right"><label for="cnab">ARQUIVO</label> </th>
+                                    <th colspan="2" style="text-align:left"><label for="cnab">{{retselect.CNQ_NOME}}</label></th>
+                                </tr>
+                                <tr class="info">
+                                    <th style="text-align: right;" >Nº Linha</th>
+                                    <th style="text-align: right;">Nº Parcela</th>
+                                    <th style="text-align: left;">Erro</th>
+                                    @*<th style="text-align: center;">Linha</th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in lstItemErro">
+                                    <td style="text-align: right;">{{item.CNE_NUM_LINHA}}</td>
+                                    <td style="text-align: right;">{{item.CNE_NUM_PARCELA}}</td>
+                                    <td style="text-align: left;">{{item.CNE_ERRO}}</td>
+                                    @*<td>{{item.CNE_LINHA_ERRO}}</td>*@
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div app-pagination="pagReq02" request-page="paginaReq02" load-function="listarErroRetorno(paginaReq02)" style="text-align:center" ng-show="lstItemErro.length>0"></div>
+            </div>
+        </div>
+
+        <!-- Selecionar Titulos P/ Retorno -->
+        <div class="modal" id="modal-upload-retorno" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: aliceblue">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title"><i class="fa fa-cog"></i> Processar Retorno</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-lg-12">
+                                    <input type="file" id="fileID" name="file" onchange="angular.element(this).scope().uploadFile(this.files)" style="width: 87%" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" ng-click="uploadFile(this.files)" class="btn btn-default">
+                            <span class="glyphicon glyphicon glyphicon-cog blue"></span>&nbspProcessar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+

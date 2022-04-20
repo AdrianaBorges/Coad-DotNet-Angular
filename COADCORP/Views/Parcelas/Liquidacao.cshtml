@@ -1,0 +1,356 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutosDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.print = true;
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;
+    if (ViewBag.print == true)
+    {
+        ViewBag.printableClass = "hidden-print";
+    }
+
+    ViewBag.Title = "Index";
+
+}
+
+<script>
+    $(document).ready(function () {
+        $(":input").inputmask();
+    });
+</script>
+
+@Scripts.Render("~/Scripts/negocio/parcelas.js")
+
+<form>
+    <div ng-app="appModule">
+        <div ng-controller="ParcelasController" class="padding content" ng-init="iniRelLiquidacao();canPrint=true">
+            <div id="page-wrapper">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-home"></i><a href="/Relatorios/Controladoria">Relatorios</a>
+                            </li>
+                            <li>
+                                <a href="/Relatorios/Controladoria">Relatórios Controladoria</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-desktop"></i>&nbspLiquidação de Titulos
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div app-message></div>
+                    <div class="panel-heading bold head-panel">
+                        <span class="glyphicon glyphicon-filter"></span>Filtros
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    Opções<span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    <li>
+                                        <a href="javascript:void(0)" ng-click="listar()" title="Pesquisar" class="blue">Pesquisar</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <fieldset>
+                                <div class="form-group">
+                                    <div class="col-lg-2" style="padding-left:20px;">
+                                        <label>
+                                            <input ng-model="filtro.tiposelecao" type="radio" ng-value="0" />
+                                            <i></i><span class="weight-300">Período</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-2" style="padding-left:20px;">
+                                        <label>
+                                            <input ng-model="filtro.tiposelecao" type="radio" ng-value="1" />
+                                            <i></i><span class="weight-300">Nº Parcela</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="row" ng_if="filtro.tiposelecao==1">
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    @Html.Label("Nº Parcela")
+                                    <input type="text" class="form-control" ng_model="filtro.par_num_parcela" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng_if="filtro.tiposelecao==0">
+                            <div class="col-lg-2">
+                                <fieldset>
+                                    <label>Tipo Data</label>
+                                    <div class="row" style="padding-left:20px;">
+                                        <label>
+                                            <input ng-model="filtro.tipodata" type="radio" ng-value="0" />
+                                            <i></i><span class="weight-300">Pagamento</span>
+                                        </label>
+                                    </div>
+                                    <div class="row" style="padding-left:20px;">
+                                        <label>
+                                            <input ng-model="filtro.tipodata" type="radio" ng-value="1" />
+                                            <i></i><span class="weight-300">Baixa</span>
+                                        </label>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-2">
+                                <fieldset>
+                                    <label>Tipo de Baixa</label>
+                                    <div class="row" style="padding-left:20px;">
+                                        <label>
+                                            <input ng-model="filtro.tipobaixa" type="radio" ng-value="0" />
+                                            <i></i><span class="weight-300">Manual</span>
+                                        </label>
+                                    </div>
+                                    <div class="row" style="padding-left:20px;">
+                                        <label>
+                                            <input ng-model="filtro.tipobaixa" type="radio" ng-value="1" />
+                                            <i></i><span class="weight-300">Retorno Bancário</span>
+                                        </label>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    @Html.Label("Inicial")
+                                    <div class="input-group date">
+                                        @Html.TextBox("dtinicial", "", new { @class = "form-control datepicker", ng_model = "dtini", app_date = "filtro.dtini" })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    @Html.Label("Final")
+                                    <div class="input-group date">
+                                        @Html.TextBox("dtfinal", "", new { @class = "form-control datepicker", ng_model = "dtfim", app_date = "filtro.dtfim" })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-lg-2">
+                                @Html.Label("Empresa")
+                                @Html.DropDownList("_emp_id", new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "filtro.empid" })
+                            </div>
+                            <div class="form-group col-lg-2">
+                                @Html.Label("Banco")
+                                @Html.DropDownList("_ban_id", new SelectList(@ViewBag.ListaBancos, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "filtro.banid" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12" ng-if="export.lnkPath!=null&&export.lnkPath!=''">
+                            <div class="form-group">
+                                <a href="{{export.lnkPath}}" ng-click="export.lnkPath=null"><i class="glyphicon glyphicon-cloud-download"></i> Donwload do arquivo ( {{export.lnkPath}} ) </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button type="button" class="btn btn-default" ng-click="listar()"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                        <a class="btn btn-default" href="javascript:void(0)" ng-click="expPlanilha()" title="Exportar a tabela para o excel">
+                            <i class="fa fa-file-excel-o blue"></i>&nbspExportar
+                        </a>
+                    </div>
+                </div>
+                <div class="panel panel-default" ng-show="listaparcelas">
+                    <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span>&nbspLiquidação de Parcelas</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="table-responsive" style="padding-left: 12px; padding-right: 12px;">
+                                <table class="table table-hover table-bordered" style="padding-left: 12px;">
+                                    <thead>
+                                        <tr class="info">
+                                            <th style="min-width: 75px">Empresa</th>
+                                            <th style="min-width: 75px">Assinatura</th>
+                                            <th style="width: 50px">Nome</th>
+                                            <th style="width: 50px">CPF/CNPJ</th>
+                                            <th>Parcela</th>
+                                            <th style="text-align: center;">Banco</th>
+                                            <th style="text-align: center;">Docto</th>
+                                            <th>Origem Pagto</th>
+                                            <th style="text-align: center;">Vencimento</th>
+                                            <th style="text-align: center;">Baixa</th>
+                                            <th style="text-align: center;">Pagamento</th>
+                                            <th style="text-align: right;">Valor</th>
+                                            <th style="text-align: right;">Liq. Valor</th>
+                                            @*<th style="text-align: center;">Opções</th>*@
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="item in listaparcelas" ng_if="item.ASN_NUM_ASSINATURA!='T O T A L'">
+                                        <td style="vertical-align: middle;">{{item.EMP_ID}}</td>
+                                        <td style="vertical-align: middle;">{{item.ASN_NUM_ASSINATURA}}</td>
+                                        <td style="font-size:x-small;width:20%;vertical-align: middle;">{{item.CLI_NOME}}</td>
+                                        <td style="font-size:x-small;width:20%;vertical-align: middle;" >{{item.CLI_CPF_CNPJ}}</td>
+                                        <td style="vertical-align: middle;">{{item.PAR_NUM_PARCELA}}</td>
+                                        <td style="text-align: center; vertical-align: middle;">{{item.BAN_ID}}</td>
+                                        <td style="text-align: center; vertical-align: middle;">{{item.PLI_TIPO_DOC}}</td>
+                                        <td style="text-align: center; vertical-align: middle;">
+                                            <span class="label label-warning" title="Boleto gerado pelo COADPAG" ng-if="item.ORDER_KEY!=NULL">COADPAG</span>
+                                            <span class="label label-info" title="parcela gerada pelo COADPAG" ng-if="item.ORDER_KEY==NULL&&item.BAN_ID==null">OUTROS</span>
+                                            <div ng-if="item.ORDER_KEY==NULL">
+                                                <span class="label label-success" ng-if="item.BAN_ID=='001'">BB</span>
+                                                <span class="label label-success" ng-if="item.BAN_ID=='237'">BRADESCO</span>
+                                                <span class="label label-success" ng-if="item.BAN_ID=='399'">HSBC</span>
+                                                <span class="label label-success" ng-if="item.BAN_ID=='104'">CEF</span>
+                                                <span class="label label-success" ng-if="item.BAN_ID=='033'">SANTANDER</span>
+                                                <span class="label label-success" ng-if="item.BAN_ID=='341'">ITAÚ</span>
+                                                <span class="label label-success" ng-if="item.BAN_ID=='604'">INDUSTRIAL</span>
+                                                <span class="label label-success" ng-if="item.BAN_ID=='041'">BANRISUL</span>
+                                            </div>
+                                        </td>
+                                        <td app-show-date="item.PAR_DATA_VENCTO" style="text-align: center; vertical-align: middle;"></td>
+                                        <td app-show-date="item.PLI_DATA_BAIXA" style="text-align: center; vertical-align: middle;"></td>
+                                        <td app-show-date="item.PLI_DATA" style="text-align: center; vertical-align: middle;"></td>
+                                        <td app-show-dinheiro="item.PAR_VLR_PARCELA" style="text-align: right;width:15%; vertical-align: middle;"></td>
+                                        <td app-show-dinheiro="item.PLI_VALOR" style="text-align: right;width:15%; vertical-align: middle;"></td>
+                                        @*<td style="text-align: center; vertical-align: middle;">
+                                            <a href="javascript:void(0)" ng-click="abriModalComprovante(item);" title="Gerar comprovante de recebimento">
+                                                <span class="glyphicon glyphicon-print red"></span>
+                                            </a>
+                                        </td>*@
+                                    </tr>
+
+                                </table>
+                                <table class="table table-hover table-bordered" style="padding-left: 12px;">
+                                    <thead>
+                                        <tr ng-repeat="item in listaparcelas" ng_if="item.ASN_NUM_ASSINATURA=='T O T A L'">
+                                            <td style="text-align: center;" colspan="12">
+                                                P E R Í O D O:
+                                                {{filtro.dtini | date:"dd/MM/yyyy" : 'UTC'}} A
+                                                {{filtro.dtfim | date:"dd/MM/yyyy" : 'UTC'}}
+                                            </td>
+                                            <td app-show-dinheiro="item.PAR_VLR_PARCELA" style="text-align: center; vertical-align: middle;"></td>
+                                            <td app-show-dinheiro="item.PLI_VALOR" style="text-align: center; vertical-align: middle;"></td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="col-lg-12">
+                                <app-pagination style="padding: 0px;" request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden-print panel-footer">
+                        <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+                        <a class="btn btn-default" href="javascript:void(0)" ng-click="expPlanilha()" title="Exportar a tabela para o excel">
+                            <i class="fa fa-file-excel-o blue"></i>&nbspExportar
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div app-modal="modal-comprovante" header="Comprovante Pagamento">
+                <div class="panel-body" id="baseContent">
+                    <table class="table table-hover table-bordered" style="padding-left: 12px;">
+                        <thead>
+                            <tr class="info">
+                                <th style="width: 20%">
+                                    <label ng-if="iselect.BAN_ID==NULL">{{iselect.PLI_TIPO_DOC}}</label>
+                                    <label ng-if="iselect.BAN_ID=='001'">BB</label>
+                                    <label ng-if="iselect.BAN_ID=='237'">BRADESCO</label>
+                                    <label ng-if="iselect.BAN_ID=='399'">HSBC</label>
+                                    <label ng-if="iselect.BAN_ID=='104'">CEF</label>
+                                    <label ng-if="iselect.BAN_ID=='033'">SANTANDER</label>
+                                    <label ng-if="iselect.BAN_ID=='341'">ITAÚ</label>
+                                    <label ng-if="iselect.BAN_ID=='604'">INDUSTRIAL</label>
+                                    <label ng-if="iselect.BAN_ID=='041'">BANRISUL</label>
+                                </th>
+                                <th style="width: 60%; text-align: center;">
+                                    <label>COMPROVANTE DE RECEBIMENTO</label>
+                                </th>
+                                <th>
+                                    <label>EMISSÃO:</label>
+                                    {{iselect.DATA_EMISSAO | date:"dd/MM/yyyy" : 'UTC'}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td style="font-size:10px;">
+                                <label>PARCELA:</label>
+                                {{iselect.PAR_NUM_PARCELA }}
+                            </td>
+                            <td style="font-size:10px;">
+                                <label>ORIGEM: </label> RENOVAÇÃO / VENDA NOVA
+                            </td>
+                            <td style="font-size:10px;">
+                                <label>REGIAO:</label>
+                                {{iselect.REGIAO_UF}}
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="font-size:10px;" colspan="2">
+                                <label>CÓDIGO:</label>
+                                {{iselect.ASN_NUM_ASSINATURA}}
+                            </td>
+                            <td>
+                                <label>REPRESENTANTE:</label>
+                                {{iselect.REP_NOME}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <label>NOME:</label>
+                                {{iselect.CLI_NOME}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <label>ENDEREÇO:</label>{{iselect.END_LOGRADOURO}} - {{iselect.END_NUMERO}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <label>COMPLEMENTO:</label>
+                                {{iselect.END_COMPLEMENTO}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>CEP:</label>
+                                {{iselect.END_CEP}}
+                            </td>
+                            <td colspan="2" style="text-align: right;">
+                                <label>BAIRRO:</label>
+                                {{iselect.END_BAIRRO}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>MUNICIPIO:</label>
+                                {{iselect.END_MUNICIPIO}}
+                            </td>
+                            <td colspan="2" style="text-align: right;">
+                                <label>UF:</label>
+                                {{iselect.END_UF}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>DATA DE PAGAMENTO:</label>
+                                {{iselect.PLI_DATA | date:"dd/MM/yyyy" : 'UTC'}}
+                            </td>
+                            <td colspan="2" style="text-align: right;">
+                                <label>VALOR PAGO:</label>
+                                <label app-show-dinheiro="iselect.PLI_VALOR" style="text-align: right;"></label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="hidden-print panel-footer">
+                    <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

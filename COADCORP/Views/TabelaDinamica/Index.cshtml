@@ -1,0 +1,249 @@
+﻿@using Coad.GenericCrud.Extensions
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@Scripts.Render("~/Scripts/appScripts/TabelaDinamica.js")
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">Home </a></li>
+        <li class="active">Tabelas e Simuladores</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="TabelaDinamicaController" class="padding content">
+        <div id="page-wrapper">
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading bold head-panel">
+                    <label id="title"><span class="glyphicon glyphicon-calendar"></span>&nbspTabelas e Simuladores</label>
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Opções<span class="caret"></span></button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="/TabelaDinamica/Editar?_tipo=1&_id=">Nova Tabela</a>
+                                </li>
+                                <li>
+                                    <a href="/TabelaDinamica/Editar?_tipo=2&_id=">Novo Simulador</a>
+                                </li>
+                                <li>
+                                    <a href="/TabelaDinamica/Importar?id=">Importar Planilha (Excel)</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row hidden-print">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Tipo")
+                                <select class="form-control" ng_model="param.TDC_TIPO">
+                                    <option value="1">Tabelas</option>
+                                    <option value="2">Tabelas/Simulador</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Informe o nome da tabela")
+                                <input id="_nometabela" type="text" ng-model="param.nometabela" class="form-control " placeholder="Nome da tabela" autofocus autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Grupo")
+                                @Html.DropDownList("TGR_ID", new SelectList(@ViewBag.Listagrupo, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "param.TGR_ID" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Grupo Titulação")
+                                @Html.DropDownList("TIT_ID", new SelectList(@ViewBag.ListaTitulacao, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "param.TIT_ID" })
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>Somente Publicados</label>
+                                <label class="switch switch switch-round" style="padding-top:5px;">
+                                    <input type="checkbox" id="PUBLICADO" ng_model="param.PUBLICADO" class="form-control" value="false">
+                                    <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button ng-click="listar()" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                </div>
+            </div>
+            <div class="panel panel-default" ng-show="listatabela">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-book"></span>&nbspTabelas Dinâmicas
+                    <div class="pull-right">
+                        <div class="btn-group">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr class="info">
+                                <th>
+                                    Descrição
+                                </th>
+                                <th>
+                                    Tipo
+                                </th>
+                                <th>
+                                    Usuário
+                                </th>
+                                <th>
+                                    Resp. Publicação
+                                </th>
+                                <th>
+                                    Situação
+                                </th>
+                                <th>
+                                    Inclusão
+                                </th>
+                                <th>
+                                    Alteração
+                                </th>
+                                <th style="text-align: center;" colspan="4">Opções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listatabela">
+                                <td>{{item.TDC_NOME_TABELA}}</td>
+                                <td ng_show="item.TDC_TIPO==1">Tabela</td>
+                                <td ng_show="item.TDC_TIPO==2">Simulador</td>
+                                <td ng_show="item.TDC_TIPO==3">Tabela/Simulador</td>
+                                <td ng_show="item.TDC_TIPO==4">Tabela/Simulador Personalizado</td>
+                                <td>{{item.USU_LOGIN}}</td>
+                                <td>{{item.USU_LOGIN_PUB}}</td>
+                                <td>
+                                    <span class="label label-success" ng_show="item.TDC_DATA_PUBLICACAO!=null">Publicado</span>
+                                    <span class="label label-warning" ng_show="item.TDC_DATA_PUBLICACAO==null">Pendente</span>
+                                </td>
+                                <td app-show-date="item.TDC_DATA_INCLUSAO"></td>
+                                <td app-show-date="item.TDC_DATA_ALTERA"></td>
+                                <td style="text-align: center;">
+                                    <a href="/TabelaDinamica/Tabela/{{item.TDC_ID}}/true" target="_blank" ng-show="(item.TDC_TIPO==1||item.TDC_TIPO==3)&&item.TDC_ID!='1228f7e8-b4a0-45e3-bf67-099c7fda840b'" title="Preview">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </a>
+                                    <a href="/TabelaDinamica/Simulador/{{item.TDC_ID}}/true" target="_blank" ng-show="item.TDC_TIPO==2&&item.TDC_ID!='1228f7e8-b4a0-45e3-bf67-099c7fda840b'" title="Preview">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </a>
+                                    <a href="/TabelaDinamica/SimuladorICMS/{{item.TDC_ID}}/true" target="_blank" ng-hide="item.TDC_ID!='1228f7e8-b4a0-45e3-bf67-099c7fda840b'" title="Preview">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </a>
+                                    <a href="/TabelaDinamica/TabelaSimuladorPersonalizado/{{item.TDC_NOME_IDENTIFICADOR}}/true" target="_blank" ng-if="item.TDC_TIPO==4" title="Preview">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </a>
+                                </td>
+                                <td style="text-align: center;">
+                                    <a href="javascript:void(0)" app-post="@Url.Action("Editar")?_tipo={{item.TDC_TIPO}}&_id={{item.TDC_ID}}" title="Editar" class="blue">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </a>
+                                </td>
+                                <td style="text-align: center;">
+                                    <a href="javascript:void(0)" app-post="@Url.Action("EditarTabela")?_tipo={{item.TDC_TIPO}}&_id={{item.TDC_ID}}" title="Editar" class="blue">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </a>
+                                </td>
+                                <td style="text-align: center;" ng_show="param.TDC_TIPO==1">
+                                    <a href="javascript:void(0)" ng-click="abrirPopUpExport(item)" title="Exportar a tabela para o excel" class="blue">
+                                        <span class="fa fa-file-excel-o blue"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>,
+                </div>
+            </div>
+        </div>
+
+        @*modal-Exportar ---- Popup modal*@
+        <div id="modal-Exportar" class="modal fade">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: aliceblue">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><span class="glyphicon glyphicon-flash"></span>Exportar Tabela</h4>
+                    </div>
+                    <div class="modal-body" style="width: 100%; height: 500px; border: none; overflow: auto;">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel panel-warning">
+                                    <div class="panel-heading">
+                                        <span class="glyphicon glyphicon-info-sign blue" aria-hidden="true"></span>
+                                        <span class="sr-only">Observação:</span>
+                                        <label>Para exportar os dados de uma tabela para uma planilha do Excel voce deve proceder da seguinte forma: </label>
+                                        <ul>
+                                            <li>Selecione a tabela desejada</li>
+                                            <li>Informe o nome do arquivo xlsx/xls que sera gerado</li>
+                                        </ul>
+                                        <label>Após a conclusão, o sistema disponiblizara um link para o download do arquivo. </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <fieldset>
+                            <div class="row padding">
+                                <legend>Exportação de tabelas para o excel</legend>
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="form-group">
+                                            @Html.Label("Informe o nome do arquivo")
+                                            <input id="_tdc_id" name="_tdc_id" type="text" ng-model="export.tdc_id" class="form-control " placeholder="ID da tabela" autofocus autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <div class="form-group">
+                                            @Html.Label("Informe o nome do arquivo")
+                                            <input id="_nometabela" name="_nometabela" type="text" ng-model="export.nometabela" class="form-control " placeholder="Nome da tabela" autofocus autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <div class="form-group">
+                                            @Html.Label("Informe o nome do arquivo")
+                                            <input id="_nomearquivo" name="_nomearquivo" type="text" ng-model="export.nomearquivo" class="form-control " placeholder="Nome do arquivo" autofocus autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12" ng-if="export.lnkPath!=null&&export.lnkPath!=''">
+                                        <div class="form-group">
+                                            <a href="{{export.lnkPath}}"><i class="fa fa-search fa-fw"></i>Donwload do arquivo </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span>Fechar</a>
+                        <a href="javascript:void(0);" ng-click="expPlanilha()" class="btn btn-default"><span class="glyphicon glyphicon-cog blue"></span>Processar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+

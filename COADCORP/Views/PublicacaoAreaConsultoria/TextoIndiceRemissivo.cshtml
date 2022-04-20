@@ -1,0 +1,53 @@
+﻿<!-- ALT: 23/06/2015 - disponibilizando os dados e métodos javascript -->
+@model  COAD.COADGED.Model.DTO.PublicacaoAreaConsultoriaDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Índice Alfabético e Remissivo";     
+}
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Índice Alfabético e Remissivo</li>
+    </ol>
+}
+@section Scripts {
+    @Scripts.Render("~/Scripts/appScripts/Home.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.js")
+    @Scripts.Render("~/Scripts/flot/excanvas.min.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.pie.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.time.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.resize.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.categories.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.tooltip.min.js")
+}
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/publicacaoAreaConsultoria.js")
+
+<!-- ALT: 23/06/2015 - abrindo Angular para a aplicação -->
+<div ng-app="appModule">
+    <div ng-controller="PublicacaoAreaConsultoriaController" class="padding content" ng-cloak>
+        <div class="panel panel-default">
+            <!-- ALT: 23/06/2015 - exibindo dados pesquisados -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Índice Alfabético e Remissivo </div>
+            <div class="panel-body">         
+                <div class="table-responsive">     
+                    <!-- ALT: 23/06/2015 - Exibindo Dados -->
+                    <table class="table table-hover table-bordered">
+                        <tr>
+                            <td>
+                                <div class="form-group col-lg-12">
+                                    <label for="coadgedBI">Índice Alfabético e Remissivo</label>
+                                    @Html.HiddenFor(model => model.PUBLICACAO.PUB_CONTEUDO_RESENHA, new { @class = "form-control", app_rich_editor = "Publicar" })
+                                    <div>
+                                        @Html.Raw(@ViewBag.Publicar)
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>                       
+                </div>
+                <app-pagination request-page="paginaReq" load-function="coadgedBI(paginaReq)"></app-pagination>
+            </div>
+        </div>
+    </div>
+</div>

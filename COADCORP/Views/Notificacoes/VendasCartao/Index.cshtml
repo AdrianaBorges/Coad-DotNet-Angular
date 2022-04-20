@@ -1,0 +1,111 @@
+﻿@using COAD.SEGURANCA.Extensions
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+
+<div ng-app="appModule">
+    <div ng-controller="VendasCartaoControler" ng-init="PreparaTela()">
+        <div class="form panel panel-primary">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-filter"></span> Movimentação Financeira (Cartão Crédito/Débito)
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            Opções
+                                <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li><a href="../VendasCartao/Novo">Novo</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="#" ng-click="Pesquisar()">Pesquisar</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                @Html.ValidationSummary(false)
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="form-group">
+                            @Html.Label("Empresa")
+                            @Html.DropDownList("_emp_id", new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "filtro.emp_id" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            @Html.Label("Mes")
+                            @Html.DropDownList("_mesatual", new SelectList(@ViewBag.ListaMes, "Value", "Text") , "---- Selecione ----", new { @class = "form-control", ng_model = "filtro.mesatual" })
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Ano")
+                            @Html.TextBox("_anoatual", "", new { @class = "form-control", ng_model = "filtro.anoatual" })
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+            <div class="panel-footer">
+                <input type="button" ng-click="Pesquisar()" value="Pesquisar" class="btn btn-default" />
+            </div>
+        </div>
+        <div class="form panel panel-primary" ng-show="lista">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-book"></span> Lista Movimentação Financeira
+                <div class="pull-right">
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>@Html.Label("Mes")</th>
+                                <th>@Html.Label("Ano")</th>
+                                <th>@Html.Label("Fornecedor")</th>
+                                <th class="align-right">@Html.Label("Crédito")</th>
+                                <th class="align-right">@Html.Label("Débito")</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in lista">
+                                <td>{{item.TVC_MES}}</td>
+                                <td>{{item.TVC_ANO}}</td>
+                                <td>{{item.FORNECEDOR.FOR_RAZAO_SOCIAL}}</td>
+                                <td app-show-dinheiro="item.TVC_VLR_CARTAO_CRE" class="align-right" style="min-width: 100px;"></td>
+                                <td app-show-dinheiro="item.TVC_VLR_CARTAO_DEB" class="align-right" style="min-width: 100px;"></td>
+                                <td><a href="javascript:void(0)" app-post="@Url.Action("Editar")?_emp_id={{item.EMP_ID}}&_for_id={{item.FOR_ID}}&_mes={{item.TVC_MES}}&_ano={{item.TVC_ANO}}" title="Editar" class="blue" value="Editar"><span class="glyphicon glyphicon-edit"></span></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr />
+                <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/appScripts/VendasCartao.js")
+
+}
+
+
+
+

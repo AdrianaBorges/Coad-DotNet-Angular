@@ -1,0 +1,133 @@
+﻿@*@model COAD.PORTAL.Model.DTO.PortalConsultoria.ConsultoriaPortalDTO
+    @using Coad.GenericCrud.Extensions
+    @using GenericCrud.ActionResultTools*@
+@using COAD.SEGURANCA.Repositorios.Base
+@{
+    ViewBag.Title = "Editar";
+    bool adm = (SessionContext.IsAdmDepartamento("TI") || SessionContext.IsAdmDepartamento("Franquiador"));
+}
+@Scripts.Render("~/Scripts/negocio/consultoria.js")
+@section breadcrumbs {
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">@Html.ActionLink("Home", "index", "Home") </a></li>
+        <li class="active">Responder E-Mail</li>
+    </ol>
+}
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+<div ng-app="appModule">
+    <div class="panel panel-corp" ng-controller="ConsultoriaController" data-ng-init="fillform('@ViewBag.IdConsulta');" ng-cloak>
+        <div class="panel-heading bold head-panel">
+            <span class="glyphicon glyphicon-envelope icon-panel"></span> Responder Consulta
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="false" ng-disabled="button == 'saved'">
+                        Opções
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li>
+                            <a href="@Url.Action("consultoriaEmail")" title="Voltar" class="blue">Voltar</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" title="Salvar" ng-click="salvar()" class="blue">Responder consulta</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel-body">
+            <div app-message></div>
+            <div>
+                <div>
+                    <div>
+                        <fieldset>
+                            <legend class="text-info">
+                                <span class="font-30">
+                                    <i class="fa fa-male" aria-hidden="true"></i>
+                                    <span class="font-16">Consulta</span>
+                                </span>
+                            </legend>
+                        </fieldset>
+                        <section id="contato">
+                            <div class="row">
+                                <div class="form-group col-sm-2">
+                                    <label for="campo_nome">Id</label>
+                                    <input type="text" id="campo_nome" class="form-control" disabled="disabled" ng-model="consulta.id" />
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label for="campo_nome">Consultoria</label>
+                                    <input type="text" id="campo_nome" class="form-control" disabled="disabled" ng-model="descricaocolecionador" />
+                                </div>
+                                <div class="form-group col-sm-5">
+                                    <label for="campo_nome">Assunto</label>
+                                    <input type="text" id="campo_nome" class="form-control" disabled="disabled" ng-model="descricaocolecionador" />
+                                </div>
+                                <div class="form-group col-sm-1">
+                                    <label for="campo_nome">Estado</label>
+                                    <input type="text" id="campo_nome" class="form-control" disabled="disabled" ng-model="consulta.estado" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-2">
+                                    <label for="campo_nome">Assinatura</label>
+                                    <input type="text" id="campo_nome" class="form-control" disabled="disabled" ng-model="consulta.usuario" />
+                                </div>
+                                <div class="form-group col-sm-7">
+                                    <label for="campo_nome">Nome</label>
+                                    <input type="text" id="campo_nome" class="form-control" disabled="disabled" ng-model="consulta.id" />
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label for="campo_nome">Data da onsulta</label>
+                                    <input type="text" id="campo_nome" class="form-control" disabled="disabled" ng-model="dataCadastro" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for="campo_pergunta">Pergunta</label>
+                                    <textarea id="campo_pergunta" style="height: 200px;" class="form-control" disabled="disabled" ng-model="consulta.pergunta"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-3">
+                                    <label for="campo_nome">Consultor</label>
+                                    <input type="text" id="campo_nome" class="form-control" disabled="disabled" ng-model="consultor" />
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label for="campo_nome">Data de resposta</label>
+                                    <input type="text" id="campo_nome" class="form-control" disabled="disabled" ng-model="dataResposta" />
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label for="campo_nome">Consultor</label>
+                                    <input type="text" id="campo_nome" class="form-control" disabled="disabled" ng-model="consultorUltimoAcesso" />
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label for="campo_nome">Último Acesso</label>
+                                    <input type="text" id="campo_nome" class="form-control" disabled="disabled" ng-model="dataUltimoAcesso" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for="campo_resposta">Resposta</label>
+                                    <textarea id="campo_resposta" style="height: 200px;" class="form-control" ng-model="consulta.resposta_supervisor"></textarea>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("consultoriaEmail")'" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span>Fechar</button>
+            <button type="button" ng-hide="!exibirBtnSalvar" ng-click="EnviarResposta()" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save blue"></span>Finalizar e enviar</button>
+        </div>
+    </div>
+</div>

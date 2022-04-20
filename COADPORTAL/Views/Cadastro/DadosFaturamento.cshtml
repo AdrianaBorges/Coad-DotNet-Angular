@@ -1,0 +1,181 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutCadastro.cshtml";
+}
+
+@Scripts.Render("~/Scripts/appScripts/Portal.js")
+
+<div ng-app="appModule">
+    <div ng-controller="PortalController" ng-init="initDadosFaturamento()">
+        <div app-modal-erro="Modal-Erro" header="Atenção"  submodal>
+           <div class="panel-body">
+              <strong><p ng-bind-html="trustAsHtml(erro)"></p></strong>
+           </div>
+        </div>
+        <div class="container">
+            <div class="row process-wizard process-wizard-primary">
+                <div class="col-xs-3 process-wizard-step complete">
+                    <div class="text-center process-wizard-stepnum">Passo 1</div>
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <a href="/Cadastro/Planos" class="process-wizard-dot"></a>
+                    <div class="process-wizard-info text-center">Selecione o produto desejado</div>
+                </div>
+
+                <div class="col-xs-3 process-wizard-step complete">
+                    <!-- complete -->
+                    <div class="text-center process-wizard-stepnum">Passo 2</div>
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <a href="/Cadastro/Identificacao" class="process-wizard-dot"></a>
+                    <div class="process-wizard-info text-center">Identificação do cliente</div>
+                </div>
+
+                <div class="col-xs-3 process-wizard-step active">
+                    <!-- complete -->
+                    <div class="text-center process-wizard-stepnum">Passo 3</div>
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <a href="javascript:void(0);" class="process-wizard-dot"></a>
+                    <div class="process-wizard-info text-center">Selecione a condição de pagamento e complete seus dados.</div>
+                </div>
+
+                <div class="col-xs-3 process-wizard-step disabled">
+                    <!-- active -->
+                    <div class="text-center process-wizard-stepnum">Passo 4</div>
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <a href="javascript:void(0);" class="process-wizard-dot"></a>
+                    <div class="process-wizard-info text-center">Confirme o pagamento.</div>
+                </div>
+
+            </div>
+            <form class="row clearfix">
+                <div class="col-lg-7">
+                    <div class="box-static box-border-top">
+                        <div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Confirme seus dados</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <label>Nome *</label>
+                                    <input ng-model="comprador.nome" type="text" class="form-control required" />
+                                </div>
+                                <div class="col-md-5">
+                                    <label>CPF/CNPJ *</label>
+                                    <input ng-model="comprador.numeroDocumento" type="text" class="form-control required" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label>Email *</label>
+                                    <input ng-model="comprador.email" type="text" class="form-control required" required="required" />
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <label>Aos Cuidados</label>
+                                    <input ng-model="comprador.ac" type="text" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>CEP *</label>
+                                    <input ng-model="comprador.CEP" type="text" class="form-control required" ng-change="buscarCep();" />
+                                </div>
+                                <div class="col-md-7">
+                                    <label>Cidade *</label>
+                                    <input ng-model="comprador.cidade" type="text" class="form-control required" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label>UF *</label>
+                                    <input ng-model="comprador.UF" type="text" class="form-control required" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <label>Endereço *</label>
+                                    <input ng-model="comprador.endereco" type="text" class="form-control required" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Numero *</label>
+                                    <input ng-model="comprador.numero" type="text" class="form-control required" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Complemento</label>
+                                    <input ng-model="comprador.complemento" type="text" class="form-control required" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>DDD *</label>
+                                    <input ng-model="comprador.dddComercial" type="text" class="form-control required"  maxlength="2"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Telefone *</label>
+                                    <input ng-model="comprador.foneComercial" type="text" class="form-control required" maxlength="9" />
+                                    
+                                </div>
+                                <div class="col-md-2">
+                                    <label>DDD </label>
+                                    <input ng-model="comprador.dddCelular" type="text" class="form-control required"  maxlength="2"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Celular</label>
+                                    <input ng-model="comprador.foneCelular" type="text" class="form-control" maxlength="9"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="box-static box-border-top">
+                        <div class="box-title">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Confirme o Produto</h4>
+                                </div>
+                            </div>
+                            <div class="price-clean">
+                                <h4>
+                                    <sup>R$</sup><span app-show-dinheiro="comprador.valor" show-simbolo="false"></span>@*="" {{mask(tabelaPreco.CMP_VLR_VENDA)}}*@<em>/mês</em>
+                                </h4>
+                                <hr />
+                         
+                                <div class="btn-group">
+                                    <select ng-model="produto" ng-options="item as item.CMP_DESCRICAO for item in tabelaSelecionada" ng-change="buscarPreco(produto)" class="btn btn-default btn-periodicity btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    </select>
+                                </div>
+                                <hr />
+                            </div>
+                        </div>
+                    </div>
+                    <hr ng-if="comprador.cli_id==null" />
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <button
+                                app-switch-button="enviarPagamento()"
+                                switch-conf="[{label : 'Avançar', state : 'save'}, {label : 'Processando...', state : 'saved', disabled : true}]"
+                                switch-var="button"
+                                class="btn btn-primary btn-lg btn-block size-15">
+                                <span class="fa fa-mail-forward""></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,54 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="COAD.EXTENSION" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="COAD.EXTENSION.TextTemplate" #>
+<#@ import namespace="COAD.EXTENSION.TextTemplate.Model" #>
+
+<#@parameter type="COAD.EXTENSION.TextTemplate.Model.T4TemplateObjectMetadataModel" name="metadata"#>
+
+using Coad.GenericCrud.Dao.Base;
+using Coad.GenericCrud.Service.Base;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Coad.GenericCrud.Repositorios.Base;
+using System.Transactions;
+using Coad.GenericCrud.Dao.Base.Pagination;
+using GenericCrud.Config.DataAttributes;
+using System.Web;
+using System.IO;
+using GenericCrud.Service;
+using GenericCrud.Validations;
+using Coad.GenericCrud.Exceptions;
+using <#=metadata.DefaultNameSpace#>.Repository.Base;
+using <#=metadata.DefaultNameSpace#>.DAO;
+using <#=metadata.ModelNamespace#>;
+using <#=metadata.RefClassNamespace#>;
+
+namespace <#=metadata.ServiceNamespace#>
+{ 
+<# 
+int index = 0;
+int count = metadata.PrimaryKeys.Count;
+#>
+	[ServiceConfig(<#foreach(var key in metadata.PrimaryKeys){#>"<#=key#>"<# if(index < (count - 1)){ #>, <#index++;}#><#}#>)]
+	public class <#=metadata.ClassName#>SRV : GenericService<<#=metadata.RefClassName#>, <#=metadata.ClassName#>DTO, <#=metadata.PrimaryKeyType#>>
+	{
+
+        public <#=metadata.ClassName#>DAO _dao { get; set; }
+
+        public <#=metadata.ClassName#>SRV(<#=metadata.ClassName#>DAO _dao)
+        {
+			this._dao = _dao;
+			this.Dao = _dao;
+        }
+
+		
+
+    }
+}

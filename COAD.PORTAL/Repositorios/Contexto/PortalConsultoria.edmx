@@ -1,0 +1,498 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="consultoriaModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="arquivos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_chamada" Type="int" Nullable="false" />
+          <Property Name="arquivo" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="colecionadores">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="menu_coadcorp" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="tipo_portal" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="observacao" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="consultores">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usuario" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="senha" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="colec" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="tipo" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="filial" Type="varchar" MaxLength="2" />
+          <Property Name="dataCadastro" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="consultoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usuario" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="cod_consultor" Type="int" Nullable="false" />
+          <Property Name="cod_supervisor" Type="int" Nullable="false" />
+          <Property Name="cod_cq" Type="int" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
+          <Property Name="estado" Type="char" MaxLength="2" />
+          <Property Name="colec" Type="varchar" MaxLength="10" />
+          <Property Name="gg" Type="varchar" MaxLength="10" />
+          <Property Name="verbete" Type="varchar" MaxLength="255" />
+          <Property Name="pergunta" Type="longtext" />
+          <Property Name="resposta_consultor" Type="text" />
+          <Property Name="resposta_supervisor" Type="text" />
+          <Property Name="resposta_cq" Type="text" />
+          <Property Name="status" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="dataCadastro" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="dataRespConsultor" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="dataRespSupervisor" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="dataUltimoAcesso" Type="datetime" Precision="0" />
+          <Property Name="codFuncUltimoAcesso" Type="varchar" MaxLength="255" />
+          <Property Name="codFuncConsultEncam" Type="int" />
+        </EntityType>
+        <EntityType Name="consultoria_bkp">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usuario" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="cod_consultor" Type="int" Nullable="false" />
+          <Property Name="cod_supervisor" Type="int" Nullable="false" />
+          <Property Name="cod_cq" Type="int" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
+          <Property Name="estado" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="colec" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="gg" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="verbete" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="pergunta" Type="mediumtext" />
+          <Property Name="resposta_consultor" Type="text" Nullable="false" />
+          <Property Name="resposta_supervisor" Type="text" Nullable="false" />
+          <Property Name="resposta_cq" Type="text" Nullable="false" />
+          <Property Name="status" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="dataCadastro" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="dataRespConsultor" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="dataRespSupervisor" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="consultoria_busca_nao_encontrada">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_cliente" Type="int" />
+          <Property Name="id_consultor" Type="int" />
+          <Property Name="data_requisicao" Type="datetime" Precision="0" />
+          <Property Name="data_resposta" Type="datetime" Precision="0" />
+          <Property Name="status" Type="int" />
+          <Property Name="txt_pergunta" Type="text" />
+          <Property Name="txt_resposta" Type="text" />
+          <Property Name="palavra" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="cli_email" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.consultoria.consultoria_log_update' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="consultoria_log_update">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="usuario" />
+            <PropertyRef Name="cod_consultor" />
+            <PropertyRef Name="cod_supervisor" />
+            <PropertyRef Name="cod_cq" />
+            <PropertyRef Name="status" />
+            <PropertyRef Name="dataCadastro" />
+            <PropertyRef Name="dataRespConsultor" />
+            <PropertyRef Name="dataRespSupervisor" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="usuario" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="cod_consultor" Type="int" Nullable="false" />
+          <Property Name="cod_supervisor" Type="int" Nullable="false" />
+          <Property Name="cod_cq" Type="int" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
+          <Property Name="estado" Type="char" MaxLength="2" />
+          <Property Name="colec" Type="varchar" MaxLength="10" />
+          <Property Name="gg" Type="varchar" MaxLength="10" />
+          <Property Name="verbete" Type="varchar" MaxLength="255" />
+          <Property Name="pergunta" Type="longtext" />
+          <Property Name="resposta_consultor" Type="text" />
+          <Property Name="resposta_supervisor" Type="text" />
+          <Property Name="resposta_cq" Type="text" />
+          <Property Name="status" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="dataCadastro" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="dataRespConsultor" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="dataRespSupervisor" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="dataUltimoAcesso" Type="datetime" Precision="0" />
+          <Property Name="codFuncUltimoAcesso" Type="varchar" MaxLength="255" />
+          <Property Name="insert_or_upudate" Type="varchar" MaxLength="1" />
+          <Property Name="data_do_registro" Type="datetime" Precision="0" />
+          <Property Name="codFuncConsultEncam" Type="int" />
+        </EntityType>
+        <EntityType Name="titulos_pesquisa">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="titulo" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="consultoriaModelStoreContainer">
+          <EntitySet Name="arquivos" EntityType="Self.arquivos" Schema="consultoria" store:Type="Tables" />
+          <EntitySet Name="colecionadores" EntityType="Self.colecionadores" Schema="consultoria" store:Type="Tables" />
+          <EntitySet Name="consultores" EntityType="Self.consultores" Schema="consultoria" store:Type="Tables" />
+          <EntitySet Name="consultoria" EntityType="Self.consultoria" Schema="consultoria" store:Type="Tables" />
+          <EntitySet Name="consultoria_bkp" EntityType="Self.consultoria_bkp" Schema="consultoria" store:Type="Tables" />
+          <EntitySet Name="consultoria_busca_nao_encontrada" EntityType="Self.consultoria_busca_nao_encontrada" Schema="consultoria" store:Type="Tables" />
+          <EntitySet Name="titulos_pesquisa" EntityType="Self.titulos_pesquisa" Schema="consultoria" store:Type="Tables" />
+          <EntitySet Name="consultoria_log_update" EntityType="Self.consultoria_log_update" store:Type="Tables" store:Schema="consultoria">
+            <DefiningQuery>SELECT
+`consultoria_log_update`.`id`, 
+`consultoria_log_update`.`usuario`, 
+`consultoria_log_update`.`cod_consultor`, 
+`consultoria_log_update`.`cod_supervisor`, 
+`consultoria_log_update`.`cod_cq`, 
+`consultoria_log_update`.`email`, 
+`consultoria_log_update`.`estado`, 
+`consultoria_log_update`.`colec`, 
+`consultoria_log_update`.`gg`, 
+`consultoria_log_update`.`verbete`, 
+`consultoria_log_update`.`pergunta`, 
+`consultoria_log_update`.`resposta_consultor`, 
+`consultoria_log_update`.`resposta_supervisor`, 
+`consultoria_log_update`.`resposta_cq`, 
+`consultoria_log_update`.`status`, 
+`consultoria_log_update`.`dataCadastro`, 
+`consultoria_log_update`.`dataRespConsultor`, 
+`consultoria_log_update`.`dataRespSupervisor`, 
+`consultoria_log_update`.`dataUltimoAcesso`, 
+`consultoria_log_update`.`codFuncUltimoAcesso`, 
+`consultoria_log_update`.`insert_or_upudate`, 
+`consultoria_log_update`.`data_do_registro`, 
+`consultoria_log_update`.`codFuncConsultEncam`
+FROM `consultoria_log_update` AS `consultoria_log_update`</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="consultoriaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="arquivos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_chamada" Type="Int32" Nullable="false" />
+          <Property Name="arquivo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="colecionadores">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="menu_coadcorp" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tipo_portal" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="observacao" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="consultores">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usuario" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="senha" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="colec" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tipo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="filial" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="dataCadastro" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="consultoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usuario" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cod_consultor" Type="Int32" Nullable="false" />
+          <Property Name="cod_supervisor" Type="Int32" Nullable="false" />
+          <Property Name="cod_cq" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="colec" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="gg" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="verbete" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="pergunta" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="resposta_consultor" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="resposta_supervisor" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="resposta_cq" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dataCadastro" Type="DateTime" Nullable="false" />
+          <Property Name="dataRespConsultor" Type="DateTime" Nullable="false" />
+          <Property Name="dataRespSupervisor" Type="DateTime" Nullable="false" />
+          <Property Name="dataUltimoAcesso" Type="DateTime" />
+          <Property Name="codFuncUltimoAcesso" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="codFuncConsultEncam" Type="Int32" />
+        </EntityType>
+        <EntityType Name="consultoria_bkp">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usuario" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cod_consultor" Type="Int32" Nullable="false" />
+          <Property Name="cod_supervisor" Type="Int32" Nullable="false" />
+          <Property Name="cod_cq" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="colec" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gg" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="verbete" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pergunta" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" />
+          <Property Name="resposta_consultor" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="resposta_supervisor" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="resposta_cq" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dataCadastro" Type="DateTime" Nullable="false" />
+          <Property Name="dataRespConsultor" Type="DateTime" Nullable="false" />
+          <Property Name="dataRespSupervisor" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="consultoria_busca_nao_encontrada">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_cliente" Type="Int32" />
+          <Property Name="id_consultor" Type="Int32" />
+          <Property Name="data_requisicao" Type="DateTime" />
+          <Property Name="data_resposta" Type="DateTime" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="txt_pergunta" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="txt_resposta" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="palavra" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cli_email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="titulos_pesquisa">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="titulo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="consultoria_log_update">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="usuario" />
+            <PropertyRef Name="cod_consultor" />
+            <PropertyRef Name="cod_supervisor" />
+            <PropertyRef Name="cod_cq" />
+            <PropertyRef Name="status" />
+            <PropertyRef Name="dataCadastro" />
+            <PropertyRef Name="dataRespConsultor" />
+            <PropertyRef Name="dataRespSupervisor" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="usuario" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cod_consultor" Type="Int32" Nullable="false" />
+          <Property Name="cod_supervisor" Type="Int32" Nullable="false" />
+          <Property Name="cod_cq" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="colec" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="gg" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="verbete" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="pergunta" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="resposta_consultor" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="resposta_supervisor" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="resposta_cq" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dataCadastro" Type="DateTime" Nullable="false" />
+          <Property Name="dataRespConsultor" Type="DateTime" Nullable="false" />
+          <Property Name="dataRespSupervisor" Type="DateTime" Nullable="false" />
+          <Property Name="dataUltimoAcesso" Type="DateTime" />
+          <Property Name="codFuncUltimoAcesso" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="insert_or_upudate" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="data_do_registro" Type="DateTime" />
+          <Property Name="codFuncConsultEncam" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="consultoriaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="arquivos" EntityType="Self.arquivos" />
+          <EntitySet Name="colecionadores" EntityType="Self.colecionadores" />
+          <EntitySet Name="consultores" EntityType="Self.consultores" />
+          <EntitySet Name="consultoria" EntityType="Self.consultoria" />
+          <EntitySet Name="consultoria_bkp" EntityType="Self.consultoria_bkp" />
+          <EntitySet Name="consultoria_busca_nao_encontrada" EntityType="Self.consultoria_busca_nao_encontrada" />
+          <EntitySet Name="titulos_pesquisa" EntityType="Self.titulos_pesquisa" />
+          <EntitySet Name="consultoria_log_update" EntityType="Self.consultoria_log_update" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="consultoriaModelStoreContainer" CdmEntityContainer="consultoriaEntities">
+          <EntitySetMapping Name="arquivos">
+            <EntityTypeMapping TypeName="consultoriaModel.arquivos">
+              <MappingFragment StoreEntitySet="arquivos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_chamada" ColumnName="id_chamada" />
+                <ScalarProperty Name="arquivo" ColumnName="arquivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="colecionadores">
+            <EntityTypeMapping TypeName="consultoriaModel.colecionadores">
+              <MappingFragment StoreEntitySet="colecionadores">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="menu_coadcorp" ColumnName="menu_coadcorp" />
+                <ScalarProperty Name="tipo_portal" ColumnName="tipo_portal" />
+                <ScalarProperty Name="observacao" ColumnName="observacao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="consultores">
+            <EntityTypeMapping TypeName="consultoriaModel.consultores">
+              <MappingFragment StoreEntitySet="consultores">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="senha" ColumnName="senha" />
+                <ScalarProperty Name="colec" ColumnName="colec" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="filial" ColumnName="filial" />
+                <ScalarProperty Name="dataCadastro" ColumnName="dataCadastro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="consultoria">
+            <EntityTypeMapping TypeName="consultoriaModel.consultoria">
+              <MappingFragment StoreEntitySet="consultoria">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="cod_consultor" ColumnName="cod_consultor" />
+                <ScalarProperty Name="cod_supervisor" ColumnName="cod_supervisor" />
+                <ScalarProperty Name="cod_cq" ColumnName="cod_cq" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="colec" ColumnName="colec" />
+                <ScalarProperty Name="gg" ColumnName="gg" />
+                <ScalarProperty Name="verbete" ColumnName="verbete" />
+                <ScalarProperty Name="pergunta" ColumnName="pergunta" />
+                <ScalarProperty Name="resposta_consultor" ColumnName="resposta_consultor" />
+                <ScalarProperty Name="resposta_supervisor" ColumnName="resposta_supervisor" />
+                <ScalarProperty Name="resposta_cq" ColumnName="resposta_cq" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="dataCadastro" ColumnName="dataCadastro" />
+                <ScalarProperty Name="dataRespConsultor" ColumnName="dataRespConsultor" />
+                <ScalarProperty Name="dataRespSupervisor" ColumnName="dataRespSupervisor" />
+                <ScalarProperty Name="dataUltimoAcesso" ColumnName="dataUltimoAcesso" />
+                <ScalarProperty Name="codFuncUltimoAcesso" ColumnName="codFuncUltimoAcesso" />
+                <ScalarProperty Name="codFuncConsultEncam" ColumnName="codFuncConsultEncam" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="consultoria_bkp">
+            <EntityTypeMapping TypeName="consultoriaModel.consultoria_bkp">
+              <MappingFragment StoreEntitySet="consultoria_bkp">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="cod_consultor" ColumnName="cod_consultor" />
+                <ScalarProperty Name="cod_supervisor" ColumnName="cod_supervisor" />
+                <ScalarProperty Name="cod_cq" ColumnName="cod_cq" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="colec" ColumnName="colec" />
+                <ScalarProperty Name="gg" ColumnName="gg" />
+                <ScalarProperty Name="verbete" ColumnName="verbete" />
+                <ScalarProperty Name="pergunta" ColumnName="pergunta" />
+                <ScalarProperty Name="resposta_consultor" ColumnName="resposta_consultor" />
+                <ScalarProperty Name="resposta_supervisor" ColumnName="resposta_supervisor" />
+                <ScalarProperty Name="resposta_cq" ColumnName="resposta_cq" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="dataCadastro" ColumnName="dataCadastro" />
+                <ScalarProperty Name="dataRespConsultor" ColumnName="dataRespConsultor" />
+                <ScalarProperty Name="dataRespSupervisor" ColumnName="dataRespSupervisor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="consultoria_busca_nao_encontrada">
+            <EntityTypeMapping TypeName="consultoriaModel.consultoria_busca_nao_encontrada">
+              <MappingFragment StoreEntitySet="consultoria_busca_nao_encontrada">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+                <ScalarProperty Name="id_consultor" ColumnName="id_consultor" />
+                <ScalarProperty Name="data_requisicao" ColumnName="data_requisicao" />
+                <ScalarProperty Name="data_resposta" ColumnName="data_resposta" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="txt_pergunta" ColumnName="txt_pergunta" />
+                <ScalarProperty Name="txt_resposta" ColumnName="txt_resposta" />
+                <ScalarProperty Name="palavra" ColumnName="palavra" />
+                <ScalarProperty Name="cli_email" ColumnName="cli_email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="titulos_pesquisa">
+            <EntityTypeMapping TypeName="consultoriaModel.titulos_pesquisa">
+              <MappingFragment StoreEntitySet="titulos_pesquisa">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="consultoria_log_update">
+            <EntityTypeMapping TypeName="consultoriaModel.consultoria_log_update">
+              <MappingFragment StoreEntitySet="consultoria_log_update">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="cod_consultor" ColumnName="cod_consultor" />
+                <ScalarProperty Name="cod_supervisor" ColumnName="cod_supervisor" />
+                <ScalarProperty Name="cod_cq" ColumnName="cod_cq" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="colec" ColumnName="colec" />
+                <ScalarProperty Name="gg" ColumnName="gg" />
+                <ScalarProperty Name="verbete" ColumnName="verbete" />
+                <ScalarProperty Name="pergunta" ColumnName="pergunta" />
+                <ScalarProperty Name="resposta_consultor" ColumnName="resposta_consultor" />
+                <ScalarProperty Name="resposta_supervisor" ColumnName="resposta_supervisor" />
+                <ScalarProperty Name="resposta_cq" ColumnName="resposta_cq" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="dataCadastro" ColumnName="dataCadastro" />
+                <ScalarProperty Name="dataRespConsultor" ColumnName="dataRespConsultor" />
+                <ScalarProperty Name="dataRespSupervisor" ColumnName="dataRespSupervisor" />
+                <ScalarProperty Name="dataUltimoAcesso" ColumnName="dataUltimoAcesso" />
+                <ScalarProperty Name="codFuncUltimoAcesso" ColumnName="codFuncUltimoAcesso" />
+                <ScalarProperty Name="insert_or_upudate" ColumnName="insert_or_upudate" />
+                <ScalarProperty Name="data_do_registro" ColumnName="data_do_registro" />
+                <ScalarProperty Name="codFuncConsultEncam" ColumnName="codFuncConsultEncam" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

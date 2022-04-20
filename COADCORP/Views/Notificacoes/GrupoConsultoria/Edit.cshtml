@@ -1,0 +1,46 @@
+﻿@model  COAD.COADGED.Model.DTO.GrupoConsultoriaDTO
+@{
+    ViewBag.Title = "Edit";
+}
+@using Coad.GenericCrud.Extensions
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li>@Html.ActionLink("Gerenciar Grupos de Consultoria","index","GrupoConsultoria")</li>
+        <li class="active">Editar Seção</li>         
+    </ol>
+}
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/grupoConsultoria.js")
+<div class="form-lg padding" ng-app="appModule">
+    <div class="panel panel-default" ng-controller="GrupoConsultoriaController" data-ng-init="read(@ViewBag.grupoConsultoriaId)">
+            @Html.ValidationSummary(true)          
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Editar Grupo de Consultoria</div>
+            <div class="panel-body">  
+                 <div app-message></div>
+                 @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) 
+                 {
+                 <div class="row">
+                    <div class="form-group col-lg-1">
+                        @Html.Label("ID")
+                        @Html.TextBoxFor(model => model.GRD_CONS_ID,  new {@class = "form-control", ng_model = "grupoConsultoria.GRD_CONS_ID", disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.GRD_CONS_ID, null, new { app_validation_msg = "erros", @for = "GRD_CONS_ID" }) 
+                    </div>
+                    <div class="form-group col-lg-9">
+                        @Html.LabelFor(model => model.GRD_CONS_DESCRICAO)
+                        @Html.TextBoxFor(model => model.GRD_CONS_DESCRICAO,  new {@class = "form-control", ng_model = "grupoConsultoria.GRD_CONS_DESCRICAO" })
+                        @Html.ValidationMessageFor(model => model.GRD_CONS_DESCRICAO, null, new { app_validation_msg = "erros", @for = "GRD_CONS_DESCRICAO" }) 
+                    </div>
+                    <div class="form-group col-lg-2">
+                        @Html.LabelFor(model => model.GRD_CONS_ATIVO)
+                        @Html.DropDownListFor(model => model.GRD_CONS_ATIVO, new SelectList(@ViewBag.ativo, "Value", "Text"), null ,new {@class = "form-control", ng_model = "grupoConsultoria.GRD_CONS_ATIVO" })
+                    </div>
+                 </div>
+                 }
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-primary" ng-click="salvarGrupoConsultoria()">Salvar</button>
+                <span class="float-right"><button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default">Voltar</button></span>
+            </div> 
+    </div>
+</div>

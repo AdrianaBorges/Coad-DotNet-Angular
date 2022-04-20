@@ -1,0 +1,506 @@
+﻿@using COAD.SEGURANCA.Extensions
+@using COAD.SEGURANCA.Repositorios.Base
+@using COAD.CORPORATIVO.SessionUtils
+
+@{
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;    
+    if(ViewBag.print == true){
+
+        ViewBag.printableClass = "hidden-print";
+    }
+}
+
+<!doctype html>
+<html lang="en-US">
+	<head>
+        <script type="text/javascript">
+            // para obter o contexto da aplicação
+            var contextPath = "@System.Web.HttpContext.Current.Request.ApplicationPath";
+        </script>
+		<meta charset="utf-8" />
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<title>Smarty Admin</title>
+		<meta name="description" content="" />
+		<meta name="Author" content="Dorin Grigoras [www.stepofweb.com]" />
+
+		<!-- mobile settings -->
+		<meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
+
+		<!-- WEB FONTS -->
+        <link href="~/Content/themes/base/assets/fonts/font-awesome.min.css" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800&amp;subset=latin,latin-ext,cyrillic,cyrillic-ext" rel="stylesheet" type="text/css" />
+        @Styles.Render("~/Content/themes/base/assets/plugins/bootstrap.min.css")
+
+        <!-- THEME CSS -->
+        <link rel="stylesheet" href="~/Content/themes/base/assets/essentials.css" type="text/css"/>
+        <link rel="stylesheet" href="~/Content/themes/base/assets/layout.css" type="text/css"/>
+        <link rel="stylesheet" href="~/Content/themes/base/assets/color_scheme/green.css" type="text/css"/>
+
+        @*@Styles.Render("~/Content/themes/base/simple-sidebar.css")*@
+        @*@Styles.Render("~/Content/themes/base/assets/plugins/bootstrap-theme.css")*@
+        @*@Styles.Render("~/Content/themes/base/default.css")*@
+        @*@Styles.Render("~/Content/themes/fonts/font-awesome.min.css")*@
+        
+        @*@Styles.Render("~/Content/themes/base/assets/plugins/jquery-ui.min.css")*@
+        @*@Styles.Render("~/Content/themes/base/coadcorp-boostrap.css")*@
+
+        
+        <script src="@Url.Content("~/Scripts/assets/plugins/jquery/jquery-2.1.4.min.js")" type="text/javascript"></script>
+        @*<script src="@Url.Content("~/Scripts/assets/plugins/jquery/jquery-ui.min.js")" type="text/javascript"></script>*@
+        @*<script src="@Url.Content("~/Scripts/jquery-1.11.1.min.js")" type="text/javascript"></script>*@
+        @*<script src="@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")" type="text/javascript"></script>*@
+        @*<script src="@Url.Content("~/Scripts/jquery-ui.min.js")" type="text/javascript"></script>*@
+        @*<script src="@Url.Content("~/Scripts/modernizr-2.5.3.js")" type="text/javascript"></script>*@
+        @*<script src="@Url.Content("~/Scripts/jquery.maskMoney.js")" type="text/javascript"></script>*@
+        @*@Scripts.Render("~/Scripts/assets/plugins/bootstrap/js/bootstrap.js")*@
+               
+        
+		<script type="text/javascript">var plugin_path = '@Url.Content("~/Scripts/assets/plugins/")';</script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/assets/app.js")"></script>
+
+        
+        @Scripts.Render("~/Scripts/util.js")
+        @Scripts.Render("~/Scripts/Angular/angular.min.js")
+
+        @Scripts.Render("~/Scripts/Angular/angular_modules/service_module.js")
+        @Scripts.Render("~/Scripts/Angular/angular_modules/directives_module.js")
+        @Scripts.Render("~/Scripts/default.js")
+        @Scripts.Render("~/Scripts/negocio/notificacao.js")
+    
+        @Scripts.Render("~/Scripts/negocio/uen.js")
+        @Scripts.Render("~/Scripts/negocio/controllers_plugins/info_cliente.js")
+        @Scripts.Render("~/Scripts/Angular/FusionCharts/fusioncharts.js")
+        @Scripts.Render("~/Scripts/Angular/FusionCharts/angular-fusioncharts.min.js")
+        @Scripts.Render("~/Scripts/Angular/FusionCharts/themes/fusioncharts.theme.zune.js")
+        @Scripts.Render("~/Scripts/Angular/angular-sanitize.js")
+        @Scripts.Render("~/Scripts/Angular/angular-animate.js")
+        @Scripts.Render("~/Scripts/js/plugins/tinymce/tinymce.min.js")
+        @Scripts.Render("~/Scripts/js/plugins/tinymce/TinyMCE.js")
+        @Scripts.Render("~/Scripts/js/plugins/tinymce/tinymce_custom_app.js")
+
+	</head>
+	<!--
+		.boxed = boxed version
+	-->
+	<body>
+
+
+		<!-- WRAPPER -->
+		<div id="wrapper" class="clearfix">
+
+			<!-- 
+				ASIDE 
+				Keep it outside of #wrapper (responsive purpose)
+			-->
+			<aside id="aside">
+				<!--
+					Always open:
+					<li class="active alays-open">
+
+					LABELS:
+						<span class="label label-danger pull-right">1</span>
+						<span class="label label-default pull-right">1</span>
+						<span class="label label-warning pull-right">1</span>
+						<span class="label label-success pull-right">1</span>
+						<span class="label label-info pull-right">1</span>
+				-->
+				<nav id="sideNav"><!-- MAIN MENU -->
+					<ul class="nav nav-list">
+						<li class="active"><!-- dashboard -->
+							<a class="dashboard" href="index.html"><!-- warning - url used by default by ajax (if eneabled) -->
+								<i class="main-icon fa fa-dashboard"></i> <span>Dashboard</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-menu-arrow pull-right"></i>
+								<i class="main-icon fa fa-bar-chart-o"></i> <span>Graphs</span>
+							</a>
+							<ul><!-- submenus -->
+								<li><a href="graphs-flot.html">Flot Charts</a></li>
+								<li><a href="graphs-morris.html">Morris Charts</a></li>
+								<li><a href="graphs-inline.html">Inline Charts</a></li>
+								<li><a href="graphs-chartjs.html">Chart.js</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-menu-arrow pull-right"></i>
+								<i class="main-icon fa fa-table"></i> <span>Tables</span>
+							</a>
+							<ul><!-- submenus -->
+								<li><a href="tables-bootstrap.html">Bootstrap Tables</a></li>
+								<li><a href="tables-jqgrid.html">jQuery Grid</a></li>
+								<li><a href="tables-footable.html">jQuery Footable</a></li>
+								<li>
+									<a href="#">
+										<i class="fa fa-menu-arrow pull-right"></i>
+										Datatables
+									</a>
+									<ul>
+										<li><a href="tables-datatable-managed.html">Managed Datatables</a></li>
+										<li><a href="tables-datatable-editable.html">Editable Datatables</a></li>
+										<li><a href="tables-datatable-advanced.html">Advanced Datatables</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-menu-arrow pull-right"></i>
+								<i class="main-icon fa fa-pencil-square-o"></i> <span>Forms</span>
+							</a>
+							<ul><!-- submenus -->
+								<li><a href="form-elements.html">Smarty Elements</a></li>
+								<li><a href="form-masked-inputs.html">Masked Inputs</a></li>
+								<li><a href="form-pickers.html">Pickers</a></li>
+								<li><a href="form-ui-sliders.html">UI Sliders</a></li>
+								<li><a href="form-validation.html">Validation Form</a></li>
+								<li><a href="form-html-editors.html">Html Editors</a></li>
+								<li><a href="form-autosuggest.html">Autosuggest</a></li>
+								<li><a href="form-x-editable.html">Form X-Editable</a></li>
+								<li><a href="form-dropzone.html">Dropzone File Upload</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-menu-arrow pull-right"></i>
+								<i class="main-icon fa fa-gears"></i> <span>UI Features</span>
+							</a>
+							<ul><!-- submenus -->
+								<li><a href="ui-portlets.html">Portlets</a></li>
+								<li><a href="ui-buttons.html">Buttons</a></li>
+								<li>
+									<a href="#">
+										<i class="fa fa-menu-arrow pull-right"></i>
+										Icons
+									</a>
+									<ul>
+										<li><a href="ui-icons-fontawsome.html">Fontawsome</a></li>
+										<li><a href="ui-icons-etline.html">Et-Line Icons</a></li>
+										<li><a href="ui-icons-glyphicons.html">Glyph Icons</a></li>
+										<li><a href="ui-icons-flags.html">Flags</a></li>
+									</ul>
+								</li>
+								<li><a href="ui-alerts-dialogs.html">Alerts &amp; Dialogs</a></li>
+								<li><a href="ui-tabs-acordion-navs.html">Tabs, Acordion &amp; Navs</a></li>
+								<li><a href="ui-knob.html">Knob Circles</a></li>
+								<li><a href="ui-nestable.html">Nestable List</a></li>
+								<li><a href="ui-toastr.html">Toastr Notifications</a></li>
+								<li><a href="ui-modals.html">Modals</a></li>
+								<li><a href="ui-grid.html">Grid</a></li>
+								<li><a href="ui-google-maps.html">Google Maps</a></li>
+								<li><a href="ui-vector-maps.html">Vector Maps</a></li>
+								<li><a href="ui-essentials.html">Essentials</a></li>
+								<li>
+									<a href="#">
+										<i class="fa fa-menu-arrow pull-right"></i>
+										<i class="fa fa-folder-open"></i>
+										Deep Navigation
+									</a>
+									<!-- 3rd Level -->
+									<ul>
+										<li>
+											<a href="#">
+												3rd Level
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												<i class="fa fa-menu-arrow pull-right"></i>
+												<i class="fa fa-folder-open"></i>
+												4rd Level
+											</a>
+											<!-- 4th Level -->
+											<ul>
+												<li>
+													<a href="#">
+														4th Level
+													</a>
+												</li>
+												<li>
+													<a href="#">
+														<i class="fa fa-menu-arrow pull-right"></i>
+														<i class="fa fa-folder-open"></i>
+														5th Level
+													</a>
+													<!-- 5th Level -->
+													<ul>
+														<li>
+															<a href="#">
+																5th level
+															</a>
+														</li>
+														<li>
+															<a href="#">
+																<i class="fa fa-menu-arrow pull-right"></i>
+																<i class="fa fa-folder-open"></i>
+																6th level
+															</a>
+															<!-- 6th Level -->
+															<ul>
+																<li>
+																	<a href="#">
+																		6th level
+																	</a>
+																</li>
+																<li>
+																	<a href="#">
+																		6th level
+																	</a>
+																</li>
+															</ul><!-- /6th Level -->
+														</li>
+													</ul><!-- /5th Level -->
+												</li>
+											</ul><!-- /4th Level -->
+										</li>
+									</ul><!-- /3rd Level -->
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-menu-arrow pull-right"></i>
+								<i class="main-icon fa fa-book"></i> <span>Pages</span>
+							</a>
+							<ul><!-- submenus -->
+								<li><a href="page-invoice.html">Invoice</a></li>
+								<li><a href="page-login.html">Login</a></li>
+								<li><a href="page-register.html">Register</a></li>
+								<li><a href="page-lock.html">Lock Screen</a></li>
+								<li><a href="page-forum.html">Forum</a></li>
+								<li><a href="page-404.html">Error 404</a></li>
+								<li><a href="page-500.html">Error 500</a></li>
+								<li><a href="page-pricing.html">Pricing Table</a></li>
+								<li><a href="page-search.html">Search Result</a></li>
+								<li><a href="page-sidebar.html">Sidebar Page</a></li>
+								<li><a href="page-user-profile.html">User Profile</a></li>
+								<li><a href="page-blank-1.html">Blank Page</a></li>
+							</ul>
+						</li>
+					</ul>
+
+					<!-- SECOND MAIN LIST -->
+					<h3>MORE</h3>
+					<ul class="nav nav-list">
+						<li>
+							<a href="calendar.html">
+								<i class="main-icon fa fa-calendar"></i>
+								<span class="label label-warning pull-right">2</span> <span>Calendar</span>
+							</a>
+						</li>
+						<li>
+							<a href="../../HTML/start.html">
+								<i class="main-icon fa fa-link"></i>
+								<span class="label label-danger pull-right">PRO</span> <span>Frontend</span>
+							</a>
+						</li>
+					</ul>
+
+				</nav>
+
+				<span id="asidebg"><!-- aside fixed background --></span>
+			</aside>
+			<!-- /ASIDE -->
+
+
+			<!-- HEADER -->
+			<header id="header">
+
+				<!-- Mobile Button -->
+				<button id="mobileMenuBtn"></button>
+
+				<!-- Logo -->
+				<span class="logo pull-left">
+					<img src="@Url.Content("~/Images/logo_light.png")" alt="admin panel" height="35" />
+				</span>
+
+				<form method="get" action="page-search.html" class="search pull-left hidden-xs">
+					<input type="text" class="form-control" name="k" placeholder="Search for something..." />
+				</form>
+
+				<nav>
+
+					<!-- OPTIONS LIST -->
+					<ul class="nav pull-right">
+
+						<!-- USER OPTIONS -->
+						<li class="dropdown pull-left">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+								<img class="user-avatar" alt="" src="@Url.Content("~/Images/noavatar.jpg")" height="34" /> 
+								<span class="user-name">
+									<span class="hidden-xs">
+										John Doe <i class="fa fa-angle-down"></i>
+									</span>
+								</span>
+							</a>
+							<ul class="dropdown-menu hold-on-click">
+								<li><!-- my calendar -->
+									<a href="calendar.html"><i class="fa fa-calendar"></i> Calendar</a>
+								</li>
+								<li><!-- my inbox -->
+									<a href="#"><i class="fa fa-envelope"></i> Inbox
+										<span class="pull-right label label-default">0</span>
+									</a>
+								</li>
+								<li><!-- settings -->
+									<a href="page-user-profile.html"><i class="fa fa-cogs"></i> Settings</a>
+								</li>
+
+								<li class="divider"></li>
+
+								<li><!-- lockscreen -->
+									<a href="page-lock.html"><i class="fa fa-lock"></i> Lock Screen</a>
+								</li>
+								<li><!-- logout -->
+									<a href="page-login.html"><i class="fa fa-power-off"></i> Log Out</a>
+								</li>
+							</ul>
+						</li>
+						<!-- /USER OPTIONS -->
+
+					</ul>
+					<!-- /OPTIONS LIST -->
+
+				</nav>
+
+			</header>
+			<!-- /HEADER -->
+
+
+			<!-- 
+				MIDDLE 
+			-->
+			<section id="middle">
+                <div> @RenderSection("breadcrumbs", false)</div>
+				<div id="content" class="dashboard padding-20">
+                    @RenderBody()
+				</div>
+			</section>
+			<!-- /MIDDLE -->
+
+		</div>
+
+
+
+	
+        
+
+
+		
+		<!-- PAGE LEVEL SCRIPT -->
+		<script type="text/javascript">
+			/* 
+				Toastr Notification On Load 
+
+				TYPE:
+					primary
+					info
+					error
+					success
+					warning
+
+				POSITION
+					top-right
+					top-left
+					top-center
+					top-full-width
+					bottom-right
+					bottom-left
+					bottom-center
+					bottom-full-width
+					
+				false = click link (example: "http://www.stepofweb.com")
+			*/
+			_toastr("Welcome, you have 2 new orders","top-right","success",false);
+
+
+
+
+			/** SALES CHART
+			******************************************* **/
+			loadScript(plugin_path + "chart.flot/jquery.flot.min.js", function(){
+				loadScript(plugin_path + "chart.flot/jquery.flot.resize.min.js", function(){
+					loadScript(plugin_path + "chart.flot/jquery.flot.time.min.js", function(){
+						loadScript(plugin_path + "chart.flot/jquery.flot.fillbetween.min.js", function(){
+							loadScript(plugin_path + "chart.flot/jquery.flot.orderBars.min.js", function(){
+								loadScript(plugin_path + "chart.flot/jquery.flot.pie.min.js", function(){
+									loadScript(plugin_path + "chart.flot/jquery.flot.tooltip.min.js", function(){
+
+										if (jQuery("#flot-sales").length > 0) {
+
+											/* DEFAULTS FLOT COLORS */
+											var $color_border_color = "#eaeaea",		/* light gray 	*/
+												$color_second 		= "#6595b4";		/* blue      	*/
+
+
+											var d = [
+												[1196463600000, 0], [1196550000000, 0], [1196636400000, 0], [1196722800000, 77], [1196809200000, 3636], [1196895600000, 3575], [1196982000000, 2736], [1197068400000, 1086], [1197154800000, 676], [1197241200000, 1205], [1197327600000, 906], [1197414000000, 710], [1197500400000, 639], [1197586800000, 540], [1197673200000, 435], [1197759600000, 301], [1197846000000, 575], [1197932400000, 481], [1198018800000, 591], [1198105200000, 608], [1198191600000, 459], [1198278000000, 234], [1198364400000, 4568], [1198450800000, 686], [1198537200000, 4122], [1198623600000, 449], [1198710000000, 468], [1198796400000, 392], [1198882800000, 282], [1198969200000, 208], [1199055600000, 229], [1199142000000, 177], [1199228400000, 374], [1199314800000, 436], [1199401200000, 404], [1199487600000, 544], [1199574000000, 500], [1199660400000, 476], [1199746800000, 462], [1199833200000, 500], [1199919600000, 700], [1200006000000, 750], [1200092400000, 600], [1200178800000, 500], [1200265200000, 900], [1200351600000, 930], [1200438000000, 1200], [1200524400000, 980], [1200610800000, 950], [1200697200000, 900], [1200783600000, 1000], [1200870000000, 1050], [1200956400000, 1150], [1201042800000, 1100], [1201129200000, 1200], [1201215600000, 1300], [1201302000000, 1700], [1201388400000, 1450], [1201474800000, 1500], [1201561200000, 1510], [1201647600000, 1510], [1201734000000, 1510], [1201820400000, 1700], [1201906800000, 1800], [1201993200000, 1900], [1202079600000, 2000], [1202166000000, 2100], [1202252400000, 2200], [1202338800000, 2300], [1202425200000, 2400], [1202511600000, 2550], [1202598000000, 2600], [1202684400000, 2500], [1202770800000, 2700], [1202857200000, 2750], [1202943600000, 2800], [1203030000000, 3245], [1203116400000, 3345], [1203202800000, 3000], [1203289200000, 3200], [1203375600000, 3300], [1203462000000, 3400], [1203548400000, 3600], [1203634800000, 3700], [1203721200000, 3800], [1203807600000, 4000], [1203894000000, 4500]];
+										
+											for (var i = 0; i < d.length; ++i) {
+												d[i][0] += 60 * 60 * 1000;
+											}
+										
+											var options = {
+
+												xaxis : {
+													mode : "time",
+													tickLength : 5
+												},
+
+												series : {
+													lines : {
+														show : true,
+														lineWidth : 1,
+														fill : true,
+														fillColor : {
+															colors : [{
+																opacity : 0.1
+															}, {
+																opacity : 0.15
+															}]
+														}
+													},
+												   //points: { show: true },
+													shadowSize : 0
+												},
+
+												selection : {
+													mode : "x"
+												},
+
+												grid : {
+													hoverable : true,
+													clickable : true,
+													tickColor : $color_border_color,
+													borderWidth : 0,
+													borderColor : $color_border_color,
+												},
+
+												tooltip : true,
+
+												tooltipOpts : {
+													content : "Sales: %x <span class='block'>$%y</span>",
+													dateFormat : "%y-%0m-%0d",
+													defaultTheme : false
+												},
+
+												colors : [$color_second],
+										
+											};
+										
+											var plot = jQuery.plot(jQuery("#flot-sales"), [d], options);
+										}
+
+									});
+								});
+							});
+						});
+					});
+				});
+			});
+			</script>
+
+	</body>
+</html>

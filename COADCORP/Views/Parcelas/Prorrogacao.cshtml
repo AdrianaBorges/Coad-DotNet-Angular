@@ -1,0 +1,123 @@
+﻿@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Consultas Parcelas Prorrogadas</li>
+    </ol>
+}
+
+
+<script src="~/Scripts/negocio/parcelas.js"></script>
+
+<div ng-app="appModule">
+    <div ng-controller="ParcelasController" data-ng-init="preparaTela()" class="padding content">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div app-message></div>
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-filter"></span>&nbspFiltros
+                <div class="pull-right">
+                    <div class="btn-group">
+                    </div>
+                </div>
+            </div>
+            <div app-message></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Data Inicial")
+                            <div class="input-group">
+                                <input type="text" id="dtinicial" class="form-control" ng-model="dtini" app-date="filtro.dtinicial" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Data Final")
+                            <div class="input-group">
+                                <input type="text" id="dtfinal" class="form-control" ng-model="dtfim" app-date="filtro.dtfinal" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-3">
+                        <label for="sigla">Situação</label>
+                        <select class="form-control" ng-model="filtro.situacao">
+                            <option></option>
+                            <option value="CON">Prorrogado Confirmado</option>
+                            <option value="PRO">Prorrogado Pendente</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="sigla">Email</label>
+                        <input type="text" id="email" class="form-control" ng-model="filtro.email" />
+                    </div>
+
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="listar()">Pesquisar</button>
+                <button type="button" class="btn btn-default" ng-click="enviarEmail()"><i class="fa fa-envelope-o" aria-hidden="true"></i>&nbspEnviar Email</button>
+            </div>
+        </div>
+
+        <div class="panel panel-default" ng-show="listaparcelas">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-book"></span>Lista Consultas
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr class="info">
+                                <th>Nº Contrato</th>
+                                <th>Nº Parcela</th>
+                                <th>Alocação</th>
+                                <th>Vencimento</th>
+                                <th class="align-right">Valor</th>
+                                <th style="text-align: center;">Situação</th>
+                                <th style="text-align: center;">Opções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listaparcelas">
+                                <td>{{item.CTR_NUM_CONTRATO}}</td>
+                                <td>{{item.PAR_NUM_PARCELA}}</td>
+                                <td style="text-align: center;">{{item.BAN_ID}} <span app-show-date="item.PAR_DATA_ALOC"></span></td>
+                                <td app-show-date="item.PAR_DATA_VENCTO"></td>
+                                <td app-show-dinheiro="item.PAR_VLR_PARCELA" class="align-right" style="min-width: 100px;"></td>
+                                <td style="text-align: center;">
+                                    <span ng-show="item.PAR_SITUACAO=='PRO'" class="label alert-warning">{{item.USU_LOGIN_PRORROGACAO}} / <span app-show-date="item.DATA_PRORROGACAO"></span>
+                                        Prorrogada (Pendente) 
+                                    </span>
+                                    <span ng-show="item.PAR_SITUACAO=='CON'" class="label alert-info">{{item.USU_LOGIN_PRORROGACAO}} / <span app-show-date="item.DATA_PRORROGACAO"></span>
+                                        Prorrogada (Liberado) 
+                                    </span>
+                                </td>
+                                <td style="text-align: center;">
+                                    @if (SessionContext.AcessoExterno("SAC") == false)
+                                    {
+                                        <a href="javascript:void(0)" ng-click="confirmaProrrogacao(item)" ng-if="item.PAR_DATA_PAGTO==null&&item.PAR_SITUACAO=='PRO'" data-toggle="tooltip" data-placement="top" app-popover data-content="Marcar como resolvido caso ja tenha sido prorrogada no banco.">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

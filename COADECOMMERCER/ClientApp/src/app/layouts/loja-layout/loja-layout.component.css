@@ -1,0 +1,6 @@
+.ajax-loader {
+  position: fixed;
+  top: 30%;
+  left: 43%;
+  z-index: 70000;
+}

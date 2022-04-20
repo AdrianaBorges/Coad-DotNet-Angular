@@ -1,0 +1,253 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutosDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";
+}
+<script>
+    $(document).ready(function () {
+        $(":input").inputmask();
+    });
+</script>
+
+@Scripts.Render("~/Scripts/negocio/cliente.js")
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li><i class="fa fa-home"></i><a href="/Home/index">Home </a></li>
+        <li class="active">Clientes</li>
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+
+
+<div ng-app="appModule">
+    <div ng-controller="ClienteController" class="padding content">
+        <div id="page-wrapper">
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading bold head-panel">
+                    <span class="glyphicon glyphicon-filter"></span>Filtros
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Opções<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)" app-post="@Url.Action("Editar")?clienteId=" title="Editar" class="blue">Novo</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+
+                    @Html.Partial("Partials/_PesquisarCliente")
+
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" ng-click="listar()"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                    <button type="button" class="btn btn-default" ng-click="limparParametros()"><span class="glyphicon glyphicon-remove red"></span>&nbspLimpar Campos</button>
+                </div>
+            </div>
+
+
+            <div class="panel panel-default" ng-show="clientes">
+                <!-- Default panel contents -->
+                <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span>&nbspClientes</div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr class="info">
+                                    <th style="min-width: 75px">ID</th>
+                                    <th style="text-align: center;">Assinatura</th>
+                                    <th style="min-width: 132px">CNPJ/CPF</th>
+                                    <th>Nome</th>
+                                    <th>Ult.Contrato</th>
+                                    <th>Faturamento</th>
+                                    <th>Inicio</th>
+                                    <th>Final</th>
+                                    <th style="text-align: center;">Situação</th>
+                                    <th style="text-align: center;" colspan="3">Opções</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in clientes">
+                                <td>{{item.CLI_ID}}</td>
+                                <td style="text-align: center;">{{item.ASN_NUM_ASSINATURA}}</td>
+                                <td>{{item.CLI_CPF_CNPJ}}</td>
+                                <td>{{item.CLI_NOME}}</td> {{item.CONTRATO}}
+                                <td>{{item.CTR_NUM_CONTRATO}}</td>
+                                <td><span app-show-date="item.CTR_DATA_FAT"></span></td>
+                                <td><span app-show-date="item.CTR_DATA_INI_VIGENCIA"></span></td>
+                                <td><span app-show-date="item.CTR_DATA_FIM_VIGENCIA"></span></td>
+                                <td style="text-align: center;">
+                                    <span ng-if="item.SITUACAO=='VIGENTE'" class="label alert-success" app-popover data-content="Contrato atual em período de vigência. ">{{item.SITUACAO}}</span>
+                                    <span ng-if="item.SITUACAO=='ENCERRADO'" class="label alert-warning" app-popover data-content="Este contrato alcançou o fim do seu período de vigência. ">{{item.SITUACAO}}</span>
+                                    <span ng-if="item.SITUACAO=='FUTURO'" class="label alert-info" app-popover data-content="Este contrato ainda não esta ativo. Ainda não foi inciado o seu período de vigência. ">{{item.SITUACAO}}</span>
+                                    <span ng-if="item.SITUACAO=='PRORROGADO'" class="label alert-warning" app-popover data-content="Este contrato esta em período de recuperação ou seja permanece ativo durante um mês após o fim da vigência. ">{{item.SITUACAO}}</span>
+                                    <span ng-if="item.SITUACAO=='CANCELADO'" class="label alert-danger" app-popover data-content="Este contrato esta cancelado. Este cancelamento ocorreu após fim de vigência, portanto é um cancelamento normal. ">{{item.SITUACAO}}</span>
+                                    <span ng-if="item.SITUACAO=='CANC.DESISTÊNCIA'" class="label alert-danger" app-popover data-content="Este contrato foi cancelado antes do fim do período de vigência. ">{{item.SITUACAO}}</span>
+                                </td>
+                                <td style="text-align: center;">
+                                    <a href="javascript:void(0)" title="Situação do cliente" ng-click="abrirPopUpSituacao(item.ASN_NUM_ASSINATURA)">
+                                        <span class="glyphicon glyphicon-search blue"></span>
+                                    </a>
+                                </td>
+                                <td style="text-align: center;">
+                                    <a href="javascript:void(0)" app-post="@Url.Action("Editar")?clienteId={{item.CLI_ID}}&assinatura={{item.ASN_NUM_ASSINATURA}}" title="Editar" class="blue">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Logradouro -->
+        <div app-modal="modal-Logradouro" header="Pesquisar Logradouro">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-5">
+                        <label for="sigla">Logradouro</label>
+                        <input type="text" id="Logradouro" ng-model="filtro.Logradouro" class="form-control" ng-change="pesquisarLogradouro()" />
+                    </div>
+                </div>
+                <div class="row" style="max-height: 350px; overflow-y: auto;">
+                    <div class="form-group col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr class="info">
+                                        <th style="min-width: 75px">Assinatura</th>
+                                        <th style="text-align: center;">Nome</th>
+                                        <th style="min-width: 132px">Logradouro</th>
+                                        <th>Complemento</th>
+                                        <th>Bairro</th>
+                                        <th>Cidade</th>
+                                        <th style="text-align: center;">Editar</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in dbLogradouro">
+                                    <td>{{item.ASN_NUM_ASSINATURA}}</td>
+                                    <td>{{item.CLI_NOME}}</td>
+                                    <td>{{item.END_LOGRADOURO}}, {{item.END_NUMERO}}</td>
+                                    <td>{{item.END_COMPLEMENTO}}</td>
+                                    <td>{{item.END_BAIRRO}}</td>
+                                    <td>{{item.END_MUNICIPIO}} / {{item.END_UF}}</td>
+                                    <td style="text-align: center;">
+                                        <a href="javascript:void(0)" ng-click="selecItem(item.ASN_NUM_ASSINATURA)" data-dismiss="modal" title="Editar" class="blue">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</button>
+            </div>
+        </div>
+        <!-- Modal Email -->
+        <div app-modal="modal-Email" header="Pesquisar Email">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-5">
+                        <label for="sigla">Email</label>
+                        <input type="text" id="Email" ng-model="filtro.Email" class="form-control" ng-change="pesquisarEmail()" />
+                    </div>
+                </div>
+                <div class="row" style="max-height: 350px; overflow-y: auto;">
+                    <div class="form-group col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr class="info">
+                                        <th>Assinatura</th>
+                                        <th>Email</th>
+                                        <th style="text-align: center;">Editar</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in dbEmail">
+                                    <td>{{item.ASN_NUM_ASSINATURA}}</td>
+                                    <td>{{item.AEM_EMAIL}}</td>
+                                    <td style="text-align: center;">
+                                        <a href="javascript:void(0)" ng-click="selecItem(item.ASN_NUM_ASSINATURA)" data-dismiss="modal" title="Editar" class="blue">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</button>
+            </div>
+        </div>
+        <!-- Modal Telefone -->
+        <div app-modal="modal-Telefone" header="Pesquisar Telefone">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-5">
+                        <label for="sigla">Telefone</label>
+                        <input type="text" id="Telefone" ng-model="filtro.Telefone" ng-change="pesquisarTelefone()" class="form-control" />
+                    </div>
+                </div>
+                <div class="row" style="max-height: 350px; overflow-y: auto;">
+                    <div class="form-group col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr class="info">
+                                        <th>Assinatura</th>
+                                        <th>Telefone</th>
+                                        <th>Ramal</th>
+                                        <th style="text-align: center;">Editar</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in dbTelefone">
+                                    <td>{{item.ASN_NUM_ASSINATURA}}</td>
+                                    <td>({{item.ATE_DDD}}) {{item.ATE_TELEFONE}}</td>
+                                    <td>{{item.ATE_RAMAL}}</td>
+                                    <td style="text-align: center;">
+                                        <a href="javascript:void(0)" ng-click="selecItem(item.ASN_NUM_ASSINATURA)" data-dismiss="modal" title="Editar" class="blue">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</button>
+            </div>
+        </div>
+        <!-- Modal Situação -->
+        <div app-modal="modal-Situacao" header="Situação Cliente">
+            <div class="panel-body">
+                @Html.Partial("Partials/_SituacaoCliente")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left blue"></span>&nbspFechar</button>
+            </div>
+        </div>
+
+    </div>
+</div>

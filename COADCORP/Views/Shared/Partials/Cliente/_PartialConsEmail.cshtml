@@ -1,0 +1,62 @@
+﻿@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+
+<fieldset ng-show="listaQtdeConsEmail">
+    <legend class="btn btn-info" style="text-align: left;">Apuração Consultas</legend>
+    <div class="row padding">
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr class="info">
+                        <th>Assinatura</th>
+                        <th>Período</th>
+                        @if (SessionContext.AcessoGerente("SAC"))
+                        {
+                            <th>Código</th>
+                        }
+                        <th style="text-align: center">Consultas (Total)</th>
+                        <th style="text-align: center">Realizadas (URA-RJ)</th>
+                        <th style="text-align: center">Realizadas (URA-MG)</th>
+                        <th style="text-align: center">Realizadas (URA-PR)</th>
+                        <th style="text-align: center">Realizadas (EMAIL)</th>
+                        <th style="text-align: center">Realizadas (TOTAL)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="ConsEmail in listaQtdeConsEmail">
+                        <td style="width: 20%">{{ConsEmail.codigo}}</td>
+                        <td style="width: 40%">{{ConsEmail.periodo}}</td>
+                        @if (SessionContext.AcessoGerente("SAC"))
+                        {
+                            <td style="width: 10%">
+                                <a href="javascript:void(0)" ng-click="gerarSenhaAssinatura()" app-popover data-content="Clique aqui para gerar uma nova senha para esta assinatura">
+                                    <i class="fa fa-unlock-alt red" aria-hidden="true"></i>&nbsp{{AssinaturaSenha.ASN_SENHA}}
+                                </a>
+                            </td>
+                        }
+                        <td style="width: 10%; text-align: center">{{ConsEmail.contratadas}}</td>
+                        <td style="width: 10%; text-align: center" >
+                            <a href="javascript:void(0)" ng-click="mostrarDetConsulta('URARJ')" app-popover data-content="Detalhamento das consultas" ng-if="ConsEmail.qtdurarj>0">{{ConsEmail.qtdurarj}}</a>
+                            <span ng-if="ConsEmail.qtdurarj<=0">{{ConsEmail.qtdurarj}}</span>
+                        </td>
+                        <td style="width: 10%; text-align: center" >
+                            <a href="javascript:void(0)" ng-click="mostrarDetConsulta('URAMG')" app-popover data-content="Detalhamento das consultas" ng-if="ConsEmail.qtduramg>0">{{ConsEmail.qtduramg}}</a>
+                            <span ng-if="ConsEmail.qtduramg<=0">{{ConsEmail.qtduramg}}</span>
+                        </td>
+                        <td style="width: 10%; text-align: center">
+                            <a href="javascript:void(0)" ng-click="mostrarDetConsulta('URAPR')" app-popover data-content="Detalhamento das consultas" ng-if="ConsEmail.qtdurapr>0">{{ConsEmail.qtdurapr}}</a>
+                            <span ng-if="ConsEmail.qtdurapr<=0">{{ConsEmail.qtdurapr}}</span>
+                        </td>
+                        <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdemail>0">
+                            <a href="javascript:void(0)" ng-click="mostrarDetConsultaEmail()" app-popover data-content="Detalhamento das consultas por email">{{ConsEmail.qtdemail}}</a>
+                        </td>
+                        <td style="width: 10%; text-align: center" ng-if="ConsEmail.qtdemail<=0">
+                            {{ConsEmail.qtdemail}}
+                        </td>
+                        <td style="width: 10%; text-align: center">{{ConsEmail.qtdtotal}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</fieldset>

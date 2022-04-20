@@ -1,0 +1,440 @@
+﻿@using COAD.SEGURANCA.Extensions
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+@section Scripts {
+
+    <link href="~/Content/themes/base/bootstrap-datepicker.css" rel="stylesheet" />
+    @Scripts.Render("~/Scripts/appScripts/NotaFiscal.js")
+    @Scripts.Render("~/Scripts/appScripts/datepicker.js")
+    @Scripts.Render("~/Content/themes/base/bootstrap-datepicker.css")
+}
+
+
+<div ng-app="appModule">
+    <div ng-controller="NotaFiscalControler" ng-init="PreparaTela()" class="padding content" ng-cloak>
+        <div app-message></div>
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li>
+                        @Html.ActionLink("Home", "index", "Home")
+                    </li>
+                    <li class="active">
+                        <i class="fa fa-desktop"></i>&nbsp @ViewBag.Title
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="panel panel-corp">
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-filter"></span> Filtros
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            Opções
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="../NotaFiscal/Editar">Novo</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                @*<div app-filtro-topo="filtros" model="filtro" list="lstFiltrosUtilizados" flag-abrir="abrirFiltro" acao-pesquisar="pesquisarNotaFiscal()" watch-pesquisa="dispararPesquisa">
+                </div>*@
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Numero")
+                            @Html.TextBox("_nfnumero", "", new { @class = "form-control", ng_model = "filtro.NF_NUMERO" })
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("CpfCnpj")
+                            @Html.TextBox("_CpfCnpj", "", new { @class = "form-control", ng_model = "filtro.CPF_CNPJ" })
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.Label("Empresa")
+                            @Html.DropDownList("_emp_id", new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "filtro.emp_id" })
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Mes")
+                            @Html.DropDownList("_mesatual", new SelectList(@ViewBag.ListaMes, "Value", "Text"), new { @class = "form-control", ng_model = "filtro.mesatual" })
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Ano")
+                            @Html.TextBox("_anoatual", "", new { @class = "form-control", ng_model = "filtro.anoatual" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Notas Antecipadas</label>
+                        <label class="switch switch-success switch-round">
+                            <input type="checkbox" ng-model="filtro.antecipada" id="antecipada" ng-checked="filtro.antecipada == true" class="ng-pristine ng-valid"><span class="switch-label" data-on="Sim" data-off="Não"></span>
+                        </label>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Notas Avulsa</label>
+                        <label class="switch switch-success switch-round">
+                            <input type="checkbox" ng-model="filtro.avulsa" id="avulsa" ng-checked="filtro.avulsa == true" class="ng-pristine ng-valid"><span class="switch-label" data-on="Sim" data-off="Não"></span>
+                        </label>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="tp">Tipo</label>
+                        <select ng-options="nfT.NTP_ID as nfT.NTP_DESCRICAO for nfT in lstNfTipo" ng-model="filtro.nf_tipo"
+                                id="tp" class="form-control" ng-change="motraLabel()">
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+                    @*<div class="col-lg-2">
+            <div class="form-group">
+                @Html.Label("Tipo")
+                @Html.DropDownList("_nf_tipo", new SelectList(@ViewBag.ListaTipoNF, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "filtro.nf_tipo", ng_change = "motraLabel()" })
+            </div>
+        </div>*@
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" ng-click="listar()" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+            </div>
+        </div>
+        <div class="panel panel-corp" >
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-book"></span>&nbspLista Notas Fiscais
+                <div class="pull-right">
+                    <div class="btn-group">
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example" >
+                    <thead>
+                        <tr class="info">
+                            <th>Tipo</th>
+                            <th style="text-align: center;">Entrada/Saída</th>
+                            <th>Nº Nota/Série</th>
+                            <th style="text-align: center;">Tipo Doc</th>
+                            <th>Possui Evento</th>
+                            <th>Situação</th>
+                            <th>Cliente</th>
+                            <th style="text-align: center;">Contrato</th>
+                            <th class="align-right">Valor</th>
+                            <th style="text-align: center;" colspan="4">Opções</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in listanf" ng-if="listanf.length>0">
+                            <td style="text-align: center;">
+                                {{item.NOTA_FISCAL_TIPO.NTP_DESCRICAO}}
+                                <span ng-if="item.NF_AVULSA === true" class="label label-info">Avulsa</span>
+                            </td>
+                            <td style="text-align: center;" app-show-date="item.NF_DATA_ENTRADA"  show-time ng-if="item.NF_TIPO == 0 || item.NF_TIPO == 2"></td>
+                            <td style="text-align: center;" app-show-date="item.NF_DATA_EMISSAO"  show-time ng-if="item.NF_TIPO == 1 || item.NF_TIPO == 3"></td>
+                            <td>{{item.NF_NUMERO}}
+                                <span>/</span>
+                                {{item.NF_SERIE}}
+                            </td>
+                            <td style="text-align: center;">
+                                {{item.TDF_ID}}
+                                <span ng-if="item.NF_NOTA_ANTECIPADA === true" class="label label-info">Antecipada</span>
+                            </td>
+                            <td>
+                                <span ng-show="item.NF_EVENTO_ANEXADO == true" class="label label-info">
+                                    Sim
+                                </span>
+                                <span ng-hide="item.NF_EVENTO_ANEXADO == true" class="label label-default">
+                                    Não
+                                </span>
+                            </td>
+                            <td style="text-align: center;">
+                                <span class="label" ng-class="{
+                                            'label-info' : item.NST_ID == 1,
+                                            'label-success' : item.NST_ID == 2,
+                                            'label-danger' : item.NST_ID == 3,
+                                            'label-warning' : item.NST_ID == 4 || item.NST_ID == 5
+                                        }">{{item.NOTA_FISCAL_STATUS.NST_DESCRICAO}}</span>
+                            </td>
+                            <td>{{item.CLIENTES.CLI_NOME}}</td>
+                            <td style="text-align: center;">{{item.CTR_NUM_CONTRATO}}</td>
+                            <td app-show-dinheiro="item.NF_VLR_NOTA" class="align-right" style="min-width: 100px;"></td>
+                            <td>
+                                <a href="javascript:void(0);" ng-click="VisualizarNf(item)" title="Editar Nota Fiscal" ng-hide="item.NF_AVULSA == true">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                                <a href="javascript:void(0);" ng-click="editarNotaAvulsa(item)" title="Editar Nota Fiscal" ng-show="item.NF_AVULSA == true">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                                <a href="javascript:void(0);" ng-click="abrirModalEnviarNotaFiscal(item)" title="Enviar Nota fiscal" ng-show="item.NF_TIPO == 0 || item.NF_TIPO == 1">
+                                    <span class="fa fa-cloud-upload"></span>
+                                </a>
+                                <a href="javascript:void(0);" ng-click="baixarNotaFiscal(item.NF_ID)"
+                                   title="Download da Nota" class="text-danger" ng-hide="item.NST_ID == 5">
+                                    <span class="glyphicon glyphicon-download"></span>
+                                </a>
+                                <a href="javascript:void(0);" ng-click="cancelarNotaFiscal(item.NF_ID)" title="Cancelar Nota Fiscal" class="text-danger"
+                                   ng-show="(item.NST_ID == 1 || item.NST_ID == 2)">
+                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                </a>
+                                <a href="javascript:void(0);" ng-click="gerarDevolucaoNotaFiscal(item.NF_ID)" title="Gerar Devolução Nota Fiscal" class="text-warning"
+                                   ng-show="item.NST_ID != 3 && item.NF_TIPO == 1">
+                                    <i class="fa fa-reply" aria-hidden="true"></i>
+                                </a>
+                                <a href="javascript:void(0);" ng-click="abrirModalCartaCorrecao(item.NF_ID)" title="Gerar Carta de Correção Nota Fiscal" class="text-warning"
+                                   ng-show="item.NST_ID != 3 && item.NF_TIPO == 1">
+                                    <span class="glyphicon glyphicon-envelope"></span>
+                                </a>
+                                <a href="javascript:void(0);" ng-click="abrirModalEventosNFe(item.NF_ID)" title="Visualizar Eventos da Nota Fiscal" class="text-info"
+                                   ng-show="item.NF_TIPO == 0 || item.NF_TIPO == 1">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                </a>
+                                <a href="javascript:void(0);" ng-click="gerarDanfe(item.NF_ID)" title="Visualizar DANFE" class="text-info"
+                                   ng-show="item.NF_TIPO == 0 || item.NF_TIPO == 1">
+                                    <span class="glyphicon glyphicon-print"></span>
+                                </a>
+                                <a href="javascript:void(0);" ng-click="abrirModalLoteNFe(item.NF_ID)"
+                                   title="Visualizar Informações de Lote" class="text-primary" ng-hide="item.NST_ID == 5">
+                                    <span class="glyphicon glyphicon-th-list"></span>
+                                </a>
+                                <a href="javascript:void(0);" ng-click="gerarLinkDanfe(item.NF_ID)" ng-show="(item.NF_TIPO == 0 || item.NF_TIPO == 1)"
+                                   title="Visualizar DANFE da NFe na SEFAZ" class="text-danger">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </a>
+                                <a href="javascript:void(0);" ng-click="gerarLinkDanfe(item.NF_ID)" ng-show="(item.NF_TIPO == 2 || item.NF_TIPO == 3) && item.NF_COD_VERIFICACAO"
+                                   title="Visualizar Detalhamento da NFse" class="text-danger">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="13" ng-show="!listanf||listanf.length==0">Nenhum registro foi encontrado para a pesquisa.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <app-pagination request-page="paginaReq" load-function="listar(paginaReq)" style="text-align:center;"></app-pagination>
+            </div>          
+        </div>
+
+        <div class="modal" id="modal-enviar-nota" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: aliceblue">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title"><i class="fa fa-envelope blue"></i> Enviar Nota Fiscal</h4>
+                    </div>
+                    <div class="container">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <div class="form-group">
+                                        <label for="cnab">Nota Fiscal: </label>
+                                        <span>
+                                            <strong>
+                                                {{nfenviar.NF_NUMERO}} / {{nfenviar.NF_SERIE}} - {{nfenviar.CFOPENT}} -
+                                                <span ng-if="nfenviar.NF_TIPO == 1 || nfenviar.NF_TIPO == 3">{{nfenviar.CLIENTES.CLI_NOME}}</span> -
+                                                <span app-show-dinheiro="nfenviar.NF_VLR_NOTA" class="align-right" style="min-width: 100px;"></span>
+                                            </strong>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="cnab">Email</label>
+                                        <select id="idConta" ng-options="item.AEM_EMAIL as item.AEM_EMAIL for item in listaemail" class="form-control" ng-model="nfenviar.NF_EMAIL">
+                                            <option value="">Escolha o email</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label for="cnab">Email Selecionado</label>
+                                        <input type="text" id="email" ng-model="nfenviar.NF_EMAIL" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-success" ng-click="enviarNotaFiscal()">
+                            <span class="fa fa-envelope"></span> Enviar Nota Fiscal
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div app-modal="modal-carta-correcao" header="Gerar Carta de Correção" submodal data-size="small">
+            <div class="row form">
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <label for="motivo">Carta de Correção</label>
+                    <div app-textarea="cartaCorrecaoModal.CartaCorrecao" data-rows="15" data-status-var="editandoObservacoes"></div>
+
+                </div>
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <button app-switch-button="gerarCartaDeCorrecao()"
+                            switch-conf="[{label : 'Gerar', state : 'sav'}, {label : 'Gerando...', state : 'saving', disabled : true}]"
+                            switch-var="$parent.buttonGerar"
+                            class="btn btn-primary">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div app-modal="modal-eventos" header="Eventos Anexados a NFe" submodal>
+            <div class="padding">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>ID Nota</th>
+                                <th class="center">Tipo</th>
+                                <th class="center">Data</th>
+                                <th class="right">Chave do Evento</th>
+                                <th colspan="1">
+                                    Ações
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in lstEventos" class="animate-repeat">
+                            <td>
+                                {{item.EventoID}}
+                            </td>
+                            <td class="right">
+                                {{item.NF_ID}}
+                            </td>
+                            <td style="text-align: center;">
+                                <span class="label" ng-class="{
+                                            'label-success' : item.NIT_ID == 4,
+                                            'label-danger' : item.NIT_ID == 2
+                                        }">{{item.NOTA_FISCAL_LOTE_ITEM_TIPO.NIT_DESCRICAO}}</span>
+                            </td>
+                            <td class="center">
+                                <span app-show-date="item.Data"></span>
+                            </td>
+                            <td class="right">
+                                {{item.EventoXMLID}}
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" ng-click="visualizarEvento(item)"
+                                   title="Download do Arquivo Evento" class="text-success">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </a>
+                                <a href="javascript:void(0);" ng-click="baixarNotaFiscalEvento(item.NEV_ID)"
+                                   title="Download do Arquivo Evento" class="text-danger">
+                                    <span class="glyphicon glyphicon-download"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" ng-if="lstEventos.length <= 0" class="text">
+                                Não foi encontrado nenhum registro.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div app-pagination="paginaEventos" request-page="paginaReq" load-function="retornarPedidosNotaNaoGeradaPorData(null,paginaReq)"></div>
+                <div ng-show="evento">
+                    <div>
+                        <h3>Informações Do Evento</h3>
+                        <div class="row">
+                            <div class="form-group col-sm-2">
+                                <label>Código</label>
+                                <div class="text">{{evento.EventoID}}</div>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>Id da Nota Fiscal</label>
+                                <div class="text">{{evento.NF_ID}}</div>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>CPF/CNPJ Emitente</label>
+                                <div class="text">{{evento.CNPJ}}</div>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>Data</label>
+                                <div class="text" app-show-date="evento.Data" data-show-time></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-2">
+                                <label>Código de Retorno</label>
+                                <div class="text">{{evento.CodRetorno}}</div>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>Mensagem de Retorno</label>
+                                <div class="text">{{evento.DescRetorno}}</div>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Nome do Arquivo</label>
+                                <div class="text">{{evento.ArquivoNome}}</div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="evento.NIT_ID == 2">
+                            <div class="col-md-6">
+                                <label>Justificativa Evento</label>
+                                <div class="text padding">{{evento.DescJustificativa}}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Número do Protocolo</label>
+                                <div class="text padding">{{evento.NumeroProtocolo}}</div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="evento.NIT_ID == 4">
+                            <div class="col-lg-12">
+                                <label>Carta de Correção</label><br />
+                                <div class="bg-grey padding">
+                                    {{evento.DescCartaCorrecao}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="evento.NIT_ID == 4">
+                            <div class="col-lg-12">
+                                <label>Condição de Uso</label>
+                                <div class="bg-grey padding">
+                                    {{evento.CondicaoUso}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div app-modal="modal-nfe-lote" header="Lote de Notas Fiscais">
+            <div class="row">
+                @Html.Partial("Partials/Modais/_ModalLoteNFe")
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+

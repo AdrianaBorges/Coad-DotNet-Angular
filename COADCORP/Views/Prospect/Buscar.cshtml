@@ -1,0 +1,284 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+@using COAD.CORPORATIVO.SessionUtils
+@using GenericCrud.ActionResultTools
+@{
+    ViewBag.Title = "Index";
+    bool gerente = (SessionContext.IsGerenteDepartamento("franquiado", true) || SessionContext.IsGerenteDepartamento("franquiador", true));
+    bool franquiador = SessionContext.IsGerenteDepartamento("franquiador", true);
+    bool podeEditar = SessionUtil.PossuiPermissaoParaEditarProspect();
+    ViewBag.defer = @"defer='defer'";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li class="active">Gerenciar Prospects</li>         
+        
+    </ol>
+}
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/controllers_plugins/extorno_pagamento_parcela.js")" defer="defer"></script>
+<script src="@UrlCorp.Content("~/Scripts/negocio/controllers_plugins/info_cliente.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts/negocio/cliente_prospect.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts/negocio/controllers_plugins/carteiramento_plugin.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts/negocio/controllers_plugins/gerencia_assinatura.js")" @ViewBag.defer></script>
+<div ng-app="appModule">    
+    <div ng-controller="ClienteProspectController" class="padding content" ng-cloak 
+        data-ng-init="init('@podeEditar'); initBuscaCliente(); initInfoCliente(); initReencarteirar('@franquiador.ToString().ToLower()'); initClienteFranquia()">
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                        </li>                                                                           
+                                    </ul>
+                                </div>
+                            </div>
+      </div>
+          
+      <div class="panel-body">            
+           
+        <div class="row">              
+            <div class="form-group col-xs-3">
+                <label for="sigla">CNPJ/CPF</label>
+                <input type="text" id="cnpf-cpf" ng-model="filtroProsp.cpf_cnpj" class="form-control" maxlength="14"/>
+            </div>
+            <div class="form-group col-xs-2">
+                <label for="sigla">CNPJ/CPF exato.
+                    <span class="glyphicon glyphicon-question-sign text-danger"
+                    title="Selecione 'não' caso queira que a busca procure por parte do cnpj/cpf do cliente. (Pesquisa mais lenta)." 
+                        data-toggle="tooltip">
+                    </span>
+                </label>
+                <br />
+                <label class="switch switch-warning switch-round">
+                    <input type="checkbox" id="checkbox_buscacnpj" 
+                        ng-model="filtroProsp.pesquisaCpfCnpjPorIqualdade" 
+                        ng-checked="filtroProsp.pesquisaCpfCnpjPorIqualdade == true">
+	                <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                </label>
+               
+            </div>
+            <div class="form-group col-xs-2">
+                <label for="sigla">Código <em>(CoadCorp)</em></label>
+                <input type="text" id="codigoCliente" ng-model="filtroProsp.codigoCliente" class="form-control"/>
+            </div>
+            <div class="form-group col-xs-3">
+                <label for="nome">Nome</label>
+                <input type="text" id="nomeCliente" ng-model="filtroProsp.nome" class="form-control"/>
+            </div>
+            <div class="form-group col-xs-2">
+                <label for="email">Email</label>
+                <input type="text" id="emailCliente" ng-model="filtroProsp.email" class="form-control"/>
+            </div>
+        </div>
+        <div class="row">              
+            
+            <div class="form-group col-xs-1">
+                <label for="sigla">DDD</label>
+                <input type="text" id="ddd" ng-model="filtroProsp.dddTelefone" class="form-control" maxlength="3" app-number/>
+            </div>
+            <div class="form-group col-xs-2">
+                <label for="nome">Telefone</label>
+                <input type="text" id="nome" ng-model="filtroProsp.telefone" class="form-control" app-number/>
+            </div>
+        </div>
+      </div>
+                  
+        <div class="panel-footer">
+            <button type="button" 
+                    id="btnPesquisar"
+                    class="btn btn-default" ng-click="buscarProspects()">Pesquisar</button>
+        </div>
+</div>
+        <div>
+            <ul class="nav nav-tabs">
+              <li role="presentation" ng-class="{active : tab == 1}">
+                  <a href="javascript:void(0)" ng-click="mudarTab(1)">Prospects (COADCORP) <label class="badge">{{page.numeroRegistros}}</label></a>
+              </li>
+              <li role="presentation" ng-class="{active : tab == 2}">
+                  <a href="javascript:void(0)" ng-click="mudarTab(2)">Prospects (Corporativo) <label class="badge">{{paginaProspect.numeroRegistros}}</label></a>
+              </li>
+            </ul>
+        <div app-message></div>
+              <div class="panel panel-default animated-show" ng-show="tab == 1">
+              <!-- Default panel contents -->
+              <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Prospects (COADCORP)</div>
+          
+              <div class="panel-body">       
+                            <div class="table-responsive">     
+                                    <!-- <input type="text" ng-model="dataTest" app-date/>  -->       
+                       
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                            <tr>                               
+                                    
+                                                <th style="min-width: 75px">                                           
+                                                    Id
+                                                </th>
+                                                <th style="min-width: 132px">                                           
+                                                    Cnpj/Cpf
+                                                </th>
+                                                <th>                                           
+                                                    Nome
+                                                </th>
+                                                <th>
+                                                    Emails
+                                                </th>
+                                                <th>
+                                                    Tipo
+                                                </th>      
+                                                <th colspan="2">Ações</th>                                   
+                                            </tr>
+                                        </thead>    
+                                      <tr ng-repeat="item in lstProspectCorp" class="animate-repeat">
+                                            <td>
+                                                {{item.CLI_ID}}
+                                            </td>                                    
+                                            <td>
+                                                {{item.CLI_CPF_CNPJ}}
+                                            </td>   
+                                            <td>
+                                                {{item.CLI_NOME}} {{item.CLI_EXCLUIR_VALIDACAO}}
+                                            </td>        
+                                          <td>
+                                               {{item.ASSINATURA_EMAIL[0].AEM_EMAIL}}
+                                        <a href="javascript:void(0)" class="" ng-if="item.ASSINATURA_EMAIL.length > 1" 
+                                            app-list-popover="item.ASSINATURA_EMAIL" label="AEM_EMAIL" title="Emails">
+                                                <span class="badge" > + {{item.ASSINATURA_EMAIL.length - 1}}</span>
+                                        </a>
+                                          </td>
+                                            <td>
+                                                <span class="label" ng-class="{
+                                                      
+                                                              'label-warning' : item.CLA_CLI_ID == 1,
+                                                              'label-success' : item.CLA_CLI_ID == 2,
+                                                              'label-primary' : item.CLA_CLI_ID == 3,
+                                                              }">{{item.CLASSIFICACAO_CLIENTE.CLA_CLI_DESCRICAO}}</span>
+                                            </td>                            
+                                            <td>
+                                                <a href="javascript:void(0)" app-post="@Url.Action("Editar")?clienteId={{item.CLI_ID}}&tipo=cliente" 
+                                                    title="{{(podeEditar) ? 'Editar' : 'Ver detalhes'}}" class="blue">
+                                                    <span ng-switch="podeEditar">
+                                                        <span ng-switch-when="true" class="glyphicon glyphicon-edit"></span>
+                                                        <span ng-switch-when="false" class="glyphicon glyphicon-search"></span>
+                                                    </span>
+                                                </a>
+                                                
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" ng-click="abrirModalCliente(item.CLI_ID)" 
+                                                   ng-show="item.CLA_CLI_ID == 3"
+                                                   title="Gerência de Assinaturas" class="text-danger">
+                                                    <span class="glyphicon glyphicon-tag"></span>
+                                                </a>
+                                            </td>
+                                                                     
+                                      </tr>
+                                    <tr>
+                                        @{
+                                    
+                                            int cols = (gerente) ? 7 : 6;
+                                   
+                                        }
+                                        <td colspan="7" ng-show="lstProspectCorp.length == 0 && listado">Nenhum registro foi encontrado. Clique no (mais) para cadastrar um novo cliente. 
+                                                <a href="javascript:void(0)" ng-click="cadastrarClienteComBaseNosFiltros()" title="Cadastrar cliente" class="blue">
+                                                    <span class="glyphicon glyphicon-plus-sign"></span>
+                                                </a> 
+                                        </td>
+                                        <td colspan="7" ng-show="!lstProspectCorp">Clique em pesquisar para listar.</td>
+
+                                    </tr>
+
+                                    </table> 
+                            </div>
+                      <app-pagination request-page="paginaReq" load-function="buscarProspectsCorp(paginaReq)"></app-pagination>
+
+                  </div>
+                </div>  
+                
+              <div class="panel panel-default animated-show" ng-show="tab == 2">
+              <!-- Default panel contents -->
+              <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Prospects (Corporativo)</div>
+          
+              <div class="panel-body">       
+                            <div class="table-responsive">     
+                                    <!-- <input type="text" ng-model="dataTest" app-date/>  -->       
+                       
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                            <tr>                               
+                                    
+                                                <th style="min-width: 75px">                                           
+                                                    Id
+                                                </th>
+                                                <th style="min-width: 132px">                                           
+                                                    Cnpj/Cpf
+                                                </th>
+                                                <th>                                           
+                                                    Nome
+                                                </th>
+                                                <th>
+                                                    Emails
+                                                </th>     
+                                                <th>Ações</th>                                   
+                                            </tr>
+                                        </thead>    
+                                      <tr ng-repeat="item in lstProspect" class="animate-repeat">
+                                            <td>
+                                                {{item.Codigo}}
+                                            </td>                                    
+                                            <td>
+                                                {{item.CLI_CPF_CNPJ}}
+                                            </td>   
+                                            <td>
+                                                {{item.CLI_NOME}} {{item.CLI_EXCLUIR_VALIDACAO}}
+                                            </td>        
+                                          <td>
+                                               {{item.ASSINATURA_EMAIL[0].AEM_EMAIL}}
+                                                <a href="javascript:void(0)" class="" ng-if="item.ASSINATURA_EMAIL.length > 1" 
+                                                    app-list-popover="item.ASSINATURA_EMAIL" label="AEM_EMAIL" title="Emails">
+                                                        <span class="badge" > + {{item.ASSINATURA_EMAIL.length - 1}}</span>
+                                                </a>
+                                            </td>                      
+                                        <td>
+                                            <a href="javascript:void(0)" app-post="@Url.Action("Editar")?clienteId={{item.Codigo}}&tipo=prospect" title="Editar" class="blue">
+                                                <span class="glyphicon glyphicon-edit"></span>
+                                            </a>
+                                        </td>
+                                                                     
+                                      </tr>
+                                    <tr>
+                                        @{
+                                    
+                                            cols = (gerente) ? 7 : 6;
+                                   
+                                        }
+                                        <td colspan="7" ng-show="lstProspectCorp.length == 0 && listado">Nenhum registro foi encontrado. Clique no (mais) para cadastrar um novo cliente. 
+                                                <a href="javascript:void(0)" ng-click="cadastrarClienteComBaseNosFiltros()" title="Cadastrar cliente" class="blue">
+                                                    <span class="glyphicon glyphicon-plus-sign"></span>
+                                                </a> 
+                                        </td>
+                                        <td colspan="7" ng-show="!lstProspectCorp">Clique em pesquisar para listar.</td>
+
+                                    </tr>
+
+                                    </table> 
+                            </div>
+                      <div app-pagination="paginaProspect" request-page="paginaReq" load-function="buscarProspectsOriginal(paginaReq)"></div>
+
+                  </div>
+                </div>            
+        </div>
+        @Html.Partial("Partials/Modais/_ModalAssinaturaPartial")
+    </div>   
+</div>

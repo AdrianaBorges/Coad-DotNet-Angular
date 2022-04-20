@@ -1,0 +1,54 @@
+﻿
+<div>     
+    <div class="limit-modal-height panel-body">   
+                     
+                <fieldset>
+                    <legend class="text-primary">Informações básicas</legend>
+                    <div class="row">
+                        <div class="form-group col-sm-5">
+                            @Html.Label("Nome")
+                            <div class="text">{{$parent.clienteModal.CLI_NOME}}</div>
+                        </div>  
+                    </div>
+                </fieldset>
+               <fieldset>
+                <legend class="text-primary">Agendamento de contato</legend>
+                   <div class="row">
+                       <div class="form-group col-sm-3">
+                            @Html.Label("Descrição")
+                            <input type="text" class="form-control" 
+                                ng-model="agendamento.AGE_DESCRICAO" placeholder="Descrição do Agendamento"/>
+                           <div app_validation_msg="erros" for="AGE_DESCRICAO" ></div>
+                       </div>
+                   </div>
+                <div class="row">
+                    <div class="form-group col-sm-3">
+                            @Html.Label("Data")
+                            <input type="text" class="form-control" ng-model="agendamento.AGE_DATA_AGENDAMENTOMask"
+                                 app-date="agendamento.AGE_DATA_AGENDAMENTO" placeholder="data de agendamento"/>
+                        <div app_validation_msg="erros" for="AGE_DATA_AGENDAMENTO"></div>
+
+                    </div>
+                    <div class="form-group col-sm-3">
+                            @Html.Label("Horario")
+                            <select id="tipoTel" name="tipoTel" class = "form-control"
+                                  ng-model="agendamento.AGE_DATA_AGENDAMENTOTime" app-time="agendamento.AGE_DATA_AGENDAMENTO"
+                                   ng-options="hor as hor for hor in horarios">
+                                           <option value="">Selecione</option>
+                                 </select> 
+                        <div app_validation_msg="erros" for="AGE_DATA_AGENDAMENTO"></div>
+                    </div>
+                    </div>
+                   <div class="row">
+                    <div class="form-group col-sm-12" ng-repeat="hist in agendamento.HISTORICO_ATENDIMENTO">
+                        
+                            <div app_validation_msg="erros" for="HISTORICO_ATENDIMENTO[{{$index}}].HAT_DESCRICAO"></div>
+                            @Html.Label("Observações")
+                            <textarea class="form-control" placeholder="Observações" rows="6" ng-model="hist.HAT_DESCRICAO"></textarea>
+                    </div>  
+                </div>
+            </fieldset>
+        
+</div>   
+
+</div>

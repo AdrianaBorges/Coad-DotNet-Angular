@@ -1,0 +1,496 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+
+@{
+    ViewBag.Title = "Emitir Proposta";
+    ViewBag.defer = @"defer='defer'";
+    bool podeFaturar = SessionUtil.PossuiPermissaoParaFaturar();
+    string podePagar = (podeFaturar) ? "1 == 1" : "1 == 2";
+}
+@using Coad.GenericCrud.Extensions
+@using COAD.CORPORATIVO.SessionUtils
+@using GenericCrud.ActionResultTools
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Emitir Nota Fiscal Avulsa</li>
+    </ol>
+ }
+
+
+<script src="@UrlCorp.Content("~/Scripts{path}appScripts/NotaFiscal.js")" defer="defer"></script>
+
+<div ng-app="appModule">
+    @*<div>
+        <a href="#" class="btn btn-info btn-" style="width: 100%;"> <i class="fa fa-cart-plus" aria-hidden="true"></i> Emitir Proposta</a>
+    </div>*@
+    <br />
+    <div class="panel panel-default" ng-controller="NotaFiscalControler"
+         data-ng-init="initNfAvulsa(@ViewBag.nfId);" ng-cloak>
+
+        <!-- Default panel contents -->
+        <div class="panel-heading bold head-panel">
+            <i class="fa fa-cart-plus" aria-hidden="true"></i> Emitir Nota Fiscal Avulsa
+
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="false" ng-disabled="button == 'saved'">
+                        Opções
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li>
+                            <a href="@Url.Action("Index")" title="Voltar" class="blue"> Voltar</a>
+                        </li>
+                        <li ng-show="prospect.ID">
+                            <a href="javascript:void(0)" app-confirm="@Url.Action("Remover")?prospectId={{prospect.ID}}"
+                               app-msg="Deseja realmente excluir o prospect [{{prospect.NOME}}] ?" class="btnConfirmaExclusao blue" title="Excluir">Excluir</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body">
+
+            <div>
+                <div class="input-group">
+                    <div id="radioBtn" class="btn-group">
+                        <a class="btn btn-primary btn-sm active" data-toggle="happy" data-title="Y">Nota de Serviço</a>
+                        <a class="btn btn-primary btn-sm notActive" data-toggle="happy" data-title="N">Nota de Produto</a>
+                    </div>
+                    <input type="hidden" name="happy" id="happy">
+                </div>
+                <div app-message></div>
+                <fieldset>
+                    <legend class="text-info">
+                        <span class="font-16">
+                            <i class="fa fa-male" aria-hidden="true"></i>
+                            <span class="font-15">Dados do Cliente</span>
+                        </span>
+                    </legend>
+                    <div class="row">
+                        <div class="form-group col-sm-3">
+                            <label for="campo_EMP_ID">Empresa</label>
+                            <select id="campo_EMP_ID" name="campo_EMP_ID" class="form-control" ng-model="nf.EMP_ID"
+                                    ng-options="emp.EMP_ID as emp.EMP_NOME_FANTASIA for emp in lstEmpresas">
+                                <option value="">Selecione</option>
+                            </select>
+                            <div app-validation-msg="erros" for="EMP_ID"></div>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="campo_CLI_ID">Código do Cliente</label>
+                            <div class="input-group">
+                                <input type="text" id="campo_CLI_ID" class="form-control" ng-model="nf.CLI_ID" app-number ng-change="obterDadosDoProspect()" />
+                                <a class="input-group-addon" href="javascript:void(0);" title="Buscar Cliente" ng-click="abrirModalBuscarCliente();">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </a>
+                            </div>
+                            <div app-validation-msg="erros" for="CLI_ID"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-1">
+                            <label>Código</label>
+                            <div class="text">{{nf.INFO_CLIENTE.CLI_ID}}</div>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label>Nome</label>
+                            <div class="text">{{nf.INFO_CLIENTE.CLI_NOME}}</div>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label>CPF/CNPJ</label>
+                            <div class="text">{{nf.INFO_CLIENTE.CLI_CPF_CNPJ}}</div>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label>Tipo de Pessoa</label>
+                            <div class="text">{{nf.INFO_CLIENTE.TIPO_CLIENTE.TIPO_CLI_DESCRICAO}}</div>
+                        </div>
+                        <div class="form-group col-sm-1">
+                            <label>Tipo</label>
+                            <div>
+                                <span class="label" ng-class="{
+
+                                                'label-warning' : nf.INFO_CLIENTE.CLA_CLI_ID == 1,
+                                                'label-success' : nf.INFO_CLIENTE.CLA_CLI_ID == 2,
+                                                'label-primary' : nf.INFO_CLIENTE.CLA_CLI_ID == 3,
+                                                }">{{nf.INFO_CLIENTE.CLASSIFICACAO_CLIENTE.CLA_CLI_DESCRICAO}}</span>
+
+                            </div>
+                        </div>
+                    </div>
+                <div class="padding"></div>
+                </fieldset>
+                <fieldset ng-show="nf">
+                    <legend class="text-info">
+                        <span class="font-16">
+                            <i class="fa fa-book" aria-hidden="true"></i>
+                            <span class="font-15">
+                                <text ng-show="nf.NF_TIPO == 1 || nf.NF_TIPO == 2">Produtos</text>
+                                <text ng-show="nf.NF_TIPO == 3 || nf.NF_TIPO == 4">Serviços</text>
+                            </span>
+                        </span>
+                    </legend>
+                    <div class="text">
+                        <div>
+                            <span>
+                                Adicionar
+                                <text ng-show="nf.NF_TIPO == 1 || nf.NF_TIPO == 2">Produtos</text>
+                                <text ng-show="nf.NF_TIPO == 3 || nf.NF_TIPO == 4">Serviços</text>
+                            </span>
+                            <a href="javascript:void(0);" ng-click="dispararAcaoAdicaoProduto()"
+                               title="Adicionar" class="text-primary">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </a>
+                        </div>
+
+                    </div>
+                    <br />
+                    <div ng-show="nf.NF_TIPO == 3 || nf.NF_TIPO == 4">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label>Nome do Serviço</label>
+                                <div class="text-muted">{{nf.NOTA_FISCAL_ITEM[0].PRODUTO_COMPOSICAO.CMP_DESCRICAO}}</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Valor de Prestação do Serviço</label>
+                                <div class="text-muted" app-show-dinheiro="nf.NOTA_FISCAL_ITEM[0].PRODUTO_COMPOSICAO.CMP_VLR_VENDA"></div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="text-info">
+                            <span class="font-16">
+                                <i class="fa fa-book" aria-hidden="true"></i>
+                                <span class="font-15">
+                                    Valores
+                                </span>
+                            </span>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>Valor do Serviço</label>
+                                    <input type="text" ng-model="nf.NF_VLR_SERVICOStr"
+                                           class="form-control" app-mask-dinheiro="nf.NF_VLR_SERVICO" data-change="calcularTotais()"/>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Valor do PIS</label>
+                                    <input type="text" ng-model="nf.NF_VLR_PISStr"
+                                           class="form-control" app-mask-dinheiro="nf.NF_VLR_PIS" data-change="calcularTotais()"/>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Valor do COFINS</label>
+                                    <input type="text" ng-model="nf.NF_VLR_COFINSStr"
+                                           class="form-control" app-mask-dinheiro="nf.NF_VLR_COFINS" data-change="calcularTotais()"/>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Valor do INSS</label>
+                                    <input type="text" ng-model="nf.NF_VLR_INSSStr"
+                                           class="form-control" app-mask-dinheiro="nf.NF_VLR_INSS" data-change="calcularTotais()"/>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Valor de IR</label>
+                                    <input type="text" ng-model="nf.NF_VLR_IRStr"
+                                           class="form-control" app-mask-dinheiro="nf.NF_VLR_IR" data-change="calcularTotais()"/>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Valor de CLSS</label>
+                                    <input type="text" ng-model="nf.NF_VLR_CSLLStr"
+                                           class="form-control" app-mask-dinheiro="nf.NF_VLR_CSLL" data-change="calcularTotais()"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Valor de ISS</label>
+                                    <input type="text" ng-model="nf.NF_VLR_ISSStr"
+                                           class="form-control" app-mask-dinheiro="nf.NF_VLR_ISS" data-change="calcularTotais()"/>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Valor de ISS Retido</label>
+                                    <input type="text" ng-model="nf.NF_VLR_ISS_RETIDOStr"
+                                           class="form-control" app-mask-dinheiro="nf.NF_VLR_ISS_RETIDO" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Valor da Alíquota</label>
+                                    <input type="text" ng-model="nf.NF_ALIQUODAStr"
+                                           class="form-control" app-mask-dinheiro="nf.NF_ALIQUODA" data-change="calcularTotais()"/>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Valor de Desconto</label>
+                                    <input type="text" ng-model="nf.NF_VLR_DESCONTOStr"
+                                           class="form-control" app-mask-dinheiro="nf.NF_VLR_DESCONTO" data-change="calcularTotais()"/>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Discriminação do Serviço</label>
+                                    <textarea class="form-control" ng-model="nf.NOTA_FISCAL_ITEM[0].NFI_DISCRIMINACAO_SERVICO" rows="10">
+
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive" ng-show="nf.NF_TIPO == 1 || nf.NF_TIPO == 2">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Item N°</th>
+                                    <th ng-show="nf.TPP_ID == 2 || nf.TPP_ID == 3"> Assinatura <span>de Origem</span></th>
+                                    <th>
+                                        Produto
+                                    </th>
+                                    <th ng-show="(nf.UEN_ID == 2) && (nf.TPP_ID == 2)">Consultas</th>
+                                    <th ng-show="(nf.UEN_ID == 2) && (nf.TPP_ID == 1)">Período Bônus (Mês)</th>
+                                    <th>
+                                        QTD
+                                    </th>
+                                    <th>Preco Unitário</th>
+                                    <th>Total </th>
+                                    <th>Cortesia</th>
+                                    <th>Gera Nota</th>
+                                    <th>#</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in nf.nf_ITEM" class="animate-repeat" ng-class="{ 'disabled-row' : item.PST_ID != null && item.PST_ID != 1 && item.PST_ID != 10}">
+                                <td>{{$index + 1}}</td>
+                                <td ng-show="nf.TPP_ID == 2 || nf.TPP_ID == 3">
+                                    <select id="campo_ASSINATURA{{$index}}" name="campo_ASSINATURA{{$index}}" class="form-control"
+                                            ng-model="item.ASN_NUM_ASSINATURA"
+                                            ng-options="ass.ASN_NUM_ASSINATURA as ass.ASN_NUM_ASSINATURA for ass in lstAssinatura"
+                                            ng-change="adicionarProdutoRenovacao(item)" ng-show="nf.TPP_ID == 2">
+                                        <option value="">Selecione</option>
+                                    </select>
+
+                                    <strong ng-show="nf.TPP_ID == 2 || nf.TPP_ID == 3">{{item.PPI_ASN_NUM_ASS_CANC}}</strong>
+                                </td>
+                                <td>
+                                    {{item.PRODUTO_COMPOSICAO.CMP_DESCRICAO}}
+                                </td>
+                                <td ng-show="(nf.UEN_ID == 2) && (nf.TPP_ID == 2)">
+                                    <input type="text" name="valor_parcelas" ng-model="item.PPI_QTD_CONSULTA" ng-change="calcularPrecoItem(item)"
+                                           class="form-control float-left" style="max-width: 70px" app-number ng-disabled="(item.PST_ID != null && item.PST_ID != 1 && item.PST_ID != 10) || item.PPI_CORTESIA == true" />
+
+                                    <div app-validation-msg="erros" for="nf_ITEM[{{$index}}].PPI_QTD"></div>
+                                </td>
+                                <td ng-show="(nf.UEN_ID == 2) && (nf.TPP_ID == 1)">
+                                    <input type="number" name="periodo_bonus" ng-model="item.PPI_PERIODO_MES_BONUS" ng-change="bloquearPeriodoBonus(item)"
+                                           class="form-control float-left" style="max-width: 70px" ng-disabled="(item.PST_ID != null && item.PST_ID != 1 && item.PST_ID != 10) || item.PPI_CORTESIA == true"
+                                           maxlength="2" />
+
+                                    <div app-validation-msg="erros" for="nf_ITEM[{{$index}}].PPI_QTD"></div>
+                                </td>
+                                <td>
+                                    <input type="text" name="valor_parcelas" ng-model="item.PPI_QTD" ng-change="calcularPrecoItem(item); quantidadeAlterada(item);"
+                                           class="form-control float-left" style="max-width: 70px" maxlength="2" app-number
+                                           ng-disabled="(item.PST_ID != null && item.PST_ID != 1 && item.PST_ID != 10) || item.PPI_CORTESIA == true" />
+
+                                    <div app-validation-msg="erros" for="nf_ITEM[{{$index}}].PPI_QTD"></div>
+                                </td>
+                                <td>
+                                    <input type="text" name="itm_valor_unitario" ng-model="item.PPI_VALOR_UNITARIOStr" data-change="calcularPrecoItem(item)"
+                                           class="form-control" style="max-width: 100px" app-mask-dinheiro="item.PPI_VALOR_UNITARIO"
+                                           ng-disabled="(item.PST_ID != null && item.PST_ID != 1 && item.PST_ID != 10) || item.PPI_CORTESIA == true" />
+                                </td>
+                                <td>
+                                    <strong app-show-dinheiro="item.PPI_TOTAL"></strong>
+                                    <div app-validation-msg="erros" for="nf_ITEM[{{$index}}].PPI_TOTAL"></div>
+                                </td>
+                                <td>
+                                    <label for="pendente">Cortesia</label><br />
+                                    <label class="switch switch-success switch-round">
+                                        <input type="checkbox" ng-model="item.PPI_CORTESIA" id="pendente" ng-checked="item.PPI_CORTESIA == true" ng-change="checarCortesia(item)">
+                                        <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label for="ped_gera_nota">Gera Nota</label><br />
+                                    <label class="switch switch-success switch-round">
+                                        <input type="checkbox" ng-model="item.PPI_GERA_NOTA" id="ped_gera_nota" ng-checked="item.PPI_GERA_NOTA == true">
+                                        <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" ng-click="deletarnfItem($index)"
+                                       class="btnConfirmaExclusao red" id="btexcluir" title="Excluir"><span class="glyphicon glyphicon-remove-sign"></span></a>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="11" ng-if="nf.nf_ITEM.length <= 0" class="text">
+                                    Não foi encontrado nenhum registro.
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="padding"></div>
+                </fieldset>
+                <fieldset ng-show="nf.UEN_ID == 1 || nf.UEN_ID == 2">
+                    <legend class="text-info">
+                        <span class="font-16">
+                            <i class="fa fa-usd" aria-hidden="true"></i>
+                            <span class="font-15">Valores</span>
+                        </span>
+                    </legend>
+                    <div ng-repeat="proItm in nf.nf_ITEM"
+                         ng-init="calcularProvaReal(proItm)">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <label for="tipo_pagamento">Tipo de Pagamento</label>
+                                <select name="tipo_pagamento" class="form-control" ng-model="proItm.TIPO_PAGAMENTO" style="width:110px;"
+                                        ng-options="item as item.TPG_DESCRICAO for item in lstTipoPagamento track by item.TPG_ID"
+                                        ng-change="dispararAcaoPagamentoSelecionado(proItm);"
+                                        ng-disabled="(proItm.PST_ID != null && proItm.PST_ID != 1 && proItm.PST_ID != 10) || proItm.PPI_CORTESIA == true">
+                                    <option value="">Selecione</option>
+                                </select>
+                                <div app-validation-msg="erros" for="nf_ITEM[{{$index}}].TPG_ID"></div>
+                            </div>
+                            <div class="form-group col-sm-2" ng-if="proItm.TIPO_PAGAMENTO.TPG_TIPO == 1">
+                                <label for="campo_entrada">Valor de Entrada</label><br />
+                                <input type="text" name="campo_entrada" ng-model="proItm.PPI_VALOR_BRUTO_ENTRADASTr" change="$parent.calcularParcela(proItm)"
+                                       class="form-control" style="max-width: 100px" app-mask-dinheiro="proItm.PPI_VALOR_BRUTO_ENTRADA"
+                                       ng-disabled="(proItm.PST_ID != null && proItm.PST_ID != 1 && proItm.PST_ID != 10) || proItm.PPI_CORTESIA == true" />
+                                <div app-validation-msg="erros" for="nf_ITEM[{{$index}}].PPI_VALOR_ENTRADA"></div>
+                            </div>
+                            <div class="form-group col-sm-2" ng-show="proItm.TIPO_PAGAMENTO.TPG_TIPO == 1 && nf.UEN_ID == 1">
+                                <label for="campo_entrada">Vlr Entr. Líquido</label><br />
+                                <strong app-show-dinheiro="proItm.PPI_VALOR_ENTRADA"></strong>
+                                <a href="javascript:void(0)" ng-click="abrirInfoFatura(proItm.INFO_FATURA1)" ng-show="proItm.INFO_FATURA1"
+                                   id="info_fatura" title="Info Fatura"><span class="glyphicon glyphicon-barcode"></span></a>
+                            </div>
+                            <div class="form-group col-sm-2" ng-show="proItm.TIPO_PAGAMENTO.TPG_ID == 9">
+                                <label for="campo_valor_parcela">Valor</label>
+                                <br />
+                                <strong app-show-dinheiro="proItm.PPI_VALOR_PARCELA"></strong>
+                                <a href="javascript:void(0)" ng-click="abrirInfoFatura(proItm.INFO_FATURA)" ng-show="proItm.INFO_FATURA"
+                                   id="info_fatura" title="Info Fatura"><span class="glyphicon glyphicon-barcode"></span></a>
+                                <div app-validation-msg="erros" for="nf_ITEM[{{$index}}].PPI_VALOR_PARCELA"></div>
+                            </div>
+                            <div class="form-group col-sm-2" ng-show="proItm.TIPO_PAGAMENTO.TPG_TIPO == 1 || proItm.TPG_ID == 9">
+                                <label for="campo_numero_parcela">N. Parcelas</label>
+                                <input type="text" id="campo_numero_parcela" class="form-control" style="max-width: 70px"
+                                       ng-change="calcularParcela(proItm)"
+                                       ng-model="proItm.PPI_QTD_PARCELAS"
+                                       ng-disabled="(proItm.PST_ID != null && proItm.PST_ID != 1 && proItm.PST_ID != 10) || proItm.PPI_CORTESIA == true" />
+                                <div app-validation-msg="erros" for="nf_ITEM[{{$index}}].PPI_QTD_PARCELAS"></div>
+                            </div>
+                            <div class="form-group col-sm-2" ng-show="proItm.TIPO_PAGAMENTO.TPG_ID != 9">
+                                <label for="campo_valor_parcela">Parcelas</label><br />
+                                <strong>{{proItm.PPI_QTD_PARCELAS}}</strong> x
+                                <strong app-show-dinheiro="proItm.PPI_VALOR_PARCELA"></strong>
+                                <a href="javascript:void(0)" ng-click="abrirInfoFatura(proItm.INFO_FATURA)" ng-show="proItm.INFO_FATURA"
+                                   id="info_fatura" title="Info Fatura"><span class="glyphicon glyphicon-barcode"></span></a>
+                                <div app-validation-msg="erros" for="nf_ITEM[{{$index}}].PPI_VALOR_PARCELA"></div>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="campo_valor_parcela">Valor Total Parcelas</label><br />
+                                <strong app-show-dinheiro="proItm.ProvaRealTotal"></strong>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-2">
+                                <label for="campo_entrada">Data de Vencimento</label><br />
+                                <input type="text" name="campo_data_venc" ng-model="proItm.PPI_DATA_VENCIMENTOSTr"
+                                       class="form-control" style="max-width: 100px" app-date="proItm.PPI_DATA_VENCIMENTO"
+                                       ng-disabled="(proItm.PST_ID != null && proItm.PST_ID != 1 && proItm.PST_ID != 10) || proItm.PPI_CORTESIA == true" />
+                                <div app-validation-msg="erros" for="nf_ITEM[{{$index}}].PPI_DATA_VENCIMENTO"></div>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label for="campo_entrada">Data de Vencimento Seg. Parcela</label><br />
+                                <input type="text" name="campo_data_venc" ng-model="proItm.PPI_DATA_VENCIMENTO_SEG_PARCELAStr"
+                                       class="form-control" style="max-width: 100px" app-date="proItm.PPI_DATA_VENCIMENTO_SEG_PARCELA"
+                                       ng-disabled="(proItm.PST_ID != null && proItm.PST_ID != 1 && proItm.PST_ID != 10) || proItm.PPI_CORTESIA == true" />
+                                <div app-validation-msg="erros" for="nf_ITEM[{{$index}}].PPI_DATA_VENCIMENTO_SEG_PARCELA"></div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <div style="width:22%" class="pull-right">
+                    <div>
+                        <label for="campo_total_total">Valor do Serviço:</label>
+                        <strong id="campo_total_total" app-show-dinheiro="nf.NF_VLR_SERVICO"></strong>
+                    </div>
+                    <div>
+                        <label for="campo_total_total_liquido">Total Líquido:</label>
+                        <strong app-show-dinheiro="nf.NF_VLR_NOTA"></strong>
+                    </div>
+                </div>
+                <div style="clear:both;"></div>
+                <fieldset>
+                    <legend class="text-info">
+                        <span class="font-16">
+                            <i class="fa fa-comment" aria-hidden="true"></i>
+                            <span class="font-15">Observações</span>
+                        </span>
+                    </legend>
+                    <div>
+                        <div class="panel panel-corp">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading bold head-panel pointer"
+                                 data-toggle="collapse"
+                                 data-target="#body_observacoes"
+                                 aria-controls="body_observacoes"
+                                 aria-expanded="false">
+                                Observações
+                            </div>
+
+                            <div class="panel-body collapse" id="body_observacoes">
+
+                                <div class="form-group">
+                                    <label>Observações Da nf</label>
+                                    <textarea ng-model="nf.PRT_OBSERVACOES" rows="5" class="form-control">
+
+                                    </textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Observações Nota Fiscal</label>
+                                    <textarea ng-model="nf.PRT_OBSERVACOES_NOTA_FISCAL" rows="5" class="form-control">
+
+                                    </textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+            <div class="panel-footer">
+                <button type="button" onclick="window.location = '@Url.Action("index", "proposta")'" class="btn btn-default" ng-disabled="button1 == 'saved' || button2 == 'saved'">
+                    <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar
+                </button>
+                <button ng-show="nf.INFO_CLIENTE.CLI_ID"
+                        app-switch-button="salvarNotaFiscalAvulsa()"
+                        switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]"
+                        switch-var="buttonSave"
+                        class="btn btn-primary">
+                    <span class="glyphicon glyphicon-floppy-save"></span>
+                </button>
+
+            </div>
+        
+            <div app-modal="modal-curso" header="Selecione o Curso">
+
+                @Html.Partial("Partials/_CursoPartial")
+            </div>
+
+            <div app-modal="modal-produto-composicao" header="Selecione o Produto">
+
+                @Html.Partial("Partials/_ProdutoPartialProposta")
+            </div>
+            <div app-modal="modal-buscar-cliente" header="Buscar Cliente">
+
+                @Html.Partial("Partials/Modais/_ModalBuscarClientePartial")
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,126 @@
+﻿
+@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+@using COAD.CORPORATIVO.SessionUtils
+@using GenericCrud.ActionResultTools
+@{
+    ViewBag.Title = "Listagem de Templates HTML";
+    bool gerente = (SessionContext.IsGerenteDepartamento("franquiado", true) || SessionContext.IsGerenteDepartamento("franquiador", true));
+    bool franquiador = SessionContext.IsGerenteDepartamento("franquiador", true);
+
+    bool podeFaturar = SessionUtil.PossuiPermissaoParaFaturar();
+    string podePagar = (podeFaturar) ? "1 == 1" : "1 == 2";
+    ViewBag.defer = @"defer='defer'";  
+
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li class="active">Gerenciar Propostas</li>         
+        
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/templates.js")" defer="defer"></script>
+<div ng-app="appModule">    
+    <div ng-controller="TemplatesController" class="padding content" ng-cloak 
+        data-ng-init="initList('@gerente');">
+    <div class="panel panel-corp">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Opções
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li>
+                            <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                        </li>                                                                           
+                    </ul>
+                </div>
+            </div>
+      </div>
+          
+            <div class="panel-body">            
+                <div class="row">
+                    <div class="form-group col-lg-3">
+                        <label for="sigla">Descrição</label>
+                        <input type="text" ng-model="filtro.descricao" class="form-control" />
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="sigla">Grupo</label>
+                        <select name="grupo_filtro" class="form-control" ng-model="filtro.tgrId" style="width:110px;"
+                                ng-options="item.TGR_ID as item.TGR_DESCRICAO for item in lstTemplateGrupo">
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+                </div>
+            </div> 
+        <div class="panel-footer">
+            <button type="button" class="btn btn-default" ng-click="pesquisarTemplatesHTML()">Pesquisar</button>
+        </div>
+    </div>
+    <div>
+        <div app-message></div>
+            <div class="panel panel-corp">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-shopping-cart"></span>Listagem de Templates</div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+                    <table class="table table-hover table-striped table-bordered-primary">
+                        <thead>
+                            <tr class="bg-info">
+                                <th>Id</th>
+                                <th>Descrição</th>
+                                <th>Grupo</th>
+                                <th>É Layout</th>
+                                <th colspan="2">#</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in lstTemplateHTML">
+                            <td>{{item.TPL_ID}}</td>
+                            <td>{{item.TPL_DESCRICAO}}</td>
+                            <td>{{item.TEMPLATE_GRUPO.TGR_DESCRICAO}}</td>
+                            <td>
+                                <span class="label label-success" ng-if="item.LAYOUT">SIM</span>
+                                <span class="label label-warning" ng-if="!item.LAYOUT">NÃO</span>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" app-post="@Url.Action("Editar")?tplId={{item.TPL_ID}}"
+                                   title="Editar" class="blue">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" ng-click="abrirPreview(item.TPL_ID)"
+                                   title="Preview" class="blue">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="12" ng-show="!lstTemplateHTML || lstTemplateHTML.length == 0">Nenhum registro foi encontrado.</td>
+                        </tr>
+                    </table>
+                </div>
+                <app-pagination request-page="paginaReq" load-function="pesquisarTemplatesHTML(paginaReq)"></app-pagination>
+
+            </div>
+        </div>
+ 
+        </div>
+           
+</div>  
+</div>

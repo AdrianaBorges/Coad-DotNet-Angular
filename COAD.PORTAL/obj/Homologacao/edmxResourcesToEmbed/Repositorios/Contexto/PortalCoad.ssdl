@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="coadModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="coadModelStoreContainer">
+    <EntitySet Name="clientes" EntityType="coadModel.Store.clientes" store:Type="Tables" Schema="coad" />
+    <EntitySet Name="idc_agregado" EntityType="coadModel.Store.idc_agregado" store:Type="Tables" Schema="coad" />
+    <EntitySet Name="noticias" EntityType="coadModel.Store.noticias" store:Type="Tables" Schema="coad" />
+    <EntitySet Name="noticias_busca" EntityType="coadModel.Store.noticias_busca" store:Type="Tables" store:Schema="coad" store:Name="noticias_busca">
+      <DefiningQuery>SELECT
+      `noticias_busca`.`id_grupo`, 
+      `noticias_busca`.`id_noticia`, 
+      `noticias_busca`.`verbete`, 
+      `noticias_busca`.`id_prod`, 
+      `noticias_busca`.`id_tipo`, 
+      `noticias_busca`.`texto`, 
+      `noticias_busca`.`data_cadastro`, 
+      `noticias_busca`.`publicar`, 
+      `noticias_busca`.`texto_integra`, 
+      `noticias_busca`.`verbete_integra`, 
+      `noticias_busca`.`descricao`
+      FROM `noticias_busca` AS `noticias_busca`</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="noticias_conteudo" EntityType="coadModel.Store.noticias_conteudo" store:Type="Tables" store:Schema="coad" store:Name="noticias_conteudo">
+      <DefiningQuery>SELECT
+      `noticias_conteudo`.`id_grupo`, 
+      `noticias_conteudo`.`id_noticia`, 
+      `noticias_conteudo`.`verbete`, 
+      `noticias_conteudo`.`subverbete`
+      FROM `noticias_conteudo` AS `noticias_conteudo`</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="noticias_grupos" EntityType="coadModel.Store.noticias_grupos" store:Type="Tables" Schema="coad" />
+    <EntitySet Name="noticias_permissoes" EntityType="coadModel.Store.noticias_permissoes" store:Type="Tables" Schema="coad" />
+    <EntitySet Name="noticias_tipos" EntityType="coadModel.Store.noticias_tipos" store:Type="Tables" Schema="coad" />
+    <EntitySet Name="tab_30" EntityType="coadModel.Store.tab_30" store:Type="Tables" Schema="coad" />
+    <EntitySet Name="tab_30_html" EntityType="coadModel.Store.tab_30_html" store:Type="Tables" Schema="coad" />
+    <EntitySet Name="tab_31" EntityType="coadModel.Store.tab_31" store:Type="Tables" Schema="coad" />
+    <EntitySet Name="tab_31_html" EntityType="coadModel.Store.tab_31_html" store:Type="Tables" Schema="coad" />
+    <EntitySet Name="VW_BuscarNoticias" EntityType="coadModel.Store.VW_BuscarNoticias" store:Type="Views" store:Schema="coad" store:Name="VW_BuscarNoticias">
+      <DefiningQuery>SELECT
+      `VW_BuscarNoticias`.`nmid`, 
+      `VW_BuscarNoticias`.`nmid_prod`, 
+      `VW_BuscarNoticias`.`nmid_tipo`, 
+      `VW_BuscarNoticias`.`nmtexto`, 
+      `VW_BuscarNoticias`.`nmnota`, 
+      `VW_BuscarNoticias`.`nmdestaque`, 
+      `VW_BuscarNoticias`.`nmnewsletter`, 
+      `VW_BuscarNoticias`.`nmlink_file`, 
+      `VW_BuscarNoticias`.`nmdata_cadastro`, 
+      `VW_BuscarNoticias`.`nmdestaque_home`, 
+      `VW_BuscarNoticias`.`nmdestaque_perfil`, 
+      `VW_BuscarNoticias`.`nmdestaque_fixo_home`, 
+      `VW_BuscarNoticias`.`nmdestaque_fixo_perfil`, 
+      `VW_BuscarNoticias`.`ncid_grupo`, 
+      `VW_BuscarNoticias`.`ncid_noticia`, 
+      `VW_BuscarNoticias`.`ncverbete`, 
+      `VW_BuscarNoticias`.`ncsubverbete`, 
+      `VW_BuscarNoticias`.`ngid`, 
+      `VW_BuscarNoticias`.`ngid_tipo`, 
+      `VW_BuscarNoticias`.`ngdescricao`
+      FROM `VW_BuscarNoticias` AS `VW_BuscarNoticias`</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+  <EntityType Name="clientes">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="perfil" Type="varchar" Nullable="false" MaxLength="5" />
+    <Property Name="usuario" Type="varchar" Nullable="false" MaxLength="80" />
+    <Property Name="senha" Type="varchar" MaxLength="20" />
+    <Property Name="permissao" Type="char" MaxLength="2" />
+    <Property Name="status" Type="char" Nullable="false" MaxLength="1" />
+    <Property Name="cpf" Type="varchar" MaxLength="40" />
+    <Property Name="nome" Type="varchar" MaxLength="200" />
+    <Property Name="sobrenome" Type="varchar" MaxLength="80" />
+    <Property Name="empresa" Type="varchar" MaxLength="255" />
+    <Property Name="email" Type="varchar" MaxLength="255" />
+    <Property Name="endereco" Type="varchar" MaxLength="80" />
+    <Property Name="numero" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="complemento" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="bairro" Type="varchar" MaxLength="40" />
+    <Property Name="cep" Type="varchar" MaxLength="9" />
+    <Property Name="cidade" Type="varchar" MaxLength="60" />
+    <Property Name="estado" Type="char" MaxLength="2" />
+    <Property Name="telefone" Type="varchar" MaxLength="40" />
+    <Property Name="conhecimento" Type="varchar" MaxLength="255" />
+    <Property Name="public" Type="varchar" MaxLength="255" />
+    <Property Name="vigencia" Type="varchar" MaxLength="255" />
+    <Property Name="trab" Type="varchar" MaxLength="255" />
+    <Property Name="profissao" Type="varchar" MaxLength="255" />
+    <Property Name="sexo" Type="char" MaxLength="1" />
+    <Property Name="data_nascimento" Type="varchar" MaxLength="12" />
+    <Property Name="area_atuacao" Type="varchar" MaxLength="255" />
+    <Property Name="receber_novidades" Type="char" MaxLength="1" />
+    <Property Name="cadastrado" Type="int" />
+    <Property Name="data1" Type="varchar" MaxLength="20" />
+    <Property Name="expiracao" Type="datetime" />
+    <Property Name="tipo_usuario" Type="varchar" MaxLength="20" />
+    <Property Name="contador" Type="int" Nullable="false" />
+    <Property Name="dataCadastro" Type="datetime" Nullable="false" />
+    <Property Name="data_atualizacao" Type="datetime" />
+    <Property Name="cnpj" Type="varchar" MaxLength="40" />
+    <Property Name="id_estacio" Type="int" Nullable="false" />
+    <Property Name="oab_flag" Type="bool" />
+    <Property Name="oab_nr_inscricao" Type="varchar" MaxLength="40" />
+    <Property Name="oab_status" Type="char" MaxLength="1" />
+    <Property Name="dt_ultimo_login" Type="datetime" />
+    <Property Name="qtd_sessoes" Type="int" Nullable="false" />
+    <Property Name="oab_nr_ficha" Type="varchar" MaxLength="40" />
+    <Property Name="data_repositorio" Type="datetime" />
+    <Property Name="pesquisa" Type="int" />
+  </EntityType>
+  <EntityType Name="idc_agregado">
+    <Key>
+      <PropertyRef Name="idc_agregado_id" />
+    </Key>
+    <Property Name="idc_agregado_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="idc_agregado_nome" Type="varchar" MaxLength="20" />
+    <Property Name="idc_agregado_valor" Type="varchar" MaxLength="12" />
+    <Property Name="idc_agregado_data" Type="varchar" MaxLength="20" />
+    <Property Name="idc_agregado_orientacao" Type="int" />
+    <Property Name="idc_agregado_ordem" Type="int" />
+  </EntityType>
+  <EntityType Name="noticias">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="id_prod" Type="int" Nullable="false" />
+    <Property Name="id_tipo" Type="int" Nullable="false" />
+    <Property Name="texto" Type="longtext" Nullable="false" />
+    <Property Name="nota" Type="longtext" Nullable="false" />
+    <Property Name="destaque" Type="char" Nullable="false" MaxLength="1" />
+    <Property Name="newsletter" Type="char" Nullable="false" MaxLength="1" />
+    <Property Name="link_file" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="data_cadastro" Type="datetime" Nullable="false" />
+    <Property Name="destaque_home" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="destaque_perfil" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="destaque_fixo_home" Type="bool" Nullable="false" />
+    <Property Name="destaque_fixo_perfil" Type="bool" Nullable="false" />
+    <Property Name="publicar" Type="char" MaxLength="1" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'def.coad.noticias_busca' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="noticias_busca">
+    <Key>
+      <PropertyRef Name="id_grupo" />
+      <PropertyRef Name="id_noticia" />
+      <PropertyRef Name="verbete" />
+      <PropertyRef Name="id_prod" />
+      <PropertyRef Name="id_tipo" />
+      <PropertyRef Name="texto" />
+      <PropertyRef Name="data_cadastro" />
+    </Key>
+    <Property Name="id_grupo" Type="int" Nullable="false" />
+    <Property Name="id_noticia" Type="int" Nullable="false" />
+    <Property Name="verbete" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="id_prod" Type="int" Nullable="false" />
+    <Property Name="id_tipo" Type="int" Nullable="false" />
+    <Property Name="texto" Type="longtext" Nullable="false" />
+    <Property Name="data_cadastro" Type="datetime" Nullable="false" />
+    <Property Name="publicar" Type="char" MaxLength="1" />
+    <Property Name="texto_integra" Type="longtext" />
+    <Property Name="verbete_integra" Type="varchar" MaxLength="255" />
+    <Property Name="descricao" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'def.coad.noticias_conteudo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="noticias_conteudo">
+    <Key>
+      <PropertyRef Name="id_grupo" />
+      <PropertyRef Name="id_noticia" />
+      <PropertyRef Name="verbete" />
+      <PropertyRef Name="subverbete" />
+    </Key>
+    <Property Name="id_grupo" Type="int" Nullable="false" />
+    <Property Name="id_noticia" Type="int" Nullable="false" />
+    <Property Name="verbete" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="subverbete" Type="varchar" Nullable="false" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="noticias_grupos">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="id_tipo" Type="int" Nullable="false" />
+    <Property Name="descricao" Type="varchar" Nullable="false" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="noticias_permissoes">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="id_grupo" Type="int" Nullable="false" />
+    <Property Name="valor" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="id_permissao" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="noticias_tipos">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="id_area" Type="int" Nullable="false" />
+    <Property Name="descricao" Type="varchar" Nullable="false" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="tab_30">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="colec" Type="varchar" MaxLength="50" />
+    <Property Name="gg" Type="varchar" MaxLength="50" />
+    <Property Name="vb" Type="varchar" MaxLength="250" />
+    <Property Name="svb" Type="varchar" MaxLength="250" />
+    <Property Name="complemento" Type="varchar" MaxLength="250" />
+    <Property Name="tipo_materia" Type="varchar" MaxLength="50" />
+    <Property Name="expressao_ato" Type="varchar" MaxLength="50" />
+    <Property Name="num" Type="varchar" MaxLength="50" />
+    <Property Name="org" Type="varchar" MaxLength="50" />
+    <Property Name="pagina" Type="int" />
+    <Property Name="informativo" Type="varchar" MaxLength="10" />
+    <Property Name="ano" Type="varchar" MaxLength="10" />
+    <Property Name="modulo" Type="varchar" MaxLength="50" />
+    <Property Name="titulo" Type="text" />
+    <Property Name="dataCadastro" Type="datetime" Nullable="false" />
+    <Property Name="idGED" Type="int" />
+    <Property Name="GED_revoga_altera" Type="varchar" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="tab_30_html">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="colec" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="modulo" Type="int" Nullable="false" />
+    <Property Name="html" Type="longtext" Nullable="false" />
+    <Property Name="idGED" Type="int" />
+  </EntityType>
+  <EntityType Name="tab_31">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="colec" Type="varchar" MaxLength="50" />
+    <Property Name="gg" Type="varchar" MaxLength="50" />
+    <Property Name="vb" Type="varchar" MaxLength="250" />
+    <Property Name="svb" Type="varchar" MaxLength="250" />
+    <Property Name="complemento" Type="text" />
+    <Property Name="tipo_materia" Type="varchar" MaxLength="50" />
+    <Property Name="expressao_ato" Type="varchar" MaxLength="50" />
+    <Property Name="num" Type="varchar" MaxLength="50" />
+    <Property Name="org" Type="varchar" MaxLength="50" />
+    <Property Name="pagina" Type="int" />
+    <Property Name="informativo" Type="int" />
+    <Property Name="ano" Type="varchar" MaxLength="10" />
+    <Property Name="modulo" Type="varchar" MaxLength="50" />
+    <Property Name="titulo" Type="text" />
+    <Property Name="dataCadastro" Type="datetime" Nullable="false" />
+    <Property Name="LABEL" Type="varchar" MaxLength="50" />
+    <Property Name="Destino" Type="varchar" MaxLength="1" />
+    <Property Name="Revisar" Type="varchar" MaxLength="1" />
+    <Property Name="datadoato" Type="date" />
+    <Property Name="publicacao" Type="date" />
+    <Property Name="diario" Type="varchar" MaxLength="50" />
+    <Property Name="ementa" Type="varchar" MaxLength="250" />
+    <Property Name="status_colec" Type="char" MaxLength="1" />
+    <Property Name="status_vb" Type="char" MaxLength="1" />
+    <Property Name="newsletter" Type="char" MaxLength="1" />
+    <Property Name="secao" Type="int" />
+    <Property Name="desc_news" Type="varchar" MaxLength="250" />
+    <Property Name="classiBuscaAvancada" Type="int" />
+    <Property Name="idGED" Type="int" />
+    <Property Name="GED_revoga_altera" Type="varchar" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="tab_31_html">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="colec" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="modulo" Type="int" Nullable="false" />
+    <Property Name="html" Type="longtext" Nullable="false" />
+    <Property Name="bug" Type="int" Nullable="false" />
+    <Property Name="idGED" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'def.coad.VW_BuscarNoticias' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="VW_BuscarNoticias">
+    <Key>
+      <PropertyRef Name="nmid" />
+      <PropertyRef Name="nmid_prod" />
+      <PropertyRef Name="nmid_tipo" />
+      <PropertyRef Name="nmtexto" />
+      <PropertyRef Name="nmnota" />
+      <PropertyRef Name="nmdestaque" />
+      <PropertyRef Name="nmnewsletter" />
+      <PropertyRef Name="nmlink_file" />
+      <PropertyRef Name="nmdata_cadastro" />
+      <PropertyRef Name="nmdestaque_home" />
+      <PropertyRef Name="nmdestaque_perfil" />
+      <PropertyRef Name="nmdestaque_fixo_home" />
+      <PropertyRef Name="nmdestaque_fixo_perfil" />
+      <PropertyRef Name="ncid_grupo" />
+      <PropertyRef Name="ncid_noticia" />
+      <PropertyRef Name="ncverbete" />
+      <PropertyRef Name="ncsubverbete" />
+      <PropertyRef Name="ngid" />
+      <PropertyRef Name="ngid_tipo" />
+      <PropertyRef Name="ngdescricao" />
+    </Key>
+    <Property Name="nmid" Type="int" Nullable="false" />
+    <Property Name="nmid_prod" Type="int" Nullable="false" />
+    <Property Name="nmid_tipo" Type="int" Nullable="false" />
+    <Property Name="nmtexto" Type="longtext" Nullable="false" />
+    <Property Name="nmnota" Type="longtext" Nullable="false" />
+    <Property Name="nmdestaque" Type="char" Nullable="false" MaxLength="1" />
+    <Property Name="nmnewsletter" Type="char" Nullable="false" MaxLength="1" />
+    <Property Name="nmlink_file" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="nmdata_cadastro" Type="datetime" Nullable="false" />
+    <Property Name="nmdestaque_home" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="nmdestaque_perfil" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="nmdestaque_fixo_home" Type="bool" Nullable="false" />
+    <Property Name="nmdestaque_fixo_perfil" Type="bool" Nullable="false" />
+    <Property Name="ncid_grupo" Type="int" Nullable="false" />
+    <Property Name="ncid_noticia" Type="int" Nullable="false" />
+    <Property Name="ncverbete" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="ncsubverbete" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="ngid" Type="int" Nullable="false" />
+    <Property Name="ngid_tipo" Type="int" Nullable="false" />
+    <Property Name="ngdescricao" Type="varchar" Nullable="false" MaxLength="255" />
+  </EntityType>
+</Schema>

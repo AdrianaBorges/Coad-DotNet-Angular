@@ -1,0 +1,167 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.InfoMarketingDTO                     
+             
+                <fieldset>
+                    <legend>Informações de Marketing</legend>
+                    <div class="row">  
+                            <div class="form-group col-sm-5">
+                                @Html.Label("Origem de Cadastro")
+                                    <select id="origem_cadastro" name="origem_cadastro" class = "form-control" ng-model="infoMarketing.O_CAD_ID"
+                                    ng-options="ori.O_CAD_ID as ori.O_CAD_DESCRICAO for ori in lstOrigemCadastro">
+                                    <option value="">Selecione</option>
+                               </select>
+                            </div>           
+                    </div>
+
+                    <div class="row padding">                
+                        <div class="table-responsive col-sm-5">
+                            @Html.Label("Area de Interesse")
+
+                            <div app-validation-msg="erros" for="PROSPECTS_TELEFONE"></div>
+                            <div class="limit-div padding">
+                                <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Area</th>
+                                    <th>Ações</th>
+                                    
+                                </tr>                                   
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="area in lstAreas | filter: query" ng-show="lstAreas">
+                                    <td>
+                                        {{area.AREA_NOME}}
+                                    </td>
+                                    <td>                                        
+                                        <a href="javascript:void(0)" ng-click="adicionarArea(area)" class="blue" id="btnEdicaoItem" title="Incluir">
+                                            <span class="glyphicon glyphicon-forward"></span>
+                                        </a>
+                                    </td>                                    
+                                </tr>
+                                <tr ng-hide="(lstAreas | filter: query).length != 0">
+                                    <td colspan="7">
+                                        <span ng-if="lstAreas.length == 0">Não há Areas cadastradas.</span> 
+                                        <span ng-if="(lstAreas | filter: query).length < 1">Não há areas para adicionar.</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                            </div>
+                    </div>
+                         <div class="table-responsive col-sm-5">
+                            @Html.Label("Areas Selecionadas")
+
+                            <div app-validation-msg="erros" for="PROSPECTS_TELEFONE"></div>
+                            <div class="limit-div padding">
+                                    <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Area</th>
+                                    <th>Ações</th>
+                                    
+                                </tr>                                   
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="area in infoMarketing.AREA_INFO_MARKETING" ng-show="infoMarketing.AREA_INFO_MARKETING">
+                                    
+                                    <td>
+                                        {{area.AREAS.AREA_NOME}}
+                                    </td>
+                                    <td> 
+                                        <a href="javascript:void(0)" ng-click="excluirArea($index, item.REGIAO.RG_DESCRICAO)" class="btnConfirmaExclusao red" 
+                                                    id="btexcluir21" title="Excluir"><span class="glyphicon glyphicon-remove-sign"></span>
+                                                    </a>
+                                    </td>                                    
+                                </tr>
+                                <tr ng-hide="infoMarketing.AREA_INFO_MARKETING.length >= 1">
+                                    <td colspan="7">Nenhuma área foi adicionada
+                                </tr>
+                            </tbody>
+                        </table>
+                            </div>
+                    </div>
+                    </div>
+                    
+                    <div class="row padding">                
+                        <div class="table-responsive col-sm-5">
+                            @Html.Label("Produto de Interesse")
+
+                            <div app-validation-msg="erros" for="PROSPECTS_TELEFONE"></div>
+                            <div class="limit-div padding">
+
+                                <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Produto de Interesse</th>
+                                    <th>Ações</th>
+                                    
+                                </tr>                                   
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="prod in lstProdutosInteresse | filter: query" ng-show="lstProdutosInteresse">
+                                    <td>
+                                        {{prod.CMP_DESCRICAO}}
+                                    </td>
+                                    <td>                                        
+                                        <a href="javascript:void(0)" ng-click="adicionarProdutoInteresse(prod)" class="blue" id="btnEdicaoItem" title="Incluir">
+                                            <span class="glyphicon glyphicon-forward"></span>
+                                        </a>
+                                    </td>                                    
+                                </tr>
+                                <tr ng-hide="(lstProdutosInteresse | filter: query).length != 0">
+                                    <td colspan="2">
+                                        <span ng-if="lstProdutosInteresse.length == 0">Não há produtos de interesse cadastrados.</span> 
+                                        <span ng-if="(lstProdutosInteresse | filter: query).length < 1">Não há produtos de interesse para adicionar.</span>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                            </div>
+                    </div>
+                         <div class="table-responsive col-sm-5">
+                            @Html.Label("Produtos de Interesse Selecionados")
+
+                            <div app-validation-msg="erros" for="PROSPECTS_TELEFONE"></div>
+                            <div class="limit-div padding">
+                                    <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Produto de Interesse</th>
+                                    <th>Ações</th>
+                                    
+                                </tr>                                   
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="prod in infoMarketing.PRODUTO_COMPOSICAO_INFO_MARKETING" ng-show="infoMarketing.PRODUTO_COMPOSICAO_INFO_MARKETING">
+                                    
+                                    <td>
+                                        {{prod.PRODUTO_COMPOSICAO.CMP_DESCRICAO}}
+                                    </td>
+                                    <td> 
+                                        <a href="javascript:void(0)" ng-click="excluirProdutoInteresse($index)" class="btnConfirmaExclusao red" 
+                                                    id="btexcluir21" title="Excluir"><span class="glyphicon glyphicon-remove-sign"></span>
+                                                    </a>
+                                    </td>                                    
+                                </tr>
+                                <tr ng-hide="cliente.CLIENTES_ENDERECO.length > 0">
+                                    <td colspan="2">Nenhuma Produto de Interesse Adicionado. </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                            </div>
+                    </div>
+                    </div>
+                    </fieldset>               
+      
+        <div app-modal="modal-endereco" header="Dados do Endereço">
+            <div class="panel panel-default">
+                <div class="panel-body">   
+                                        
+                </div>
+                 <div class="panel-footer">
+            <button type="button" class="btn btn-default" ng-click="salvarEndereco()"><span class="glyphicon glyphicon-floppy-save blue"></span> {{acaoEnd.label}}</button>      
+                
+        </div> 
+
+        </div>
+    </div>

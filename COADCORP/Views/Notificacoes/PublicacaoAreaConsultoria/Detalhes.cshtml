@@ -1,0 +1,379 @@
+﻿@model  COAD.COADGED.Model.DTO.PublicacaoAreaConsultoriaDTO
+@{
+    ViewBag.Title = "Exibindo matéria registrada";
+}
+@using Coad.GenericCrud.Extensions
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li>@Html.ActionLink("Gerenciar Matérias","index","PublicacaoAreaConsultoria")</li>
+        <li class="active">Exibindo matéria registrada - Colaborador: @ViewBag.colaborador</li>         
+    </ol>
+}
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/publicacaoAreaConsultoria.js")
+<div class="form-lg padding" ng-app="appModule">
+    <div class="panel panel-default" ng-controller="PublicacaoAreaConsultoriaController" data-ng-init="preparaTudo(@ViewBag.publicacaoId, @ViewBag.colecionadorId)">
+            <div class="panel-heading bold head-panel" ng-click="exibirEditando()"><span class="glyphicon glyphicon-edit icon-panel"></span> Exibindo matéria registrada</div>
+            @Html.ValidationSummary(true)          
+            <div class="panel-body" app-bind-rich-text-event load="read(@ViewBag.publicacaoId, @ViewBag.colecionadorId)" ng-cloak>
+                 <div app-message></div>
+                 @using (Html.BeginForm(null, null, FormMethod.Post, new {role = "form"})) 
+                 {
+                 <div class="panel-group" ng-show="exibir.editando" data-ng-init="pub.ARE_CONS_ID=@ViewBag.colecionadorId">
+                     <div class="row">
+                         <div class="form-group col-lg-2">
+                             @Html.LabelFor(model => model.PUB_ID)
+                             @Html.TextBoxFor(model => model.PUB_ID, new {@class = "form-control", ng_model = "pub.PUB_ID", disabled = "disabled" })
+                             @Html.ValidationMessageFor(model => model.PUB_ID, null, new { app_validation_msg = "erros", @for = "PUB_ID" })
+                         </div>
+                         <div class="form-group col-lg-3">
+                             @Html.Label("Colecionador")
+                             @Html.DropDownListFor(model => model.ARE_CONS_ID, new SelectList(@ViewBag.areas, "Value", "Text"), "Selecione" ,new {@class = "form-control", ng_model = "pub.ARE_CONS_ID", ng_change="lerGg()", disabled = "disabled" })
+                             @Html.ValidationMessageFor(model => model.ARE_CONS_ID, null, new { app_validation_msg = "erros", @for = "ARE_CONS_ID" }) 
+                         </div>
+                         <div class="form-group col-lg-2">
+                             @Html.LabelFor(model => model.PUBLICACAO.TIP_MAT_ID)
+                             @Html.DropDownListFor(model => model.PUBLICACAO.TIP_MAT_ID, new SelectList(@ViewBag.tpMateria, "Value", "Text"), "Selecione" ,new {@class = "form-control", ng_model = "pub.PUBLICACAO.TIP_MAT_ID", disabled = "disabled" })
+                             @Html.ValidationMessageFor(model => model.PUBLICACAO.TIP_MAT_ID, null, new { app_validation_msg = "erros", @for = "TIP_MAT_ID" }) 
+                         </div>
+                         <div class="form-group col-lg-3">
+                             <a href="#" data-toggle="tooltip" 
+                                 title="Informe [Sim] para usar esta matéria nos informativos indicados nesta tela; ou [Não] para arquivá-la para uso posterior.">
+                                 Usar neste informativo?
+                             </a>
+                             @Html.DropDownListFor(model => model.PUBLICACAO.PUB_ATIVO, new SelectList(@ViewBag.ativo, "Value", "Text"), "Selecione", new {@class = "form-control", ng_model = "pub.PUBLICACAO.PUB_ATIVO", disabled = "disabled" })
+                             @Html.ValidationMessageFor(model => model.PUBLICACAO.PUB_ATIVO, null, new { app_validation_msg = "erros", @for = "PUB_ATIVO" }) 
+                         </div>
+                         <div class="form-group col-lg-2" ng-show="pub.ARE_CONS_ID!=='2'">
+                             @Html.Label("Informativo")
+                             @Html.DropDownListFor(model => model.PUBLICACAO.INF_ANO, new SelectList(@ViewBag.informativo, "Value", "Text"), "Selecione" ,
+                             new {@class = "form-control", ng_model = "pub.PUBLICACAO_UF[0].INF_ANO", disabled = "disabled" })
+                         </div>
+                     </div>
+                     
+                     <div class="panel panel-default" ng-show="pub.ARE_CONS_ID=='2'">
+                        <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Estados</div>
+                        <div class="panel-body">
+                             <div class="row" ng-repeat="uf in pub.PUBLICACAO_UF">
+                                 <div class="form-group col-lg-5">
+                                     @Html.Label("{{$index+1}}º Estado")
+                                     @Html.DropDownListFor(model => model.PUBLICACAO_UF, new SelectList(@ViewBag.uf, "Value", "Text"), "Selecione" ,new {@class = "form-control", ng_model = "pub.PUBLICACAO_UF[$index].UF_ID", disabled = "disabled" })
+                                 </div>
+                                 <div class="form-group col-lg-5">
+                                     @Html.Label("Informativo")
+                                     @Html.DropDownListFor(model => model.PUBLICACAO.INF_ANO, new SelectList(@ViewBag.informativo, "Value", "Text"), "Selecione" ,
+                                     new {@class = "form-control", ng_model = "pub.PUBLICACAO_UF[$index].INF_ANO", disabled = "disabled"})
+                                 </div>
+                             </div>
+                        </div>
+                     </div>
+                     
+                     <div class="panel panel-default">
+                        <div class="panel-heading bold head-panel" ng-click="exibirOrigem()"><span class="glyphicon glyphicon-edit icon-panel"></span> Origem da matéria</div>
+                        <div class="panel-body" ng-show="exibir.origem">
+                             <div class="row">
+                                 <div class="form-group col-lg-4">
+                                     @Html.LabelFor(model => model.PUBLICACAO.TIP_ATO_ID)
+                                     @Html.DropDownListFor(model => model.PUBLICACAO.TIP_ATO_ID, new SelectList(@ViewBag.tpAto, "Value", "Text"), "Selecione" ,new {@class = "form-control", ng_model = "pub.PUBLICACAO.TIP_ATO_ID", disabled = "disabled" })
+                                     @Html.ValidationMessageFor(model => model.PUBLICACAO.TIP_ATO_ID, null, new { app_validation_msg = "erros", @for = "TIP_ATO_ID" }) 
+                                 </div>
+                                 <div class="form-group col-lg-2">
+                                     @Html.LabelFor(model => model.PUBLICACAO.PUB_NUMERO_ATO)
+                                     @Html.TextBoxFor(model => model.PUBLICACAO.PUB_NUMERO_ATO, new {@class = "form-control", ng_model = "pub.PUBLICACAO.PUB_NUMERO_ATO", disabled = "disabled" })
+                                     @Html.ValidationMessageFor(model => model.PUBLICACAO.PUB_NUMERO_ATO, null, new { app_validation_msg = "erros", @for = "PUB_NUMERO_ATO" }) 
+                                 </div>
+                                 <div class="form-group col-lg-2">
+                                     @Html.LabelFor(model => model.PUBLICACAO.PUB_DATA_ATO)
+                                     @Html.TextBoxFor(model => model.PUBLICACAO.PUB_DATA_ATO, new { @class = "form-control datepicker", ng_model = "PUB_DATA_ATO", app_date = "pub.PUBLICACAO.PUB_DATA_ATO", disabled = "disabled" })
+                                     @Html.ValidationMessageFor(model => model.PUBLICACAO.PUB_DATA_ATO, null, new { app_validation_msg = "erros", @for = "PUB_DATA_ATO" }) 
+                                 </div>
+                                 <div class="form-group col-lg-4">
+                                     @Html.LabelFor(model => model.PUBLICACAO.ORG_ID)
+                                     @Html.DropDownListFor(model => model.PUBLICACAO.ORG_ID, new SelectList(@ViewBag.orgao, "Value", "Text"), "Selecione" ,new {@class = "form-control", ng_model = "pub.PUBLICACAO.ORG_ID", disabled = "disabled" })
+                                     @Html.ValidationMessageFor(model => model.PUBLICACAO.ORG_ID, null, new { app_validation_msg = "erros", @for = "ORG_ID" }) 
+                                 </div>
+                             </div>
+                        </div>
+                     </div>
+
+                     <div class="panel panel-default">
+                        <div class="panel-heading bold head-panel" ng-click="exibirVeiculacao()"><span class="glyphicon glyphicon-edit icon-panel"></span> Veiculação da matéria</div>
+                        <div class="panel-body" ng-show="exibir.veiculacao">
+                             <div class="row">
+                                 <div class="form-group col-lg-4">
+                                     @Html.LabelFor(model => model.PUBLICACAO.TVI_ID)
+                                     @Html.DropDownListFor(model => model.PUBLICACAO.TVI_ID, new SelectList(@ViewBag.veiculo, "Value", "Text"), "Selecione" ,new {@class = "form-control", ng_model = "pub.PUBLICACAO.TVI_ID", disabled = "disabled" })
+                                     @Html.ValidationMessageFor(model => model.PUBLICACAO.TVI_ID, null, new { app_validation_msg = "erros", @for = "TVI_ID" }) 
+                                 </div>
+                                 <div class="form-group col-lg-4">
+                                     @Html.LabelFor(model => model.PUBLICACAO.PUB_DATA_PUB_ATO)
+                                     @Html.TextBoxFor(model => model.PUBLICACAO.PUB_DATA_PUB_ATO, new { @class = "form-control datepicker", ng_model = "PUB_DATA_PUB_ATO", app_date = "pub.PUBLICACAO.PUB_DATA_PUB_ATO", disabled = "disabled" })
+                                     @Html.ValidationMessageFor(model => model.PUBLICACAO.PUB_DATA_PUB_ATO, null, new { app_validation_msg = "erros", @for = "PUB_DATA_PUB_ATO" }) 
+                                 </div>
+                                 <div class="form-group col-lg-4">
+                                     @Html.LabelFor(model => model.PUBLICACAO.PUB_COMPL_VEICULO)
+                                     @Html.TextBoxFor(model => model.PUBLICACAO.PUB_COMPL_VEICULO, new { @class = "form-control", ng_model = "pub.PUBLICACAO.PUB_COMPL_VEICULO", disabled = "disabled" })
+                                     @Html.ValidationMessageFor(model => model.PUBLICACAO.PUB_COMPL_VEICULO, null, new { app_validation_msg = "erros", @for = "PUB_COMPL_VEICULO" }) 
+                                 </div>
+                             </div>
+                        </div>
+                     </div>
+                     
+                     <div class="panel panel-default">
+                        <div class="panel-heading bold head-panel" ng-click="exibirRevogacao()"><span class="glyphicon glyphicon-edit icon-panel"></span> Ato alterado ou revogado pelo registro acima</div>
+                        <div class="panel-body" ng-show="exibir.revogacao">
+                             <div class="row">
+                                 <div class="form-group col-lg-4">
+                                     @Html.LabelFor(model => model.PUBLICACAO.TIP_ATO_ID_REP)
+                                     @Html.DropDownListFor(model => model.PUBLICACAO.TIP_ATO_ID_REP, new SelectList(@ViewBag.tpAto, "Value", "Text"), "Selecione" ,new {@class = "form-control", ng_model = "pub.PUBLICACAO.TIP_ATO_ID_REP", disabled = "disabled" })
+                                     @Html.ValidationMessageFor(model => model.PUBLICACAO.TIP_ATO_ID_REP, null, new { app_validation_msg = "erros", @for = "TIP_ATO_ID_REP" }) 
+                                 </div>
+                                 <div class="form-group col-lg-2">
+                                     @Html.LabelFor(model => model.PUBLICACAO.PUB_NUMERO_ATO_REP)
+                                     @Html.TextBoxFor(model => model.PUBLICACAO.PUB_NUMERO_ATO_REP, new {@class = "form-control", ng_model = "pub.PUBLICACAO.PUB_NUMERO_ATO_REP", disabled = "disabled" })
+                                     @Html.ValidationMessageFor(model => model.PUBLICACAO.PUB_NUMERO_ATO_REP, null, new { app_validation_msg = "erros", @for = "PUB_NUMERO_ATO_REP" }) 
+                                 </div>
+                                 <div class="form-group col-lg-2">
+                                     @Html.LabelFor(model => model.PUBLICACAO.PUB_DATA_ATO_REP)
+                                     @Html.TextBoxFor(model => model.PUBLICACAO.PUB_DATA_ATO_REP, new { @class = "form-control datepicker", ng_model = "PUB_DATA_ATO_REP", app_date = "pub.PUBLICACAO.PUB_DATA_ATO_REP", disabled = "disabled" })
+                                     @Html.ValidationMessageFor(model => model.PUBLICACAO.PUB_DATA_ATO_REP, null, new { app_validation_msg = "erros", @for = "PUB_DATA_ATO_REP" }) 
+                                 </div>
+                                 <div class="form-group col-lg-4">
+                                     @Html.LabelFor(model => model.PUBLICACAO.ORG_ID_REP)
+                                     @Html.DropDownListFor(model => model.PUBLICACAO.ORG_ID_REP, new SelectList(@ViewBag.orgao, "Value", "Text"), "Selecione" ,new {@class = "form-control", ng_model = "pub.PUBLICACAO.ORG_ID_REP", disabled = "disabled" })
+                                     @Html.ValidationMessageFor(model => model.PUBLICACAO.ORG_ID_REP, null, new { app_validation_msg = "erros", @for = "ORG_ID_REP" }) 
+                                 </div>
+                             </div>
+                             <div class="row">
+                                 <div class="form-group col-lg-12">
+                                     @Html.LabelFor(model => model.PUBLICACAO.PUB_ALTERACAO_ATO_REP)
+                                     @Html.TextAreaFor(model => model.PUBLICACAO.PUB_ALTERACAO_ATO_REP, new {@class = "form-control", ng_model = "pub.PUBLICACAO.PUB_ALTERACAO_ATO_REP", disabled = "disabled" })
+                                     @Html.ValidationMessageFor(model => model.PUBLICACAO.PUB_ALTERACAO_ATO_REP, null, new { app_validation_msg = "erros", @for = "PUB_ALTERACAO_ATO_REP" }) 
+                                 </div>
+                             </div>
+                        </div>
+                     </div>
+                     
+                     <div class="panel panel-default">
+                        <div class="panel-heading bold head-panel" ng-click="exibirTitulacao()"><span class="glyphicon glyphicon-edit icon-panel"></span> Titulações</div>
+                        <div class="panel-body" ng-show="exibir.titulacao" data-ng-init="lerGg()">
+                             <div class="row" ng-repeat="titulacao in pub.PUBLICACAO_TITULACAO" ng-show="pub.PUBLICACAO_TITULACAO">  
+                                 <div class="form-group col-lg-3">
+                                     @Html.Label("{{$index+1}}º Grande grupo")
+                                     <select ng-options=" item.TIT_ID as item.TIT_DESCRICAO for item in titulacao.gg" class="form-control" ng-model = "pub.PUBLICACAO_TITULACAO[$index].TIT_ID" ng-change = "lerVerbetes(titulacao, $index)" disabled = "disabled">
+                                        <option value="">Selecione</option>
+                                     </select>
+                                 </div>
+                                 <div class="form-group col-lg-3" ng-show="titulacao.verbetes">
+                                     @Html.Label("Verbetes")
+                                     <select ng-options=" item.TIT_ID as item.TIT_DESCRICAO for item in titulacao.verbetes" class="form-control" ng-model = "pub.PUBLICACAO_TITULACAO[$index].TIT_ID_VERBETE" ng-change = "lerSubverbetes(titulacao, $index)" disabled = "disabled">
+                                        <option value="">Selecione</option>
+                                     </select>
+                                 </div>
+                                 <div class="form-group col-lg-3" ng-show="titulacao.subverbetes">
+                                     @Html.Label("Subverbetes")
+                                     <select ng-options=" item.TIT_ID as item.TIT_DESCRICAO for item in titulacao.subverbetes" class="form-control" ng-model = "pub.PUBLICACAO_TITULACAO[$index].TIT_ID_SUBVERBETE" disabled = "disabled">
+                                        <option value="">Selecione</option>
+                                     </select>
+                                 </div>
+                                 <div class="form-group col-lg-1" ng-show="titulacao.subverbetes && pub.PUBLICACAO_TITULACAO[$index].TIT_ID_SUBVERBETE">
+                                     @Html.Label("Principal")
+                                     <div ng-if="pub.PUBLICACAO_TITULACAO[$index].PTI_PRINCIPAL">
+                                        <input type="radio" class="form-control" name="titulacao" value="$parent.PTI_PRINCIPAL" checked disabled>
+                                     </div>
+                                     <div ng-if="!pub.PUBLICACAO_TITULACAO[$index].PTI_PRINCIPAL">
+                                        <input type="radio" class="form-control" name="titulacao" value="$parent.PTI_PRINCIPAL" disabled>
+                                     </div>
+                                     @*<input type="radio" class="form-control" ng-model="$parent.PTI_PRINCIPAL" ng-value="titulacao" ng-click="marcouPrincipal(titulacao)">*@
+                                 </div>
+                             </div>                     
+                        </div>
+                     </div>
+                     
+                     <div class="panel panel-default">
+                        <div class="panel-heading bold head-panel" ng-click="exibirIntegra()"><span class="glyphicon glyphicon-edit icon-panel"></span> Texto na íntegra para o portal</div>
+                        <div class="panel-body" ng-show="exibir.integra">
+                             <div class="row">
+                                 <div class="form-group col-lg-12">
+                                     @Html.LabelFor(model => model.PUBLICACAO.PUB_CONTEUDO)
+                                     @Html.HiddenFor(model => model.PUBLICACAO.PUB_CONTEUDO, new { @class = "form-control", ng_model = "pub.PUBLICACAO.PUB_CONTEUDO_TEXTO", app_rich_editor="Integra" })
+                                     <div>
+                                        @Html.Raw(@ViewBag.PUB_CONTEUDO)
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+                     </div>
+
+                     <div class="panel panel-default">
+                        <div class="panel-heading bold head-panel" ng-click="exibirManchete()"><span class="glyphicon glyphicon-edit icon-panel"></span> Manchete</div>
+                        <div class="panel-body" ng-show="exibir.manchete">
+                             <div class="row">
+                                 <div class="form-group col-lg-12">
+                                     @Html.LabelFor(model => model.PUB_MANCHETE)
+                                     @Html.HiddenFor(model => model.PUB_MANCHETE, new { @class = "form-control", ng_model = "pub.PUB_MANCHETE", app_rich_editor = "Manchete" })
+                                     <div>
+                                         @Html.Raw(@ViewBag.PUB_MANCHETE)
+                                     </div>
+                                </div>
+                             </div>
+                        </div>
+                     </div>
+                     
+                     <div class="panel panel-default">
+                        <div class="panel-heading bold head-panel" ng-click="exibirLocalizacao()"><span class="glyphicon glyphicon-edit icon-panel"></span> Localização no portal e news</div>
+                        <div class="panel-body" ng-show="exibir.localizacao">
+                             <div class="row">
+                                 <div class="form-group col-lg-6">
+                                    @* portal *@
+                                    @Html.LabelFor(model => model.PUBLICACAO.LBL_ID)
+                                    @Html.DropDownListFor(model => model.PUBLICACAO.LBL_ID, new SelectList(@ViewBag.label, "Value", "Text"), "Selecione" , new { @class = "form-control", ng_model = "pub.PUBLICACAO.LBL_ID", disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.PUBLICACAO.LBL_ID, null, new { app_validation_msg = "erros", @for = "LBL_ID" }) 
+                                 </div>
+                                 <div class="form-group col-lg-6">
+                                    @* news *@
+                                    @Html.LabelFor(model => model.PUBLICACAO.SEC_ID)
+                                    @Html.DropDownListFor(model => model.PUBLICACAO.SEC_ID, new SelectList(@ViewBag.secao, "Value", "Text"), "Selecione" , new { @class = "form-control", ng_model = "pub.PUBLICACAO.SEC_ID", disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.PUBLICACAO.SEC_ID, null, new { app_validation_msg = "erros", @for = "SEC_ID" }) 
+                                 </div>
+                             </div>
+                             <div class="row">
+                                 <div class="form-group col-lg-12">
+                                    @* news *@
+                                    @Html.LabelFor(model => model.PUBLICACAO.PUB_DESCRICAO_NEWS)
+                                    @Html.TextBoxFor(model => model.PUBLICACAO.PUB_DESCRICAO_NEWS, new {@class = "form-control", ng_model = "pub.PUBLICACAO.PUB_DESCRICAO_NEWS", disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.PUBLICACAO.PUB_DESCRICAO_NEWS, null, new { app_validation_msg = "erros", @for = "PUB_DESCRICAO_NEWS" }) 
+                                 </div>
+                             </div>
+                        </div>
+                     </div>
+                     
+                     <div class="panel panel-default">
+                        <div class="panel-heading bold head-panel" ng-click="exibirPalavraChave()"><span class="glyphicon glyphicon-edit icon-panel"></span> Palavras chave</div>
+                        <div class="panel-body" ng-show="exibir.palavraChave">
+                             <div class="row" ng-repeat="palavraChave in pub.PUBLICACAO_PALAVRA_CHAVE" ng-show="pub.PUBLICACAO_PALAVRA_CHAVE">
+                                 <div class="form-group col-lg-10">
+                                     @Html.Label("{{$index+1}}ª Palavra chave")
+                                     @Html.TextBoxFor(model => model.PUBLICACAO_PALAVRA_CHAVE, new {@class = "form-control", ng_model = "pub.PUBLICACAO_PALAVRA_CHAVE[$index].PPC_TEXTO", disabled = "disabled" })
+                                     @Html.ValidationMessageFor(model => model.PUBLICACAO_PALAVRA_CHAVE, null, new { app_validation_msg = "erros", @for = "PUBLICACAO_PALAVRA_CHAVE" }) 
+                                 </div>
+                             </div>
+                        </div>
+                     </div>
+                     
+                     <div class="panel panel-default">
+                        <div class="panel-heading bold head-panel" ng-click="exibirPublicarPortalNews()"><span class="glyphicon glyphicon-edit icon-panel"></span> Publicar no portal e news</div>
+                        <div class="panel-body" ng-show="exibir.publicarPortalNews">
+                             <div class="row">
+                                 <div class="form-group col-lg-6">
+                                    @Html.Label("Publicado no portal em:") {{pub.publicadoWeb}}
+                                    <br><span class="float-left"><button type="button" ng-click="publicarWEB()" class="btn btn-primary" disabled>Portal: íntegra e manchete</button></span>
+                                 </div>
+                                 <div class="form-group col-lg-6">
+                                    @Html.Label("Publicado na NEWS em:") {{pub.publicadoNews}}
+                                    <br><span class="float-left"><button type="button" ng-click="publicarNEWS()" class="btn btn-primary" disabled>Publicar na NEWS</button></span>
+                                 </div>
+                             </div>
+                        </div>
+                     </div>
+                     
+                     <div class="panel panel-default">
+                        <div class="panel-heading bold head-panel" ng-click="exibirEmenta()"><span class="glyphicon glyphicon-edit icon-panel"></span> Ementa</div>
+                        <div class="panel-body" ng-show="exibir.ementa">
+                             <div class="row">
+                                 <div class="form-group col-lg-12">
+                                     @Html.LabelFor(model => model.PUB_EMENTA)
+                                     @Html.HiddenFor(model => model.PUB_EMENTA, new { @class = "form-control", ng_model = "pub.PUB_EMENTA", app_rich_editor = "Ementa" })
+                                     <div>
+                                         @Html.Raw(@ViewBag.PUB_EMENTA)
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="row">
+                                 <div class="form-group col-lg-12">
+                                    @Html.Label("Ementa publicada em:") {{pub.publicadoEmenta}}
+                                    <br><span class="float-left"><button type="button" ng-click="publicarEmenta()" class="btn btn-primary" disabled>Publicar Ementa</button></span>
+                                 </div>
+                             </div>
+                        </div>
+                     </div>
+                     
+                     <div class="panel panel-default">
+                        <div class="panel-heading bold head-panel" ng-click="exibirImpresso()"><span class="glyphicon glyphicon-edit icon-panel"></span> Texto para matéria impressa</div>
+                        <div class="panel-body" ng-show="exibir.impresso">
+                             <div class="row">
+                                 <div class="form-group col-lg-12">
+                                     @Html.LabelFor(model => model.PUBLICACAO.PUB_CONTEUDO_RESENHA)
+                                     @Html.HiddenFor(model => model.PUBLICACAO.PUB_CONTEUDO_RESENHA, new { @class = "form-control", ng_model = "pub.PUBLICACAO.PUB_CONTEUDO_RESENHA_TEXTO", app_rich_editor = "Resenha", ng_change="txtRemissao()" })
+                                     <div>
+                                         @Html.Raw(@ViewBag.PUB_CONTEUDO_RESENHA)
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+                     </div>
+
+                     <div class="panel panel-default">
+                        <div class="panel-heading bold head-panel" ng-click="exibirRemissao()"><span class="glyphicon glyphicon-edit icon-panel"></span> Remissões</div>
+                        <div class="panel-body" ng-show="exibir.remissao">
+                             <div class="row" ng-repeat="remissao in pub.PUBLICACAO_REMISSAO" ng-show="pub.PUBLICACAO_REMISSAO">
+                                 <div class="form-group col-lg-10">
+                                     @Html.Label("{{$index+1}}ª Remissão")
+                                     @Html.TextAreaFor(model => model.PUBLICACAO_REMISSAO, new {@class = "form-control", ng_model = "pub.PUBLICACAO_REMISSAO[$index].PRE_REMISSAO", ng_blur="txtRemissao()", disabled = "disabled" })
+                                     @Html.ValidationMessageFor(model => model.PUBLICACAO_REMISSAO, null, new { app_validation_msg = "erros", @for = "PRE_REMISSAO" }) 
+                                 </div>
+                             </div>
+                        </div>
+                     </div>
+                     
+                     <div class="panel panel-default" ng-show="(pub.PUBLICACAO_REMISSAO.length > 0) && (pub.PUBLICACAO_REMISSAO[0].PRE_REMISSAO)">
+                        <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Texto + Remissões</div>
+                        <div class="panel-body">
+                             <div class="row">
+                                 <div class="form-group col-lg-12">
+                                     @Html.Label("Texto com as remissões")
+                                     @Html.HiddenFor(model => model.PUB_REMISSAO, new { @class = "form-control", ng_model = "pub.PRE_REMISSAO", app_rich_editor = "Remissao" })
+                                     <div>
+                                         @Html.Raw(@ViewBag.PRE_REMISSAO)
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+                     </div>
+
+                     <div class="panel panel-default">
+                        <div class="panel-heading bold head-panel" ng-click="exibirRemissivo()"><span class="glyphicon glyphicon-edit icon-panel"></span> Remissivos</div>
+                        <div class="panel-body" ng-show="exibir.remissivo">
+                             <div class="row" ng-repeat="remissivo in pub.PUBLICACAO_REMISSIVO" ng-show="pub.PUBLICACAO_REMISSIVO">
+                                 <div class="form-group col-lg-10">
+                                     @Html.Label("{{$index+1}}º Remissivo")
+                                     @Html.TextBoxFor(model => model.PUBLICACAO_REMISSIVO, new {@class = "form-control", ng_model = "pub.PUBLICACAO_REMISSIVO[$index].PRE_REMISSIVO", disabled = "disabled" })
+                                     @Html.ValidationMessageFor(model => model.PUBLICACAO_REMISSIVO, null, new { app_validation_msg = "erros", @for = "PRE_REMISSIVO" }) 
+                                 </div>
+                             </div>
+                        </div>
+                     </div>
+                     
+                     <div class="panel panel-default">
+                        <div class="panel-heading bold head-panel" ng-click="exibirObs()"><span class="glyphicon glyphicon-edit icon-panel"></span> Observações</div>
+                        <div class="panel-body" ng-show="exibir.obs">
+                             <div class="row">
+                                 <div class="form-group col-lg-12">
+                                     @Html.LabelFor(model => model.PUBLICACAO.PUB_OBS)
+                                     @Html.TextAreaFor(model => model.PUBLICACAO.PUB_OBS, new {@class = "form-control", ng_model = "pub.PUBLICACAO.PUB_OBS", disabled = "disabled" })
+                                     @Html.ValidationMessageFor(model => model.PUBLICACAO.PUB_OBS, null, new { app_validation_msg = "erros", @for = "PUB_OBS" }) 
+                                 </div>
+                             </div>
+                        </div>
+                     </div>
+                 </div>
+                 }
+            </div>
+            <div class="panel-footer">
+                <div ng-show="!((pub.PUBLICACAO.PUB_CONTEUDO_TEXTO || pub.PUBLICACAO.PUB_CONTEUDO_RESENHA_TEXTO) && pub.ARE_CONS_ID)">
+                    <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default">Voltar</button>
+                </div>
+            </div> 
+    </div>
+</div>

@@ -1,0 +1,43 @@
+﻿<fieldset>
+    <legend class="btn btn-info" style="text-align: left;">Histórico (SAC)</legend>
+    <div class="row padding" ng-if="listaatend.length>0">
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr class="info">
+                        <th>Assinatura</th>
+                        <th>Data</th>
+                        <th>Histórico</th>
+                        <th>Solicitante</th>
+                        <th>Atendente</th>
+                        <th style="text-align: center;">Detalhe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="historico in listaatend">
+                        <td>{{historico.ASN_NUM_ASSINATURA}}</td>
+                        <td app-show-date="historico.HAT_DATA_HIST" show-time></td>
+                        <td>{{historico.HAT_DESCRICAO}}</td>
+                        <td>{{historico.HAT_SOLICITANTE}}</td>
+                        <td>{{historico.USU_LOGIN}}</td>
+                        <td style="text-align: center;">
+                            <a href="javascript:void(0)" ng-click="histAtendDetalhe(historico)">
+                                <span class="fa fa-search"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div ng-if="!listaatend||listaatend.length==0">
+        <hr>
+
+        <div class="alert alert-success">
+            <strong>Atenção!</strong> Não existe histórico cadastrado para este cliente.
+        </div>
+
+    </div>
+
+</fieldset>

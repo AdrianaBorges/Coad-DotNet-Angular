@@ -1,0 +1,232 @@
+﻿@using Coad.GenericCrud.Extensions
+
+@{
+    ViewBag.print = true;
+    int ano = (DateTime.Now != null) ? DateTime.Now.Year : 2015;
+    if (ViewBag.print == true)
+    {
+        ViewBag.printableClass = "hidden-print";
+    }
+
+    ViewBag.Title = "Index";
+
+}
+
+<script>
+    $(document).ready(function () {
+        $(":input").inputmask();
+    });
+</script>
+
+@Scripts.Render("~/Scripts/negocio/contratos.js")
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+    td {
+        font-size:xx-small !important;
+    }
+</style>
+
+
+<div ng-app="appModule">
+    <div ng-controller="ContratosController" class="padding content" ng-init="iniRelClientesProduto(@ViewBag.ultimodia);canPrint=true">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i><a href="/Relatorios/Controladoria">Relatorios</a>
+                        </li>
+                        <li>
+                            <a href="/Relatorios/Controladoria">Relatórios Controladoria</a>
+                        </li>
+                        <li class="active">
+                            <span>Contratos Vigentes por Produto</span> 
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="panel panel-corp">
+                <div app-message></div>
+                <div class="panel-heading bold head-panel">
+                    <span class="glyphicon glyphicon-filter"></span>Filtros
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Opções<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)" ng-click="listarClientesProduto()" title="Editar" class="blue">Pesquisar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Mes")
+                                @Html.DropDownList("_mesatual", new SelectList(@ViewBag.ListaMes, "Value", "Text"), new { @class = "form-control", ng_model = "filtro.mes", ng_change = "listarClientesProduto()" })
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div class="form-group">
+                                @Html.Label("Ano")
+                                @Html.TextBox("_anoatual", "", new { @class = "form-control", ng_model = "filtro.ano" })
+                            </div>
+                        </div>
+                        @*<div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="GRUPO_ID">Grupo</label>
+                                @Html.DropDownList("AREA_ID", new SelectList(ViewBag.areas, "AREA_ID", "AREA_NOME"), "Selecione", new { @class = "form-control", ng_model = "filtro.area_id" , ng_change = "listarClientesProduto()" })
+                            </div>
+                        </div>*@
+
+                        @*<div class="col-lg-1">
+                            <div class="form-group">
+                                @Html.Label("Analítico")
+                                <label class="switch switch switch-round">
+                                    <input type="checkbox" ng_model="filtro.analitico" ng_change="listarFaturamentoContrato()">
+                                    <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>*@
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" ng-click="listarClientesProduto()"><span class="glyphicon glyphicon-search"></span>&nbspPesquisar</button>
+                </div>
+            </div>
+            <div class="panel panel-corp" ng-show="listaclientesproduto" id="baseContent">
+                <div class="panel-heading bold head-panel hidden-print"><span class="glyphicon glyphicon-book"></span>&nbspCOADCORP - Contratos Vigentes por Produto - {{filtro.dataatual}}</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="table-responsive" style="padding-left: 12px; padding-right: 12px;">
+                            <table class="table table-hover table-bordered" style="padding-left: 12px;  font-size:0.5pt !important;" ng-repeat="cabec in listaclientesproduto" >
+                                <thead>
+                                    <tr class="info">
+                                        <th colspan="28">
+                                          <span>Area:</span><span>{{cabec.AREA_ID}} - {{cabec.AREA_NOME}}</span> 
+                                        </th>
+                                    </tr>
+                                    <tr class="info" >
+                                        <th>Produto </th>
+                                        <th>AC</th>
+                                        <th>AL</th>
+                                        <th>AM</th>
+                                        <th>AP</th>
+                                        <th>BA</th>
+                                        <th>CE</th>
+                                        <th>DF</th>
+                                        <th>ES</th>
+                                        <th>GO</th>
+                                        <th>MA</th>
+                                        <th>MG</th>
+                                        <th>MS</th>
+                                        <th>MT</th>
+                                        <th>PA</th>
+                                        <th>PB</th>
+                                        <th>PE</th>
+                                        <th>PI</th>
+                                        <th>PR</th>
+                                        <th>RJ</th>
+                                        <th>RN</th>
+                                        <th>RO</th>
+                                        <th>RR</th>
+                                        <th>RS</th>
+                                        <th>SC</th>
+                                        <th>SE</th>
+                                        <th>SP</th>
+                                        <th>TO</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in cabec.LISTAUF" @*ng-if="item.PRO_ID>0"*@ >
+                                    <td >{{item.PRO_ID}} - {{item.PRO_NOME}}</td>
+                                    <td>{{item.AC}}</td>
+                                    <td>{{item.AL}}</td>
+                                    <td>{{item.AM}}</td>
+                                    <td>{{item.AP}}</td>
+                                    <td>{{item.BA}}</td>
+                                    <td>{{item.CE}}</td>
+                                    <td>{{item.DF}}</td>
+                                    <td>{{item.ES}}</td>
+                                    <td>{{item.GO}}</td>
+                                    <td>{{item.MA}}</td>
+                                    <td>{{item.MG}}</td>
+                                    <td>{{item.MS}}</td>
+                                    <td>{{item.MT}}</td>
+                                    <td>{{item.PA}}</td>
+                                    <td>{{item.PB}}</td>
+                                    <td>{{item.PE}}</td>
+                                    <td>{{item.PI}}</td>
+                                    <td>{{item.PR}}</td>
+                                    <td>{{item.RJ}}</td>
+                                    <td>{{item.RN}}</td>
+                                    <td>{{item.RO}}</td>
+                                    <td>{{item.RR}}</td>
+                                    <td>{{item.RS}}</td>
+                                    <td>{{item.SC}}</td>
+                                    <td>{{item.SE}}</td>
+                                    <td>{{item.SP}}</td>
+                                    <td>{{item.TO}}</td>
+                               </tr>
+                                @*<tr ng-repeat="item in cabec.LISTAUF" ng-if="item.PRO_ID==0">
+                                    <td>{{item.PRO_NOME}}
+                                        <a class="btn btn-default" href="javascript:void(0)" ng-click="expPlanilha(cabec.LISTAUF)" title="Exportar a tabela para o excel">
+                                            <i class="fa fa-file-excel-o blue"></i>
+                                        </a>
+                                    </td>
+                                    <td>{{item.AC}}</td>
+                                    <td>{{item.AL}}</td>
+                                    <td>{{item.AM}}</td>
+                                    <td>{{item.AP}}</td>
+                                    <td>{{item.BA}}</td>
+                                    <td>{{item.CE}}</td>
+                                    <td>{{item.DF}}</td>
+                                    <td>{{item.ES}}</td>
+                                    <td>{{item.GO}}</td>
+                                    <td>{{item.MA}}</td>
+                                    <td>{{item.MG}}</td>
+                                    <td>{{item.MS}}</td>
+                                    <td>{{item.MT}}</td>
+                                    <td>{{item.PA}}</td>
+                                    <td>{{item.PB}}</td>
+                                    <td>{{item.PE}}</td>
+                                    <td>{{item.PI}}</td>
+                                    <td>{{item.PR}}</td>
+                                    <td>{{item.RJ}}</td>
+                                    <td>{{item.RN}}</td>
+                                    <td>{{item.RO}}</td>
+                                    <td>{{item.RR}}</td>
+                                    <td>{{item.RS}}</td>
+                                    <td>{{item.SC}}</td>
+                                    <td>{{item.SE}}</td>
+                                    <td>{{item.SP}}</td>
+                                    <td>{{item.TO}}</td>
+                                </tr>*@
+                           </table>
+                        </div>
+                    </div>
+                    <div ng-if="export.lnkPath!=null&&export.lnkPath!=''">
+                        <a href="{{export.lnkPath}}" ng-click="export.lnkPath=null"><i class="glyphicon glyphicon-cloud-download"></i> Donwload do arquivo ( {{export.lnkPath}} ) </a>
+                    </div>
+                </div>
+                <div class="hidden-print panel-footer">
+                    <a class="btn btn-default" href="/Relatorios/Controladoria">
+                        <span class="glyphicon glyphicon-chevron-left blue"></span>&nbspVoltar
+                    </a>
+                    <a class="btn btn-default" href="javascript:void(0)" ng-click="expPlanilha(listaclientesproduto)" title="Exportar a tabela para o excel">
+                        <i class="fa fa-file-excel-o blue"></i>&nbspExportar
+                    </a>
+                    <a class="btn btn-success" href="javascript:void(0)" app-print="#baseContent" print-flag="canPrint"><i class="fa fa-print"></i>&nbspImprimir</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

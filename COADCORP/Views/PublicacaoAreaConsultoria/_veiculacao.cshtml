@@ -1,0 +1,23 @@
+﻿@model  COAD.COADGED.Model.DTO.PublicacaoAreaConsultoriaDTO
+
+<div class="row">
+    <div class="form-group col-lg-4">
+        @Html.LabelFor(model => model.PUBLICACAO.TVI_ID)
+        <select id="veiculo" class="form-control" ng-model = "pub.PUBLICACAO.TVI_ID" ng-disabled="(operacao.substring(0,1)=='V')">
+            <option value="">--Selecione--</option>
+            <option data-ng-repeat="item in lst._veiculo" ng-value="{{item.Value}}" ng-selected="pub.PUBLICACAO.TVI_ID==item.Value">{{item.Text}}</option>
+        </select>
+        @Html.ValidationMessageFor(model => model.PUBLICACAO.TVI_ID, null, new { app_validation_msg = "erros", @for = "PUBLICACAO.TVI_ID" }) 
+    </div>
+    <div class="form-group col-lg-4">
+        @Html.LabelFor(model => model.PUBLICACAO.PUB_DATA_PUB_ATO)
+        @Html.TextBoxFor(model => model.PUBLICACAO.PUB_DATA_PUB_ATO, new { @class = "form-control datepicker", ng_model = "PUB_DATA_PUB_ATO", app_date = "pub.PUBLICACAO.PUB_DATA_PUB_ATO", ng_disabled="(operacao.substring(0,1)=='V')" })
+        @Html.ValidationMessageFor(model => model.PUBLICACAO.PUB_DATA_PUB_ATO, null, new { app_validation_msg = "erros", @for = "PUBLICACAO.PUB_DATA_PUB_ATO" }) 
+    </div>
+    <div class="form-group col-lg-4">
+        @Html.LabelFor(model => model.PUBLICACAO.PUB_COMPL_VEICULO)
+        @Html.TextBoxFor(model => model.PUBLICACAO.PUB_COMPL_VEICULO, new { @class = "form-control", ng_model = "pub.PUBLICACAO.PUB_COMPL_VEICULO", ng_disabled="(operacao.substring(0,1)=='V')" })
+        @Html.ValidationMessageFor(model => model.PUBLICACAO.PUB_COMPL_VEICULO, null, new { app_validation_msg = "erros", @for = "PUBLICACAO.PUB_COMPL_VEICULO" }) 
+    </div>
+</div>
+                     

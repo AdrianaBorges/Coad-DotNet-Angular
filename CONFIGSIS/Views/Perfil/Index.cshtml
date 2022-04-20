@@ -1,0 +1,138 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutosDTO
+@using Coad.GenericCrud.Extensions
+@{
+    ViewBag.Title = "Index";     
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li class="active">Gerenciar Perfis</li>         
+        
+    </ol>
+}
+
+@*<style type="text/css">
+
+    .body {
+        background-color: #e8e8e8 !important;
+
+    }
+</style>*@
+
+
+@Scripts.Render("~/Scripts/negocio/perfil.js")
+<div ng-app="appModule">
+    <div ng-controller="PerfilController" class="padding content" ng-cloak>
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-warning btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Opções
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                                        </li>     
+                                         <li>
+                                            <a href="@Url.Action("Configurar")" class="blue">Configurar</a>
+                                        </li>   
+                                    </ul>
+                                       
+                                </div>
+                            </div>
+      </div>
+          
+      <div class="panel-body">            
+           
+        <div class="row">              
+            <div class="form-group col-lg-3">
+                <label for="usu_login">Perfil</label>
+                <input type="text" id="usu_login" ng-model="filtro.nome" class="form-control"/>
+            </div>                      
+            <div class="form-group col-lg-3">
+                <label for="usu_login">Sistema</label>
+                 @Html.DropDownList("SIS_ID", new SelectList(ViewBag.lstSistemas, "SIS_ID", "SIS_DESCRICAO"), 
+                    "Selecione" ,new {@class = "form-control", ng_model = "filtro.SIS_ID" })
+            </div>                 
+            <div class="form-group col-sm-3">
+                                @Html.Label("Departamento")
+                                @Html.DropDownList("DP_ID", 
+                                    new SelectList(@ViewBag.lstDepartamento, "DP_ID", "DP_NOME"), "Selecione", new { @class = "form-control", ng_model = "filtro.DP_ID" })
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="usu_login">Nível Acesso</label>
+                 @Html.DropDownList("NIV_ACE_ID", new SelectList(ViewBag.lstNivelAcesso, "NIV_ACE_ID", "NIV_ACE_DESCRICAO"), 
+                    "Selecione" ,new {@class = "form-control", ng_model = "filtro.NIV_ACE_ID" })
+            </div>                  
+        </div>
+      </div>
+                  
+        <div class="panel-footer">
+            <button type="button" class="btn btn-primary" ng-click="listarPerfis()">Pesquisar</button>
+        </div>
+</div>
+        <div app-message></div>
+        
+                <div class="panel panel-default">
+                          <!-- Default panel contents -->
+      
+                          <div class="panel-heading bold"><span class="glyphicon glyphicon-user"></span> Perfis</div>
+          
+                          <div class="panel-body">   
+                    
+                                        <div class="table-responsive">     
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>     
+                                                            <th>
+                                                                Nome
+                                                            </th>
+                                                            <th>Ativo</th>
+                                                            <th>Sistema</th>
+                                                            <th>Departamento</th>
+                                                            <th>Nivel de Acesso</th>
+                                                            <th>#</th>                            
+                                                        </tr>
+                                                    </thead>    
+                                                    <tr ng-repeat="item in perfis" class="animate-repeat">                                    
+                                                        <td>
+                                                             {{item.PER_ID}}   
+                                                        </td>
+                                                        <td>
+                                                            <span class="label label-success" ng-if="item.PER_ATIVO == 1">SIM</span>
+                                                            <span class="label label-warning" ng-if="!item.PER_ATIVO || item.PER_ATIVO == 0">NÃO</span>
+                                                        </td>
+                                                        <td>
+                                                             {{item.SISTEMA.SIS_DESCRICAO}}   
+                                                        </td>
+                                                        <td>
+                                                             {{item.DEPARTAMENTO.DP_NOME}}   
+                                                        </td>
+                                                        <td>
+                                                            {{item.NIVEL_ACESSO.NIV_ACE_DESCRICAO}}                                                             
+                                                        </td>
+                                                        <td>
+                                                            <a href="javascript:void(0)" app-post="@Url.Action("Editar")?PER_ID={{item.PER_ID}}" 
+                                                                title="Editar" class="blue">
+                                                                <span class="glyphicon glyphicon-edit"></span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="6" ng-show="perfis.length == 0 && listado">Nenhum registro foi encontrado.</td>
+                                                        <td colspan="6" ng-show="!perfis">Clique em pesquisar para listar.</td>
+                                                    </tr>
+                                                </table> 
+                                        </div>          
+                                  <div app-pagination="page" request-page="paginaReq" load-function="listarPerfis(paginaReq)"></div>          
+
+                              </div>
+         
+                            </div>  
+    </div>   
+</div>

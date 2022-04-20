@@ -1,0 +1,448 @@
+﻿@using COAD.SEGURANCA.Repositorios.Base
+
+<ul class="nav nav-tabs" role="tablist">
+
+    <li role="presentation"
+        class="active"
+        data-toggle="tab"
+        aria-controls="tab1"
+        aria-expanded="true">
+        <a href="#tab1"
+           id="clienteematraso"
+           data-toggle="tab"><span class="glyphicon glyphicon-book"></span>&nbspAtraso (Igual ou superior a 7 dias)</a>
+    </li>
+
+    <li>
+        <a href="#tab2"
+           id="clienteagendado"
+           data-toggle="tab"><span class="glyphicon glyphicon-book"></span>&nbspAgendamento(s)</a>
+    </li>
+
+    <li>
+        <a href="#tab3"
+           id="clienteatrasoentrada"
+           data-toggle="tab"><span class="glyphicon glyphicon-book"></span>&nbspPrimeira parcela em atraso</a>
+    </li>
+
+    <li>
+        <a href="#tab4"
+           id="clienteparcelaliberada"
+           app-popover data-content="Conhecido como Parcela com Código 9."
+           data-toggle="tab"><span class="glyphicon glyphicon-book"></span>&nbspParcela liberada</a>
+    </li>
+
+
+</ul>
+
+<div class="tab-content">
+
+    <!-- Aba01 - Clientes em atraso igual ou superior a 7 dias -->
+    <div class="tab-pane" id="tab1">
+        <div class="row">
+            <div class="panel-body">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                        <tr class="info">
+                            <th style="text-align:Center;">Assinatura</th>
+                            <th style="text-align:Center;">Contrato</th>
+                            <th style="text-align:Center;">Parcela</th>
+                            <th style="text-align:Center;">Vencimento</th>
+                            <th style="text-align:right;">Valor</th>
+                            <th style="text-align:Center;">Atraso</th>
+                            <th style="text-align:left;">Cliente</th>
+                            <th style="text-align:left;">Contato</th>
+                            <th style="text-align:center;" colspan="4">Opções</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in lstagendacobranca">
+                            <td style="text-align:Center;">{{item.ASN_NUM_ASSINATURA}}</td>
+                            <td style="text-align:Center;">{{item.CTR_NUM_CONTRATO}}</td>
+                            <td style="text-align:Center;">{{item.PAR_NUM_PARCELA}}</td>
+                            <td style="text-align:Center;" app-show-date="item.PAR_DATA_VENCTO"></td>
+                            <td style="text-align:right;width:9%;" app-show-dinheiro="item.PAR_VLR_PARCELA"></td>
+                            <td style="text-align:Center;">{{item.DIAS_ATRASO}}</td>
+                            <td style="text-align:left;width:30%;">{{item.CLI_NOME}}</td>
+                            <td style="text-align:left;">{{item.ASN_A_C}}</td>
+
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" ng-click="abrirModalAtendimento(item)" data-toggle="tooltip" data-placement="top" app-popover data-content="Realizar Negociação">
+                                    <span class="fa fa-comments"></span>
+                                </a>
+                            </td>
+
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" ng-click="abrirModalReagendamento(item)" data-toggle="tooltip" data-placement="top" app-popover data-content="Reagendar Atendimento">
+                                    <span class="fa fa-clock-o"></span>
+                                </a>
+                            </td>
+
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" ng-click="AbrirModalBoletoAvulso(item.PAR_NUM_PARCELA)"
+                                   ng-if="item.PAR_DATA_PAGTO==null"
+                                   data-toggle="tooltip"
+                                   data-placement="top"
+                                   app-popover data-content="Emissão de boleto avulso">
+                                    <span class="fa fa-calendar"></span>
+
+                                </a>
+                            </td>
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0);" ng-if="item.PAR_DATA_PAGTO==null"
+                                   app-post="@Url.Action("Boleto2aViaDownload","CobrancaEscritural")?idTitulo={{item.PAR_NUM_PARCELA}}"
+                                   ng-disabled="!item.PAR_NUM_PARCELA"
+                                   data-toggle="tooltip"
+                                   data-placement="top"
+                                   app-popover data-content="Gerar 2ª via do boleto">
+                                    <i class="fa fa-barcode" aria-hidden="true"></i>
+                                </a>
+                            </td>
+
+                        </tr>
+                        <tr ng-hide="lstagendacobranca.length > 0">
+                            <td colspan="7">
+                                Nenhum item selecionado. Realize uma nova pesquisa!
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- 1 -->
+                @*<app-pagination ="pagina01"
+                                request-page="paginaReq"
+                                load-function="listarAgendaCobranca(paginaReq)">                   
+                </app-pagination>*@
+
+                <div app-pagination="pagina01"
+                     request-page="paginaReq"
+                     load-function="listarAgendaCobranca(paginaReq)"
+                     style="text-align:center;">
+                </div>
+
+            </div>
+            <div class="hidden-print panel-footer" style="text-align:center;">
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Aba02 - Clientes agendados -->
+    <div class="tab-pane" id="tab2">
+        <div class="row">
+            <div class="panel-body">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                        <tr class="info">
+                            <!-- <th style="text-align:Center;">Nº Agendamento</th> -->
+                            <th style="text-align:Center;">Data</th>
+                            <th style="text-align:Center;">Assunto</th>
+                            <th style="text-align:left;">Cliente</th>
+                            <th style="text-align:Center;">Assinatura</th>
+                            <th style="text-align:center;">Login</th>
+                            <th style="text-align:left;">Atendimento</th>
+                            <th style="text-align:center;">Situação</th>
+                            <th style="text-align:center;" colspan="4">Opções</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in lstagendamento">
+                            <!-- <td style="text-align:right;">{{item.AGC_ID}}</td> -->
+                            <td style="text-align:Center;width:10%;" app-show-date="item.AGC_DATA_AGENDA" show-time></td>
+                            <td style="text-align:left;width:30%;">{{item.AGC_ASSUNTO}}</td>
+                            <td style="text-align:left;width:40%;">{{item.CLI_NOME}}</td>
+                            <td style="text-align:Center;">{{item.ASN_NUM_ASSINATURA}}</td>
+                            <td style="text-align:Center;">{{item.USU_LOGIN}}</td>
+                            <td style="text-align:Center;" app-show-date="item.AGC_DATA_ATENDIMENTO" show-time></td>
+
+                            <td style="text-align:Center;">
+                                <span class="label label-success"
+                                      ng-if="item.AGC_REAGENDAMENTO==null||item.AGC_REAGENDAMENTO==0||item.AGC_REAGENDAMENTO==''">AGENDA</span>
+                                <span class="label label-danger"
+                                      ng-if="item.AGC_REAGENDAMENTO>1">REAGENDAMENTO</span>
+                                <span class="label label-success"
+                                      ng-if="item.PAR_DATA_PAGTO!=null">PAGO</span>
+
+                            </td>
+
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" ng-click="abrirModalAtendimento(item)" data-toggle="tooltip" data-placement="top" app-popover data-content="Realizar Negociação">
+                                    <span class="fa fa-comments"></span>
+                                </a>
+                            </td>
+
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" ng-click="abrirModalReagendamento(item)" data-toggle="tooltip" data-placement="top" app-popover data-content="Reagendar Atendimento">
+                                    <span class="fa fa-clock-o"></span>
+                                </a>
+                            </td>
+
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)"
+                                   ng-click="AbrirModalBoletoAvulso(item.PAR_NUM_PARCELA)"
+                                   ng-if="item.PAR_DATA_PAGTO==null"
+                                   data-toggle="tooltip"
+                                   data-placement="top"
+                                   app-popover data-content="Emissão de boleto avulso">
+                                    <span class="fa fa-calendar"></span>
+
+                                </a>
+                            </td>
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0);" ng-if="item.PAR_DATA_PAGTO==null"
+                                   app-post="@Url.Action("Boleto2aViaDownload","CobrancaEscritural")?idTitulo={{item.PAR_NUM_PARCELA}}"
+                                   ng-disabled="!item.PAR_NUM_PARCELA"
+                                   data-toggle="tooltip"
+                                   data-placement="top"
+                                   app-popover data-content="Gerar 2ª via do boleto">
+                                    <i class="fa fa-barcode" aria-hidden="true"></i>
+                                </a>
+                            </td>
+
+                        </tr>
+                        <tr ng-hide="lstagendamento.length > 0">
+                            <td colspan="7">
+                                Nenhum item selecionado. Realize uma nova pesquisa!
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- pagina 02 -->
+                <div app-pagination="pagina02"
+                     request-page="paginaReq"
+                     load-function="listarAgendamento(paginaReq)"
+                     style="text-align:center;">
+                </div>
+
+            </div>
+            <div class="hidden-print panel-footer" style="text-align:center;">
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Aba03 - Clientes em atraso na entrada -->
+    <div class="tab-pane" id="tab3">
+        <div class="row">
+            <div class="panel-body">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                        <tr class="info">
+                            <th style="text-align:Center;">Assinatura</th>
+                            <th style="text-align:Center;">Contrato</th>
+                            <th style="text-align:Center;">Parcela</th>
+                            <th style="text-align:Center;">Vencimento</th>
+                            <th style="text-align:right;">Valor</th>
+                            <th style="text-align:Center;">Atraso</th>
+                            <th style="text-align:left;">Cliente</th>
+                            <th style="text-align:left;">Contato</th>
+                            <th style="text-align: center;" colspan="4">Opções</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in lstprimeiraparcela">
+                            <td style="text-align:Center;">{{item.ASN_NUM_ASSINATURA}}</td>
+                            <td style="text-align:Center;">{{item.CTR_NUM_CONTRATO}}</td>
+                            <td style="text-align:Center;">{{item.PAR_NUM_PARCELA}}</td>
+                            <td style="text-align:Center;" app-show-date="item.PAR_DATA_VENCTO"></td>
+                            <td style="text-align:right;" app-show-dinheiro="item.PAR_VLR_PARCELA"></td>
+                            <td style="text-align:Center;">{{item.DIAS_ATRASO}}</td>
+                            <td style="text-align:left;width:20%;">{{item.CLI_NOME}}</td>
+                            <td style="text-align:left;">{{item.ASN_A_C}}</td>
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" ng-click="abrirModalAtendimento(item)" data-toggle="tooltip" data-placement="top" app-popover data-content="Realizar Negociação">
+                                    <span class="fa fa-comments"></span>
+                                </a>
+                            </td>
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" ng-click="abrirModalReagendamento(item)" data-toggle="tooltip" data-placement="top" app-popover data-content="Reagendar Atendimento">
+                                    <span class="fa fa-clock-o"></span>
+                                </a>
+                            </td>
+
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" ng-click="AbrirModalBoletoAvulso(item.PAR_NUM_PARCELA)"
+                                   ng-if="item.PAR_DATA_PAGTO==null"
+                                   data-toggle="tooltip"
+                                   data-placement="top"
+                                   app-popover data-content="Emissão de boleto avulso">
+                                    <span class="fa fa-calendar"></span>
+
+                                </a>
+                            </td>
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0);" ng-if="item.PAR_DATA_PAGTO==null"
+                                   app-post="@Url.Action("Boleto2aViaDownload","CobrancaEscritural")?idTitulo={{item.PAR_NUM_PARCELA}}"
+                                   ng-disabled="!item.PAR_NUM_PARCELA"
+                                   data-toggle="tooltip"
+                                   data-placement="top"
+                                   app-popover data-content="Gerar 2ª via do boleto">
+                                    <i class="fa fa-barcode" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr ng-hide="lstprimeiraparcela.length > 0">
+                            <td colspan="7">
+                                Nenhum item selecionado. Realize uma nova pesquisa!
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- pagina 03 -->
+                <div app-pagination="pagina03"
+                     request-page="paginaReq"
+                     load-function="listarAtrasoPrimeiraParcela(paginaReq)"
+                     style="text-align:center;">
+                </div>
+
+                </div>
+            <div class="hidden-print panel-footer" style="text-align:center;">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Aba04 - Clientes em atraso com parcela liberada -->
+    <div class="tab-pane" id="tab4">
+
+        <div class="panel panel-corp">
+            <!-- Default panel contents -->
+
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-shopping-cart"></span>Listagem de Parcelas liberadas
+
+                <div class="pull-right">
+                    <!-- Adriana, criar funcionalidade para retirara o codigo 9-->
+                    @*<div class="btn-group">
+                <button type="button"
+                        class="btn btn-primary btn-xs dropdown-toggle"
+                        app-popover data-content="Executar"
+                        ng-click="alteraSituacaoParcelas()">
+                    Executar Ação
+                </button>
+            </div>*@
+
+                    @*<div class="btn-group">
+            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                Mais Opções
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu pull-right" role="menu">
+                <li>
+                    <a href="javascript:void(0)" ng-click="cancelarAcao()" class="blue">Cancelar Ação Atual</a>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0)" ng-click="ativarModoBatchParcela()" class="blue">Habilita retirada do cod.9</a>
+                </li>
+
+            </ul>
+
+                </div> *@
+            </div>
+            </div>
+            <!--<-->
+            <div class="panel-body">
+                <a href="javascript:void(0)"
+                   ng-if="parcelaBatchModal.ativo == true"
+                   @*ng-click="abrirModalCodigoParcelasSelecionadas()"*@
+                   class="text-muted">
+                    <span class="badge">{{parcelaBatchModal.ListCodParcelas.length}}</span>
+                    Parcelas Selecionada(s)
+                </a>
+                <br />
+                <div class="table-responsive">
+                    <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr class="info">
+
+                                <th ng-show="parcelaBatchModal.ativo == true">
+                                    <input type="checkbox" id="selecao-geral"
+                                           class="form-control big-checkbox"
+                                           ng-model="parcelaBatchModal.selecionarTodos"
+                                           ng-selected="parcelaBatchModal.selecionarTodos == true" />
+                                </th>
+
+                                <th style="min-width: 75px">Id</th>
+                                <th style="text-align:Center;">Assinatura</th>
+                                <th style="text-align:Center;">Vencimento</th>
+                                <th style="text-align:right;">Valor</th>
+                                <th style="text-align:left;">Cliente</th>
+                                <th style="text-align:Center;">Liberada em</th>
+                                <th style="text-align:Center;">Usuário</th>
+                                <th style="text-align:center;">Situação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in lstparcelaliberada" class="animate-repeat">
+
+                                <td ng-show="parcelaBatchModal.ativo == true">
+                                    <span app-many-checkbox="parcelaBatchModal.ListCodParcelas"
+                                          key-value="item.PAR_NUM_PARCELA"
+                                          key-name="CodParcela"
+                                          control-obj="parcelaBatchModal.controle"
+                                          select-watch="parcelaBatchModal.selecionarTodos"></span>
+                                </td>
+                                <td>
+                                    {{item.PAR_NUM_PARCELA}}
+                                </td>
+
+                                <td style="text-align:Center;">{{item.ASN_NUM_ASSINATURA}}</td>
+                                <td style="text-align:Center;" app-show-date="item.PAR_DATA_VENCTO"></td>
+                                <td style="text-align:right;" app-show-dinheiro="item.PAR_VLR_PARCELA"></td>
+                                <td style="text-align:left;width:30%;">{{item.CLI_NOME}}</td>
+                                <td style="text-align:Center;" app-show-date="item.DATA_ALTERA"></td>
+                                <td style="text-align:Center;">{{item.USU_LOGIN}}</td>
+
+                                <td style="text-align: center;">
+
+                                    <span ng-if="item.PAR_SITUACAO=='LIB'&&item.PAR_DATA_PAGTO!=NULL"
+                                          class="label label-warning"
+                                          app-popover data-content="Parcela em atraso com situação liberada.">PAGO</span>
+
+                                    <span ng-if="item.PAR_SITUACAO=='LIB'"
+                                          class="label label-danger"
+                                          app-popover data-content="Parcela em atraso com situação liberada.">LIBERADA</span>
+
+
+                                    <span ng-if="item.PAR_SITUACAO=='VIGENTE'" class="label alert-success" app-popover data-content="Contrato atual em período de vigência. ">{{item.PAR_SITUACAO}}</span>
+                                    <span ng-if="item.PAR_SITUACAO=='ENCERRADO'" class="label alert-warning" app-popover data-content="Este contrato alcançou o fim do seu período de vigência. ">{{item.PAR_SITUACAO}}</span>
+                                    <span ng-if="item.PAR_SITUACAO=='FUTURO'" class="label alert-info" app-popover data-content="Este contrato ainda não esta ativo. Ainda não foi inciado o seu período de vigência. ">{{item.PAR_SITUACAO}}</span>
+                                    <span ng-if="item.PAR_SITUACAO=='PRORROGADO'" class="label alert-warning" app-popover data-content="Este contrato esta em período de recuperação ou seja permanece ativo durante um mês após o fim da vigência. ">{{item.PAR_SITUACAO}}</span>
+                                    <span ng-if="item.PAR_SITUACAO=='CANCELADO'" class="label alert-danger" app-popover data-content="Este contrato esta cancelado. Este cancelamento ocorreu após fim de vigência, portanto é um cancelamento normal. ">{{item.PAR_SITUACAO}}</span>
+                                    <span ng-if="item.PAR_SITUACAO=='CANC.DESISTÊNCIA'" class="label alert-danger" app-popover data-content="Este contrato foi cancelado antes do fim do período de vigência. ">{{item.PAR_SITUACAO}}</span>
+                                </td>
+
+                            </tr>
+                            <tr ng-hide="lstparcelaliberada.length > 0">
+                                <td colspan="7">
+                                    Nenhum item selecionado. Realize uma nova pesquisa!
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- pagina 04 -->
+                    <div app-pagination="pagina04"
+                         request-page="paginaReq"
+                         load-function="listarParcelaLiberada(paginaReq)"
+                         style="text-align:center;">
+                    </div>
+
+                </div>
+                <div class="hidden-print panel-footer" style="text-align:center;">
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+

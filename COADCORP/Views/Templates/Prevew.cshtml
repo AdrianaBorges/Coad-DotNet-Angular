@@ -1,0 +1,103 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using COAD.CORPORATIVO.SessionUtils
+@using GenericCrud.Util
+
+<script type="text/javascript">
+        // para obter o contexto da aplicação
+        var contextPath = "@System.Web.HttpContext.Current.Request.ApplicationPath";
+        var inHomologation = @SysUtils.InHomologation().ToString().ToLower();
+</script>
+<script src="@Url.Content("~/Scripts/jquery-1.11.1.min.js")" type="text/javascript"></script>
+
+<script src="@Url.Content("~/Scripts/jquery-migrate-1.2.1.min.js")" type="text/javascript" @ViewBag.defer></script>
+<script src="@Url.Content("~/Scripts/jquery-ui.min.js")" type="text/javascript" @ViewBag.defer></script>
+<script src="@Url.Content("~/Scripts/modernizr-2.5.3.js")" type="text/javascript" @ViewBag.defer></script>
+<script src="@Url.Content("~/Scripts/jquery.maskMoney.js")" type="text/javascript" @ViewBag.defer></script>
+<script src="@Url.Content("~/Scripts/jquery.connections.js")" @ViewBag.defer></script>
+
+<script src="@Url.Content("~/Scripts/MonthPicker.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts/bootstrap.min.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts{path}util.js")" @ViewBag.defer></script>
+
+@if (ViewBag.useNewAngular != null && ViewBag.useNewAngular == true)
+{
+    <script src="@UrlCorp.Content("~/Scripts/Angular/angular.min.js")"></script>
+    <script src="@UrlCorp.Content("~/Scripts/Angular/angular-sanitize.js")" @ViewBag.defer></script>
+    <script src="@UrlCorp.Content("~/Scripts/Angular/angular-animate.js")" @ViewBag.defer></script>
+}
+else
+{
+    <script src="@UrlCorp.Content("~/Scripts/Angular/angular.min._old.js")"></script>
+    <script src="@UrlCorp.Content("~/Scripts/Angular/angular-sanitize_old.js")" @ViewBag.defer></script>
+    <script src="@UrlCorp.Content("~/Scripts/Angular/angular-animate_old.js")" @ViewBag.defer></script>
+}
+
+<script src="@UrlCorp.Content("~/Scripts{path}Angular/angular_modules/service_module.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts{path}Angular/angular_modules/directives_module.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts/Angular/ng-file-upload/ng-file-upload-shim.min.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts/Angular/ng-file-upload/ng-file-upload.min.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts{path}default.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/notificacao.js")" @ViewBag.defer></script>
+
+@if (ViewBag.useNewTheme == true)
+{
+    <script type="text/javascript" @ViewBag.defer>var plugin_path = '@Url.Content("~/Scripts/assets/plugins/")';</script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/assets/app.js")" @ViewBag.defer></script>
+}
+
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/uen.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/controllers_plugins/importacao_cliente.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/controllers_plugins/info_cliente.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts/Angular/FusionCharts/fusioncharts.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts/Angular/FusionCharts/angular-fusioncharts.min.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts/Angular/FusionCharts/themes/fusioncharts.theme.zune.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts/js/plugins/tinymce/tinymce.min.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts/js/plugins/tinymce/TinyMCE.js")" @ViewBag.defer></script>
+<script src="@UrlCorp.Content("~/Scripts/js/plugins/tinymce/tinymce_custom_app.js")" @ViewBag.defer></script>
+
+<!-- compatibilidades com ie antigos-->
+<script src="@UrlCorp.Content("~/Scripts/compatibilidades/respond.js")" @ViewBag.defer></script>
+<!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+@{
+    Layout = null;
+    ViewBag.Title = "Editar";
+    bool podeEditar = SessionUtil.PossuiPermissaoParaEditarProspect();
+    ViewBag.defer = "defer='defer'";
+}
+@using Coad.GenericCrud.Extensions
+@using GenericCrud.ActionResultTools
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Templates (Editar)</li>
+    </ol>
+}
+<script src="@UrlCorp.Content("~/Scripts/negocio/templates.js")" @ViewBag.defer></script>
+
+<div ng-app="appModule">
+    <div ng-controller="TemplatesController" data-ng-init="init('@ViewBag.tplId')" ng-cloak>       
+        <!-- Default panel contents -->
+ 
+
+            <div class="panel-body">  
+                <div app-message></div>
+                    <section id="dados-cadastrais">
+                        <div class="row">
+                            <h3>Descrição</h3>
+                            <div>{{templateHTML.TPL_DESCRICAO}}</div>                            
+                        </div>
+                        <div>
+                            <div ng-bind-html="trustHTML(templateHTML.HTMLCompleto)">
+
+                            </div>
+                        </div>
+                        </section>
+            </div>
+
+      </div>
+</div>

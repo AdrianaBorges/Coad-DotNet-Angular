@@ -1,0 +1,86 @@
+﻿
+@using GenericCrud.ActionResultTools
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<script src="@UrlCorp.Content("~/Scripts/negocio/empresa.js")" defer="defer"></script>
+@section breadcrumbs {
+
+    <ol class="breadcrumb breadcrumb-dashboard">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active"> Empresa</li>
+
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<div ng-app="appModule">
+    <div ng-controller="EmpresaController" class="padding content" ng-cloak data-ng-init="init()">
+        <div class="panel panel-corp">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold">
+                <span class="glyphicon glyphicon-user"></span> Empresa
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Opções
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="@Url.Action("Editar")" class="blue">Novo</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div app-filtro-topo2="filtros" model="filtro" list="lstFiltrosUtilizados" flag-abrir="abrirFiltro" acao-pesquisar="BuscarEmpresa()" watch-pesquisa="dispararPesquisa">
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr class="">
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarEmpresa()" order-property="EMP_ID">Id</th>
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarEmpresa()" order-property="EMP_RAZAO_SOCIAL">Razão Social</th>
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarEmpresa()" order-property="EMP_CNPJ">Cnpj</th>
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarEmpresa()" order-property="EMP_IE">IE</th>
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarEmpresa()" order-property="EMP_IM">IM</th>
+                                <th app-ordering-th="filtro.requisicao.ordenacao" load-function="BuscarEmpresa()" order-property="EMP_ULTIMA_NFSE">Ultima NFSE</th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in lstempresa">
+                            <td>{{item.EMP_ID}}</td>
+                            <td>{{item.EMP_RAZAO_SOCIAL}}</td>
+                            <td>{{item.EMP_CNPJ}}</td>
+                            <td>{{item.EMP_IE}}</td>
+                            <td>{{item.EMP_IM}}</td>
+                            <td>{{item.EMP_ULTIMA_NFSE}}</td>
+                            <td>
+                                <a href="javascript:void(0)" app-post="@Url.Action("Editar")?EMP_ID={{item.EMP_ID}}"
+                                   title="Editar" class="blue">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="12" ng-show="!lstempresa || lstempresa.length == 0">Nenhum registro foi encontrado.</td>
+                        </tr>
+                    </table>
+                </div>
+                <div app-pagination="page" request-page="paginaReq" page-request="filtro.requisicao" load-function="BuscarEmpresa(paginaReq)" ng-show="lstempresa && lstempresa.length > 1"></div>
+            </div>
+        </div>
+        <div app-filtro-lateral="filtros" model="filtro" list="lstFiltrosUtilizados" acao-pesquisar="BuscarEmpresa()" flag-abrir="abrirFiltro">
+
+        </div>
+    </div>
+</div>

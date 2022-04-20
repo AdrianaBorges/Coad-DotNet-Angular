@@ -1,0 +1,349 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props" Condition="Exists('..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{ECC5C7D0-7324-4062-8D0C-3C93F660AF06}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>COAD.CORPORATIVO.LEGADO</RootNamespace>
+    <AssemblyName>COAD.CORPORATIVO.LEGADO</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>coadcorporativolegado.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Homologacao|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Homologacao\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_Prod|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug_Prod\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.3.3.0\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=3.4.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Windsor.3.4.0\lib\net45\Castle.Windsor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\Open-XML-SDK.2.7.2\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="GatewayApiClient">
+      <HintPath>..\blibliotecas\GatewayApiClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.CodeCoverage.Shim, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeCoverage.1.0.3\lib\netstandard1.0\Microsoft.VisualStudio.CodeCoverage.Shim.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NReco.PdfGenerator, Version=1.1.15.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.PdfGenerator.1.1.15\lib\net20\NReco.PdfGenerator.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz, Version=2.5.0.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.2.5.0\lib\net40\Quartz.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.5840.25917, Culture=neutral, PublicKeyToken=ee154a05c16af196, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\blibliotecas\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.40804.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\CoadCorporativoLegado.cs" />
+    <Compile Include="Config\IOCContainer\DAOInstaller.cs" />
+    <Compile Include="Config\IOCContainer\DbContextInstaller.cs" />
+    <Compile Include="Config\IOCContainer\ServiceInstaller.cs" />
+    <Compile Include="Config\Profile\AutoMapperProfile.cs" />
+    <Compile Include="Dao\EmpresaLegadoDAO.cs" />
+    <Compile Include="Dao\AgendaDAO.cs" />
+    <Compile Include="Dao\cart_coadDAO.cs" />
+    <Compile Include="Dao\clienteLegDAO.cs" />
+    <Compile Include="Dao\AssinaturaLegadoDAO.cs" />
+    <Compile Include="Dao\ContratoLegadoDAO.cs" />
+    <Compile Include="Dao\BloqueiaConsultaIndividualDAO.cs" />
+    <Compile Include="Dao\LiquidacaoLegadoDAO.cs" />
+    <Compile Include="Dao\ParcelasLegadoDAO.cs" />
+    <Compile Include="Dao\Reflection\ExecutaProcedures.cs" />
+    <Compile Include="Dao\Reflection\Models\ParcelasLegadoUpdateDTO.cs" />
+    <Compile Include="Dao\Reflection\PreparaPropriedades.cs" />
+    <Compile Include="Dao\Reflection\PreparaTabelas.cs" />
+    <Compile Include="Dao\RepresentanteLegadoDAO.cs" />
+    <Compile Include="Dao\DatasFaturamentoDAO.cs" />
+    <Compile Include="Dao\ParamDAO.cs" />
+    <Compile Include="Dao\EmailsDAO.cs" />
+    <Compile Include="Dao\ender_fatDAO.cs" />
+    <Compile Include="Dao\SeqProdDAO.cs" />
+    <Compile Include="Dao\Telefones2DAO.cs" />
+    <Compile Include="Dao\UltimoCodigoLegadoDAO.cs" />
+    <Compile Include="Model\clienteLegDTO.cs" />
+    <Compile Include="Model\Dto\AgendaDTO.cs" />
+    <Compile Include="Model\Dto\AssinaturaLegadoDTO.cs" />
+    <Compile Include="Model\Dto\BloqueiaConsultaIndividualDTO.cs" />
+    <Compile Include="Model\Dto\cart_coadDTO.cs" />
+    <Compile Include="Model\Dto\ContratoLegadoDTO.cs" />
+    <Compile Include="Model\Dto\DatasFaturamentoDTO.cs" />
+    <Compile Include="Model\Dto\EmailsDTO.cs" />
+    <Compile Include="Model\Dto\EmpresaLegadoDTO.cs" />
+    <Compile Include="Model\Dto\ender_fatDTO.cs" />
+    <Compile Include="Model\Dto\LiquidacaoLegadoDTO.cs" />
+    <Compile Include="Model\Dto\ParamDTO.cs" />
+    <Compile Include="Model\Dto\ParcelasLegadoDTO.cs" />
+    <Compile Include="Model\Dto\ParcelasLegadoUpdateDTO.cs" />
+    <Compile Include="Model\Dto\RepresentanteLegadoDTO.cs" />
+    <Compile Include="Model\Dto\SeqProdDTO.cs" />
+    <Compile Include="Model\Dto\Telefones2DTO.cs" />
+    <Compile Include="Model\Dto\UltimoCodigoLegadoDTO.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\Contexto\AGENDA.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ASSINATURA.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\bloqueia_consulta_individual.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\cart_coad.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CLIENTES.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\CONTRATOS.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\Corporativo2.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Corporativo2.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\Corporativo2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\Corporativo2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Corporativo2.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\datas_fat.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\EMAILS.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\empresas.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ender_fat.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\HIST_ATEND.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\liquidacao.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\PARAM.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\Parcelas.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\representante.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\SEQ_PROD.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\TELEFONES2.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorios\Contexto\ULTIMO_CODIGO.cs">
+      <DependentUpon>Corporativo2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\EmpresaLegadoSRV .cs" />
+    <Compile Include="Service\AgendaSRV.cs" />
+    <Compile Include="Service\cart_coadSRV.cs" />
+    <Compile Include="Service\clienteLegSRV.cs" />
+    <Compile Include="Service\AssinaturaLegadoSRV.cs" />
+    <Compile Include="Service\ContratoLegadoSRV.cs" />
+    <Compile Include="Service\BloqueiaConsultaIndividualSRV.cs" />
+    <Compile Include="Service\LiquidacaoLegadoSRV.cs" />
+    <Compile Include="Service\ParcelasLegadoSRV.cs" />
+    <Compile Include="Service\RepresentanteLegadoSRV.cs" />
+    <Compile Include="Service\DatasFaturamentoSRV.cs" />
+    <Compile Include="Service\ParamSRV.cs" />
+    <Compile Include="Service\EmailsSRV.cs" />
+    <Compile Include="Service\ender_fatSRV.cs" />
+    <Compile Include="Service\SeqProdSRV.cs" />
+    <Compile Include="Service\Telefones2SRV.cs" />
+    <Compile Include="Service\UltimoCodigoLegadoSRV.cs" />
+    <Compile Include="Service\Utils\AssinaturaUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="coadcorporativolegado.snk" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <EntityDeploy Include="Repositorios\Contexto\Corporativo2.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Corporativo2.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Repositorios\Contexto\Corporativo2.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Corporativo2.edmx</DependentUpon>
+      <LastGenOutput>Corporativo2.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Repositorios\Contexto\Corporativo2.edmx.diagram">
+      <DependentUpon>Corporativo2.edmx</DependentUpon>
+    </None>
+    <None Include="Repositorios\Contexto\Corporativo2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Corporativo2.edmx</DependentUpon>
+      <LastGenOutput>Corporativo2.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\shared\genericcrud\GenericCrud\Coad.GenericCrud.csproj">
+      <Project>{a6a9ff49-fa0d-468e-9966-31b8d7ef5a97}</Project>
+      <Name>Coad.GenericCrud</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Repositorios\Contexto\Base\backup.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\Dto\Custons\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este projeto faz referência a pacotes do NuGet que não estão presentes neste computador. Use a Restauração de Pacotes do NuGet para baixá-los.  Para obter mais informações, consulte http://go.microsoft.com/fwlink/?LinkID=322105. O arquivo ausente é {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets" Condition="Exists('..\packages\Microsoft.NET.Test.Sdk.15.5.0\build\net45\Microsoft.Net.Test.Sdk.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,215 @@
+﻿@model  COAD.COADGED.Model.DTO.PublicacaoAreaConsultoriaDTO
+
+<ul class="nav nav-pills">
+    <li class="active"><a data-toggle="pill" href="#impressoMateria" ng-click="buscarTexto('Resenha', pub.PUBLICACAO.PUB_CONTEUDO_RESENHA, 'PUB_CONTEUDO_RESENHA')">Matéria</a></li>
+    <li><a data-toggle="pill" href="#impressoManchete" ng-click="buscarTexto('Manchete', pub.PUB_MANCHETE, 'PUB_MANCHETE')">Manchete</a></li>
+    <li><a data-toggle="pill" href="#impressoEmenta" ng-click="buscarTexto('Ementa', pub.PUB_EMENTA, 'PUB_EMENTA')">Ementa</a></li>
+    <li><a data-toggle="pill" href="#impressoRemissao">Remissão</a></li>
+    <li><a data-toggle="pill" href="#impressoVisualizar" ng-click="carregarTexto('Remissao', pub.MATERIA_IMPRESSA, 'MATERIA_IMPRESSA', true, true)">Visualizar</a></li>
+    <li ng-if="_cargoSigla=='RVO'" title="Matéria liberada pela digitação">
+        <a data-toggle="pill" href="#impressoRVO" ng-click="buscarTexto('EditorRapido', pub.PUBLICACAO.PUB_CONTEUDO_RESENHA_RVO, 'PUB_CONTEUDO_RESENHA_RVO')">Revisor Ortográfico</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div id="impressoMateria" class="tab-pane fade in active">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        @*@Html.Hidden("print", new { @class = "form-control", ng_model = "pub.PUBLICACAO.PUB_CONTEUDO_RESENHA", app_rich_editor = "Resenha" })
+                        <div>
+                            @Html.Raw(@ViewBag.PUB_CONTEUDO_RESENHA)
+                        </div>*@
+                        <div app-editor="pub.PUBLICACAO.PUB_CONTEUDO_RESENHA" data-fullscreen="true" app-editor-model="portal.ementaConteudo" editor-model="editor" id="publicacao_ementa_conteudo" data-force-model="true" class="limit-div-4" data-disabled="(operacao.substring(0,1)=='V')">
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <span class="float-left"><button type="button" ng-click="copiaIntegra()" class="btn btn-primary" ng-disabled="(operacao.substring(0,1)=='V') || pub.PUBLICACAO.PUB_CONTEUDO.length==0">Copiar a matéria do Portal</button></span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUBLICACAO.PUB_CONTEUDO_RESENHA">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=PDF&campo=PUB_CONTEUDO_RESENHA&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">PDF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUBLICACAO.PUB_CONTEUDO_RESENHA">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=RTF&campo=PUB_CONTEUDO_RESENHA&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">RTF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUBLICACAO.PUB_CONTEUDO_RESENHA">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=HTML&campo=PUB_CONTEUDO_RESENHA&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">HTML</span></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="impressoManchete" class="tab-pane fade">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        @*@Html.Hidden("printManchete", new { @class = "form-control", ng_model = "pub.PUB_MANCHETE", app_rich_editor = "Manchete" })
+                        <div>
+                            @Html.Raw(@ViewBag.PUB_MANCHETE)
+                        </div>*@
+                        <div app-editor="pub.PUBLICACAO.PUB_MANCHETE" data-fullscreen="true" app-editor-model="portal.ementaPugManchete" editor-model="editor" id="publicacao_pug_manchete" data-force-model="true" class="limit-div-4" data-disabled="(operacao.substring(0,1)=='V')">
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <span class="float-left"><button type="button" ng-click="copiaManchete()" class="btn btn-primary" ng-disabled="(operacao.substring(0,1)=='V') || pub.PUBLICACAO.PUB_MANCHETE_PORTAL.length==0">Copiar a manchete do Portal</button></span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUB_MANCHETE">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=PDF&campo=PUB_MANCHETE&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">PDF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUB_MANCHETE">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=RTF&campo=PUB_MANCHETE&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">RTF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUB_MANCHETE">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=HTML&campo=PUB_MANCHETE&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">HTML</span></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="impressoEmenta" class="tab-pane fade">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        @*@Html.Hidden("printEmenta", new { @class = "form-control", ng_model = "pub.PUB_EMENTA", app_rich_editor = "Ementa" })
+                        <div>
+                            @Html.Raw(@ViewBag.PUB_EMENTA)
+                        </div>*@
+                        <div app-editor="pub.PUBLICACAO.PUB_EMENTA"  data-fullscreen="true" app-editor-model="portal.ementaPugEmenta" editor-model="editor" id="publicacao_pug_ementa" data-force-model="true" class="limit-div-4" data-disabled="(operacao.substring(0,1)=='V')">
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <span class="float-left"><button type="button" ng-click="copiaEmenta()" class="btn btn-primary" ng-disabled="(operacao.substring(0,1)=='V') || pub.PUBLICACAO.PUB_EMENTA_PORTAL.length==0">Copiar a ementa do Portal</button></span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUB_EMENTA">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=PDF&campo=PUB_EMENTA&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">PDF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUB_EMENTA">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=RTF&campo=PUB_EMENTA&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">RTF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUB_EMENTA">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=HTML&campo=PUB_EMENTA&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">HTML</span></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="impressoRemissao" class="tab-pane fade">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row" ng-repeat="remissao in pub.TMP_REMISSAO" ng-show="pub.TMP_REMISSAO">
+                    <div class="form-group col-lg-10">
+                        @Html.Label("{{$index+1}}ª Remissão")
+                        @Html.TextAreaFor(model => model.PUBLICACAO_REMISSAO, new { @class = "form-control", ng_model = "pub.TMP_REMISSAO[$index].PRE_REMISSAO", ng_blur="atualizarTextos()", ng_disabled="(operacao.substring(0,1)=='V')" })
+                        @Html.ValidationMessageFor(model => model.PUBLICACAO_REMISSAO, null, new { app_validation_msg = "erros", @for = "pub.TMP_REMISSAO[$index].PRE_REMISSAO" }) 
+                        @Html.ValidationMessageFor(model => model.PUBLICACAO_REMISSAO, null, new { app_validation_msg = "erros", @for = "pub.TMP_REMISSAO[$index].PRE_NUMERO" }) 
+                    </div>
+                    <div class="form-group col-lg-1" ng-if="remissao.PRE_REMISSAO && (operacao.substring(0,1)!='V')">
+                        @Html.Label("ação")<br>
+                        <span>
+                            <a href="javascript:void(0)" ng-click="adicionarRemissao(remissao)" title="Incluir" 
+                                ng-if="remissao.PRE_REMISSAO && pub.TMP_REMISSAO.length == ($index+1)">
+                                <span class="glyphicon glyphicon-plus blue"></span>
+                            </a>
+                            <a href="javascript:void(0)" ng-click="removerRemissao(remissao, $index)" title="Excluir"
+                                ng-if="remissao.PRE_REMISSAO">
+                                <span class="glyphicon glyphicon-trash red"></span>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="impressoVisualizar" class="tab-pane fade">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        @*@Html.Hidden("printVer", new { @class = "form-control", ng_model = "pub.MATERIA_IMPRESSA", app_rich_editor = "Remissao" })
+                        <div>
+                            @Html.Raw(@ViewBag.PRE_REMISSAO)
+                        </div>*@
+                        @*<div app-editor="pub.MATERIA_IMPRESSA" app-editor-model="portal.ementaImpressa" editor-model="editor" id="publicacao_impressa" data-force-model="true" class="limit-div-4">
+                        </div>*@
+                        <div app-html="pub.MATERIA_IMPRESSA">
+
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <span class="float-left"><button type="button" ng-click="carregarTexto('Remissao', pub.MATERIA_IMPRESSA, 'MATERIA_IMPRESSA', true, true);" class="btn btn-primary">Atualizar texto</button></span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.MATERIA_IMPRESSA">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=PDF&campo=MATERIA_IMPRESSA&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">PDF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.MATERIA_IMPRESSA">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=RTF&campo=MATERIA_IMPRESSA&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">RTF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.MATERIA_IMPRESSA">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=HTML&campo=MATERIA_IMPRESSA&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">HTML</span></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="impressoRVO" class="tab-pane fade">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        @*@Html.Hidden("printRVO", new { @class = "form-control", ng_model = "pub.PUBLICACAO.PUB_CONTEUDO_RESENHA_RVO", app_rich_editor = "EditorRapido" })
+                        <div>
+                            @Html.Raw(@ViewBag.PUB_CONTEUDO_RESENHA_RVO)
+                        </div>*@
+                        @*<div app-editor="pub.PUBLICACAO.PUB_CONTEUDO_RESENHA_RVO" app-editor-model="portal.conteudoResenha" editor-model="editor" id="publicacao_resenha" data-force-model="true" class="limit-div-4">
+                        </div>*@
+                        <div app-HTML="pub.PUBLICACAO.PUB_CONTEUDO_RESENHA_RVO">
+
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUBLICACAO.PUB_CONTEUDO_RESENHA_RVO">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=PDF&campo=PUB_CONTEUDO_RESENHA_RVO&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">PDF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUBLICACAO.PUB_CONTEUDO_RESENHA_RVO">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=RTF&campo=PUB_CONTEUDO_RESENHA_RVO&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">RTF</span></a>
+                        </span>
+                    </div>
+                    <div class="form-group col-lg-4" data-ng-disabled="pub.PUBLICACAO.PUB_CONTEUDO_RESENHA_RVO">
+                        <span class="float-left">
+                            <a href="javascript:void(0)" app-post="@Url.Action("salvarEditor")?extensao=HTML&campo=PUB_CONTEUDO_RESENHA_RVO&pub_id={{pub.PUB_ID}}&area_id={{pub.ARE_CONS_ID}}" title="Download" class="blue"><span class="glyphicon glyphicon-download-alt">HTML</span></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

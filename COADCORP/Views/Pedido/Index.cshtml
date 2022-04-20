@@ -1,0 +1,1526 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using Coad.GenericCrud.Extensions
+@using COAD.CORPORATIVO.SessionUtils
+@using COAD.SEGURANCA.Repositorios.Base
+@using GenericCrud.ActionResultTools
+@{
+    ViewBag.Title = "Index";
+    bool podeFaturar = SessionUtil.PossuiPermissaoParaFaturar();
+    string podePagar = (podeFaturar) ? "1 == 1" : "1 == 2";
+    ViewBag.defer = @"defer='defer'";
+    bool isFranquiado = SessionContext.IsGerenteDepartamento("franquiado", true);
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Listagem de Pedidos</li>
+
+    </ol>
+} 
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/controllers_plugins/comprovantes.js")" defer="defer"></script>
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/controllers_plugins/extorno_pagamento_parcela.js")" defer="defer"></script>
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/controllers_plugins/boleto_avulso.js")" defer="defer"></script>
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/controllers_plugins/lote_nota_fiscal.js")" defer="defer"></script>
+<script type="text/javascript" src="@UrlCorp.Content("~/Scripts{path}negocio/pedido.js")" defer="defer"></script> 
+<style type="text/css">
+
+    .body {
+        background-color: #e8e8e8 !important;
+
+    }
+</style>
+<div ng-app="appModule">
+    <div ng-controller="PedidoController" class="padding content" ng-cloak data-ng-init="initListagem('@ViewBag.ipeId', '@ViewBag.pedCrmId', '@isFranquiado')">
+       
+        <div class="panel panel-corp" role="tablist" aria-multiselectable="true" id="filtros">
+           <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-filter"></span>Filtros
+                 <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Opções
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="javascript:void(0)"ng-click="ativarModoBatchNotaFiscal()" class="blue">Gerar Notas Fiscais</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+            <div class="panel-body">
+                <div app-filtro-topo="filtros" model="filtro" list="lstFiltrosUtilizados" flag-abrir="abrirFiltro" acao-pesquisar="listarPedidos()" watch-pesquisa="dispararPesquisa">
+
+                </div>
+            </div>
+        </div>
+        <div app-message></div>
+        <div class="panel panel-corp">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-shopping-cart"></span>Listagem de Pedidos
+            
+                <div class="pull-right" ng-if="notaBatchModal.ativo == true">
+                    @*<div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-xs dropdown-toggle" ng-click="abrirModalGerarVariasNotasFiscais()">
+                            Gerar Notas
+                        </button>                        
+                    </div>*@
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-xs dropdown-toggle" ng-click="abrirModalGerarVariasXMLNotasFiscais()">
+                            Gerar Nota(s) Fiscal(is)
+                        </button>
+                    </div>
+                    @*<div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" ng-click="abrirDownloadVariasNotasFiscais()">
+                            Download das Notas
+                        </button>
+                    </div>*@
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Mais Opções
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="javascript:void(0)" ng-click="cancelarAcao()" class="blue">Cancelar Ação Atual</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <a href="javascript:void(0)" 
+                   ng-if="notaBatchModal.ativo == true" 
+                   ng-click="abrirModalCodigoPedidosSelecionados()"
+                   class="text-muted">
+                        <span class="badge">{{notaBatchModal.ListCodPedidos.length}}</span> 
+                        Pedidos Selecionado(s)
+                </a>
+                <br />
+                <div class="table-responsive">
+                    <!-- <input type="text" ng-model="dataTest" app-date/>  -->
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="bg-info">
+
+                                <th ng-show="notaBatchModal.ativo == true">
+                                    <input type="checkbox" id="selecao-geral"
+                                           class="form-control big-checkbox"
+                                           ng-model="notaBatchModal.selecionarTodos"
+                                           ng-selected="notaBatchModal.selecionarTodos == true" />
+                                </th>
+                                <th style="min-width: 75px">
+                                    Id
+                                </th>
+                                <th>UEN</th>
+                                <th>
+                                    Id Proposta
+                                </th>
+                                <th>
+                                    Data
+                                </th>
+                                <th>
+                                    Cliente
+                                </th>
+                                <th>CPF/CNPJ</th>
+                                <th>Empresa</th>
+                                <th>Representante</th>
+                                <th>Tipo Negociação</th>
+                                <th>Carteira</th>
+                                <th>Tipo</th>
+                                <th>Status</th>
+                                <th>
+                                    Qtd de Itens
+                                </th>
+                                @if (SessionUtil.FranquiadoOuGerenteOuTI())
+                                {
+                                    <th>Região</th>
+                                }
+                                @*@if (SessionContext.IsAdmDepartamento("franquiador"))
+        {
+            <th>Uen</th>
+        }*@
+                                <th colspan="7" class="center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in lstPedidos" class="animate-repeat">
+                            <td ng-show="notaBatchModal.ativo == true">
+                                <span app-many-checkbox="notaBatchModal.ListCodPedidos" 
+                                      key-value="item.PED_CRM_ID"
+                                      key-name="CodPedido"
+                                      control-obj="notaBatchModal.controle"
+                                      select-watch="notaBatchModal.selecionarTodos"></span>
+                            </td>
+                            <td>
+                                {{item.PED_CRM_ID}}
+                            </td>
+                            <td>
+                                <strong ng-switch="item.UEN_ID">
+                                    <span ng-switch-when="1" class="label label-info" app-tooltip title="Curso">C</span>
+                                    <span ng-switch-when="2" class="label label-success" app-tooltip title="Assinatura">A</span>
+                                    <span ng-switch-default class="label label-default" app-tooltip title="Não Especificado">*</span>
+                                </strong>
+                            </td>
+                            <td>{{item.PRT_ID}}</td>
+                            <td app-show-date="item.PED_CRM_DATA"></td>
+                            <td>
+                                {{item.CLIENTES.CLI_NOME}}
+                            </td>
+                            <td>
+                                {{item.CLIENTES.CLI_CPF_CNPJ}}
+                            </td>
+                            <td>
+                                {{item.EMPRESAS.EMP_NOME_FANTASIA}}
+                            </td>
+                            <td>
+                                {{item.REPRESENTANTE.REP_NOME}}
+                            </td>
+                            <td>
+                                {{item.TIPO_NEGOCIACAO.TNE_DESCRICAO}}
+                            </td>
+                            <td>{{item.CAR_ID}}</td>
+                            <td>
+                                {{item.TIPO_PEDIDO_CRM.TPD_DESCRICAO}}
+                            </td>
+                            <td>
+                                <span class="label" ng-class="{
+                                        'label-warning' : item.PST_ID == 1,
+                                        'label-purple' : item.PST_ID == 2,
+                                        'label-info' : item.PST_ID == 3 || item.PST_ID == 12,
+                                        'label-danger' : item.PST_ID == 5 || item.PST_ID == 6 || item.PST_ID == 11 || item.PST_ID == 13 || item.PST_ID == 14,
+                                        'label-success' : item.PST_ID == 7 || item.PST_ID == 4
+                                    }">{{item.PEDIDO_STATUS.PST_STATUS}}</span>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" ng-click="listarItensDoPedido(item.PED_CRM_ID);">
+                                    <span class="badge">{{item.ITEM_PEDIDO.length}}</span>
+                                </a>
+                            </td>
+                            @if (SessionUtil.FranquiadoOuGerenteOuTI())
+                            {
+                                <td>{{item.REGIAO.RG_DESCRICAO}}</td>
+                            }
+                            @*@if (SessionContext.IsAdmDepartamento("franquiador"))
+        {
+            <td>{{item.UEN.UEN_DESCRICAO}}</td>
+        }*@
+
+                            <td>
+                                <a href="javascript:void(0);" ng-click="listarItensDoPedido(item.PED_CRM_ID);" app-tooltip title="Ver Itens" class="text-primary">
+                                    <span class="glyphicon glyphicon-th-list"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" ng-click="abrirProposta(item.PRT_ID);" app-tooltip title="Abrir Proposta" class="text-primary">
+                                    <span class="glyphicon glyphicon-open"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" ng-click="abrirDetalhes(item.PED_CRM_ID)" app-tooltip
+                                   title="Visualizar Detalhes" class="blue">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" ng-click="cancelarPedidoComNotificacao(item)" app-tooltip
+                                   title="Cancelar pedido" class="red" ng-if="item.PST_ID != 5">
+                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" ng-click="abrirModalObservacoes(item)" app-tooltip
+                                   title="Visualizar / Editar Observações" class="text-primary">
+                                    <span class="glyphicon glyphicon-comment"></span>
+                                </a>
+                            </td>
+
+                            <td>
+                                @if (SessionUtil.PossuiPermissaoParaFaturar())
+                                {
+                                    <a href="javascript:void(0);" ng-click="abrirModalFaturamento(item.PED_CRM_ID);"
+                                       ng-if="item.PST_ID == 7 || item.PST_ID == 4" app-tooltip
+                                       title="Faturar Pedido" class="blue">
+                                        <span class="glyphicon glyphicon-list-alt"></span>
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="13" ng-show="lstPedidos.length == 0 && listado">Nenhum registro foi encontrado.</td>
+                            <td colspan="13" ng-show="!lstPedidos">Clique em pesquisar para listar.</td>
+                        </tr>
+
+                    </table>
+                </div>
+                <app-pagination request-page="paginaReq" load-function="listarPedidos(paginaReq)"></app-pagination>
+
+            </div>
+        </div>
+
+        @Html.Partial("Partials/_ModalClientePartial")
+        @Html.Partial("Partials/_AdicionarRegiaoPartial")
+
+        <div app-modal="modal-detalhes-pedido" header="Detalhes dos itens de pedido">
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Código do Cooporativo</th>
+                                    <th>
+                                        Nome do Produto
+                                    </th>
+                                    <th>Assinatura</th>
+                                    <th>
+                                        Qtd
+                                    </th>
+                                    <th ng-if="!propostaItem.TPD_ID && itemPedido.TPD_ID != 2">Qtd Consultas</th>
+                                    <th>Período Bônus (Mês)</th>
+                                    <th>Entrada</th>
+                                    <th>
+                                        Valor da Parcela
+                                    </th>
+                                    <th>Total </th>
+                                    <th>Código de Autorização</th>
+                                    <th>Cód Prospect</th>
+                                    <th>Tipo Período</th>
+                                    <th>Dia cobrança Recorrente</th>
+                                    <th>Data de Faturamento</th>
+                                    <th>Status</th>
+                                    <th>
+                                        Desconto (%)
+                                    </th>
+                                    <th colspan="9" class="center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in lstItemPedidoModal" class="animate-repeat">
+                                <td>
+                                    {{item.IPE_ID}}
+                                </td>
+                                <td>{{item.IPE_COD_LEGADO}}</td>
+                                <td>
+                                    {{item.PRODUTO_COMPOSICAO.CMP_DESCRICAO}}
+                                    <strong class="label label-primary"
+                                            ng-if="item.IPE_PRIMEIRA_PARCELA_CORTERIA">
+                                        Primeira parcela grátis
+                                    </strong>
+                                    <strong class="label label-success"
+                                            ng-if="item.IPE_CORTESIA == true">
+                                        Cortesia
+                                    </strong>
+                                    <i class="fa fa-sticky-note font-15 text-success" aria-hidden="true" title="Gera Nota Fiscal" ng-if="item.IPE_GERA_NOTA == true"></i>
+                                    <strong class="label label-success"
+                                            ng-if="item.IPE_GERA_NOTA == null || item.IPE_GERA_NOTA == false">
+                                        Não gera nota
+                                    </strong>
+                                </td>
+                                <td>
+                                    <span ng-if="item.PEDIDO_CRM.TPD_ID == 3">
+                                        De: <strong>{{item.IPE_ASN_NUM_ASS_CANC}}</strong> <br /> Para:
+                                    </span>
+                                    <strong>{{item.ASN_NUM_ASSINATURA}}</strong>
+                                </td>
+                                <td>
+                                    <span class="label label-success">{{item.IPE_QTD}}</span>
+                                </td>
+                                <td ng-if="!propostaItem.TPD_ID && itemPedido.TPD_ID != 2">{{item.IPE_QTD_CONSULTA}}</td>
+                                <td>{{item.IPE_PERIODO_MES_BONUS}}</td>
+                                <td>
+                                    <strong app-show-dinheiro="item.IPE_VALOR_ENTRADA" hide-when-zero="true" ng-show="item.TIPO_PAGAMENTO.TPG_TIPO == 1"></strong>
+                                    <span ng-show="item.TIPO_PAGAMENTO.TPG_TIPO == 0" class="label label-default">Não se Aplica</span>
+                                    <a href="javascript:void(0)" ng-show="item.IFF_ID_ENTRADA" ng-click="carregarInfoFaturaEAbrirModal(item.IFF_ID_ENTRADA)" app-tooltip
+                                       id="info_fatura" title="Info De Imposto"><span class="glyphicon glyphicon-barcode"></span></a>
+                                </td>
+                                <td>
+                                    <span ng-if="item.IPE_PARCELA && item.TPG_ID != 9"><strong>{{item.IPE_PARCELA}}X</strong> De</span>
+                                    <strong><span app-show-dinheiro="item.IPE_VALOR_PARCELA"></span></strong>
+                                    <span ng-if="item.IPE_PARCELA && item.TPG_ID == 9">Em <strong>{{item.IPE_PARCELA}}X</strong></span>
+                                    <a href="javascript:void(0)" ng-show="item.IFF_ID" ng-click="carregarInfoFaturaEAbrirModal(item.IFF_ID)" app-tooltip
+                                       id="info_fatura" title="Info De Imposto"><span class="glyphicon glyphicon-barcode"></span></a>
+                                </td>
+                                <td>
+                                    <strong app-show-dinheiro="item.IPE_TOTAL"></strong>
+                                </td>
+                                <td>
+                                    {{item.AUTHORIZATION_CODE}}
+                                </td>
+                                <td>
+                                    {{item.PROSP_ID}}
+
+                                </td>
+                                <td>{{item.TIPO_PERIODO.TTP_DESCRICAO}}</td>
+                                <td>{{item.IPE_DIA_VENCIMENTO_VENDA_RECORRENTE}}</td>
+                                <td><strong app-show-date="item.IPE_DATA_FATURAMENTO"></strong></td>
+                                <td>
+                                    <span class="label" ng-class="{
+                                        'label-warning' : item.PST_ID == 1,
+                                        'label-purple' : item.PST_ID == 2,
+                                        'label-info' : item.PST_ID == 3 || item.PST_ID == 12,
+                                        'label-danger' : item.PST_ID == 5 || item.PST_ID == 6 || item.PST_ID == 11 || item.PST_ID == 13 || item.PST_ID == 14,
+                                        'label-success' : item.PST_ID == 7 || item.PST_ID == 4
+                                    }">{{item.PEDIDO_STATUS.PST_STATUS}}</span>
+                                </td>
+                                <td>
+                                    <span app-show-dinheiro="item.IPE_DESCONTO" data-show-simbolo="false"></span>
+                                </td>
+                                <td ng-if="item.PST_ID == 1 || item.PST_ID == 2">
+                                    <a href="javascript:void(0);" ng-show="@podePagar || item.PST_ID == 1"
+                                       ng-click="abrirModalOpcoesDePagamento(item)"
+                                       class="blue" app-tooltip title="Realizar Pagamento">
+                                        <span class="glyphicon glyphicon-ok-sign"></span>
+                                    </a>
+                                </td>
+
+                                @if (SessionUtil.FranquiadoOuGerenteOuTI())
+                                {
+                                    <td ng-if="item.PST_ID == 6">
+                                        <a href="javascript:void(0);" ng-click="aprovarDescontoNoPedido(item)" app-tooltip
+                                           title="Aprovar Desconto no pedido" class="text-warning">
+                                            <span class="glyphicon glyphicon-ok-circle"></span>
+                                        </a>
+                                    </td>
+                                }
+                                <td ng-if="item.PST_ID == 1">
+                                    <a href="javascript:void(0);" ng-click="abrirFuncionalidadeBoletoAvulso(item.IPE_ID)" app-tooltip
+                                       title="Boleto Avulso." class="text-warning">
+                                        <span class="glyphicon glyphicon-usd"></span>
+                                    </a>
+                                </td>
+                                @if (SessionUtil.GetUenId() == 1)
+                                {
+                                    <td ng-if="item.PRODUTO_COMPOSICAO.EhCurso == true">
+                                        <a href="javascript:void(0);" ng-click="abrirSubModalParticipantes(item.IPE_ID)" app-tooltip
+                                           title="Ver participantes" class="blue">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </a>
+                                    </td>
+                                }
+
+                                <td ng-if="(item.PST_ID == 3 || item.PST_ID == 11 || item.PST_ID == 12) && item.ASN_NUM_ASSINATURA">
+                                    <a href="javascript:void(0);" ng-click="carregarAssinatura(item.ASN_NUM_ASSINATURA, item)" app-tooltip
+                                       title="Assinaturas / Contrato Gerado" class="text-danger">
+                                        <span class="glyphicon glyphicon-tag"></span>
+                                    </a>
+                                </td>
+                                <td ng-if="(item.PST_ID == 3 || item.PST_ID == 11 || item.PST_ID == 12)">
+                                    <a href="javascript:void(0);" ng-click="abrirModalRegistroFaturamento(item.IPE_ID)" app-tooltip
+                                       title="Exibir Registro de Faturamento" class="text-danger">
+                                        <span class="glyphicon glyphicon-file"></span>
+                                    </a>
+                                </td>
+                                <td ng-if="item.IPE_CORTESIA != true">
+                                    <a href="javascript:void(0);" ng-click="abrirModalNFe(item.IPE_ID)" app-tooltip
+                                       title="Nota Fiscal" class="text-danger">
+                                        <span class="glyphicon glyphicon-download"></span>
+                                    </a>
+                                </td>
+                                <td ng-if="item.IPE_CORTESIA != true">
+                                    <a href="javascript:void(0);" ng-click="abreModalFormasDePagamento(item)" app-tooltip
+                                       title="Ver dados do pagamento" class="text-primary">
+                                        <span class="glyphicon glyphicon-credit-card"></span>
+                                    </a>
+                                </td>
+                                <td ng-hide="item.PST_ID == 5">
+                                    <a href="javascript:void(0);" ng-click="abrirModalComprovante(item, 'pedido')" app-tooltip
+                                       title="Comprovantes" class="text-primary">
+                                        <span class="fa fa-book font-15" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);" ng-click="abrirModalHistorico(item.IPE_ID)" app-tooltip
+                                       title="Ver historicos" class="text-primary">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="8" ng-if="lstItemPedidoModal.length <= 0" class="text">
+                                    Não foi encontrado nenhum registro.
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div app-modal="modal-fatura" header="Informações de desconto de imposto" size="small">
+            @Html.Partial("Partials/_ModalInfoFaturaPartial")
+        </div>
+        <div app-modal="modal-cancelamento-pedido" header="Cancelamento" submodal data-size="small">
+            <div class="row form">
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <label for="motivo">Motivo do cancelamento</label>
+                    <textarea class="form-control" ng-model="cancelamentoDTO.MOTIVO_ALTERACAO">
+
+                    </textarea>
+                </div>
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <label for="motivo">Enviar Email para Cliente.</label>
+                    <label class="switch switch-success switch-round">
+                        <input type="checkbox" id="checkbox_envio_email"
+                               ng-model="cancelamentoDTO.EnviaEmail"
+                               ng-checked="cancelamentoDTO.EnviaEmail == true">
+                        <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                    </label>
+                </div>
+                <div class="form-group col-lg-12 limit-modal-height animate-show" ng-show="cancelamentoDTO.EnviaEmail == true">
+                    <label for="motivo">Mensagem E-Mail Cliente. 
+                        <span class="glyphicon glyphicon-question-sign text-danger" id="span-explane" app-tooltip data-placement="top"
+                            tooltip-title="Caso opte por enviar um email explicando porque a sua assinatura foi cancelado. Escreva a mensagem aqui.">
+                        </span>
+                        <a href="javascript:void(0);" ng-click="abrirModalPreviewEmail()"><span class="glyphicon glyphicon-eye-open"></span></a>
+                    </label>
+                    <div app-editor="cancelamentoDTO.MengagemEmailAssCanc" app-editor-model="cancelamentoDTO.MengagemEmailAssCanc" editor-model="editor" id="mensagemEmail" data-force-model="true">
+                    </div>
+                </div>
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <label for="motivo">Detalhes do Item</label>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Item do Pedido</th>
+                                    <th>
+                                        Nome do Produto
+                                    </th>
+                                    <th>
+                                        Valor do Pedido
+                                    </th>
+                                    <th>Pode Extornar N. Nota</th>
+                                    <th>Extornar N. Nota</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in cancelamentoDTO.Itens" class="animate-repeat">
+                                <td>
+                                    {{item.ipeId}}
+                                </td>
+                                <td>
+                                    {{item.NomeProduto}}
+                                </td>
+                                <td app-show-dinheiro="item.ValorPedido" class="center">
+
+                                </td>
+                                <td>
+                                    <span ng-if="item.PstId != 3" class="label label-default">Não se aplica</span>
+                                    <span ng-if="item.PstId == 3 && item.ValidadoPraExtornarNumNota == true" class="label label-success">Sim</span>
+                                    <span ng-if="item.PstId == 3 && item.ValidadoPraExtornarNumNota == false" class="label label-danger">Não</span>
+                                </td>
+                                <td>
+                                    <label class="switch switch-success switch-round" ng-show="item.ValidadoPraExtornarNumNota == true">
+                                        <input type="checkbox" id="checkbox_envio_email"
+                                               ng-model="item.ExtornarNumeroNotaFiscal"
+                                               ng-checked="item.ExtornarNumeroNotaFiscal == true">
+                                        <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                                    </label>
+                                    <span ng-if="item.PstId != 3 || item.ValidadoPraExtornarNumNota == false" class="label label-default">Não se aplica</span>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" ng-if="lstPedidoParticipante.length <= 0" class="text">
+                                    Não foi encontrado nenhum registro.
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <button app-switch-button="cancelarPedido()"
+                            switch-conf="[{label : 'Cancelar Pedido', state : 'can'}, {label : 'Cancelando Pedido...', state : 'canceling', disabled : true}]"
+                            switch-var="$parent.buttonCancel"
+                            class="btn btn-danger">
+                        <span class="glyphicon glyphicon-"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div app-modal="template-html-email" header="PreviewEmail" submodal>
+            <div class="row form padding">
+                <div class="text-info"  ng-bind-html="previewHtmlEmail">
+                </div>
+            </div>
+        </div>
+        
+        <div app-modal="modal-opcoes-pagamento" header="Pagamento" submodal data-size="small">
+            <div class="row form padding">
+                <div class="text-info">
+                    @if (SessionUtil.PossuiPermissaoParaFaturar() || SessionUtil.FranquiadoOuGerenteOuTI())
+                    {
+                        <div ng-show="itemModal.PST_ID == 2">
+                            <div>
+                                <a href="javascript:void(0);" ng-click="alterarStatusPedidoParaPago(itemModal)"
+                                   title="Adicionar Curso">
+                                    <span class="glyphicon glyphicon-flag"></span> Confirmar Pagamento (Conferido)
+                                </a>
+                            </div>
+                            <div>
+                                <a href="javascript:void(0);" ng-click="abrirModalRecusaDadosDePagamento(itemModal)"
+                                   title="Adicionar Curso" class="text-danger">
+                                    <span class="glyphicon glyphicon-remove-circle"></span> Recusar indicação de pagamento
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    <div ng-show="itemModal.pedidoPagamentoItemPedido">
+                        <div ng-show="itemModal.PST_ID == 1">
+                            @*&& itemModal.pedidoPagamentoItemPedido.TPG_ID != 7*@
+                            <a href="javascript:void(0);" ng-click="abrirModalMarcarComoPago(itemModal)"
+                               title="Adicionar Curso">
+                                <span class="glyphicon glyphicon-flag"></span> Informar recebimento de pagamento
+                            </a>
+                        </div>
+
+                        <div>
+                            <div ng-show="itemModal.PodeUsarGateway == true && itemModal.PST_ID == 1">
+                                <a href="javascript:void(0);" ng-click="abrirPagamentoComGateway(itemModal)"
+                                   title="Adicionar Produto Composicao">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span> Pagar Com Gateway
+                                </a>
+                            </div>
+                            <div ng-show="itemModal.PodeUsarGateway == true && itemModal.PST_ID == 1">
+                                <a href="javascript:void(0);" ng-click="abreModalEnviarEmailParaCliente(itemModal.IPE_ID, itemModal.PEDIDO_CRM.CLI_ID, true)"
+                                   title="Enviar Email">
+                                    <span class="glyphicon glyphicon-envelope"></span> Enviar Email com Link de Pagamento (Gateway)
+                                </a>
+                            </div>
+                        </div>
+                        <div ng-show="itemModal.pedidoPagamentoItemPedido.TPG_ID == 7">
+                            <a href="javascript:void(0);" ng-click="abreModalEnviarEmailParaCliente(itemModal.IPE_ID, itemModal.PEDIDO_CRM.CLI_ID, false)"
+                               title="Enviar Boleto">
+                                <span class="glyphicon glyphicon-envelope"></span> Enviar Link do Boleto (Interno) por E-Mail
+                            </a>
+                        </div>
+                    </div>
+                    <div ng-show="itemModal.pedidoPagamentoItemPedido">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div app-modal="modal-assinatura-gerada" header="Informações da Assinatura" submodal>
+
+            <div class="row">
+                <div class="col-lg-12 limit-modal-height-32em">
+                    <div class="font-30 pull-right"><strong>Assinatura </strong><span class="label label-danger">{{numeroAssinatura }}</span></div>                    
+                    <div style="clear:both;"></div>
+                    <br />
+                    @*<ul class="nav nav-tabs">
+                          <li role="presentation" ng-class="{active : tab == 1}"><a href="javascript:void(0)" ng-click="selecionarTab(1)">Telefones / Emails</a></li>
+                          <li role="presentation" ng-class="{active : tab == 2}"><a href="javascript:void(0)" ng-click="selecionarTab(2)">Parcelas</a></li>
+
+                        </ul>*@
+
+                    <div class="row" ng-show="modalAssinatura.ASN_TRANSFERIDA == true">
+                        <div class="col-md-2">
+                            <span class="label label-default">Assinatura Transferida</span>
+                        </div>
+                        <div class="col-md-10">
+                            <strong>Transferida Para</strong>
+                            <span class="label label-danger">{{modalAssinatura.ASN_NUM_ASS_TRANSFERIDA }}</span>
+                         </div>
+                    </div>
+                    <br />
+                    <fieldset class="padding-bottom" id="contratos_gerados">
+                        <legend class="text-primary">Contratos Gerados no Pedido</legend>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered table-stripped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Código
+                                        </th>
+                                        <th class="right">Número do Pedido</th>
+                                        <th class="center">Data de Faturamento</th>
+                                        <th class="center">Período Bõnus (Mês)</th>
+                                        <th class="center">Inicio de Vigência</th>
+                                        <th class="center">Fim de Vigência</th>
+                                        <th class="right">Valor Serviço</th>
+                                        <th class="right">Valor Produto</th>
+                                        <th class="right">Valor Bruto</th>
+                                        <th class="right">
+                                            Valor do Contrato
+                                        </th>
+                                        <th class="right">
+                                            Valor de Entrada
+                                        </th>
+                                        <th class="center">Número de Parcelas</th>
+                                        <th class="right">Valor das Parcelas</th>
+                                        @*<th>Ano de Vigência</th>*@
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in lstContratosGerados" class="animate-repeat-all">
+                                    <td>
+                                        {{item.CTR_NUM_CONTRATO}}
+                                    </td>
+                                    <td class="right">
+                                        {{item.IPE_ID}}
+                                    </td>
+                                    <td class="center" app-show-date="item.CTR_DATA_FAT" show-time></td>
+                                    <td>{{item.CTR_PERIODO_MES_BONUS}}</td>
+                                    <td class="center" app-show-date="item.CTR_DATA_INI_VIGENCIA"></td>
+                                    <td class="center" app-show-date="item.CTR_DATA_FIM_VIGENCIA"></td>
+                                    <td class="right">
+                                        <strong app-show-dinheiro="item.CTR_VLR_SERVICO"></strong>
+                                    </td>
+                                    <td class="right">
+                                        <strong app-show-dinheiro="item.CTR_VLR_PRODUTO"></strong>
+                                    </td>
+                                    <td class="right">
+                                        <strong app-show-dinheiro="item.CTR_VLR_BRUTO"></strong>
+                                    </td>
+                                    <td class="right">
+                                        <strong app-show-dinheiro="item.CTR_VLR_CONTRATO"></strong>
+                                        <span ng-if="item.CTR_CORTESIA == 1" class="label label-success">Cortesia</span>
+                                    </td>
+                                    <td class="right">
+                                        <strong app-show-dinheiro="item.CTR_VLR_ENTRADA"></strong>
+                                    </td>
+                                    <td class="center"> <span class="label label-success">{{item.CTR_QTE_PARCELAS}}</span></td>
+                                    <td class="right">
+                                        <strong app-show-dinheiro="item.CTR_VLR_PARCELAS" class="right"></strong>
+                                    </td>
+                                    @*<td>{{item.CTR_ANO_VIGENCIA}}</td>*@
+                                    <td>
+                                        <a href="#parcelas" ng-click="carregarParcelas(item.CTR_NUM_CONTRATO, 'contratos_gerados')"
+                                           title="Visualizar Parcelas" class="text-success">
+                                            <span class="glyphicon glyphicon-usd"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="10" ng-show="!lstContratos || lstContratos.length == 0">Nenhum Contrato Encontrado</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div app-pagination="pageContratosDoPedido" request-page="paginaReq" load-function="listarContratosGeradosNoPedido(paginaReq)"></div>
+                    </fieldset>
+                    <fieldset class="padding-bottom" id="contratos">
+                        <legend class="text-primary">Todos os Contratos</legend>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered table-stripped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Código
+                                        </th>
+                                        <th class="right">Número do Pedido</th>
+                                        <th class="center">Venda Recorrente</th>
+                                        <th class="center">Data de Faturamento</th>
+                                        <th class="center">Período Bõnus (Mês)</th>
+                                        <th class="center">Inicio de Vigência</th>
+                                        <th class="center">Fim de Vigência</th>
+                                        <th class="right">
+                                            Valor do Contrato
+                                        </th>
+                                        <th class="right">
+                                            Valor de Entrada
+                                        </th>
+                                        <th class="center">Número de Parcelas</th>
+                                        <th class="right">Valor das Parcelas</th>
+                                        @*<th>Ano de Vigência</th>*@
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in lstContratos" class="animate-repeat-all">
+                                    <td>
+                                        {{item.CTR_NUM_CONTRATO}}
+                                    </td>
+                                    <td class="right">
+                                        {{item.IPE_ID}}
+                                    </td>
+                                    <td ng-switch="item.CTR_VENDA_RECORRENTE" class="center">
+                                        <span ng-switch-when="true" class="label label-success">
+                                            Sim
+                                        </span>
+                                        <span ng-switch-default class="label label-warning">
+                                            Não
+                                        </span>
+                                    </td>
+                                    <td class="center" app-show-date="item.CTR_DATA_FAT" show-time></td>
+                                    <td>{{item.CTR_PERIODO_MES_BONUS}}</td>
+                                    <td class="center" app-show-date="item.CTR_DATA_INI_VIGENCIA"></td>
+                                    <td class="center" app-show-date="item.CTR_DATA_FIM_VIGENCIA"></td>
+                                    <td class="right">
+                                        <strong app-show-dinheiro="item.CTR_VLR_CONTRATO"></strong>
+                                        <span ng-if="item.CTR_CORTESIA == 1" class="label label-success">Cortesia</span>
+                                    </td>
+                                    <td class="right">
+                                        <strong app-show-dinheiro="item.CTR_VLR_ENTRADA"></strong>
+                                    </td>
+                                    <td class="center"> <span class="label label-success">{{item.CTR_QTE_PARCELAS}}</span></td>
+                                    <td class="right">
+                                        <strong app-show-dinheiro="item.CTR_VLR_PARCELAS" class="right"></strong>
+                                    </td>
+                                    @*<td>{{item.CTR_ANO_VIGENCIA}}</td>*@
+                                    <td>
+                                        <a href="#parcelas" ng-click="carregarParcelas(item.CTR_NUM_CONTRATO, 'contratos')"
+                                           title="Visualizar Parcelas" class="text-success">
+                                            <span class="glyphicon glyphicon-usd"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="10" ng-show="!lstContratos || lstContratos.length == 0">Nenhum Contrato Encontrado</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div app-pagination="pageContratos" request-page="paginaReq" load-function="listarContratos(paginaReq)"></div>
+                    </fieldset>
+                    <fieldset class="padding-bottom" id="parcelas">
+                        <legend>Parcelas</legend>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered table-stripped">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Código no PJ</th>
+                                        <th class="center">Situação</th>
+                                        <th class="center">Data de Vencimento</th>
+                                        <th class="right">Valor das Parcelas</th>
+                                        <th class="right">
+                                            Valor Pago
+                                        </th>
+                                        <th class="center">
+                                            Data do Pagamento
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in lstParcelas" class="animate-repeat-all">
+                                    <td>
+                                        {{item.PAR_NUM_PARCELA}}
+                                    </td>
+                                    <td>{{item.PAR_COD_LEGADO}}</td>
+                                    <td>
+                                        <span ng-if="item.PAR_VLR_PAGO >= 0 && item.PAR_DATA_PAGTO" class="label label-success">Paga</span>
+                                        <span ng-if="item.PAR_VLR_PAGO <= 0 && !item.PAR_DATA_PAGTO" class="label label-warning">Aberta</span>
+                                    </td>
+                                    <td class="center" app-show-date="item.PAR_DATA_VENCTO"></td>
+                                    <td class="right">
+                                        <strong app-show-dinheiro="item.PAR_VLR_PARCELA"></strong>
+                                    </td>
+                                    <td class="right">
+                                        <strong app-show-dinheiro="item.PAR_VLR_PAGO"></strong>
+                                    </td>
+                                    <td class="center" app-show-date="item.PAR_DATA_PAGTO"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6"
+                                        ng-show="!lstParcelas || lstParcelas.length == 0">
+                                        Selecione um contrato para visualizar a parcela.
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div app-pagination="pageParcelas" request-page="paginaReq" load-function="carregarDadosDaParcela(paginaReq)"></div>
+                        <span>
+                            <br />
+                            <a data-ng-href="#{{retornoParcela}}" class="button button-warning" ng-show="retornoParcela">
+                                <span class="glyphicon glyphicon-chevron-left"></span>Voltar
+                            </a>
+                        </span>
+                    </fieldset>
+                    <fieldset class="padding-bottom">
+                        <br />
+                        <legend class="text-primary">Telefones / Emails</legend>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-stripped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Telefone da Assinatura
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-repeat="item in modalAssinatura.ASSINATURA_TELEFONE" class="animate-repeat-all">
+                                            <td>
+                                                <span>({{item.ATE_DDD}}) {{item.ATE_TELEFONE}}</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td ng-show="!modalAssinatura.ASSINATURA_TELEFONE || modalAssinatura.ASSINATURA_TELEFONE.length == 0">Nenhum telefone foi encontrado.</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-stripped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Emails da Assinatura
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-repeat="item in modalAssinatura.ASSINATURA_EMAIL" class="animate-repeat-all">
+                                            <td>
+                                                <div>
+                                                    <span>{{item.AEM_EMAIL}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td ng-show="!modalAssinatura.ASSINATURA_EMAIL || modalAssinatura.ASSINATURA_EMAIL == 0">Nenhum E-Mail foi encontrado.</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div app-modal="modal-forma-pagamento-gerada" header="Informações de Pagamento" submodal>
+
+            <div class="row">
+                <div class="col-lg-12 limit-modal-height-32em">
+                    <div class="padding-bottom-10">
+                        <span class="label label-success font-12">{{itemPedidoModal.TIPO_PAGAMENTO.TPG_DESCRICAO}}</span>
+                        
+                    </div>
+
+                    <fieldset class="padding-bottom">
+                        
+                        <legend class="text-primary">Forma de Pagamento</legend>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered table-stripped">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>
+                                            Tipo de Pagamento
+                                        </th>
+                                        <th class="center">Entrada</th>
+                                        <th class="center">Número de Parcelas</th>
+                                        <th class="center">Data de Vencimento</th>
+                                        <th class="right">Valor da Parcela</th>
+                                        <th class="right">Valor Total</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in lstPedidoPagamento" class="animate-repeat-all">
+                                    <td>{{item.PGT_ID}}</td>
+                                    <td>
+                                        {{item.TIPO_PAGAMENTO.TPG_DESCRICAO}}
+                                        <span ng-if="item.PGT_PAGO == true" class="label label-success">Pago</span>
+                                    </td>
+                                    <td class="center">
+                                        <span ng-if="item.PGT_ENTRADA == true" class="label label-primary">Sim</span>
+                                        <span ng-if="item.PGT_ENTRADA != true" class="label label-warning">Não</span>
+                                    </td>
+                                    <td>
+                                        <span ng-show="item.TPG_ID != 9">
+                                            {{item.PGT_QTDE_PARCELAS}}
+                                        </span>
+                                    </td>
+                                    <td class="center">
+                                        <span app-show-date="item.PGT_DATA_VENCIMENTO"></span>
+                                    </td>
+                                    <td class="right">
+                                        <strong app-show-dinheiro="item.PGT_VLR_PARCELA"></strong>
+                                    </td>
+                                    <td class="right">
+                                        <strong app-show-dinheiro="item.PGT_VLR_TOTAL"></strong>
+                                        Em <strong>{{item.PGT_QTDE_PARCELAS}} X</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="10" ng-show="!lstPedidoPagamento || lstPedidoPagamento.length == 0">Nenhum Contrato Encontrado</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div app-modal="modal-enviar-email" header="Informações da Assinatura" submodal>
+            <div class="row">
+                <div class="col-lg-12 limit-modal-height-32em">
+                    <fieldset>
+                        <legend>Selecione um E-Mail para o Envio</legend>
+                        <div class="row">
+                            <div class="form-group col-sm-4">
+                                <label for="assinatura">Assinatura</label>
+                                <select name="assinatura" class="form-control" ng-model="$parent.objAssinatura"
+                                        ng-options="item as item.ASN_NUM_ASSINATURA for item in lstAssinatura"
+                                        ng-change="assinaturaSelecionada()">
+                                    <option value="">Selecione</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="padding-bottom">
+                        <legend class="text-primary">Emails</legend>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-stripped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Emails do Cliente
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-repeat="item in lstEmailsDoCliente" class="animate-repeat-all">
+                                            <td>
+                                                <a href="javascript:void(0);" ng-click="$parent.enviarEmailPagamento(item.AEM_EMAIL)" class="text-success font-12"
+                                                   title="Enviar Email">
+                                                    <span class="label label-success">{{item.AEM_EMAIL}}</span>
+                                                </a>
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                            <td ng-show="!lstEmailsDoCliente || lstEmailsDoCliente.length == 0">Nenhum E-Mail foi encontrado.</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-stripped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Emails da Assinatura
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-repeat="item in lstEmails" class="animate-repeat-all">
+                                            <td>
+
+                                                <a href="javascript:void(0);" ng-click="enviarEmailPagamento(item.AEM_EMAIL)"
+                                                   title="Enviar Email" class="text-success font-12">
+                                                    <span class="label label-success">{{item.AEM_EMAIL}}</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td ng-show="!lstEmails || lstEmails.length == 0">Nenhum E-Mail foi encontrado.</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        @*<div app-modal="modal-nfe-xml" header="Nota(s) Fiscal(s) Gerada(s)" submodal>
+            <div class="row">
+                <div class="form-group col-lg-12 limit-modal-height" ng-show="modalNFe.possuiServico == false && modalNFe.ehCurso">
+                    <form>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Arquivo de Nota</label>  https://github.com/danialfarid/ng-file-upload 
+                                    <input type="file" id="exampleInputFile" class="button button-default"
+                                           ngf-select="uploadNFe($file, $invalidFiles, modalNFe.IPE_ID)" ngf-max-size="1MB" accept=".xml">
+                                    <div app-validation-msg="erros" for="NFeXML"></div>
+                                </div>
+                                <div class="progress" ng-show="f.progress >= 0">
+                                    <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+                                         aria-valuenow="{{f.progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{f.progress}}%">
+                                        <span class="sr-only">f.progress% Complete</span>
+                                    </div>
+                                </div>
+                                {{errorMsg}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="codigo">Chave da Nota Fiscal</label>
+                                    <input type="text" id="codigo" ng-model="modalNFe.chaveDaNota" class="form-control" ng-disabled="modalNFe.uploaded != true">
+                                    <div app-validation-msg="erros" for="chaveDaNota"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button app-switch-button="salvarArquivoUploadNfeService()"
+                                switch-conf="[{label : 'Anexar NFe', state : 'anex'}, {label : 'Anexando NFe...', state : 'anexando', disabled : true}]"
+                                switch-var="$parent.buttonNFe"
+                                class="btn btn-primary">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <table class="table table-hover" ng-show="!requisicaoItensNota || requisicaoItensNota.ExistemNotas == true">
+                        <thead>
+                            <tr>
+                                <th>Número da Nota</th>
+                                <th>Chave da Nota</th>
+                                <th>
+                                    Tipo de Nota
+                                </th>
+                                <th colspan="2">
+                                    Ações
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in requisicaoItensNota.LstNfeXml" class="animate-repeat">
+                            <td>
+                                {{item.NFX_NUMERO_NOTA}}
+                            </td>
+                            <td>
+                                {{item.NFX_CHAVE_NOTA}}
+                            </td>
+                            <td>
+                                <span ng-switch="item.NFX_TIPO">
+                                    <span class="label label-success" ng-switch-when="0">Produto</span>
+                                    <span class="label label-primary" ng-switch-when="1">Serviço</span>
+                                    <span class="label label-success" ng-switch-default>Produto</span>
+                                </span>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" ng-click="downloadDaNota(item.NFX_ID)"
+                                   title="Download da Nota Fiscal" class="text-danger">
+                                    <span class="glyphicon glyphicon-download"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" ng-click="regerarNotaFiscal(item.NFX_ID, item.IPE_ID)"
+                                   title="Regerar Nota Fiscal" class="text-success">
+                                    <span class="glyphicon glyphicon-refresh"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" ng-if="requisicaoItensNota.LstNfeXml.length <= 0" class="text">
+                                Não foi encontrado nenhum registro.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row" ng-hide="requisicaoItensNota.LstNfeXml.length > 0">
+                <div class="form-group col-lg-12 limit-modal-height">
+                        <fieldset>
+                            <legend class="text-primary">Gerar nova Nota</legend>
+                            <div class="panel panel-default" ng-repeat="reqItem in requisicaoItensNota.PreviewGeracao">
+                                <div class="panel-body">
+                                    <div ng-if="reqItem.Mensagem">
+                                        <strong class="text-danger">{{reqItem.Mensagem }}</strong>
+                                    </div>
+                                    <br />  
+                                    <div ng-if="!reqItem.Valido">
+                                        <a href="javascript:void(0)" 
+                                           ng-click="abrirModalPedidosRetroativos(reqItem)">
+                                            Visualizar Pedidos Pendentes
+                                        </a>
+                                    </div>
+                                    <br />
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label>Empresa</label>
+                                                <div class="text"> {{reqItem.Empresa.EMP_NOME_FANTASIA}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            
+                                            <div class="form-group col-md-4">
+                                                <label>Número da Nota que Será Gerado</label>
+                                                <div class="text">{{reqItem.NumeroNota}}</div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Data de Faturamento deste Pedido</label>
+                                                <div class="text" app-show-date="reqItem.DataFaturamento"></div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Data do último faturamento</label>
+                                                <div class="text" app-show-date="reqItem.DataUltimoFaturamento"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" ng-show="reqItem.Valido == true">
+                                            <div class="form-group col-sm-4">
+                                                <button app-switch-button="gerarNotaFiscal()"
+                                                        switch-conf="[{label : 'Gerar Nota Fiscal', state : 'save'}, {label : 'Gerando Nota...', state : 'saved', disabled : true}]"
+                                                        switch-var="$parent.$parent.buttonGerarNota"
+                                                        class="btn btn-default">
+                                                    <span class="glyphicon glyphicon-asterisk"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                </div>
+            </div>
+        </div>*@
+        @Html.Partial("Partials/Modais/_ModalPedidoNFe")
+        <div app-modal="modal-observacao-pedido" header="Observações" submodal data-size="small">
+            <div class="row form">
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <label for="motivo">Observações</label>
+                    <div app-textarea="observacoesDTO.OBSERVACOES" data-rows="15" data-status-var="editandoObservacoes"></div>
+
+                </div>
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <button app-switch-button="alterarObservacoes()" ng-show="!editandoObservacoes || editandoObservacoes == false"
+                            switch-conf="[{label : 'Salvar', state : 'sav'}, {label : 'Salvando...', state : 'saving', disabled : true}]"
+                            switch-var="$parent.buttonSave"
+                            class="btn btn-primary">
+                        <span class="glyphicon glyphicon-save"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div app-modal="modal-marcar-pago" header="Marcar como Pago" submodal data-size="small">
+            <div class="row form">
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <label for="motivo">Motivo Da Indicação Manual de Pago</label>
+                    @*<textarea class="form-control" ng-model="" rows="15">
+
+                        </textarea>*@
+                    <div app-textarea="statusPago.MOTIVO_ALTERACAO" data-rows="15" data-status-var="editandoMotivacao"></div>
+                </div>
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <button ng-show="!editandoMotivacao || editandoMotivacao == false"
+                            app-switch-button="alterarStatusPedidoParaPagoComPendenciaDeConferencia()"
+                            switch-conf="[{label : 'Marcar como Pago', state : 'sav'}, {label : 'Processando...', state : 'saving', disabled : true}]"
+                            switch-var="$parent.buttonPaid"
+                            class="btn btn-primary">
+                        <span class="glyphicon glyphicon-save"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-alterar-status" app-status-modal="alteracaoModal"></div>
+        <div data-app-modal="modal-parcela" data-header="Parcela de Pagamento" data-submodal="" data-size="small" data-header-bg="false">
+            <div class="row form">
+                <div class="form-group col-lg-12 limit-modal-height">
+                    <div class="font-16"><strong>Código da Parcela para Pagamento</strong><span class="label label-danger">{{parcelaItem.PAR_NUM_PARCELA }}</span></div>
+
+                </div>
+            </div>
+        </div>
+
+        <div data-app-modal="modal-faturamento" data-header="Faturamento">
+            <div class="row">
+                <div class="col-lg-12 limit-modal-height-32em">
+                    <fieldset class="padding-bottom" ng-show="requisicaoFaturamento.LstRequisicaoFaturamento.length > 1">
+                        <legend class="text-primary">Definições Geral</legend>
+                        <div class="row">
+                            <div class="form-group col-sm-4">
+                                <label for="campo_data_faturamento">Data/Semana Faturamento</label>
+                                <select id="campo_data_faturamento"
+                                        name="campo_data_faturamento"
+                                        class="form-control"
+                                        ng-change="semanaFatSelecionada(requisicaoFaturamento.DATA_FATURAMENTO_STR, requisicaoFaturamento);
+                                        sobreEscreverRequisicaoFaturamentoSemanaFat();"
+                                        ng-model="requisicaoFaturamento.DATA_FATURAMENTO_STR"
+                                        ng-options="
+                                       dtFat.Data.getFullYear() + '/' +
+                                       dtFat.Data.getMonth() + '/' +
+                                       dtFat.Data.getDate() as
+                                       dtFat.Descricao for dtFat in lstDatasFaturamento">
+                                    <option value="">Selecione</option>
+                                </select>
+                                <div app-validation-msg="erros" for="EMP_ID"></div>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label for="campo_data_faturamento">Gerar Nota Fiscal</label>
+                                <div class="form-group col-lg-2">
+                                    <label class="switch switch-success switch-round">
+                                        <input type="checkbox" ng-model="requisicaoFaturamento.GerarNotaFiscal" id="gera-nota-fiscal-base" 
+                                               ng-checked="requisicaoFaturamento.GerarNotaFiscal == true" ng-change="sobreEscreverRequisicaoFaturamentoGerarNotaFiscal()">
+                                        <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                                    </label>
+                                </div>
+                                <div app-validation-msg="erros" for="EMP_ID"></div>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label for="campo_data_faturamento">Empresa</label>
+                                <select id="campo_EMP_ID_BASS" name="campo_EMP_ID_BASE" class="form-control" ng-model="requisicaoFaturamento.EmpId"
+                                        ng-options="emp.EMP_ID as emp.EMP_NOME_FANTASIA for emp in lstEmpresas" ng-change="sobreEscreverRequisicaoFaturamentoEmpresa()">
+                                    <option value="">Selecione</option>
+                                </select>
+                                <div app-validation-msg="erros" for="EMP_ID"></div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="padding-bottom">
+                        <legend class="text-primary">Definições por Itens</legend>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-stripped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Id Item de Pedido
+                                                </th>
+                                                <th>Produto</th>
+                                                <th>Valor Unitário</th>
+                                                <th>Valor Total</th>
+                                                <th>Data de Faturamento</th>
+                                                <th>Gera Nota Fiscal</th>
+                                                @*<th>Empresa</th>*@
+                                            </tr>
+                                        </thead>
+                                        <tr ng-repeat="item in requisicaoFaturamento.LstRequisicaoFaturamento" class="animate-repeat-all">
+                                            <td>
+                                                {{item.IpeId}}
+                                            </td>
+                                            <td>{{item.NomeProduto}}</td>
+                                            <td><strong app-show-dinheiro="item.PrecoUnitario"></strong></td>
+                                            <td><strong app-show-dinheiro="item.ValorPedido"></strong></td>
+                                            <td>
+                                                <select id="campo_data_faturamento"
+                                                        name="campo_data_faturamento"
+                                                        class="form-control"
+                                                        ng-change="semanaFatSelecionada(item.DATA_FATURAMENTO_STR, item)"
+                                                        ng-model="item.DATA_FATURAMENTO_STR"
+                                                        ng-options="
+                                                           dtFat.Data.getFullYear() + '/' +
+                                                           dtFat.Data.getMonth() + '/' +
+                                                           dtFat.Data.getDate() as
+                                                           dtFat.Descricao for dtFat in lstDatasFaturamento">
+                                                    <option value="">Selecione</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <div class="form-group col-lg-2" ng-show="item.BloqueiaGeracaoNota == false">
+                                                    <label class="switch switch-success switch-round">
+                                                        <input type="checkbox" ng-model="item.GerarNotaFiscal" id="gera-nota-fiscal-{{$index}}" ng-checked="item.GerarNotaFiscal == true">
+                                                        <span class="switch-label" data-on="Sim" data-off="Não"></span>
+                                                    </label>
+                                                </div>
+                                                <span class="label label-default" ng-show="item.BloqueiaGeracaoNota == true">Marcado para não gerar</span>
+                                            </td>
+                                            @*<td>
+                                                <select id="campo_EMP_ID{{$index}}" name="campo_EMP_ID" class="form-control" ng-model="item.EmpId"
+                                                        ng-options="emp.EMP_ID as emp.EMP_NOME_FANTASIA for emp in lstEmpresas">
+                                                    <option value="">Selecione</option>
+                                                </select>
+                                            </td>*@
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7" ng-show="requisicaoFaturamento.LstRequisicaoFaturamento.length == 0"> Não há itens para o pedido.</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-4">
+                                <button app-switch-button="faturarPedido(codigoPropostaItem)"
+                                        switch-conf="[{label : 'Faturar', state : 'save'}, {label : 'Faturando...', state : 'saved', disabled : true}]"
+                                        switch-var="$parent.buttonFaturamento"
+                                        class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-list-alt"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div data-app-modal="modal-registro-faturamento" data-header="Faturamento">
+            <div class="row">
+                <div class="col-lg-12 limit-modal-height-32em">
+                    <fieldset class="padding-bottom">
+                        <legend class="text-primary">Definições por Itens</legend>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-stripped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Código</th>
+                                                <th>
+                                                    Id Item de Pedido
+                                                </th>
+                                                <th>Assinatura</th>
+                                                <th>Contrato</th>
+                                                <th>Empresa</th>
+                                                <th>Representante</th>
+                                                <th>Login</th>
+                                                <th>Data de Faturamento</th>
+                                                <th>Data de Produção</th>
+                                                <th>Gera Nota Fiscal</th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-repeat="item in lstRegistroFaturamento" class="animate-repeat-all">
+                                            <td>
+                                                {{item.RFT_ID}}
+                                            </td>
+                                            <td>
+                                                {{item.IPE_ID}}
+                                            </td>
+                                            <td>{{item.ASN_NUM_ASSINATURA}}</td>
+                                            <td>{{item.CTR_NUM_CONTRATO}}</td>
+                                            <td>{{item.EMPRESA.EMP_NOME_FANTASIA}}</td>
+                                            <td>{{item.REPRESENTANTE.REP_NOME}}</td>
+                                            <td>{{item.USU_LOGIN}}</td>
+                                            <td>
+                                                <span app-show-date="item.RFT_DATA_FATURAMENTO"></span>
+                                            </td>
+                                            <td>
+                                                <span app-show-date="item.RFT_FATURAMENTO_EFETIVO"></span>
+                                            </td>
+                                            <td ng-switch="item.RFT_GERAR_NOTA_FISCAL">
+                                                <span ng-switch-when="true" class="label label-success">
+                                                    Sim
+                                                </span>
+                                                <span ng-switch-default class="label label-warning">
+                                                    Não
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7" ng-show="requisicaoFaturamento.LstRequisicaoFaturamento.length == 0"> Não há itens para o pedido.</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div data-app-modal="modal-pedidos-retroativos-sem-nota" data-header="Pedidos Retroativos sem Nota">
+            <div class="row">
+                <div class="col-lg-12 limit-modal-height-32em">
+                    <fieldset class="padding-bottom">
+                        <legend class="text-primary">Pedidos Retroativos sem Nota</legend>
+                        <div class="row">
+                            <div class="col-sm-12">
+
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-stripped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Id Item de Pedido</th>
+                                                <th>Id do Pedido</th>
+                                                <th>Produto</th>
+                                                <th>Id do Cliente</th>
+                                                <th>Cliente</th>
+                                                <td>CNPJ/CPF</td>
+                                                <th>Representante</th>
+                                                <th>Carteira</th>
+                                                <th>Data de Emissão</th>
+                                                <th>Data de Faturamento</th>
+                                                <th>Total do Pedido</th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-repeat="item in lstPedidosRetroativos" class="animate-repeat-all">
+                                            <td>
+                                                {{item.CodigoItemPedido}}
+                                            </td>
+                                            <td>
+                                                {{item.CodigoPedido}}
+                                            </td>
+                                            <td>{{item.NomeProduto}}</td>
+                                            <td>{{item.CodigoCliente}}</td>
+                                            <td>{{item.NomeCliente}}</td>
+                                            <td>{{item.CNPJ_CPF_Cliente}}</td>
+                                            <td>{{item.NomeRepresentante}}</td>
+                                            <td>{{item.CarId}}</td>
+                                            <td>
+                                                <span app-show-date="item.DataEmissaoPedido"></span>
+                                            </td>
+                                            <td>
+                                                <span app-show-date="item.DataFaturamento"></span>
+                                            </td>
+                                            <td>
+                                                <strong app-show-dinheiro="item.TotalDoPedido"></strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7" ng-show="requisicaoFaturamento.LstRequisicaoFaturamento.length == 0"> Não há itens para o pedido.</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            <div app-pagination="pagePedidosRetroativos" request-page="paginaReq" load-function="retornarPedidosNotaNaoGeradaPorData(null,paginaReq)"></div>
+                            </div>                            
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div app-model-bind source-model="modalComprovante" target-model="modalPropostaItem">
+            @Html.Partial("Partials/Modais/_ModalComprovantes")
+        </div>
+        <div>
+            <div data-app-modal="modal-pedidos-selecionados" data-header="Pedidos Selecionados" size="small">
+                <form>
+                    <div class="panel panel-corp" style="margin: 0px;">
+                        <div class="panel-heading bold head-panel">
+                            <span class="glyphicon glyphicon-filter"></span>Gerar Nota Fiscal
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                {{loteBatch}}
+                                <table class="table table-hover table-striped">
+                                    <thead>
+                                        <tr class="bg-info">
+                                            <th style="min-width: 75px">
+                                                Código Pedido
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="item in notaBatchModal.ListCodPedidos" class="animate-repeat">
+                                        <td>{{item.key}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td ng-show="notaBatchModal.ListCodPedidos.length == 0">Nenhum registro foi encontrado.</td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div data-app-modal="modal-batch-notaFiscal" data-header="Pedidos Selecionados" size="small">
+                <form>
+                    @Html.Partial("Partials/Modais/_ModalGerarNotaFiscalBatchPartial")
+                </form>
+            </div>
+            </div>
+            <div app-filtro-lateral="filtros" model="filtro" list="lstFiltrosUtilizados" acao-pesquisar="listarPedidos()" flag-abrir="abrirFiltro">
+
+            </div>
+            @Html.Partial("Partials/_HistoricoPedidoPartial")
+            <div app-init-editor="editor"></div> 
+            @Html.Partial("Partials/Modais/_ModalExtornoPagamentoParcela")
+            @Html.Partial("Partials/Modais/_ModalBoletoAvulso")
+            @Html.Partial("Partials/Modais/_ModalListaParticipantes")
+        </div>
+
+    </div>

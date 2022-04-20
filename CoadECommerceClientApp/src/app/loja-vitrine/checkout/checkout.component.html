@@ -1,0 +1,229 @@
+<!-- CART -->
+<section>
+  <div class="container">
+
+  
+    <!-- NOT LOGGED IN -->
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <strong>You are not logged in!</strong>
+        Please, <a href="page-login-1.html">login</a> or <a href="javascript:;" onclick="jQuery('#accountswitch').trigger('click'); _scrollTo('#newaccount', 200);">create an account</a> for later use.
+      </div>
+    </div>
+    <!-- /NOT LOGGED IN -->
+
+
+
+    <!-- CHECKOUT -->
+    <form class="row clearfix" method="post" action="shop-checkout-final.html">
+
+      <div class="col-lg-7 col-sm-7">
+        <div class="heading-title">
+          <h4>Billing &amp; Shipping</h4>
+        </div>
+      </div>
+
+
+
+      <div class="col-lg-5 col-sm-5">
+        <div class="heading-title">
+          <h4>Payment Method</h4>
+        </div>
+
+        <!-- PAYMENT METHOD -->
+        <fieldset class="margin-top-60">
+          <div class="toggle-transparent toggle-bordered-full clearfix">
+            <div class="toggle active">
+              <div class="toggle-content">
+
+                <div class="row nomargin-bottom">
+                  <div class="col-lg-12 nomargin clearfix">
+                    <label class="radio pull-left nomargin-top">
+                      <input id="payment_check" name="payment[method]" type="radio" value="1" checked="checked" />
+                      <i></i> <span class="weight-300">Check / Money order</span>
+                    </label>
+                  </div>
+                  <div class="col-lg-12 nomargin clearfix">
+                    <label class="radio pull-left">
+                      <input id="payment_card" name="payment[method]" type="radio" value="2" />
+                      <i></i> <span class="weight-300">Credit Card</span>
+                    </label>
+                  </div>
+                </div>
+              
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <!-- /PAYMENT METHOD -->
+
+
+        <!-- CREDIT CARD PAYMENT -->
+        <fieldset id="ccPayment" class="margin-top-30 softhide">
+
+          <div class="toggle-transparent toggle-bordered-full clearfix">
+            <div class="toggle active">
+              <div class="toggle-content">
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <label for="payment:name">Name on Card *</label>
+                    <input id="payment:name" name="payment[name]" type="text" class="form-control required" autocomplete="off" />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <label for="payment:name">Credit Card Type *</label>
+                    <select id="payment:state" name="payment[state]" class="form-control pointer required">
+                      <option value="">Select...</option>
+                      <option value="AE">American Express</option>
+                      <option value="VI">Visa</option>
+                      <option value="MC">Mastercard</option>
+                      <option value="DI">Discover</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <label for="payment:cc_number">Credit Card Number *</label>
+                    <input id="payment:cc_number" name="payment[cc_number]" type="text" class="form-control required" autocomplete="off" />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <label for="payment:cc_exp_month">Card Expiration *</label>
+                    
+                    <div class="row nomargin-bottom">
+                      <div class="col-lg-6 col-sm-6">
+                        <select id="payment:cc_exp_month" name="payment[cc_exp_month]" class="form-control pointer required">
+                          <option value="0">Month</option>
+                          <option value="01">01 - January</option>
+                          <option value="02">02 - February</option>
+                          <option value="03">03 - March</option>
+                          <option value="04">04 - April</option>
+                          <option value="05">05 - May</option>
+                          <option value="06">06 - June</option>
+                          <option value="07">07 - July</option>
+                          <option value="08">08 - August</option>
+                          <option value="09">09 - September</option>
+                          <option value="10">10 - October</option>
+                          <option value="11">11 - November</option>
+                          <option value="12">12 - December</option>
+                        </select>
+                      </div>
+
+                      <div class="col-lg-6 col-sm-6">
+                        <select id="payment:cc_exp_year" name="payment[cc_exp_year]" class="form-control pointer required">
+                          <option value="0">Year</option>
+                          <option value="2015">2015</option>
+                          <option value="2016">2016</option>
+                          <option value="2017">2017</option>
+                          <option value="2018">2018</option>
+                          <option value="2019">2019</option>
+                          <option value="2020">2020</option>
+                          <option value="2021">2021</option>
+                          <option value="2022">2022</option>
+                          <option value="2023">2023</option>
+                          <option value="2024">2024</option>
+                          <option value="2025">2025</option>
+                        </select>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <label for="payment:cc_cvv">CVV2 *</label>
+                    <input id="payment:cc_cvv" name="payment[cc_cvv]" type="text" class="form-control required" autocomplete="off" maxlength="4" />
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </fieldset>
+        <!-- /CREDIT CARD PAYMENT -->
+
+
+        <!-- TOTAL / PLACE ORDER -->
+        <div class="toggle-transparent toggle-bordered-full clearfix">
+          <div class="toggle active">
+            <div class="toggle-content">
+              
+              <span class="clearfix">
+                <span class="pull-right">$120.75</span>
+                <strong class="pull-left">Subtotal:</strong>
+              </span>
+              <span class="clearfix">
+                <span class="pull-right">$0.00</span>
+                <span class="pull-left">Discount:</span>
+              </span>
+              <span class="clearfix">
+                <span class="pull-right">$8.00</span>
+                <span class="pull-left">Shipping:</span>
+              </span>
+
+              <hr />
+
+              <span class="clearfix">
+                <span class="pull-right size-20">$128.75</span>
+                <strong class="pull-left">TOTAL:</strong>
+              </span>
+
+              <hr />
+
+              <button class="btn btn-primary btn-lg btn-block size-15"><i class="fa fa-mail-forward"></i> Place Order Now</button>
+            </div>
+          </div>
+        </div>
+        <!-- /TOTAL / PLACE ORDER -->
+
+        <!-- CREATE ACCOUNT -->
+        <div class="toggle-transparent toggle-bordered-full margin-top-30 clearfix">
+          <div class="toggle active">
+            <div class="toggle-content">
+
+              <div class="clearfix">
+                <label class="checkbox pull-left">
+                  <input id="accountswitch" name="create-account[yes]" type="checkbox" value="1" />
+                  <i></i> <span class="weight-300">Create an account for later use</span>
+                </label>
+              </div>
+
+              <!-- CREATE ACCOUNT FORM -->
+              <div id="newaccount" class="margin-top-10 margin-bottom-30 softhide">
+
+                <div class="row nomargin-bottom">
+                  <div class="col-md-6 col-sm-6">
+                    <label for="account:password">Password *</label>
+                    <input id="account:password" name="account[password]" type="password" class="form-control" />
+                  </div>
+                  <div class="col-md-6 col-sm-6">
+                    <label for="account:password2">Confirm Password *</label>
+                    <input id="account:password2" name="account[password2]" type="password" class="form-control" />
+                  </div>
+                </div>
+                <small class="text-warning">NOTE: Email address will be used to login</small>
+                
+              </div>
+              <!-- /CREATE ACCOUNT FORM -->
+
+
+          </div>
+        </div>
+      </div>
+      <!-- /CREATE ACCOUNT -->
+      </div>
+    </form>
+    <!-- /CHECKOUT -->
+    
+  </div>
+</section>
+<!-- /CART -->

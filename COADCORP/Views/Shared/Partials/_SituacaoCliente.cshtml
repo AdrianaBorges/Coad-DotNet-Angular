@@ -1,0 +1,78 @@
+﻿<legend class="btn btn-danger" style="text-align: left;">Situação do Cliente</legend>
+<div class="row padding">
+    <table id="user" class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <td width="20%">Linha de produto </td>
+                <td width="30%">
+                    <a href="#" id="username" data-type="text" data-title="Enter username">{{SituacaoCliente.LINHA_PRODUTO}}</a>
+                    <span class="label label-success" ng-if="contrato.SITUACAO!=null"> - {{contrato.SITUACAO}} </span>
+                </td>
+                <td width="20%">
+                    <span>Contrato Vigente
+                           <span class="label alert-warning" ng-if="SituacaoCliente.CTR_PRORROGADO==1">Prorrogado</span>
+                    </span>
+                </td>
+                <td width="30%">
+                    <span data-toggle="tooltip" data-placement="top" app-popover data-content="O cliente deve possuir ao menos 1 contrato vigente para que seja considerado ativo.">{{SituacaoCliente.CONTRATO_VIGENTE}} - {{SituacaoCliente.CTR_VIGENCIA}}
+                    </span></td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+                <td>
+                    <span ng-class="{'fa fa-exclamation-triangle red':SituacaoCliente.SENHAS_CADASTRAS==0}"></span>
+                    <span>Senhas Cadastradas</span>
+                </td>
+                <td><span data-toggle="tooltip" data-placement="top" app-popover data-content="Para ter acesso ao portal ou a ura o cliente precisa ter ao menos uma senha cadastrada.">{{SituacaoCliente.SENHAS_CADASTRAS}}</span></td>
+                <td>
+                    <span ng-class="{'fa fa-exclamation-triangle red':SituacaoCliente.TELEFONES_URA==0}"></span>
+                    <span>Telefones na URA</span>
+                </td>
+                <td><span data-toggle="tooltip" data-placement="top" app-popover data-content="Para ter acesso a ura, o cliente precisa ter ao menos um telefone cadastrado com o tipo de atendimento CONSULTAR.">{{SituacaoCliente.TELEFONES_URA}}</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <span ng-class="{'fa fa-exclamation-triangle red':SituacaoCliente.TITULOS_VENCIDOS>0}"></span>
+                    <span>Titulos em atraso (+21)</span>
+                </td>
+                <td>
+                    <span data-toggle="tooltip" data-placement="top" app-popover data-content="O Cliente sera impedido de acessar a URA e o portal caso possua uma ou mais parcelas em atraso por mais de 21 dias.">{{SituacaoCliente.TITULOS_VENCIDOS}}</span>
+                </td>
+                <td width="20%">
+                    <span ng-class="{'fa fa-exclamation-triangle red':SituacaoCliente.CONTRATOS_VIGENTES==0}"></span>
+                    <span>Qtde Consultas</span>
+                </td>
+                <td width="30%">
+                    <span data-toggle="tooltip" data-placement="top" app-popover data-content="O cliente deve possuir ao menos 1 consulta disponível">{{SituacaoCliente.QTDE_CONS_CONTRATO}}
+                    </span></td>
+            </tr>
+            <tr>
+                <td>Acesso a URA 
+                </td>
+                <td>
+                    <span class="label label-info" ng-if="SituacaoCliente.ACESSA_URA==true">SIM</span>
+                    <span class="label label-danger" ng-if="SituacaoCliente.ACESSA_URA==false">NÃO</span>
+                </td>
+                <td>@*Consultas Utilizadas*@
+                </td>
+                <td>@*<span class="label label-info" ng-if="SituacaoCliente.QTDE_CONS_UTILIZADA">{{SituacaoCliente.QTDE_CONS_UTILIZADA}}</span>*@
+                </td>
+            </tr>
+            <tr>
+                <td>Acesso ao Portal COAD 
+                </td>
+                <td>
+                    <span class="label label-info" ng-if="SituacaoCliente.ACESSA_PORTAL==true">SIM</span>
+                    <span class="label label-danger" ng-if="SituacaoCliente.ACESSA_PORTAL==false">NÃO</span>
+                </td>
+                <td>Acesso ao Portal ST 
+                </td>
+                <td><span class="label label-info" ng-if="SituacaoCliente.ACESSA_PORTAL_ST==true">SIM</span>
+                    <span class="label label-danger" ng-if="SituacaoCliente.ACESSA_PORTAL_ST==false">NÃO</span>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

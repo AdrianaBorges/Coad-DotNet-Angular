@@ -1,0 +1,59 @@
+﻿
+@using COAD.SEGURANCA.Repositorios.Base
+@using COAD.CORPORATIVO.SessionUtils
+
+<fieldset ng-show="assinturaSelect">
+    <legend class="btn btn-info" style="text-align: left;">Contratos</legend>
+    <div class="row padding">
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr class="info">
+                        <th>Nº Contrato / Vigência</th>
+                        <th style="text-align: center">Pedido / NF</th>
+                        <th style="text-align: center">Situação</th>
+                        <th style="text-align: center">Data Fat</th>
+                        <th style="text-align: center">Data Inicial</th>
+                        <th style="text-align: center">Data Final</th>
+                        <th style="text-align: center">Data Canc</th>
+                        <th class="align-right">Valor</th>
+                        <th style="text-align: center;">Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="contrato in listacontrato">
+                        <td style="text-align: center">{{contrato.CTR_NUM_CONTRATO}} / {{contrato.CTR_ANO_VIGENCIA}}</td>
+                        <td style="text-align: center">{{contrato.PED_NUM_PEDIDO}} / {{contrato.CTR_NUMERO_NOTA}}</td>
+                        <td style="text-align: center">
+                            <span ng-if="contrato.SITUACAO=='VIGENTE'" class="label alert-success" app-popover data-content="Contrato atual em período de vigência. ">{{contrato.SITUACAO}}</span>
+                            <span ng-if="contrato.SITUACAO=='ENCERRADO'" class="label alert-warning" app-popover data-content="Este contrato alcançou o fim do seu período de vigência. ">{{contrato.SITUACAO}}</span>
+                            <span ng-if="contrato.SITUACAO=='FUTURO'" class="label alert-info" app-popover data-content="Este contrato ainda não esta ativo. Ainda não foi inciado o seu período de vigência. ">{{contrato.SITUACAO}}</span>
+                            <span ng-if="contrato.SITUACAO=='PRORROGADO'" class="label alert-warning" app-popover data-content="Este contrato esta em período de recuperação ou seja permanece ativo durante um mês após o fim da vigência. ">{{contrato.SITUACAO}}</span>
+                            <span ng-if="contrato.SITUACAO=='CANCELADO'" class="label alert-danger" app-popover data-content="Este contrato esta cancelado. Este cancelamento ocorreu após fim de vigência, portanto é um cancelamento normal. ">{{contrato.SITUACAO}}</span>
+                            <span ng-if="contrato.SITUACAO=='CANC.DESISTÊNCIA'" class="label alert-danger" app-popover data-content="Este contrato foi cancelado antes do fim do período de vigência. ">{{contrato.SITUACAO}}</span>
+                        </td>
+                        <td app-show-date="contrato.CTR_DATA_FAT" style="text-align: center"></td>
+                        <td app-show-date="contrato.CTR_DATA_INI_VIGENCIA" style="text-align: center"></td>
+                        <td app-show-date="contrato.CTR_DATA_FIM_VIGENCIA" style="text-align: center"></td>
+                        <td app-show-date="contrato.CTR_DATA_CANC" style="text-align: center"></td>
+                        <td app-show-dinheiro="contrato.CTR_VLR_BRUTO" class="align-right" style="min-width: 100px;"></td>
+                        <td style="text-align: center;">
+                            <a href="javascript:void(0)" ng-click="AbrirModalParcelas(contrato)">
+                                <span class="fa fa-search"></span>
+                            </a>
+
+                            @if (SessionUtil.PerfilPossuiPermissaoDeCancelamentoDeContrato())
+                            {
+                                <a href="javascript:void(0)" ng-click="abrirModalCancelamento(contrato)">
+                                    <span class="fa fa-times-circle-o red"></span>
+                                </a>
+
+                            }
+             
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </fieldset>

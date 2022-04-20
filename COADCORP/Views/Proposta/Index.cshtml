@@ -1,0 +1,441 @@
+﻿
+@model  COAD.CORPORATIVO.Model.Dto.ClienteDto
+@using COAD.SEGURANCA.Repositorios.Base
+@using Coad.GenericCrud.Extensions
+@using COAD.CORPORATIVO.SessionUtils
+@using GenericCrud.ActionResultTools
+@{
+    ViewBag.Title = "Listagem de Proposta";
+    bool gerente = (SessionContext.IsGerenteDepartamento("franquiado", true) || SessionContext.IsGerenteDepartamento("franquiador", true));
+    bool franquiador = SessionContext.IsGerenteDepartamento("franquiador", true);
+    bool isFranquiado = SessionContext.IsGerenteDepartamento("franquiado", true); 
+
+    bool podeFaturar = SessionUtil.PossuiPermissaoParaFaturar();
+    string podePagar = (podeFaturar) ? "1 == 1" : "1 == 2";
+    ViewBag.defer = @"defer='defer'";  
+
+
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li class="active">Gerenciar Propostas</li>         
+        
+    </ol>
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/controllers_plugins/comprovantes.js")" defer="defer"></script>
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/controllers_plugins/extorno_pagamento_parcela.js")" defer="defer"></script>
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/controllers_plugins/lote_nota_fiscal.js")" defer="defer"></script>
+<script src="@UrlCorp.Content("~/Scripts{path}negocio/proposta.js")" defer="defer"></script>
+<div ng-app="appModule">    
+    <div ng-controller="PropostaController" class="padding content" ng-cloak 
+        data-ng-init="initList('@gerente', '@ViewBag.ppiId', '@ViewBag.prtId', '@isFranquiado');">
+    <div class="panel panel-corp">
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Filtros
+           <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Opções
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li>
+                            <a href="@Url.Action("Emitir")" class="blue">Emitir</a>
+                        </li>                                                                           
+                    </ul>
+                </div>
+            </div>
+      </div>
+          
+        <div class="panel-body">            
+            <div app-filtro-topo="filtros" model="filtro" list="lstFiltrosUtilizados" flag-abrir="abrirFiltro" acao-pesquisar="listarPropostas()" watch-pesquisa="dispararPesquisa">
+            </div>
+        </div> 
+    </div>
+        <div>
+        <div app-message></div>
+            <div class="panel panel-corp">
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-shopping-cart"></span>Listagem de Proposta</div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="bg-info">
+                                <th style="min-width: 75px">Id
+                                </th>
+                                <th>UEN</th>
+                                <th>
+                                    Data
+                                </th>
+                                <th>
+                                    Cód Cliente
+                                </th>
+                                <th>
+                                    Cliente
+                                </th>
+                                <th>CPF/CNPJ</th>
+                                <th>Empresa</th>
+                                <th>Representante</th>
+                                <th>Tipo Negociação</th>
+                                <th>Carteira</th>
+                                <th>Tipo</th>
+                                <th>Status</th>
+                                <th colspan="5" class="center" style="min-width: 80px;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in lstPropostas" class="animate-repeat">
+                            <td>{{item.PRT_ID}}
+                            </td>
+                            <td>
+                                <strong ng-switch="item.UEN_ID">
+                                    <span ng-switch-when="1" class="label label-info" app-tooltip title="Curso">C</span>
+                                    <span ng-switch-when="2" class="label label-success" app-tooltip title="Assinatura">A</span>
+                                    <span ng-switch-default class="label label-default"  app-tooltip title="Não Especificado">*</span>
+                                </strong>
+                            </td>
+                            <td app-show-date="item.DATA_CADASTRO" class="center"></td>
+                            <td>{{item.CLIENTES.CLI_ID}}</td>
+                            <td>{{item.CLIENTES.CLI_NOME}}
+                            </td>
+                            <td>{{item.CLIENTES.CLI_CPF_CNPJ}}
+                            </td>
+                            <td>{{item.EMPRESAS.EMP_NOME_FANTASIA}}</td>
+                            <td> {{item.REPRESENTANTE.REP_NOME}}
+                            </td>
+                            <td>
+                                {{item.TIPO_NEGOCIACAO.TNE_DESCRICAO}}
+                            </td>
+                            <td>
+                                {{item.CAR_ID}}
+                            </td>
+                            <td>{{item.TIPO_PROPOSTA.TPP_DESCRICAO}}</td>
+                            <td>
+                                <span class="label" ng-class="{
+                                        'label-warning' : item.PST_ID == 1,                                    
+                                        'label-purple' : item.PST_ID == 2 || item.PST_ID == 9,
+                                        'label-info' : item.PST_ID == 3 || item.PST_ID == 8,
+                                        'label-danger' : item.PST_ID == 5 || item.PST_ID == 6 || item.PST_ID == 10 || item.PST_ID == 13 || item.PST_ID == 14,
+                                        'label-success' : item.PST_ID == 7 || item.PST_ID == 4
+                                    }"
+                                    >{{item.PEDIDO_STATUS.PST_STATUS}}</span>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)"  ng-if="item.PST_ID == 1 || item.PST_ID == 10" app-post="@Url.Action("Editar")?prtId={{item.PRT_ID}}" app-tooltip title="Editar" class="text-primary">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                                <a href="javascript:void(0);" ng-click="abrirModalPropostaItem(item.PRT_ID);" title="Ver Itens" class="text-primary" app-tooltip>
+                                      <span class="glyphicon glyphicon-th-list"></span>
+                                </a>
+                                <a href="javascript:void(0);" ng-click="abrirPedidoDaProposta(item.PRT_ID);" title="Abrir Pedido" class="text-primary" ng-show="item.PST_ID == 8" app-tooltip>
+                                    <span class="glyphicon glyphicon-open"></span>
+                                </a>
+                                @if(SessionUtil.PossuiPermissaoParaFaturar())
+                                {
+                                    <a href="javascript:void(0);" ng-if="item.PST_ID == 7 || item.PST_ID == 3 || item.PST_ID == 4" 
+                                       ng-click="emitirPedidoDaProposta(item.PRT_ID);"
+                                       title="Emitir pedido a partir dessa proposta."
+                                       class="text-success" app-tooltip>
+                                            <span class="glyphicon glyphicon-import"></span>
+                                    </a>
+                                }
+                                <a href="javascript:void(0)" ng-click="abrirDetalhes(item.PRT_ID)" app-tooltip
+                                    title="Visualizar Detalhes" class="text-danger">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </a>                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="11" ng-show="lstPropostas.length == 0 && listado">Nenhum registro foi encontrado.</td>
+                            <td colspan="11" ng-show="!lstPropostas">Clique em pesquisar para listar.</td>
+                        </tr>
+
+                    </table>
+                </div>
+                <app-pagination request-page="paginaReq" load-function="listarPropostas(paginaReq)"></app-pagination>
+
+            </div>
+        </div>
+ 
+        </div>
+    <div app-modal="modal-detalhes-proposta" header="Itens da Proposta">
+        <div class="row">
+            <div class="form-group col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>
+                                    Nome do Produto
+                                </th>
+                                <th>Assinatura</th>
+                                <th>
+                                    Qtd
+                                </th>
+                                <th>Consultas</th>
+                                <th>Período Bônus (Mês)</th>
+                                <th>Entrada</th>
+                                <th>Tipo de Pagamento</th>
+                                <th>
+                                    Parcela(s)
+                                </th>
+                                <th>Total </th>
+                                <th>Código de Autorização</th>
+                                <th>Status</th>
+                                <th>Data de Vencimento</th>
+                                <th colspan="10" class="center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in lstPropostaItemModal" class="animate-repeat">
+                            <td>
+                                {{item.PPI_ID}}
+                            </td>
+                            <td>
+                                {{item.PRODUTO_COMPOSICAO.CMP_DESCRICAO}}
+                                <strong class="label label-success"
+                                        ng-if="item.PPI_CORTESIA == true">
+                                    Cortesia
+                                </strong>
+                                <i class="fa fa-sticky-note font-15 text-success" aria-hidden="true" title="Gera Nota Fiscal" ng-if="item.PPI_GERA_NOTA == true"></i>
+                                <strong class="label label-success"
+                                        ng-if="item.PPI_GERA_NOTA == null || item.PPI_GERA_NOTA == false">
+                                    Não gera nota
+                                </strong>
+                            </td>  
+                            <td>
+                                <span ng-if="item.PROPOSTA.TPP_ID == 3">
+                                De: <strong>{{item.PPI_ASN_NUM_ASS_CANC}}</strong> <br /> Para:
+                                </span>
+                                <strong>{{item.ASN_NUM_ASSINATURA}}</strong>
+                            </td>
+                            <td>
+                                <span class="label label-success">{{item.PPI_QTD}}</span>
+                            </td>
+                            <td ng-if="!item.TPP_ID && item.TPP_ID != 1"><span class="badge">{{item.PPI_QTD_CONSULTA}}</span></td>
+                            <td>{{item.PPI_PERIODO_MES_BONUS}}</td>
+                            <td>
+
+                                <strong app-show-dinheiro="item.PPI_VALOR_ENTRADA" ng-show="item.TIPO_PAGAMENTO.TPG_TIPO == 1"></strong>
+                                <span ng-show="item.TIPO_PAGAMENTO.TPG_TIPO == 0" class="label label-default">Não se Aplica</span>
+                                <a href="javascript:void(0)" ng-show="item.IFF_ID_ENTRADA" ng-click="carregarInfoFaturaEAbrirModal(item.IFF_ID_ENTRADA)" app-tooltip
+                                   id="info_fatura" title="Info De Imposto"><span class="glyphicon glyphicon-barcode"></span></a>
+                            </td> 
+                            <td>
+                                {{item.TIPO_PAGAMENTO.TPG_DESCRICAO}}
+                            </td>
+                            <td>
+                                <span ng-show="item.TPG_ID != 9"><strong>{{item.PPI_QTD_PARCELAS}}X</strong> De</span>
+                                <strong><span app-show-dinheiro="item.PPI_VALOR_PARCELA"></span></strong>
+                                <span ng-show="item.TPG_ID == 9">Em <strong>{{item.PPI_QTD_PARCELAS}}X</strong></span>
+                                <a href="javascript:void(0)" ng-show="item.IFF_ID" ng-click="carregarInfoFaturaEAbrirModal(item.IFF_ID)" app-tooltip
+                                   id="info_fatura" title="Info De Imposto"><span class="glyphicon glyphicon-barcode"></span></a>
+                            </td>
+                            <td>
+                                <strong app-show-dinheiro="item.PPI_TOTAL"></strong>
+                            </td>  
+                            <td>
+                                {{item.AUTHORIZATION_CODE}}
+                            </td>
+                            <td>
+                                  <span class="label" ng-class="{
+                                        'label-warning' : item.PST_ID == 1,
+                                        'label-purple' : item.PST_ID == 2 || item.PST_ID == 9,
+                                        'label-info' : item.PST_ID == 3 || item.PST_ID == 8,
+                                        'label-danger' : item.PST_ID == 5 || item.PST_ID == 6 || item.PST_ID == 10 || item.PST_ID == 13 || item.PST_ID == 14,
+                                        'label-success' : item.PST_ID == 7 || item.PST_ID == 4
+                                    }"
+                                    >{{item.PEDIDO_STATUS.PST_STATUS}}</span>
+                            </td>
+                            <td class="center" app-show-date="item.PPI_DATA_VENCIMENTO"></td>
+                            <td ng-if="item.PST_ID == 1 || item.PST_ID == 2">
+                                <a href="javascript:void(0);" ng-show="@podePagar || item.PST_ID == 1" 
+                                        ng-click="abrirModalOpcoesDePagamento(item)" app-tooltip
+                                     class="blue" title="Realizar Pagamento">
+                                    <span class="glyphicon glyphicon-ok-sign"></span>
+                                </a>
+                            </td>
+                            <td ng-if="item.PST_ID == 1 || item.PST_ID == 2">
+                                <a href="javascript:void(0);" ng-show="@podePagar || item.PST_ID == 1"
+                                   ng-click="abrirModalForcarBaixa(item.PPI_ID)"
+                                   class="text-warning" title="Forçar Baixa de Pagamento do Pedido" app-tooltip>
+                                    <span class="glyphicon glyphicon-flash"></span>
+                                </a>
+                            </td>
+
+                            <td ng-if="item.PST_ID != 3 && item.PST_ID != 5">
+                                <a href="javascript:void(0);" ng-click="abrirModalCancelarProposta(item)"
+                                                     title="Cancelar Proposta" class="red" app-tooltip>
+                                                    <span class="glyphicon glyphicon-remove-sign"></span></a>
+                            </td>
+                            <td ng-if="item.PRODUTO_COMPOSICAO.EhCurso == true">
+                                <a href="javascript:void(0);" ng-click="abrirSubModalParticipantes(item.PPI_ID)" app-tooltip
+                                   title="Ver participantes" class="blue">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </a>
+                            </td>
+                            
+                           @* @if (SessionUtil.GetUenId() == 1)
+                            {
+                                <td ng-if="item.PRODUTO_COMPOSICAO.EhCurso == true"><a href="javascript:void(0);" ng-click="abrirSubModalParticipantes(item.IPE_ID)"
+                                                         title="Ver participantes" class="blue">
+                                        <span class="glyphicon glyphicon-user"></span></a>
+                                </td>
+                            }*@
+                            <td>
+                                <a href="javascript:void(0);" ng-click="abrirModalHistorico(item.PPI_ID)" app-tooltip
+                                                         title="Ver historicos" class="text-primary">
+                                <span class="fa fa-history font-15"></span></a>
+                            </td>
+                            @*<td ng-show="item.PST_ID == 3 || item.PST_ID == 7 || item.PST_ID == 8">
+                                <a href="javascript:void(0);" ng-click="abrirModalExtorno(item.ASN_NUM_ASSINATURA, item)"
+                                   title="Estorno de parcela" class="text-danger">
+                                    <span class="fa fa-undo font-15" aria-hidden="true"></span>
+                                </a>
+                            </td>*@
+                            <td ng-hide="item.PST_ID == 5">
+                                <a href="javascript:void(0);" ng-click="abrirModalComprovante(item, 'proposta')" app-tooltip
+                                                         title="Comprovantes" class="text-primary">
+                                    <span class="fa fa-book font-15" aria-hidden="true"></span>
+                                </a>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="8" ng-if="lstItemPedidoModal.length <= 0" class="text">
+                                Não foi encontrado nenhum registro.
+                            </td>
+                        </tr>
+                    </table> 
+                </div>
+            </div>
+        </div>
+     </div>
+    @Html.Partial("Partials/_HistoricoPedidoPartial")
+
+    <div app-model-bind source-model="modalComprovante" target-model="modalPropostaItem">
+        @Html.Partial("Partials/Modais/_ModalComprovantes")
+    </div>
+
+    <div app-modal="modal-opcoes-pagamento" header="Pagamento" submodal data-size="small">              
+    <div class="row form padding">
+        <div class="text-info">
+            @if (SessionUtil.PossuiPermissaoParaFaturar() || SessionUtil.FranquiadoOuGerenteOuTI())
+            {
+                <div ng-show="modalPropostaItem.PST_ID == 2 && 
+                     modalPropostaItem.PROPOSTA.TNE_ID != 2">
+                    <div>
+                        <a href="javascript:void(0);" ng-click="confirmarPagamento(modalPropostaItem)"
+                           title="Adicionar Curso">
+                            <span class="glyphicon glyphicon-flag"></span> Confirmar Pagamento (Conferido)
+                        </a>
+                    </div>
+                    <div>
+                        <a href="javascript:void(0);" ng-click="abrirModalRecusaDadosDePagamento(modalPropostaItem)"
+                           title="Adicionar Curso" class="text-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span> Recusar indicação de pagamento
+                        </a>
+                    </div>
+                </div>
+                <div ng-show="modalPropostaItem.PST_ID == 1 && 
+                     modalPropostaItem.PROPOSTA.TNE_ID == 2">
+                    <div>
+                        <a href="javascript:void(0);" ng-click="confirmarAceiteVendaAPrazo(modalPropostaItem.PPI_ID)"
+                           title="Adicionar Curso">
+                            <span class="glyphicon glyphicon-flag"></span> Marcar Aceite Cliente
+                        </a>
+                    </div>
+                </div>
+               
+            }
+            <div>
+                <div ng-show="modalPropostaItem.PST_ID == 1 && modalPropostaItem.PROPOSTA.TNE_ID != 2">
+                    @*&& modalPropostaItem.pedidoPagamentoItemPedido.TPG_ID != 7*@
+                    <a href="javascript:void(0);" ng-click="abrirModalMarcarComoPago(modalPropostaItem)"
+                       title="Adicionar Curso">
+                        <span class="glyphicon glyphicon-flag"></span> Informar recebimento de pagamento
+                    </a>
+                </div>
+                <div ng-show="modalPropostaItem.TIPO_PAGAMENTO.CodigoPagamento == 7">
+                    <a href="javascript:void(0);" ng-click="abreModalEnviarEmailParaCliente(modalPropostaItem.PPI_ID, modalPropostaItem.PROPOSTA.CLI_ID, true)"
+                       title="Enviar Boleto">
+                        <span class="glyphicon glyphicon-envelope"></span> Enviar Link do Boleto (Interno) por E-Mail
+                    </a>
+                </div>
+                <div ng-show="modalPropostaItem.TIPO_PAGAMENTO.CodigoPagamento == 7">
+                    <a href="javascript:void(0);" ng-click="enviarBoletoAutomatico(modalPropostaItem.PROPOSTA.PRT_EMAIL_CONTATO, modalPropostaItem.PPI_ID, modalPropostaItem.PROPOSTA.CLI_ID)"
+                       title="Enviar Boleto" ng-show="modalPropostaItem.PROPOSTA.PRT_EMAIL_CONTATO">
+                        <span class="glyphicon glyphicon-envelope"></span> Enviar Boleto para '{{modalPropostaItem.PROPOSTA.PRT_EMAIL_CONTATO}}'
+                    </a>
+                </div>
+                <div ng-show="modalPropostaItem.TIPO_PAGAMENTO.CodigoPagamento != 7">
+                    <a href="javascript:void(0);" ng-click="abreModalEnviarEmailParaCliente(modalPropostaItem.PPI_ID, modalPropostaItem.PROPOSTA.CLI_ID, false)"
+                       title="Enviar Boleto">
+                        <span class="glyphicon glyphicon-envelope"></span> Enviar E-Mail com resumo de renegociação
+                    </a>
+                </div>
+            </div>
+            <div ng-show="modalPropostaItem.pedidoPagamentoItemPedido">
+            </div>
+        </div>
+    </div>  
+</div>
+        
+@Html.Partial("Partials/Modais/_ModalEnviarEmailBoletoPartial")
+<div data-app-modal="modal-forcar-baixa" data-header="Baixa de Proposta">
+    <div class="row">
+        <div class="col-lg-12 limit-modal-height-32em">
+            <fieldset class="padding-bottom">
+                <legend class="text-primary">Verificar e Forçar a baixa</legend>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        <strong  
+                                ng-class="{'text-info' : !existeParcelaPaga && existeParcelaPaga != false, 
+                                'text-danger' : existeParcelaPaga == false,
+                                'text-success' : existeParcelaPaga == true}">
+                            <span class="glyphicon" ng-class="{
+                                    'glyphicon-info-sign' : !existeParcelaPaga && existeParcelaPaga != false, 
+                                    'glyphicon-remove-sign' : existeParcelaPaga == false,
+                                    'glyphicon-ok-sign' : existeParcelaPaga == true}"></span>
+                            {{PassoOperacao}}
+                        </strong>
+                    </div>
+                    <div class="form-group col-sm-4" ng-show="existeParcelaPaga == true">
+                        <button app-switch-button="forcarBaixaAutomatica(codigoPropostaItem)"
+                                switch-conf="[{label : 'Realizar Baixa', state : 'save'}, {label : 'Baixando Pagamento...', state : 'saved', disabled : true}]"
+                                switch-var="$parent.buttonForcarBaixa"
+                                class="btn btn-primary">
+                            <span class="glyphicon glyphicon-flash"></span>
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+    <div id="modal-alterar-status" app-status-modal="alteracaoModal"></div>
+    @Html.Partial("Partials/Modais/_ModalExtornoPagamentoParcela")
+    @Html.Partial("Partials/Modais/_ModalPedidoNFe")
+    @Html.Partial("Partials/Modais/_ModalListaParticipantes")
+
+    <div app-modal="modal-fatura" header="Informações de desconto de imposto" size="small">
+        @Html.Partial("Partials/_ModalInfoFaturaPartial")
+    </div>
+
+<div app-filtro-lateral="filtros" model="filtro" list="lstFiltrosUtilizados" acao-pesquisar="listarPropostas()" flag-abrir="abrirFiltro">
+
+</div>
+       
+</div>  
+</div>

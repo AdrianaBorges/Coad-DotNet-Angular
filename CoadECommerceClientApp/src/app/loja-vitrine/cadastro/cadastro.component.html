@@ -1,0 +1,128 @@
+
+			<!-- -->
+			<section>
+				<div class="container">
+					
+					<div class="row">
+
+						<!-- LOGIN -->
+						<div class="col-md-6 col-sm-6">
+
+							<!-- ALERT -->
+							<!--
+							<div class="alert alert-mini alert-danger margin-bottom-30">
+								<strong>Oh snap!</strong> Login Incorrect!
+							</div>
+							-->
+							<!-- /ALERT -->
+
+              <!-- register form -->
+							<form class="nomargin sky-form boxed" action="#" method="post" #registerForm="ngForm">
+								<header>
+									<i class="fa fa-users"></i> Register
+									</header>
+								{{cliente | json}}
+								<fieldset class="nomargin">					
+									<label class="input margin-bottom-10">
+										<i class="ico-append fa fa-envelope"></i>
+										<input type="text" placeholder="Email" name="Email" [(ngModel)]="cliente.email">
+										<b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
+									</label>
+								
+									<label class="input margin-bottom-10">
+										<i class="ico-append fa fa-lock"></i>
+										<input type="password" placeholder="Password" name="senha" [(ngModel)]="cliente.senha">
+										<b class="tooltip tooltip-bottom-right">Only latin characters and numbers</b>
+									</label>
+								
+									<label class="input margin-bottom-10">
+										<i class="ico-append fa fa-lock"></i>
+										<input type="password" placeholder="Confirm password" name="senhaConfirm" [(ngModel)]="cliente.senhaConfir">
+										<b class="tooltip tooltip-bottom-right">Only latin characters and numbers</b>
+									</label>
+
+									<div class="row margin-bottom-10">
+										<div class="col-md-6">
+											<label class="input">
+												<input type="text" placeholder="Nome Completo" name="nome" [(ngModel)]="cliente.clI_NOME">
+											</label>
+										</div>
+										<div class="col col-md-6">
+											<label class="input">
+												<input type="text" placeholder="CPF/CNPJ" [(ngModel)]="cliente.clI_CPF_CNPJ" name="cpfCnpj">
+											</label>
+										</div>
+									</div>
+
+									<label class="select margin-bottom-10 margin-top-20">
+										<select name="tipoCliente" [(ngModel)]="cliente.tipO_CLI_ID">
+											<option selected="selected" [ngValue]="null">Selecione</option>
+											<option *ngFor="let tp of lstTiposCliente" [ngValue]="tp.tipO_CLI_ID">{{tp.tipO_CLI_DESCRICAO}}</option>
+										</select>
+										<i></i>
+									</label>
+									
+									<div class="margin-top-30">
+										<label class="checkbox nomargin"><input class="checked-agree" type="checkbox" name="checkbox"><i></i>I agree to the <a href="#" data-toggle="modal" data-target="#termsModal">Terms of Service</a></label>
+										<label class="checkbox nomargin"><input type="checkbox" name="checkbox"><i></i>I want to receive news and  special offers</label>
+									</div>
+								</fieldset>
+
+								<div class="row margin-bottom-20">
+									<div class="col-md-12">
+										<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> REGISTER</button>
+									</div>
+								</div>
+
+							</form>
+							<!-- /register form -->
+
+						</div>
+						<!-- /LOGIN -->
+
+						<!-- SOCIAL LOGIN -->
+						<div class="col-md-6 col-sm-6">
+							<form action="#" method="post" class="sky-form boxed">
+
+								<header class="size-18 margin-bottom-20">
+									Register using your favourite social network
+								</header>
+								
+								<fieldset class="nomargin">
+
+									<div class="row">
+									
+										<div class="col-md-8 col-md-offset-2">
+
+											<a class="btn btn-block btn-social btn-facebook margin-bottom-10">
+												<i class="fa fa-facebook"></i> Sign up with Facebook
+											</a>
+
+											<a class="btn btn-block btn-social btn-twitter margin-bottom-10">
+												<i class="fa fa-twitter"></i> Sign up with Twitter
+											</a>
+
+											<a class="btn btn-block btn-social btn-google margin-bottom-10">
+												<i class="fa fa-google-plus"></i> Sign up with Google
+											</a>
+									
+										</div>
+									</div>
+
+								</fieldset>
+
+								<footer>
+									Already have an account? <a href="page-login-1.html"><strong>Back to login!</strong></a>
+								</footer>
+
+							</form>
+
+						</div>
+						<!-- /SOCIAL LOGIN -->
+
+					</div>
+
+					
+				</div>
+			</section>
+			<!-- / -->

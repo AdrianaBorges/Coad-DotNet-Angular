@@ -1,0 +1,270 @@
+﻿@model  COAD.CORPORATIVO.Model.Dto.ProdutoComposicaoDTO
+
+@{
+    ViewBag.Title = "Editar";
+}
+@using Coad.GenericCrud.Extensions
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard", "index", "Home")</li>
+        <li>@Html.ActionLink("Gerenciar Produtos", "index", "Produto")</li>
+        <li class="active">Editar Cursos</li>
+
+    </ol>
+}
+
+@Scripts.Render("~/Scripts/negocio/controllers_plugins/tabela_preco.js")
+@Scripts.Render("~/Scripts/negocio/controllers_plugins/nota_fiscal_config.js")
+@Scripts.Render("~/Scripts/negocio/curso.js")
+
+<div ng-app="appModule">
+
+    <div ng-controller="CursoController" data-ng-init="read(@ViewBag.composicaoId); init()" ng-cloak ng-show="curso" class="animate-show-fast animate-show-no-border">
+
+
+        <ul class="nav nav-tabs" ng-show="curso.CMP_ID">
+            <li role="presentation" ng-class="{active : tab == 1}"><a href="#" ng-click="selecionarTab(1);">1. Formulário de composição</a></li>
+            <li role="presentation" ng-class="{active : tab == 2}"><a href="#" ng-click="selecionarTab(2);">2. Tabela de preço</a></li>
+            <li role="presentation" ng-class="{active : tab == 3}"><a href="#" ng-click="selecionarTab(3);">3. Nota Fiscal Config</a></li>
+        </ul>
+        <div app-message></div>
+        <div class="panel panel-default" ng-show="tab == 1">
+
+            @Html.ValidationSummary(true)
+            <!-- Default panel contents -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Informações do Curso</div>
+            <div class="panel-body">
+
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { role = "form" }))
+                {
+                    <fieldset>
+                        <legend class="text-primary">Informações básicas</legend>
+                        <div class="row">
+                            <div class="form-group col-lg-4">
+                                <label for="CMP_DESCRICAO">Nome do Curso</label>
+                                <input type="text" name="CMP_DESCRICAO" class="form-control" ng-model="curso.CMP_DESCRICAO" />
+                                <div app-validation-msg="erros" for="CMP_DESCRICAO"></div>
+                            </div>
+
+                            <div class="form-group col-lg-2">
+                                <label for="proInteresse">Produto de Interesse</label>
+                                <input type="checkbox" id="proInteresse" ng-model="curso.CMP_PRO_INTERESSE" class="form-control"
+                                       ng-checked="curso.CMP_PRO_INTERESSE == true" />
+                            </div>
+                            <div class="form-group col-lg-3">
+                                @Html.LabelFor(model => model.CMP_VLR_VENDA)
+                                <div class="input-group">
+                                    <div class="input-group-addon">R$</div>
+                                    <input type="text" name="CMP_VLR_VENDA" class="form-control" ng-model="curso.CMP_VLR_VENDAMask" style="max-width: 92px"
+                                           app-mask-dinheiro="curso.CMP_VLR_VENDA" change="valorVendaAlterado()" />
+
+                                    <div app-validation-msg="erros" for="CMP_VLR_VENDA"></div>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label for="campo_EMP_ID">Empresa</label>
+                                <select id="campo_EMP_ID" name="campo_EMP_ID" class="form-control" ng-model="curso.EMP_ID"
+                                        ng-options="emp.EMP_ID as emp.EMP_NOME_FANTASIA for emp in lstEmpresas">
+                                    <option value="">Selecione</option>
+                                </select>
+                                <div app-validation-msg="erros" for="EMP_ID"></div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Composições</legend>
+                        <div class="row padding">
+                            <div class="table-responsive">
+                                <div><span app-validation-msg="erros" for="PRODUTO_COMPOSICAO_ITEM"></span></div>
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Produto</th>
+                                            <th>Quantidade</th>
+                                            <th>Preço Unitário</th>
+                                            <th class="center" colspan="3">#</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in curso.PRODUTO_COMPOSICAO_ITEM" ng-show="curso.PRODUTO_COMPOSICAO_ITEM">
+                                            <td>{{item.PRODUTOS.PRO_NOME}} <span class="label label-success" ng-show="item.PRODUTOS.GRUPO_ID == 2">Fixo</span></td>
+                                            <td>{{item.CMI_QTDE}}</td>
+                                            <td app-show-dinheiro="item.CMI_PRECO_UNIT"></td>
+                                            <td ng-hide="item.PRODUTOS.GRUPO_ID == 2">
+                                                <a href="javascript:void(0)" ng-click="abrirEdicaoItem($index, item)"
+                                                   class="btnConfirmaExclusao blue" id="btnEdicaoItem" title="Editar"><span class="glyphicon glyphicon-edit"></span></a>
+                                            </td>
+                                            <td ng-hide="item.PRODUTOS.GRUPO_ID == 2">
+                                                <a href="javascript:void(0)" ng-click="removerComposicaoItem($index)"
+                                                   class="btnConfirmaExclusao red" id="btexcluir" title="Excluir"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                                            </td>
+                                            <td colspan="3">
+                                                <a href="javascript:void(0);" data-toggle="modal" data-target="#modalComposicaoItem"
+                                                   ng-if="$last" title="Adicionar Composição"
+                                                   ng-click="renovarForm()"><span class="glyphicon glyphicon-plus"></span></a>
+                                            </td>
+
+                                        </tr>
+                                        <tr ng-hide="curso.PRODUTO_COMPOSICAO_ITEM.length > 0">
+                                            <td colspan="7">
+                                                Nenhuma composição adicionada. Clique aqui para adicionar
+                                                <a href="javascript:void(0);" data-toggle="modal" data-target="#modalComposicaoItem"
+                                                   title="Adicionar Composição"
+                                                   ng-click="renovarForm()"><span class="glyphicon glyphicon-plus"></span></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend class="text-primary">Especializações</legend>
+                        <div class="row padding">
+                            <div class="table-responsive">
+                                <div app-validation-msg="erros" for="AREA_CONSULTORIA_CURSO_PROXY"></div>
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Colecionador</th>
+                                            <th>Grande Grupo</th>
+                                            <th>Ações</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in curso.AREA_CONSULTORIA_CURSO_PROXY">
+                                            <td>
+                                                <select ng-options="col.ARE_CONS_ID as col.ARE_CONS_DESCRICAO for col in lstColecionadores"
+                                                        ng-model="item.ARE_CONS_ID" id="proRep" class="form-control"
+                                                        app-change="colecionadorSelecionado(item.ARE_CONS_ID, $index)">
+                                                    <option value="">Selecione</option>
+                                                </select>
+                                                <div app-validation-msg="erros" for="AREA_CONSULTORIA_CURSO_PROXY[{{$index}}].ARE_CONS_ID"></div>
+
+                                            </td>
+                                            <td>
+                                                <select ng-options="gg.TIT_ID as gg.TIT_DESCRICAO for gg in matrizGrandeGrupo[$index].lstGrandeGrupo"
+                                                        ng-model="item.TIT_ID" id="gg" class="form-control">
+                                                    <option value="">Selecione</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0)" ng-click="ExcluirAreas($index)" class="btnConfirmaExclusao red" id="btexcluir" title="Excluir">
+                                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                                </a>
+                                                <span ng-show="curso.AREA_CONSULTORIA_CURSO_PROXY.length == ($index + 1)">
+                                                    <a href="javascript:void(0)" ng-click="IncluirAreas()" title="Incluir">
+                                                        <span class="glyphicon glyphicon-plus blue"></span>
+                                                    </a>
+                                                </span>
+                                            </td>
+
+                                        </tr>
+                                        <tr ng-hide="curso.AREA_CONSULTORIA_CURSO_PROXY.length > 0">
+                                            <td colspan="6">
+                                                Nenhuma area de consultoria adicionada. Clique para adicionar:
+                                                <a href="javascript:void(0)" ng-click="IncluirAreas()" title="Incluir">
+                                                    <span class="glyphicon glyphicon-plus blue"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </fieldset>
+                }
+            </div>
+            <div class="panel-footer">
+                <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default">
+                    <span class="glyphicon glyphicon-chevron-left blue"></span> Voltar
+                </button>
+                @*     <button type="button" class="btn btn-primary" ng-click="salvarComposicao()" ng-disabled="buttonSave.show == false">
+                        <span class="glyphicon glyphicon-floppy-save"></span> {{buttonSave.label}}
+                    </button>*@
+
+                <button app-switch-button="salvarCurso()"
+                        switch-conf="[{label : 'Salvar', state : 'save'}, {label : 'Salvando...', state : 'saved', disabled : true}]"
+                        switch-var="buttonSave"
+                        class="btn btn-primary">
+                    <span class="glyphicon glyphicon-floppy-save"></span>
+                </button>
+
+            </div>
+            <div app-modal="modalComposicaoItem" header="Selecione">
+                <div class="panel panel-default">
+                    <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Informações de Curso</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                @Html.Label("Produto do item")
+
+                                @*<select name="produto_composicao" class="form-control" ng-model="$parent.composicaoitem.PRODUTO"  ng-options="item as item.PRO_SIGLA for item in $parent.lstprodutos track by item.PRO_ID" ng-change="$parent.produtoSelecionado(composicaoitem)">
+                                        <option value="">Selecione</option>
+                                    </select>*@
+                                <div app-select2="$parent.composicaoitem.PRO_ID"
+                                     item-var="$parent.composicaoitem.PRODUTOS"
+                                     ng-model="$parent.PRODUTO_DESCRICAO_ITEM"
+                                     result-list="$parent.lstProdutosAnexos"
+                                     search-param="nomeProItem"
+                                     load-function="$parent.listarProdutoAnexoPorNome(nomeProItem, 'lstProdutosAnexos')"
+                                     list-value="PRO_ID"
+                                     list-label="PRO_NOME"
+                                     ctrl-var="$parente.select2CtrlItem"
+                                     start-with-full-list="true"></div>
+                                @Html.ValidationMessageFor(model => model.AREA_ID, null, new { app_validation_msg = "errosModal", @for = "PRO_ID" })
+                            </div>
+                            <div class="form-group col-lg-6">
+                                @Html.LabelFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().TTP_ID)
+                                <select name="tipo_periodo" class="form-control" ng-model="$parent.composicaoitem.TIPO_PERIODO" ng-options="item as item.TTP_DESCRICAO for item in $parent.lsttipoperiodo track by item.TTP_ID" ng-change="$parent.tipoPeriodoSelecionado(composicaoitem)">
+                                    <option value="">Selecione</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().TTP_ID, null, new { app_validation_msg = "errosModal", @for = "TTP_ID" })
+                            </div>
+                            @* <div class="form-group col-lg-2">
+                                     @Html.LabelFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_PRECO_TOTAL)
+                                     @Html.TextBoxFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_PRECO_TOTAL, new {@class = "form-control", style = "max-width: 92px", ng_model = "$parent.composicaoitem.CMI_PRECO_TOTALMask", app_mask_dinheiro = "$parent.composicaoitem.CMI_PRECO_TOTAL"})
+                                     @Html.ValidationMessageFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_PRECO_TOTAL, null, new { app_validation_msg = "errosModal", @for = "CMI_PRECO_TOTAL" })
+                                </div>*@
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-4">
+                                @Html.LabelFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_PRECO_UNIT)
+                                @Html.TextBoxFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_PRECO_UNIT, new { @class = "form-control", style = "max-width: 92px", ng_model = "$parent.composicaoitem.CMI_PRECO_UNITMask", app_mask_dinheiro = "$parent.composicaoitem.CMI_PRECO_UNIT" })
+                                @Html.ValidationMessageFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_PRECO_UNIT, null, new { app_validation_msg = "errosModal", @for = "CMI_PRECO_UNIT" })
+                            </div>
+                            <div class="form-group col-lg-3">
+                                @Html.LabelFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_QTDE)
+                                @Html.TextBoxFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_QTDE, new { @class = "form-control", style = "max-width: 60px", ng_model = "$parent.composicaoitem.CMI_QTDE", maxlength = "4", app_number = "" })
+                                @Html.ValidationMessageFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_QTDE, null, new { app_validation_msg = "errosModal", @for = "CMI_QTDE" })
+                            </div>
+                            <div class="form-group col-lg-5">
+                                @Html.LabelFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_QTDE_PERIODO)
+                                @Html.TextBoxFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_QTDE_PERIODO, new { @class = "form-control", style = "max-width: 60px", ng_model = "$parent.composicaoitem.CMI_QTDE_PERIODO", maxlength = "4", app_number = "" })
+                                @Html.ValidationMessageFor(model => model.PRODUTO_COMPOSICAO_ITEM.First().CMI_QTDE_PERIODO, null, new { app_validation_msg = "errosModal", @for = "CMI_QTDE_PERIODO" })
+                            </div>
+
+                        </div>
+                        <div class="row">
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button type="button" class="btn btn-default" ng-click="$parent.addComposicaoItem(composicaoitem, this)" ng-disabled="$parent.button.show == false">
+                            {{$parent.button.label}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="tab == 2" app-model-bind source-model="tabelasPreco" target-model="curso.TABELA_PRECO">
+            @Html.Partial("Partials/_TabelaPrecoPartial")
+        </div>
+        <div ng-show="tab == 3">
+            @Html.Partial("Partials/_NotaFiscalConfigPartial")
+        </div>
+    </div>
+</div>

@@ -1,0 +1,219 @@
+﻿<!-- ALT: 23/06/2015 - disponibilizando os dados e métodos javascript -->
+@model  COAD.COADGED.Model.DTO.PublicacaoRevisaoDTO
+
+@{
+    ViewBag.Title = "Digitação";     
+}
+
+@using Coad.GenericCrud.Extensions
+
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li class="active">Digitação</li>
+        <li class="active">Colaborador <span class="label label-default">@ViewBag.colaborador</span></li>
+        <li class="active">Privilégio <span class="label label-default">@ViewBag.cargo (@ViewBag.cargoSigla)</span></li>          
+        <li class="active">Área <span class="label label-default">@ViewBag.colecionadorNome</span></li>
+    </ol>
+}
+
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/publicacaoRevisao.js")
+
+<!-- ALT: 23/06/2015 - abrindo Angular para a aplicação -->
+<div ng-app="appModule" ng-cloak>
+    <div ng-controller="PublicacaoRevisaoController" class="padding content" data-ng-init="digitacao(@ViewBag.colecionadorId)">
+
+        <div class="panel panel-default">
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-filter"></span> Digitação</div>
+            <div class="panel-body"> 
+                <div class="row">              
+                    <div class="form-group col-lg-2">
+                        <label for="revisao">Colecionador</label>
+                        @Html.DropDownList("filtro.colecionadorId", new SelectList(@ViewBag.areas, "Value", "Text", @ViewBag.colecionadorId), "Todos", new { @class = "form-control", ng_model = "filtro.colecionadorId" })
+                    </div>
+                    <div class="form-group col-lg-1">
+                        <label for="revisao">Informativo</label>
+                        <input type="text" id="informativo" ng-model="filtro.informativo" class="form-control"/>
+                    </div>
+                    <div class="form-group col-lg-1">
+                        <label for="revisao">Ano</label>
+                        <input type="text" id="anoInformativo" ng-model="filtro.anoInformativo" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="digitacao()"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Lista de matérias da digitação </div>
+            <div class="panel-body">         
+                <div class="table-responsive">     
+                    <div ng-show="!revisao">
+                        <li>
+                            @{
+                                @MvcHtmlString.Create("Não há matérias para digitação!");
+                            }
+                        </li>                        
+                    </div>
+                    <div>
+                        @Html.Messages()
+                        <div app-message></div>
+                    </div>
+
+                    <table class="table table-hover table-bordered" ng-show="revisao">
+                        <thead>
+                            <tr class="warning">                               
+                                <th style="min-width: 030px">
+                                    @Html.DisplayName("Nº")
+                                </th>
+                                <th style="min-width: 050px">
+                                    @Html.DisplayName("Area")
+                                </th>
+                                <th style="min-width: 030px">
+                                    @Html.DisplayName("Inf")
+                                </th>
+                                <th style="min-width: 030px">
+                                    @Html.DisplayName("Ano")
+                                </th>
+                                <th style="min-width: 030px">
+                                    @Html.DisplayName("UF")
+                                </th>
+                                <th style="min-width: 050px">
+                                    @Html.DisplayName("Data")
+                                </th>
+                                <th style="min-width: 030px">
+                                    @Html.DisplayName("Ativa")
+                                </th>
+                                <th style="min-width: 030px">
+                                    @Html.DisplayName("Texto")
+                                </th>
+                                <th style="min-width: 020px">
+                                    @Html.DisplayName("Fase")
+                                </th>
+                                <th>Ver</th>
+                                <th>Editar</th>
+                                <th style="min-width: 30px">Resultado</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in revisao">
+                            <td>
+                                {{item.PUB_ID}}
+                            </td>
+                            <td>
+                                {{item.PUBLICACAO_AREAS_CONSULTORIA.AREAS_CONSULTORIA.ARE_CONS_DESCRICAO}}
+                            </td>
+                            <td>
+                                <div ng-repeat="uf in item.PUBLICACAO_AREAS_CONSULTORIA.PUBLICACAO_UF">
+                                    {{uf.INF_NUMERO}}
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-repeat="uf in item.PUBLICACAO_AREAS_CONSULTORIA.PUBLICACAO_UF">
+                                    {{uf.INF_ANO}}
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-repeat="uf in item.PUBLICACAO_AREAS_CONSULTORIA.PUBLICACAO_UF">
+                                    {{uf.UF_ID}}
+                                </div>
+                            </td>
+                            <td>
+                                {{item.PUBLICACAO.DATA_CADASTRO | date: "dd/MM/yyyy"}}
+                            </td>
+                            <td>
+                                <span class="label label-success" ng-if="item.PUBLICACAO.PUB_ATIVO == 1">SIM</span>
+                                <span class="label label-danger" ng-if="item.PUBLICACAO.PUB_ATIVO != 1">NÃO</span>
+                            </td>
+                            <td> 
+                                <span class="label label-success" ng-if="(item.PUBLICACAO.PUB_CONTEUDO_RESENHA) || (item.PUBLICACAO.PUB_CONTEUDO)">SIM</span>
+                                <span class="label label-danger" ng-if="(!item.PUBLICACAO.PUB_CONTEUDO_RESENHA) && (!item.PUBLICACAO.PUB_CONTEUDO)">NÃO</span>
+                            </td>
+                            <td>
+                                <div ng-if="item.REV_TC == 'R'">
+                                    <span>
+                                        <span class="label label-primary">REDAÇÃO</span>
+                                        <a href="javascript:void(0)" ng-click="historicoMateria(item.REPROVADA)" title="" data-original-title="Clique para ver histórico" data-toggle="tooltip">Histórico</a>
+                                    </span>
+                                </div>
+                                <div ng-if="item.REV_TC == 'L'">
+                                    <span>
+                                        <span class="label label-success">REVISÃO TÉCNICA</span>
+                                        <a href="javascript:void(0)" ng-click="historicoMateria(item.REPROVADA)" title="" data-original-title="Clique para ver histórico" data-toggle="tooltip">Histórico</a>
+                                    </span>
+                                </div>
+                                <div ng-if="item.DIG_TC == 'L'">
+                                    <span>
+                                        <span class="label label-info">DIGITAÇÃO</span>
+                                        <a href="javascript:void(0)" ng-click="historicoMateria(item.REPROVADA)" title="" data-original-title="Clique para ver histórico" data-toggle="tooltip">Histórico</a>
+                                    </span>
+                                </div>
+                                <div ng-if="item.REV_OR == 'L'">
+                                    <span>
+                                        <span class="label label-warning">REVISÃO ORTOGRÁFICA</span>
+                                        <a href="javascript:void(0)" ng-click="historicoMateria(item.REPROVADA)" title="" data-original-title="Clique para ver histórico" data-toggle="tooltip">Histórico</a>
+                                    </span>
+                                </div>
+                                <div ng-if="item.REV_OR == 'A'">
+                                    <span>
+                                        <span class="label label-danger">DIAGRAMAÇÃO</span>
+                                        <a href="javascript:void(0)" ng-click="historicoMateria(item.REPROVADA)" title="" data-original-title="Clique para ver histórico" data-toggle="tooltip">Histórico</a>
+                                    </span>
+                                </div>
+                                <span class="label label-primary" ng-if="item.length == 0">REDAÇÃO</span>
+                            </td>
+                            <td><a href="javascript:void(0)" ng-click="sairDoMenu()" app-post="@Url.Action("../PublicacaoAreaConsultoria/Detalhes")?publicacaoId={{item.PUB_ID}}&colecionadorId={{item.ARE_CONS_ID}}&revisao=D" title="Visualizar" class="blue"><span class="glyphicon glyphicon-search"></span></a></td>
+                            <td><a href="javascript:void(0)" ng-click="modalEditorDigitador(item.PUBLICACAO, item.PUBLICACAO_AREAS_CONSULTORIA)" title="Editar" class="blue"><span class="glyphicon glyphicon-edit"></span></a></td>
+                            <td style="width:40px;">
+                                <div style="width:auto; float:left;">
+                                    <a href="javascript:void(0)" ng-click="aprovarDigitacao(item.REV_ID, item.PUB_ID)"><span class="glyphicon glyphicon-thumbs-up green" title="Aprovar"></span></a>
+                                </div>
+                                <div style="width:auto; float:right;">
+                                    <a href="javascript:void(0)" ng-click="reprovarDigitacao(item.REV_ID, item.PUB_ID)"><span class="glyphicon glyphicon-thumbs-down red"  title="Reprovar"></span></a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- ALT: 01/06/2017 - MODAL - Editor de Textos do Digitador -->
+                    <div app-modal="modalEditorDigitador" header="{{tit}}">
+                        <div "app-bind-rich-text-event">
+                             @using (Html.BeginForm(null, null, FormMethod.Post, new { role = "form" }))
+                             {
+                                <div id="idMateria" class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group col-lg-12">
+                                                @Html.Hidden("print", new {id="", @class = "form-control", ng_model = "_pub.PUB_CONTEUDO_RESENHA_DGT", app_rich_editor = "EditorRapido" })
+                                                <div>
+                                                    @Html.Raw(@ViewBag.PUB_CONTEUDO_RESENHA_DGT)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <button type="button" class="btn btn-default" ng-click="salvarPublicacao()"><span class="glyphicon glyphicon-save blue"></span> Salvar</button>
+                                        <button type="button" class="btn btn-default" Onclick="angular.element('#modalEditorDigitador').modal('hide');digitacao()" style="float:right;"><span class="glyphicon glyphicon-off red"></span> Sair</button>
+                                    </div>
+                                </div>
+                             }
+                        </div>
+                    </div>
+
+                    <!-- ALT: 26/07/2016 - MODAL - Exibindo Mensagens -->
+                    <div app-modal="historicoMateria" header="{{tit}}">
+                        <div id="idMateria" class="panel panel-default">
+                            <div class="panel-body">
+                                <div style="max-height:500px; overflow-y:auto;" ng-bind-html="msg"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <app-pagination request-page="paginaReq" load-function="digitacao(filtro.colecionadorId, paginaReq)"></app-pagination>
+            </div>
+        </div>
+    </div>
+</div>

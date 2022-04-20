@@ -1,0 +1,223 @@
+﻿@model  COAD.SEGURANCA.Model.ContaDTO
+
+@using Coad.GenericCrud.Extensions
+@using GenericCrud.ActionResultTools
+
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Contas</li>
+    </ol>
+}
+
+@{
+    var emitirBoleto = new SelectList(
+        new List<SelectListItem>
+       {
+            new SelectListItem {Text = "Sim", Value = "1"},
+            new SelectListItem {Text = "Não", Value = "0"}
+       }, "Value", "Text"
+    );
+}
+
+<style type="text/css">
+    .body {
+        background-color: #e8e8e8 !important;
+    }
+</style>
+
+<script src="@UrlCorp.Content("~/Scripts/negocio/conta.js")" defer="defer"></script>
+
+
+<div ng-app="appModule">
+    <div class="panel panel-corp" ng-controller="ContaController" ng-init="initEdicao(@ViewBag.ctaId)">
+        <div app-message></div>
+        <!-- Default panel contents -->
+        <div class="panel-heading bold">
+            <span class="glyphicon glyphicon-user"></span> Contas
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Opções
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li>
+                            <a href="@Url.Action("Editar")" class="blue">Novo</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group col-lg-1">
+                    @Html.Label("ID")
+                    @Html.TextBoxFor(model => model.CTA_ID, new { @class = "form-control", ng_model = "conta.CTA_ID", disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.CTA_ID, null, new { app_validation_msg = "erros", @for = "CTA_ID" })
+                </div>
+                <div class="form-group col-lg-4">
+                    @Html.Label("Banco")
+                    @Html.DropDownListFor(model => model.BAN_ID, new SelectList(@ViewBag.banco, "Value", "Text"), null, new { @class = "form-control", ng_model = "conta.BAN_ID", ng_disabled="conta.CTA_ID" })
+                    @Html.ValidationMessageFor(model => model.BAN_ID, null, new { app_validation_msg = "erros", @for = "BAN_ID" })
+                </div>
+                <div class="form-group col-lg-2">
+                    @Html.Label("Agência")
+                    @Html.TextBoxFor(model => model.CTA_AGENCIA, new { @class = "form-control", ng_model = "conta.CTA_AGENCIA", ng_disabled="conta.CTA_ID" })
+                    @Html.ValidationMessageFor(model => model.CTA_AGENCIA, null, new { app_validation_msg = "erros", @for = "CTA_AGENCIA" })
+                </div>
+                <div class="form-group col-lg-2">
+                    @Html.Label("Conta")
+                    @Html.TextBoxFor(model => model.CTA_CONTA, new { @class = "form-control", ng_model = "conta.CTA_CONTA", ng_disabled="conta.CTA_ID" })
+                    @Html.ValidationMessageFor(model => model.CTA_CONTA, null, new { app_validation_msg = "erros", @for = "CTA_CONTA" })
+                </div>
+                <div class="form-group col-lg-3">
+                    @Html.Label("Tipo")
+                    <select class="form-control" ng-model="conta.CTA_TIPO">
+                        <option value="C">Conta Corrente</option>
+                        <option value="P">Poupança</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-5">
+                    @Html.Label("Empresa")
+                    @Html.DropDownListFor(model => model.EMP_ID, new SelectList(@ViewBag.empresa, "Value", "Text"), null, new { @class = "form-control", ng_model = "conta.EMP_ID", ng_change = "empresaSelecionada()"})
+                    @Html.ValidationMessageFor(model => model.EMP_ID, null, new { app_validation_msg = "erros", @for = "EMP_ID" })
+                </div>
+                <div class="form-group col-lg-2">
+                    @Html.Label("Convênio")
+                    @Html.TextBoxFor(model => model.CTA_CONVENIO, new { @class = "form-control", ng_model = "conta.CTA_CONVENIO" })
+                    @Html.ValidationMessageFor(model => model.CTA_CONVENIO, null, new { app_validation_msg = "erros", @for = "CTA_CONVENIO" })
+                </div>
+                <div class="form-group col-lg-2">
+                    @Html.Label("Código p/CNAB 240")
+                    @Html.TextBoxFor(model => model.CTA_CODIGO_240, new { @class = "form-control", ng_model = "conta.CTA_CODIGO_240" })
+                    @Html.ValidationMessageFor(model => model.CTA_CODIGO_240, null, new { app_validation_msg = "erros", @for = "CTA_CODIGO_240" })
+                </div>
+                <div class="form-group col-lg-3">
+                    @Html.Label("Código p/CNAB 400")
+                    @Html.TextBoxFor(model => model.CTA_CODIGO_400, new { @class = "form-control", ng_model = "conta.CTA_CODIGO_400" })
+                    @Html.ValidationMessageFor(model => model.CTA_CODIGO_400, null, new { app_validation_msg = "erros", @for = "CTA_CODIGO_400" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-2">
+                    @Html.Label("Compl.Conta Cobrança")
+                    @Html.TextBoxFor(model => model.CTA_COMPL_CTA_COB, new { @class = "form-control", ng_model = "conta.CTA_COMPL_CTA_COB" })
+                    @Html.ValidationMessageFor(model => model.CTA_COMPL_CTA_COB, null, new { app_validation_msg = "erros", @for = "CTA_COMPL_CTA_COB" })
+                </div>
+                <div class="form-group col-lg-2">
+                    @Html.Label("Carteira da Remessa")
+                    @Html.TextBoxFor(model => model.CTA_CARTEIRA_REMESSA, new { @class = "form-control", ng_model = "conta.CTA_CARTEIRA_REMESSA" })
+                    @Html.ValidationMessageFor(model => model.CTA_CARTEIRA_REMESSA, null, new { app_validation_msg = "erros", @for = "CTA_CARTEIRA_REMESSA" })
+                </div>
+                <div class="form-group col-lg-2">
+                    @Html.Label("Carteira do Boleto")
+                    @Html.TextBoxFor(model => model.CTA_CARTEIRA_BOLETO, new { @class = "form-control", ng_model = "conta.CTA_CARTEIRA_BOLETO" })
+                    @Html.ValidationMessageFor(model => model.CTA_CARTEIRA_BOLETO, null, new { app_validation_msg = "erros", @for = "CTA_CARTEIRA_BOLETO" })
+                </div>
+                <div class="form-group col-lg-2">
+                    @Html.Label("Cedente da Remessa")
+                    @Html.TextBoxFor(model => model.CTA_CEDENTE_REMESSA, new { @class = "form-control", ng_model = "conta.CTA_CEDENTE_REMESSA" })
+                    @Html.ValidationMessageFor(model => model.CTA_CEDENTE_REMESSA, null, new { app_validation_msg = "erros", @for = "CTA_CEDENTE_REMESSA" })
+                </div>
+                <div class="form-group col-lg-2">
+                    @Html.Label("Cedente do Boleto")
+                    @Html.TextBoxFor(model => model.CTA_CEDENTE_BOLETO, new { @class = "form-control", ng_model = "conta.CTA_CEDENTE_BOLETO" })
+                    @Html.ValidationMessageFor(model => model.CTA_CEDENTE_BOLETO, null, new { app_validation_msg = "erros", @for = "CTA_CEDENTE_BOLETO" })
+                </div>
+                <div class="form-group col-lg-2">
+                    @Html.Label("% Multa")
+                    @Html.TextBoxFor(model => model.CTA_PERC_MULTA, new { @class = "form-control", ng_model = "conta.CTA_PERC_MULTA" })
+                    @Html.ValidationMessageFor(model => model.CTA_PERC_MULTA, null, new { app_validation_msg = "erros", @for = "CTA_PERC_MULTA" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-2">
+                    @Html.Label("% Mora/mês")
+                    @Html.TextBoxFor(model => model.CTA_PERC_MORA_MES, new { @class = "form-control", ng_model = "conta.CTA_PERC_MORA_MES" })
+                    @Html.ValidationMessageFor(model => model.CTA_PERC_MORA_MES, null, new { app_validation_msg = "erros", @for = "CTA_PERC_MORA_MES" })
+                </div>
+                <div class="form-group col-lg-2">
+                    @Html.Label("Nº Arquivo enviado")
+                    @Html.TextBoxFor(model => model.CTA_NR_ARQ_ENVIADO, new { @class = "form-control", ng_model = "conta.CTA_NR_ARQ_ENVIADO" })
+                    @Html.ValidationMessageFor(model => model.CTA_NR_ARQ_ENVIADO, null, new { app_validation_msg = "erros", @for = "CTA_NR_ARQ_ENVIADO" })
+                </div>
+
+                <div class="form-group col-lg-2">
+                    <label>Gera Remessa</label><br />
+                    <label class="switch switch switch-round switch-success" style="padding-top: 5px;">
+                        <input type="checkbox" id="sacador_avalista" ng-model="conta.CTA_CEDENTE_EMITE_BOLETO"
+                               ng-checked="conta.CTA_CEDENTE_EMITE_BOLETO == true"
+                               class="form-control" value="false">
+                        <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                    </label>
+                </div>
+                <div class="form-group col-lg-2">
+                    <label>Disponível no portal</label><br />
+                    <label class="switch switch switch-round switch-success" style="padding-top: 5px;">
+                        <input type="checkbox" id="sacador_avalista" ng-model="conta.CTA_ENVIA_BOLETO"
+                                ng-checked="conta.CTA_ENVIA_BOLETO == true"
+                                class="form-control" value="false">
+                        <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                    </label>
+                </div>
+                <div class="form-group col-lg-2">
+                    <label>Gerar nosso número</label><br />
+                    <label class="switch switch switch-round switch-success" style="padding-top: 5px;">
+                        <input type="checkbox" id="sacador_avalista" ng-model="conta.CTA_GERA_NOSSO_NUMERO"
+                               ng-checked="conta.CTA_GERA_NOSSO_NUMERO == true"
+                               class="form-control" value="false">
+                        <span class="switch-label" data-on="SIM" data-off="NÃO"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-5">
+                    <label for="campo_EMP_ID">Empresa Sacadora Avalista</label>
+                    <select id="campo_EMP_ID" name="campo_EMP_ID" class="form-control" ng-model="conta.EMP_ID_S_AVS"
+                            ng-options="emp.EMP_ID as emp.EMP_RAZAO_SOCIAL for emp in lstEmpresas | filter:filtroSacador">
+                        <option value="">Selecione</option>
+                    </select>
+                    <div app-validation-msg="erros" for="EMP_ID_S_AVS"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.Label("Espécie Doc")
+                        <input type="text" class="form-control" ng_model="conta.CTA_ESPECIE_DOC" maxlength="20" />
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.Label("Espécie")
+                        <input type="text" class="form-control" ng_model="conta.CTA_ESPECIE" maxlength="20" />
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.Label("Aceite")
+                        <input type="text" class="form-control" ng_model="conta.CTA_ACEITE" maxlength="20" />
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        @Html.Label("Instruções")
+                        <textarea type="text" class="form-control" ng_model="conta.CTA_INSTRUCOES_BOLETO" rows="6" >
+ 
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left blue"></span>Fechar</button>
+            <button type="button" class="btn btn-default" ng-click="salvarConta()"><span class="glyphicon glyphicon-floppy-save blue"></span>Salvar</button>
+        </div>
+        @*modal-preview - editor --- Popup modal*@
+        <div app-init-editor="editor"></div>
+    </div>
+</div>
+

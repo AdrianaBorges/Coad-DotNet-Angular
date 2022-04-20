@@ -1,0 +1,142 @@
+﻿@using COAD.SEGURANCA.Extensions
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+}
+
+
+
+@using (Html.BeginForm())
+{
+    if (TempData["Resultado"] != null)
+    {
+        string t = TempData["Resultado"].ToString();
+
+    @Html.Alert(t);
+                  TempData.Remove("Resultado");
+
+    }
+    
+    <div ng-app="appModule">
+        <div ng-controller="NotaFiscalControler" ng-init="PreparaTela()">
+            <div class="form panel panel-primary">
+                <div class="panel-heading">
+                    <i class="fa fa-search fa-fw"></i> @ViewBag.Title
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Opções
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="../NotaFiscal/Novo">Novo</a>
+                                </li>
+                                <li><a href="../NotaFiscal/ImportarXML">Importar</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a href="#" ng-click="ConsultarNotas()">Pesquisar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    @Html.ValidationSummary(false)
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.Label("Mes")
+                                @Html.DropDownList("_mesatual", new SelectList(@ViewBag.ListaMes, "Value", "Text"), new { @class = "form-control", ng_model = "filtro.mesatual" })
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Ano")
+                                @Html.TextBox("_anoatual", "", new { @class = "form-control", ng_model = "filtro.anoatual" })
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                @Html.Label("Tipo")
+                                @Html.DropDownList("_nf_tipo", new SelectList(@ViewBag.ListaTipoNF, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "filtro.nf_tipo", ng_change = "motraLabel()" })
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="form-group">
+                                @Html.Label("Empresa")
+                                @Html.DropDownList("_emp_id", new SelectList(@ViewBag.ListaEmpresa, "Value", "Text"), "---- Selecione ----", new { @class = "form-control", ng_model = "filtro.emp_id" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <input type="button" ng-click="ConsultarNotas()" value="Pesquisar" class="btn btn-default" />
+                </div>
+            </div>
+            <div class="form panel panel-primary" ng-show="listanf">
+                <div class="panel-heading">
+                    <i class="fa fa-list-alt fa-fw"></i> @ViewBag.Title
+                    <div class="pull-right">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>@Html.Label("{{lblDataEntSai}}")</th>
+                                    <th>@Html.Label("Nº Nota")</th>
+                                    <th>@Html.Label("Série")</th>
+                                    <th>@Html.Label("ID", "Tipo Doc. Fiscal")</th>
+                                    <th>@Html.Label("CFOP")</th>
+                                    <th>@Html.Label("Situação")</th>
+                                    <th>@Html.Label("{{lblRazaoSocial}}")</th>
+                                    <th class="align-right">@Html.Label("Valor")</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in listanf">
+                                    <td app-show-date="DataEntSai" ng-if="mostrarData(item)"></td>
+                                    <td>{{item.NF_NUMERO}}</td>
+                                    <td>{{item.NF_SERIE}}</td>
+                                    <td>{{item.TDF_ID}}</td>
+                                    <td>{{item.CFOPENT}}</td>
+                                    <td>{{item.NF_STATUS}}</td>
+                                    <td>{{lblNome}}</td>
+                                    <td app-show-dinheiro="item.NF_VLR_NOTA" class="align-right" style="min-width: 100px;"></td>
+                                    <td><a href="javascript:void(0);" ng-click="VisualizarNf(item)" title="">
+                                        <span class="glyphicon glyphicon-edit"></span></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr />
+                    <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+
+    <link href="~/Content/themes/base/bootstrap-datepicker.css" rel="stylesheet" />
+    @Scripts.Render("~/Scripts/appScripts/NotaFiscal.js")
+    @Scripts.Render("~/Scripts/appScripts/datepicker.js")
+    @Scripts.Render("~/Content/themes/base/bootstrap-datepicker.css")
+
+}
+
+
+
+

@@ -1,0 +1,42 @@
+﻿@model  COAD.COADGED.Model.DTO.CargosDTO
+@{
+    ViewBag.Title = "Edit";
+}
+@using Coad.GenericCrud.Extensions
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("DashBoard","index","Home")</li>
+        <li>@Html.ActionLink("Gerenciar Cargos","index","Cargos")</li>
+        <li class="active">Editar Cargos</li>         
+    </ol>
+}
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/cargos.js")
+<div class="form-lg padding" ng-app="appModule">
+    <div class="panel panel-default" ng-controller="CargosController" data-ng-init="read(@ViewBag.cargoId)">
+            @Html.ValidationSummary(true)          
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-edit icon-panel"></span> Editar Cargos</div>
+            <div class="panel-body">  
+                 <div app-message></div>
+                 @using (Html.BeginForm(null,null, FormMethod.Post, new {role = "form"})) 
+                 {
+                 <div class="row">
+                    <div class="form-group col-lg-2">
+                        @Html.Label("ID")
+                        @Html.TextBoxFor(model => model.CRG_ID,  new {@class = "form-control", ng_model = "cargos.CRG_ID", disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.CRG_ID, null, new { app_validation_msg = "erros", @for = "CRG_ID" }) 
+                    </div>
+                    <div class="form-group col-lg-2">
+                        @Html.LabelFor(model => model.CRG_DESCRICAO)
+                        @Html.TextBoxFor(model => model.CRG_DESCRICAO,  new {@class = "form-control", ng_model = "cargos.CRG_DESCRICAO" })
+                        @Html.ValidationMessageFor(model => model.CRG_DESCRICAO, null, new { app_validation_msg = "erros", @for = "CRG_DESCRICAO" }) 
+                    </div>
+                 </div>
+                 }
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-primary" ng-click="salvarCargos()">Salvar</button>
+                <span class="float-right"><button type="button" onclick="window.location = '@Url.Action("Index")'" class="btn btn-default">Voltar</button></span>
+            </div> 
+    </div>
+</div>

@@ -1,0 +1,127 @@
+﻿<!-- ALT: 23/06/2015 - disponibilizando os dados e métodos javascript -->
+@model  COAD.COADGED.Model.DTO.ColaboradorDTO
+@using Coad.GenericCrud.Extensions
+
+@section breadcrumbs {
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "index", "Home")</li>
+        <li class="active">Colaboradores</li>
+    </ol>
+}
+
+<!-- ALT: 23/06/2015 - importando JavaScript específico deste módulo -->
+@Scripts.Render("~/Scripts/negocio/COADGED/colaborador.js")
+
+<!-- ALT: 23/06/2015 - abrindo Angular para a aplicação -->
+<div ng-app="appModule">
+    <div ng-controller="ColaboradorController" class="padding content" data-ng-init="init()">
+        <div class="panel panel-default">
+            <div app-message></div>
+            <!-- ALT: 23/06/2015 - pequeno menu à direita -->
+            <div class="panel-heading bold head-panel">
+                <span class="glyphicon glyphicon-filter"></span> Filtros
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Opções <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="@Url.Action("Novo")" class="blue">Novo</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ALT: 23/06/2015 - buscar/pesquisar -->
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-lg-4">
+                        <label for="nome">Login/COADCORP</label>
+                        <input type="text" id="nome" ng-model="filtro.nome" class="form-control" />
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="nome">Cargo</label>
+                        @Html.DropDownList("filtro.cargoId", new SelectList(@ViewBag.cargos, "Value", "Text"), "", new { @class = "form-control", ng_model = "filtro.cargoId" })
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="nome">Colecionador</label>
+                        @Html.DropDownList("filtro.colecionadorId", new SelectList(@ViewBag.colecionador, "Value", "Text"), "", new { @class = "form-control", ng_model = "filtro.colecionadorId" })
+                    </div>
+
+                    <div class="form-group col-lg-2">
+                        <label for="ativoId">
+                            Ativo
+                        </label>
+                        <br />
+                        <input type="radio" id="ativoId" ng-model="filtro.ativoId" ng-value="1" />
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label for="ativoId">
+                            Inativo
+                        </label>
+                        <br />
+                        <input type="radio" id="ativoId2" ng-model="filtro.ativoId" ng-value="0" />
+                    </div>
+                </div>
+            </div>
+            <!-- ALT: 23/06/2015 - botão pesquisar -->
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-click="listar()"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-show="colaboradores">
+            <!-- ALT: 23/06/2015 - exibindo dados pesquisados -->
+            <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-book"></span> Colaboradores</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <!-- ALT: 23/06/2015 - mensagens ocorridas nesta tela -->
+                    <div>
+                        @Html.Messages()
+                    </div>
+                    <!-- ALT: 23/06/2015 - registros deste módulo -->
+                    <table class="table table-hover table-bordered">
+                        <!-- ALT: 23/06/2015 - exibindo campos do cabeçalho -->
+                        <thead>
+                            <tr>
+                                <th style="min-width: 050px">
+                                    @Html.DisplayNameFor(model => model.COL_ID)
+                                </th>
+                                <th style="min-width: 150px">
+                                    @Html.DisplayName("Login/COADCORP")
+                                </th>
+                                <th style="min-width: 500px">
+                                    @Html.DisplayNameFor(model => model.COL_NOME)
+                                </th>
+                                <th style="min-width: 150px">
+                                    @Html.DisplayNameFor(model => model.CRG_ID)
+                                </th>
+                                <th style="min-width: 150px">
+                                    @Html.DisplayNameFor(model => model.ARE_CONS_ID)
+                                </th>
+                                <th style="min-width: 050px">
+                                    @Html.DisplayNameFor(model => model.COL_ATIVO)
+                                </th>
+                                <th style="text-align: center;">Editar</th>
+                            </tr>
+                        </thead>
+                        <!-- ALT: 23/06/2015 - exibindo os dados e os botões de operações -->
+                        <tr ng-repeat="item in colaboradores">
+                            <td>{{item.COL_ID}}
+                            </td>
+                            <td>{{item.USU_LOGIN}}</td>
+                            <td>{{item.COL_NOME}}</td>
+                            <td>{{item.CARGOS.CRG_DESCRICAO}}</td>
+                            <td>{{item.AREAS_CONSULTORIA.ARE_CONS_DESCRICAO}}</td>
+                            <td ng-show="item.COL_ATIVO==1">Sim</td>
+                            <td ng-show="item.COL_ATIVO==0">Não</td>
+                            <td style="text-align: center;"><a href="javascript:void(0)" app-post="@Url.Action("Editar")?colaboradorId={{item.COL_ID}}" title="Editar" class="blue"><span class="glyphicon glyphicon-edit"></span></a></td>
+                        </tr>
+                    </table>
+                </div>
+                <app-pagination request-page="paginaReq" load-function="listar(paginaReq)"></app-pagination>
+            </div>
+        </div>
+    </div>
+</div>

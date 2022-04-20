@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Transferir Clientes";
+}
+
+@section breadcrumbs {
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home","index","Home")</li>
+        <li class="active">Transferência de Suspects</li>         
+        
+    </ol>
+}
+@Scripts.Render("~/Scripts/negocio/transferir_clientes.js")
+<div ng-app="appModule" class="padding">
+     <div class="panel panel-default painel-limit margin-auto"> 
+      <!-- Default panel contents -->
+      <div class="panel-heading bold head-panel"><span class="glyphicon glyphicon-transfer" id="breadcrumbs-globe"></span> Transferência de Suspect 
+           
+      </div>
+          
+     <div class="panel-body">   
+        <div ng-controller="TransferirClientesController" data-ng-init="init()">
+            @Html.Partial("Partials/_TransferirClientesPartial")
+        </div>
+     </div>
+    </div>     
+</div>

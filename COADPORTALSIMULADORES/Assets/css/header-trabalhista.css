@@ -1,0 +1,8 @@
+﻿.custom-css-header-bg-image {
+    background: url('../img/simulador/trabalhista/HEADER_1920_120.png') !important;
+    /* Center and scale the image nicely */
+    background-repeat: no-repeat !important;
+    /*background-size: contain !important;*/
+    background-size: 100% 100% !important;
+    background-position: center !important;
+}

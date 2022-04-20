@@ -1,0 +1,123 @@
+﻿
+<li class="dropdown" ng-controller="NotificacaoController" data-ng-init="initNotify(); initInfoCliente();" ng-cloak>
+    <div app-message></div>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" ng-click="checaResumoNotificacacoesNaoLidas()" title="Tarefas Assincronas">
+        <i class="fa fa-clock-o font-18" aria-hidden="true"></i><b class="caret"></b>
+        <span class="badge">{{lstJobs.length}}</span>
+    </a>
+    <ul class="dropdown-menu alert-dropdown">
+        <li ng-repeat="item in lstJobs" class="separator-li" style="min-width: 300px;">
+            <a href="javascript:void(0)" ng-click="abrirModalSchedulerNotify(item);">
+                <div class="">
+                    <span class="center label label-default"
+                          ng-class="{
+                                        'label-warning': item.JNT_ID == 1,
+                                        'label-info': item.JNT_ID == 2,
+                                        'label-danger': item.JNT_ID == 3,
+                                        'label-success': item.JNT_ID == 4 || item.JNT_ID == 5
+                                    }">
+                        {{item.JOB_NOTIFICACAO_STATUS.JNT_DESCRICAO}}
+                    </span><br />
+                    <span class="center">{{item.JNF_DESCRICAO}} <span class="glyphicon glyphicon-remove-sign text-danger" ng-click="cancelarNotificacao(item.JNF_ID, $event);" title="Cancelar"></span></span>
+                    <div class="progress" ng-show="item.JNT_ID == 1 || item.JNT_ID == 5">
+                        <div class="progress-bar progress-bar-primary progress-bar-striped active" role="progressbar"
+                                aria-valuenow="100" aria-valuemin="100" aria-valuemax="100" style="width: 100%" title="Processando">
+                            <span class="sr-only">Processando</span>
+                            <span>Processando</span>
+                            <span ng-show="dot">{{dot}}</span>
+                            <span ng-show="!dot">&emsp;</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </li>
+        <li class="divider" ng-show="lstJobs"></li>
+        <li ng-show="lstJobs" class="padding" ng-click="$event.stopPropagation();">
+            <app-pagination request-page="paginaReq" load-function="pesquisarJobAgendamento(paginaReq)"></app-pagination>
+        </li>
+        <li ng-hide="lstJobs">
+            <div class="padding">Nenhuma tarefa executando no momento.</div>
+        </li>
+    </ul>
+<div app-modal="modal-scheduler-notify" header="Informações da Notificação" submodal header-bg="false">
+    <div>
+        <div>
+            <h3 class="center">Informações do Serviço</h3>
+            <br />
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <label>Status</label>
+                    <div>
+                        <span class="center label label-default"
+                              ng-class="{
+                                        'label-warning': notify.JNT_ID == 1,
+                                        'label-info': notify.JNT_ID == 2,
+                                        'label-danger': notify.JNT_ID == 3,
+                                        'label-success': item.JNT_ID == 4 || item.JNT_ID == 5
+                                        }">
+                            {{notify.JOB_NOTIFICACAO_STATUS.JNT_DESCRICAO}}
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>Descrição</label>
+                    <div class="text">{{notify.JNF_DESCRICAO}}</div>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>Usuário Solicitante</label>
+                    <div class="text">{{notify.USU_LOGIN}}</div>
+                </div>
+            </div>
+            <div class="row">                
+                <div class="form-group col-sm-4">
+                    <label>Data de Criação</label>
+                    <div class="text" app-show-date="notify.JNF_DATA" data-show-time></div>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>Data de Conclusão</label>
+                    <div class="text" app-show-date="notify.JNF_DATA_CONCLUSAO" data-show-time></div>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>Data de Cancelamento</label>
+                    <div class="text" app-show-date="notify.JNF_DATA_CANCELAMENTO" data-show-time></div>
+                </div>
+            </div>
+            <div class="row" ng-show="notify.JNF_ULTIMO_ERRO">
+                <div class="col-md-12">
+                    <div class="bg-grey padding">
+                        {{notify.JNF_ULTIMO_ERRO}}
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-show="lstMsg">
+                <div class="col-md-12">
+                <h4 class="center">Detalhes</h4>
+                    <br />
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 75px" id="erroBatch">
+                                        Referência
+                                    </th>
+                                    <th>Mensagem</th>
+                                    <th>Data</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in lstMsg" class="animate-repeat">
+                                <td class="text-danger"><strong>{{item.NTM_COD_REF}}  {{item.NTM_COD_REF_STR}}</strong></td>
+                                <td class="text-danger">
+                                    {{item.NTM_MENSAGEM}}
+                                </td>
+                                <td class="text-danger">
+                                    <span app-show-date="item.NTM_DATA" data-show-time></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</li>

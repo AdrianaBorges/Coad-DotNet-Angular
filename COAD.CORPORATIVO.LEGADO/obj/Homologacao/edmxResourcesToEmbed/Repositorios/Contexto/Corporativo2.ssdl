@@ -1,0 +1,613 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="corporativo2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AGENDA">
+    <Key>
+      <PropertyRef Name="CODIGO" />
+      <PropertyRef Name="DATA_HIST" />
+      <PropertyRef Name="HORA_HIST" />
+    </Key>
+    <Property Name="CODIGO" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="DATA_HIST" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="HORA_HIST" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="HISTORICO_BASICO" Type="varchar" MaxLength="200" />
+    <Property Name="HISTORICO_LIVRE" Type="text" />
+    <Property Name="CONTATO" Type="smallint" />
+    <Property Name="RESULTADO" Type="smallint" />
+    <Property Name="DATA_AGENDA" Type="varchar" MaxLength="10" />
+    <Property Name="HORA_AGENDA" Type="varchar" MaxLength="5" />
+    <Property Name="DATA_REAL_CANC" Type="varchar" MaxLength="10" />
+    <Property Name="CARTEIRA" Type="varchar" MaxLength="7" />
+    <Property Name="NOME" Type="varchar" MaxLength="40" />
+    <Property Name="A_C" Type="varchar" MaxLength="40" />
+    <Property Name="TIPO_ATEND" Type="smallint" />
+    <Property Name="TAREFA" Type="smallint" />
+    <Property Name="CARTEIRA_ATEND" Type="varchar" MaxLength="7" />
+    <Property Name="ID" Type="int" />
+    <Property Name="IDINC" Type="int" />
+    <Property Name="cancelamentoMotivo_id" Type="int" />
+  </EntityType>
+  <EntityType Name="ASSINATURA">
+    <Key>
+      <PropertyRef Name="CODIGO_UNIX" />
+    </Key>
+    <Property Name="CODIGO_UNIX" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+    <Property Name="ANO_COAD" Type="varchar" MaxLength="2" />
+    <Property Name="ATV_REM" Type="varchar" MaxLength="1" />
+    <Property Name="CORTESIA" Type="varchar" MaxLength="1" />
+    <Property Name="A_C" Type="varchar" MaxLength="90" />
+    <Property Name="E_MAIL" Type="varchar" MaxLength="50" />
+    <Property Name="EX_BTC" Type="varchar" MaxLength="1" />
+    <Property Name="PART_BTC" Type="varchar" MaxLength="1" />
+    <Property Name="MAT_ADIC" Type="varchar" MaxLength="20" />
+    <Property Name="REMESSA" Type="varchar" MaxLength="2" />
+    <Property Name="ANO_REMESSA" Type="varchar" MaxLength="4" />
+    <Property Name="DT_SUSP_REM_DIASC" Type="varchar" MaxLength="10" />
+    <Property Name="MALA_OFERTA" Type="varchar" MaxLength="3" />
+    <Property Name="ULT_PASTA" Type="varchar" MaxLength="4" />
+    <Property Name="REENVIO_PASTA_SN" Type="varchar" MaxLength="1" />
+    <Property Name="NUM_TP_ENVIO" Type="varchar" MaxLength="9" />
+    <Property Name="DT_GRAV_PASTA" Type="varchar" MaxLength="10" />
+    <Property Name="DATA_ASSINATURA" Type="varchar" MaxLength="10" />
+    <Property Name="MAT_ADIC2" Type="varchar" MaxLength="20" />
+    <Property Name="DT_DEVOL_PASTA" Type="varchar" MaxLength="10" />
+    <Property Name="ENTREGADOR" Type="varchar" MaxLength="30" />
+    <Property Name="RETIRAR_DE_MAOS" Type="varchar" MaxLength="1" />
+    <Property Name="COD_CURSO" Type="varchar" MaxLength="6" />
+    <Property Name="COD_LIVRO" Type="varchar" MaxLength="6" />
+    <Property Name="MES_REFERENCIA" Type="int" />
+    <Property Name="PROSPECTADO" Type="varchar" MaxLength="8" />
+    <Property Name="AUTOID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CNPJ_CPF" Type="varchar" MaxLength="20" />
+    <Property Name="DH_SUBIR" Type="varchar" MaxLength="19" />
+    <Property Name="DH_SUBIU" Type="varchar" MaxLength="19" />
+    <Property Name="DATA_ALTERA" Type="datetime" />
+    <Property Name="DATA_INSERT" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'corporativo2.dbo.bloqueia_consulta_individual' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="bloqueia_consulta_individual">
+    <Key>
+      <PropertyRef Name="AUTOID" />
+    </Key>
+    <Property Name="data" Type="varchar" MaxLength="10" />
+    <Property Name="hora" Type="varchar" MaxLength="8" />
+    <Property Name="usuario" Type="varchar" MaxLength="40" />
+    <Property Name="assinatura" Type="varchar" MaxLength="8" />
+    <Property Name="qtd_consulta_sem" Type="int" />
+    <Property Name="ativo_sn" Type="varchar" MaxLength="1" />
+    <Property Name="qtd_consulta_total" Type="int" />
+    <Property Name="qtd_consulta_usou" Type="int" />
+    <Property Name="qtd_disponibilizar" Type="int" />
+    <Property Name="qtd_consulta_acum" Type="int" />
+    <Property Name="per_disponibilizar" Type="varchar" MaxLength="1" />
+    <Property Name="atualizou" Type="varchar" MaxLength="1" />
+    <Property Name="AUTOID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DATA_INSERT" Type="datetime" />
+    <Property Name="USU_LOGIN" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="cart_coad">
+    <Key>
+      <PropertyRef Name="CODIGO" />
+    </Key>
+    <Property Name="CODIGO" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="NOME" Type="varchar" MaxLength="35" />
+    <Property Name="A_C" Type="varchar" MaxLength="35" />
+    <Property Name="TIPO" Type="varchar" MaxLength="10" />
+    <Property Name="LOGRAD" Type="varchar" MaxLength="125" />
+    <Property Name="NUMERO" Type="varchar" MaxLength="6" />
+    <Property Name="TIPO_COMPL" Type="varchar" MaxLength="10" />
+    <Property Name="COMPL" Type="varchar" MaxLength="70" />
+    <Property Name="TIPO_COMPL2" Type="varchar" MaxLength="10" />
+    <Property Name="COMPL2" Type="varchar" MaxLength="15" />
+    <Property Name="TIPO_COMPL3" Type="varchar" MaxLength="10" />
+    <Property Name="COMPL3" Type="varchar" MaxLength="15" />
+    <Property Name="BAIRRO" Type="varchar" MaxLength="50" />
+    <Property Name="MUNIC" Type="varchar" MaxLength="60" />
+    <Property Name="UF" Type="varchar" MaxLength="2" />
+    <Property Name="CEP" Type="varchar" MaxLength="9" />
+    <Property Name="DDD_TEL" Type="varchar" MaxLength="4" />
+    <Property Name="TELEFONE" Type="varchar" MaxLength="8" />
+    <Property Name="DDD_FAX" Type="varchar" MaxLength="4" />
+    <Property Name="FAX" Type="varchar" MaxLength="8" />
+    <Property Name="E_MAIL" Type="varchar" MaxLength="50" />
+    <Property Name="CARGO" Type="varchar" MaxLength="30" />
+    <Property Name="PROF" Type="varchar" MaxLength="30" />
+    <Property Name="IDENTIFICACAO" Type="varchar" MaxLength="1" />
+    <Property Name="DATA_CADASTRO" Type="varchar" MaxLength="10" />
+    <Property Name="MXM_CODIGO" Type="varchar" MaxLength="15" />
+    <Property Name="cep_status" Type="varchar" MaxLength="1" />
+    <Property Name="TP_PESSOA" Type="varchar" MaxLength="1" />
+    <Property Name="id_ceps" Type="int" />
+    <Property Name="DH_SUBIR" Type="varchar" MaxLength="19" />
+    <Property Name="DH_SUBIU" Type="varchar" MaxLength="19" />
+    <Property Name="DATA_ALTERA" Type="datetime" />
+    <Property Name="DATA_INSERT" Type="datetime" />
+    <Property Name="CLI_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="CLIENTES">
+    <Key>
+      <PropertyRef Name="CODIGO" />
+    </Key>
+    <Property Name="CODIGO" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="CGC" Type="varchar" MaxLength="18" />
+    <Property Name="INSCRICAO" Type="varchar" MaxLength="16" />
+    <Property Name="AUTOID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DH_SUBIR" Type="varchar" MaxLength="19" />
+    <Property Name="DH_SUBIU" Type="varchar" MaxLength="19" />
+    <Property Name="DATA_ALTERA" Type="datetime" />
+    <Property Name="DATA_INSERT" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CONTRATOS">
+    <Key>
+      <PropertyRef Name="CONTRATO" />
+    </Key>
+    <Property Name="CONTRATO" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="ASSINATURA" Type="varchar" MaxLength="8" />
+    <Property Name="ANO_VIGENCIA" Type="varchar" MaxLength="4" />
+    <Property Name="PEDIDO" Type="varchar" MaxLength="6" />
+    <Property Name="ANO_FAT" Type="varchar" MaxLength="4" />
+    <Property Name="PERIODO_FAT" Type="varchar" MaxLength="1" />
+    <Property Name="SEMANA_FAT" Type="varchar" MaxLength="1" />
+    <Property Name="DATA_FAT" Type="varchar" MaxLength="10" />
+    <Property Name="ANO_PROD" Type="varchar" MaxLength="4" />
+    <Property Name="PERIODO_PROD" Type="varchar" MaxLength="1" />
+    <Property Name="DATA_PRODUCAO" Type="varchar" MaxLength="10" />
+    <Property Name="AREA" Type="varchar" MaxLength="1" />
+    <Property Name="REGIAO" Type="varchar" MaxLength="2" />
+    <Property Name="REPRESENTANTE" Type="varchar" MaxLength="4" />
+    <Property Name="VLR_ENTRADA" Type="varchar" MaxLength="11" />
+    <Property Name="VLR_PARC_REST" Type="varchar" MaxLength="11" />
+    <Property Name="QTE_PARC_REST" Type="varchar" MaxLength="2" />
+    <Property Name="DATA_CANC" Type="varchar" MaxLength="10" />
+    <Property Name="PART_BTC" Type="varchar" MaxLength="1" />
+    <Property Name="EMISS_CONTRA" Type="varchar" MaxLength="10" />
+    <Property Name="QTE_MES_VIG" Type="varchar" MaxLength="2" />
+    <Property Name="DATA_REAT" Type="varchar" MaxLength="10" />
+    <Property Name="DATA_FIM_VIGENCIA" Type="varchar" MaxLength="10" />
+    <Property Name="DATA_AUTORIZACAO" Type="varchar" MaxLength="10" />
+    <Property Name="LIXO" Type="varchar" MaxLength="1" />
+    <Property Name="DT_OFERTA_1" Type="varchar" MaxLength="10" />
+    <Property Name="DT_OFERTA_2" Type="varchar" MaxLength="10" />
+    <Property Name="DT_OFERTA_3" Type="varchar" MaxLength="10" />
+    <Property Name="DT_OFERTA_ZERO" Type="varchar" MaxLength="10" />
+    <Property Name="DT_DIARIO_FAT" Type="varchar" MaxLength="10" />
+    <Property Name="DT_OFERTA_4" Type="varchar" MaxLength="10" />
+    <Property Name="ULT_MOD_RP" Type="varchar" MaxLength="2" />
+    <Property Name="DATA_RP" Type="varchar" MaxLength="10" />
+    <Property Name="INDICACAO" Type="varchar" MaxLength="8" />
+    <Property Name="PROSPECTADO" Type="varchar" MaxLength="8" />
+    <Property Name="DATA_ATRIBUICAO" Type="varchar" MaxLength="10" />
+    <Property Name="COD_CONSULTA" Type="varchar" MaxLength="3" />
+    <Property Name="CONTRATO_NEGOCIADO" Type="varchar" MaxLength="1" />
+    <Property Name="SEM_ENTRADA" Type="varchar" MaxLength="1" />
+    <Property Name="DT_CANCELAR" Type="varchar" MaxLength="10" />
+    <Property Name="DH_SUBIR" Type="varchar" MaxLength="19" />
+    <Property Name="DH_SUBIU" Type="varchar" MaxLength="19" />
+    <Property Name="EMPRESA_ID" Type="int" />
+    <Property Name="DATA_INSERT" Type="datetime" />
+    <Property Name="DATA_ALTERA" Type="datetime" />
+    <Property Name="INCLUIR_TAXA_ADM" Type="varchar" MaxLength="1" />
+    <Property Name="CMP_ID" Type="int" />
+    <Property Name="DIA_VENCIMENTO" Type="smallint" />
+    <Property Name="VENDA_RECORRENTE" Type="bit" />
+    <Property Name="DIA_VENC_RECORRENTE" Type="smallint" />
+  </EntityType>
+  <EntityType Name="datas_fat">
+    <Key>
+      <PropertyRef Name="PERIODO" />
+      <PropertyRef Name="SEMANA" />
+      <PropertyRef Name="DATA_FAT" />
+    </Key>
+    <Property Name="PERIODO" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="SEMANA" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="DATA_FAT" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EMAILS">
+    <Key>
+      <PropertyRef Name="AUTOID" />
+    </Key>
+    <Property Name="ASSINATURA" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="E_MAIL" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PRINCIPAL_SN" Type="varchar" MaxLength="1" />
+    <Property Name="DT_LISTAGEM_CONF" Type="varchar" MaxLength="10" />
+    <Property Name="AUTOID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DH_SUBIR" Type="varchar" MaxLength="19" />
+    <Property Name="DH_SUBIU" Type="varchar" MaxLength="19" />
+    <Property Name="SETOR" Type="varchar" MaxLength="20" />
+    <Property Name="DECISOR" Type="varchar" MaxLength="50" />
+    <Property Name="DATA_INSERT" Type="datetime" />
+    <Property Name="DATA_ALTERA" Type="datetime" />
+  </EntityType>
+  <EntityType Name="empresas">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="razao" Type="varchar" MaxLength="60" Nullable="false" />
+    <Property Name="fantasia" Type="varchar" MaxLength="60" Nullable="false" />
+    <Property Name="cnpj" Type="varchar" MaxLength="14" Nullable="false" />
+    <Property Name="ie" Type="varchar" MaxLength="20" />
+    <Property Name="im" Type="varchar" MaxLength="20" />
+    <Property Name="suframa" Type="varchar" MaxLength="20" />
+    <Property Name="logradouro" Type="varchar" MaxLength="60" Nullable="false" />
+    <Property Name="numero" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="complemento" Type="varchar" MaxLength="30" />
+    <Property Name="bairro" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="cidade" Type="varchar" MaxLength="25" />
+    <Property Name="uf" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="pais" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="cep" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="telefones" Type="varchar" MaxLength="60" />
+    <Property Name="email" Type="varchar" MaxLength="60" />
+    <Property Name="site" Type="varchar" MaxLength="99" />
+    <Property Name="area" Type="varchar" MaxLength="1" />
+    <Property Name="ultima_nfe" Type="int" />
+    <Property Name="cnr_agcedente" Type="varchar" MaxLength="10" />
+    <Property Name="SEQ_DIARIO" Type="int" Nullable="false" />
+    <Property Name="perfil" Type="varchar" MaxLength="1" />
+    <Property Name="atividade" Type="int" />
+    <Property Name="inf_complementar_nfe" Type="text" />
+    <Property Name="inf_complementar_cod" Type="varchar" MaxLength="6" />
+    <Property Name="primeira_nfe" Type="int" />
+  </EntityType>
+  <EntityType Name="ender_fat">
+    <Key>
+      <PropertyRef Name="CODIGO" />
+    </Key>
+    <Property Name="CODIGO" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="TIPO_FAT" Type="varchar" MaxLength="10" />
+    <Property Name="END_FAT" Type="varchar" MaxLength="50" />
+    <Property Name="NUM_FAT" Type="varchar" MaxLength="6" />
+    <Property Name="TP_COMPL_FAT" Type="varchar" MaxLength="10" />
+    <Property Name="COMPL_FAT" Type="varchar" MaxLength="70" />
+    <Property Name="BAIRRO_FAT" Type="varchar" MaxLength="50" />
+    <Property Name="MUNIC_FAT" Type="varchar" MaxLength="60" />
+    <Property Name="UF_FAT" Type="varchar" MaxLength="2" />
+    <Property Name="CEP_FAT" Type="varchar" MaxLength="9" />
+    <Property Name="id_ceps" Type="int" />
+    <Property Name="DH_SUBIR" Type="varchar" MaxLength="19" />
+    <Property Name="DH_SUBIU" Type="varchar" MaxLength="19" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'corporativo2.dbo.HIST_ATEND' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="HIST_ATEND">
+    <Key>
+      <PropertyRef Name="DATA_SOLIC" />
+      <PropertyRef Name="ASSINATURA" />
+    </Key>
+    <Property Name="DATA_SOLIC" Type="datetime" Nullable="false" />
+    <Property Name="ASSINATURA" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="HISTORICO" Type="varchar" MaxLength="100" />
+    <Property Name="SOLICITANTE" Type="varchar" MaxLength="50" />
+    <Property Name="ACAO" Type="varchar" MaxLength="50" />
+    <Property Name="DATA_RESOLUCAO" Type="datetime" />
+    <Property Name="GRUPO" Type="int" />
+    <Property Name="DATA_EMISSAO_FICHA" Type="datetime" />
+    <Property Name="DH_SUBIR" Type="varchar" MaxLength="19" />
+    <Property Name="DH_SUBIU" Type="varchar" MaxLength="19" />
+    <Property Name="SAC_TIPO_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="liquidacao">
+    <Key>
+      <PropertyRef Name="CONTRATO" />
+      <PropertyRef Name="LETRA" />
+      <PropertyRef Name="CD" />
+      <PropertyRef Name="TIPO_DOC" />
+      <PropertyRef Name="NUMERO" />
+    </Key>
+    <Property Name="CONTRATO" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="LETRA" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="CD" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="TIPO_DOC" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="NUMERO" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="BANCO" Type="varchar" MaxLength="4" />
+    <Property Name="NAUT" Type="varchar" MaxLength="10" />
+    <Property Name="DATA" Type="varchar" MaxLength="10" />
+    <Property Name="DT_VALIDAD" Type="varchar" MaxLength="7" />
+    <Property Name="PRACA" Type="varchar" MaxLength="2" />
+    <Property Name="VALOR" Type="varchar" MaxLength="11" />
+    <Property Name="DATA_DA_BAIXA" Type="varchar" MaxLength="10" />
+    <Property Name="NUM_ARQ" Type="varchar" MaxLength="5" />
+    <Property Name="ORIGEM_PGTO" Type="varchar" MaxLength="1" />
+    <Property Name="IDENT_DOCTO" Type="varchar" MaxLength="8" />
+    <Property Name="SEQ_BX_CART" Type="varchar" MaxLength="8" />
+    <Property Name="DT_BORDERO" Type="varchar" MaxLength="10" />
+    <Property Name="CHEQUE_EMITIDO_SN" Type="varchar" MaxLength="1" />
+    <Property Name="DT_EMISSAO_CHEQUE" Type="varchar" MaxLength="10" />
+    <Property Name="NUM_RECIBO" Type="varchar" MaxLength="6" />
+    <Property Name="NUM_LEITORA_CHEQUE" Type="varchar" MaxLength="40" />
+    <Property Name="DATA_LAYOUT_CHEQUE" Type="varchar" MaxLength="10" />
+    <Property Name="DH_SUBIR" Type="varchar" MaxLength="19" />
+    <Property Name="DH_SUBIU" Type="varchar" MaxLength="19" />
+    <Property Name="PAR_NUM_PARCELA" Type="varchar" MaxLength="8" />
+    <Property Name="atualizarCodigo" Type="bit" />
+  </EntityType>
+  <EntityType Name="PARAM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="PERIODO_BASE" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="ANO_BASE" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="PERIODO_MAXIMO" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="ANO_MAXIMO" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="ULT_SEQ_DIGITACAO" Type="varchar" MaxLength="6" />
+    <Property Name="MORA_MES" Type="varchar" MaxLength="5" />
+    <Property Name="NUM_CONTRATO" Type="varchar" MaxLength="6" />
+    <Property Name="SEQ_PARCELA" Type="varchar" MaxLength="5" />
+    <Property Name="ULT_PROC_BAIX_CART" Type="varchar" MaxLength="6" />
+    <Property Name="QUEBRA_SENHA" Type="varchar" MaxLength="1" />
+    <Property Name="SEQ_SENHA" Type="varchar" MaxLength="5" />
+    <Property Name="DT_ULT_SENHA" Type="varchar" MaxLength="5" />
+    <Property Name="EM_USO_SN" Type="varchar" MaxLength="1" />
+    <Property Name="SEQ_DIARIO" Type="varchar" MaxLength="4" />
+    <Property Name="IDENT_DOC" Type="varchar" MaxLength="8" />
+    <Property Name="SEQ_BX_CART" Type="varchar" MaxLength="8" />
+    <Property Name="DT_ULT_BORDERO" Type="varchar" MaxLength="10" />
+    <Property Name="DT_CNT_ACORD" Type="varchar" MaxLength="10" />
+    <Property Name="ULT_NUM_SOL_AC" Type="varchar" MaxLength="6" />
+    <Property Name="ULT_EXP_ACORDAO" Type="varchar" MaxLength="10" />
+    <Property Name="ULT_REM_SEM" Type="varchar" MaxLength="2" />
+    <Property Name="ULT_ANO_SEM" Type="varchar" MaxLength="4" />
+    <Property Name="ULT_REM_QUIZ" Type="varchar" MaxLength="2" />
+    <Property Name="ULT_ANO_QUIZ" Type="varchar" MaxLength="4" />
+    <Property Name="REGIST_INI" Type="varchar" MaxLength="9" />
+    <Property Name="ATCI_LIBERADO_SN" Type="varchar" MaxLength="1" />
+    <Property Name="ATCI_DATA_INSTRUC" Type="varchar" MaxLength="10" />
+    <Property Name="ADVI_LIBERADO_SN" Type="varchar" MaxLength="1" />
+    <Property Name="ADVI_DATA_INSTRUC" Type="varchar" MaxLength="10" />
+    <Property Name="ULT_NUM_CR" Type="varchar" MaxLength="10" />
+    <Property Name="DESP_ADM" Type="varchar" MaxLength="8" />
+    <Property Name="PERC_MALA" Type="varchar" MaxLength="10" />
+    <Property Name="SEQ_DIARIO_DEMAR_IV" Type="varchar" MaxLength="4" />
+    <Property Name="DATA_FECH_C_REC" Type="varchar" MaxLength="10" />
+    <Property Name="DATA_CONTROLE_CH_COAD" Type="varchar" MaxLength="10" />
+    <Property Name="SEQ_CONTROLE_CH_COAD" Type="varchar" MaxLength="3" />
+    <Property Name="DATA_CONTROLE_CH_ATL" Type="varchar" MaxLength="10" />
+    <Property Name="SEQ_CONTROLE_CH_ATL" Type="varchar" MaxLength="3" />
+    <Property Name="SEQ_IDENT" Type="int" />
+    <Property Name="SEQ_PROXIMO_RECIBO" Type="int" />
+    <Property Name="SEQ_MV" Type="int" />
+    <Property Name="SEQ_REGISTRO" Type="int" />
+    <Property Name="NUM_BORDERO_MV" Type="int" />
+    <Property Name="ID_LIQ_MV" Type="int" />
+    <Property Name="SEQ_VALE" Type="int" />
+    <Property Name="RODOU_PROG_LIMITE_SEMANAL" Type="varchar" MaxLength="1" />
+    <Property Name="SEQ_SUSPECT" Type="int" />
+    <Property Name="COD_FILIAL" Type="varchar" MaxLength="1" />
+    <Property Name="ULT_SEQ_CART_CURSO" Type="varchar" MaxLength="2" />
+    <Property Name="SEQ_ARQ_EMPRESTIMO" Type="varchar" MaxLength="6" />
+    <Property Name="SEQ_PARCELA2" Type="varchar" MaxLength="5" />
+    <Property Name="LOTE_REMESSA" Type="int" />
+    <Property Name="SENHA_SAC" Type="varchar" MaxLength="10" />
+    <Property Name="SENHA_SAC_GERENCIA" Type="varchar" MaxLength="10" />
+    <Property Name="SEQ_ARQ_CAIXA" Type="int" />
+    <Property Name="LOG_DIARIO" Type="varchar" MaxLength="255" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Parcelas">
+    <Key>
+      <PropertyRef Name="CONTRATO" />
+      <PropertyRef Name="LETRA" />
+      <PropertyRef Name="CD" />
+    </Key>
+    <Property Name="CONTRATO" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="LETRA" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="CD" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="DATA_VENCTO" Type="varchar" MaxLength="10" />
+    <Property Name="SITUACAO" Type="varchar" MaxLength="1" />
+    <Property Name="VLR_PARCELA" Type="varchar" MaxLength="11" />
+    <Property Name="MORA_MES" Type="varchar" MaxLength="5" />
+    <Property Name="PG_PART_BTC" Type="varchar" MaxLength="1" />
+    <Property Name="BCO_ALOC" Type="varchar" MaxLength="4" />
+    <Property Name="CART_ALOC" Type="varchar" MaxLength="2" />
+    <Property Name="DT_ALOC" Type="varchar" MaxLength="10" />
+    <Property Name="DT_EMISSAO_BLQ" Type="varchar" MaxLength="10" />
+    <Property Name="VLR_PAGO" Type="varchar" MaxLength="11" />
+    <Property Name="DT_PAGTO" Type="varchar" MaxLength="10" />
+    <Property Name="DATA_DIARIO" Type="varchar" MaxLength="10" />
+    <Property Name="DATA_RECIBO" Type="varchar" MaxLength="10" />
+    <Property Name="DT_IMP_AUT_CRA" Type="varchar" MaxLength="10" />
+    <Property Name="ALOC_BANCO" Type="varchar" MaxLength="1" />
+    <Property Name="DATA_DIARIO_CANC" Type="varchar" MaxLength="10" />
+    <Property Name="DATA_SITUACAO_9" Type="varchar" MaxLength="10" />
+    <Property Name="VENCTO_PRORROG" Type="varchar" MaxLength="1" />
+    <Property Name="CART_ALOC_2" Type="varchar" MaxLength="3" />
+    <Property Name="nosso_numero" Type="varchar" MaxLength="13" />
+    <Property Name="DH_SUBIR" Type="varchar" MaxLength="19" />
+    <Property Name="DH_SUBIU" Type="varchar" MaxLength="19" />
+    <Property Name="cedente" Type="varchar" MaxLength="40" />
+    <Property Name="DATA_INSERT" Type="datetime" />
+    <Property Name="DATA_ALTERA" Type="datetime" />
+    <Property Name="TAXA_ADM" Type="varchar" MaxLength="11" />
+    <Property Name="PAR_BAIXA_MANUAL" Type="bit" />
+    <Property Name="PAR_VENC_BOLETO" Type="datetime" />
+    <Property Name="CNQ_ID" Type="int" />
+    <Property Name="PAR_NUM_PARCELA" Type="varchar" MaxLength="8" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'corporativo2.dbo.representante' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="representante">
+    <Key>
+      <PropertyRef Name="COD_REPR" />
+      <PropertyRef Name="AUTOID" />
+    </Key>
+    <Property Name="COD_REPR" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="OPER" Type="varchar" MaxLength="4" />
+    <Property Name="NOME" Type="varchar" MaxLength="30" />
+    <Property Name="REGIAO" Type="varchar" MaxLength="2" />
+    <Property Name="PROX_ENCART" Type="varchar" MaxLength="1" />
+    <Property Name="AREA" Type="varchar" MaxLength="1" />
+    <Property Name="PERIODO" Type="varchar" MaxLength="1" />
+    <Property Name="ANO" Type="varchar" MaxLength="4" />
+    <Property Name="PERC_OBJ" Type="float" />
+    <Property Name="PERC_PERF" Type="float" />
+    <Property Name="LIQUIDEZ" Type="float" />
+    <Property Name="VLR_OBJETIVO" Type="float" />
+    <Property Name="VLR_COTA" Type="float" />
+    <Property Name="FUNCAO" Type="varchar" MaxLength="4" />
+    <Property Name="MATRICULA" Type="varchar" MaxLength="16" />
+    <Property Name="MATGERSUP" Type="varchar" MaxLength="16" />
+    <Property Name="MATGERNAC" Type="varchar" MaxLength="16" />
+    <Property Name="MATEX" Type="varchar" MaxLength="16" />
+    <Property Name="MATASSVDA" Type="varchar" MaxLength="16" />
+    <Property Name="CRED_CAMPANHA" Type="float" />
+    <Property Name="DEB_CAMPANHA" Type="float" />
+    <Property Name="OUTROS_CREDITOS" Type="float" />
+    <Property Name="OUTROS_DEBITOS" Type="float" />
+    <Property Name="PERC_REA" Type="float" />
+    <Property Name="INCOB" Type="float" />
+    <Property Name="INCOB_FAT" Type="float" />
+    <Property Name="INCOB_DEB" Type="float" />
+    <Property Name="COTA_RECIBO" Type="int" />
+    <Property Name="VLR_REALIZADO" Type="float" />
+    <Property Name="VLR_PERF_ANT" Type="float" />
+    <Property Name="VLR_PERF_ATU" Type="float" />
+    <Property Name="AREAN" Type="varchar" MaxLength="1" />
+    <Property Name="SETOR" Type="int" />
+    <Property Name="SORTEIO" Type="int" />
+    <Property Name="AUTOID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TEL_1" Type="varchar" MaxLength="10" />
+    <Property Name="TEL_2" Type="varchar" MaxLength="10" />
+    <Property Name="TEL_3" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="SEQ_PROD">
+    <Key>
+      <PropertyRef Name="COD_PROD" />
+      <PropertyRef Name="LETRA" />
+    </Key>
+    <Property Name="COD_PROD" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="LETRA" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="SEQUENCIA" Type="varchar" MaxLength="4" />
+  </EntityType>
+  <EntityType Name="TELEFONES2">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="ASSINATURA" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="DDD_TEL" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="TIPO" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="DH_SUBIR" Type="varchar" MaxLength="19" />
+    <Property Name="DH_SUBIU" Type="varchar" MaxLength="19" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SETOR" Type="varchar" MaxLength="20" />
+    <Property Name="TELEFONE" Type="varchar" MaxLength="10" />
+    <Property Name="DATA_INSERT" Type="datetime" />
+    <Property Name="DATA_ALTERA" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ULTIMO_CODIGO">
+    <Key>
+      <PropertyRef Name="CODIGO2" />
+    </Key>
+    <Property Name="CODIGO2" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DV" Type="varchar" MaxLength="1" />
+    <Property Name="codigo" Type="numeric" Precision="18" Scale="0" />
+  </EntityType>
+  <Function Name="TRANSF_ASSIN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="vASSIN_ANT" Type="varchar" Mode="In" />
+    <Parameter Name="vASSIN_ATU" Type="varchar" Mode="In" />
+    <Parameter Name="vSOLIC" Type="varchar" Mode="In" />
+    <Parameter Name="vDATA_TRANSF" Type="varchar" Mode="In" />
+    <Parameter Name="vVIGENCIA" Type="varchar" Mode="In" />
+    <Parameter Name="vCONTRATO" Type="varchar" Mode="In" />
+    <Parameter Name="vMES_REFERENCIA" Type="int" Mode="In" />
+    <Parameter Name="vDATA_INI_VIGENCIA" Type="datetime" Mode="In" />
+    <Parameter Name="vDATA_FIM_VIGENCIA" Type="datetime" Mode="In" />
+    <Parameter Name="USU_LOGIN" Type="varchar" Mode="In" />
+    <Parameter Name="ASN_TRANSF_MOTIVO" Type="varchar" Mode="In" />
+    <Parameter Name="vRETORNO" Type="varchar" Mode="InOut" />
+  </Function>
+  <EntityContainer Name="corporativo2ModelStoreContainer">
+    <EntitySet Name="AGENDA" EntityType="Self.AGENDA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ASSINATURA" EntityType="Self.ASSINATURA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="cart_coad" EntityType="Self.cart_coad" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CLIENTES" EntityType="Self.CLIENTES" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CONTRATOS" EntityType="Self.CONTRATOS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="datas_fat" EntityType="Self.datas_fat" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EMAILS" EntityType="Self.EMAILS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="empresas" EntityType="Self.empresas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ender_fat" EntityType="Self.ender_fat" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="liquidacao" EntityType="Self.liquidacao" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PARAM" EntityType="Self.PARAM" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Parcelas" EntityType="Self.Parcelas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SEQ_PROD" EntityType="Self.SEQ_PROD" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TELEFONES2" EntityType="Self.TELEFONES2" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ULTIMO_CODIGO" EntityType="Self.ULTIMO_CODIGO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="bloqueia_consulta_individual" EntityType="Self.bloqueia_consulta_individual" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[bloqueia_consulta_individual].[data] AS [data], 
+[bloqueia_consulta_individual].[hora] AS [hora], 
+[bloqueia_consulta_individual].[usuario] AS [usuario], 
+[bloqueia_consulta_individual].[assinatura] AS [assinatura], 
+[bloqueia_consulta_individual].[qtd_consulta_sem] AS [qtd_consulta_sem], 
+[bloqueia_consulta_individual].[ativo_sn] AS [ativo_sn], 
+[bloqueia_consulta_individual].[qtd_consulta_total] AS [qtd_consulta_total], 
+[bloqueia_consulta_individual].[qtd_consulta_usou] AS [qtd_consulta_usou], 
+[bloqueia_consulta_individual].[qtd_disponibilizar] AS [qtd_disponibilizar], 
+[bloqueia_consulta_individual].[qtd_consulta_acum] AS [qtd_consulta_acum], 
+[bloqueia_consulta_individual].[per_disponibilizar] AS [per_disponibilizar], 
+[bloqueia_consulta_individual].[atualizou] AS [atualizou], 
+[bloqueia_consulta_individual].[AUTOID] AS [AUTOID], 
+[bloqueia_consulta_individual].[DATA_INSERT] AS [DATA_INSERT], 
+[bloqueia_consulta_individual].[USU_LOGIN] AS [USU_LOGIN]
+FROM [dbo].[bloqueia_consulta_individual] AS [bloqueia_consulta_individual]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="HIST_ATEND" EntityType="Self.HIST_ATEND" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[HIST_ATEND].[DATA_SOLIC] AS [DATA_SOLIC], 
+[HIST_ATEND].[ASSINATURA] AS [ASSINATURA], 
+[HIST_ATEND].[HISTORICO] AS [HISTORICO], 
+[HIST_ATEND].[SOLICITANTE] AS [SOLICITANTE], 
+[HIST_ATEND].[ACAO] AS [ACAO], 
+[HIST_ATEND].[DATA_RESOLUCAO] AS [DATA_RESOLUCAO], 
+[HIST_ATEND].[GRUPO] AS [GRUPO], 
+[HIST_ATEND].[DATA_EMISSAO_FICHA] AS [DATA_EMISSAO_FICHA], 
+[HIST_ATEND].[DH_SUBIR] AS [DH_SUBIR], 
+[HIST_ATEND].[DH_SUBIU] AS [DH_SUBIU], 
+[HIST_ATEND].[SAC_TIPO_ID] AS [SAC_TIPO_ID]
+FROM [dbo].[HIST_ATEND] AS [HIST_ATEND]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="representante" EntityType="Self.representante" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[representante].[COD_REPR] AS [COD_REPR], 
+[representante].[OPER] AS [OPER], 
+[representante].[NOME] AS [NOME], 
+[representante].[REGIAO] AS [REGIAO], 
+[representante].[PROX_ENCART] AS [PROX_ENCART], 
+[representante].[AREA] AS [AREA], 
+[representante].[PERIODO] AS [PERIODO], 
+[representante].[ANO] AS [ANO], 
+[representante].[PERC_OBJ] AS [PERC_OBJ], 
+[representante].[PERC_PERF] AS [PERC_PERF], 
+[representante].[LIQUIDEZ] AS [LIQUIDEZ], 
+[representante].[VLR_OBJETIVO] AS [VLR_OBJETIVO], 
+[representante].[VLR_COTA] AS [VLR_COTA], 
+[representante].[FUNCAO] AS [FUNCAO], 
+[representante].[MATRICULA] AS [MATRICULA], 
+[representante].[MATGERSUP] AS [MATGERSUP], 
+[representante].[MATGERNAC] AS [MATGERNAC], 
+[representante].[MATEX] AS [MATEX], 
+[representante].[MATASSVDA] AS [MATASSVDA], 
+[representante].[CRED_CAMPANHA] AS [CRED_CAMPANHA], 
+[representante].[DEB_CAMPANHA] AS [DEB_CAMPANHA], 
+[representante].[OUTROS_CREDITOS] AS [OUTROS_CREDITOS], 
+[representante].[OUTROS_DEBITOS] AS [OUTROS_DEBITOS], 
+[representante].[PERC_REA] AS [PERC_REA], 
+[representante].[INCOB] AS [INCOB], 
+[representante].[INCOB_FAT] AS [INCOB_FAT], 
+[representante].[INCOB_DEB] AS [INCOB_DEB], 
+[representante].[COTA_RECIBO] AS [COTA_RECIBO], 
+[representante].[VLR_REALIZADO] AS [VLR_REALIZADO], 
+[representante].[VLR_PERF_ANT] AS [VLR_PERF_ANT], 
+[representante].[VLR_PERF_ATU] AS [VLR_PERF_ATU], 
+[representante].[AREAN] AS [AREAN], 
+[representante].[SETOR] AS [SETOR], 
+[representante].[SORTEIO] AS [SORTEIO], 
+[representante].[AUTOID] AS [AUTOID], 
+[representante].[TEL_1] AS [TEL_1], 
+[representante].[TEL_2] AS [TEL_2], 
+[representante].[TEL_3] AS [TEL_3]
+FROM [dbo].[representante] AS [representante]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

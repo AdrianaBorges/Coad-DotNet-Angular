@@ -1,0 +1,59 @@
+﻿<fieldset>
+    <legend class="btn btn-info" style="text-align: left;">Histórico(Agenda)</legend>
+    <div class="row padding" ng-if="listaagenda.length>0">
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr class="info">
+                        <th>Data</th>
+                        <th>Histórico</th>
+                        <th>Contato</th>
+                        <th>Resultado</th>
+                        <th>Data Agenda</th>
+                        <th>Nome</th>
+                        <th>A/C</th>
+                        <th style="text-align: center;">Detalhe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="agenda in listaagenda">
+                        <td>
+                            {{agenda.DATA_HIST}}
+                        </td>
+                        <td>
+                            {{agenda.HISTORICO_LIVRE}}
+                        </td>
+                        <td>
+                            {{agenda.CONTATO}}
+                        </td>
+                        <td>
+                            {{agenda.RESULTADO}}
+                        </td>
+                        <td>{{agenda.DATA_AGENDA}}</td>
+                        <td>
+                            {{agenda.NOME}}
+                        </td>
+                        <td>
+                            {{agenda.A_C}}
+                        </td>
+                        <td style="text-align: center;">
+                            <a href="javascript:void(0)" ng-click="histAgendaDetalhe(agenda)">
+                                <span class="fa fa-search"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div ng-if="!listaagenda||listaagenda.length==0">
+        <hr>
+
+        <div class="alert alert-success">
+            <strong>Atenção!</strong> Não existe histórico cadastrado para este cliente.
+        </div>
+
+    </div>
+
+</fieldset>
